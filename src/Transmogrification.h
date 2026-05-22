@@ -95,6 +95,48 @@ enum TransmogStrings : uint32
     LANG_TRANSMOG_SET_DISCLAIMER               = 43,
     LANG_TRANSMOG_CMD_DISCLAIMER_ON            = 44,
     LANG_TRANSMOG_CMD_DISCLAIMER_OFF           = 45,
+    // Check command: header / info
+    LANG_TRANSMOG_CHECK_HEADER                 = 46,
+    LANG_TRANSMOG_CHECK_DEST                   = 47,
+    LANG_TRANSMOG_CHECK_SRC                    = 48,
+    LANG_TRANSMOG_CHECK_PLAYER                 = 49,
+    LANG_TRANSMOG_CHECK_PLAYER_NOT_FOUND       = 50,
+    // Check command: section labels
+    LANG_TRANSMOG_CHECK_SECTION_PAIR           = 51,
+    LANG_TRANSMOG_CHECK_SECTION_ITEM           = 52,
+    LANG_TRANSMOG_CHECK_SECTION_COLL           = 53,
+    // Check command: verdict
+    LANG_TRANSMOG_CHECK_RESULT_OK              = 54,
+    LANG_TRANSMOG_CHECK_RESULT_FAIL            = 55,
+    // Check command: pair fail messages
+    LANG_TRANSMOG_CHECK_PAIR_IDS_SAME          = 56,
+    LANG_TRANSMOG_CHECK_PAIR_DISP_SAME         = 57,
+    LANG_TRANSMOG_CHECK_PAIR_CLASS_FAIL        = 58,
+    LANG_TRANSMOG_CHECK_PAIR_DEST_TYPE_FAIL    = 59,
+    LANG_TRANSMOG_CHECK_PAIR_SRC_TYPE_FAIL     = 60,
+    LANG_TRANSMOG_CHECK_PAIR_RANGED_FAIL       = 61,
+    LANG_TRANSMOG_CHECK_PAIR_SUB_DENIED        = 62,
+    LANG_TRANSMOG_CHECK_PAIR_INV_DENIED        = 63,
+    // Check command: per-item fail messages
+    LANG_TRANSMOG_CHECK_ITEM_WHITELISTED       = 64,
+    LANG_TRANSMOG_CHECK_ITEM_CLASS_FAIL         = 65,
+    LANG_TRANSMOG_CHECK_ITEM_BLACKLISTED       = 66,
+    LANG_TRANSMOG_CHECK_ITEM_QUALITY_FAIL      = 67,
+    LANG_TRANSMOG_CHECK_ITEM_POLE_FAIL         = 68,
+    LANG_TRANSMOG_CHECK_ITEM_EVENT_FAIL        = 69,
+    LANG_TRANSMOG_CHECK_ITEM_STAT_FAIL         = 70,
+    LANG_TRANSMOG_CHECK_ITEM_PROF_FAIL         = 71,
+    LANG_TRANSMOG_CHECK_ITEM_FACTION_FAIL      = 72,
+    LANG_TRANSMOG_CHECK_ITEM_CLASS_REQ_FAIL    = 73,
+    LANG_TRANSMOG_CHECK_ITEM_RACE_REQ_FAIL     = 74,
+    LANG_TRANSMOG_CHECK_ITEM_SKILL_FAIL        = 75,
+    LANG_TRANSMOG_CHECK_ITEM_LEVEL_FAIL        = 76,
+    LANG_TRANSMOG_CHECK_ITEM_SPELL_FAIL        = 77,
+    // Check command: collection fail messages
+    LANG_TRANSMOG_CHECK_COLL_DISABLED          = 78,
+    LANG_TRANSMOG_CHECK_COLL_NOT_FOUND         = 79,
+    // Check command: section pass message (shared by all sections)
+    LANG_TRANSMOG_CHECK_SECTION_OK             = 80,
 };
 
 enum ArmorClassSpellIDs

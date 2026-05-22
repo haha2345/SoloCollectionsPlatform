@@ -41,13 +41,14 @@ public:
 
         static ChatCommandTable transmogTable =
         {
-            { "add",        addCollectionTable                                            },
-            { "",           HandleDisableTransMogVisual,   SEC_PLAYER,        Console::No },
-            { "sync",       HandleSyncTransMogCommand,     SEC_PLAYER,        Console::No },
-            { "portable",   HandleTransmogPortableCommand, SEC_PLAYER,        Console::No },
-            { "interface",  HandleInterfaceOption,         SEC_PLAYER,        Console::No },
-            { "disclaimer", HandleDisclaimerOption,        SEC_PLAYER,        Console::No },
-            { "reload",     HandleReloadTransmogConfig,    SEC_ADMINISTRATOR, Console::Yes}
+            { "add",        addCollectionTable                                              },
+            { "check",      HandleCheckTransmog,           SEC_GAMEMASTER,    Console::Yes },
+            { "",           HandleDisableTransMogVisual,   SEC_PLAYER,        Console::No  },
+            { "sync",       HandleSyncTransMogCommand,     SEC_PLAYER,        Console::No  },
+            { "portable",   HandleTransmogPortableCommand, SEC_PLAYER,        Console::No  },
+            { "interface",  HandleInterfaceOption,         SEC_PLAYER,        Console::No  },
+            { "disclaimer", HandleDisclaimerOption,        SEC_PLAYER,        Console::No  },
+            { "reload",     HandleReloadTransmogConfig,    SEC_ADMINISTRATOR, Console::Yes }
         };
 
         static ChatCommandTable commandTable =
@@ -331,6 +332,276 @@ public:
             player->UpdatePlayerSetting("mod-transmog", SETTING_HIDE_SET_DISCLAIMER, 1);
             handler->PSendModuleSysMessage("mod-transmog", LANG_TRANSMOG_CMD_DISCLAIMER_OFF);
         }
+        return true;
+    }
+
+    static bool HandleCheckTransmog(ChatHandler* handler, PlayerIdentifier playerIdent, ItemTemplate const* destItem, ItemTemplate const* srcItem)
+    {
+        static constexpr char const* MOD = "mod-transmog";
+
+        WorldSession* gSession = handler->GetSession();
+        auto itemDisplay = [&](uint32 itemId) -> std::string
+        {
+            if (gSession)
+                return sTransmogrification->GetItemLink(itemId, gSession);
+            ItemTemplate const* tpl = sObjectMgr->GetItemTemplate(itemId);
+            return tpl ? Acore::StringFormat("{} (ID: {})", tpl->Name1, itemId)
+                       : Acore::StringFormat("ID: {}", itemId);
+        };
+
+        // Header
+        handler->PSendModuleSysMessage(MOD, LANG_TRANSMOG_CHECK_HEADER);
+        handler->PSendModuleSysMessage(MOD, LANG_TRANSMOG_CHECK_DEST,   itemDisplay(destItem->ItemId));
+        handler->PSendModuleSysMessage(MOD, LANG_TRANSMOG_CHECK_SRC,    itemDisplay(srcItem->ItemId));
+        handler->PSendModuleSysMessage(MOD, LANG_TRANSMOG_CHECK_PLAYER, playerIdent.GetName());
+
+        // Resolve player
+        ObjectGuid playerGuid = playerIdent.GetGUID();
+        Player*    player     = playerIdent.GetConnectedPlayer();
+
+        CharacterCacheEntry const* cache = sCharacterCache->GetCharacterCacheByGuid(playerGuid);
+        if (!cache)
+        {
+            handler->PSendModuleSysMessage(MOD, LANG_TRANSMOG_CHECK_PLAYER_NOT_FOUND, playerIdent.GetName());
+            return true;
+        }
+
+        uint32 rawGuid     = static_cast<uint32>(playerGuid.GetCounter());
+        uint8  playerRace  = cache->Race;
+        uint32 playerLevel = cache->Level;
+        uint32 raceMask    = 1u << (playerRace - 1);
+        uint32 classMask   = 1u << (cache->Class - 1);
+        TeamId teamId      = Player::TeamIdForRace(playerRace);
+
+        std::unordered_map<uint32, uint32> offlineSkills;
+        if (!player)
+        {
+            if (QueryResult res = CharacterDatabase.Query(
+                    "SELECT `skill`, `value` FROM `character_skills` WHERE `guid` = {}", rawGuid))
+            {
+                do {
+                    Field* f = res->Fetch();
+                    offlineSkills[f[0].Get<uint16>()] = f[1].Get<uint16>();
+                } while (res->NextRow());
+            }
+        }
+
+        auto skillValue = [&](uint32 skillId) -> uint32
+        {
+            if (player) return player->GetSkillValue(skillId);
+            auto it = offlineSkills.find(skillId);
+            return it != offlineSkills.end() ? it->second : 0u;
+        };
+
+        auto hasSpellFn = [&](uint32 spellId) -> bool
+        {
+            if (player) return player->HasSpell(spellId);
+            return static_cast<bool>(CharacterDatabase.Query(
+                "SELECT `spell` FROM `character_spell` WHERE `guid` = {} AND `spell` = {}",
+                rawGuid, spellId));
+        };
+
+        // Section: collects failure messages; skips are silently ignored
+        struct Section {
+            bool ok          = true;
+            bool whitelisted = false;
+            std::vector<std::string> fails;
+
+            void check(bool passed, std::string failMsg)
+            {
+                if (!passed) { ok = false; fails.push_back(std::move(failMsg)); }
+            }
+        };
+
+        // Render one section line: "label  [+] All checks passed" or "label  [-] fail1; fail2"
+        std::string okMsg = handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_SECTION_OK);
+        auto printSection = [&](std::string const& label, Section const& sec, std::string const& whitelistMsg = "")
+        {
+            std::string line = label + "  ";
+            if (sec.whitelisted)
+            {
+                line += "[~] " + whitelistMsg;
+            }
+            else if (sec.ok)
+            {
+                line += "[+] " + okMsg;
+            }
+            else
+            {
+                line += "[-] ";
+                for (size_t i = 0; i < sec.fails.size(); ++i)
+                {
+                    if (i) line += "; ";
+                    line += sec.fails[i];
+                }
+            }
+            handler->SendSysMessage(line);
+        };
+
+        // ----------------------------------------------------------------
+        // Pair checks
+        // ----------------------------------------------------------------
+        Section pair;
+
+        pair.check(srcItem->ItemId != destItem->ItemId,
+            handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_IDS_SAME));
+        pair.check(srcItem->DisplayInfoID != destItem->DisplayInfoID,
+            handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_DISP_SAME));
+        pair.check(srcItem->Class == destItem->Class,
+            handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_CLASS_FAIL));
+
+        auto isForbiddenType = [](uint32 t) -> bool
+        {
+            return t == INVTYPE_BAG    || t == INVTYPE_RELIC   || t == INVTYPE_FINGER ||
+                   t == INVTYPE_TRINKET || t == INVTYPE_AMMO  || t == INVTYPE_QUIVER;
+        };
+
+        pair.check(!isForbiddenType(destItem->InventoryType),
+            handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_DEST_TYPE_FAIL));
+        pair.check(!isForbiddenType(srcItem->InventoryType),
+            handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_SRC_TYPE_FAIL));
+
+        {
+            bool srcRanged  = sTransmogrification->IsRangedWeapon(srcItem->Class,  srcItem->SubClass);
+            bool destRanged = sTransmogrification->IsRangedWeapon(destItem->Class, destItem->SubClass);
+            pair.check(srcRanged == destRanged,
+                handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_RANGED_FAIL));
+        }
+
+        if (srcItem->SubClass != destItem->SubClass)
+            pair.check(sTransmogrification->IsSubclassMismatchAllowed(player, srcItem, destItem),
+                handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_SUB_DENIED));
+
+        if (srcItem->InventoryType != destItem->InventoryType)
+            pair.check(sTransmogrification->IsInvTypeMismatchAllowed(srcItem, destItem),
+                handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_PAIR_INV_DENIED));
+
+        // ----------------------------------------------------------------
+        // Per-item checks  (collect into a section, print later)
+        // ----------------------------------------------------------------
+        auto gatherItemChecks = [&](ItemTemplate const* proto, Section& sec)
+        {
+            if (sTransmogrification->IsAllowed(proto->ItemId))
+            {
+                sec.whitelisted = true;
+                return;
+            }
+
+            {
+                bool ok = proto->Class == ITEM_CLASS_ARMOR || proto->Class == ITEM_CLASS_WEAPON;
+                sec.check(ok, handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_CLASS_FAIL));
+                if (!ok)
+                    return;
+            }
+
+            sec.check(!sTransmogrification->IsNotAllowed(proto->ItemId),
+                handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_BLACKLISTED));
+
+            sec.check(sTransmogrification->IsAllowedQuality(proto->Quality, playerGuid),
+                handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_QUALITY_FAIL));
+
+            if (proto->Class == ITEM_CLASS_WEAPON && proto->SubClass == ITEM_SUBCLASS_WEAPON_FISHING_POLE)
+                sec.check(sTransmogrification->AllowFishingPoles,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_POLE_FAIL));
+
+            if (proto->HolidayId)
+                sec.check(sTransmogrification->IgnoreReqEvent || IsHolidayActive((HolidayIds)proto->HolidayId),
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_EVENT_FAIL));
+
+            if (!sTransmogrification->IgnoreReqStats && !proto->RandomProperty && !proto->RandomSuffix && proto->StatsCount > 0)
+            {
+                bool hasStats = false;
+                for (uint8 i = 0; i < proto->StatsCount; ++i)
+                    if (proto->ItemStat[i].ItemStatValue != 0) { hasStats = true; break; }
+                sec.check(hasStats, handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_STAT_FAIL));
+            }
+
+            {
+                uint32 subclassSkill = proto->GetSkill();
+                if (proto->SubClass > 0 && subclassSkill)
+                {
+                    uint32 sv = skillValue(subclassSkill);
+                    bool ok;
+                    if (proto->Class == ITEM_CLASS_ARMOR)
+                        ok = sv > 0 || sTransmogrification->AllowMixedArmorTypes;
+                    else
+                        ok = sv > 0 || sTransmogrification->AllowMixedWeaponTypes == MIXED_WEAPONS_LOOSE;
+                    sec.check(ok, handler->PGetParseModuleString(MOD,
+                        LANG_TRANSMOG_CHECK_ITEM_PROF_FAIL, subclassSkill));
+                }
+            }
+
+            if (proto->HasFlag2(ITEM_FLAG2_FACTION_HORDE))
+                sec.check(teamId == TEAM_HORDE,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_FACTION_FAIL));
+            else if (proto->HasFlag2(ITEM_FLAG2_FACTION_ALLIANCE))
+                sec.check(teamId == TEAM_ALLIANCE,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_FACTION_FAIL));
+
+            if (!sTransmogrification->IgnoreReqClass)
+                sec.check((proto->AllowableClass & classMask) != 0,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_CLASS_REQ_FAIL));
+
+            if (!sTransmogrification->IgnoreReqRace)
+                sec.check((proto->AllowableRace & raceMask) != 0,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_RACE_REQ_FAIL));
+
+            if (!sTransmogrification->IgnoreReqSkill && proto->RequiredSkill != 0)
+            {
+                uint32 sv = skillValue(proto->RequiredSkill);
+                sec.check(sv >= proto->RequiredSkillRank,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_SKILL_FAIL,
+                        proto->RequiredSkill, proto->RequiredSkillRank, sv));
+            }
+
+            if (!sTransmogrification->IgnoreLevelRequirement(playerGuid))
+                sec.check(playerLevel >= proto->RequiredLevel,
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_LEVEL_FAIL,
+                        proto->RequiredLevel, playerLevel));
+
+            bool skipSpell = sTransmogrification->AllowLowerTiers &&
+                             sTransmogrification->TierAvailable(player, rawGuid, proto->SubClass);
+            if (!sTransmogrification->IgnoreReqSpell && proto->RequiredSpell != 0 && !skipSpell)
+                sec.check(hasSpellFn(proto->RequiredSpell),
+                    handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_SPELL_FAIL, proto->RequiredSpell));
+        };
+
+        Section destSec, srcSec;
+        gatherItemChecks(destItem, destSec);
+        gatherItemChecks(srcItem, srcSec);
+
+        // ----------------------------------------------------------------
+        // Collection check
+        // ----------------------------------------------------------------
+        bool collOk = true;
+        std::string collLine = handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_SECTION_COLL) + "  ";
+        if (!sTransmogrification->GetUseCollectionSystem())
+        {
+            collLine += "[~] " + handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_COLL_DISABLED);
+        }
+        else
+        {
+            uint32 accountId = sCharacterCache->GetCharacterAccountIdByGuid(playerGuid);
+            auto const& collCache = sTransmogrification->collectionCache[accountId];
+            bool inCollection = collCache.find(srcItem->ItemId) != collCache.end();
+            collOk = inCollection;
+            collLine += inCollection
+                ? "[+] " + okMsg
+                : "[-] " + handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_COLL_NOT_FOUND);
+        }
+
+        // ----------------------------------------------------------------
+        // Print all section results, then final verdict
+        // ----------------------------------------------------------------
+        std::string whitelistMsg = handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_ITEM_WHITELISTED);
+        printSection(handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_SECTION_PAIR), pair);
+        printSection(handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_SECTION_ITEM, itemDisplay(destItem->ItemId)), destSec, whitelistMsg);
+        printSection(handler->PGetParseModuleString(MOD, LANG_TRANSMOG_CHECK_SECTION_ITEM, itemDisplay(srcItem->ItemId)),  srcSec,  whitelistMsg);
+        handler->SendSysMessage(collLine);
+
+        bool overallOk = pair.ok && destSec.ok && srcSec.ok && collOk;
+        handler->PSendModuleSysMessage(MOD, overallOk ? LANG_TRANSMOG_CHECK_RESULT_OK : LANG_TRANSMOG_CHECK_RESULT_FAIL);
+
         return true;
     }
 
