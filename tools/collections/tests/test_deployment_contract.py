@@ -44,6 +44,12 @@ class DeploymentContractTests(unittest.TestCase):
         self.assertNotIn("Remove-Item -Recurse", text)
         self.assertNotIn("Copy-Item *", text)
 
+    def test_verifier_hashing_does_not_require_get_file_hash_cmdlet(self):
+        text = self.verify.read_text(encoding="utf-8-sig")
+        self.assertIn("System.Security.Cryptography.SHA256", text)
+        self.assertIn("System.IO.File]::OpenRead", text)
+        self.assertNotIn("Get-FileHash", text)
+
     def test_whatif_lists_operations_and_writes_nothing(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

@@ -58,6 +58,26 @@ function Assert-NoPathOverlap {
     }
 }
 
+function Get-Sha256Hex {
+    param([Parameter(Mandatory = $true)][string]$Path)
+
+    $stream = [System.IO.File]::OpenRead($Path)
+    try {
+        $sha256 = [System.Security.Cryptography.SHA256]::Create()
+        try {
+            $bytes = $sha256.ComputeHash($stream)
+        }
+        finally {
+            $sha256.Dispose()
+        }
+    }
+    finally {
+        $stream.Dispose()
+    }
+
+    return [System.BitConverter]::ToString($bytes).Replace('-', '').ToLowerInvariant()
+}
+
 function Get-FileMetadata {
     param([Parameter(Mandatory = $true)][string]$Path)
     if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
@@ -66,7 +86,7 @@ function Get-FileMetadata {
     $item = Get-Item -LiteralPath $Path
     return [pscustomobject]@{
         Size = [int64]$item.Length
-        Sha256 = (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+        Sha256 = Get-Sha256Hex $Path
     }
 }
 
