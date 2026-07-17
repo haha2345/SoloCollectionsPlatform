@@ -2,6 +2,7 @@
 
 ## 下载入口
 
+> **GitHub Release：[SoloCollections v0.1.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.1.0)**  
 > **网盘主链接：[百度网盘下载](https://pan.baidu.com/s/1XyCl8PaimIVPPSTNUDaIOg?pwd=j8sk)**  
 > **提取码：`j8sk`**  
 > **对应项目版本：`v0.1.0`**  
