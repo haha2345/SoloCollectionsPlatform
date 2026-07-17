@@ -37,6 +37,11 @@ are not complete.
 
 ## Downloads
 
+[GitHub Release v0.1.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.1.0)
+provides a directory-preserving full package and separate AddOn, Lua, DLL,
+patcher, and MPQ downloads. Most users should start with
+`SoloCollections-v0.1.0-full.zip`.
+
 Source control excludes proprietary/extracted media, game executables, MPQs,
 and compiled artifacts. Runtime packages are assembled separately under the
 ignored local `release` directory and may be attached to a GitHub Release.

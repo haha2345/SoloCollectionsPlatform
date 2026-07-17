@@ -39,6 +39,10 @@ SoloCollections 为纯净的 World of Warcraft 3.3.5a build 12340 客户端补�
 
 ## 下载
 
+[GitHub Release v0.1.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.1.0)
+提供保留完整目录结构的发布包，也可以分别下载 AddOn、Lua、DLL、补丁器和两个
+MPQ。普通使用者建议优先下载 `SoloCollections-v0.1.0-full.zip`。
+
 GitHub 源码不上传客户端提取素材、游戏 EXE、MPQ、编译产物或私有完整包。
 本地 `release/v0.1.0` 已整理好插件、Lua、DLL 和两个 MPQ，可从中选择权利清楚的
 文件作为 GitHub Release 附件；正式服素材和客户端文件通过网盘单独提供。两个
