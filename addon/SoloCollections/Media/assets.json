@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "distribution": {
+    "localStatus": "retained-for-development",
+    "publicStatus": "blocked-pending-provenance-audit-and-placeholder-replacement",
+    "pathContract": "Public placeholders and optional external media packs must use the same relative paths.",
+    "policy": "../../../docs/ASSETS.md"
+  },
+  "source": {
+    "type": "hybrid-original-and-retail-extracted",
+    "referenceRoot": "_work/main_quest_marker/reference/wow-ui-source/Interface/AddOns/Blizzard_Collections",
+    "referenceCommit": "6e96727fd523c80f2cd43dc1c43946b0336f1217",
+    "referenceFiles": [
+      "Mainline/Blizzard_Collections.xml",
+      "Mainline/Blizzard_CollectionTemplates.xml",
+      "Wrath/Blizzard_Wardrobe.xml"
+    ],
+    "notes": "The original 3.3.5-compatible artwork recreates the dark parchment and bronze collection journal chrome. Blizzard Retail BLP2 resources are copied byte-for-byte from the local Retail installation. MountJournalPortraitRound.tga preserves the official mount portrait pixels and adds only a circular alpha mask required by the 3.3.5 client. Wardrobe slot navigation uses the original Retail atlas textures with 3.3.5 SetTexCoord rectangles because the old client has no SetAtlas API. The requested UI-HUD-MicroMenu-Collections-* artwork remains unavailable as an independent slice, so Achievement_Transmog_Collections.blp is retained as the documented Collections-themed launcher fallback.",
+    "retailImport": {
+      "sourceRoot": "F:/Games/World of Warcraft (local Retail CASC)",
+      "files": {
+        "Retail/MountJournalPortrait.blp": "Interface/Icons/MountJournalPortrait.blp",
+        "Retail/Achievement_Transmog_Collections.blp": "Interface/Icons/Achievement_Transmog_Collections.blp",
+        "Retail/TransmogNavSlots.blp": "FileDataID 1116940 / UiTextureAtlas 610",
+        "Retail/BagsRoundHighlight.blp": "FileDataID 969828 / UiTextureAtlas 202"
+      },
+      "missingAtlas": "UI-HUD-MicroMenu-Collections-* has no independent source slice in the audited local files and cannot be consumed through SetAtlas on WoW 3.3.5."
+    },
+    "visualMapping": {
+      "mainWindow": "Wide journal shell with a compact header and roughly 85 percent of its height reserved for the inset content field; bottom collection tabs overlap the lower frame edge.",
+      "searchAndFilter": "Search is placed in the upper-right header row with the filter control immediately to its right, following Blizzard_Collections/Wrath/Blizzard_Wardrobe.xml.",
+      "selectionStates": "Selected tabs and rows use restrained amber fill plus bright gold text; unselected controls retain bronze trim, dark fill, and muted gold text.",
+      "collectionStates": "Collected entries use Borders/collected-frame.tga with a bright gold rim and full-color icon; uncollected entries use Borders/uncollected-frame.tga with charcoal trim, desaturation, and reduced icon alpha."
+    }
+  },
+  "format": {
+    "container": "TGA",
+    "containers": ["TGA", "BLP2"],
+    "pixelFormat": "32-bit BGRA for recreated TGA; DXT5 for imported BLP2",
+    "alpha": true,
+    "origin": "top-left",
+    "powerOfTwo": true
+  },
+  "assets": {
+    "Backgrounds/collection-bg.tga": { "width": 512, "height": 512, "role": "tileable dark brown parchment field" },
+    "Borders/collection-border.tga": { "width": 128, "height": 128, "role": "bronze and gold journal nine-slice source" },
+    "Borders/collected-frame.tga": { "width": 64, "height": 64, "role": "gold collected-state item frame" },
+    "Borders/uncollected-frame.tga": { "width": 64, "height": 64, "role": "restrained charcoal uncollected-state item frame" },
+    "Tabs/mounts.tga": { "width": 64, "height": 64, "role": "mount journal horse-head silhouette" },
+    "Tabs/pets.tga": { "width": 64, "height": 64, "role": "non-battle companion paw silhouette" },
+    "Tabs/toys.tga": { "width": 64, "height": 64, "role": "toy chest silhouette" },
+    "Tabs/wardrobe.tga": { "width": 64, "height": 64, "role": "wardrobe cuirass silhouette" },
+    "Icons/launcher.tga": { "width": 64, "height": 64, "role": "legacy round collection-chest launcher retained for compatibility" },
+    "Retail/MountJournalPortrait.blp": { "width": 64, "height": 64, "format": "BLP2/DXT5", "source": "F:/Games/World of Warcraft/_retail_/Interface/Icons/MountJournalPortrait.blp", "role": "official Retail mount journal portrait source" },
+    "Retail/MountJournalPortraitRound.tga": { "width": 64, "height": 64, "format": "TGA/32-bit BGRA", "alpha": true, "origin": "bottom-left", "derivedFrom": "Retail/MountJournalPortrait.blp", "role": "official Retail mount portrait with a 3.3.5-compatible circular alpha mask" },
+    "Retail/Achievement_Transmog_Collections.blp": { "width": 64, "height": 64, "format": "BLP2/DXT5", "source": "F:/Games/World of Warcraft/_retail_/Interface/Icons/Achievement_Transmog_Collections.blp", "role": "official Retail Collections-themed launcher fallback; not the unavailable micro-menu atlas slice" },
+    "Retail/TransmogNavSlots.blp": { "width": 512, "height": 512, "format": "BLP2/DXT5", "source": "Retail CASC FileDataID 1116940", "role": "official Retail transmog body-slot, main-hand, off-hand, and selected-ring atlas" },
+    "Retail/BagsRoundHighlight.blp": { "width": 512, "height": 256, "format": "BLP2/DXT5", "source": "Retail CASC FileDataID 969828", "role": "official Retail circular slot-button hover atlas" }
+  },
+  "files": {
+    "Backgrounds/collection-bg.tga": "C66471F984141210064E4C43577EB5CF30689F218555C4B4E3BFC2B63099E561",
+    "Borders/collection-border.tga": "8BE826415FFB1127C44E1F06DF9BB66B33F0F41CA2394F7A1A0C4F41298F0AF0",
+    "Borders/collected-frame.tga": "027FCB6174AC196E579BCC680526EA79EBA47814AC747B11287A64CFFDC608BD",
+    "Borders/uncollected-frame.tga": "DEAFBC2F8B2D15C6C2FEA85E50AB04C18908BD6BE0E3F5DD90956622D2E14F82",
+    "Tabs/mounts.tga": "62EA7A4B23DA623C51ADABE94423578D11D860116A4253F9009214E4405480C4",
+    "Tabs/pets.tga": "A49B44D5E4688E8B740B8EB59FC5352956F7A9DCC58CA6136AD35FA64ED33693",
+    "Tabs/toys.tga": "DD3A5EFC8E05622BB4A23D5F8CC3A05C2574D59A7566EC5E47E99DC350872B6D",
+    "Tabs/wardrobe.tga": "6C741523F7FB5395A998A691CB485D24C4B7711DB019FFD84E4F4A213FD17E5D",
+    "Icons/launcher.tga": "A7D47E6D29B9F77BBE7842AE1806F872F2DEAB4CE796C99990662FBBFC5F6BC2"
+  },
+  "externalFiles": {
+    "Retail/MountJournalPortrait.blp": "7E3E8197F036C1B9E2310AE8649A2F06FD8C96166C59009ECE3CB2A0F4A9F96F",
+    "Retail/MountJournalPortraitRound.tga": "E6ABCE1BBFF47827C19270FF4C737F2FF5F18ED22FAE42B14EB28BB511ACA2E4",
+    "Retail/Achievement_Transmog_Collections.blp": "76943463AC4DA7CC3DD39CE20B02AEB7438E61F86CF08140EBCBCC2F6294EEC3",
+    "Retail/TransmogNavSlots.blp": "40A6D51111BC3D144350A4CCBA49F598C9FBB50A6C4F308040A1C22DD0A7B45B",
+    "Retail/BagsRoundHighlight.blp": "4D713B9FB0339F64B1E7675CAB3CB49FC7E376989A9EDAEDBE343603E38A353F"
+  }
+}
