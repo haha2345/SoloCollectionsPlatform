@@ -1,0 +1,31 @@
+name: Bug report
+description: Report a reproducible SoloCollections problem
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options: [AddOn, ALE bridge, SoloCam, Media pack, Tooling]
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Project version or commit
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps and observed result
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Client build/hash, server/core version, locale, and relevant configuration. Do not attach game executables.
+    validations:
+      required: true
