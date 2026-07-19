@@ -254,6 +254,8 @@ docs: record upstream module build baseline
 
 ### 任务 1.1：封闭幻化执行入口
 
+状态：✅ 已完成（`mod-solo-collections` `c25f3f3`）
+
 主要文件：
 
 - `src/Transmogrification.h`
@@ -1041,9 +1043,9 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 - [x] 在 `mod-solo-collections` 记录 upstream/Core 基线和许可证归属。（`55e0cd5`）
 - [x] 建立安全 module junction 脚本并验证可恢复。（`f61ac44`）
 - [x] 编译基于 `33ac64b` 的 fork bootstrap 基线。（`17568dc`、`64996e4`）
-- [ ] 为现有收藏越权路径编写失败测试/复现测试。
-- [ ] 新增安全 `TryApplyCollectedAppearance` facade。
-- [ ] 让 vendor、Gossip 和命令入口统一调用 facade。
+- [x] 为现有收藏越权路径编写失败测试/复现测试。（`c25f3f3`）
+- [x] 新增安全 `TryApplyCollectedAppearance` facade。（`c25f3f3`）
+- [x] 让 vendor、Gossip 和命令入口统一调用 facade。（`c25f3f3`；当前普通命令无应用入口）
 - [ ] 修复空模板和临时 Item 所有权。
 - [ ] 修复金币/token 预检和多槽部分提交。
 - [ ] 修复 reload 原子替换。
