@@ -450,6 +450,8 @@ feat: add account collection cache state machine
 
 ## 8. 阶段 3：数据库、revision 和审计
 
+阶段状态：✅ 已完成（任务 3.1–3.3）
+
 ### 任务 3.1：创建版本化 schema
 
 状态：✅ 已完成（mod-solo-collections `821fcae`）
@@ -507,6 +509,8 @@ feat: persist account collections with confirmed async transactions
 
 ### 任务 3.3：GM 和诊断命令骨架
 
+状态：✅ 已完成（mod-solo-collections `642879d`）
+
 实现：
 
 - `.solocollections status`
@@ -517,6 +521,12 @@ feat: persist account collections with confirmed async transactions
 - `.solocollections import/reconcile --dry-run`
 
 所有写命令检查 RBAC 并写审计。未知 ID、未知类别和 DB 未 ready 时安全失败。
+
+运行验收：真实 3.3.5 客户端完成 status/account、grant/revoke、reload、
+resync 安全失败和 import/reconcile dry-run；生产库确认 RBAC `5:5`、成功与
+拒绝审计、revision 1–4、worldserver 重启后 revision 3 恢复。测试 unlock
+已通过正式 revoke 清理，审计历史按设计保留。完整证据记录在
+`mod-solo-collections/docs/baselines/2026-07-20-phase3-runtime.md`。
 
 建议提交：
 
