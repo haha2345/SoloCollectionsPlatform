@@ -157,6 +157,8 @@ mod-solo-collections/
 
 ### 任务 0.1：记录 fork 来源
 
+状态：✅ 已完成（`mod-solo-collections` `55e0cd5`）
+
 仓库：`mod-solo-collections`
 
 变更：
@@ -1025,7 +1027,7 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 
 下一次开始编码时只执行以下内容：
 
-- [ ] 在 `mod-solo-collections` 记录 upstream/Core 基线和许可证归属。
+- [x] 在 `mod-solo-collections` 记录 upstream/Core 基线和许可证归属。（`55e0cd5`）
 - [ ] 建立安全 module junction 脚本并验证可恢复。
 - [ ] 编译未修改的 `33ac64b` 基线。
 - [ ] 为现有收藏越权路径编写失败测试/复现测试。
