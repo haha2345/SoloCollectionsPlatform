@@ -395,7 +395,9 @@ class DeploymentContractTests(unittest.TestCase):
 
             self.assertNotEqual(0, result.returncode)
             output = (result.stderr + result.stdout).lower()
-            self.assertIn("target-only addon file", output)
+            # Windows PowerShell 5.1 can hard-wrap native error records in the
+            # middle of a word according to the host buffer width.
+            self.assertIn("target-onlyaddonfile", "".join(output.split()))
             payload = json.loads(manifest.read_text(encoding="utf-8"))
             self.assertEqual(2, payload["schema_version"])
             self.assertEqual(
