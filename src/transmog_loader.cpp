@@ -6,10 +6,12 @@
 // From SC
 void AddSC_Transmog();
 void AddSC_transmog_commandscript();
+void AddSC_solo_collections_core();
 
 // Add all
 void Addmod_solo_collectionsScripts()
 {
+    AddSC_solo_collections_core();
     AddSC_Transmog();
     AddSC_transmog_commandscript();
 }
