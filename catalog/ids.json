@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "reservations": {
+    "collectionTypes": [
+      {"id": 1, "key": "synthetic", "ordinal": 0, "lifecycle": "active"},
+      {"id": 10, "key": "mount", "ordinal": 1, "lifecycle": "active"},
+      {"id": 11, "key": "companion", "ordinal": 2, "lifecycle": "active"},
+      {"id": 12, "key": "toy", "ordinal": 3, "lifecycle": "active"},
+      {"id": 13, "key": "appearance", "ordinal": 4, "lifecycle": "active"},
+      {"id": 14, "key": "set", "ordinal": 5, "lifecycle": "active"}
+    ],
+    "classes": [
+      {"id": 1, "key": "warrior", "ordinal": 0, "lifecycle": "active"},
+      {"id": 2, "key": "paladin", "ordinal": 1, "lifecycle": "active"},
+      {"id": 3, "key": "hunter", "ordinal": 2, "lifecycle": "active"},
+      {"id": 4, "key": "rogue", "ordinal": 3, "lifecycle": "active"},
+      {"id": 5, "key": "priest", "ordinal": 4, "lifecycle": "active"},
+      {"id": 6, "key": "death_knight", "ordinal": 5, "lifecycle": "active"},
+      {"id": 7, "key": "shaman", "ordinal": 6, "lifecycle": "active"},
+      {"id": 8, "key": "mage", "ordinal": 7, "lifecycle": "active"},
+      {"id": 9, "key": "warlock", "ordinal": 8, "lifecycle": "active"},
+      {"id": 10, "key": "druid", "ordinal": 9, "lifecycle": "active"}
+    ],
+    "races": [
+      {"id": 1, "key": "human", "ordinal": 0, "lifecycle": "active"},
+      {"id": 2, "key": "orc", "ordinal": 1, "lifecycle": "active"},
+      {"id": 3, "key": "dwarf", "ordinal": 2, "lifecycle": "active"},
+      {"id": 4, "key": "night_elf", "ordinal": 3, "lifecycle": "active"},
+      {"id": 5, "key": "undead", "ordinal": 4, "lifecycle": "active"},
+      {"id": 6, "key": "tauren", "ordinal": 5, "lifecycle": "active"},
+      {"id": 7, "key": "gnome", "ordinal": 6, "lifecycle": "active"},
+      {"id": 8, "key": "troll", "ordinal": 7, "lifecycle": "active"},
+      {"id": 9, "key": "blood_elf", "ordinal": 8, "lifecycle": "active"},
+      {"id": 10, "key": "draenei", "ordinal": 9, "lifecycle": "active"}
+    ],
+    "collections": []
+  },
+  "aliases": []
+}
