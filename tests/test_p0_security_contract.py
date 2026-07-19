@@ -141,10 +141,21 @@ class AtomicApplyContractTests(unittest.TestCase):
         self.assertIn("GetFakeEntry(targetItem->GetGUID()) == prepared.FakeEntry", preflight)
 
     def test_commit_failure_has_localized_reason(self):
-        sql = (ROOT / "data" / "sql" / "updates" / "world" /
-               "2026_07_19_transmog_atomic_apply_error.sql").read_text(encoding="utf-8")
+        sql = (ROOT / "data" / "sql" / "db-world" /
+               "zzzzz_2026_07_19_transmog_atomic_apply_error.sql").read_text(encoding="utf-8")
         self.assertIn("('mod-transmog', 81", sql)
         self.assertIn("未扣除任何费用", sql)
+
+    def test_current_module_strings_run_after_legacy_base_sql(self):
+        world_sql = ROOT / "data" / "sql" / "db-world"
+        base_name = "trasm_world_texts.sql"
+        current_name = "zzzz_2026_05_09_migrate_strings_to_module_string.sql"
+        error_name = "zzzzz_2026_07_19_transmog_atomic_apply_error.sql"
+        self.assertTrue((world_sql / base_name).is_file())
+        self.assertTrue((world_sql / current_name).is_file())
+        self.assertTrue((world_sql / error_name).is_file())
+        self.assertLess(base_name, current_name)
+        self.assertLess(current_name, error_name)
 
 
 class AtomicReloadContractTests(unittest.TestCase):
