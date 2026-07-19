@@ -5,7 +5,7 @@
 | Component | Revision |
 |---|---|
 | AzerothCore production checkout | `4cc67a316d2bec9faf27c3392634282e70cacbe0` |
-| `mod-solo-collections` P0 code | `c455d68` |
+| `mod-solo-collections` P0 code | `bd7aa3e` |
 | Production build | `RelWithDebInfo`, static modules |
 
 The production build retained ALE, AOE Loot, AutoBalance, Junk-to-Gold,
@@ -24,7 +24,7 @@ Deployed `worldserver.exe`:
 
 ```text
 Size:    41,565,184 bytes
-SHA-256: 3DABC0E0DC9EC78DF0EBFC412323D40C56EFA9302E2A7514A41D96E8BF940AA4
+SHA-256: 54898B85F699E2CB6F4F3134DC9F0587E995830EE575E88F3D4727BE4902C9C6
 ```
 
 Rollback backup:
@@ -45,6 +45,13 @@ The immediate pre-fix P0 binary is also preserved at:
 ```text
 D:\AzerothCore_NPCBots_Clean\backups\solocollections-gossip-precharge-20260720-001010
 SHA-256: DE2C4AC5C866B9D29CDAEB71CB11896C5380F7A6F0CE9E6AA9BF46749E2ED4B2
+```
+
+The pre-config-reload-fix binary is preserved at:
+
+```text
+D:\AzerothCore_NPCBots_Clean\backups\solocollections-config-reload-20260720-001939
+SHA-256: 3DABC0E0DC9EC78DF0EBFC412323D40C56EFA9302E2A7514A41D96E8BF940AA4
 ```
 
 ## Database and startup checks
@@ -109,6 +116,30 @@ remained open. The client reported `源元素不存在`; character money remaine
 `1000268`, item GUID `1403` retained no fake entry, and the temporary
 collection row remained absent.
 
+### Resource preflight and disk-config reload
+
+The first insufficient-money setup exposed that `.transmog reload` called
+`LoadConfig(true)` against ConfigMgr's existing memory snapshot without first
+reloading module files from disk. The command reported success, but the test
+appearance was applied using the old zero-extra-cost values. That controlled
+apply cost `10000` copper at the normal base price; the appearance was removed
+and the test cost was restored while the character was offline.
+
+Commit `bd7aa3e` now calls `LoadModulesConfigs(true, false)` before loading the
+transmog runtime values. A contract test enforces this order. After deployment,
+the command reported `Transmog module config files and runtime values
+reloaded.` and both resource-failure paths passed:
+
+- With `CopperCost = 2000000`, the client reported `你没有足够的钱`.
+  Live `.pinfo` remained `100g2s68c`; item GUID `1403` retained no fake entry.
+- With `RequireToken = 1`, `TokenEntry = 49426`, and `TokenAmount = 1` while
+  the character owned zero tokens, the client reported `你的筹码不够`.
+  Money, token count, and item GUID `1403` remained unchanged.
+
+The production config was restored to `CopperCost = 0` and
+`RequireToken = 0`; temporary collection item `6971` was deleted and the
+runtime cache reloaded.
+
 ## Client acceptance status
 
 The local `security-baseline` tag must not be created until a real 3.3.5 client
@@ -117,7 +148,7 @@ confirms all of the following against this deployed server:
 1. [x] Open NPC `190010` and apply a collected appearance successfully.
 2. [x] Submit an uncollected appearance and confirm no money, token, database, or
    visible-item side effect.
-3. [ ] Test insufficient money and insufficient token paths.
+3. [x] Test insufficient money and insufficient token paths.
 4. [ ] Apply a preset containing one valid and one invalid slot and confirm that
    neither slot changes.
 5. [ ] Run `.transmog reload` after a controlled revoke and confirm the revoked
