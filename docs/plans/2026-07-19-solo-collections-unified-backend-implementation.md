@@ -183,6 +183,8 @@ chore: establish mod-solo-collections fork metadata
 
 ### 任务 0.2：建立安全的 Core 开发接入
 
+状态：✅ 已完成（`SoloCollections` `f61ac44`）
+
 仓库：`SoloCollections`
 
 新增：
@@ -1028,7 +1030,7 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 下一次开始编码时只执行以下内容：
 
 - [x] 在 `mod-solo-collections` 记录 upstream/Core 基线和许可证归属。（`55e0cd5`）
-- [ ] 建立安全 module junction 脚本并验证可恢复。
+- [x] 建立安全 module junction 脚本并验证可恢复。（`f61ac44`）
 - [ ] 编译未修改的 `33ac64b` 基线。
 - [ ] 为现有收藏越权路径编写失败测试/复现测试。
 - [ ] 新增安全 `TryApplyCollectedAppearance` facade。
