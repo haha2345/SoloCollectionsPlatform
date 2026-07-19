@@ -176,6 +176,18 @@ closing and reopening the NPC menu the client confirmed `淬火罩帽` had
 disappeared. The temporary collection row, query lock, and test connection were
 all removed.
 
+## Final security-baseline gate
+
+- Module P0 security contract: 21 of 21 tests passed.
+- SoloCollections AddOn/catalog/deployment contract: 123 of 123 tests passed.
+- Lua 5.1 syntax: 19 of 19 AddOn and server Lua files passed.
+- Production `worldserver.exe` is running from the expected D drive path with
+  SHA-256 `54898B85F699E2CB6F4F3134DC9F0587E995830EE575E88F3D4727BE4902C9C6`.
+- Production settings were restored to `CopperCost = 0`, `RequireToken = 0`,
+  collection mode enabled, and fake-vendor mode disabled.
+- Temporary item `6971`, preset `P0-Atomic-Mixed`, temporary table names, and
+  database query locks are absent.
+
 ## Client acceptance status
 
 The local `security-baseline` tag must not be created until a real 3.3.5 client
