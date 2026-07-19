@@ -136,8 +136,8 @@ void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEn
     }
 
     uint8 slot = selection->second;
-    TransmogStrings res = sT->TryApplyCollectedAppearance(player, itemEntry, slot, creature->GetGUID(), source);
-    if (res == LANG_TRANSMOG_OK)
+    TransmogApplyResult result = sT->TryApplyCollectedAppearance(player, itemEntry, slot, creature->GetGUID(), source);
+    if (result.IsSuccess())
     {
         session->SendAreaTriggerMessage("{}", Tstr(session, LANG_TRANSMOG_OK));
 
@@ -153,7 +153,7 @@ void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEn
         }
     }
     else
-        ChatHandler(session).SendNotification(Tstr(session, res));
+        ChatHandler(session).SendNotification(Tstr(session, result.Code));
 }
 
 void RemoveTransmogrification (Player* player)
@@ -319,15 +319,25 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                // action = presetID
-                for (Transmogrification::slotMap::const_iterator it = sT->presetById[player->GetGUID()][action].begin(); it != sT->presetById[player->GetGUID()][action].end(); ++it)
+                auto playerPresets = sT->presetById.find(player->GetGUID());
+                if (playerPresets == sT->presetById.end())
                 {
-                    uint32 sourceEntry = it->second == HIDDEN_ITEM_ID ? UINT_MAX : it->second;
-                    TransmogStrings result = sT->TryApplyCollectedAppearance(player, sourceEntry, it->first,
-                        creature->GetGUID(), TransmogApplySource::Preset, true);
-                    if (result != LANG_TRANSMOG_OK)
-                        ChatHandler(session).SendNotification(Tstr(session, result));
+                    ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SRC_ENTRY));
+                    OnGossipHello(player, creature);
+                    return true;
                 }
+
+                auto preset = playerPresets->second.find(action);
+                if (preset == playerPresets->second.end())
+                {
+                    ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SRC_ENTRY));
+                    OnGossipHello(player, creature);
+                    return true;
+                }
+
+                TransmogApplyResult result = sT->TryApplyCollectedPreset(player, preset->second, creature->GetGUID());
+                if (!result.IsSuccess())
+                    ChatHandler(session).SendNotification(Tstr(session, result.Code));
                 OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 6, action);
             } break;
             case EQUIPMENT_SLOT_END + 6: // view preset

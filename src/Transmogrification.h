@@ -145,6 +145,16 @@ enum TransmogStrings : uint32
     LANG_TRANSMOG_CHECK_COLL_NOT_FOUND         = 79,
     // Check command: section pass message (shared by all sections)
     LANG_TRANSMOG_CHECK_SECTION_OK             = 80,
+    // Apply pipeline failures
+    LANG_TRANSMOG_DATABASE_ERROR               = 81,
+};
+
+struct TransmogApplyResult
+{
+    TransmogStrings Code;
+    uint32 AppliedSlots = 0;
+
+    [[nodiscard]] bool IsSuccess() const { return Code == LANG_TRANSMOG_OK; }
 };
 
 enum ArmorClassSpellIDs
@@ -299,12 +309,15 @@ public:
     uint32 GetFakeEntry(ObjectGuid itemGUID) const;
     void UpdateItem(Player* player, Item* item) const;
     void DeleteFakeEntry(Player* player, uint8 slot, Item* itemTransmogrified, CharacterDatabaseTransaction* trans = nullptr);
-    void SetFakeEntry(Player* player, uint32 newEntry, uint8 slot, Item* itemTransmogrified);
     bool AddCollectedAppearance(uint32 accountId, uint32 itemId);
     [[nodiscard]] bool HasCollectedAppearance(uint32 accountId, uint32 itemId) const;
 
-    TransmogStrings TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
+    TransmogApplyResult TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
+#ifdef PRESETS
+    TransmogApplyResult TryApplyCollectedPreset(Player* player, slotMap const& appearances,
+        ObjectGuid interactionGuid);
+#endif
     bool CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     bool SuitableForTransmogrification(Player* player, ItemTemplate const* proto) const;
     bool SuitableForTransmogrification(ObjectGuid guid, ItemTemplate const* proto) const;
@@ -362,8 +375,33 @@ public:
     [[nodiscard]] bool IsTransmogVendor(uint32 entry) const { return entry == TMOG_VENDOR_CREATURE_ID || (PetEntry && entry == PetEntry); };
 
 private:
-    TransmogStrings ApplyAppearance(Player* player, ItemTemplate const* sourceTemplate, Item* ownedSource,
-        uint8 slot, bool noCost = false, bool hiddenTransmog = false);
+    struct AppearanceApplyRequest
+    {
+        uint8 Slot;
+        uint32 SourceItemEntry;
+    };
+
+    struct PreparedAppearance
+    {
+        uint8 Slot;
+        uint32 FakeEntry;
+        Item* TargetItem;
+        Item* OwnedSource;
+        ItemTemplate const* SourceTemplate;
+    };
+
+    struct AppearanceApplyPlan
+    {
+        std::vector<PreparedAppearance> Appearances;
+        uint32 MoneyCost = 0;
+        uint32 TokenCost = 0;
+    };
+
+    TransmogApplyResult PreflightApply(Player* player, std::vector<AppearanceApplyRequest> const& requests,
+        ObjectGuid interactionGuid, TransmogApplySource source, bool noCost, AppearanceApplyPlan& plan);
+    TransmogApplyResult CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan);
+    TransmogStrings ValidateApplyInteraction(Player* player, ObjectGuid interactionGuid, TransmogApplySource source) const;
+    void ApplyCommittedFakeEntry(Player* player, uint32 newEntry, Item* itemTransmogrified);
 };
 #define sTransmogrification Transmogrification::instance()
 

@@ -24,17 +24,17 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         self.assertNotRegex(external_consumers, r"(?:sT|sTransmogrification)->PresetTransmog\s*\(")
 
     def test_facade_rechecks_account_collection_and_exact_source(self):
-        facade = IMPLEMENTATION.split(
-            "TransmogStrings Transmogrification::TryApplyCollectedAppearance", 1
-        )[1].split("TransmogStrings Transmogrification::ApplyAppearance", 1)[0]
+        preflight = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::PreflightApply", 1
+        )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
 
-        self.assertIn("session->GetAccountId()", facade)
-        self.assertIn("HasCollectedAppearance(session->GetAccountId(), sourceItemEntry)", facade)
-        self.assertIn("GetItemTemplate(sourceItemEntry)", facade)
-        self.assertIn("player->GetItemByEntry(sourceItemEntry)", facade)
+        self.assertIn("player->GetSession()->GetAccountId()", preflight)
+        self.assertIn("HasCollectedAppearance(accountId, request.SourceItemEntry)", preflight)
+        self.assertIn("GetItemTemplate(request.SourceItemEntry)", preflight)
+        self.assertIn("player->GetItemByEntry(request.SourceItemEntry)", preflight)
         self.assertLess(
-            facade.index("HasCollectedAppearance(session->GetAccountId(), sourceItemEntry)"),
-            facade.index("return ApplyAppearance(player, sourceTemplate"),
+            preflight.index("HasCollectedAppearance(accountId, request.SourceItemEntry)"),
+            preflight.index("plan.Appearances.push_back(prepared)"),
         )
 
     def test_facade_rechecks_npc_distance_session_and_portable_owner(self):
@@ -45,10 +45,11 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
 
     def test_gossip_vendor_and_presets_all_use_the_facade(self):
         calls = re.findall(r"TryApplyCollectedAppearance\s*\([^;]+;", SCRIPTS, re.DOTALL)
-        self.assertGreaterEqual(len(calls), 2)
+        self.assertEqual(1, len(calls))
+        self.assertEqual(1, SCRIPTS.count("TryApplyCollectedPreset("))
         self.assertIn("TransmogApplySource::Gossip", SCRIPTS)
         self.assertIn("TransmogApplySource::Vendor", SCRIPTS)
-        self.assertIn("TransmogApplySource::Preset", SCRIPTS)
+        self.assertIn("TransmogApplySource::Preset", IMPLEMENTATION)
 
     def test_missing_selection_cannot_default_to_equipment_slot_zero(self):
         indexed_access = "selectionCache[player->GetGUID()]"
@@ -63,7 +64,8 @@ class TemplateSafetyContractTests(unittest.TestCase):
         self.assertNotIn("Item::CreateItem", all_sources)
         self.assertNotIn("std::vector<Item*>", SCRIPTS)
         self.assertIn("std::vector<ItemTemplate const*>", SCRIPTS)
-        self.assertIn("ApplyAppearance(player, sourceTemplate, nullptr", IMPLEMENTATION)
+        self.assertIn("ItemTemplate const* SourceTemplate", HEADER)
+        self.assertNotIn("TransmogStrings ApplyAppearance", HEADER)
 
     def test_store_hook_and_database_helpers_reject_null_items(self):
         hook = SCRIPTS.split("void OnPlayerAfterStoreOrEquipNewItem", 1)[1].split(
@@ -91,6 +93,58 @@ class TemplateSafetyContractTests(unittest.TestCase):
         self.assertIn("if (ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(entry))", SCRIPTS)
         self.assertIn("PetEntry = 0;", IMPLEMENTATION)
         self.assertIn("Portable NPC spell", IMPLEMENTATION)
+
+
+class AtomicApplyContractTests(unittest.TestCase):
+    def test_preflight_checks_all_resources_without_mutating_them(self):
+        preflight = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::PreflightApply", 1
+        )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
+
+        self.assertIn("LANG_TRANSMOG_MISSING_DEST_ITEM", preflight)
+        self.assertIn("LANG_TRANSMOG_NOT_ENOUGH_MONEY", preflight)
+        self.assertIn("LANG_TRANSMOG_NOT_ENOUGH_TOKENS", preflight)
+        self.assertIn("CanTransmogrifyItemWithItem", preflight)
+        self.assertNotIn("DestroyItemCount", preflight)
+        self.assertNotIn("ModifyMoney", preflight)
+        self.assertNotIn("transaction->Append", preflight)
+
+    def test_multi_slot_preset_is_preflighted_and_committed_once(self):
+        single = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::TryApplyCollectedAppearance", 1
+        )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedPreset", 1)[0]
+        preset = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::TryApplyCollectedPreset", 1
+        )[1].split("#endif", 1)[0]
+        self.assertIn("source == TransmogApplySource::Preset", single)
+        self.assertIn("PreflightApply(player, requests", preset)
+        self.assertIn("CommitApplyPlan(player, plan)", preset)
+        self.assertEqual(1, SCRIPTS.count("TryApplyCollectedPreset("))
+        self.assertNotRegex(SCRIPTS, r"for \([^)]*preset[^)]*\)[\s\S]{0,500}TryApplyCollectedAppearance")
+
+    def test_database_success_precedes_cost_and_cache_mutation(self):
+        commit = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::CommitApplyPlan", 1
+        )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedAppearance", 1)[0]
+        db_success = commit.index("callback.m_future.get()")
+        self.assertLess(db_success, commit.index("DestroyItemCount"))
+        self.assertLess(db_success, commit.index("ModifyMoney"))
+        self.assertLess(db_success, commit.index("ApplyCommittedFakeEntry"))
+        self.assertIn("LANG_TRANSMOG_DATABASE_ERROR", commit)
+        self.assertIn("no resources or cache entries were changed", commit)
+
+    def test_duplicate_slots_and_duplicate_appearance_are_rejected(self):
+        preflight = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::PreflightApply", 1
+        )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
+        self.assertIn("requestedSlots.insert(request.Slot).second", preflight)
+        self.assertIn("GetFakeEntry(targetItem->GetGUID()) == prepared.FakeEntry", preflight)
+
+    def test_commit_failure_has_localized_reason(self):
+        sql = (ROOT / "data" / "sql" / "updates" / "world" /
+               "2026_07_19_transmog_atomic_apply_error.sql").read_text(encoding="utf-8")
+        self.assertIn("('mod-transmog', 81", sql)
+        self.assertIn("未扣除任何费用", sql)
 
 
 if __name__ == "__main__":

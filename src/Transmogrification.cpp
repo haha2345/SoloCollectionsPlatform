@@ -5,6 +5,7 @@
 #include "TemporarySummon.h"
 #include "Tokenize.h"
 #include "WorldSessionMgr.h"
+#include <limits>
 
 Transmogrification* Transmogrification::instance()
 {
@@ -442,7 +443,7 @@ void Transmogrification::DeleteFakeEntry(Player* player, uint8 /*slot*/, Item* i
     UpdateItem(player, itemTransmogrified);
 }
 
-void Transmogrification::SetFakeEntry(Player* player, uint32 newEntry, uint8 /*slot*/, Item* itemTransmogrified)
+void Transmogrification::ApplyCommittedFakeEntry(Player* player, uint32 newEntry, Item* itemTransmogrified)
 {
     if (!player || !itemTransmogrified)
         return;
@@ -450,7 +451,6 @@ void Transmogrification::SetFakeEntry(Player* player, uint32 newEntry, uint8 /*s
     ObjectGuid itemGUID = itemTransmogrified->GetGUID();
     entryMap[player->GetGUID()][itemGUID] = newEntry;
     dataMap[itemGUID] = player->GetGUID();
-    CharacterDatabase.Execute("REPLACE INTO custom_transmogrification (GUID, FakeEntry, Owner) VALUES ({}, {}, {})", itemGUID.GetCounter(), newEntry, player->GetGUID().GetCounter());
     UpdateItem(player, itemTransmogrified);
 }
 
@@ -473,23 +473,17 @@ bool Transmogrification::HasCollectedAppearance(uint32 accountId, uint32 itemId)
     return account != collectionCache.end() && account->second.find(itemId) != account->second.end();
 }
 
-TransmogStrings Transmogrification::TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
-    ObjectGuid interactionGuid, TransmogApplySource source, bool noCost)
+TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, ObjectGuid interactionGuid,
+    TransmogApplySource source) const
 {
     if (!player || !player->GetSession() || !IsEnabled())
-        return LANG_TRANSMOG_INVALID_SRC_ENTRY;
-
-    if (slot >= EQUIPMENT_SLOT_END || !player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
-        return slot >= EQUIPMENT_SLOT_END ? LANG_TRANSMOG_INVALID_SLOT : LANG_TRANSMOG_MISSING_DEST_ITEM;
-
-    if (noCost && source != TransmogApplySource::Preset)
         return LANG_TRANSMOG_INVALID_SRC_ENTRY;
 
     uint32 requiredNpcFlag = source == TransmogApplySource::Vendor ? UNIT_NPC_FLAG_VENDOR : UNIT_NPC_FLAG_NONE;
     Creature* interaction = player->GetNPCIfCanInteractWith(interactionGuid, requiredNpcFlag);
     if (!interaction || !IsTransmogVendor(interaction->GetEntry()))
     {
-        LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Player {} rejected invalid transmog interaction {}.",
+        LOG_WARN("module", "Transmogrification::ValidateApplyInteraction - Player {} rejected invalid transmog interaction {}.",
             player->GetGUID().ToString(), interactionGuid.ToString());
         return LANG_TRANSMOG_INVALID_SRC_ENTRY;
     }
@@ -497,7 +491,7 @@ TransmogStrings Transmogrification::TryApplyCollectedAppearance(Player* player, 
     if (source != TransmogApplySource::Vendor &&
         (!player->PlayerTalkClass || player->PlayerTalkClass->GetGossipMenu().GetSenderGUID() != interactionGuid))
     {
-        LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Player {} rejected mismatched gossip sender {}.",
+        LOG_WARN("module", "Transmogrification::ValidateApplyInteraction - Player {} rejected mismatched gossip sender {}.",
             player->GetGUID().ToString(), interactionGuid.ToString());
         return LANG_TRANSMOG_INVALID_SRC_ENTRY;
     }
@@ -507,154 +501,207 @@ TransmogStrings Transmogrification::TryApplyCollectedAppearance(Player* player, 
         TempSummon* summon = interaction->ToTempSummon();
         if (!summon || summon->GetOwner() != player)
         {
-            LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Player {} rejected another owner's portable transmog NPC {}.",
+            LOG_WARN("module", "Transmogrification::ValidateApplyInteraction - Player {} rejected another owner's portable transmog NPC {}.",
                 player->GetGUID().ToString(), interactionGuid.ToString());
             return LANG_TRANSMOG_INVALID_SRC_ENTRY;
         }
     }
 
-    if (sourceItemEntry == UINT_MAX)
-    {
-        if (!AllowHiddenTransmog)
-            return LANG_TRANSMOG_INVALID_SRC_ENTRY;
-
-        return ApplyAppearance(player, nullptr, nullptr, slot, noCost, true);
-    }
-
-    ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(sourceItemEntry);
-    if (!sourceTemplate)
-        return LANG_TRANSMOG_MISSING_SRC_ITEM;
-
-    WorldSession* session = player->GetSession();
-    if (GetUseCollectionSystem())
-    {
-        if (!HasCollectedAppearance(session->GetAccountId(), sourceItemEntry))
-        {
-            LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Account {} rejected uncollected source item {}.",
-                session->GetAccountId(), sourceItemEntry);
-            return LANG_TRANSMOG_MISSING_SRC_ITEM;
-        }
-
-        return ApplyAppearance(player, sourceTemplate, nullptr, slot, noCost, false);
-    }
-
-    Item* ownedSource = player->GetItemByEntry(sourceItemEntry);
-    if (!ownedSource)
-        return LANG_TRANSMOG_MISSING_SRC_ITEM;
-
-    return ApplyAppearance(player, sourceTemplate, ownedSource, slot, noCost, false);
-}
-
-TransmogStrings Transmogrification::ApplyAppearance(Player* player, ItemTemplate const* sourceTemplate, Item* ownedSource,
-    uint8 slot, bool no_cost, bool hidden_transmog)
-{
-    if (!player)
-        return LANG_TRANSMOG_INVALID_SRC_ENTRY;
-
-    int32 cost = 0;
-    // slot of the transmogrified item
-    if (slot >= EQUIPMENT_SLOT_END)
-    {
-        // TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleTransmogrifyItems - Player (GUID: {}, name: {}) tried to transmogrify an item (lowguid: {}) with a wrong slot ({}) when transmogrifying items.", player->GetGUIDLow(), player->GetName(), GUID_LOPART(itemGUID), slot);
-        return LANG_TRANSMOG_INVALID_SLOT;
-    }
-
-    // transmogrified item
-    Item* itemTransmogrified = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot);
-    if (!itemTransmogrified)
-    {
-        //TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleTransmogrifyItems - Player (GUID: {}, name: {}) tried to transmogrify an invalid item in a valid slot (slot: {}).", player->GetGUIDLow(), player->GetName(), slot);
-        return LANG_TRANSMOG_MISSING_DEST_ITEM;
-    }
-    ItemTemplate const* targetTemplate = itemTransmogrified->GetTemplate();
-    if (!targetTemplate)
-        return LANG_TRANSMOG_MISSING_DEST_ITEM;
-
-    if (hidden_transmog)
-    {
-        cost = GetSpecialPrice(targetTemplate);
-        cost *= ScaledCostModifier;
-        cost += CopperCost;
-
-        if (!no_cost && !HiddenTransmogIsFree && cost)
-        {
-            if (cost < 0)
-                LOG_DEBUG("module", "Transmogrification::Transmogrify - {} ({}) transmogrification invalid cost (non negative, amount {}). Transmogrified {} with {}",
-                    player->GetName(), player->GetGUID().ToString(), -cost, itemTransmogrified->GetEntry(), HIDDEN_ITEM_ID);
-            else
-            {
-                if (!player->HasEnoughMoney(cost))
-                    return LANG_TRANSMOG_NOT_ENOUGH_MONEY;
-                player->ModifyMoney(-cost, false);
-            }
-        }
-        SetFakeEntry(player, HIDDEN_ITEM_ID, slot, itemTransmogrified); // newEntry
-        return LANG_TRANSMOG_OK;
-    }
-
-    if (!sourceTemplate) // reset look newEntry
-    {
-        // Custom
-        DeleteFakeEntry(player, slot, itemTransmogrified);
-    }
-    else
-    {
-        if (!CanTransmogrifyItemWithItem(player, targetTemplate, sourceTemplate))
-        {
-            //TC_LOG_DEBUG(LOG_FILTER_NETWORKIO, "WORLD: HandleTransmogrifyItems - Player (GUID: {}, name: {}) failed CanTransmogrifyItemWithItem ({} with {}).", player->GetGUIDLow(), player->GetName(), itemTransmogrified->GetEntry(), itemTransmogrifier->GetEntry());
-            return LANG_TRANSMOG_INVALID_ITEMS;
-        }
-
-        if (!no_cost)
-        {
-            if (RequireToken)
-            {
-                if (player->HasItemCount(TokenEntry, TokenAmount))
-                    player->DestroyItemCount(TokenEntry, TokenAmount, true);
-                else
-                    return LANG_TRANSMOG_NOT_ENOUGH_TOKENS;
-            }
-
-            cost = GetSpecialPrice(targetTemplate);
-            cost *= ScaledCostModifier;
-            cost += CopperCost;
-
-            if (cost) // 0 cost if reverting look
-            {
-                if (cost < 0)
-                    LOG_DEBUG("module", "Transmogrification::Transmogrify - {} ({}) transmogrification invalid cost (non negative, amount {}). Transmogrified {} with {}",
-                        player->GetName(), player->GetGUID().ToString(), -cost, itemTransmogrified->GetEntry(), sourceTemplate->ItemId);
-                else
-                {
-                    if (!player->HasEnoughMoney(cost))
-                        return LANG_TRANSMOG_NOT_ENOUGH_MONEY;
-                    player->ModifyMoney(-cost, false);
-                }
-            }
-        }
-
-        // Custom
-        SetFakeEntry(player, sourceTemplate->ItemId, slot, itemTransmogrified); // newEntry
-
-        itemTransmogrified->UpdatePlayedTime(player);
-
-        itemTransmogrified->SetOwnerGUID(player->GetGUID());
-        itemTransmogrified->SetNotRefundable(player);
-        itemTransmogrified->ClearSoulboundTradeable(player);
-
-        if (ownedSource)
-        {
-            if (sourceTemplate->Bonding == BIND_WHEN_EQUIPPED || sourceTemplate->Bonding == BIND_WHEN_USE)
-                ownedSource->SetBinding(true);
-
-            ownedSource->SetOwnerGUID(player->GetGUID());
-            ownedSource->SetNotRefundable(player);
-            ownedSource->ClearSoulboundTradeable(player);
-        }
-    }
-
     return LANG_TRANSMOG_OK;
 }
+
+TransmogApplyResult Transmogrification::PreflightApply(Player* player,
+    std::vector<AppearanceApplyRequest> const& requests, ObjectGuid interactionGuid, TransmogApplySource source,
+    bool noCost, AppearanceApplyPlan& plan)
+{
+    plan = {};
+    if (!player || !player->GetSession() || requests.empty())
+        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+
+    if (noCost && source != TransmogApplySource::Preset)
+        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+
+    if (TransmogStrings interactionResult = ValidateApplyInteraction(player, interactionGuid, source);
+        interactionResult != LANG_TRANSMOG_OK)
+        return { interactionResult };
+
+    uint64 moneyCost = 0;
+    uint64 tokenCost = 0;
+    std::unordered_set<uint8> requestedSlots;
+
+    for (AppearanceApplyRequest const& request : requests)
+    {
+        if (request.Slot >= EQUIPMENT_SLOT_END)
+            return { LANG_TRANSMOG_INVALID_SLOT };
+        if (!requestedSlots.insert(request.Slot).second)
+            return { LANG_TRANSMOG_INVALID_SLOT };
+
+        Item* targetItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, request.Slot);
+        if (!targetItem)
+            return { LANG_TRANSMOG_MISSING_DEST_ITEM };
+
+        ItemTemplate const* targetTemplate = targetItem->GetTemplate();
+        if (!targetTemplate)
+            return { LANG_TRANSMOG_MISSING_DEST_ITEM };
+
+        PreparedAppearance prepared { request.Slot, 0, targetItem, nullptr, nullptr };
+        bool chargeMoney = !noCost;
+
+        if (request.SourceItemEntry == UINT_MAX)
+        {
+            if (!AllowHiddenTransmog)
+                return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+            prepared.FakeEntry = HIDDEN_ITEM_ID;
+            chargeMoney = chargeMoney && !HiddenTransmogIsFree;
+        }
+        else
+        {
+            prepared.SourceTemplate = sObjectMgr->GetItemTemplate(request.SourceItemEntry);
+            if (!prepared.SourceTemplate)
+                return { LANG_TRANSMOG_MISSING_SRC_ITEM };
+
+            if (GetUseCollectionSystem())
+            {
+                uint32 accountId = player->GetSession()->GetAccountId();
+                if (!HasCollectedAppearance(accountId, request.SourceItemEntry))
+                {
+                    LOG_WARN("module", "Transmogrification::PreflightApply - Account {} rejected uncollected source item {}.",
+                        accountId, request.SourceItemEntry);
+                    return { LANG_TRANSMOG_MISSING_SRC_ITEM };
+                }
+            }
+            else
+            {
+                prepared.OwnedSource = player->GetItemByEntry(request.SourceItemEntry);
+                if (!prepared.OwnedSource)
+                    return { LANG_TRANSMOG_MISSING_SRC_ITEM };
+            }
+
+            if (!CanTransmogrifyItemWithItem(player, targetTemplate, prepared.SourceTemplate))
+                return { LANG_TRANSMOG_INVALID_ITEMS };
+
+            prepared.FakeEntry = request.SourceItemEntry;
+            if (!noCost && RequireToken)
+                tokenCost += TokenAmount;
+        }
+
+        if (GetFakeEntry(targetItem->GetGUID()) == prepared.FakeEntry)
+            return { LANG_TRANSMOG_INVALID_ITEMS };
+
+        if (chargeMoney)
+        {
+            double configuredCost = static_cast<double>(GetSpecialPrice(targetTemplate)) *
+                static_cast<double>(ScaledCostModifier) + static_cast<double>(CopperCost);
+            if (configuredCost > 0.0)
+            {
+                if (configuredCost > static_cast<double>(MAX_MONEY_AMOUNT))
+                    return { LANG_TRANSMOG_NOT_ENOUGH_MONEY };
+                moneyCost += static_cast<uint64>(configuredCost);
+            }
+        }
+
+        if (moneyCost > MAX_MONEY_AMOUNT || tokenCost > std::numeric_limits<uint32>::max())
+            return { moneyCost > MAX_MONEY_AMOUNT ? LANG_TRANSMOG_NOT_ENOUGH_MONEY : LANG_TRANSMOG_NOT_ENOUGH_TOKENS };
+
+        plan.Appearances.push_back(prepared);
+    }
+
+    plan.MoneyCost = static_cast<uint32>(moneyCost);
+    plan.TokenCost = static_cast<uint32>(tokenCost);
+    if (plan.MoneyCost && !player->HasEnoughMoney(plan.MoneyCost))
+        return { LANG_TRANSMOG_NOT_ENOUGH_MONEY };
+    if (plan.TokenCost && !player->HasItemCount(TokenEntry, plan.TokenCost))
+        return { LANG_TRANSMOG_NOT_ENOUGH_TOKENS };
+
+    return { LANG_TRANSMOG_OK };
+}
+
+TransmogApplyResult Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan)
+{
+    if (!player || plan.Appearances.empty())
+        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+
+    CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
+    for (PreparedAppearance const& appearance : plan.Appearances)
+    {
+        transaction->Append("REPLACE INTO custom_transmogrification (GUID, FakeEntry, Owner) VALUES ({}, {}, {})",
+            appearance.TargetItem->GetGUID().GetCounter(), appearance.FakeEntry, player->GetGUID().GetCounter());
+    }
+
+    bool committed = false;
+    try
+    {
+        TransactionCallback callback = CharacterDatabase.AsyncCommitTransaction(transaction);
+        committed = callback.m_future.get();
+    }
+    catch (std::exception const& exception)
+    {
+        LOG_ERROR("module", "Transmogrification::CommitApplyPlan - Appearance transaction raised an exception for player {}: {}",
+            player->GetGUID().ToString(), exception.what());
+    }
+
+    if (!committed)
+    {
+        LOG_ERROR("module", "Transmogrification::CommitApplyPlan - Appearance transaction failed for player {}; no resources or cache entries were changed.",
+            player->GetGUID().ToString());
+        return { LANG_TRANSMOG_DATABASE_ERROR };
+    }
+
+    if (plan.TokenCost)
+        player->DestroyItemCount(TokenEntry, plan.TokenCost, true);
+    if (plan.MoneyCost)
+        player->ModifyMoney(-static_cast<int32>(plan.MoneyCost), false);
+
+    for (PreparedAppearance const& appearance : plan.Appearances)
+    {
+        ApplyCommittedFakeEntry(player, appearance.FakeEntry, appearance.TargetItem);
+
+        if (!appearance.SourceTemplate)
+            continue;
+
+        appearance.TargetItem->UpdatePlayedTime(player);
+        appearance.TargetItem->SetOwnerGUID(player->GetGUID());
+        appearance.TargetItem->SetNotRefundable(player);
+        appearance.TargetItem->ClearSoulboundTradeable(player);
+
+        if (appearance.OwnedSource)
+        {
+            if (appearance.SourceTemplate->Bonding == BIND_WHEN_EQUIPPED || appearance.SourceTemplate->Bonding == BIND_WHEN_USE)
+                appearance.OwnedSource->SetBinding(true);
+            appearance.OwnedSource->SetOwnerGUID(player->GetGUID());
+            appearance.OwnedSource->SetNotRefundable(player);
+            appearance.OwnedSource->ClearSoulboundTradeable(player);
+        }
+    }
+
+    return { LANG_TRANSMOG_OK, static_cast<uint32>(plan.Appearances.size()) };
+}
+
+TransmogApplyResult Transmogrification::TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
+    ObjectGuid interactionGuid, TransmogApplySource source, bool noCost)
+{
+    if (source == TransmogApplySource::Preset)
+        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+
+    AppearanceApplyPlan plan;
+    TransmogApplyResult result = PreflightApply(player, { { slot, sourceItemEntry } }, interactionGuid, source, noCost, plan);
+    return result.IsSuccess() ? CommitApplyPlan(player, plan) : result;
+}
+
+#ifdef PRESETS
+TransmogApplyResult Transmogrification::TryApplyCollectedPreset(Player* player, slotMap const& appearances,
+    ObjectGuid interactionGuid)
+{
+    std::vector<AppearanceApplyRequest> requests;
+    requests.reserve(appearances.size());
+    for (auto const& [slot, itemEntry] : appearances)
+        requests.push_back({ slot, itemEntry == HIDDEN_ITEM_ID ? UINT_MAX : itemEntry });
+
+    AppearanceApplyPlan plan;
+    TransmogApplyResult result = PreflightApply(player, requests, interactionGuid, TransmogApplySource::Preset, true, plan);
+    return result.IsSuccess() ? CommitApplyPlan(player, plan) : result;
+}
+#endif
 
 bool Transmogrification::CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* target, ItemTemplate const* source) const
 {
