@@ -291,6 +291,8 @@ fix: enforce collected appearance authorization at apply boundary
 
 ### 任务 1.2：修复模板空指针和对象所有权
 
+状态：✅ 已完成（`mod-solo-collections` `4876632`）
+
 变更：
 
 - 所有 item、quest reward、spell、creature 和 template lookup 增加显式空值处理。
@@ -1046,7 +1048,7 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 - [x] 为现有收藏越权路径编写失败测试/复现测试。（`c25f3f3`）
 - [x] 新增安全 `TryApplyCollectedAppearance` facade。（`c25f3f3`）
 - [x] 让 vendor、Gossip 和命令入口统一调用 facade。（`c25f3f3`；当前普通命令无应用入口）
-- [ ] 修复空模板和临时 Item 所有权。
+- [x] 修复空模板和临时 Item 所有权。（`4876632`）
 - [ ] 修复金币/token 预检和多槽部分提交。
 - [ ] 修复 reload 原子替换。
 - [ ] 完成 P0 回归并打安全基线 tag。
