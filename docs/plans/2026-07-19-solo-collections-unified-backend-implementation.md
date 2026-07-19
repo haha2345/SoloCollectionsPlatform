@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-状态：待执行
+状态：实施中
 
 设计依据：[2026-07-19-solo-collections-unified-backend-design.md](2026-07-19-solo-collections-unified-backend-design.md)
 
@@ -155,6 +155,8 @@ mod-solo-collections/
 
 ## 5. 阶段 0：建立可维护 fork 和构建基线
 
+阶段状态：✅ 已完成（2026-07-19）
+
 ### 任务 0.1：记录 fork 来源
 
 状态：✅ 已完成（`mod-solo-collections` `55e0cd5`）
@@ -213,6 +215,13 @@ tools: add safe backend module workspace linking
 ```
 
 ### 任务 0.3：编译未改造上游基线
+
+状态：✅ 已完成（fork bootstrap `17568dc`；构建记录 `64996e4`）
+
+执行说明：上游 `33ac64b` 的 loader 名称仍为 `Addmod_transmogScripts`，
+无法以 `mod-solo-collections` 目录名通过 Core 最终链接。经确认后先以独立
+bootstrap 提交将入口改为 `Addmod_solo_collectionsScripts`，其余上游源码不变，
+再完成干净基线编译。
 
 仓库：`mod-solo-collections`
 
@@ -1031,7 +1040,7 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 
 - [x] 在 `mod-solo-collections` 记录 upstream/Core 基线和许可证归属。（`55e0cd5`）
 - [x] 建立安全 module junction 脚本并验证可恢复。（`f61ac44`）
-- [ ] 编译未修改的 `33ac64b` 基线。
+- [x] 编译基于 `33ac64b` 的 fork bootstrap 基线。（`17568dc`、`64996e4`）
 - [ ] 为现有收藏越权路径编写失败测试/复现测试。
 - [ ] 新增安全 `TryApplyCollectedAppearance` facade。
 - [ ] 让 vendor、Gossip 和命令入口统一调用 facade。
