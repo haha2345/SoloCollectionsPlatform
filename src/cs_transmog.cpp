@@ -65,7 +65,7 @@ public:
         uint32 accountId = player->GetSession()->GetAccountId();
         handler->PSendModuleSysMessage("mod-transmog", LANG_TRANSMOG_CMD_BEGIN_SYNC);
 
-        for (uint32 itemId : sTransmogrification->collectionCache[accountId])
+        for (uint32 itemId : sTransmogrification->GetCollectedAppearances(accountId))
             handler->PSendSysMessage("TRANSMOG_SYNC:{}", itemId);
 
         handler->PSendModuleSysMessage("mod-transmog", LANG_TRANSMOG_CMD_COMPLETE_SYNC);
@@ -582,8 +582,7 @@ public:
         else
         {
             uint32 accountId = sCharacterCache->GetCharacterAccountIdByGuid(playerGuid);
-            auto const& collCache = sTransmogrification->collectionCache[accountId];
-            bool inCollection = collCache.find(srcItem->ItemId) != collCache.end();
+            bool inCollection = sTransmogrification->HasCollectedAppearance(accountId, srcItem->ItemId);
             collOk = inCollection;
             collLine += inCollection
                 ? "[+] " + okMsg
@@ -609,8 +608,10 @@ public:
     {
         sTransmogrification->LoadConfig(true);
         handler->SendSysMessage("Transmog configs reloaded.");
-        sTransmogrification->LoadCollections();
-        handler->SendSysMessage("Transmog collections reloaded.");
+        if (sTransmogrification->LoadCollections())
+            handler->SendSysMessage("Transmog collections reloaded.");
+        else
+            handler->SendSysMessage("Transmog collection reload failed; previous cache retained.");
         return true;
     }
 };

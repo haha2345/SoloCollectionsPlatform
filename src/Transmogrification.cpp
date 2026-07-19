@@ -7,6 +7,36 @@
 #include "WorldSessionMgr.h"
 #include <limits>
 
+namespace
+{
+bool ParseItemEntrySet(std::string const& configuredEntries, std::set<uint32>& entries)
+{
+    std::istringstream stream(configuredEntries);
+    std::string token;
+    while (stream >> token)
+    {
+        auto entry = Acore::StringTo<uint32>(token);
+        if (!entry)
+            return false;
+        entries.insert(*entry);
+    }
+    return true;
+}
+
+bool ParseMembershipLevels(std::string const& configuredLevels, uint32 feature,
+    Transmogrification::transmogPlusData& levelsByFeature)
+{
+    for (auto const& token : Acore::Tokenize(configuredLevels, ',', false))
+    {
+        auto level = Acore::StringTo<uint32>(token);
+        if (!level)
+            return false;
+        levelsByFeature[feature].push_back(*level);
+    }
+    return true;
+}
+}
+
 Transmogrification* Transmogrification::instance()
 {
     static Transmogrification instance;
@@ -471,6 +501,13 @@ bool Transmogrification::HasCollectedAppearance(uint32 accountId, uint32 itemId)
 {
     auto account = collectionCache.find(accountId);
     return account != collectionCache.end() && account->second.find(itemId) != account->second.end();
+}
+
+std::unordered_set<uint32> const& Transmogrification::GetCollectedAppearances(uint32 accountId) const
+{
+    static std::unordered_set<uint32> const emptyAppearances;
+    auto account = collectionCache.find(accountId);
+    return account != collectionCache.end() ? account->second : emptyAppearances;
 }
 
 TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, ObjectGuid interactionGuid,
@@ -1192,24 +1229,17 @@ void Transmogrification::LoadConfig(bool reload)
     EnableTransmogInfo = sConfigMgr->GetOption<bool>("Transmogrification.EnableTransmogInfo", true);
     TransmogNpcText = uint32(sConfigMgr->GetOption<uint32>("Transmogrification.TransmogNpcText", 601083));
 
-    std::istringstream issAllowed(sConfigMgr->GetOption<std::string>("Transmogrification.Allowed", ""));
-    std::istringstream issNotAllowed(sConfigMgr->GetOption<std::string>("Transmogrification.NotAllowed", ""));
-    while (issAllowed.good())
+    std::set<uint32> refreshedAllowed;
+    std::set<uint32> refreshedNotAllowed;
+    bool allowedValid = ParseItemEntrySet(sConfigMgr->GetOption<std::string>("Transmogrification.Allowed", ""), refreshedAllowed);
+    bool notAllowedValid = ParseItemEntrySet(sConfigMgr->GetOption<std::string>("Transmogrification.NotAllowed", ""), refreshedNotAllowed);
+    if (allowedValid && notAllowedValid)
     {
-        uint32 entry;
-        issAllowed >> entry;
-        if (issAllowed.fail())
-            break;
-        Allowed.insert(entry);
+        Allowed.swap(refreshedAllowed);
+        NotAllowed.swap(refreshedNotAllowed);
     }
-    while (issNotAllowed.good())
-    {
-        uint32 entry;
-        issNotAllowed >> entry;
-        if (issNotAllowed.fail())
-            break;
-        NotAllowed.insert(entry);
-    }
+    else
+        LOG_ERROR("module", "Transmogrification::LoadConfig - Invalid Allowed/NotAllowed entry list; previous cache retained.");
 
     ScaledCostModifier = sConfigMgr->GetOption<float>("Transmogrification.ScaledCostModifier", 1.0f);
     CopperCost = sConfigMgr->GetOption<uint32>("Transmogrification.CopperCost", 0);
@@ -1263,31 +1293,16 @@ void Transmogrification::LoadConfig(bool reload)
     /* TransmogPlus */
     IsTransmogPlusEnabled = sConfigMgr->GetOption<bool>("Transmogrification.EnablePlus", false);
 
-    plusDataMap.clear();
-
-    std::string stringMembershipIds = sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevels", "");
-    for (auto& itr : Acore::Tokenize(stringMembershipIds, ',', false))
-    {
-        plusDataMap[PLUS_FEATURE_GREY_ITEMS].push_back(Acore::StringTo<uint32>(itr).value());
-    }
-
-    stringMembershipIds = sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsLegendary", "");
-    for (auto& itr : Acore::Tokenize(stringMembershipIds, ',', false))
-    {
-        plusDataMap[PLUS_FEATURE_LEGENDARY_ITEMS].push_back(Acore::StringTo<uint32>(itr).value());
-    }
-
-    stringMembershipIds = sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsPet", "");
-    for (auto& itr : Acore::Tokenize(stringMembershipIds, ',', false))
-    {
-        plusDataMap[PLUS_FEATURE_PET].push_back(Acore::StringTo<uint32>(itr).value());
-    }
-
-    stringMembershipIds = sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsSkipLevelReq", "");
-    for (auto& itr : Acore::Tokenize(stringMembershipIds, ',', false))
-    {
-        plusDataMap[PLUS_FEATURE_SKIP_LEVEL_REQ].push_back(Acore::StringTo<uint32>(itr).value());
-    }
+    transmogPlusData refreshedPlusData;
+    bool plusDataValid =
+        ParseMembershipLevels(sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevels", ""), PLUS_FEATURE_GREY_ITEMS, refreshedPlusData) &&
+        ParseMembershipLevels(sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsLegendary", ""), PLUS_FEATURE_LEGENDARY_ITEMS, refreshedPlusData) &&
+        ParseMembershipLevels(sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsPet", ""), PLUS_FEATURE_PET, refreshedPlusData) &&
+        ParseMembershipLevels(sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsSkipLevelReq", ""), PLUS_FEATURE_SKIP_LEVEL_REQ, refreshedPlusData);
+    if (plusDataValid)
+        plusDataMap.swap(refreshedPlusData);
+    else
+        LOG_ERROR("module", "Transmogrification::LoadConfig - Invalid membership level list; previous Plus cache retained.");
 
     PetSpellId = sConfigMgr->GetOption<uint32>("Transmogrification.PetSpellId", 2000100);
     PetEntry = 0;
@@ -1346,27 +1361,47 @@ bool Transmogrification::IsPlusFeatureEligible(ObjectGuid const &playerGuid, uin
     return false;
 }
 
-void Transmogrification::LoadCollections()
+bool Transmogrification::LoadCollections()
 {
-    if (sTransmogrification->GetUseCollectionSystem())
+    if (!GetUseCollectionSystem())
     {
-        LOG_INFO("module", "Loading transmog appearance collection cache....");
-        uint32 collectedAppearanceCount = 0;
-        QueryResult result = CharacterDatabase.Query("SELECT account_id, item_template_id FROM custom_unlocked_appearances");
-        if (result)
-        {
-            do
-            {
-                uint32 accountId = (*result)[0].Get<uint32>();
-                uint32 itemId = (*result)[1].Get<uint32>();
-                if (sTransmogrification->AddCollectedAppearance(accountId, itemId))
-                    collectedAppearanceCount++;
-
-            } while (result->NextRow());
-        }
-
-        LOG_INFO("module", "Loaded {} collected appearances into cache", collectedAppearanceCount);
+        collectionCacheMap emptyCache;
+        collectionCache.swap(emptyCache);
+        collectionCacheHealth = CollectionCacheHealth::Disabled;
+        LOG_INFO("module", "Transmog appearance collection cache is disabled.");
+        return true;
     }
+
+    LOG_INFO("module", "Loading transmog appearance collection cache....");
+    QueryResult result = CharacterDatabase.Query(
+        "SELECT 0 AS row_kind, 0 AS account_id, 0 AS item_template_id "
+        "UNION ALL "
+        "SELECT 1 AS row_kind, account_id, item_template_id FROM custom_unlocked_appearances");
+    if (!result)
+    {
+        collectionCacheHealth = CollectionCacheHealth::QueryFailed;
+        LOG_ERROR("module", "Transmogrification::LoadCollections - Query failed; previous cache with {} accounts retained.",
+            collectionCache.size());
+        return false;
+    }
+
+    collectionCacheMap refreshedCache;
+    uint32 collectedAppearanceCount = 0;
+    do
+    {
+        if ((*result)[0].Get<uint8>() == 0)
+            continue;
+
+        uint32 accountId = (*result)[1].Get<uint32>();
+        uint32 itemId = (*result)[2].Get<uint32>();
+        if (refreshedCache[accountId].insert(itemId).second)
+            ++collectedAppearanceCount;
+    } while (result->NextRow());
+
+    collectionCache.swap(refreshedCache);
+    collectionCacheHealth = CollectionCacheHealth::Healthy;
+    LOG_INFO("module", "Loaded {} collected appearances into cache", collectedAppearanceCount);
+    return true;
 }
 
 bool Transmogrification::GetEnableTransmogInfo() const

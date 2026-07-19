@@ -147,5 +147,58 @@ class AtomicApplyContractTests(unittest.TestCase):
         self.assertIn("未扣除任何费用", sql)
 
 
+class AtomicReloadContractTests(unittest.TestCase):
+    def test_collection_cache_is_private_and_consumers_use_read_only_api(self):
+        public_api = HEADER.split("private:", 1)[0]
+        self.assertNotIn("collectionCacheMap collectionCache", public_api)
+        self.assertIn("GetCollectedAppearances", public_api)
+        self.assertIn("HasCollectedAppearance", public_api)
+        self.assertNotIn("collectionCache", SCRIPTS)
+        self.assertNotIn("collectionCache", COMMANDS)
+
+    def test_collection_query_distinguishes_empty_success_from_failure(self):
+        load = IMPLEMENTATION.split("bool Transmogrification::LoadCollections()", 1)[1].split(
+            "bool Transmogrification::GetEnableTransmogInfo", 1
+        )[0]
+        self.assertIn("SELECT 0 AS row_kind", load)
+        self.assertIn("UNION ALL", load)
+        self.assertIn("if (!result)", load)
+        self.assertIn("CollectionCacheHealth::QueryFailed", load)
+        self.assertIn("previous cache", load)
+
+    def test_successful_reload_replaces_snapshot_and_removes_revoked_rows(self):
+        load = IMPLEMENTATION.split("bool Transmogrification::LoadCollections()", 1)[1].split(
+            "bool Transmogrification::GetEnableTransmogInfo", 1
+        )[0]
+        self.assertIn("collectionCacheMap refreshedCache", load)
+        self.assertIn("refreshedCache[accountId].insert(itemId)", load)
+        self.assertIn("collectionCache.swap(refreshedCache)", load)
+        self.assertLess(load.index("if (!result)"), load.index("collectionCache.swap(refreshedCache)"))
+        self.assertIn("CollectionCacheHealth::Healthy", load)
+
+    def test_config_sets_and_plus_cache_swap_only_after_complete_parse(self):
+        parser = IMPLEMENTATION.split("bool ParseItemEntrySet", 1)[1].split(
+            "bool ParseMembershipLevels", 1
+        )[0]
+        config = IMPLEMENTATION.split("void Transmogrification::LoadConfig(bool reload)", 1)[1].split(
+            "void Transmogrification::DeleteFakeFromDB", 1
+        )[0]
+        self.assertIn("Acore::StringTo<uint32>(token)", parser)
+        self.assertIn("if (!entry)", parser)
+        self.assertIn("std::set<uint32> refreshedAllowed", config)
+        self.assertIn("Allowed.swap(refreshedAllowed)", config)
+        self.assertIn("NotAllowed.swap(refreshedNotAllowed)", config)
+        self.assertIn("transmogPlusData refreshedPlusData", config)
+        self.assertIn("plusDataMap.swap(refreshedPlusData)", config)
+        self.assertNotIn("plusDataMap.clear()", config)
+
+    def test_reload_command_reports_failed_collection_refresh(self):
+        reload_handler = COMMANDS.split("static bool HandleReloadTransmogConfig", 1)[1].split(
+            "};", 1
+        )[0]
+        self.assertIn("if (sTransmogrification->LoadCollections())", reload_handler)
+        self.assertIn("previous cache retained", reload_handler)
+
+
 if __name__ == "__main__":
     unittest.main()

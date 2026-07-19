@@ -82,10 +82,7 @@ std::vector<ItemTemplate const*> GetValidTransmogs(Player* player, Item* target,
     if (sT->GetUseCollectionSystem())
     {
         uint32 accountId = player->GetSession()->GetAccountId();
-        if (sT->collectionCache.find(accountId) == sT->collectionCache.end())
-            return allowedItems;
-
-        for (uint32 itemId : sT->collectionCache[accountId])
+        for (uint32 itemId : sT->GetCollectedAppearances(accountId))
         {
             ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(itemId);
             if (!sourceTemplate)

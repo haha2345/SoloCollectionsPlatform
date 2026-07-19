@@ -52,6 +52,14 @@ enum class TransmogApplySource : uint8
     Preset
 };
 
+enum class CollectionCacheHealth : uint8
+{
+    Uninitialized,
+    Healthy,
+    QueryFailed,
+    Disabled
+};
+
 enum TransmogStrings : uint32
 {
     // Transmog result strings
@@ -204,10 +212,8 @@ public:
     typedef std::unordered_map<uint32, std::vector<uint32>> transmogPlusData;
     typedef std::unordered_map<ObjectGuid, uint8> selectedSlotMap;
     
-    transmogPlusData plusDataMap;
     transmogMap entryMap; // entryMap[pGUID][iGUID] = entry
     transmogData dataMap; // dataMap[iGUID] = pGUID
-    collectionCacheMap collectionCache;
     selectedSlotMap selectionCache;
 
 #ifdef PRESETS
@@ -235,16 +241,10 @@ public:
 
     void LoadPlayerSets(ObjectGuid pGUID);
     void UnloadPlayerSets(ObjectGuid pGUID);
-    void LoadCollections();
 #endif
 
     bool EnableTransmogInfo;
     uint32 TransmogNpcText;
-
-    // Use IsAllowed() and IsNotAllowed()
-    // these are thread unsafe, but assumed to be static data so it should be safe
-    std::set<uint32> Allowed;
-    std::set<uint32> NotAllowed;
 
     float ScaledCostModifier;
     int32 CopperCost;
@@ -299,7 +299,8 @@ public:
     bool IsRangedWeapon(uint32 Class, uint32 SubClass) const;
     bool CanNeverTransmog(ItemTemplate const* itemTemplate);
 
-    void LoadConfig(bool reload); // thread unsafe
+    void LoadConfig(bool reload); // world-thread only
+    bool LoadCollections();
 
     std::string GetItemIcon(uint32 entry, uint32 width, uint32 height, int x, int y) const;
     std::string GetSlotIcon(uint8 slot, uint32 width, uint32 height, int x, int y) const;
@@ -311,6 +312,8 @@ public:
     void DeleteFakeEntry(Player* player, uint8 slot, Item* itemTransmogrified, CharacterDatabaseTransaction* trans = nullptr);
     bool AddCollectedAppearance(uint32 accountId, uint32 itemId);
     [[nodiscard]] bool HasCollectedAppearance(uint32 accountId, uint32 itemId) const;
+    [[nodiscard]] std::unordered_set<uint32> const& GetCollectedAppearances(uint32 accountId) const;
+    [[nodiscard]] CollectionCacheHealth GetCollectionCacheHealth() const { return collectionCacheHealth; }
 
     TransmogApplyResult TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
@@ -375,6 +378,13 @@ public:
     [[nodiscard]] bool IsTransmogVendor(uint32 entry) const { return entry == TMOG_VENDOR_CREATURE_ID || (PetEntry && entry == PetEntry); };
 
 private:
+    // Reloadable caches are replaced as complete snapshots on the world thread.
+    transmogPlusData plusDataMap;
+    collectionCacheMap collectionCache;
+    CollectionCacheHealth collectionCacheHealth = CollectionCacheHealth::Uninitialized;
+    std::set<uint32> Allowed;
+    std::set<uint32> NotAllowed;
+
     struct AppearanceApplyRequest
     {
         uint8 Slot;
