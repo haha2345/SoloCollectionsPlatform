@@ -160,6 +160,9 @@ class AtomicApplyContractTests(unittest.TestCase):
             (world_sql / legacy_name).read_bytes(),
             (world_sql / current_name).read_bytes(),
         )
+        current_sql = (world_sql / current_name).read_text(encoding="utf-8")
+        self.assertGreaterEqual(current_sql.count("`id` BETWEEN 1 AND 80"), 2)
+        self.assertNotIn("WHERE `module` = 'mod-transmog';", current_sql)
         self.assertLess(base_name, current_name)
         self.assertLess(current_name, error_name)
 

@@ -3,8 +3,8 @@
 -- Also migrates hardcoded gossip strings from C++ to module_string.
 DELETE FROM `acore_string` WHERE `entry` BETWEEN 11100 AND 11121;
 
-DELETE FROM `module_string` WHERE `module` = 'mod-transmog';
-DELETE FROM `module_string_locale` WHERE `module` = 'mod-transmog';
+DELETE FROM `module_string` WHERE `module` = 'mod-transmog' AND `id` BETWEEN 1 AND 80;
+DELETE FROM `module_string_locale` WHERE `module` = 'mod-transmog' AND `id` BETWEEN 1 AND 80;
 INSERT INTO `module_string` (`module`, `id`, `string`) VALUES
 -- Transmog result strings
 ('mod-transmog',  1, 'Item successfully transmogrified.'),
