@@ -71,8 +71,9 @@ SHA-256: 3DABC0E0DC9EC78DF0EBFC412323D40C56EFA9302E2A7514A41D96E8BF940AA4
 - NPCBots remained enabled and loaded normally.
 - The server reached the `worldserver-daemon ready` state.
 
-`Errors.log` contains only three pre-existing orphan references for quest
-`990101`; no new transmog or module error was recorded.
+Before fault injection, `Errors.log` contained only three pre-existing orphan
+references for quest `990101`. The deliberate collection-reload failures and
+their recovery evidence are recorded below.
 
 ## Live acceptance setup
 
@@ -153,6 +154,28 @@ The client reported `所选项目无效`. Database verification found no
 temporary preset and collection row were then deleted and runtime state
 reloaded.
 
+### Cache failure retention and successful revoke
+
+The first failure-injection attempt temporarily renamed the collection table.
+AzerothCore classified MySQL error `1146` as an out-of-date database structure
+and protectively terminated worldserver. A `finally` block restored the table
+name; verification found all 66 rows intact, and worldserver restarted
+normally. This unsafe injection method was discarded and is not counted as a
+passing reload test.
+
+The replacement test left the schema unchanged. A dedicated connection held a
+short write lock while `.transmog reload` issued its collection SELECT; only
+that SELECT was interrupted with `KILL QUERY`, producing MySQL error `1317`.
+The command returned `Transmog collection reload failed; previous cache
+retained.` Worldserver remained running, `.transmog check` still passed for
+controlled item `6971`, and the real client still listed `淬火罩帽`.
+
+After deleting item `6971` from the collection table, a normal reload succeeded.
+The diagnostic then reported that the appearance was not collected, and after
+closing and reopening the NPC menu the client confirmed `淬火罩帽` had
+disappeared. The temporary collection row, query lock, and test connection were
+all removed.
+
 ## Client acceptance status
 
 The local `security-baseline` tag must not be created until a real 3.3.5 client
@@ -164,6 +187,6 @@ confirms all of the following against this deployed server:
 3. [x] Test insufficient money and insufficient token paths.
 4. [x] Apply a preset containing one valid and one invalid slot and confirm that
    neither slot changes.
-5. [ ] Run `.transmog reload` after a controlled revoke and confirm the revoked
+5. [x] Run `.transmog reload` after a controlled revoke and confirm the revoked
    appearance disappears while a deliberately failed reload retains the old
    cache.
