@@ -362,12 +362,8 @@ public:
     [[nodiscard]] bool IsTransmogVendor(uint32 entry) const { return entry == TMOG_VENDOR_CREATURE_ID || (PetEntry && entry == PetEntry); };
 
 private:
-#ifdef PRESETS
-    void PresetTransmog(Player* player, Item* itemTransmogrified, uint32 fakeEntry, uint8 slot);
-#endif
-    TransmogStrings Transmogrify(Player* player, ObjectGuid itemGUID, uint8 slot, bool noCost = false);
-    TransmogStrings Transmogrify(Player* player, uint32 itemEntry, uint8 slot, bool noCost = false);
-    TransmogStrings Transmogrify(Player* player, Item* itemTransmogrifier, uint8 slot, bool noCost = false, bool hiddenTransmog = false);
+    TransmogStrings ApplyAppearance(Player* player, ItemTemplate const* sourceTemplate, Item* ownedSource,
+        uint8 slot, bool noCost = false, bool hiddenTransmog = false);
 };
 #define sTransmogrification Transmogrification::instance()
 

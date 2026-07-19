@@ -96,9 +96,9 @@ public:
         if (!sTransmogrification->GetUseCollectionSystem())
             return true;
 
-        if (!sObjectMgr->GetItemTemplate(itemTemplate->ItemId))
+        if (!itemTemplate || !sObjectMgr->GetItemTemplate(itemTemplate->ItemId))
         {
-            handler->PSendSysMessage(LANG_COMMAND_ITEMIDINVALID, itemTemplate->ItemId);
+            handler->PSendSysMessage(LANG_COMMAND_ITEMIDINVALID, itemTemplate ? itemTemplate->ItemId : 0);
             handler->SetSentErrorMessage(true);
             return false;
         }

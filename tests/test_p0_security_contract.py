@@ -26,7 +26,7 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
     def test_facade_rechecks_account_collection_and_exact_source(self):
         facade = IMPLEMENTATION.split(
             "TransmogStrings Transmogrification::TryApplyCollectedAppearance", 1
-        )[1].split("TransmogStrings Transmogrification::Transmogrify", 1)[0]
+        )[1].split("TransmogStrings Transmogrification::ApplyAppearance", 1)[0]
 
         self.assertIn("session->GetAccountId()", facade)
         self.assertIn("HasCollectedAppearance(session->GetAccountId(), sourceItemEntry)", facade)
@@ -34,7 +34,7 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         self.assertIn("player->GetItemByEntry(sourceItemEntry)", facade)
         self.assertLess(
             facade.index("HasCollectedAppearance(session->GetAccountId(), sourceItemEntry)"),
-            facade.index("return Transmogrify(player, sourceItemEntry"),
+            facade.index("return ApplyAppearance(player, sourceTemplate"),
         )
 
     def test_facade_rechecks_npc_distance_session_and_portable_owner(self):
@@ -55,6 +55,42 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         self.assertEqual(1, SCRIPTS.count(indexed_access))
         self.assertIn(f"{indexed_access} = action;", SCRIPTS)
         self.assertGreaterEqual(SCRIPTS.count("selectionCache.find(player->GetGUID())"), 3)
+
+
+class TemplateSafetyContractTests(unittest.TestCase):
+    def test_collection_listing_and_apply_do_not_create_temporary_items(self):
+        all_sources = HEADER + IMPLEMENTATION + SCRIPTS + COMMANDS
+        self.assertNotIn("Item::CreateItem", all_sources)
+        self.assertNotIn("std::vector<Item*>", SCRIPTS)
+        self.assertIn("std::vector<ItemTemplate const*>", SCRIPTS)
+        self.assertIn("ApplyAppearance(player, sourceTemplate, nullptr", IMPLEMENTATION)
+
+    def test_store_hook_and_database_helpers_reject_null_items(self):
+        hook = SCRIPTS.split("void OnPlayerAfterStoreOrEquipNewItem", 1)[1].split(
+            "void OnPlayerCompleteQuest", 1
+        )[0]
+        self.assertIn("if (!item)", hook)
+        self.assertIn("Received a null item", hook)
+
+        item_helper = SCRIPTS.split("void AddToDatabase(Player* player, Item* item)", 1)[1].split(
+            "void AddToDatabase(Player* player, ItemTemplate const* itemTemplate)", 1
+        )[0]
+        self.assertIn("if (!player || !item)", item_helper)
+        self.assertIn("if (!itemTemplate)", item_helper)
+
+    def test_missing_quest_reward_templates_are_skipped_and_logged(self):
+        quest_hook = SCRIPTS.split("void OnPlayerCompleteQuest", 1)[1].split(
+            "void OnPlayerAfterSetVisibleItemSlot", 1
+        )[0]
+        self.assertGreaterEqual(quest_hook.count("if (itemTemplate)"), 2)
+        self.assertIn("choice reward item", quest_hook)
+        self.assertIn("reward item", quest_hook)
+
+    def test_item_links_mirror_images_and_portable_spell_are_null_safe(self):
+        self.assertIn('return "(Unknown item: " + std::to_string(entry)', IMPLEMENTATION)
+        self.assertIn("if (ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(entry))", SCRIPTS)
+        self.assertIn("PetEntry = 0;", IMPLEMENTATION)
+        self.assertIn("Portable NPC spell", IMPLEMENTATION)
 
 
 if __name__ == "__main__":

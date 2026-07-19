@@ -50,33 +50,33 @@ uint32 GetTransmogPrice (ItemTemplate const* targetItem)
     return price;
 }
 
-bool ValidForTransmog (Player* player, Item* target, Item* source, bool hasSearch, std::string searchTerm)
+bool ValidForTransmog(Player* player, Item* target, ItemTemplate const* sourceTemplate, bool hasSearch, std::string const& searchTerm)
 {
-    if (!target || !source || !player) return false;
+    if (!target || !sourceTemplate || !player)
+        return false;
     ItemTemplate const* targetTemplate = target->GetTemplate();
-    ItemTemplate const* sourceTemplate = source->GetTemplate();
+    if (!targetTemplate)
+        return false;
 
     if (!sT->CanTransmogrifyItemWithItem(player, targetTemplate, sourceTemplate))
         return false;
-    if (sT->GetFakeEntry(target->GetGUID()) == source->GetEntry())
+    if (sT->GetFakeEntry(target->GetGUID()) == sourceTemplate->ItemId)
         return false;
     if (hasSearch && sourceTemplate->Name1.find(searchTerm) == std::string::npos)
         return false;
     return true;
 }
 
-bool CmpTmog (Item* i1, Item* i2)
+bool CmpTmog(ItemTemplate const* i1, ItemTemplate const* i2)
 {
-    const ItemTemplate* i1t = i1->GetTemplate();
-    const ItemTemplate* i2t = i2->GetTemplate();
-    const int q1 = 7-i1t->Quality;
-    const int q2 = 7-i2t->Quality;
-    return std::tie(q1, i1t->Name1) < std::tie(q2, i2t->Name1);
+    const int q1 = 7 - i1->Quality;
+    const int q2 = 7 - i2->Quality;
+    return std::tie(q1, i1->Name1) < std::tie(q2, i2->Name1);
 }
 
-std::vector<Item*> GetValidTransmogs (Player* player, Item* target, bool hasSearch, std::string searchTerm)
+std::vector<ItemTemplate const*> GetValidTransmogs(Player* player, Item* target, bool hasSearch, std::string const& searchTerm)
 {
-    std::vector<Item*> allowedItems;
+    std::vector<ItemTemplate const*> allowedItems;
     if (!target) return allowedItems;
 
     if (sT->GetUseCollectionSystem())
@@ -87,11 +87,11 @@ std::vector<Item*> GetValidTransmogs (Player* player, Item* target, bool hasSear
 
         for (uint32 itemId : sT->collectionCache[accountId])
         {
-            if (!sObjectMgr->GetItemTemplate(itemId))
+            ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(itemId);
+            if (!sourceTemplate)
                 continue;
-            Item* srcItem = Item::CreateItem(itemId, 1, 0);
-            if (ValidForTransmog(player, target, srcItem, hasSearch, searchTerm))
-                allowedItems.push_back(srcItem);
+            if (ValidForTransmog(player, target, sourceTemplate, hasSearch, searchTerm))
+                allowedItems.push_back(sourceTemplate);
         }
     }
     else
@@ -99,8 +99,9 @@ std::vector<Item*> GetValidTransmogs (Player* player, Item* target, bool hasSear
         for (uint8 i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; ++i)
         {
             Item* srcItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, i);
-            if (ValidForTransmog(player, target, srcItem, hasSearch, searchTerm))
-                allowedItems.push_back(srcItem);
+            ItemTemplate const* sourceTemplate = srcItem ? srcItem->GetTemplate() : nullptr;
+            if (ValidForTransmog(player, target, sourceTemplate, hasSearch, searchTerm))
+                allowedItems.push_back(sourceTemplate);
         }
         for (uint8 i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_BAG_END; ++i)
         {
@@ -110,8 +111,9 @@ std::vector<Item*> GetValidTransmogs (Player* player, Item* target, bool hasSear
             for (uint32 j = 0; j < bag->GetBagSize(); ++j)
             {
                 Item* srcItem = player->GetItemByPos(i, j);
-                if (ValidForTransmog(player, target, srcItem, hasSearch, searchTerm))
-                    allowedItems.push_back(srcItem);
+                ItemTemplate const* sourceTemplate = srcItem ? srcItem->GetTemplate() : nullptr;
+                if (ValidForTransmog(player, target, sourceTemplate, hasSearch, searchTerm))
+                    allowedItems.push_back(sourceTemplate);
             }
         }
     }
@@ -144,7 +146,8 @@ void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEn
         {
             if (Item* destItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
             {
-                if (destItem->GetTemplate()->ItemSet)
+                ItemTemplate const* destTemplate = destItem->GetTemplate();
+                if (destTemplate && destTemplate->ItemSet)
                     ChatHandler(session).PSendSysMessage("{}", Tstr(session, LANG_TRANSMOG_SET_DISCLAIMER));
             }
         }
@@ -530,7 +533,7 @@ public:
             std::unordered_map<uint32, std::string>::iterator searchStringIterator = sT->searchStringByPlayer.find(player->GetGUID().GetCounter());
             hasSearchString = !(searchStringIterator == sT->searchStringByPlayer.end());
             std::string searchDisplayValue(hasSearchString ? searchStringIterator->second : Tstr(session, LANG_TRANSMOG_SEARCH));
-            std::vector<Item*> allowedItems = GetValidTransmogs(player, oldItem, hasSearchString, searchDisplayValue);
+            std::vector<ItemTemplate const*> allowedItems = GetValidTransmogs(player, oldItem, hasSearchString, searchDisplayValue);
 
             if (allowedItems.size() > 0)
             {
@@ -572,8 +575,8 @@ public:
                         lastPage = true;
                         break;
                     }
-                    Item* newItem = allowedItems.at(i);
-                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, sT->GetItemIcon(newItem->GetEntry(), 30, 30, -18, 0) + sT->GetItemLink(newItem, session), slot, newItem->GetEntry(), Tstr(session, LANG_TRANSMOG_CONFIRM_USEITEM) + sT->GetItemIcon(newItem->GetEntry(), 40, 40, -15, -10) + sT->GetItemLink(newItem, session) + lineEnd, price, false);
+                    ItemTemplate const* sourceTemplate = allowedItems.at(i);
+                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, sT->GetItemIcon(sourceTemplate->ItemId, 30, 30, -18, 0) + sT->GetItemLink(sourceTemplate->ItemId, session), slot, sourceTemplate->ItemId, Tstr(session, LANG_TRANSMOG_CONFIRM_USEITEM) + sT->GetItemIcon(sourceTemplate->ItemId, 40, 40, -15, -10) + sT->GetItemLink(sourceTemplate->ItemId, session) + lineEnd, price, false);
                 }
             }
             if (gossipPageNumber == EQUIPMENT_SLOT_END + 11)
@@ -607,24 +610,24 @@ public:
         if (sT->AllowHiddenTransmog && !existingTransmog)
         {
             ItemTemplate const* _hideSlotButton = sObjectMgr->GetItemTemplate(CUSTOM_HIDE_ITEM_VENDOR_ID);
+            if (!_hideSlotButton)
+                _hideSlotButton = sObjectMgr->GetItemTemplate(FALLBACK_HIDE_ITEM_VENDOR_ID);
+
             if (_hideSlotButton)
                 spoofedItems.push_back(_hideSlotButton);
             else
-            {
-                _hideSlotButton = sObjectMgr->GetItemTemplate(FALLBACK_HIDE_ITEM_VENDOR_ID);
-                spoofedItems.push_back(_hideSlotButton);
-            }
+                LOG_WARN("module", "Transmogrification::GetSpoofedVendorItems - Hide-item templates {} and {} are both missing.", CUSTOM_HIDE_ITEM_VENDOR_ID, FALLBACK_HIDE_ITEM_VENDOR_ID);
         }
         if (existingTransmog)
         {
             ItemTemplate const* _removeTransmogButton = sObjectMgr->GetItemTemplate(CUSTOM_REMOVE_TMOG_VENDOR_ID);
+            if (!_removeTransmogButton)
+                _removeTransmogButton = sObjectMgr->GetItemTemplate(FALLBACK_REMOVE_TMOG_VENDOR_ID);
+
             if (_removeTransmogButton)
                 spoofedItems.push_back(_removeTransmogButton);
             else
-            {
-                _removeTransmogButton = sObjectMgr->GetItemTemplate(FALLBACK_REMOVE_TMOG_VENDOR_ID);
-                spoofedItems.push_back(_removeTransmogButton);
-            }
+                LOG_WARN("module", "Transmogrification::GetSpoofedVendorItems - Remove-item templates {} and {} are both missing.", CUSTOM_REMOVE_TMOG_VENDOR_ID, FALLBACK_REMOVE_TMOG_VENDOR_ID);
         }
         return spoofedItems;
     }
@@ -643,6 +646,9 @@ public:
 
     static void EncodeItemToPacket (WorldPacket& data, ItemTemplate const* proto, uint8& slot, uint32 price)
     {
+        if (!proto)
+            return;
+
         data << uint32(slot + 1);
         data << uint32(proto->ItemId);
         data << uint32(proto->DisplayInfoID);
@@ -666,7 +672,7 @@ public:
         }
         ItemTemplate const* targetTemplate = targetItem->GetTemplate();
 
-        std::vector<Item*> itemList = GetValidTransmogs(player, targetItem, false, "");
+        std::vector<ItemTemplate const*> itemList = GetValidTransmogs(player, targetItem, false, "");
         std::vector<ItemTemplate const*> spoofedItems = GetSpoofedVendorItems(targetItem);
 
         uint32 itemCount = itemList.size();
@@ -690,8 +696,9 @@ public:
         }
         for (uint32 i = 0; i < itemCount && count < MAX_VENDOR_ITEMS; ++i)
         {
-            ItemTemplate const* _proto = itemList[i]->GetTemplate();
-            if (_proto) EncodeItemToPacket(data, _proto, count, price);
+            ItemTemplate const* sourceTemplate = itemList[i];
+            if (sourceTemplate)
+                EncodeItemToPacket(data, sourceTemplate, count, price);
         }
 
         data.put(count_pos, count);
@@ -704,16 +711,27 @@ class PS_Transmogrification : public PlayerScript
 private:
     void AddToDatabase(Player* player, Item* item)
     {
+        if (!player || !item)
+            return;
+
         if (item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_BOP_TRADEABLE) && !sTransmogrification->GetAllowTradeable())
             return;
         if (item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_REFUNDABLE))
             return;
         ItemTemplate const* itemTemplate = item->GetTemplate();
+        if (!itemTemplate)
+        {
+            LOG_WARN("module", "Transmogrification::AddToDatabase - Item {} has no template.", item->GetGUID().ToString());
+            return;
+        }
         AddToDatabase(player, itemTemplate);
     }
 
     void AddToDatabase(Player* player, ItemTemplate const* itemTemplate)
     {
+        if (!player || !player->GetSession() || !itemTemplate)
+            return;
+
         if (!sT->GetTrackUnusableItems() && !sT->SuitableForTransmogrification(player, itemTemplate))
             return;
         if (itemTemplate->Class != ITEM_CLASS_ARMOR && itemTemplate->Class != ITEM_CLASS_WEAPON)
@@ -799,7 +817,10 @@ private:
         for (RewardedQuestSet::const_iterator itr = rewQuests.begin(); itr != rewQuests.end(); ++itr)
         {
             Quest const* quest = sObjectMgr->GetQuestTemplate(*itr);
-            OnPlayerCompleteQuest(player, quest);
+            if (quest)
+                OnPlayerCompleteQuest(player, quest);
+            else
+                LOG_WARN("module", "Transmogrification::CheckRetroActiveQuestAppearances - Rewarded quest {} has no template.", *itr);
         }
 
         // One-time backfill for already-owned items
@@ -822,7 +843,7 @@ public:
 
     void OnPlayerEquip(Player* player, Item* it, uint8 /*bag*/, uint8 /*slot*/, bool /*update*/) override
     {
-        if (!sT->GetUseCollectionSystem())
+        if (!sT->GetUseCollectionSystem() || !it)
             return;
         AddToDatabase(player, it);
     }
@@ -831,7 +852,10 @@ public:
     {
         if (!sT->GetUseCollectionSystem() || !item || typeid(*item) != typeid(Item))
             return;
-        if (item->GetTemplate()->Bonding == ItemBondingType::BIND_WHEN_PICKED_UP || item->IsSoulBound())
+        ItemTemplate const* itemTemplate = item->GetTemplate();
+        if (!itemTemplate)
+            return;
+        if (itemTemplate->Bonding == ItemBondingType::BIND_WHEN_PICKED_UP || item->IsSoulBound())
         {
             AddToDatabase(player, item);
         }
@@ -839,9 +863,12 @@ public:
 
     void OnPlayerCreateItem(Player* player, Item* item, uint32 /*count*/) override
     {
-        if (!sT->GetUseCollectionSystem())
+        if (!sT->GetUseCollectionSystem() || !item)
             return;
-        if (item->GetTemplate()->Bonding == ItemBondingType::BIND_WHEN_PICKED_UP || item->IsSoulBound())
+        ItemTemplate const* itemTemplate = item->GetTemplate();
+        if (!itemTemplate)
+            return;
+        if (itemTemplate->Bonding == ItemBondingType::BIND_WHEN_PICKED_UP || item->IsSoulBound())
         {
             AddToDatabase(player, item);
         }
@@ -851,7 +878,16 @@ public:
     {
         if (!sT->GetUseCollectionSystem())
             return;
-        if (item->GetTemplate()->Bonding == ItemBondingType::BIND_WHEN_PICKED_UP || item->IsSoulBound())
+        if (!item)
+        {
+            LOG_WARN("module", "Transmogrification::OnPlayerAfterStoreOrEquipNewItem - Received a null item for player {}.",
+                player ? player->GetGUID().ToString() : "<null>");
+            return;
+        }
+        ItemTemplate const* itemTemplate = item->GetTemplate();
+        if (!itemTemplate)
+            return;
+        if (itemTemplate->Bonding == ItemBondingType::BIND_WHEN_PICKED_UP || item->IsSoulBound())
         {
             AddToDatabase(player, item);
         }
@@ -867,7 +903,10 @@ public:
             if (!itemId)
                 continue;
             ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(itemId);
-            AddToDatabase(player, itemTemplate);
+            if (itemTemplate)
+                AddToDatabase(player, itemTemplate);
+            else
+                LOG_WARN("module", "Transmogrification::OnPlayerCompleteQuest - Quest {} choice reward item {} has no template.", quest->GetQuestId(), itemId);
         }
 
         for (uint8 i = 0; i < QUEST_REWARDS_COUNT; ++i)
@@ -876,7 +915,10 @@ public:
             if (!itemId)
                 continue;
             ItemTemplate const* itemTemplate = sObjectMgr->GetItemTemplate(itemId);
-            AddToDatabase(player, itemTemplate);
+            if (itemTemplate)
+                AddToDatabase(player, itemTemplate);
+            else
+                LOG_WARN("module", "Transmogrification::OnPlayerCompleteQuest - Quest {} reward item {} has no template.", quest->GetQuestId(), itemId);
         }
     }
 
@@ -893,7 +935,8 @@ public:
 
     void OnPlayerAfterMoveItemFromInventory(Player* /*player*/, Item* it, uint8 /*bag*/, uint8 /*slot*/, bool /*update*/) override
     {
-        sT->DeleteFakeFromDB(it->GetGUID().GetCounter());
+        if (it)
+            sT->DeleteFakeFromDB(it->GetGUID().GetCounter());
     }
 
     void OnPlayerLogin(Player* player) override
@@ -1020,6 +1063,9 @@ public:
 
     void OnMirrorImageDisplayItem(const Item *item, uint32 &display) override
     {
+        if (!item)
+            return;
+
         if (uint32 entry = sTransmogrification->GetFakeEntry(item->GetGUID()))
         {
             if (entry == HIDDEN_ITEM_ID)
@@ -1028,7 +1074,10 @@ public:
             }
             else
             {
-                display=uint32(sObjectMgr->GetItemTemplate(entry)->DisplayInfoID);
+                if (ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(entry))
+                    display = sourceTemplate->DisplayInfoID;
+                else
+                    LOG_WARN("module", "Transmogrification::OnMirrorImageDisplayItem - Fake entry {} has no item template.", entry);
             }
         }
     }
