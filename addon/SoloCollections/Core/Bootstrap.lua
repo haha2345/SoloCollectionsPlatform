@@ -38,11 +38,7 @@ local VALID_POINTS = {
 
 local VALID_MAIN_TABS = { MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true }
 local VALID_WARDROBE_TABS = { ITEMS = true, SETS = true }
-local VALID_CLASS_TOKENS = {
-    ALL = true, WARRIOR = true, PALADIN = true, HUNTER = true,
-    ROGUE = true, PRIEST = true, DEATHKNIGHT = true, SHAMAN = true,
-    MAGE = true, WARLOCK = true, DRUID = true,
-}
+local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()
 local VALID_SLOTS = {
     ALL = true, HEAD = true, SHOULDER = true, BACK = true, CHEST = true,
     WRIST = true, HANDS = true, WAIST = true, LEGS = true, FEET = true,

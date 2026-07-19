@@ -352,7 +352,7 @@ def _identity_inc(model: dict[str, Any]) -> str:
         profile = entry["defaultFilterProfile"]
         lines.append(
             "        {" + ", ".join([
-                str(entry["logicalClassId"]), _cpp_string(entry["classKey"]), str(entry["runtimeClassId"]),
+                f"LogicalClassId{{{entry['logicalClassId']}}}", _cpp_string(entry["classKey"]), str(entry["runtimeClassId"]),
                 _cpp_strings(entry["aliases"]), _cpp_strings(entry["capabilities"]),
                 _cpp_string(entry["compatibilityProfile"]), _cpp_string(entry["clientAssetProfile"]),
                 str(entry["legacyMaskBit"]), _cpp_string(profile["armorType"]),
@@ -363,7 +363,7 @@ def _identity_inc(model: dict[str, Any]) -> str:
     for entry in model["races"]:
         lines.append(
             "        {" + ", ".join([
-                str(entry["logicalRaceId"]), _cpp_string(entry["raceKey"]), str(entry["runtimeRaceId"]),
+                f"LogicalRaceId{{{entry['logicalRaceId']}}}", _cpp_string(entry["raceKey"]), str(entry["runtimeRaceId"]),
                 _cpp_strings(entry.get("aliases", [])), _cpp_strings(entry.get("capabilities", [])),
                 _cpp_string(entry["factionKey"]), _cpp_string(entry["compatibilityProfile"]),
                 _cpp_string(entry["clientAssetProfile"]), _cpp_string(entry["cameraProfile"]),

@@ -12,19 +12,6 @@ local CATEGORY_KEYS = {
     SETS = "Sets",
 }
 
-local CLASS_BITS = {
-    WARRIOR = 1,
-    PALADIN = 2,
-    HUNTER = 4,
-    ROGUE = 8,
-    PRIEST = 16,
-    DEATHKNIGHT = 32,
-    SHAMAN = 64,
-    MAGE = 128,
-    WARLOCK = 256,
-    DRUID = 1024,
-}
-
 local DEFAULT_FILTERS = {
     collected = true,
     uncollected = true,
@@ -155,7 +142,7 @@ local function classMatches(record, classToken)
     if record.classToken then
         return record.classToken == classToken
     end
-    local classBit = CLASS_BITS[classToken]
+    local classBit = SC.IdentityRegistry.GetLegacyClassBit(classToken)
     local classMask = tonumber(record.classMask)
     if not classBit or not classMask then
         return false
