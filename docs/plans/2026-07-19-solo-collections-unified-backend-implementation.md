@@ -362,6 +362,11 @@ fix: replace transmog caches atomically on reload
 - 当前幻化功能可编译、可运行且安全基线测试通过。
 - 形成 `security-baseline` tag，后续重构可与其比较。
 
+运行部署状态：✅ worldserver、SQL updater、模块字符串、收藏缓存和 NPCBots
+兼容性已验证；⏳ 真实客户端 NPC/费用/多槽/reload 验收尚待完成，因此暂未创建
+`security-baseline` tag。服务端证据记录在
+`mod-solo-collections/docs/baselines/2026-07-19-p0-security-runtime.md`。
+
 ## 7. 阶段 2：统一收藏核心骨架
 
 ### 任务 2.1：引入稳定基础类型
