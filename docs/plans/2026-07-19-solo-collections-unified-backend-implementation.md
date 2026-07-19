@@ -371,6 +371,8 @@ reload（`bd7aa3e`）。已在 `mod-solo-collections` 提交 `17c1cdc` 创建注
 
 ## 7. 阶段 2：统一收藏核心骨架
 
+阶段状态：✅ 已完成（任务 2.1–2.3）
+
 ### 任务 2.1：引入稳定基础类型
 
 状态：✅ 已完成（`mod-solo-collections` `be9f68e`）
@@ -420,6 +422,8 @@ feat: add collection provider registry
 ```
 
 ### 任务 2.3：建立账号缓存和状态机
+
+状态：✅ 已完成（mod-solo-collections `b3b2fb3`）
 
 实现：
 
