@@ -76,18 +76,23 @@ B335010D2ADCB28FC1E96528C9DBFFB607A51B79B4C8C44EC5258737011E2955
   worldserver restart was required.
 - No spawn for creature templates `190010` or `190011` existed before the
   client-side acceptance run.
+- The GM client created creature spawn GUID `6000008` from template `190010`.
+- Applying source `6084` to equipped target `900047` succeeded. Characters DB
+  item GUID `1410` now has `FakeEntry = 6084` and `Owner = 14`. Character money
+  remained at the pre-test value of `1000268` copper, as expected for this
+  zero-price target.
 
-## Remaining in-client acceptance
+## Client acceptance status
 
 The local `security-baseline` tag must not be created until a real 3.3.5 client
 confirms all of the following against this deployed server:
 
-1. Open NPC `190010` and apply a collected appearance successfully.
-2. Submit an uncollected appearance and confirm no money, token, database, or
+1. [x] Open NPC `190010` and apply a collected appearance successfully.
+2. [ ] Submit an uncollected appearance and confirm no money, token, database, or
    visible-item side effect.
-3. Test insufficient money and insufficient token paths.
-4. Apply a preset containing one valid and one invalid slot and confirm that
+3. [ ] Test insufficient money and insufficient token paths.
+4. [ ] Apply a preset containing one valid and one invalid slot and confirm that
    neither slot changes.
-5. Run `.transmog reload` after a controlled revoke and confirm the revoked
+5. [ ] Run `.transmog reload` after a controlled revoke and confirm the revoked
    appearance disappears while a deliberately failed reload retains the old
    cache.
