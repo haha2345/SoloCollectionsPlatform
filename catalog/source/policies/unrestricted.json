@@ -1,0 +1,15 @@
+{
+  "policyKey": "unrestricted",
+  "requiredCapabilities": [],
+  "anyCapabilities": [],
+  "forbiddenCapabilities": [],
+  "allowedRaceKeys": [],
+  "deniedRaceKeys": [],
+  "allowedClassKeys": [],
+  "deniedClassKeys": [],
+  "factionPolicy": "ANY",
+  "minimumLevel": 0,
+  "requiredSkills": {},
+  "customPolicyKey": "",
+  "legacyFallback": false
+}
