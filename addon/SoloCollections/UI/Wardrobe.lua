@@ -1,6 +1,7 @@
 local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
+local Identity = SC.IdentityRegistry
 
 local ITEM_ROWS = 3
 local ITEM_COLUMNS = 6
@@ -60,19 +61,7 @@ local WARDROBE_MODEL_PROFILES = {
     FEET = { camera = 1, scaleMultiplier = 1.00, depthOffset = 0.00, horizontalOffset = 0.00, verticalOffset = 0.00, rotation = 0.08 },
 }
 
-local CLASS_FILTERS = {
-    { key = "ALL", label = "全部职业" },
-    { key = "WARRIOR", label = "战士" },
-    { key = "PALADIN", label = "圣骑士" },
-    { key = "HUNTER", label = "猎人" },
-    { key = "ROGUE", label = "潜行者" },
-    { key = "PRIEST", label = "牧师" },
-    { key = "DEATHKNIGHT", label = "死亡骑士" },
-    { key = "SHAMAN", label = "萨满祭司" },
-    { key = "MAGE", label = "法师" },
-    { key = "WARLOCK", label = "术士" },
-    { key = "DRUID", label = "德鲁伊" },
-}
+local CLASS_FILTERS = Identity.GetClassFilterOptions()
 
 local ARMOR_TYPE_FILTERS = {
     { key = "PLATE", label = "板甲" },
@@ -141,49 +130,6 @@ local WEAPON_FILTERS = {
     { key = "OFFHAND_ITEM", label = "副手物品", off = true },
 }
 
-local CLASS_WEAPON_TYPES = {
-    WARRIOR = {
-        MAINHAND = { ONE_HAND_AXE = true, TWO_HAND_AXE = true, BOW = true, GUN = true, ONE_HAND_MACE = true, TWO_HAND_MACE = true, POLEARM = true, ONE_HAND_SWORD = true, TWO_HAND_SWORD = true, STAFF = true, FIST_WEAPON = true, DAGGER = true, THROWN = true, CROSSBOW = true, FISHING_POLE = true },
-        OFFHAND = { ONE_HAND_AXE = true, ONE_HAND_MACE = true, ONE_HAND_SWORD = true, FIST_WEAPON = true, DAGGER = true, SHIELD = true },
-    },
-    PALADIN = {
-        MAINHAND = { ONE_HAND_AXE = true, TWO_HAND_AXE = true, ONE_HAND_MACE = true, TWO_HAND_MACE = true, POLEARM = true, ONE_HAND_SWORD = true, TWO_HAND_SWORD = true, FISHING_POLE = true },
-        OFFHAND = { SHIELD = true },
-    },
-    HUNTER = {
-        MAINHAND = { ONE_HAND_AXE = true, TWO_HAND_AXE = true, BOW = true, GUN = true, POLEARM = true, ONE_HAND_SWORD = true, TWO_HAND_SWORD = true, STAFF = true, FIST_WEAPON = true, DAGGER = true, CROSSBOW = true, FISHING_POLE = true },
-        OFFHAND = { ONE_HAND_AXE = true, ONE_HAND_SWORD = true, FIST_WEAPON = true, DAGGER = true },
-    },
-    ROGUE = {
-        MAINHAND = { ONE_HAND_AXE = true, BOW = true, GUN = true, ONE_HAND_MACE = true, ONE_HAND_SWORD = true, FIST_WEAPON = true, DAGGER = true, THROWN = true, CROSSBOW = true, FISHING_POLE = true },
-        OFFHAND = { ONE_HAND_AXE = true, ONE_HAND_MACE = true, ONE_HAND_SWORD = true, FIST_WEAPON = true, DAGGER = true },
-    },
-    PRIEST = {
-        MAINHAND = { ONE_HAND_MACE = true, STAFF = true, DAGGER = true, WAND = true, FISHING_POLE = true },
-        OFFHAND = { OFFHAND_ITEM = true },
-    },
-    DEATHKNIGHT = {
-        MAINHAND = { ONE_HAND_AXE = true, TWO_HAND_AXE = true, ONE_HAND_MACE = true, TWO_HAND_MACE = true, POLEARM = true, ONE_HAND_SWORD = true, TWO_HAND_SWORD = true, FISHING_POLE = true },
-        OFFHAND = { ONE_HAND_AXE = true, ONE_HAND_MACE = true, ONE_HAND_SWORD = true },
-    },
-    SHAMAN = {
-        MAINHAND = { ONE_HAND_AXE = true, TWO_HAND_AXE = true, ONE_HAND_MACE = true, TWO_HAND_MACE = true, STAFF = true, FIST_WEAPON = true, DAGGER = true, FISHING_POLE = true },
-        OFFHAND = { ONE_HAND_AXE = true, ONE_HAND_MACE = true, FIST_WEAPON = true, DAGGER = true, SHIELD = true, OFFHAND_ITEM = true },
-    },
-    MAGE = {
-        MAINHAND = { ONE_HAND_SWORD = true, STAFF = true, DAGGER = true, WAND = true, FISHING_POLE = true },
-        OFFHAND = { OFFHAND_ITEM = true },
-    },
-    WARLOCK = {
-        MAINHAND = { ONE_HAND_SWORD = true, STAFF = true, DAGGER = true, WAND = true, FISHING_POLE = true },
-        OFFHAND = { OFFHAND_ITEM = true },
-    },
-    DRUID = {
-        MAINHAND = { ONE_HAND_MACE = true, TWO_HAND_MACE = true, POLEARM = true, STAFF = true, FIST_WEAPON = true, DAGGER = true, FISHING_POLE = true },
-        OFFHAND = { OFFHAND_ITEM = true },
-    },
-}
-
 local STANDALONE_ITEM_SLOTS = {
     MAINHAND = true,
     OFFHAND = true,
@@ -243,20 +189,12 @@ local function setAtlasRegion(texture, texturePath, atlasWidth, atlasHeight, reg
 end
 
 local function getPlayerClassToken()
-    local _, classToken = UnitClass("player")
-    return classToken
+    local classIdentity = Identity.GetPlayerClass()
+    return classIdentity.known and classIdentity.filterToken or nil
 end
 
 local function getDefaultArmorType()
-    local classToken = getPlayerClassToken()
-    if classToken == "WARRIOR" or classToken == "PALADIN" or classToken == "DEATHKNIGHT" then
-        return "PLATE"
-    elseif classToken == "HUNTER" or classToken == "SHAMAN" then
-        return "MAIL"
-    elseif classToken == "ROGUE" or classToken == "DRUID" then
-        return "LEATHER"
-    end
-    return "CLOTH"
+    return Identity.GetDefaultArmorType() or "AUTO"
 end
 
 local function weaponOptionSupportsSlot(option, slot)
@@ -265,11 +203,9 @@ end
 
 local function getAvailableWeaponFilters(slot)
     local result = {}
-    local classToken = getPlayerClassToken()
-    local classUsage = CLASS_WEAPON_TYPES[classToken]
-    local allowed = classUsage and classUsage[slot]
+    local allowed = Identity.GetWeaponTypes(slot)
     for _, option in ipairs(WEAPON_FILTERS) do
-        if weaponOptionSupportsSlot(option, slot) and (not allowed or allowed[option.key]) then
+        if weaponOptionSupportsSlot(option, slot) and allowed[option.key] then
             table.insert(result, option)
         end
     end
