@@ -1,4 +1,5 @@
 #include "SoloCollectionsAccountCache.h"
+#include "SoloCollectionsIdentity.h"
 #include "SoloCollectionsProvider.h"
 
 #include <cstdlib>
@@ -273,6 +274,44 @@ void TestExplicitReloadAndDiagnostics()
     Require(!cache.CompleteLoad(Account(7), opened.Generation, {}, SC::CollectionRevision(std::uint64_t { 5 })),
         "pre-reload callback crossed generation boundary");
 }
+
+void TestExtensibleIdentityRegistry()
+{
+    SC::ClassIdentityDefinition syntheticClass {
+        SC::LogicalClassId(std::uint16_t { 501 }), "chronomancer", 101,
+        { "CHRONOMANCER" }, { "armor.cloth", "weapon.staff" },
+        "class.caster", "class.chronomancer", 0, "CLOTH", { "STAFF" }, { "OFFHAND_ITEM" }
+    };
+    SC::RaceIdentityDefinition syntheticRace {
+        SC::LogicalRaceId(std::uint16_t { 601 }), "earthen", 102,
+        { "EARTHEN" }, {}, "ALLIANCE", "race.medium", "race.earthen", ""
+    };
+    SC::IdentityRegistry registry({ syntheticClass }, { syntheticRace });
+    Require(registry.IsValid(), "synthetic identity registry was rejected");
+
+    auto byRuntime = registry.ResolveClass(101);
+    auto byAlias = registry.ResolveClass("CHRONOMANCER");
+    Require(byRuntime.IsKnown() && byAlias.IsKnown(), "synthetic class runtime/alias did not resolve");
+    Require(byRuntime.Identity->LogicalId.Value() == 501 && byAlias.Identity == byRuntime.Identity,
+        "synthetic class lost its logical identity");
+    Require(registry.ResolveCameraProfile(registry.ResolveRace(102)) == "global",
+        "race without a camera profile did not use global fallback");
+    Require(!registry.ResolveClass(999).IsKnown() &&
+        registry.ResolveClass(999).Code == SC::IdentityResolutionCode::UnknownIdentity,
+        "unknown runtime class did not fail closed");
+
+    syntheticClass.RuntimeClassId = 202;
+    SC::IdentityRegistry remapped({ syntheticClass }, { syntheticRace });
+    auto afterRuntimeChange = remapped.ResolveClass(202);
+    Require(afterRuntimeChange.IsKnown() && afterRuntimeChange.Identity->LogicalId.Value() == 501,
+        "runtime class change renumbered the logical class");
+    Require(!remapped.ResolveClass(101).IsKnown(), "old runtime class ID stayed implicitly bound");
+
+    SC::IdentityRegistry const& generated = SC::GetIdentityRegistry();
+    Require(generated.IsValid() && generated.Classes().size() == 10 && generated.Races().size() == 10,
+        "generated WotLK identity registry is invalid");
+    Require(generated.ResolveClass("DEATHKNIGHT").IsKnown(), "generated class aliases were not loaded");
+}
 }
 
 int main()
@@ -290,6 +329,7 @@ int main()
         TestFailedLoadRetry();
         TestWorldThreadConfinement();
         TestExplicitReloadAndDiagnostics();
+        TestExtensibleIdentityRegistry();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

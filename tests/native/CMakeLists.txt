@@ -6,6 +6,7 @@ enable_testing()
 add_executable(solo_collections_domain_tests
     SoloCollectionsDomainTests.cpp
     ../../src/SoloCollectionsAccountCache.cpp
+    ../../src/SoloCollectionsIdentity.cpp
     ../../src/SoloCollectionsProvider.cpp
 )
 
