@@ -5,7 +5,7 @@
 | Component | Revision |
 |---|---|
 | AzerothCore production checkout | `4cc67a316d2bec9faf27c3392634282e70cacbe0` |
-| `mod-solo-collections` P0 code | `3bbb4f7` |
+| `mod-solo-collections` P0 code | `c455d68` |
 | Production build | `RelWithDebInfo`, static modules |
 
 The production build retained ALE, AOE Loot, AutoBalance, Junk-to-Gold,
@@ -23,8 +23,8 @@ D:\AzerothCore_NPCBots_Clean
 Deployed `worldserver.exe`:
 
 ```text
-Size:    41,563,648 bytes
-SHA-256: DE2C4AC5C866B9D29CDAEB71CB11896C5380F7A6F0CE9E6AA9BF46749E2ED4B2
+Size:    41,565,184 bytes
+SHA-256: 3DABC0E0DC9EC78DF0EBFC412323D40C56EFA9302E2A7514A41D96E8BF940AA4
 ```
 
 Rollback backup:
@@ -38,6 +38,13 @@ targeted `rollback.sql`. The previous executable SHA-256 was:
 
 ```text
 B335010D2ADCB28FC1E96528C9DBFFB607A51B79B4C8C44EC5258737011E2955
+```
+
+The immediate pre-fix P0 binary is also preserved at:
+
+```text
+D:\AzerothCore_NPCBots_Clean\backups\solocollections-gossip-precharge-20260720-001010
+SHA-256: DE2C4AC5C866B9D29CDAEB71CB11896C5380F7A6F0CE9E6AA9BF46749E2ED4B2
 ```
 
 ## Database and startup checks
@@ -82,13 +89,33 @@ B335010D2ADCB28FC1E96528C9DBFFB607A51B79B4C8C44EC5258737011E2955
   remained at the pre-test value of `1000268` copper, as expected for this
   zero-price target.
 
+### Rejected-request runtime regression and fix
+
+The first stale-menu test correctly rejected revoked source `6971` and left
+head item GUID `1403` without a fake entry, but AzerothCore's gossip handler
+pre-deducted the option's `BoxMoney` before the module callback. Character
+money fell from `1000268` to `990268` copper despite the rejection.
+
+Commit `c455d68` changed gossip options to use `BoxMoney = 0`, retained a
+read-only icon-based cost display, and left all real deductions exclusively in
+`CommitApplyPlan` after a successful database commit. The security contract
+suite now includes a regression test for this Core/module boundary and passes
+21 of 21 tests.
+
+After deploying the fix, the character's `10000` copper was restored while the
+character was offline. The same stale-menu test was repeated: source `6971`
+was removed and the collection cache reloaded while the confirmation dialog
+remained open. The client reported `源元素不存在`; character money remained
+`1000268`, item GUID `1403` retained no fake entry, and the temporary
+collection row remained absent.
+
 ## Client acceptance status
 
 The local `security-baseline` tag must not be created until a real 3.3.5 client
 confirms all of the following against this deployed server:
 
 1. [x] Open NPC `190010` and apply a collected appearance successfully.
-2. [ ] Submit an uncollected appearance and confirm no money, token, database, or
+2. [x] Submit an uncollected appearance and confirm no money, token, database, or
    visible-item side effect.
 3. [ ] Test insufficient money and insufficient token paths.
 4. [ ] Apply a preset containing one valid and one invalid slot and confirm that
