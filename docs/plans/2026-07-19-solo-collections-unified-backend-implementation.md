@@ -482,6 +482,8 @@ feat: add versioned account collection schema
 
 ### 任务 3.2：实现异步 store
 
+状态：✅ 已完成（mod-solo-collections `a6536bd`）
+
 实现：
 
 - 登录使用 `CharacterDatabase.AsyncQuery`。
