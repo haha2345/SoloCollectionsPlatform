@@ -149,11 +149,17 @@ class AtomicApplyContractTests(unittest.TestCase):
     def test_current_module_strings_run_after_legacy_base_sql(self):
         world_sql = ROOT / "data" / "sql" / "db-world"
         base_name = "trasm_world_texts.sql"
+        legacy_name = "updates/2026_05_09_migrate_strings_to_module_string.sql"
         current_name = "zzzz_2026_05_09_migrate_strings_to_module_string.sql"
         error_name = "zzzzz_2026_07_19_transmog_atomic_apply_error.sql"
         self.assertTrue((world_sql / base_name).is_file())
+        self.assertTrue((world_sql / legacy_name).is_file())
         self.assertTrue((world_sql / current_name).is_file())
         self.assertTrue((world_sql / error_name).is_file())
+        self.assertNotEqual(
+            (world_sql / legacy_name).read_bytes(),
+            (world_sql / current_name).read_bytes(),
+        )
         self.assertLess(base_name, current_name)
         self.assertLess(current_name, error_name)
 
