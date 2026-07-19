@@ -1,8 +1,10 @@
+#include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsProvider.h"
 
 #include <cstdlib>
 #include <iostream>
 #include <memory>
+#include <set>
 #include <stdexcept>
 #include <string>
 #include <utility>
@@ -134,6 +136,121 @@ void TestRegistrationOrderIndependence()
     Require(FinalizedOrder(false) == expected, "forward registration produced unstable order");
     Require(FinalizedOrder(true) == expected, "reverse registration produced unstable order");
 }
+
+SC::AccountId Account(std::uint32_t value)
+{
+    return SC::AccountId(value);
+}
+
+SC::AccountSessionId Session(std::uint64_t value)
+{
+    return SC::AccountSessionId(value);
+}
+
+SC::CollectionKey Key(std::uint16_t typeId, std::uint32_t collectionId)
+{
+    return { SC::CollectionTypeId(typeId), SC::CollectionId(collectionId) };
+}
+
+void TestTwoSessionsShareOneLoad()
+{
+    SC::AccountCollectionCache cache(100);
+    auto first = cache.OpenSession(Account(1), Session(10), 0);
+    auto second = cache.OpenSession(Account(1), Session(11), 0);
+
+    Require(first.Accepted && first.ShouldStartLoad, "first account session did not start lazy load");
+    Require(second.Accepted && !second.ShouldStartLoad, "second account session started a duplicate load");
+    Require(first.Generation == second.Generation, "same-account sessions did not share generation");
+    auto snapshot = cache.Snapshot(Account(1));
+    Require(snapshot && snapshot->SessionCount == 2 && snapshot->State == SC::AccountCacheLoadState::Loading,
+        "same-account session set was not retained");
+}
+
+void TestLogoutBeforeCallback()
+{
+    SC::AccountCollectionCache cache(100);
+    auto opened = cache.OpenSession(Account(2), Session(20), 0);
+    Require(cache.CloseSession(Account(2), Session(20), 10), "session logout was not recorded");
+    auto waiting = cache.Snapshot(Account(2));
+    Require(waiting && waiting->SessionCount == 0 && waiting->EvictionScheduled,
+        "loading account was removed before its delayed eviction deadline");
+    Require(cache.CompleteLoad(Account(2), opened.Generation, {}, SC::CollectionRevision(std::uint64_t { 1 })),
+        "valid callback was rejected after the last session logged out");
+    Require(cache.EvictExpired(109) == 0, "account cache was evicted before its deadline");
+    Require(cache.EvictExpired(110) == 1 && !cache.Snapshot(Account(2)),
+        "account cache was not evicted at its deadline");
+}
+
+void TestUnlockDuringLoad()
+{
+    SC::AccountCollectionCache cache(100);
+    auto opened = cache.OpenSession(Account(3), Session(30), 0);
+    SC::CollectionDelta unlock {
+        Key(1, 500), SC::CollectionDeltaKind::Unlock, SC::CollectionRevision(std::uint64_t { 8 })
+    };
+    Require(cache.QueueDelta(Account(3), unlock) == SC::DeltaQueueResult::Deferred,
+        "unlock during load was not deferred");
+    Require(cache.CompleteLoad(Account(3), opened.Generation, {}, SC::CollectionRevision(std::uint64_t { 7 })),
+        "loading account did not accept its snapshot");
+    Require(cache.IsOwned(Account(3), unlock.Key), "pending unlock was lost when the snapshot completed");
+    auto snapshot = cache.Snapshot(Account(3));
+    Require(snapshot && snapshot->Revision.Value() == 8 && snapshot->PendingDeltaCount == 0,
+        "pending unlock revision was not merged");
+    Require(cache.DrainReadyDeltas(Account(3)).size() == 1,
+        "merged unlock was not available for account-session broadcast");
+}
+
+void TestRelogAndDelayedEviction()
+{
+    SC::AccountCollectionCache cache(100);
+    auto first = cache.OpenSession(Account(4), Session(40), 0);
+    Require(cache.CompleteLoad(Account(4), first.Generation, {}, SC::CollectionRevision(std::uint64_t { 1 })),
+        "initial account load failed");
+    Require(cache.CloseSession(Account(4), Session(40), 10), "initial logout failed");
+
+    auto quickRelog = cache.OpenSession(Account(4), Session(41), 50);
+    Require(!quickRelog.ShouldStartLoad && quickRelog.Generation == first.Generation,
+        "relog before delayed eviction started a redundant load");
+    Require(cache.CloseSession(Account(4), Session(41), 60), "second logout failed");
+    Require(cache.EvictExpired(160) == 1, "last-session cache did not expire after renewed delay");
+
+    auto afterEviction = cache.OpenSession(Account(4), Session(42), 161);
+    Require(afterEviction.ShouldStartLoad && afterEviction.Generation.Value() == first.Generation.Value() + 1,
+        "relog after eviction did not start a new generation");
+    Require(!cache.CompleteLoad(Account(4), first.Generation, {}, SC::CollectionRevision(std::uint64_t { 2 })),
+        "stale callback crossed login generations");
+}
+
+void TestFailedLoadRetry()
+{
+    SC::AccountCollectionCache cache(100);
+    auto opened = cache.OpenSession(Account(5), Session(50), 0);
+    Require(cache.FailLoad(Account(5), opened.Generation), "load failure was not accepted");
+    auto retry = cache.RetryFailed(Account(5));
+    Require(retry && retry->Value() == opened.Generation.Value() + 1,
+        "failed online account did not receive a new retry generation");
+    Require(!cache.CompleteLoad(Account(5), opened.Generation, {}, SC::CollectionRevision(std::uint64_t { 1 })),
+        "failed-generation callback was accepted after retry");
+}
+
+void TestWorldThreadConfinement()
+{
+    SC::AccountCollectionCache cache(100);
+    bool rejected = false;
+    std::thread worker([&cache, &rejected]()
+    {
+        try
+        {
+            (void)cache.Snapshot(Account(6));
+        }
+        catch (std::logic_error const&)
+        {
+            rejected = true;
+        }
+    });
+    worker.join();
+    Require(rejected, "cross-thread cache access was not rejected");
+}
 }
 
 int main()
@@ -144,6 +261,12 @@ int main()
         TestDuplicateAndTombstoneFailures();
         TestCyclesAndMissingDependencies();
         TestRegistrationOrderIndependence();
+        TestTwoSessionsShareOneLoad();
+        TestLogoutBeforeCallback();
+        TestUnlockDuringLoad();
+        TestRelogAndDelayedEviction();
+        TestFailedLoadRetry();
+        TestWorldThreadConfinement();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

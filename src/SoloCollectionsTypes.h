@@ -48,12 +48,18 @@ struct CollectionIdTag;
 struct LogicalClassIdTag;
 struct LogicalRaceIdTag;
 struct CollectionRevisionTag;
+struct AccountIdTag;
+struct AccountSessionIdTag;
+struct LoginGenerationTag;
 
 using CollectionTypeId = StableId<CollectionTypeIdTag, std::uint16_t>;
 using CollectionId = StableId<CollectionIdTag, std::uint32_t>;
 using LogicalClassId = StableId<LogicalClassIdTag, std::uint16_t>;
 using LogicalRaceId = StableId<LogicalRaceIdTag, std::uint16_t>;
 using CollectionRevision = StableId<CollectionRevisionTag, std::uint64_t>;
+using AccountId = StableId<AccountIdTag, std::uint32_t>;
+using AccountSessionId = StableId<AccountSessionIdTag, std::uint64_t>;
+using LoginGeneration = StableId<LoginGenerationTag, std::uint64_t>;
 
 template <typename Id>
 struct StableIdHash

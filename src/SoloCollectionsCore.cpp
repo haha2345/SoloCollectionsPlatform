@@ -1,3 +1,4 @@
+#include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsProvider.h"
 
 #include "Log.h"
@@ -53,8 +54,10 @@ public:
         if (!finalized.Success)
             throw std::runtime_error("SoloCollections provider finalization failed: " + finalized.Message);
 
-        LOG_INFO("module", "SoloCollections provider registry initialized with {} provider(s).",
-            registry.TopologicalOrder().size());
+        (void)GetAccountCollectionCache();
+
+        LOG_INFO("module", "SoloCollections provider registry initialized with {} provider(s); "
+            "account cache initialized with world-thread confinement.", registry.TopologicalOrder().size());
     }
 };
 }
