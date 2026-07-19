@@ -8,7 +8,7 @@ void AddSC_Transmog();
 void AddSC_transmog_commandscript();
 
 // Add all
-void Addmod_transmogScripts()
+void Addmod_solo_collectionsScripts()
 {
     AddSC_Transmog();
     AddSC_transmog_commandscript();
