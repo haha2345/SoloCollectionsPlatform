@@ -23,6 +23,7 @@
 
 class Item;
 class Player;
+class Creature;
 class WorldSession;
 struct ItemTemplate;
 
@@ -42,6 +43,13 @@ enum MixedWeaponSettings
     MIXED_WEAPONS_STRICT = 0,
     MIXED_WEAPONS_MODERN = 1,
     MIXED_WEAPONS_LOOSE  = 2
+};
+
+enum class TransmogApplySource : uint8
+{
+    Gossip,
+    Vendor,
+    Preset
 };
 
 enum TransmogStrings : uint32
@@ -205,8 +213,6 @@ public:
     presetNameMap presetByName; // presetByName[pGUID][presetID] = presetName
     searchStringMap searchStringByPlayer;
 
-    void PresetTransmog(Player* player, Item* itemTransmogrified, uint32 fakeEntry, uint8 slot);
-
     bool EnableSets;
     uint8 MaxSets;
     float SetCostModifier;
@@ -295,10 +301,10 @@ public:
     void DeleteFakeEntry(Player* player, uint8 slot, Item* itemTransmogrified, CharacterDatabaseTransaction* trans = nullptr);
     void SetFakeEntry(Player* player, uint32 newEntry, uint8 slot, Item* itemTransmogrified);
     bool AddCollectedAppearance(uint32 accountId, uint32 itemId);
+    [[nodiscard]] bool HasCollectedAppearance(uint32 accountId, uint32 itemId) const;
 
-    TransmogStrings Transmogrify(Player* player, ObjectGuid itemGUID, uint8 slot, /*uint32 newEntry, */bool no_cost = false);
-    TransmogStrings Transmogrify(Player* player, uint32 itemEntry, uint8 slot, /*uint32 newEntry, */bool no_cost = false);
-    TransmogStrings Transmogrify(Player* player, Item* itemTransmogrifier, uint8 slot, /*uint32 newEntry, */bool no_cost = false, bool hidden_transmog = false);
+    TransmogStrings TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
+        ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
     bool CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     bool SuitableForTransmogrification(Player* player, ItemTemplate const* proto) const;
     bool SuitableForTransmogrification(ObjectGuid guid, ItemTemplate const* proto) const;
@@ -353,7 +359,15 @@ public:
 
     uint32 PetSpellId;
     uint32 PetEntry;
-    [[nodiscard]] bool IsTransmogVendor(uint32 entry) const { return entry == TMOG_VENDOR_CREATURE_ID || entry == PetEntry; };
+    [[nodiscard]] bool IsTransmogVendor(uint32 entry) const { return entry == TMOG_VENDOR_CREATURE_ID || (PetEntry && entry == PetEntry); };
+
+private:
+#ifdef PRESETS
+    void PresetTransmog(Player* player, Item* itemTransmogrified, uint32 fakeEntry, uint8 slot);
+#endif
+    TransmogStrings Transmogrify(Player* player, ObjectGuid itemGUID, uint8 slot, bool noCost = false);
+    TransmogStrings Transmogrify(Player* player, uint32 itemEntry, uint8 slot, bool noCost = false);
+    TransmogStrings Transmogrify(Player* player, Item* itemTransmogrifier, uint8 slot, bool noCost = false, bool hiddenTransmog = false);
 };
 #define sTransmogrification Transmogrification::instance()
 

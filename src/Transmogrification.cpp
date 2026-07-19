@@ -2,6 +2,7 @@
 #include "ItemTemplate.h"
 #include "DatabaseEnv.h"
 #include "SpellMgr.h"
+#include "TemporarySummon.h"
 #include "Tokenize.h"
 #include "WorldSessionMgr.h"
 
@@ -476,6 +477,83 @@ bool Transmogrification::AddCollectedAppearance(uint32 accountId, uint32 itemId)
     return inserted;
 }
 
+bool Transmogrification::HasCollectedAppearance(uint32 accountId, uint32 itemId) const
+{
+    auto account = collectionCache.find(accountId);
+    return account != collectionCache.end() && account->second.find(itemId) != account->second.end();
+}
+
+TransmogStrings Transmogrification::TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
+    ObjectGuid interactionGuid, TransmogApplySource source, bool noCost)
+{
+    if (!player || !player->GetSession() || !IsEnabled())
+        return LANG_TRANSMOG_INVALID_SRC_ENTRY;
+
+    if (slot >= EQUIPMENT_SLOT_END || !player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
+        return slot >= EQUIPMENT_SLOT_END ? LANG_TRANSMOG_INVALID_SLOT : LANG_TRANSMOG_MISSING_DEST_ITEM;
+
+    if (noCost && source != TransmogApplySource::Preset)
+        return LANG_TRANSMOG_INVALID_SRC_ENTRY;
+
+    uint32 requiredNpcFlag = source == TransmogApplySource::Vendor ? UNIT_NPC_FLAG_VENDOR : UNIT_NPC_FLAG_NONE;
+    Creature* interaction = player->GetNPCIfCanInteractWith(interactionGuid, requiredNpcFlag);
+    if (!interaction || !IsTransmogVendor(interaction->GetEntry()))
+    {
+        LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Player {} rejected invalid transmog interaction {}.",
+            player->GetGUID().ToString(), interactionGuid.ToString());
+        return LANG_TRANSMOG_INVALID_SRC_ENTRY;
+    }
+
+    if (source != TransmogApplySource::Vendor &&
+        (!player->PlayerTalkClass || player->PlayerTalkClass->GetGossipMenu().GetSenderGUID() != interactionGuid))
+    {
+        LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Player {} rejected mismatched gossip sender {}.",
+            player->GetGUID().ToString(), interactionGuid.ToString());
+        return LANG_TRANSMOG_INVALID_SRC_ENTRY;
+    }
+
+    if (PetEntry && interaction->GetEntry() == PetEntry)
+    {
+        TempSummon* summon = interaction->ToTempSummon();
+        if (!summon || summon->GetOwner() != player)
+        {
+            LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Player {} rejected another owner's portable transmog NPC {}.",
+                player->GetGUID().ToString(), interactionGuid.ToString());
+            return LANG_TRANSMOG_INVALID_SRC_ENTRY;
+        }
+    }
+
+    if (sourceItemEntry == UINT_MAX)
+    {
+        if (!AllowHiddenTransmog)
+            return LANG_TRANSMOG_INVALID_SRC_ENTRY;
+
+        return Transmogrify(player, nullptr, slot, noCost, true);
+    }
+
+    if (!sObjectMgr->GetItemTemplate(sourceItemEntry))
+        return LANG_TRANSMOG_MISSING_SRC_ITEM;
+
+    WorldSession* session = player->GetSession();
+    if (GetUseCollectionSystem())
+    {
+        if (!HasCollectedAppearance(session->GetAccountId(), sourceItemEntry))
+        {
+            LOG_WARN("module", "Transmogrification::TryApplyCollectedAppearance - Account {} rejected uncollected source item {}.",
+                session->GetAccountId(), sourceItemEntry);
+            return LANG_TRANSMOG_MISSING_SRC_ITEM;
+        }
+
+        return Transmogrify(player, sourceItemEntry, slot, noCost);
+    }
+
+    Item* ownedSource = player->GetItemByEntry(sourceItemEntry);
+    if (!ownedSource)
+        return LANG_TRANSMOG_MISSING_SRC_ITEM;
+
+    return Transmogrify(player, ownedSource, slot, noCost, false);
+}
+
 TransmogStrings Transmogrification::Transmogrify(Player* player, uint32 itemEntry, uint8 slot, /*uint32 newEntry, */bool no_cost) {
     if (itemEntry == UINT_MAX) // Hidden transmog
     {
@@ -531,7 +609,7 @@ TransmogStrings Transmogrification::Transmogrify(Player* player, Item* itemTrans
         cost *= ScaledCostModifier;
         cost += CopperCost;
 
-        if (!HiddenTransmogIsFree && cost)
+        if (!no_cost && !HiddenTransmogIsFree && cost)
         {
             if (cost < 0)
                 LOG_DEBUG("module", "Transmogrification::Transmogrify - {} ({}) transmogrification invalid cost (non negative, amount {}). Transmogrified {} with {}",

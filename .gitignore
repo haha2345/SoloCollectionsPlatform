@@ -1,5 +1,9 @@
 !.gitignore
 
+# Python contract tests
+__pycache__/
+*.py[cod]
+
 #
 #Generic
 #

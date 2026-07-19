@@ -123,16 +123,18 @@ std::vector<Item*> GetValidTransmogs (Player* player, Item* target, bool hasSear
     return allowedItems;
 }
 
-void PerformTransmogrification (Player* player, uint32 itemEntry, uint32 cost)
+void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEntry, TransmogApplySource source)
 {
-    uint8 slot = sT->selectionCache[player->GetGUID()];
     WorldSession* session = player->GetSession();
-    if (!player->HasEnoughMoney(cost))
+    auto selection = sT->selectionCache.find(player->GetGUID());
+    if (selection == sT->selectionCache.end())
     {
-        ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_NOT_ENOUGH_MONEY));
+        ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SLOT));
         return;
     }
-    TransmogStrings res = sT->Transmogrify(player, itemEntry, slot);
+
+    uint8 slot = selection->second;
+    TransmogStrings res = sT->TryApplyCollectedAppearance(player, itemEntry, slot, creature->GetGUID(), source);
     if (res == LANG_TRANSMOG_OK)
     {
         session->SendAreaTriggerMessage("{}", Tstr(session, LANG_TRANSMOG_OK));
@@ -153,8 +155,15 @@ void PerformTransmogrification (Player* player, uint32 itemEntry, uint32 cost)
 
 void RemoveTransmogrification (Player* player)
 {
-    uint8 slot = sT->selectionCache[player->GetGUID()];
     WorldSession* session = player->GetSession();
+    auto selection = sT->selectionCache.find(player->GetGUID());
+    if (selection == sT->selectionCache.end())
+    {
+        ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SLOT));
+        return;
+    }
+
+    uint8 slot = selection->second;
     if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
     {
         if (sT->GetFakeEntry(newItem->GetGUID()))
@@ -310,8 +319,11 @@ public:
                 // action = presetID
                 for (Transmogrification::slotMap::const_iterator it = sT->presetById[player->GetGUID()][action].begin(); it != sT->presetById[player->GetGUID()][action].end(); ++it)
                 {
-                    if (Item* item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, it->first))
-                        sT->PresetTransmog(player, item, it->second, it->first);
+                    uint32 sourceEntry = it->second == HIDDEN_ITEM_ID ? UINT_MAX : it->second;
+                    TransmogStrings result = sT->TryApplyCollectedAppearance(player, sourceEntry, it->first,
+                        creature->GetGUID(), TransmogApplySource::Preset, true);
+                    if (result != LANG_TRANSMOG_OK)
+                        ChatHandler(session).SendNotification(Tstr(session, result));
                 }
                 OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 6, action);
             } break;
@@ -398,7 +410,7 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                PerformTransmogrification(player, action, sender);
+                PerformTransmogrification(player, creature, action, TransmogApplySource::Gossip);
                 CloseGossipMenuFor(player); // Wait for SetMoney to get fixed, issue #10053
             } break;
         }
@@ -944,11 +956,18 @@ public:
         if (!sT->IsTransmogVendor(vendor->GetEntry()))
             return;
 
-        uint8 slot = sT->selectionCache[player->GetGUID()];
+        auto selection = sT->selectionCache.find(player->GetGUID());
+        if (selection == sT->selectionCache.end())
+        {
+            itemEntry = 0;
+            return;
+        }
+
+        uint8 slot = selection->second;
 
         if (itemEntry == CUSTOM_HIDE_ITEM_VENDOR_ID || itemEntry == FALLBACK_HIDE_ITEM_VENDOR_ID)
         {
-            PerformTransmogrification(player, UINT_MAX, 0);
+            PerformTransmogrification(player, vendor, UINT_MAX, TransmogApplySource::Vendor);
         }
         else if (itemEntry == CUSTOM_REMOVE_TMOG_VENDOR_ID || itemEntry == FALLBACK_REMOVE_TMOG_VENDOR_ID)
         {
@@ -956,7 +975,7 @@ public:
         }
         else
         {
-            PerformTransmogrification(player, itemEntry, 0);
+            PerformTransmogrification(player, vendor, itemEntry, TransmogApplySource::Vendor);
         }
         npc_transmogrifier::ShowTransmogItemsInFakeVendor(player, vendor, slot); //Refresh menu
         itemEntry = 0; //Prevents the handler from proceeding to core vendor handling
