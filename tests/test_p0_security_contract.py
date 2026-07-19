@@ -225,6 +225,11 @@ class AtomicReloadContractTests(unittest.TestCase):
         reload_handler = COMMANDS.split("static bool HandleReloadTransmogConfig", 1)[1].split(
             "};", 1
         )[0]
+        self.assertIn("sConfigMgr->LoadModulesConfigs(true, false)", reload_handler)
+        self.assertLess(
+            reload_handler.index("LoadModulesConfigs(true, false)"),
+            reload_handler.index("sTransmogrification->LoadConfig(true)"),
+        )
         self.assertIn("if (sTransmogrification->LoadCollections())", reload_handler)
         self.assertIn("previous cache retained", reload_handler)
 

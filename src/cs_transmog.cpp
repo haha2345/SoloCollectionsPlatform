@@ -16,6 +16,7 @@
  */
 
 #include "Chat.h"
+#include "Config.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "ScriptMgr.h"
@@ -606,8 +607,12 @@ public:
 
     static bool HandleReloadTransmogConfig(ChatHandler* handler)
     {
+        // Refresh module files before reading transmog values. Calling
+        // LoadConfig alone only re-reads ConfigMgr's existing in-memory
+        // snapshot and can falsely report success after a file edit.
+        sConfigMgr->LoadModulesConfigs(true, false);
         sTransmogrification->LoadConfig(true);
-        handler->SendSysMessage("Transmog configs reloaded.");
+        handler->SendSysMessage("Transmog module config files and runtime values reloaded.");
         if (sTransmogrification->LoadCollections())
             handler->SendSysMessage("Transmog collections reloaded.");
         else
