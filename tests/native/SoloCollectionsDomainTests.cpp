@@ -1,4 +1,5 @@
 #include "SoloCollectionsAccountCache.h"
+#include "SoloCollectionsEligibility.h"
 #include "SoloCollectionsIdentity.h"
 #include "SoloCollectionsProvider.h"
 
@@ -312,6 +313,114 @@ void TestExtensibleIdentityRegistry()
         "generated WotLK identity registry is invalid");
     Require(generated.ResolveClass("DEATHKNIGHT").IsKnown(), "generated class aliases were not loaded");
 }
+
+void TestEligibilityResourceAndOverrideOrder()
+{
+    SC::EligibilityPolicyDefinition unrestricted;
+    unrestricted.PolicyKey = "unrestricted";
+    unrestricted.FactionPolicy = "ANY";
+    SC::EligibilityIdentityContext identity;
+    identity.IdentityKnown = true;
+    identity.ClassKey = "chronomancer";
+    identity.RaceKey = "earthen";
+    identity.FactionKey = "ALLIANCE";
+    identity.Capabilities = { "armor.cloth", "weapon.staff" };
+    identity.Level = 80;
+
+    SC::EligibilityRequest request;
+    request.Policy = &unrestricted;
+    request.Identity = &identity;
+    request.ExactOverride = SC::ExactEligibilityOverride::Allow;
+    request.Resources.AssetReady = false;
+    Require(SC::EvaluateEligibility(request).Reason == SC::EligibilityReason::AssetMissing,
+        "exact allow bypassed missing assets");
+
+    request.Resources.AssetReady = true;
+    request.ExactOverride = SC::ExactEligibilityOverride::Deny;
+    Require(SC::EvaluateEligibility(request).Reason == SC::EligibilityReason::ExactDenied,
+        "exact deny did not precede ordinary policy allow");
+}
+
+void TestEligibilityDeclarativeAndFallbackOrder()
+{
+    SC::EligibilityPolicyDefinition policy;
+    policy.PolicyKey = "synthetic.caster";
+    policy.RequiredCapabilities = { "armor.cloth" };
+    policy.AnyCapabilities = { "weapon.staff", "weapon.wand" };
+    policy.ForbiddenCapabilities = { "form.demon" };
+    policy.AllowedRaceKeys = { "earthen" };
+    policy.AllowedClassKeys = { "chronomancer" };
+    policy.FactionPolicy = "ALLIANCE";
+    policy.MinimumLevel = 40;
+    policy.RequiredSkills = { { "enchanting", 300 } };
+    policy.CustomPolicyKey = "timeline.stable";
+    policy.LegacyFallback = true;
+
+    SC::EligibilityIdentityContext identity;
+    identity.IdentityKnown = true;
+    identity.ClassKey = "chronomancer";
+    identity.RaceKey = "earthen";
+    identity.FactionKey = "ALLIANCE";
+    identity.Capabilities = { "armor.cloth", "weapon.staff" };
+    identity.Level = 80;
+    identity.Skills = { { "enchanting", 450 } };
+
+    std::vector<std::string> order;
+    SC::EligibilityRequest request;
+    request.Policy = &policy;
+    request.Identity = &identity;
+    request.CustomPolicy = [&order](std::string_view key, SC::EligibilityIdentityContext const&)
+    {
+        order.emplace_back(key);
+        return true;
+    };
+    request.LegacyFallback = [&order](SC::EligibilityIdentityContext const&)
+    {
+        order.emplace_back("legacy");
+        return true;
+    };
+    request.RuntimeCondition = [&order](SC::EligibilityIdentityContext const&)
+    {
+        order.emplace_back("runtime");
+        return true;
+    };
+    Require(SC::EvaluateEligibility(request).IsAllowed(), "synthetic reusable profile was denied");
+    Require(order == std::vector<std::string>({ "timeline.stable", "legacy", "runtime" }),
+        "custom, legacy and runtime policy order changed");
+
+    identity.Capabilities.insert("form.demon");
+    order.clear();
+    Require(SC::EvaluateEligibility(request).Reason == SC::EligibilityReason::ForbiddenCapability,
+        "forbidden capability was ignored");
+    Require(order.empty(), "later policy stages ran after declarative denial");
+}
+
+void TestEligibilityUnknownIdentityViewOnly()
+{
+    SC::EligibilityPolicyDefinition unrestricted;
+    unrestricted.PolicyKey = "unrestricted";
+    unrestricted.FactionPolicy = "ANY";
+    SC::EligibilityPolicyDefinition restricted = unrestricted;
+    restricted.PolicyKey = "restricted";
+    SC::EligibilityIdentityContext unknown;
+
+    SC::EligibilityRequest request;
+    request.Policy = &unrestricted;
+    request.Identity = &unknown;
+    request.Mode = SC::EligibilityMode::View;
+    Require(SC::EvaluateEligibility(request).IsAllowed(), "unknown identity could not view unrestricted catalog");
+    request.Mode = SC::EligibilityMode::Use;
+    Require(SC::EvaluateEligibility(request).Reason == SC::EligibilityReason::UnknownIdentity,
+        "unknown identity could use a collection");
+    request.Mode = SC::EligibilityMode::View;
+    request.Policy = &restricted;
+    Require(SC::EvaluateEligibility(request).Reason == SC::EligibilityReason::UnknownIdentity,
+        "unknown identity could view a restricted catalog");
+
+    SC::EligibilityPolicyRegistry const& generated = SC::GetEligibilityPolicyRegistry();
+    Require(generated.IsValid() && generated.Find("unrestricted") && generated.Find("appearance.plate"),
+        "generated policy registry is invalid");
+}
 }
 
 int main()
@@ -330,6 +439,9 @@ int main()
         TestWorldThreadConfinement();
         TestExplicitReloadAndDiagnostics();
         TestExtensibleIdentityRegistry();
+        TestEligibilityResourceAndOverrideOrder();
+        TestEligibilityDeclarativeAndFallbackOrder();
+        TestEligibilityUnknownIdentityViewOnly();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }
