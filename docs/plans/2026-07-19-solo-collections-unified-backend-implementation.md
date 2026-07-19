@@ -373,6 +373,8 @@ reload（`bd7aa3e`）。已在 `mod-solo-collections` 提交 `17c1cdc` 创建注
 
 ### 任务 2.1：引入稳定基础类型
 
+状态：✅ 已完成（`mod-solo-collections` `be9f68e`）
+
 新增：
 
 - `CollectionTypeId`
