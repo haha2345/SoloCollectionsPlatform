@@ -56,6 +56,7 @@ struct AccountStoreDiagnostics
     AccountStoreSchemaState SchemaState = AccountStoreSchemaState::Checking;
     std::size_t PendingLoads = 0;
     std::size_t PendingMutations = 0;
+    std::size_t PendingAudits = 0;
     std::uint64_t SuccessfulLoads = 0;
     std::uint64_t FailedLoads = 0;
     std::uint64_t SuccessfulMutations = 0;
@@ -69,6 +70,7 @@ public:
     virtual void OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta const& delta) = 0;
     virtual void OnCollectionMutationFailed(
         AccountId accountId, CollectionKey const& key, CollectionReasonCode reason) = 0;
+    virtual bool OnAccountResyncRequested(AccountId accountId) = 0;
 };
 
 class AccountCollectionStore
@@ -84,7 +86,12 @@ public:
     void Update();
     void BeginLoad(AccountId accountId, std::uint32_t playerGuid, LoginGeneration generation);
     [[nodiscard]] bool RetryLoad(AccountId accountId, std::uint32_t playerGuid);
+    [[nodiscard]] bool ReloadAccount(AccountId accountId, std::uint32_t playerGuid);
     [[nodiscard]] MutationStartResult BeginMutation(AccountCollectionMutation mutation);
+    [[nodiscard]] bool RecordRejectedMutation(
+        AccountCollectionMutation const& mutation, CollectionReasonCode reason);
+    [[nodiscard]] bool RequestResync(AccountId accountId);
+    [[nodiscard]] bool HasPendingMutation(AccountId accountId) const;
     void SetEventSink(AccountCollectionEventSink* sink);
 
     [[nodiscard]] AccountStoreDiagnostics Diagnostics() const;

@@ -141,6 +141,21 @@ std::optional<LoginGeneration> AccountCollectionCache::RetryFailed(AccountId acc
     return entry->second.Generation;
 }
 
+std::optional<LoginGeneration> AccountCollectionCache::BeginReload(AccountId accountId)
+{
+    AssertOwnerThread();
+    auto entry = _entries.find(accountId);
+    if (entry == _entries.end() || entry->second.Sessions.empty())
+        return std::nullopt;
+
+    entry->second.Generation = NextGeneration();
+    entry->second.State = AccountCacheLoadState::Loading;
+    entry->second.Owned.clear();
+    entry->second.ReadyDeltas.clear();
+    entry->second.Revision = CollectionRevision();
+    return entry->second.Generation;
+}
+
 DeltaQueueResult AccountCollectionCache::QueueDelta(AccountId accountId, CollectionDelta delta)
 {
     AssertOwnerThread();
@@ -212,6 +227,28 @@ std::optional<AccountCacheSnapshot> AccountCollectionCache::Snapshot(AccountId a
         entry->second.Revision,
         entry->second.EvictAfterMs.has_value(),
     };
+}
+
+AccountCacheDiagnostics AccountCollectionCache::Diagnostics() const
+{
+    AssertOwnerThread();
+    AccountCacheDiagnostics diagnostics;
+    diagnostics.EntryCount = _entries.size();
+    for (auto const& [accountId, entry] : _entries)
+    {
+        (void)accountId;
+        switch (entry.State)
+        {
+            case AccountCacheLoadState::Loading: ++diagnostics.LoadingCount; break;
+            case AccountCacheLoadState::Ready: ++diagnostics.ReadyCount; break;
+            case AccountCacheLoadState::Failed: ++diagnostics.FailedCount; break;
+        }
+        diagnostics.SessionCount += entry.Sessions.size();
+        diagnostics.PendingDeltaCount += entry.PendingDeltas.size();
+        if (entry.EvictAfterMs)
+            ++diagnostics.EvictionScheduledCount;
+    }
+    return diagnostics;
 }
 
 bool AccountCollectionCache::IsOwned(AccountId accountId, CollectionKey const& key) const

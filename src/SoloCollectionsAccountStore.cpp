@@ -308,11 +308,71 @@ public:
         return true;
     }
 
+    bool ReloadAccount(AccountId accountId, std::uint32_t playerGuid)
+    {
+        if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready ||
+            _pendingMutations.contains(accountId) || _loadingAccounts.contains(accountId))
+            return false;
+
+        std::optional<LoginGeneration> generation = GetAccountCollectionCache().BeginReload(accountId);
+        if (!generation)
+            return false;
+        BeginLoad({ accountId, playerGuid, *generation });
+        return true;
+    }
+
+    bool RecordRejectedMutation(AccountCollectionMutation const& mutation, CollectionReasonCode reason)
+    {
+        if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid())
+        {
+            LOG_ERROR("module.solocollections.audit",
+                "event=rejected_mutation_audit result=unavailable account={} type={} collection={} reason={}",
+                mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                ToStableReasonCode(reason));
+            return false;
+        }
+
+        CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
+        transaction->Append(
+            "INSERT INTO sc_collection_audit(account_id, type_id, collection_id, action_kind, source_kind, source_id, "
+            "character_guid, actor_account_id, actor_guid, revision, result_code) "
+            "VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, 0, {})",
+            mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+            StableMutationKind(mutation.Kind), StableSourceKind(mutation.SourceKind), mutation.SourceId,
+            mutation.CharacterGuid, mutation.ActorAccountId, mutation.ActorGuid, ToStableReasonCode(reason));
+
+        ++_pendingAudits;
+        TransactionCallback& callback = _transactionCallbacks.AddCallback(
+            CharacterDatabase.AsyncCommitTransaction(transaction));
+        callback.AfterComplete([this, mutation, reason](bool committed)
+        {
+            --_pendingAudits;
+            LOG_INFO("module.solocollections.audit",
+                "event=rejected_mutation_audit result={} account={} type={} collection={} reason={}",
+                committed ? "committed" : "failed", mutation.Account.Value(), mutation.Key.TypeId.Value(),
+                mutation.Key.Id.Value(), ToStableReasonCode(reason));
+        });
+        return true;
+    }
+
+    bool RequestResync(AccountId accountId)
+    {
+        std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(accountId);
+        return snapshot && snapshot->State == AccountCacheLoadState::Ready && _eventSink &&
+            _eventSink->OnAccountResyncRequested(accountId);
+    }
+
+    bool HasPendingMutation(AccountId accountId) const
+    {
+        return _pendingMutations.contains(accountId);
+    }
+
     AccountStoreDiagnostics Diagnostics() const
     {
         AccountStoreDiagnostics result = _diagnostics;
         result.PendingLoads = _loadingAccounts.size() + _deferredLoads.size();
         result.PendingMutations = _pendingMutations.size();
+        result.PendingAudits = _pendingAudits;
         return result;
     }
 
@@ -332,6 +392,7 @@ private:
     std::map<AccountId, DeferredLoad> _deferredLoads;
     std::set<AccountId> _loadingAccounts;
     std::map<AccountId, AccountCollectionMutation> _pendingMutations;
+    std::size_t _pendingAudits = 0;
     AccountCollectionEventSink* _eventSink = nullptr;
     AccountStoreDiagnostics _diagnostics;
     bool _initialized = false;
@@ -361,9 +422,30 @@ bool AccountCollectionStore::RetryLoad(AccountId accountId, std::uint32_t player
     return _impl->RetryLoad(accountId, playerGuid);
 }
 
+bool AccountCollectionStore::ReloadAccount(AccountId accountId, std::uint32_t playerGuid)
+{
+    return _impl->ReloadAccount(accountId, playerGuid);
+}
+
 MutationStartResult AccountCollectionStore::BeginMutation(AccountCollectionMutation mutation)
 {
     return _impl->BeginMutation(std::move(mutation));
+}
+
+bool AccountCollectionStore::RecordRejectedMutation(
+    AccountCollectionMutation const& mutation, CollectionReasonCode reason)
+{
+    return _impl->RecordRejectedMutation(mutation, reason);
+}
+
+bool AccountCollectionStore::RequestResync(AccountId accountId)
+{
+    return _impl->RequestResync(accountId);
+}
+
+bool AccountCollectionStore::HasPendingMutation(AccountId accountId) const
+{
+    return _impl->HasPendingMutation(accountId);
 }
 
 void AccountCollectionStore::SetEventSink(AccountCollectionEventSink* sink)

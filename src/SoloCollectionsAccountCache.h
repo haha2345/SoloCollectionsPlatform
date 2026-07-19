@@ -77,6 +77,17 @@ struct AccountCacheSnapshot
     bool EvictionScheduled = false;
 };
 
+struct AccountCacheDiagnostics
+{
+    std::size_t EntryCount = 0;
+    std::size_t LoadingCount = 0;
+    std::size_t ReadyCount = 0;
+    std::size_t FailedCount = 0;
+    std::size_t SessionCount = 0;
+    std::size_t PendingDeltaCount = 0;
+    std::size_t EvictionScheduledCount = 0;
+};
+
 // This cache is deliberately world-thread confined. Database workers may
 // produce immutable load results, but callbacks must marshal back to the owner
 // thread before calling CompleteLoad or any other cache operation.
@@ -94,12 +105,14 @@ public:
         std::set<CollectionKey> owned, CollectionRevision revision);
     [[nodiscard]] bool FailLoad(AccountId accountId, LoginGeneration generation);
     [[nodiscard]] std::optional<LoginGeneration> RetryFailed(AccountId accountId);
+    [[nodiscard]] std::optional<LoginGeneration> BeginReload(AccountId accountId);
 
     [[nodiscard]] DeltaQueueResult QueueDelta(AccountId accountId, CollectionDelta delta);
     [[nodiscard]] std::vector<CollectionDelta> DrainReadyDeltas(AccountId accountId);
     [[nodiscard]] std::size_t EvictExpired(std::uint64_t nowMs);
 
     [[nodiscard]] std::optional<AccountCacheSnapshot> Snapshot(AccountId accountId) const;
+    [[nodiscard]] AccountCacheDiagnostics Diagnostics() const;
     [[nodiscard]] bool IsOwned(AccountId accountId, CollectionKey const& key) const;
     [[nodiscard]] std::thread::id OwnerThread() const noexcept { return _ownerThread; }
 

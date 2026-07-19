@@ -251,6 +251,28 @@ void TestWorldThreadConfinement()
     worker.join();
     Require(rejected, "cross-thread cache access was not rejected");
 }
+
+void TestExplicitReloadAndDiagnostics()
+{
+    SC::AccountCollectionCache cache(100);
+    auto opened = cache.OpenSession(Account(7), Session(70), 0);
+    (void)cache.OpenSession(Account(7), Session(71), 0);
+    auto loading = cache.Diagnostics();
+    Require(loading.EntryCount == 1 && loading.LoadingCount == 1 && loading.SessionCount == 2,
+        "cache diagnostics did not report shared loading sessions");
+    Require(cache.CompleteLoad(Account(7), opened.Generation, { Key(1, 700) },
+        SC::CollectionRevision(std::uint64_t { 4 })), "initial reload fixture did not become ready");
+
+    auto generation = cache.BeginReload(Account(7));
+    Require(generation && generation->Value() == opened.Generation.Value() + 1,
+        "explicit reload did not advance generation");
+    auto reloading = cache.Snapshot(Account(7));
+    Require(reloading && reloading->State == SC::AccountCacheLoadState::Loading &&
+        reloading->SessionCount == 2 && reloading->Revision.Value() == 0,
+        "explicit reload did not atomically reset the online snapshot");
+    Require(!cache.CompleteLoad(Account(7), opened.Generation, {}, SC::CollectionRevision(std::uint64_t { 5 })),
+        "pre-reload callback crossed generation boundary");
+}
 }
 
 int main()
@@ -267,6 +289,7 @@ int main()
         TestRelogAndDelayedEviction();
         TestFailedLoadRetry();
         TestWorldThreadConfinement();
+        TestExplicitReloadAndDiagnostics();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }
