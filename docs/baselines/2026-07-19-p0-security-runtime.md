@@ -53,12 +53,26 @@ B335010D2ADCB28FC1E96528C9DBFFB607A51B79B4C8C44EC5258737011E2955
   `AAE2B9756ABE2E73D0F62966D9868C3705B82449`.
 - Startup loaded 89 total module strings and 658 total localized module
   strings.
-- The collection cache loaded successfully with zero current appearances.
+- The collection cache loaded successfully with zero appearances at startup.
 - NPCBots remained enabled and loaded normally.
 - The server reached the `worldserver-daemon ready` state.
 
 `Errors.log` contains only three pre-existing orphan references for quest
 `990101`; no new transmog or module error was recorded.
+
+## Live acceptance setup
+
+- Account ID `1` is GM level 3 and character GUID `14` (`啊啊水电费`) was
+  confirmed online for the acceptance run.
+- Character login populated 65 collected appearances without manual database
+  injection.
+- A compatible collected test pair is available: target item `900047`
+  (`边境守备护腿`) and source item `6084` (`暴风城卫兵护腿`).
+- Remote administration executed `.transmog reload` successfully and returned
+  both `Transmog configs reloaded.` and `Transmog collections reloaded.`. No
+  worldserver restart was required.
+- No spawn for creature templates `190010` or `190011` existed before the
+  client-side acceptance run.
 
 ## Remaining in-client acceptance
 
@@ -74,4 +88,3 @@ confirms all of the following against this deployed server:
 5. Run `.transmog reload` after a controlled revoke and confirm the revoked
    appearance disappears while a deliberately failed reload retains the old
    cache.
-
