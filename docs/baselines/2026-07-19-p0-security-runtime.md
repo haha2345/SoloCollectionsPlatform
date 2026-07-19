@@ -140,6 +140,19 @@ The production config was restored to `CopperCost = 0` and
 `RequireToken = 0`; temporary collection item `6971` was deleted and the
 runtime cache reloaded.
 
+### Mixed-validity preset atomicity
+
+A temporary preset named `P0-Atomic-Mixed` contained a valid head request
+(`slot 0 -> item 6971`) followed by an incompatible shoulder request
+(`slot 2 -> item 6971`). Before the test, head item GUID `1403` and shoulder
+item GUID `1404` both had no fake entry.
+
+The client reported `所选项目无效`. Database verification found no
+`custom_transmogrification` row for either item, and live money remained
+`100g2s68c`. The valid first slot was therefore not partially committed. The
+temporary preset and collection row were then deleted and runtime state
+reloaded.
+
 ## Client acceptance status
 
 The local `security-baseline` tag must not be created until a real 3.3.5 client
@@ -149,7 +162,7 @@ confirms all of the following against this deployed server:
 2. [x] Submit an uncollected appearance and confirm no money, token, database, or
    visible-item side effect.
 3. [x] Test insufficient money and insufficient token paths.
-4. [ ] Apply a preset containing one valid and one invalid slot and confirm that
+4. [x] Apply a preset containing one valid and one invalid slot and confirm that
    neither slot changes.
 5. [ ] Run `.transmog reload` after a controlled revoke and confirm the revoked
    appearance disappears while a deliberately failed reload retains the old
