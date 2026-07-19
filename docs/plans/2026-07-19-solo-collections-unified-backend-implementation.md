@@ -536,7 +536,11 @@ feat: add collection diagnostics and audited admin commands
 
 ## 9. 阶段 4：目录生成器和身份扩展
 
+阶段状态：✅ 已完成（任务 4.1–4.3）
+
 ### 任务 4.1：建立单一目录源
+
+状态：✅ 已完成（SoloCollections `d291b5f`；mod-solo-collections `fe29c27`）
 
 仓库：`SoloCollections`
 
@@ -567,6 +571,8 @@ feat: add deterministic collection catalog generator
 
 ### 任务 4.2：实现 `IdentityRegistry`
 
+状态：✅ 已完成（SoloCollections `a67b5e7`；mod-solo-collections `e289ad9`）
+
 仓库：两个仓库配套修改。
 
 实现：
@@ -590,6 +596,8 @@ feat: add extensible class and race identity registry
 ```
 
 ### 任务 4.3：实现资格策略
+
+状态：✅ 已完成（mod-solo-collections `f38f1a1`）
 
 实现：
 
@@ -616,6 +624,12 @@ feat: evaluate collection eligibility through identity policies
 
 - 新增普通目录条目不改业务 C++。
 - 新增 synthetic 职业/种族不改五个类别实现。
+
+验证记录：目录生成器 `--check` 无漂移，mapping hash 为
+`bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac`；
+AddOn 137 项 Python 测试、模块 53 项 Python 测试和 MSVC 原生测试通过；
+当前 AzerothCore `worldserver` 已重新配置并成功编译，新增 identity/eligibility
+源文件进入真实模块构建。
 - 同一源数据可重新生成两仓库配套输出且 diff 确定。
 
 ## 10. 阶段 5：SC2 和客户端真实状态层
