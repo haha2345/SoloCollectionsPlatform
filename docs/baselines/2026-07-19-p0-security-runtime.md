@@ -68,6 +68,9 @@ B335010D2ADCB28FC1E96528C9DBFFB607A51B79B4C8C44EC5258737011E2955
   injection.
 - A compatible collected test pair is available: target item `900047`
   (`边境守备护腿`) and source item `6084` (`暴风城卫兵护腿`).
+- `.transmog check 啊啊水电费 900047 6084` passed every item-pair,
+  target-item, source-item, and collection check, ending with
+  `结果：可以幻化`.
 - Remote administration executed `.transmog reload` successfully and returned
   both `Transmog configs reloaded.` and `Transmog collections reloaded.`. No
   worldserver restart was required.
