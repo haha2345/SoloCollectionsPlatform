@@ -316,6 +316,8 @@ fix: make transmog template handling null safe and leak free
 
 ### 任务 1.3：原子化费用和多槽应用
 
+状态：✅ 已完成（`mod-solo-collections` `87f3d3e`）
+
 变更：
 
 - 建立 `PreflightApply`，计算目标、来源、兼容性、金币、token 和总费用。
@@ -1049,7 +1051,7 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 - [x] 新增安全 `TryApplyCollectedAppearance` facade。（`c25f3f3`）
 - [x] 让 vendor、Gossip 和命令入口统一调用 facade。（`c25f3f3`；当前普通命令无应用入口）
 - [x] 修复空模板和临时 Item 所有权。（`4876632`）
-- [ ] 修复金币/token 预检和多槽部分提交。
+- [x] 修复金币/token 预检和多槽部分提交。（`87f3d3e`）
 - [ ] 修复 reload 原子替换。
 - [ ] 完成 P0 回归并打安全基线 tag。
 
