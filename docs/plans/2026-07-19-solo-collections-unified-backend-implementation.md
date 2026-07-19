@@ -452,6 +452,8 @@ feat: add account collection cache state machine
 
 ### 任务 3.1：创建版本化 schema
 
+状态：✅ 已完成（mod-solo-collections `821fcae`）
+
 角色库表：
 
 - `sc_account_state`
