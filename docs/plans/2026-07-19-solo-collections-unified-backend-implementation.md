@@ -401,6 +401,8 @@ refactor: introduce stable collection domain types
 
 ### 任务 2.2：建立 provider 注册表
 
+状态：✅ 已完成（mod-solo-collections `4ab2246`）
+
 新增 `CollectionProvider` 接口和 `CollectionProviderRegistry`：
 
 - 重复 typeId/typeKey 注册时启动失败。
