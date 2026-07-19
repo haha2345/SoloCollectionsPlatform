@@ -362,9 +362,11 @@ fix: replace transmog caches atomically on reload
 - 当前幻化功能可编译、可运行且安全基线测试通过。
 - 形成 `security-baseline` tag，后续重构可与其比较。
 
-运行部署状态：✅ worldserver、SQL updater、模块字符串、收藏缓存和 NPCBots
-兼容性已验证；⏳ 真实客户端 NPC/费用/多槽/reload 验收尚待完成，因此暂未创建
-`security-baseline` tag。服务端证据记录在
+运行部署状态：✅ worldserver、SQL updater、模块字符串、收藏缓存、NPCBots
+兼容性以及真实客户端 NPC/越权拒绝/费用/token/多槽/reload 验收全部通过。
+运行验收额外修复了 Gossip Core 预扣款（`c455d68`）和磁盘模块配置未真实
+reload（`bd7aa3e`）。已在 `mod-solo-collections` 提交 `17c1cdc` 创建注释标签
+`security-baseline`。完整证据记录在
 `mod-solo-collections/docs/baselines/2026-07-19-p0-security-runtime.md`。
 
 ## 7. 阶段 2：统一收藏核心骨架
@@ -1060,7 +1062,8 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 - [x] 修复空模板和临时 Item 所有权。（`4876632`）
 - [x] 修复金币/token 预检和多槽部分提交。（`87f3d3e`）
 - [x] 修复 reload 原子替换。（`ef07e94`）
-- [ ] 完成 P0 回归并打安全基线 tag。
+- [x] 完成 P0 回归并打安全基线 tag。（`mod-solo-collections`
+  `security-baseline` -> `17c1cdc`）
 
 第一轮明确不做：
 
