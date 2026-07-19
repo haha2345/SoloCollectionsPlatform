@@ -341,6 +341,8 @@ fix: make transmog costs and outfit application atomic
 
 ### 任务 1.4：修复缓存 reload
 
+状态：✅ 已完成（`mod-solo-collections` `ef07e94`）
+
 变更：
 
 - `LoadCollections`、Allowed、NotAllowed 和其他目录缓存先构建新状态，成功后 swap。
@@ -1052,7 +1054,7 @@ python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
 - [x] 让 vendor、Gossip 和命令入口统一调用 facade。（`c25f3f3`；当前普通命令无应用入口）
 - [x] 修复空模板和临时 Item 所有权。（`4876632`）
 - [x] 修复金币/token 预检和多槽部分提交。（`87f3d3e`）
-- [ ] 修复 reload 原子替换。
+- [x] 修复 reload 原子替换。（`ef07e94`）
 - [ ] 完成 P0 回归并打安全基线 tag。
 
 第一轮明确不做：
