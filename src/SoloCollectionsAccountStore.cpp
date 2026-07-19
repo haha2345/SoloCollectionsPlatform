@@ -1,0 +1,389 @@
+#include "SoloCollectionsAccountStore.h"
+
+#include "AsyncCallbackProcessor.h"
+#include "DatabaseEnv.h"
+#include "Log.h"
+#include "QueryResult.h"
+#include "StringFormat.h"
+
+#include <limits>
+#include <map>
+#include <set>
+#include <string>
+#include <utility>
+#include <vector>
+
+namespace SoloCollections
+{
+namespace
+{
+struct DeferredLoad
+{
+    AccountId Account;
+    std::uint32_t PlayerGuid = 0;
+    LoginGeneration Generation;
+};
+
+[[nodiscard]] std::uint16_t StableMutationKind(CollectionMutationKind kind)
+{
+    return static_cast<std::uint16_t>(kind);
+}
+
+[[nodiscard]] std::uint16_t StableSourceKind(CollectionSourceKind kind)
+{
+    return static_cast<std::uint16_t>(kind);
+}
+}
+
+class AccountCollectionStore::Impl
+{
+public:
+    void Initialize()
+    {
+        if (_initialized)
+            return;
+
+        _initialized = true;
+        std::string schemaQuery =
+            "SELECT CASE WHEN COUNT(*) = 4 THEN 1 ELSE 0 END "
+            "FROM information_schema.tables "
+            "WHERE table_schema = DATABASE() AND table_name IN "
+            "('sc_account_state','sc_collection_unlock','sc_collection_audit','sc_migration_marker')";
+        _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(schemaQuery).WithCallback(
+            [this](QueryResult result)
+            {
+                bool ready = result && (*result)[0].Get<uint64>() == 1;
+                _diagnostics.SchemaState = ready ? AccountStoreSchemaState::Ready : AccountStoreSchemaState::Failed;
+                if (!ready)
+                {
+                    LOG_ERROR("module.solocollections.store",
+                        "event=schema_check result=failed expected_version=1 pending_loads={}", _deferredLoads.size());
+                    for (auto const& [accountId, load] : _deferredLoads)
+                    {
+                        (void)accountId;
+                        (void)GetAccountCollectionCache().FailLoad(load.Account, load.Generation);
+                        ++_diagnostics.FailedLoads;
+                    }
+                    _deferredLoads.clear();
+                    return;
+                }
+
+                LOG_INFO("module.solocollections.store", "event=schema_check result=ready schema_version=1");
+                std::vector<DeferredLoad> deferred;
+                deferred.reserve(_deferredLoads.size());
+                for (auto const& [accountId, load] : _deferredLoads)
+                {
+                    (void)accountId;
+                    deferred.push_back(load);
+                }
+                _deferredLoads.clear();
+                for (DeferredLoad const& load : deferred)
+                    BeginLoadNow(load);
+            }));
+    }
+
+    void Update()
+    {
+        _queryCallbacks.ProcessReadyCallbacks();
+        _transactionCallbacks.ProcessReadyCallbacks();
+    }
+
+    void BeginLoad(DeferredLoad load)
+    {
+        if (!load.Account.IsValid() || !load.Generation.IsValid())
+            return;
+
+        if (_diagnostics.SchemaState == AccountStoreSchemaState::Checking)
+        {
+            _deferredLoads[load.Account] = load;
+            return;
+        }
+
+        if (_diagnostics.SchemaState == AccountStoreSchemaState::Failed)
+        {
+            (void)GetAccountCollectionCache().FailLoad(load.Account, load.Generation);
+            ++_diagnostics.FailedLoads;
+            return;
+        }
+
+        BeginLoadNow(load);
+    }
+
+    void BeginLoadNow(DeferredLoad load)
+    {
+        if (!_loadingAccounts.insert(load.Account).second)
+            return;
+
+        std::string query = Acore::StringFormat(
+            "SELECT 0 AS row_kind, COALESCE(s.revision, 0) AS revision, 0 AS type_id, 0 AS collection_id "
+            "FROM (SELECT 1) seed LEFT JOIN sc_account_state s ON s.account_id = {} "
+            "UNION ALL "
+            "SELECT 1 AS row_kind, u.revision, u.type_id, u.collection_id "
+            "FROM sc_collection_unlock u WHERE u.account_id = {} "
+            "ORDER BY row_kind, type_id, collection_id",
+            load.Account.Value(), load.Account.Value());
+
+        _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(query).WithCallback(
+            [this, accountId = load.Account, playerGuid = load.PlayerGuid, generation = load.Generation](QueryResult result)
+            {
+                _loadingAccounts.erase(accountId);
+                std::set<CollectionKey> owned;
+                CollectionRevision revision;
+                bool valid = static_cast<bool>(result);
+                bool sawSentinel = false;
+                if (result)
+                {
+                    do
+                    {
+                        Field* fields = result->Fetch();
+                        uint64 rowKind = fields[0].Get<uint64>();
+                        uint64 rowRevision = fields[1].Get<uint64>();
+                        if (rowKind == 0)
+                        {
+                            if (sawSentinel)
+                            {
+                                valid = false;
+                                break;
+                            }
+                            sawSentinel = true;
+                            revision = CollectionRevision(rowRevision);
+                            continue;
+                        }
+
+                        uint64 typeId = fields[2].Get<uint64>();
+                        uint64 collectionId = fields[3].Get<uint64>();
+                        if (rowKind != 1 || typeId == 0 || typeId > std::numeric_limits<std::uint16_t>::max() ||
+                            collectionId == 0 || collectionId > std::numeric_limits<std::uint32_t>::max() ||
+                            rowRevision > revision.Value())
+                        {
+                            valid = false;
+                            break;
+                        }
+                        CollectionKey key {
+                            CollectionTypeId(static_cast<std::uint16_t>(typeId)),
+                            CollectionId(static_cast<std::uint32_t>(collectionId))
+                        };
+                        owned.insert(key);
+                    } while (result->NextRow());
+                }
+
+                if (!valid || !sawSentinel)
+                {
+                    (void)GetAccountCollectionCache().FailLoad(accountId, generation);
+                    ++_diagnostics.FailedLoads;
+                    LOG_ERROR("module.solocollections.store",
+                        "event=account_load result=failed account={} character={} generation={}",
+                        accountId.Value(), playerGuid, generation.Value());
+                    return;
+                }
+
+                bool accepted = GetAccountCollectionCache().CompleteLoad(
+                    accountId, generation, std::move(owned), revision);
+                if (accepted)
+                {
+                    ++_diagnostics.SuccessfulLoads;
+                    LOG_DEBUG("module.solocollections.store",
+                        "event=account_load result=ready account={} character={} generation={} revision={}",
+                        accountId.Value(), playerGuid, generation.Value(), revision.Value());
+                }
+                else
+                {
+                    LOG_DEBUG("module.solocollections.store",
+                        "event=account_load result=stale account={} character={} generation={}",
+                        accountId.Value(), playerGuid, generation.Value());
+                }
+            }));
+    }
+
+    MutationStartResult BeginMutation(AccountCollectionMutation mutation)
+    {
+        if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid() ||
+            !mutation.Generation.IsValid() || !mutation.Key.TypeId.IsValid() || !mutation.Key.Id.IsValid() ||
+            StableSourceKind(mutation.SourceKind) == 0)
+            return { false, _diagnostics.SchemaState == AccountStoreSchemaState::Ready ?
+                CollectionReasonCode::InvalidArgument : CollectionReasonCode::DatabaseError, {} };
+
+        std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(mutation.Account);
+        if (!snapshot || snapshot->State != AccountCacheLoadState::Ready || snapshot->Generation != mutation.Generation)
+            return { false, CollectionReasonCode::NotReady, {} };
+        if (_pendingMutations.contains(mutation.Account))
+            return { false, CollectionReasonCode::PendingOperation, {} };
+
+        bool owned = GetAccountCollectionCache().IsOwned(mutation.Account, mutation.Key);
+        if (mutation.Kind == CollectionMutationKind::Grant && owned)
+            return { false, CollectionReasonCode::AlreadyOwned, snapshot->Revision };
+        if (mutation.Kind == CollectionMutationKind::Revoke && !owned)
+            return { false, CollectionReasonCode::NotOwned, snapshot->Revision };
+        if (snapshot->Revision.Value() == std::numeric_limits<std::uint64_t>::max())
+            return { false, CollectionReasonCode::RevisionConflict, snapshot->Revision };
+
+        CollectionRevision nextRevision(snapshot->Revision.Value() + 1);
+        CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
+        transaction->Append(
+            "INSERT INTO sc_account_state(account_id, revision, schema_version) VALUES ({}, 0, 1) "
+            "ON DUPLICATE KEY UPDATE schema_version = schema_version",
+            mutation.Account.Value());
+
+        bool requireExisting = mutation.Kind == CollectionMutationKind::Revoke;
+        transaction->Append(
+            "UPDATE sc_account_state SET revision = IF(revision = {} AND {}EXISTS("
+            "SELECT 1 FROM sc_collection_unlock u WHERE u.account_id = {} AND u.type_id = {} AND u.collection_id = {}"
+            "), {}, NULL) WHERE account_id = {}",
+            snapshot->Revision.Value(), requireExisting ? "" : "NOT ", mutation.Account.Value(),
+            mutation.Key.TypeId.Value(), mutation.Key.Id.Value(), nextRevision.Value(), mutation.Account.Value());
+
+        if (mutation.Kind == CollectionMutationKind::Grant)
+        {
+            transaction->Append(
+                "INSERT INTO sc_collection_unlock(account_id, type_id, collection_id, revision, source_kind, source_id, character_guid) "
+                "VALUES ({}, {}, {}, {}, {}, {}, {})",
+                mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(), nextRevision.Value(),
+                StableSourceKind(mutation.SourceKind), mutation.SourceId, mutation.CharacterGuid);
+        }
+        else
+        {
+            transaction->Append(
+                "DELETE FROM sc_collection_unlock WHERE account_id = {} AND type_id = {} AND collection_id = {}",
+                mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value());
+        }
+
+        transaction->Append(
+            "INSERT INTO sc_collection_audit(account_id, type_id, collection_id, action_kind, source_kind, source_id, "
+            "character_guid, actor_account_id, actor_guid, revision, result_code) "
+            "VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})",
+            mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+            StableMutationKind(mutation.Kind), StableSourceKind(mutation.SourceKind), mutation.SourceId,
+            mutation.CharacterGuid, mutation.ActorAccountId, mutation.ActorGuid, nextRevision.Value(),
+            ToStableReasonCode(CollectionReasonCode::Ok));
+
+        _pendingMutations.emplace(mutation.Account, mutation);
+        TransactionCallback& callback = _transactionCallbacks.AddCallback(
+            CharacterDatabase.AsyncCommitTransaction(transaction));
+        callback.AfterComplete(
+            [this, mutation, nextRevision](bool committed)
+            {
+                _pendingMutations.erase(mutation.Account);
+                if (!committed)
+                {
+                    ++_diagnostics.FailedMutations;
+                    LOG_ERROR("module.solocollections.store",
+                        "event=mutation_commit result=failed account={} type={} collection={} generation={} revision={}",
+                        mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                        mutation.Generation.Value(), nextRevision.Value());
+                    if (_eventSink)
+                        _eventSink->OnCollectionMutationFailed(
+                            mutation.Account, mutation.Key, CollectionReasonCode::DatabaseError);
+                    return;
+                }
+
+                CollectionDelta delta {
+                    mutation.Key,
+                    mutation.Kind == CollectionMutationKind::Grant ?
+                        CollectionDeltaKind::Unlock : CollectionDeltaKind::Revoke,
+                    nextRevision
+                };
+                std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(mutation.Account);
+                DeltaQueueResult cacheResult = DeltaQueueResult::Rejected;
+                if (snapshot && snapshot->Generation == mutation.Generation)
+                    cacheResult = GetAccountCollectionCache().QueueDelta(mutation.Account, delta);
+
+                ++_diagnostics.SuccessfulMutations;
+                LOG_INFO("module.solocollections.store",
+                    "event=mutation_commit result=success account={} type={} collection={} generation={} revision={} cache_result={}",
+                    mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                    mutation.Generation.Value(), nextRevision.Value(), static_cast<std::uint8_t>(cacheResult));
+                if (_eventSink && cacheResult != DeltaQueueResult::Rejected)
+                    _eventSink->OnCollectionDeltaCommitted(mutation.Account, delta);
+            });
+
+        return { true, CollectionReasonCode::Ok, nextRevision };
+    }
+
+    bool RetryLoad(AccountId accountId, std::uint32_t playerGuid)
+    {
+        std::optional<LoginGeneration> generation = GetAccountCollectionCache().RetryFailed(accountId);
+        if (!generation)
+            return false;
+        BeginLoad({ accountId, playerGuid, *generation });
+        return true;
+    }
+
+    AccountStoreDiagnostics Diagnostics() const
+    {
+        AccountStoreDiagnostics result = _diagnostics;
+        result.PendingLoads = _loadingAccounts.size() + _deferredLoads.size();
+        result.PendingMutations = _pendingMutations.size();
+        return result;
+    }
+
+    bool IsSchemaReady() const
+    {
+        return _diagnostics.SchemaState == AccountStoreSchemaState::Ready;
+    }
+
+    void SetEventSink(AccountCollectionEventSink* sink)
+    {
+        _eventSink = sink;
+    }
+
+private:
+    QueryCallbackProcessor _queryCallbacks;
+    AsyncCallbackProcessor<TransactionCallback> _transactionCallbacks;
+    std::map<AccountId, DeferredLoad> _deferredLoads;
+    std::set<AccountId> _loadingAccounts;
+    std::map<AccountId, AccountCollectionMutation> _pendingMutations;
+    AccountCollectionEventSink* _eventSink = nullptr;
+    AccountStoreDiagnostics _diagnostics;
+    bool _initialized = false;
+};
+
+AccountCollectionStore::AccountCollectionStore() : _impl(std::make_unique<Impl>()) { }
+AccountCollectionStore::~AccountCollectionStore() = default;
+
+void AccountCollectionStore::Initialize()
+{
+    _impl->Initialize();
+}
+
+void AccountCollectionStore::Update()
+{
+    _impl->Update();
+}
+
+void AccountCollectionStore::BeginLoad(
+    AccountId accountId, std::uint32_t playerGuid, LoginGeneration generation)
+{
+    _impl->BeginLoad({ accountId, playerGuid, generation });
+}
+
+bool AccountCollectionStore::RetryLoad(AccountId accountId, std::uint32_t playerGuid)
+{
+    return _impl->RetryLoad(accountId, playerGuid);
+}
+
+MutationStartResult AccountCollectionStore::BeginMutation(AccountCollectionMutation mutation)
+{
+    return _impl->BeginMutation(std::move(mutation));
+}
+
+void AccountCollectionStore::SetEventSink(AccountCollectionEventSink* sink)
+{
+    _impl->SetEventSink(sink);
+}
+
+AccountStoreDiagnostics AccountCollectionStore::Diagnostics() const
+{
+    return _impl->Diagnostics();
+}
+
+bool AccountCollectionStore::IsSchemaReady() const
+{
+    return _impl->IsSchemaReady();
+}
+
+AccountCollectionStore& GetAccountCollectionStore()
+{
+    static AccountCollectionStore store;
+    return store;
+}
+}

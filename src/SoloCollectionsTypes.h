@@ -108,11 +108,15 @@ enum class CollectionReasonCode : std::uint16_t
     NotUsable = 0x0401,
     CatalogMissing = 0x0402,
     AssetMissing = 0x0403,
+    AlreadyOwned = 0x0404,
     DependencyMissing = 0x0500,
     DuplicateProvider = 0x0501,
     DependencyCycle = 0x0502,
     Tombstoned = 0x0600,
     InvalidArgument = 0x0700,
+    DatabaseError = 0x0701,
+    RevisionConflict = 0x0702,
+    PendingOperation = 0x0703,
     InternalError = 0x7FFF,
 };
 
@@ -131,11 +135,15 @@ enum class CollectionReasonCode : std::uint16_t
         case CollectionReasonCode::NotUsable: return 0x0401;
         case CollectionReasonCode::CatalogMissing: return 0x0402;
         case CollectionReasonCode::AssetMissing: return 0x0403;
+        case CollectionReasonCode::AlreadyOwned: return 0x0404;
         case CollectionReasonCode::DependencyMissing: return 0x0500;
         case CollectionReasonCode::DuplicateProvider: return 0x0501;
         case CollectionReasonCode::DependencyCycle: return 0x0502;
         case CollectionReasonCode::Tombstoned: return 0x0600;
         case CollectionReasonCode::InvalidArgument: return 0x0700;
+        case CollectionReasonCode::DatabaseError: return 0x0701;
+        case CollectionReasonCode::RevisionConflict: return 0x0702;
+        case CollectionReasonCode::PendingOperation: return 0x0703;
         case CollectionReasonCode::InternalError: return 0x7FFF;
     }
     return 0x7FFF;
@@ -156,11 +164,15 @@ enum class CollectionReasonCode : std::uint16_t
         case 0x0401: return CollectionReasonCode::NotUsable;
         case 0x0402: return CollectionReasonCode::CatalogMissing;
         case 0x0403: return CollectionReasonCode::AssetMissing;
+        case 0x0404: return CollectionReasonCode::AlreadyOwned;
         case 0x0500: return CollectionReasonCode::DependencyMissing;
         case 0x0501: return CollectionReasonCode::DuplicateProvider;
         case 0x0502: return CollectionReasonCode::DependencyCycle;
         case 0x0600: return CollectionReasonCode::Tombstoned;
         case 0x0700: return CollectionReasonCode::InvalidArgument;
+        case 0x0701: return CollectionReasonCode::DatabaseError;
+        case 0x0702: return CollectionReasonCode::RevisionConflict;
+        case 0x0703: return CollectionReasonCode::PendingOperation;
         case 0x7FFF: return CollectionReasonCode::InternalError;
         default: return std::nullopt;
     }
@@ -181,11 +193,15 @@ enum class CollectionReasonCode : std::uint16_t
         case CollectionReasonCode::NotUsable: return "SC_REASON_NOT_USABLE";
         case CollectionReasonCode::CatalogMissing: return "SC_REASON_CATALOG_MISSING";
         case CollectionReasonCode::AssetMissing: return "SC_REASON_ASSET_MISSING";
+        case CollectionReasonCode::AlreadyOwned: return "SC_REASON_ALREADY_OWNED";
         case CollectionReasonCode::DependencyMissing: return "SC_REASON_DEPENDENCY_MISSING";
         case CollectionReasonCode::DuplicateProvider: return "SC_REASON_DUPLICATE_PROVIDER";
         case CollectionReasonCode::DependencyCycle: return "SC_REASON_DEPENDENCY_CYCLE";
         case CollectionReasonCode::Tombstoned: return "SC_REASON_TOMBSTONED";
         case CollectionReasonCode::InvalidArgument: return "SC_REASON_INVALID_ARGUMENT";
+        case CollectionReasonCode::DatabaseError: return "SC_REASON_DATABASE_ERROR";
+        case CollectionReasonCode::RevisionConflict: return "SC_REASON_REVISION_CONFLICT";
+        case CollectionReasonCode::PendingOperation: return "SC_REASON_PENDING_OPERATION";
         case CollectionReasonCode::InternalError: return "SC_REASON_INTERNAL_ERROR";
     }
     return "SC_REASON_INTERNAL_ERROR";
