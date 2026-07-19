@@ -50,6 +50,25 @@ uint32 GetTransmogPrice (ItemTemplate const* targetItem)
     return price;
 }
 
+std::string GetTransmogPriceText(uint32 price)
+{
+    if (!price)
+        return {};
+
+    uint32 gold = price / 10000;
+    uint32 silver = (price % 10000) / 100;
+    uint32 copper = price % 100;
+    std::ostringstream text;
+    text << std::endl << std::endl;
+    if (gold)
+        text << gold << " |TInterface/MoneyFrame/UI-GoldIcon:14:14:2:0|t ";
+    if (silver)
+        text << silver << " |TInterface/MoneyFrame/UI-SilverIcon:14:14:2:0|t ";
+    if (copper)
+        text << copper << " |TInterface/MoneyFrame/UI-CopperIcon:14:14:2:0|t";
+    return text.str();
+}
+
 bool ValidForTransmog(Player* player, Item* target, ItemTemplate const* sourceTemplate, bool hasSearch, std::string const& searchTerm)
 {
     if (!target || !sourceTemplate || !player)
@@ -532,10 +551,10 @@ public:
         {
             uint32 price = GetTransmogPrice(oldItem->GetTemplate());
             std::ostringstream ss;
-            ss << std::endl;
             if (sT->GetRequireToken())
                 ss << std::endl << std::endl << sT->GetTokenAmount() << " x " << sT->GetItemLink(sT->GetTokenEntry(), session);
-            std::string lineEnd = ss.str();
+            std::string lineEnd = GetTransmogPriceText(price) + ss.str();
+            std::string hiddenLineEnd = sT->GetHiddenTransmogIsFree() ? std::string() : GetTransmogPriceText(price);
 
             std::unordered_map<uint32, std::string>::iterator searchStringIterator = sT->searchStringByPlayer.find(player->GetGUID().GetCounter());
             hasSearchString = !(searchStringIterator == sT->searchStringByPlayer.end());
@@ -572,7 +591,7 @@ public:
                     else
                     {
                         // Add invisible item entry
-                        AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/inv_misc_enggizmos_27:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_HIDESLOT), slot, UINT_MAX, Tstr(session, LANG_TRANSMOG_CONFIRM_HIDE_ITEM) + lineEnd, 0, false);
+                        AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/inv_misc_enggizmos_27:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_HIDESLOT), slot, UINT_MAX, Tstr(session, LANG_TRANSMOG_CONFIRM_HIDE_ITEM) + hiddenLineEnd, 0, false);
                     }
                 }
                 for (uint32 i = startValue; i <= endValue; i++)
@@ -583,7 +602,10 @@ public:
                         break;
                     }
                     ItemTemplate const* sourceTemplate = allowedItems.at(i);
-                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, sT->GetItemIcon(sourceTemplate->ItemId, 30, 30, -18, 0) + sT->GetItemLink(sourceTemplate->ItemId, session), slot, sourceTemplate->ItemId, Tstr(session, LANG_TRANSMOG_CONFIRM_USEITEM) + sT->GetItemIcon(sourceTemplate->ItemId, 40, 40, -15, -10) + sT->GetItemLink(sourceTemplate->ItemId, session) + lineEnd, price, false);
+                    // BoxMoney must remain zero: AzerothCore deducts it before the
+                    // script callback, which would charge rejected stale/forged
+                    // gossip requests. CommitApplyPlan owns all resource changes.
+                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, sT->GetItemIcon(sourceTemplate->ItemId, 30, 30, -18, 0) + sT->GetItemLink(sourceTemplate->ItemId, session), slot, sourceTemplate->ItemId, Tstr(session, LANG_TRANSMOG_CONFIRM_USEITEM) + sT->GetItemIcon(sourceTemplate->ItemId, 40, 40, -15, -10) + sT->GetItemLink(sourceTemplate->ItemId, session) + lineEnd, 0, false);
                 }
             }
             if (gossipPageNumber == EQUIPMENT_SLOT_END + 11)

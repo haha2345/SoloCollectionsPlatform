@@ -133,6 +133,15 @@ class AtomicApplyContractTests(unittest.TestCase):
         self.assertIn("LANG_TRANSMOG_DATABASE_ERROR", commit)
         self.assertIn("no resources or cache entries were changed", commit)
 
+    def test_gossip_confirmation_does_not_precharge_money(self):
+        gossip_menu = SCRIPTS.split(
+            "void ShowTransmogItemsInGossipMenu", 1
+        )[1].split("static std::vector<ItemTemplate const*> GetSpoofedVendorItems", 1)[0]
+        self.assertIn("GetTransmogPriceText(price)", gossip_menu)
+        self.assertIn("CommitApplyPlan owns all resource changes", gossip_menu)
+        self.assertNotIn("lineEnd, price, false", gossip_menu)
+        self.assertRegex(gossip_menu, r"lineEnd,\s*0,\s*false\)")
+
     def test_duplicate_slots_and_duplicate_appearance_are_rejected(self):
         preflight = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::PreflightApply", 1
