@@ -743,7 +743,7 @@ feat: consume authoritative SC2 collection state
 
 ## 11. 阶段 6：第一个完整纵切——坐骑
 
-阶段状态：🚧 实施中（任务 6.1–6.3 已完成；待阶段实机验收）
+阶段状态：✅ 已完成（任务 6.1–6.3；2026-07-20 实机验收通过）
 
 ### 任务 6.1：生成 WotLK 坐骑候选和审核目录
 
@@ -776,7 +776,8 @@ feat: consume authoritative SC2 collection state
 
 ### 任务 6.2：实现坐骑解锁
 
-状态：✅ 已完成（mod-solo-collections `5ffa2ce`；NPCBots 架构兼容修复 `993ebb8`）
+状态：✅ 已完成（mod-solo-collections `5ffa2ce`；NPCBots 架构兼容修复 `993ebb8`；
+跨线程运行时修复 `75d83b7`；账号隔离测试 `9cb568a`）
 
 - `OnPlayerLearnSpell` 只处理新学习事件。
 - 首次迁移在 `OnPlayerLogin` 法术加载完成后扫描已有有效法术。
@@ -792,9 +793,12 @@ feat: consume authoritative SC2 collection state
 `sc_migration_marker` 版本命中时不再返回或扫描法术。账号内迁移和实时
 学习共用单一串行 mutation 队列，每次成功提交沿用账号当前 revision + 1，并通过已有
 SC2 account event sink 向所有在线 session 广播 delta。迁移全部成功/明确拒绝后才写
-marker，数据库失败不会伪造完成。63 项 Python 契约测试、两个 MSVC 原生测试目标和
-真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；构建产物 SHA-256 为
-`2191D5E03D2E4B11056824D86110AED0DB75D9A4ECA20693BD769E8D067687C4`。
+marker，数据库失败不会伪造完成。首轮实机登录捕获到地图工作线程读取账号缓存时触发
+owner-thread 断言；账号缓存、SC2 session 和迁移状态随后改为显式互斥同步，既保留账号级
+单写入语义，也允许 Player map worker 安全读取。64 项 Python 契约测试、两个 MSVC 原生
+测试目标和真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；最终部署构建产物
+SHA-256 为
+`0331077277AD373386BB56BC178EE5CED2DD441528BCE870A36C78A2743051B7`。
 
 ### 任务 6.3：实现安全召唤
 
@@ -813,9 +817,10 @@ account、类型、动作和目标；客户端伪造 spellId、creatureId 或 ow
 服务端从生成目录选择满足当前角色种族、职业、骑术和地图限制的动作法术，并显式检查
 死亡、战斗、载具、出租飞行、战场、形态和室内状态；失败返回稳定 reason code。
 代码中不存在预先 `Dismount`，只有全部检查通过后才以 Core 的 mounted/vehicle 兼容触发标志
-施放新坐骑。154 项客户端 Python 测试、63 项模块 Python 测试、两个 MSVC 原生测试目标、
-23 个 Lua 文件语法检查和真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；构建产物
-SHA-256 为 `2191D5E03D2E4B11056824D86110AED0DB75D9A4ECA20693BD769E8D067687C4`。
+施放新坐骑。154 项客户端 Python 测试、64 项模块 Python 测试、两个 MSVC 原生测试目标、
+23 个 Lua 文件语法检查和真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；最终部署
+构建产物 SHA-256 为
+`0331077277AD373386BB56BC178EE5CED2DD441528BCE870A36C78A2743051B7`。
 
 阶段验收：
 
@@ -824,6 +829,21 @@ SHA-256 为 `2191D5E03D2E4B11056824D86110AED0DB75D9A4ECA20693BD769E8D067687C4`�
 - 重启后保留。
 - 伪造 spellId 和 owned 状态无效。
 - 不可用目标不会移除当前坐骑。
+
+完成记录：账号 1 的离线圣骑士已有 `spellId=13819`，登录角色触发一次迁移后写入逻辑
+`mount collectionId=100261`，账号 revision 提升到 5；战士角色收到 `SC2 Ready 5 true`，
+但召唤按职业限制稳定返回 `CLASS_RESTRICTED`。切换到同账号圣骑士后仍收到同一 revision
+和 owned 集合，召唤返回 `SUMMON true ACCEPTED` 并实际骑上军马。额外原生协议测试建立同账号
+两个活动 SC2 session 和另一个账号 session，断言前两者都收到同一 delta、不同账号收不到；
+真实账号库中账号 `1/2/3/5/6` 仅账号 1 存在该 unlock，未发现跨账号共享。
+
+保持骑乘时提交带 `target=13819` 的伪造 spellId 请求，服务端返回
+`SPOOF false INVALID_REQUEST`；再把客户端内存中的未拥有 `collectionId=100001` 临时改为
+owned 并请求召唤，服务端返回 `FORGE false NOT_OWNED`，两次拒绝后当前坐骑均未被移除，且
+临时客户端状态已清理。随后停止并重新启动同一 SHA-256 的 worldserver，端口恢复监听，
+圣骑士重新登录后返回 `RESTART Ready 5 true`，数据库仍保持 revision 5 和唯一 unlock，证明
+重启持久化。实机期间发现的首次登录崩溃已由 `75d83b7` 修复并重新完成全量编译、部署、
+启动和角色登录验证。
 
 建议配套提交：
 
