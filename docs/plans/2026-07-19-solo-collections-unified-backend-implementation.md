@@ -1229,7 +1229,7 @@ envelope，满足阶段出口。
 
 ## 16. 阶段 11：Lua 到 C++ 切换
 
-阶段状态：🚧 进行中（任务 11.1 已完成；任务 11.2–11.3 待实施）
+阶段状态：🚧 进行中（任务 11.1–11.2 已完成；任务 11.3 待实施）
 
 ### 任务 11.1：shadow 比较
 
@@ -1263,6 +1263,30 @@ RelWithDebInfo `worldserver` 构建通过。
 - shadow 模式禁止写 DB、执行动作和发送成功 delta。
 
 ### 任务 11.2：切换前演练
+
+状态：✅ 已完成（`SoloCollections` `a2c6393`；`mod-solo-collections` `8b2c80b`）
+
+实现记录：ALE SC1 现在读取与 C++ 相同的 `SoloCollections.Backend`，仅在 `Lua` 和 `Compare`
+注册事件 30；`Cpp` 模式明确不注册 SC1。模块合同测试同时约束 C++：只有 `Cpp` 允许账号写入、
+动作和 SC2，`Compare` 仅允许只读 shadow，`Lua` 不取得 C++ 生产 owner，从代码层消除双入口。
+
+切换前备份存放于
+`D:\AzerothCore_NPCBots_Clean\_codex_backups\phase11-switch-rehearsal\20260720-190728`：
+auth、characters、world 必要数据共 12 个非空 SQL 文件、161344 字节，并生成逐文件 SHA-256
+`manifest.json`。覆盖账号/RBAC、四张 `sc_*` 表、旧外观/幻化表、账号角色和物品，以及模块命令、
+字符串、NPC 和 fake vendor item 行；运行二进制、PDB、Lua 和配置另有 `runtime-pre-matrix` 备份。
+
+账号 1 的 `import --dry-run` 与 `reconcile --dry-run` 结果一致：legacy 65、valid 63、canonical
+62、merged 1、unknown 2、disabled 0、missing template 0、conflicts 0、`writes=0`。真实服务端
+依次完成三模式启动与客户端验收：`Lua` 为 `writes/actions/shadow=0/0/0`，探针
+`ROLLBACK true false connected fallback`；`Compare` 为 `0/0/1`，探针
+`SHADOW true false connected fallback`；`Cpp` 为 `1/1/0`，探针
+`OWNER false true fallback connected`。全程任一时刻只有一个协议 owner。
+
+从 `Cpp` 回滚到 `Lua` 后五张兼容表仍可读取，SC1 握手恢复。演练前后账号快照完全一致：
+state `1/rev89`、unlock `71/rev75`、audit `91/rev89/max_audit_id91`、migration `3/rev73`；
+Cpp 登录也未产生新的幂等迁移或收藏写入。AddOn/目录 171 项、模块 115 项 Python 测试、目录
+生成器 `--check`、`git diff --check` 和集成 RelWithDebInfo `worldserver` 构建通过。
 
 - 备份 auth/characters/world 必要表。
 - 对账号收藏和外观旧表运行 dry-run migration/reconcile。
