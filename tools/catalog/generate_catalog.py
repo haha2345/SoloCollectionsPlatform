@@ -380,6 +380,9 @@ def build_model(source_root: Path) -> dict[str, Any]:
         entry["ordinal"] = next((int(row["ordinal"]) for row in ids["reservations"]["classes"] if row["key"] == entry["classKey"]), -1)
     for entry in races:
         entry["ordinal"] = next((int(row["ordinal"]) for row in ids["reservations"]["races"] if row["key"] == entry["raceKey"]), -1)
+        entry.setdefault("appearanceOverrideProfile", entry["compatibilityProfile"])
+        entry.setdefault("clientAssetVersion", versions["assetPackVersion"])
+        entry.setdefault("modelProfile", entry["clientAssetProfile"])
     _validate_reservations(ids["reservations"]["collectionTypes"], types, "typeId", "typeKey", "collection types")
     _validate_reservations(ids["reservations"]["classes"], classes, "logicalClassId", "classKey", "classes")
     _validate_reservations(ids["reservations"]["races"], races, "logicalRaceId", "raceKey", "races")
@@ -508,6 +511,8 @@ def _identity_inc(model: dict[str, Any]) -> str:
                 _cpp_strings(entry.get("aliases", [])), _cpp_strings(entry.get("capabilities", [])),
                 _cpp_string(entry["factionKey"]), _cpp_string(entry["compatibilityProfile"]),
                 _cpp_string(entry["clientAssetProfile"]), _cpp_string(entry["cameraProfile"]),
+                _cpp_string(entry["appearanceOverrideProfile"]), _cpp_string(entry["clientAssetVersion"]),
+                _cpp_string(entry["modelProfile"]),
             ]) + "},"
         )
     lines += ["    };", "}", ""]

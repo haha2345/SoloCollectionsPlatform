@@ -519,20 +519,23 @@ SoloCollections.GeneratedIdentityData = {
             sourceId = 11
         }
     },
-    mappingHash = "b2144a049c8e9bf06c1df019e78a353b331788792c02bee2411e13757ebf5054",
+    mappingHash = "68dc8d9b0f275bde0e56f398f2e9a1a28cee16407b2247bba835cd505e268c4e",
     races = {
         {
             aliases = {
                 "Human",
                 "HUMAN"
             },
+            appearanceOverrideProfile = "race.human",
             cameraProfile = "race.human",
             capabilities = {},
             clientAssetProfile = "race.human",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.human",
             factionKey = "ALLIANCE",
             icon = "Interface\\Icons\\Achievement_Character_Human_Male",
             logicalRaceId = 1,
+            modelProfile = "race.human",
             name = {
                 enUS = "Human",
                 zhCN = "人类"
@@ -549,13 +552,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Orc",
                 "ORC"
             },
+            appearanceOverrideProfile = "race.orc",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.orc",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.orc",
             factionKey = "HORDE",
             icon = "Interface\\Icons\\Achievement_Character_Orc_Male",
             logicalRaceId = 2,
+            modelProfile = "race.orc",
             name = {
                 enUS = "Orc",
                 zhCN = "兽人"
@@ -572,13 +578,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Dwarf",
                 "DWARF"
             },
+            appearanceOverrideProfile = "race.dwarf",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.dwarf",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.dwarf",
             factionKey = "ALLIANCE",
             icon = "Interface\\Icons\\Achievement_Character_Dwarf_Male",
             logicalRaceId = 3,
+            modelProfile = "race.dwarf",
             name = {
                 enUS = "Dwarf",
                 zhCN = "矮人"
@@ -595,13 +604,16 @@ SoloCollections.GeneratedIdentityData = {
                 "NightElf",
                 "NIGHTELF"
             },
+            appearanceOverrideProfile = "race.night_elf",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.night_elf",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.night_elf",
             factionKey = "ALLIANCE",
             icon = "Interface\\Icons\\Achievement_Character_Nightelf_Male",
             logicalRaceId = 4,
+            modelProfile = "race.night_elf",
             name = {
                 enUS = "Night Elf",
                 zhCN = "暗夜精灵"
@@ -619,13 +631,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Undead",
                 "UNDEAD"
             },
+            appearanceOverrideProfile = "race.undead",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.undead",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.undead",
             factionKey = "HORDE",
             icon = "Interface\\Icons\\Achievement_Character_Undead_Male",
             logicalRaceId = 5,
+            modelProfile = "race.undead",
             name = {
                 enUS = "Undead",
                 zhCN = "亡灵"
@@ -642,13 +657,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Tauren",
                 "TAUREN"
             },
+            appearanceOverrideProfile = "race.tauren",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.tauren",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.tauren",
             factionKey = "HORDE",
             icon = "Interface\\Icons\\Achievement_Character_Tauren_Male",
             logicalRaceId = 6,
+            modelProfile = "race.tauren",
             name = {
                 enUS = "Tauren",
                 zhCN = "牛头人"
@@ -665,13 +683,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Gnome",
                 "GNOME"
             },
+            appearanceOverrideProfile = "race.gnome",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.gnome",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.gnome",
             factionKey = "ALLIANCE",
             icon = "Interface\\Icons\\Achievement_Character_Gnome_Male",
             logicalRaceId = 7,
+            modelProfile = "race.gnome",
             name = {
                 enUS = "Gnome",
                 zhCN = "侏儒"
@@ -688,13 +709,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Troll",
                 "TROLL"
             },
+            appearanceOverrideProfile = "race.troll",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.troll",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.troll",
             factionKey = "HORDE",
             icon = "Interface\\Icons\\Achievement_Character_Troll_Male",
             logicalRaceId = 8,
+            modelProfile = "race.troll",
             name = {
                 enUS = "Troll",
                 zhCN = "巨魔"
@@ -711,13 +735,16 @@ SoloCollections.GeneratedIdentityData = {
                 "BloodElf",
                 "BLOODELF"
             },
+            appearanceOverrideProfile = "race.blood_elf",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.blood_elf",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.blood_elf",
             factionKey = "HORDE",
             icon = "Interface\\Icons\\Achievement_Character_Bloodelf_Male",
             logicalRaceId = 9,
+            modelProfile = "race.blood_elf",
             name = {
                 enUS = "Blood Elf",
                 zhCN = "血精灵"
@@ -734,13 +761,16 @@ SoloCollections.GeneratedIdentityData = {
                 "Draenei",
                 "DRAENEI"
             },
+            appearanceOverrideProfile = "race.draenei",
             cameraProfile = "global",
             capabilities = {},
             clientAssetProfile = "race.draenei",
+            clientAssetVersion = "wotlk-3.3.5a-local-1",
             compatibilityProfile = "race.draenei",
             factionKey = "ALLIANCE",
             icon = "Interface\\Icons\\Achievement_Character_Draenei_Male",
             logicalRaceId = 10,
+            modelProfile = "race.draenei",
             name = {
                 enUS = "Draenei",
                 zhCN = "德莱尼"

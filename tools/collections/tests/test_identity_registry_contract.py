@@ -32,6 +32,22 @@ class IdentityRegistryContractTests(unittest.TestCase):
         self.assertIn('cameraProfile = "global"', registry)
         self.assertIn('return entry.cameraProfile or "global"', registry)
 
+    def test_race_presentation_is_versioned_and_missing_assets_fail_closed(self):
+        generated = read_text(ADDON / "Data/Generated/IdentityRegistry.lua")
+        registry = read_text(ADDON / "Core/IdentityRegistry.lua")
+        for field in ("appearanceOverrideProfile", "clientAssetVersion", "modelProfile"):
+            self.assertIn(field, generated)
+        for reason in (
+            "ASSET_VERSION_MISMATCH",
+            "MODEL_MISSING",
+            "TEXTURE_MISSING",
+        ):
+            self.assertIn(reason, registry)
+        self.assertIn("resources.modelAvailable ~= true", registry)
+        self.assertIn("resources.textureAvailable ~= true", registry)
+        self.assertIn("previewEnabled = false", registry)
+        self.assertIn("actionEnabled = false", registry)
+
     def test_consumers_use_registry_instead_of_hardcoded_class_tables(self):
         catalog = read_text(ADDON / "Core/Catalog.lua")
         bootstrap = read_text(ADDON / "Core/Bootstrap.lua")
