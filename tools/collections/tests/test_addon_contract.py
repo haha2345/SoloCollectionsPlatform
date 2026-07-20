@@ -1222,6 +1222,11 @@ class AddonContractTests(unittest.TestCase):
             self.assertNotIn(forbidden, text)
         self.assertIn("setsPanel:SetWidth(350)", text)
         self.assertIn('pieces:SetPoint("TOP", name, "BOTTOM"', text)
+        self.assertIn("local pieceState = deriveSetPieceState(record)", text)
+        self.assertIn("SC.CollectionState.IsOwnedByType(13, appearanceId)", text)
+        self.assertIn("local collectedPieces = tonumber(record.collectedCount) or 0", text)
+        self.assertIn("local requiredPieces = tonumber(record.requiredCount) or #(record.itemIds or {})", text)
+        self.assertNotIn('setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #(record.itemIds or {}))', text)
 
     def test_wardrobe_set_view_ignores_item_slot_filter(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")

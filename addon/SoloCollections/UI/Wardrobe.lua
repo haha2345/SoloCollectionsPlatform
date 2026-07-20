@@ -1236,9 +1236,23 @@ function UI.CreateWardrobePage(parent)
         pcall(function() model:SetUnit("player") end)
     end
 
-    local appearanceState = {}
-    for _, appearance in ipairs(Catalog.Get("APPEARANCES")) do
-        appearanceState[appearance.itemId] = appearance.collected and true or false
+    local function deriveSetPieceState(record)
+        local state = {}
+        local variant = record and record.selectedVariant
+        for _, member in ipairs(variant and variant.members or {}) do
+            local collected = false
+            for _, appearanceId in ipairs(member.appearanceIds or {}) do
+                if SC.CollectionState and SC.CollectionState.IsOwnedByType and
+                    SC.CollectionState.IsOwnedByType(13, appearanceId) then
+                    collected = true
+                    break
+                end
+            end
+            for _, itemId in ipairs(member.sourceItemIds or {}) do
+                state[itemId] = collected
+            end
+        end
+        return state
     end
 
     local function updateSetPieceVisual(piece, itemId, collected)
@@ -1272,7 +1286,7 @@ function UI.CreateWardrobePage(parent)
         name:SetText(record.name or "未知套装")
         detail:SetText("职业：" .. filterLabel(CLASS_FILTERS, record.classToken))
         pieces:Show()
-        local collectedPieces = 0
+        local pieceState = deriveSetPieceState(record)
         local pieceCount = math.min(#orderedItems, #page.scPieceIcons)
         local piecesWidth = (pieceCount * SET_PIECE_SIZE) + (math.max(0, pieceCount - 1) * SET_PIECE_SPACING)
         pieces:SetWidth(math.max(1, piecesWidth))
@@ -1287,15 +1301,16 @@ function UI.CreateWardrobePage(parent)
             local itemId = orderedItems[index]
             piece.scItemId = itemId
             if itemId then
-                local collected = appearanceState[itemId] and true or false
-                if collected then collectedPieces = collectedPieces + 1 end
+                local collected = pieceState[itemId] and true or false
                 updateSetPieceVisual(piece, itemId, collected)
                 piece:Show()
             else
                 piece:Hide()
             end
         end
-        setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #(record.itemIds or {}))
+        local collectedPieces = tonumber(record.collectedCount) or 0
+        local requiredPieces = tonumber(record.requiredCount) or #(record.itemIds or {})
+        setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. requiredPieces)
         setProgress:Show()
     end
 
