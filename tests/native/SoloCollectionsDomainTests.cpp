@@ -287,13 +287,19 @@ SC::ClassIdentityDefinition SyntheticChronomancer(std::uint32_t runtimeClassId)
     };
 }
 
+SC::RaceIdentityDefinition SyntheticEarthen(std::uint32_t runtimeRaceId)
+{
+    return {
+        SC::LogicalRaceId(std::uint16_t { 601 }), "earthen", runtimeRaceId,
+        { "EARTHEN" }, { "appearance.stoneform" }, "ALLIANCE", "race.medium", "race.earthen", "",
+        "appearance.dwarf", "synthetic-assets-v2", "model.earthen.stone",
+    };
+}
+
 void TestExtensibleIdentityRegistry()
 {
     SC::ClassIdentityDefinition syntheticClass = SyntheticChronomancer(101);
-    SC::RaceIdentityDefinition syntheticRace {
-        SC::LogicalRaceId(std::uint16_t { 601 }), "earthen", 102,
-        { "EARTHEN" }, {}, "ALLIANCE", "race.medium", "race.earthen", ""
-    };
+    SC::RaceIdentityDefinition syntheticRace = SyntheticEarthen(102);
     SC::IdentityRegistry registry({ syntheticClass }, { syntheticRace });
     Require(registry.IsValid(), "synthetic identity registry was rejected");
 
@@ -403,6 +409,68 @@ void TestSyntheticClassCapabilityAndCollectionContract()
     auto ownedAppearances = accountCollections.OwnedByType(Account(501), stableCatalogKey.TypeId);
     Require(ownedAppearances && *ownedAppearances == std::vector<SC::CollectionId> { stableCatalogKey.Id },
         "runtime remap changed the stable catalog ID");
+}
+
+void TestSyntheticRacePresentationContract()
+{
+    constexpr std::uint32_t InitialRuntimeRaceId = 102;
+    constexpr std::uint32_t RemappedRuntimeRaceId = 302;
+    SC::IdentityRegistry registry(
+        { SyntheticChronomancer(101) }, { SyntheticEarthen(InitialRuntimeRaceId) });
+    Require(registry.IsValid(), "synthetic race registration failed");
+
+    auto race = registry.ResolveRace(InitialRuntimeRaceId);
+    SC::EligibilityIdentityContext identity = SC::BuildEligibilityIdentityContext(
+        registry.ResolveClass(101), race, 80);
+    Require(identity.IdentityKnown && identity.LogicalRace == SC::LogicalRaceId(601) &&
+        identity.RaceKey == "earthen" && identity.FactionKey == "ALLIANCE" &&
+        identity.Capabilities.contains("appearance.stoneform"),
+        "synthetic race identity or faction profile was not composed");
+
+    SC::EligibilityPolicyDefinition factionPolicy;
+    factionPolicy.PolicyKey = "synthetic.earthen.alliance";
+    factionPolicy.RequiredCapabilities = { "appearance.stoneform" };
+    factionPolicy.AllowedRaceKeys = { "earthen" };
+    factionPolicy.FactionPolicy = "ALLIANCE";
+    SC::EligibilityRequest request;
+    request.Policy = &factionPolicy;
+    request.Identity = &identity;
+    Require(SC::EvaluateEligibility(request).IsAllowed(),
+        "synthetic race faction and appearance capability were denied");
+
+    SC::RacePresentationResources readyAssets { "synthetic-assets-v2", true, true };
+    SC::RacePresentationResolution ready = registry.ResolveRacePresentation(race, readyAssets);
+    Require(ready.IsReady() && ready.CameraProfile == "global" &&
+        ready.AppearanceOverrideProfile == "appearance.dwarf" &&
+        ready.ModelProfile == "model.earthen.stone",
+        "synthetic race presentation profiles did not resolve");
+
+    SC::RacePresentationResources wrongVersion { "synthetic-assets-v1", true, true };
+    auto versionDenied = registry.ResolveRacePresentation(race, wrongVersion);
+    Require(versionDenied.Code == SC::RacePresentationCode::AssetVersionMismatch &&
+        !versionDenied.PreviewEnabled && !versionDenied.ActionEnabled,
+        "race asset version mismatch did not disable presentation");
+    SC::RacePresentationResources missingModel { "synthetic-assets-v2", false, true };
+    Require(registry.ResolveRacePresentation(race, missingModel).Code ==
+        SC::RacePresentationCode::ModelMissing,
+        "missing race model did not fail closed");
+    SC::RacePresentationResources missingTexture { "synthetic-assets-v2", true, false };
+    auto textureDenied = registry.ResolveRacePresentation(race, missingTexture);
+    Require(textureDenied.Code == SC::RacePresentationCode::TextureMissing &&
+        !textureDenied.PreviewEnabled && !textureDenied.ActionEnabled,
+        "missing race texture did not disable preview and actions");
+
+    auto unknown = registry.ResolveRacePresentation(registry.ResolveRace(999), readyAssets);
+    Require(unknown.Code == SC::RacePresentationCode::UnknownIdentity &&
+        unknown.CameraProfile == "global" && !unknown.PreviewEnabled && !unknown.ActionEnabled,
+        "unknown race presentation did not use a safe disabled fallback");
+
+    SC::IdentityRegistry remapped(
+        { SyntheticChronomancer(101) }, { SyntheticEarthen(RemappedRuntimeRaceId) });
+    auto remappedRace = remapped.ResolveRace(RemappedRuntimeRaceId);
+    Require(remappedRace.IsKnown() && remappedRace.Identity->LogicalId == SC::LogicalRaceId(601) &&
+        !remapped.ResolveRace(InitialRuntimeRaceId).IsKnown(),
+        "synthetic race runtime remap changed its logical identity");
 }
 
 void TestEligibilityResourceAndOverrideOrder()
@@ -571,6 +639,7 @@ int main()
         TestExplicitReloadAndDiagnostics();
         TestExtensibleIdentityRegistry();
         TestSyntheticClassCapabilityAndCollectionContract();
+        TestSyntheticRacePresentationContract();
         TestEligibilityResourceAndOverrideOrder();
         TestEligibilityDeclarativeAndFallbackOrder();
         TestEligibilityUnknownIdentityViewOnly();

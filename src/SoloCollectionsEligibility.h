@@ -62,6 +62,7 @@ struct EligibilityIdentityContext
 {
     bool IdentityKnown = false;
     LogicalClassId LogicalClass;
+    LogicalRaceId LogicalRace;
     std::string ClassKey;
     std::string RaceKey;
     std::string FactionKey;
@@ -75,6 +76,12 @@ struct EligibilityIdentityContext
 // context; callers must never substitute a WotLK class such as warrior.
 [[nodiscard]] EligibilityIdentityContext BuildClassEligibilityContext(
     IdentityResolution<ClassIdentityDefinition> const& classIdentity,
+    std::uint32_t level = 0,
+    std::unordered_map<std::string, std::uint32_t> skills = {});
+
+[[nodiscard]] EligibilityIdentityContext BuildEligibilityIdentityContext(
+    IdentityResolution<ClassIdentityDefinition> const& classIdentity,
+    IdentityResolution<RaceIdentityDefinition> const& raceIdentity,
     std::uint32_t level = 0,
     std::unordered_map<std::string, std::uint32_t> skills = {});
 

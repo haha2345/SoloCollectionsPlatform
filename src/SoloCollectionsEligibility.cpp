@@ -117,6 +117,31 @@ EligibilityIdentityContext BuildClassEligibilityContext(
     return context;
 }
 
+EligibilityIdentityContext BuildEligibilityIdentityContext(
+    IdentityResolution<ClassIdentityDefinition> const& classIdentity,
+    IdentityResolution<RaceIdentityDefinition> const& raceIdentity,
+    std::uint32_t level,
+    std::unordered_map<std::string, std::uint32_t> skills)
+{
+    EligibilityIdentityContext context;
+    context.Level = level;
+    context.Skills = std::move(skills);
+    if (!classIdentity.IsKnown() || !raceIdentity.IsKnown())
+        return context;
+
+    context.IdentityKnown = true;
+    context.LogicalClass = classIdentity.Identity->LogicalId;
+    context.LogicalRace = raceIdentity.Identity->LogicalId;
+    context.ClassKey = classIdentity.Identity->ClassKey;
+    context.RaceKey = raceIdentity.Identity->RaceKey;
+    context.FactionKey = raceIdentity.Identity->FactionKey;
+    context.Capabilities.insert(
+        classIdentity.Identity->Capabilities.begin(), classIdentity.Identity->Capabilities.end());
+    context.Capabilities.insert(
+        raceIdentity.Identity->Capabilities.begin(), raceIdentity.Identity->Capabilities.end());
+    return context;
+}
+
 EligibilityResult EvaluateEligibility(EligibilityRequest const& request)
 {
     if (!request.Resources.CatalogKnown)

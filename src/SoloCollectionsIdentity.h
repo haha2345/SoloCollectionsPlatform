@@ -55,6 +55,40 @@ struct RaceIdentityDefinition
     std::string CompatibilityProfile;
     std::string ClientAssetProfile;
     std::string CameraProfile;
+    std::string AppearanceOverrideProfile;
+    std::string ClientAssetVersion;
+    std::string ModelProfile;
+};
+
+enum class RacePresentationCode : std::uint8_t
+{
+    Ok = 0,
+    UnknownIdentity,
+    AssetVersionMismatch,
+    ModelMissing,
+    TextureMissing,
+};
+
+struct RacePresentationResources
+{
+    std::string ClientAssetVersion;
+    bool ModelAvailable = false;
+    bool TextureAvailable = false;
+};
+
+struct RacePresentationResolution
+{
+    RacePresentationCode Code = RacePresentationCode::UnknownIdentity;
+    std::string_view CameraProfile = "global";
+    std::string_view AppearanceOverrideProfile;
+    std::string_view ModelProfile;
+    bool PreviewEnabled = false;
+    bool ActionEnabled = false;
+
+    [[nodiscard]] bool IsReady() const noexcept
+    {
+        return Code == RacePresentationCode::Ok && PreviewEnabled && ActionEnabled;
+    }
 };
 
 class IdentityRegistry final
@@ -74,6 +108,9 @@ public:
     [[nodiscard]] IdentityResolution<RaceIdentityDefinition> ResolveRace(std::string_view keyOrAlias) const;
     [[nodiscard]] IdentityResolution<RaceIdentityDefinition> ResolveLogicalRace(LogicalRaceId logicalId) const;
     [[nodiscard]] std::string_view ResolveCameraProfile(IdentityResolution<RaceIdentityDefinition> const& race) const noexcept;
+    [[nodiscard]] RacePresentationResolution ResolveRacePresentation(
+        IdentityResolution<RaceIdentityDefinition> const& race,
+        RacePresentationResources const& resources) const noexcept;
 
     [[nodiscard]] std::vector<ClassIdentityDefinition> const& Classes() const noexcept { return _classes; }
     [[nodiscard]] std::vector<RaceIdentityDefinition> const& Races() const noexcept { return _races; }

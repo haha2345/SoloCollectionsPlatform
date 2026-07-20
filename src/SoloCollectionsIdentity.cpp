@@ -143,6 +143,40 @@ std::string_view IdentityRegistry::ResolveCameraProfile(IdentityResolution<RaceI
     return race.Identity->CameraProfile;
 }
 
+RacePresentationResolution IdentityRegistry::ResolveRacePresentation(
+    IdentityResolution<RaceIdentityDefinition> const& race,
+    RacePresentationResources const& resources) const noexcept
+{
+    RacePresentationResolution resolution;
+    resolution.CameraProfile = ResolveCameraProfile(race);
+    if (!race.IsKnown())
+        return resolution;
+
+    resolution.AppearanceOverrideProfile = race.Identity->AppearanceOverrideProfile;
+    resolution.ModelProfile = race.Identity->ModelProfile;
+    if (race.Identity->ClientAssetVersion.empty() ||
+        resources.ClientAssetVersion != race.Identity->ClientAssetVersion)
+    {
+        resolution.Code = RacePresentationCode::AssetVersionMismatch;
+        return resolution;
+    }
+    if (race.Identity->ModelProfile.empty() || !resources.ModelAvailable)
+    {
+        resolution.Code = RacePresentationCode::ModelMissing;
+        return resolution;
+    }
+    if (!resources.TextureAvailable)
+    {
+        resolution.Code = RacePresentationCode::TextureMissing;
+        return resolution;
+    }
+
+    resolution.Code = RacePresentationCode::Ok;
+    resolution.PreviewEnabled = true;
+    resolution.ActionEnabled = true;
+    return resolution;
+}
+
 IdentityRegistry const& GetIdentityRegistry()
 {
     static IdentityRegistry const registry(LoadGeneratedClassIdentities(), LoadGeneratedRaceIdentities());
