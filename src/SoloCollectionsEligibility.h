@@ -1,6 +1,8 @@
 #ifndef SOLO_COLLECTIONS_ELIGIBILITY_H
 #define SOLO_COLLECTIONS_ELIGIBILITY_H
 
+#include "SoloCollectionsIdentity.h"
+
 #include <cstdint>
 #include <functional>
 #include <string>
@@ -59,6 +61,7 @@ struct EligibilityResourceState
 struct EligibilityIdentityContext
 {
     bool IdentityKnown = false;
+    LogicalClassId LogicalClass;
     std::string ClassKey;
     std::string RaceKey;
     std::string FactionKey;
@@ -66,6 +69,14 @@ struct EligibilityIdentityContext
     std::uint32_t Level = 0;
     std::unordered_map<std::string, std::uint32_t> Skills;
 };
+
+// Converts a registry resolution into the capability-first context consumed by
+// providers. Unknown runtime IDs intentionally produce an unknown, empty
+// context; callers must never substitute a WotLK class such as warrior.
+[[nodiscard]] EligibilityIdentityContext BuildClassEligibilityContext(
+    IdentityResolution<ClassIdentityDefinition> const& classIdentity,
+    std::uint32_t level = 0,
+    std::unordered_map<std::string, std::uint32_t> skills = {});
 
 struct EligibilityPolicyDefinition
 {

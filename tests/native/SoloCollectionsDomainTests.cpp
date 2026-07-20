@@ -278,13 +278,18 @@ void TestExplicitReloadAndDiagnostics()
         "pre-reload callback crossed generation boundary");
 }
 
-void TestExtensibleIdentityRegistry()
+SC::ClassIdentityDefinition SyntheticChronomancer(std::uint32_t runtimeClassId)
 {
-    SC::ClassIdentityDefinition syntheticClass {
-        SC::LogicalClassId(std::uint16_t { 501 }), "chronomancer", 101,
-        { "CHRONOMANCER" }, { "armor.cloth", "weapon.staff" },
+    return {
+        SC::LogicalClassId(std::uint16_t { 501 }), "chronomancer", runtimeClassId,
+        { "CHRONOMANCER" }, { "armor.cloth", "weapon.staff", "appearance.timeweave" },
         "class.caster", "class.chronomancer", 0, "CLOTH", { "STAFF" }, { "OFFHAND_ITEM" }
     };
+}
+
+void TestExtensibleIdentityRegistry()
+{
+    SC::ClassIdentityDefinition syntheticClass = SyntheticChronomancer(101);
     SC::RaceIdentityDefinition syntheticRace {
         SC::LogicalRaceId(std::uint16_t { 601 }), "earthen", 102,
         { "EARTHEN" }, {}, "ALLIANCE", "race.medium", "race.earthen", ""
@@ -314,6 +319,90 @@ void TestExtensibleIdentityRegistry()
     Require(generated.IsValid() && generated.Classes().size() == 10 && generated.Races().size() == 10,
         "generated WotLK identity registry is invalid");
     Require(generated.ResolveClass("DEATHKNIGHT").IsKnown(), "generated class aliases were not loaded");
+}
+
+void TestSyntheticClassCapabilityAndCollectionContract()
+{
+    constexpr std::uint32_t InitialRuntimeClassId = 101;
+    constexpr std::uint32_t RemappedRuntimeClassId = 202;
+    SC::IdentityRegistry initial({ SyntheticChronomancer(InitialRuntimeClassId) }, {});
+    Require(initial.IsValid(), "synthetic class registration failed");
+
+    auto initialResolution = initial.ResolveClass(InitialRuntimeClassId);
+    SC::EligibilityIdentityContext initialContext =
+        SC::BuildClassEligibilityContext(initialResolution, 80);
+    Require(initialContext.IdentityKnown && initialContext.LogicalClass == SC::LogicalClassId(501) &&
+        initialContext.ClassKey == "chronomancer",
+        "synthetic class capability profile lost its stable identity");
+
+    auto policyFor = [](std::string key, std::string capability)
+    {
+        SC::EligibilityPolicyDefinition policy;
+        policy.PolicyKey = std::move(key);
+        policy.RequiredCapabilities = { std::move(capability) };
+        policy.FactionPolicy = "ANY";
+        return policy;
+    };
+    std::vector<SC::EligibilityPolicyDefinition> explicitPolicies {
+        policyFor("synthetic.armor.cloth", "armor.cloth"),
+        policyFor("synthetic.weapon.staff", "weapon.staff"),
+        policyFor("synthetic.appearance.timeweave", "appearance.timeweave"),
+    };
+    for (SC::EligibilityPolicyDefinition const& policy : explicitPolicies)
+    {
+        SC::EligibilityRequest request;
+        request.Policy = &policy;
+        request.Identity = &initialContext;
+        Require(SC::EvaluateEligibility(request).IsAllowed(),
+            "synthetic class was denied an explicitly granted capability");
+    }
+
+    SC::EligibilityPolicyDefinition warriorOnly = policyFor("synthetic.armor.plate", "armor.plate");
+    SC::EligibilityRequest denied;
+    denied.Policy = &warriorOnly;
+    denied.Identity = &initialContext;
+    Require(SC::EvaluateEligibility(denied).Reason == SC::EligibilityReason::RequiredCapabilityMissing,
+        "synthetic class inherited warrior capabilities");
+
+    SC::EligibilityPolicyRegistry policies({
+        policyFor("unrestricted", "armor.cloth"),
+        explicitPolicies[0], explicitPolicies[1], explicitPolicies[2],
+    });
+    Require(policies.IsValid() && policies.Find("synthetic.unconfigured") == nullptr,
+        "unconfigured synthetic policy unexpectedly resolved");
+    denied.Policy = policies.Find("synthetic.unconfigured");
+    Require(SC::EvaluateEligibility(denied).Reason == SC::EligibilityReason::UnknownIdentity,
+        "missing synthetic policy did not fail closed");
+
+    SC::EligibilityIdentityContext unknown =
+        SC::BuildClassEligibilityContext(initial.ResolveClass(999), 80);
+    denied.Policy = &warriorOnly;
+    denied.Identity = &unknown;
+    Require(!unknown.IdentityKnown && unknown.ClassKey.empty() && unknown.Capabilities.empty() &&
+        SC::EvaluateEligibility(denied).Reason == SC::EligibilityReason::UnknownIdentity,
+        "unknown runtime class defaulted to warrior");
+
+    SC::CollectionKey stableCatalogKey = Key(13, 260001);
+    SC::AccountCollectionCache accountCollections;
+    auto opened = accountCollections.OpenSession(Account(501), Session(501), 0);
+    Require(opened.Accepted && accountCollections.CompleteLoad(
+        Account(501), opened.Generation, { stableCatalogKey }, SC::CollectionRevision(7)),
+        "synthetic account collection fixture failed to load");
+
+    SC::IdentityRegistry remapped({ SyntheticChronomancer(RemappedRuntimeClassId) }, {});
+    auto remappedResolution = remapped.ResolveClass(RemappedRuntimeClassId);
+    SC::EligibilityIdentityContext remappedContext =
+        SC::BuildClassEligibilityContext(remappedResolution, 80);
+    Require(remappedContext.IdentityKnown && remappedContext.LogicalClass == initialContext.LogicalClass &&
+        remappedContext.ClassKey == initialContext.ClassKey,
+        "runtime remap changed synthetic logical or catalog identity");
+    Require(!remapped.ResolveClass(InitialRuntimeClassId).IsKnown(),
+        "runtime remap retained the obsolete class ID");
+    Require(accountCollections.IsOwned(Account(501), stableCatalogKey),
+        "runtime remap changed account collection ownership");
+    auto ownedAppearances = accountCollections.OwnedByType(Account(501), stableCatalogKey.TypeId);
+    Require(ownedAppearances && *ownedAppearances == std::vector<SC::CollectionId> { stableCatalogKey.Id },
+        "runtime remap changed the stable catalog ID");
 }
 
 void TestEligibilityResourceAndOverrideOrder()
@@ -481,6 +570,7 @@ int main()
         TestExplicitCrossThreadLocking();
         TestExplicitReloadAndDiagnostics();
         TestExtensibleIdentityRegistry();
+        TestSyntheticClassCapabilityAndCollectionContract();
         TestEligibilityResourceAndOverrideOrder();
         TestEligibilityDeclarativeAndFallbackOrder();
         TestEligibilityUnknownIdentityViewOnly();

@@ -98,6 +98,25 @@ EligibilityPolicyRegistry const& GetEligibilityPolicyRegistry()
     return registry;
 }
 
+EligibilityIdentityContext BuildClassEligibilityContext(
+    IdentityResolution<ClassIdentityDefinition> const& classIdentity,
+    std::uint32_t level,
+    std::unordered_map<std::string, std::uint32_t> skills)
+{
+    EligibilityIdentityContext context;
+    context.Level = level;
+    context.Skills = std::move(skills);
+    if (!classIdentity.IsKnown())
+        return context;
+
+    context.IdentityKnown = true;
+    context.LogicalClass = classIdentity.Identity->LogicalId;
+    context.ClassKey = classIdentity.Identity->ClassKey;
+    context.Capabilities.insert(
+        classIdentity.Identity->Capabilities.begin(), classIdentity.Identity->Capabilities.end());
+    return context;
+}
+
 EligibilityResult EvaluateEligibility(EligibilityRequest const& request)
 {
     if (!request.Resources.CatalogKnown)
