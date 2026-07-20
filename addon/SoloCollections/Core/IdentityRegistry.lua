@@ -160,3 +160,43 @@ function Identity.ResolveCameraProfile(raceIdentity)
     local entry = raceIdentity or Identity.GetPlayerRace()
     return entry.cameraProfile or "global"
 end
+
+function Identity.ResolveRacePresentation(raceIdentity, resourceState)
+    local entry = raceIdentity or Identity.GetPlayerRace()
+    local resources = type(resourceState) == "table" and resourceState or {}
+    local result = {
+        reason = "UNKNOWN_IDENTITY",
+        cameraProfile = Identity.ResolveCameraProfile(entry),
+        appearanceOverrideProfile = nil,
+        modelProfile = nil,
+        previewEnabled = false,
+        actionEnabled = false,
+    }
+    if not entry or not entry.known then
+        return result
+    end
+
+    result.appearanceOverrideProfile = entry.appearanceOverrideProfile
+    result.modelProfile = entry.modelProfile
+    if type(entry.clientAssetVersion) ~= "string"
+        or entry.clientAssetVersion == ""
+        or resources.clientAssetVersion ~= entry.clientAssetVersion then
+        result.reason = "ASSET_VERSION_MISMATCH"
+        return result
+    end
+    if type(entry.modelProfile) ~= "string"
+        or entry.modelProfile == ""
+        or resources.modelAvailable ~= true then
+        result.reason = "MODEL_MISSING"
+        return result
+    end
+    if resources.textureAvailable ~= true then
+        result.reason = "TEXTURE_MISSING"
+        return result
+    end
+
+    result.reason = "OK"
+    result.previewEnabled = true
+    result.actionEnabled = true
+    return result
+end

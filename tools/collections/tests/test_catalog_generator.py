@@ -65,6 +65,14 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertIn("LoadGeneratedSc2Categories", rendered)
         self.assertIn("typeMappingHashes", generator.build_model(self.source))
 
+    def test_race_presentation_profiles_inherit_the_asset_pack_version(self):
+        model = generator.build_model(self.source)
+        expected_version = model["assetPackVersion"]
+        for race in model["races"]:
+            self.assertEqual(expected_version, race["clientAssetVersion"])
+            self.assertEqual(race["compatibilityProfile"], race["appearanceOverrideProfile"])
+            self.assertEqual(race["clientAssetProfile"], race["modelProfile"])
+
     def test_localized_metadata_does_not_change_mapping_hash(self):
         before = generator.build_model(self.source)["mappingHash"]
         classes = self.read_json("catalog/source/classes.json")
