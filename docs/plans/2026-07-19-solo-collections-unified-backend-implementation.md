@@ -747,7 +747,7 @@ feat: consume authoritative SC2 collection state
 
 ### 任务 6.1：生成 WotLK 坐骑候选和审核目录
 
-状态：✅ 已完成（SoloCollections 待本次提交；mod-solo-collections `f325385`）
+状态：✅ 已完成（SoloCollections `d3b6ce4`；mod-solo-collections `f325385`）
 
 - 从 Spell/SkillLineAbility/Creature 等当前数据生成候选。
 - 只将经过规则和人工审核的条目加入正式 allowlist。
