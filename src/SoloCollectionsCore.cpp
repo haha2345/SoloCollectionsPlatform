@@ -7,6 +7,7 @@
 #include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProvider.h"
 #include "SoloCollectionsProtocolScript.h"
+#include "SoloCollectionsSetCatalog.h"
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
 
@@ -154,6 +155,39 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class SetCollectionProvider final : public CollectionProvider
+{
+public:
+    SetCollectionProvider()
+    {
+        _descriptor.TypeId = SetCollectionTypeId;
+        _descriptor.TypeKey = "set";
+        _descriptor.Dependencies = { SetAppearanceDependencyTypeId };
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        bool known = GetSetCatalog().Find(collectionId) != nullptr;
+        result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        return result;
+    }
+    [[nodiscard]] std::optional<bool> IsOwned(AccountId accountId, CollectionId collectionId) const override
+    {
+        return GetSetCatalog().IsComplete(accountId, collectionId);
+    }
+    [[nodiscard]] std::optional<std::vector<CollectionId>> OwnedByAccount(AccountId accountId) const override
+    {
+        return GetSetCatalog().CompletedByAccount(accountId);
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class SoloCollectionsCoreWorldScript final : public WorldScript
 {
 public:
@@ -178,6 +212,9 @@ public:
         registration = registry.Register(std::make_unique<AppearanceCollectionProvider>());
         if (!registration.Accepted)
             throw std::runtime_error("SoloCollections appearance provider registration failed: " + registration.Message);
+        registration = registry.Register(std::make_unique<SetCollectionProvider>());
+        if (!registration.Accepted)
+            throw std::runtime_error("SoloCollections set provider registration failed: " + registration.Message);
 
         RegistryFinalizeResult finalized = registry.Finalize();
         if (!finalized.Success)

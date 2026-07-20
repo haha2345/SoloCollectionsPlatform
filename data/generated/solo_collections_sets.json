@@ -1,0 +1,960 @@
+{
+  "appearanceMappingHash": "f418b28486adc98ba8b2d59fd98059a99ba31c9f44f4366189e151264a92f92b",
+  "mappingHash": "3f32527e1a67aa71ec878381751907258f99a1ec6dc049fce1a5caba92a8ff66",
+  "schemaVersion": 1,
+  "sets": [
+    {
+      "classToken": "MAGE",
+      "collectionId": 300000,
+      "collectionKey": "set.arcanist_regalia",
+      "icon": "Interface\\Icons\\INV_Helmet_53",
+      "itemSetId": 201,
+      "name": {
+        "enUS": "Arcanist Regalia",
+        "zhCN": "奥术师套装"
+      },
+      "ordinal": 18499,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                206750
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16798
+              ]
+            },
+            {
+              "appearanceIds": [
+                206757
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16800
+              ]
+            },
+            {
+              "appearanceIds": [
+                206755
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16801
+              ]
+            },
+            {
+              "appearanceIds": [
+                207095
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16795
+              ]
+            },
+            {
+              "appearanceIds": [
+                206751
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16796
+              ]
+            },
+            {
+              "appearanceIds": [
+                206756
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16797
+              ]
+            },
+            {
+              "appearanceIds": [
+                206753
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16802
+              ]
+            },
+            {
+              "appearanceIds": [
+                206754
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16799
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "WARLOCK",
+      "collectionId": 300001,
+      "collectionKey": "set.felheart_raiment",
+      "icon": "Interface\\Icons\\INV_Shoulder_23",
+      "itemSetId": 203,
+      "name": {
+        "enUS": "Felheart Raiment",
+        "zhCN": "恶魔之心套装"
+      },
+      "ordinal": 18500,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                207265
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16809
+              ]
+            },
+            {
+              "appearanceIds": [
+                207267
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16803
+              ]
+            },
+            {
+              "appearanceIds": [
+                207263
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16805
+              ]
+            },
+            {
+              "appearanceIds": [
+                207273
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16808
+              ]
+            },
+            {
+              "appearanceIds": [
+                207264
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16810
+              ]
+            },
+            {
+              "appearanceIds": [
+                207266
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16807
+              ]
+            },
+            {
+              "appearanceIds": [
+                207261
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16806
+              ]
+            },
+            {
+              "appearanceIds": [
+                207262
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16804
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "ROGUE",
+      "collectionId": 300002,
+      "collectionKey": "set.nightslayer_armor",
+      "icon": "Interface\\Icons\\INV_Helmet_41",
+      "itemSetId": 204,
+      "name": {
+        "enUS": "Nightslayer Armor",
+        "zhCN": "夜幕杀手套装"
+      },
+      "ordinal": 18501,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                206958
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16820
+              ]
+            },
+            {
+              "appearanceIds": [
+                206960
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16824
+              ]
+            },
+            {
+              "appearanceIds": [
+                207087
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16826
+              ]
+            },
+            {
+              "appearanceIds": [
+                207094
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16821
+              ]
+            },
+            {
+              "appearanceIds": [
+                207054
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16822
+              ]
+            },
+            {
+              "appearanceIds": [
+                207088
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16823
+              ]
+            },
+            {
+              "appearanceIds": [
+                207053
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16827
+              ]
+            },
+            {
+              "appearanceIds": [
+                206959
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16825
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "DRUID",
+      "collectionId": 300003,
+      "collectionKey": "set.cenarion_raiment",
+      "icon": "Interface\\Icons\\INV_Helmet_09",
+      "itemSetId": 205,
+      "name": {
+        "enUS": "Cenarion Raiment",
+        "zhCN": "塞纳里奥套装"
+      },
+      "ordinal": 18502,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                207192
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16833
+              ]
+            },
+            {
+              "appearanceIds": [
+                207167
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16829
+              ]
+            },
+            {
+              "appearanceIds": [
+                207169
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16831
+              ]
+            },
+            {
+              "appearanceIds": [
+                207504
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16834
+              ]
+            },
+            {
+              "appearanceIds": [
+                207170
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16835
+              ]
+            },
+            {
+              "appearanceIds": [
+                207279
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16836
+              ]
+            },
+            {
+              "appearanceIds": [
+                207166
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16828
+              ]
+            },
+            {
+              "appearanceIds": [
+                207168
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16830
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "HUNTER",
+      "collectionId": 300004,
+      "collectionKey": "set.giantstalker_armor",
+      "icon": "Interface\\Icons\\INV_Shoulder_10",
+      "itemSetId": 206,
+      "name": {
+        "enUS": "Giantstalker Armor",
+        "zhCN": "巨人追猎者套装"
+      },
+      "ordinal": 18503,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                207282
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16845
+              ]
+            },
+            {
+              "appearanceIds": [
+                207294
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16849
+              ]
+            },
+            {
+              "appearanceIds": [
+                207283
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16852
+              ]
+            },
+            {
+              "appearanceIds": [
+                207285
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16846
+              ]
+            },
+            {
+              "appearanceIds": [
+                207286
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16847
+              ]
+            },
+            {
+              "appearanceIds": [
+                207287
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16848
+              ]
+            },
+            {
+              "appearanceIds": [
+                207280
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16851
+              ]
+            },
+            {
+              "appearanceIds": [
+                207281
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16850
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "SHAMAN",
+      "collectionId": 300005,
+      "collectionKey": "set.earthfury",
+      "icon": "Interface\\Icons\\INV_Shoulder_29",
+      "itemSetId": 207,
+      "name": {
+        "enUS": "The Earthfury",
+        "zhCN": "大地之怒套装"
+      },
+      "ordinal": 18504,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                207207
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16841
+              ]
+            },
+            {
+              "appearanceIds": [
+                207205
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16837
+              ]
+            },
+            {
+              "appearanceIds": [
+                207209
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16839
+              ]
+            },
+            {
+              "appearanceIds": [
+                207210
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16842
+              ]
+            },
+            {
+              "appearanceIds": [
+                207211
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16843
+              ]
+            },
+            {
+              "appearanceIds": [
+                207208
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16844
+              ]
+            },
+            {
+              "appearanceIds": [
+                207204
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16838
+              ]
+            },
+            {
+              "appearanceIds": [
+                207206
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16840
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "PALADIN",
+      "collectionId": 300006,
+      "collectionKey": "set.lawbringer_armor",
+      "icon": "Interface\\Icons\\INV_Helmet_05",
+      "itemSetId": 208,
+      "name": {
+        "enUS": "Lawbringer Armor",
+        "zhCN": "秩序之源套装"
+      },
+      "ordinal": 18505,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                207089
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16853
+              ]
+            },
+            {
+              "appearanceIds": [
+                207060
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16859
+              ]
+            },
+            {
+              "appearanceIds": [
+                207091
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16860
+              ]
+            },
+            {
+              "appearanceIds": [
+                207090
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16854
+              ]
+            },
+            {
+              "appearanceIds": [
+                207058
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16855
+              ]
+            },
+            {
+              "appearanceIds": [
+                207093
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16856
+              ]
+            },
+            {
+              "appearanceIds": [
+                207059
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16858
+              ]
+            },
+            {
+              "appearanceIds": [
+                207092
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16857
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    },
+    {
+      "classToken": "WARRIOR",
+      "collectionId": 300007,
+      "collectionKey": "set.battlegear_of_might",
+      "icon": "Interface\\Icons\\INV_Chest_Plate16",
+      "itemSetId": 209,
+      "name": {
+        "enUS": "Battlegear of Might",
+        "zhCN": "力量套装"
+      },
+      "ordinal": 18506,
+      "variants": [
+        {
+          "colorKey": "default",
+          "difficultyKey": "raid",
+          "lifecycle": "active",
+          "members": [
+            {
+              "appearanceIds": [
+                206900
+              ],
+              "lifecycle": "active",
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16865
+              ]
+            },
+            {
+              "appearanceIds": [
+                206904
+              ],
+              "lifecycle": "active",
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16862
+              ]
+            },
+            {
+              "appearanceIds": [
+                206901
+              ],
+              "lifecycle": "active",
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16863
+              ]
+            },
+            {
+              "appearanceIds": [
+                210102
+              ],
+              "lifecycle": "active",
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16866
+              ]
+            },
+            {
+              "appearanceIds": [
+                206902
+              ],
+              "lifecycle": "active",
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16867
+              ]
+            },
+            {
+              "appearanceIds": [
+                206903
+              ],
+              "lifecycle": "active",
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16868
+              ]
+            },
+            {
+              "appearanceIds": [
+                206898
+              ],
+              "lifecycle": "active",
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16864
+              ]
+            },
+            {
+              "appearanceIds": [
+                206899
+              ],
+              "lifecycle": "active",
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16861
+              ]
+            }
+          ],
+          "requiredCount": 8,
+          "variantKey": "tier1"
+        }
+      ]
+    }
+  ],
+  "sourceBuild": "3.3.5.12340"
+}

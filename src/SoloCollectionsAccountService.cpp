@@ -1,6 +1,7 @@
 #include "SoloCollectionsAccountService.h"
 
 #include "SoloCollectionsAccountCache.h"
+#include "SoloCollectionsProvider.h"
 
 namespace SoloCollections
 {
@@ -20,7 +21,9 @@ CollectionResult AccountCollectionService::Evaluate(AccountId accountId, Collect
     }
 
     result.Revision = snapshot->Revision;
-    result.Availability.Owned = GetAccountCollectionCache().IsOwned(accountId, key);
+    CollectionProvider const* provider = GetCollectionProviderRegistry().Find(key.TypeId);
+    std::optional<bool> derived = provider ? provider->IsOwned(accountId, key.Id) : std::nullopt;
+    result.Availability.Owned = derived.value_or(GetAccountCollectionCache().IsOwned(accountId, key));
     result.Reason = result.Availability.Owned ? CollectionReasonCode::Ok : CollectionReasonCode::NotOwned;
     return result;
 }
@@ -28,6 +31,9 @@ CollectionResult AccountCollectionService::Evaluate(AccountId accountId, Collect
 std::optional<std::vector<CollectionId>> AccountCollectionService::OwnedByType(
     AccountId accountId, CollectionTypeId typeId) const
 {
+    if (CollectionProvider const* provider = GetCollectionProviderRegistry().Find(typeId))
+        if (std::optional<std::vector<CollectionId>> derived = provider->OwnedByAccount(accountId))
+            return derived;
     return GetAccountCollectionCache().OwnedByType(accountId, typeId);
 }
 

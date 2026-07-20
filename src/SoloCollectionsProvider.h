@@ -34,6 +34,12 @@ public:
     virtual ~CollectionProvider() = default;
     [[nodiscard]] virtual CollectionProviderDescriptor const& Descriptor() const = 0;
     [[nodiscard]] virtual CollectionResult Evaluate(CollectionId collectionId) const = 0;
+    // Derived providers (for example sets) may project ownership from another
+    // authoritative collection type without writing parallel unlock rows.
+    [[nodiscard]] virtual std::optional<bool> IsOwned(AccountId /*accountId*/,
+        CollectionId /*collectionId*/) const { return std::nullopt; }
+    [[nodiscard]] virtual std::optional<std::vector<CollectionId>> OwnedByAccount(
+        AccountId /*accountId*/) const { return std::nullopt; }
 };
 
 struct RegistryRegistrationResult
