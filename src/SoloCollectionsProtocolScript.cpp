@@ -2,10 +2,14 @@
 
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsCompanionCatalog.h"
+#include "SoloCollectionsCompanionService.h"
 #include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProtocolServer.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsToyCatalog.h"
+#include "SoloCollectionsToyService.h"
 
 #include "Chat.h"
 #include "Player.h"
@@ -105,10 +109,28 @@ bool Sc2ProtocolCanUsePrivateChat(
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
         [player](AccountId accountId, Sc2Message const& request)
         {
-            if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId() ||
-                request.TypeId != MountCollectionTypeId.Value() || request.ActionId != "SUMMON" || request.Target != "-")
+            if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId())
                 return std::string("INVALID_REQUEST");
-            return GetMountCollectionService().ExecuteSummon(player, CollectionId(request.CollectionId));
+            if (request.TypeId == MountCollectionTypeId.Value())
+            {
+                if (request.ActionId != "SUMMON" || request.Target != "-")
+                    return std::string("INVALID_REQUEST");
+                return GetMountCollectionService().ExecuteSummon(player, CollectionId(request.CollectionId));
+            }
+            if (request.TypeId == CompanionCollectionTypeId.Value())
+            {
+                if (request.ActionId != "SUMMON" || request.Target != "-")
+                    return std::string("INVALID_REQUEST");
+                return GetCompanionCollectionService().ExecuteSummon(player, CollectionId(request.CollectionId));
+            }
+            if (request.TypeId == ToyCollectionTypeId.Value())
+            {
+                if (request.ActionId != "USE" || (request.Target != "-" && request.Target != "1"))
+                    return std::string("INVALID_REQUEST");
+                return GetToyCollectionService().ExecuteUse(
+                    player, CollectionId(request.CollectionId), request.Target == "1");
+            }
+            return std::string("INVALID_REQUEST");
         });
     return false;
 }

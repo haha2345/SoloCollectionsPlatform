@@ -53,7 +53,7 @@ class MountUnlockContractTests(unittest.TestCase):
         self.assertIn("nextRevision.Value()", STORE_CPP)
 
     def test_summon_accepts_only_logical_collection_and_server_resolves_spell(self):
-        self.assertIn('request.TypeId != MountCollectionTypeId.Value()', PROTOCOL_SCRIPT)
+        self.assertIn('request.TypeId == MountCollectionTypeId.Value()', PROTOCOL_SCRIPT)
         self.assertIn('request.ActionId != "SUMMON"', PROTOCOL_SCRIPT)
         self.assertIn('request.Target != "-"', PROTOCOL_SCRIPT)
         self.assertIn("GetMountCatalog().Find(collectionId)", SERVICE)

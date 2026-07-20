@@ -1,8 +1,10 @@
 #include "SoloCollectionsAccountCache.h"
+#include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsEligibility.h"
 #include "SoloCollectionsIdentity.h"
 #include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsToyCatalog.h"
 
 #include <cstdlib>
 #include <iostream>
@@ -434,6 +436,33 @@ void TestGeneratedMountCatalog()
     Require(gryphon && gryphon->ActionVariants.front().MinimumRidingSkill == 300 &&
         gryphon->ActionVariants.front().IsFlying, "mount action requirements were not generated");
 }
+
+void TestGeneratedCompanionCatalog()
+{
+    SC::CompanionCatalog const& catalog = SC::GetCompanionCatalog();
+    Require(catalog.Collections().size() == 24, "generated companion catalog count changed without review");
+    SC::CompanionCollectionDefinition const* worg = catalog.FindBySpell(15999);
+    Require(worg && worg->Id == SC::CollectionId(100281) && worg->CreatureId == 10259,
+        "Worg Pup companion lookup failed");
+    Require(catalog.Find(worg->Id) == worg, "companion collection reverse lookup failed");
+    Require(!catalog.FindBySpell(48778), "mount spell entered the companion allowlist");
+}
+
+void TestGeneratedToyCatalog()
+{
+    SC::ToyCatalog const& catalog = SC::GetToyCatalog();
+    Require(catalog.Collections().size() == 4, "generated toy catalog count changed without review");
+    SC::ToyCollectionDefinition const* orb = catalog.FindByItem(35275);
+    Require(orb && orb->Id == SC::CollectionId(100305) && orb->ActionKind == SC::ToyActionKind::SpellSelf,
+        "Orb of the Sin'dorei toy lookup failed");
+    Require(catalog.Find(orb->Id) == orb, "toy collection reverse lookup failed");
+
+    std::set<SC::ToyActionKind> actionKinds;
+    for (SC::ToyCollectionDefinition const& toy : catalog.Collections())
+        actionKinds.insert(toy.ActionKind);
+    Require(actionKinds.size() == 4, "toy action registry no longer covers every reviewed handler kind");
+    Require(!catalog.FindByItem(6948), "teleport item entered the toy allowlist");
+}
 }
 
 int main()
@@ -456,6 +485,8 @@ int main()
         TestEligibilityDeclarativeAndFallbackOrder();
         TestEligibilityUnknownIdentityViewOnly();
         TestGeneratedMountCatalog();
+        TestGeneratedCompanionCatalog();
+        TestGeneratedToyCatalog();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

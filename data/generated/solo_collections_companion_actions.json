@@ -1,0 +1,174 @@
+{
+  "entries": [
+    {
+      "collectionId": 100281,
+      "collectionKey": "companion.worg_pup",
+      "creatureId": 10259,
+      "ordinal": 281,
+      "spellId": 15999
+    },
+    {
+      "collectionId": 100282,
+      "collectionKey": "companion.smolderweb_hatchling",
+      "creatureId": 10598,
+      "ordinal": 282,
+      "spellId": 16450
+    },
+    {
+      "collectionId": 100283,
+      "collectionKey": "companion.emerald_whelpling",
+      "creatureId": 7545,
+      "ordinal": 283,
+      "spellId": 10698
+    },
+    {
+      "collectionId": 100284,
+      "collectionKey": "companion.vampiric_batling",
+      "creatureId": 28513,
+      "ordinal": 284,
+      "spellId": 51851
+    },
+    {
+      "collectionId": 100285,
+      "collectionKey": "companion.stinker",
+      "creatureId": 23274,
+      "ordinal": 285,
+      "spellId": 40990
+    },
+    {
+      "collectionId": 100286,
+      "collectionKey": "companion.sinister_squashling",
+      "creatureId": 23909,
+      "ordinal": 286,
+      "spellId": 42609
+    },
+    {
+      "collectionId": 100287,
+      "collectionKey": "companion.tiny_sporebat",
+      "creatureId": 25062,
+      "ordinal": 287,
+      "spellId": 45082
+    },
+    {
+      "collectionId": 100288,
+      "collectionKey": "companion.speedy",
+      "creatureId": 16547,
+      "ordinal": 288,
+      "spellId": 28738
+    },
+    {
+      "collectionId": 100289,
+      "collectionKey": "companion.phoenix_hatchling",
+      "creatureId": 26119,
+      "ordinal": 289,
+      "spellId": 46599
+    },
+    {
+      "collectionId": 100290,
+      "collectionKey": "companion.ghostly_skull",
+      "creatureId": 29147,
+      "ordinal": 290,
+      "spellId": 53316
+    },
+    {
+      "collectionId": 100291,
+      "collectionKey": "companion.hyacinth_macaw",
+      "creatureId": 7391,
+      "ordinal": 291,
+      "spellId": 10682
+    },
+    {
+      "collectionId": 100292,
+      "collectionKey": "companion.disgusting_oozeling",
+      "creatureId": 15429,
+      "ordinal": 292,
+      "spellId": 25162
+    },
+    {
+      "collectionId": 100293,
+      "collectionKey": "companion.mr_wiggles",
+      "creatureId": 16548,
+      "ordinal": 293,
+      "spellId": 28739
+    },
+    {
+      "collectionId": 100294,
+      "collectionKey": "companion.lifelike_toad",
+      "creatureId": 12419,
+      "ordinal": 294,
+      "spellId": 19772
+    },
+    {
+      "collectionId": 100295,
+      "collectionKey": "companion.dragon_kite",
+      "creatureId": 25110,
+      "ordinal": 295,
+      "spellId": 45127
+    },
+    {
+      "collectionId": 100296,
+      "collectionKey": "companion.firefly",
+      "creatureId": 21076,
+      "ordinal": 296,
+      "spellId": 36034
+    },
+    {
+      "collectionId": 100297,
+      "collectionKey": "companion.zergling",
+      "creatureId": 11327,
+      "ordinal": 297,
+      "spellId": 17709
+    },
+    {
+      "collectionId": 100298,
+      "collectionKey": "companion.panda_cub",
+      "creatureId": 11325,
+      "ordinal": 298,
+      "spellId": 17707
+    },
+    {
+      "collectionId": 100299,
+      "collectionKey": "companion.frosty",
+      "creatureId": 28883,
+      "ordinal": 299,
+      "spellId": 52615
+    },
+    {
+      "collectionId": 100300,
+      "collectionKey": "companion.bananas",
+      "creatureId": 23234,
+      "ordinal": 300,
+      "spellId": 40549
+    },
+    {
+      "collectionId": 100301,
+      "collectionKey": "companion.mr_chilly",
+      "creatureId": 29726,
+      "ordinal": 301,
+      "spellId": 55068
+    },
+    {
+      "collectionId": 100302,
+      "collectionKey": "companion.giant_sewer_rat",
+      "creatureId": 31575,
+      "ordinal": 302,
+      "spellId": 59250
+    },
+    {
+      "collectionId": 100303,
+      "collectionKey": "companion.spring_rabbit",
+      "creatureId": 32791,
+      "ordinal": 303,
+      "spellId": 61725
+    },
+    {
+      "collectionId": 100304,
+      "collectionKey": "companion.onyxian_whelpling",
+      "creatureId": 36607,
+      "ordinal": 304,
+      "spellId": 69002
+    }
+  ],
+  "mappingHash": "08fb8129152abf3e21d7bb0b9d39d97197460ecf05642af7e99440c3b8bc50d9",
+  "schemaVersion": 1
+}

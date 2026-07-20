@@ -6,10 +6,12 @@ enable_testing()
 add_executable(solo_collections_domain_tests
     SoloCollectionsDomainTests.cpp
     ../../src/SoloCollectionsAccountCache.cpp
+    ../../src/SoloCollectionsCompanionCatalog.cpp
     ../../src/SoloCollectionsEligibility.cpp
     ../../src/SoloCollectionsIdentity.cpp
     ../../src/SoloCollectionsMountCatalog.cpp
     ../../src/SoloCollectionsProvider.cpp
+    ../../src/SoloCollectionsToyCatalog.cpp
 )
 
 target_include_directories(solo_collections_domain_tests PRIVATE ../../src)

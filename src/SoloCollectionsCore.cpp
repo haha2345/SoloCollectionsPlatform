@@ -1,10 +1,15 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsCompanionCatalog.h"
+#include "SoloCollectionsCompanionService.h"
 #include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProvider.h"
 #include "SoloCollectionsProtocolScript.h"
+#include "SoloCollectionsToyCatalog.h"
+#include "SoloCollectionsToyService.h"
 
+#include "Item.h"
 #include "Player.h"
 #include "Log.h"
 #include "ScriptMgr.h"
@@ -79,6 +84,56 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class CompanionCollectionProvider final : public CollectionProvider
+{
+public:
+    CompanionCollectionProvider()
+    {
+        _descriptor.TypeId = CompanionCollectionTypeId;
+        _descriptor.TypeKey = "companion";
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        bool known = GetCompanionCatalog().Find(collectionId) != nullptr;
+        result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        return result;
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
+class ToyCollectionProvider final : public CollectionProvider
+{
+public:
+    ToyCollectionProvider()
+    {
+        _descriptor.TypeId = ToyCollectionTypeId;
+        _descriptor.TypeKey = "toy";
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        bool known = GetToyCatalog().Find(collectionId) != nullptr;
+        result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        return result;
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class SoloCollectionsCoreWorldScript final : public WorldScript
 {
 public:
@@ -94,6 +149,12 @@ public:
         registration = registry.Register(std::make_unique<MountCollectionProvider>());
         if (!registration.Accepted)
             throw std::runtime_error("SoloCollections mount provider registration failed: " + registration.Message);
+        registration = registry.Register(std::make_unique<CompanionCollectionProvider>());
+        if (!registration.Accepted)
+            throw std::runtime_error("SoloCollections companion provider registration failed: " + registration.Message);
+        registration = registry.Register(std::make_unique<ToyCollectionProvider>());
+        if (!registration.Accepted)
+            throw std::runtime_error("SoloCollections toy provider registration failed: " + registration.Message);
 
         RegistryFinalizeResult finalized = registry.Finalize();
         if (!finalized.Success)
@@ -110,6 +171,8 @@ public:
     {
         GetAccountCollectionStore().Update();
         GetMountCollectionService().Update();
+        GetCompanionCollectionService().Update();
+        GetToyCollectionService().Update();
         (void)GetAccountCollectionCache().EvictExpired(MonotonicMilliseconds());
     }
 };
@@ -119,7 +182,9 @@ class SoloCollectionsCorePlayerScript final : public PlayerScript
 public:
     SoloCollectionsCorePlayerScript() : PlayerScript(
         "SoloCollectionsCorePlayerScript", { PLAYERHOOK_ON_LOGIN, PLAYERHOOK_ON_LOGOUT,
-            PLAYERHOOK_ON_UPDATE, PLAYERHOOK_ON_LEARN_SPELL, PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
+            PLAYERHOOK_ON_UPDATE, PLAYERHOOK_ON_LEARN_SPELL, PLAYERHOOK_ON_STORE_NEW_ITEM,
+            PLAYERHOOK_ON_CREATE_ITEM, PLAYERHOOK_ON_QUEST_REWARD_ITEM,
+            PLAYERHOOK_ON_AFTER_STORE_OR_EQUIP_NEW_ITEM, PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
 
     void OnPlayerLogin(Player* player) override
     {
@@ -133,6 +198,8 @@ public:
         if (opened.Accepted && opened.ShouldStartLoad)
             GetAccountCollectionStore().BeginLoad(accountId, playerGuid, opened.Generation);
         GetMountCollectionService().OnPlayerLogin(player);
+        GetCompanionCollectionService().OnPlayerLogin(player);
+        GetToyCollectionService().OnPlayerLogin(player);
         Sc2ProtocolOpenSession(player);
     }
 
@@ -155,12 +222,42 @@ public:
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId) override
     {
         GetMountCollectionService().OnPlayerLearnSpell(player, spellId);
+        GetCompanionCollectionService().OnPlayerLearnSpell(player, spellId);
+    }
+
+    void OnPlayerStoreNewItem(Player* player, Item* item, std::uint32_t /*count*/) override
+    {
+        OnToyItem(player, item);
+    }
+
+    void OnPlayerCreateItem(Player* player, Item* item, std::uint32_t /*count*/) override
+    {
+        OnToyItem(player, item);
+    }
+
+    void OnPlayerQuestRewardItem(Player* player, Item* item, std::uint32_t /*count*/) override
+    {
+        OnToyItem(player, item);
+    }
+
+    void OnPlayerAfterStoreOrEquipNewItem(Player* player, std::uint32_t /*vendorslot*/, Item* item,
+        std::uint8_t /*count*/, std::uint8_t /*bag*/, std::uint8_t /*slot*/, ItemTemplate const* /*pProto*/,
+        Creature* /*pVendor*/, VendorItem const* /*crItem*/, bool /*bStore*/) override
+    {
+        OnToyItem(player, item);
     }
 
     bool OnPlayerCanUseChat(Player* player, std::uint32_t type, std::uint32_t language,
         std::string& message, Player* receiver) override
     {
         return Sc2ProtocolCanUsePrivateChat(player, type, language, message, receiver);
+    }
+
+private:
+    static void OnToyItem(Player* player, Item* item)
+    {
+        if (item)
+            GetToyCollectionService().OnItemAcquired(player, item->GetEntry());
     }
 };
 }
