@@ -49,6 +49,7 @@
   },
   "actionStatuses": [
     "ACCEPTED",
+    "DISMISSED",
     "LOADING",
     "NOT_OWNED",
     "CATALOG_MISMATCH",

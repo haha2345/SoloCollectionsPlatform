@@ -113,6 +113,19 @@
       "wire": "R|0123456789abcdef|99|LOADING|1|1001|43"
     },
     {
+      "name": "companion_toggle_result",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 100,
+        "status": "DISMISSED",
+        "typeId": 11,
+        "collectionId": 100281,
+        "revision": 43
+      },
+      "wire": "R|0123456789abcdef|100|DISMISSED|11|100281|43"
+    },
+    {
       "name": "resync",
       "message": {
         "kind": "RESYNC",

@@ -87,10 +87,11 @@ remain in a short bounded replay cache, and replay returns `REPLAYED_REQUEST`
 without repeating an action. Outbound snapshot packets are queued across world
 ticks rather than emitted in a single burst.
 
-The stable action status set includes `ACCEPTED`, `LOADING`, `NOT_OWNED`,
+The stable action status set includes `ACCEPTED`, `DISMISSED`, `LOADING`, `NOT_OWNED`,
 `CATALOG_MISMATCH`, `ASSET_MISMATCH`, `UNKNOWN_IDENTITY`, class/race/skill
 restrictions, `INVALID_TARGET_SLOT`, `DB_UNAVAILABLE`, `RATE_LIMITED`,
-`INVALID_REQUEST`, and `UNSUPPORTED`. Mount actions additionally distinguish
+`INVALID_REQUEST`, and `UNSUPPORTED`. `DISMISSED` is a successful idempotent
+companion toggle result. Mount actions additionally distinguish
 `IN_COMBAT`, `DEAD`, `IN_VEHICLE`, `ON_TAXI`, `INDOORS`,
 `FLYING_NOT_ALLOWED`, `MAP_RESTRICTED`, `BATTLEGROUND_RESTRICTED`,
 `SHAPESHIFT_RESTRICTED`, and `CAST_FAILED`. Transport errors also use stable codes,

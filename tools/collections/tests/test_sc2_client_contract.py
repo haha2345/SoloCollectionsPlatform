@@ -72,6 +72,7 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertIn("displayItemId", generated)
         self.assertNotIn("sourceId =", generated)
         self.assertNotIn("actionId =", generated)
+        self.assertIn('status == "ACCEPTED" or status == "DISMISSED"', bridge)
 
     def test_lua_state_harness_is_checked_in(self):
         harness = ROOT / "tools/collections/tests/lua/sc2_collection_state_harness.lua"
