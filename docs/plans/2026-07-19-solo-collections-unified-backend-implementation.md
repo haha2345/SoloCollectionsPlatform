@@ -1335,7 +1335,35 @@ release: switch SoloCollections backend ownership to C++
 
 ## 17. 阶段 12：性能、监控和发布
 
+阶段状态：实施中（任务 12.1 已完成）
+
 ### 任务 12.1：性能基线
+
+状态：✅ 已完成（`SoloCollections` `0e58cb8`；`mod-solo-collections` `ca20cd0`）
+
+实现记录：服务端账号缓存、异步 store 和 SC2 server 新增只读诊断快照，覆盖登录查询数/行数/耗时、
+命中/未命中/淘汰/估算内存、快照分片/载荷/排队/发送耗时、重复 grant 和 transaction retry；
+`.solocollections benchmark` 使用真实 18190 项外观目录执行 17000 项 materialize、过滤和 canonical
+lookup。启动实测外观目录加载 18190 项耗时 3689 us；17k 基线为 load/filter/lookup
+`48/37/265 us`。真实账号 1 的三次登录均各使用 1 条联合查询，累计加载 213 行，最近/最大/累计
+耗时 `613/101906/103089 us`；快速登出重进跨过 30 秒窗口后得到 miss 3、总淘汰 2，估算缓存
+832 bytes。重复 grant 被 `SC_REASON_ALREADY_OWNED` 拒绝，`duplicate_grants=1`，异步拒绝审计回落
+到 0 pending；本次健康基线没有发生数据库重试，`tx_retries=0`。SC2 累计 28 次类别快照、32 片、
+1416 payload bytes、123 个发送包/6897 bytes，queue 最大 14 us、send 最大 7 us。两次真实 SC2
+外观 APPLY 请求进入服务端解析和动作分派管线并安全拒绝为 `NOT_OWNED`，请求计时分别为
+6 us 和 23 us，无费用和外观副作用。
+
+真实 3.3.5 客户端必须完全退出后重新启动，才能读取新增 TOC 文件。冷启动后第二轮基线为：页面
+mount/pet/toy/wardrobe/title 首次切换 `26.911/1.102/0.544/3.053/0.527 ms`；17k synthetic
+appearance 构建/筛选/首末页 `27.593/78.987/0.007 ms`，峰值 28786.2 KB，固定模型池 18；
+31997-byte 快照分为 200 片，重组 8332 个 owned ID 用时 9.072 ms，峰值 936.4 KB；隐藏页保留
+1 个待处理模型任务但活动卡片 `OnUpdate=0`，证明隐藏期间不继续逐帧执行。真实客户端无 Lua 错误
+或崩溃。
+
+验证结果：AddOn/目录 174 项、模块 119 项 Python 测试通过；目录生成器 `--check` 的 mapping
+hash 为 `9781ece5bd2d290c0b04ec9c233a5b8925fe18748f7db46a5853676b9203e86d`；
+`git diff --check`、集成 RelWithDebInfo `worldserver` 构建和冷启动客户端验收通过。部署二进制
+SHA-256 为 `D66BC3C525E3D4A3DC870DED3DC08075F31D853F88D7BC21D80E5B36FAF6687C`。
 
 服务端测量：
 
