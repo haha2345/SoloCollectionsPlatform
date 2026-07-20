@@ -23,6 +23,31 @@ local DEFAULT_FILTERS = {
 }
 
 local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
+local generatedMountSource = nil
+
+local function getGeneratedMountSource()
+    if generatedMountSource then
+        return generatedMountSource
+    end
+    generatedMountSource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "mount" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            table.insert(generatedMountSource, {
+                id = collection.collectionId,
+                creatureId = collection.displayCreatureId,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = "Interface\\Icons\\Ability_Mount_RidingHorse",
+                source = "账号收藏",
+                description = "由 SoloCollections 服务端权威目录提供。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedMountSource
+end
 
 local function resolvedWeaponType(record)
     local weaponType = record.weaponCategory or record.weaponType
@@ -90,6 +115,9 @@ local function overlayCollectionState(category, record, fallback)
 end
 
 local function getSource(category)
+    if category == "MOUNTS" and SC.GeneratedCatalog then
+        return getGeneratedMountSource()
+    end
     local key = CATEGORY_KEYS[category]
     if not key or not SC.Data then
         return nil

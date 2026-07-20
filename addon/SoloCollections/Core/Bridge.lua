@@ -37,6 +37,11 @@ local function isPositiveInteger(value)
     return type(value) == "number" and value > 0 and value == math.floor(value)
 end
 
+local function isActionToken(value)
+    return type(value) == "string" and string.len(value) <= 32 and
+        string.match(value, "^[A-Z][A-Z0-9_]*$") ~= nil
+end
+
 local function ensurePrefixRegistered()
     if prefixRegistered then
         return true
@@ -287,7 +292,7 @@ end
 function B.RequestSC2Action(typeId, collectionId, actionId, target, callback)
     if not B.sc2Connected or not CS or not CS.sessionNonce or
         not isPositiveInteger(typeId) or not isPositiveInteger(collectionId) or
-        not isPositiveInteger(actionId) or not CS.categories[typeId] or
+        not isActionToken(actionId) or not CS.categories[typeId] or
         CS.categories[typeId].state ~= "Ready" then
         if type(callback) == "function" then
             pcall(callback, false, "BRIDGE_UNAVAILABLE")
@@ -353,37 +358,22 @@ function B.RequestModel(mountId, callback)
     return requestId
 end
 
-function B.SummonMount(mountId, callback)
-    if not isPositiveInteger(mountId) then
+function B.SummonMount(collectionId, callback)
+    if not isPositiveInteger(collectionId) then
         if type(callback) == "function" then
-            pcall(callback, false, "INVALID_MOUNT_ID")
+            pcall(callback, false, "INVALID_COLLECTION_ID")
         end
         return nil
     end
-    if not B.connected then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
-        end
-        return nil
-    end
-
-    local playerName = UnitName("player")
-    if not playerName or playerName == "" then
+    if not B.sc2Connected then
         if type(callback) == "function" then
             pcall(callback, false, "BRIDGE_UNAVAILABLE")
         end
         return nil
     end
-
-    requestSerial = requestSerial + 1
-    local requestId = requestSerial
-    pendingSummons[requestId] = {
-        mountId = mountId,
-        deadline = GetTime() + requestTimeout,
-        callback = callback,
-    }
-    SendAddonMessage(B.prefix, "SUMMON|" .. requestId .. "|" .. mountId, "WHISPER", playerName)
-    return requestId
+    -- collectionId is the stable logical ID. No spellId, creatureId, or
+    -- client-owned bit is ever sent to the authoritative action endpoint.
+    return B.RequestSC2Action(10, collectionId, "SUMMON", nil, callback)
 end
 
 function B.RequestPetModel(petId, callback)

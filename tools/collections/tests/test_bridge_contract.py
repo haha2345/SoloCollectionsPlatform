@@ -226,34 +226,25 @@ class BridgeContractTests(unittest.TestCase):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
             "function B.RequestModel(mountId, callback)",
-            "function B.SummonMount(mountId, callback)",
+            "function B.SummonMount(collectionId, callback)",
             "requestSerial",
             "pendingModels",
-            "pendingSummons",
+            "sc2PendingActions",
             '"MODEL|"',
             "MODEL_READY|",
-            '"SUMMON|"',
-            "SUMMON_RESULT|",
+            '"SUMMON"',
+            "B.RequestSC2Action(10, collectionId",
             "pendingModels[requestId]",
-            "pendingSummons[requestId]",
         ):
             self.assertIn(token, bridge)
         self.assertRegex(
             bridge,
             r'string\.match\(message,\s*"\^MODEL_READY\|\(%d\+\)\|\(%d\+\)\$"\)',
         )
-        self.assertRegex(
-            bridge,
-            r'string\.match\(message,\s*"\^SUMMON_RESULT\|\(%d\+\)\|[^"\n]+\$"\)',
-        )
         self.assertRegex(bridge, r"pending\.mountId\s*~=\s*mountId")
         on_message = function_region(bridge, "B.OnMessage")
         model_ready = function_region(bridge, "handleModelReady")
-        summon_result = function_region(bridge, "handleSummonResult")
-        for handler, pending_table in (
-            (model_ready, "pendingModels"),
-            (summon_result, "pendingSummons"),
-        ):
+        for handler, pending_table in ((model_ready, "pendingModels"),):
             self.assertIn(f"local pending = {pending_table}[requestId]", handler)
             self.assertIn("pending.mountId ~= mountId", handler)
             self.assertIn(f"{pending_table}[requestId] = nil", handler)
@@ -376,10 +367,7 @@ class BridgeContractTests(unittest.TestCase):
         ):
             self.assertIn(token, validator)
 
-        for function_name, pending_table, verb in (
-            ("B.RequestModel", "pendingModels", "MODEL"),
-            ("B.SummonMount", "pendingSummons", "SUMMON"),
-        ):
+        for function_name, pending_table, verb in (("B.RequestModel", "pendingModels", "MODEL"),):
             request = function_region(bridge, function_name)
             for token in (
                 "isPositiveInteger(mountId)",
@@ -395,6 +383,17 @@ class BridgeContractTests(unittest.TestCase):
                 'UnitName("player")',
             ):
                 self.assertIn(token, request)
+
+        summon = function_region(bridge, "B.SummonMount")
+        for token in (
+            "isPositiveInteger(collectionId)",
+            'if not B.sc2Connected then',
+            '"BRIDGE_UNAVAILABLE"',
+            'B.RequestSC2Action(10, collectionId, "SUMMON", nil, callback)',
+        ):
+            self.assertIn(token, summon)
+        self.assertNotIn('"SUMMON|"', summon)
+        self.assertNotIn("mountId", summon)
 
         self.assertEqual(
             1,

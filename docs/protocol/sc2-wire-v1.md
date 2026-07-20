@@ -90,7 +90,10 @@ ticks rather than emitted in a single burst.
 The stable action status set includes `ACCEPTED`, `LOADING`, `NOT_OWNED`,
 `CATALOG_MISMATCH`, `ASSET_MISMATCH`, `UNKNOWN_IDENTITY`, class/race/skill
 restrictions, `INVALID_TARGET_SLOT`, `DB_UNAVAILABLE`, `RATE_LIMITED`,
-`INVALID_REQUEST`, and `UNSUPPORTED`. Transport errors also use stable codes,
+`INVALID_REQUEST`, and `UNSUPPORTED`. Mount actions additionally distinguish
+`IN_COMBAT`, `DEAD`, `IN_VEHICLE`, `ON_TAXI`, `INDOORS`,
+`FLYING_NOT_ALLOWED`, `MAP_RESTRICTED`, `BATTLEGROUND_RESTRICTED`,
+`SHAPESHIFT_RESTRICTED`, and `CAST_FAILED`. Transport errors also use stable codes,
 including `LOADING`, `DB_UNAVAILABLE`, `RATE_LIMITED`, and replay/version errors.
 Exact enum lists live in the schema.
 
