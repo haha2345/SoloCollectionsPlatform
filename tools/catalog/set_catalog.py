@@ -219,7 +219,8 @@ def main() -> int:
     model = build_model(source, appearances)
     for path, content in outputs(repo, module, model).items():
         if args.check:
-            _require(path.is_file() and path.read_bytes() == content, f"generated output drift: {path}")
+            current = path.read_bytes().replace(b"\r\n", b"\n") if path.is_file() else None
+            _require(current == content, f"generated output drift: {path}")
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(content)

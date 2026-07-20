@@ -57,7 +57,9 @@ class MountCatalogTests(unittest.TestCase):
             self.assertIn(entry["canonicalSpellId"], variant_ids)
 
     def test_committed_generation_is_current(self) -> None:
-        with tempfile.TemporaryDirectory(dir=ROOT / "_work") as temp:
+        work_root = ROOT / "_work"
+        work_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=work_root) as temp:
             temp_root = Path(temp)
             ids = temp_root / "ids.json"
             shutil.copy2(ROOT / "catalog/ids.json", ids)

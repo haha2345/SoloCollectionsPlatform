@@ -79,10 +79,9 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertEqual((24, 24), (by_type["mount"]["legacyEntryCount"], by_type["mount"]["mappedEntryCount"]))
         self.assertEqual((24, 24), (by_type["companion"]["legacyEntryCount"], by_type["companion"]["mappedEntryCount"]))
         self.assertEqual((36, 4), (by_type["toy"]["legacyEntryCount"], by_type["toy"]["mappedEntryCount"]))
-        self.assertEqual(
-            generator.hashlib.sha256((ROOT / "server/ale/solo_collections.lua").read_bytes()).hexdigest(),
-            shadow["sourceHash"],
-        )
+        source = (ROOT / "server/ale/solo_collections.lua").read_text(encoding="utf-8")
+        source = source.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+        self.assertEqual(generator.hashlib.sha256(source).hexdigest(), shadow["sourceHash"])
         self.assertIn("LoadGeneratedLegacyShadowEntries", outputs[cpp_target])
 
     def test_race_presentation_profiles_inherit_the_asset_pack_version(self):
