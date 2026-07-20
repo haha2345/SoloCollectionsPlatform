@@ -26,6 +26,7 @@ local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
 local generatedMountSource = nil
 local generatedCompanionSource = nil
 local generatedToySource = nil
+local generatedAppearanceSource = nil
 
 local function getGeneratedMountSource()
     if generatedMountSource then
@@ -98,6 +99,51 @@ local function getGeneratedToySource()
         end
     end
     return generatedToySource
+end
+
+local function getGeneratedAppearanceSource()
+    if generatedAppearanceSource then
+        return generatedAppearanceSource
+    end
+    generatedAppearanceSource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "appearance" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            local itemIds = {}
+            local slot = "HEAD"
+            local armorType
+            local weaponType
+            for _, alias in ipairs(collection.aliases or {}) do
+                local itemId = string.match(alias, "^item:(%d+)$")
+                if itemId then
+                    table.insert(itemIds, tonumber(itemId))
+                else
+                    slot = string.match(alias, "^slot:(.+)$") or slot
+                    armorType = string.match(alias, "^armor:(.+)$") or armorType
+                    weaponType = string.match(alias, "^weapon:(.+)$") or weaponType
+                end
+            end
+            if #itemIds == 0 and tonumber(collection.displayItemId) then
+                itemIds[1] = tonumber(collection.displayItemId)
+            end
+            table.insert(generatedAppearanceSource, {
+                id = collection.collectionId,
+                itemId = tonumber(collection.displayItemId) or itemIds[1],
+                itemIds = itemIds,
+                slot = slot,
+                armorType = armorType,
+                weaponType = weaponType,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = nil,
+                source = "账号收藏",
+                description = "canonical 外观；来源物品可追溯。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedAppearanceSource
 end
 
 local function resolvedWeaponType(record)
@@ -174,6 +220,9 @@ local function getSource(category)
     end
     if category == "TOYS" and SC.GeneratedCatalog then
         return getGeneratedToySource()
+    end
+    if category == "APPEARANCES" and SC.GeneratedCatalog then
+        return getGeneratedAppearanceSource()
     end
     local key = CATEGORY_KEYS[category]
     if not key or not SC.Data then
