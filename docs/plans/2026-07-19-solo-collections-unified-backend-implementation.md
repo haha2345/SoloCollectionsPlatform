@@ -1229,7 +1229,32 @@ envelope，满足阶段出口。
 
 ## 16. 阶段 11：Lua 到 C++ 切换
 
+阶段状态：🚧 进行中（任务 11.1 已完成；任务 11.2–11.3 待实施）
+
 ### 任务 11.1：shadow 比较
+
+状态：✅ 已完成（`SoloCollections` `d597812`、`4c91302`；`mod-solo-collections`
+`b7f3b6b`、`b432533`）
+
+实现记录：新增显式 `Lua | Compare | Cpp` 后端模式；`Compare` 下 C++ 只加载同一账号状态和由
+SC1 Lua 生成的只读目录投影，比较目录 Hash、owned ID/数量和可用性，并把结果同时写入服务端
+结构化日志与 `logs/solo-collections-shadow.jsonl`。写入、动作和成功 delta 均由统一配置守卫关闭；
+SC2 协议只在 `Cpp` owner 模式注册。SC1 Lua 增加启动与握手可观测日志，但不增加数据库或背包
+写入路径。
+
+真实集成构建使用 `azerothcore-wotlk/build-npcbots-clean-vs18`，同时包含 ALE、NPCBots 和当前
+`mod-solo-collections`；部署二进制 SHA-256 为
+`16007D36FE0AAAFBF30DFF7CDE47D31524A1E8671EDF830AFA7E54562B0D2B84`。启动日志确认
+`mode=Compare writes_enabled=0 actions_enabled=0 shadow_enabled=1`，真实客户端探针返回
+`SHADOW true false connected fallback`，证明 ALE SC1 是生产入口而 C++ SC2 未取得 owner。
+
+账号 1、角色 14 登录比较得到 legacy 84 项、映射 52 项、未映射 32 项；legacy owned 47、
+canonical owned 7、catalog mismatch 0、owned mismatch 29、availability mismatch 0，报告 JSON
+可解析且日志明确记录 `writes=0 actions=0 success_deltas=0`。登录前后数据库快照完全一致：
+`sc_account_state=1/rev89`、`sc_collection_unlock=71/rev75`、
+`sc_collection_audit=91/rev89/max_audit_id91`、`sc_migration_marker=3/rev73`。AddOn/目录
+171 项、模块 114 项 Python 测试通过，目录生成器 `--check`、`git diff --check` 和集成
+RelWithDebInfo `worldserver` 构建通过。
 
 - ALE Lua 保持当前生产动作 owner。
 - C++ 只读同一目录和账号状态。
