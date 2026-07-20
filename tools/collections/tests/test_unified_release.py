@@ -41,6 +41,7 @@ class UnifiedReleaseTests(unittest.TestCase):
 
     def test_release_safety_gate_rejects_binaries_paths_and_credentials(self):
         release.assert_safe_entries([("safe/readme.md", b"relative documentation")])
+        release.assert_safe_entries([("safe/localized.sql", b"no se limitan a:\\r\\nnext line")])
         rejected = [
             ("Wow.exe", b"binary"),
             ("client/Patch-W.MPQ", b"archive"),

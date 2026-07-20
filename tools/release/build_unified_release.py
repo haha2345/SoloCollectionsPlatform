@@ -72,7 +72,11 @@ def assert_safe_entries(entries: Iterable[tuple[str, bytes]]) -> None:
             raise ReleaseError(f"unsafe archive path: {name}")
         if path.suffix.lower() in FORBIDDEN_SUFFIXES or lowered in FORBIDDEN_FILENAMES:
             raise ReleaseError(f"forbidden release file: {name}")
-        if LOCAL_WINDOWS_PATH.search(payload):
+        # SQL localization strings contain literal ``:\r\n`` sequences (for
+        # example Spanish "a:\r\n"), which are line breaks rather than drive
+        # roots. Remove that exact escape pair before checking absolute paths.
+        path_scan_payload = payload.replace(b"\\r\\n", b"")
+        if LOCAL_WINDOWS_PATH.search(path_scan_payload):
             raise ReleaseError(f"local Windows path leaked into release text: {name}")
         if ASSIGNED_SECRET.search(payload):
             raise ReleaseError(f"credential-like value leaked into release text: {name}")
