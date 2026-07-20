@@ -7,6 +7,7 @@ import argparse
 import csv
 import hashlib
 import json
+import re
 import sys
 from copy import deepcopy
 from pathlib import Path
@@ -305,6 +306,103 @@ def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> d
     normalized = sorted(entries, key=lambda row: int(row["ordinal"]))
     result = {"schemaVersion": 1, "entries": normalized}
     result["mappingHash"] = _hash(result)
+    return result
+
+
+def _parse_legacy_sc1_table(lua_text: str, table_name: str) -> list[dict[str, Any]]:
+    table = re.search(rf"(?ms)^local\s+{re.escape(table_name)}\s*=\s*\{{(.*?)^\}}", lua_text)
+    _require(table is not None, f"legacy SC1 table is missing: {table_name}")
+    entries: list[dict[str, Any]] = []
+    for match in re.finditer(r"(?m)^\s*\[(\d+)\]\s*=\s*\{([^\n]+)\},?\s*$", table.group(1)):
+        fields: dict[str, Any] = {"legacyId": int(match.group(1))}
+        for field in re.finditer(r"(\w+)\s*=\s*(\d+|true|false)", match.group(2)):
+            value = field.group(2)
+            fields[field.group(1)] = value == "true" if value in {"true", "false"} else int(value)
+        entries.append(fields)
+    _require(entries, f"legacy SC1 table is empty: {table_name}")
+    _require([entry["legacyId"] for entry in entries] == list(range(1, len(entries) + 1)),
+             f"legacy SC1 IDs must be contiguous: {table_name}")
+    return entries
+
+
+def _load_legacy_sc1_shadow(repo_root: Path, model: dict[str, Any]) -> dict[str, Any]:
+    path = repo_root / "server" / "ale" / "solo_collections.lua"
+    try:
+        raw = path.read_bytes()
+        lua_text = raw.decode("utf-8")
+    except (OSError, UnicodeDecodeError) as exc:
+        raise CatalogError(f"cannot read legacy SC1 bridge {path}: {exc}") from exc
+
+    type_ids = {entry["typeKey"]: int(entry["typeId"]) for entry in model["collectionTypes"]}
+    table_specs = (
+        ("mount", "MOUNTS", "creatureId"),
+        ("companion", "PETS", "creatureId"),
+        ("toy", "TOYS", "itemId"),
+    )
+    parsed: dict[str, list[dict[str, Any]]] = {}
+    entries: list[dict[str, Any]] = []
+
+    mount_actions = model["mountActions"]["collections"]
+    companion_actions = model["companionActions"]["entries"]
+    toy_actions = model["toyActions"]["entries"]
+
+    for type_key, table_name, source_field in table_specs:
+        _require(type_key in type_ids, f"legacy SC1 type is not registered: {type_key}")
+        rows = _parse_legacy_sc1_table(lua_text, table_name)
+        parsed[type_key] = rows
+        for row in rows:
+            required = {source_field, "spellId", "collected"}
+            _require(required <= row.keys(), f"legacy SC1 entry is incomplete: {table_name}[{row['legacyId']}]")
+            candidates: list[dict[str, Any]]
+            if type_key == "mount":
+                candidates = [entry for entry in mount_actions
+                              if int(row["spellId"]) in map(int, entry["unlockSpellIds"])
+                              and int(row[source_field]) in map(int, entry["creatureIds"])]
+            elif type_key == "companion":
+                candidates = [entry for entry in companion_actions
+                              if int(entry["spellId"]) == int(row["spellId"])
+                              and int(entry[source_field]) == int(row[source_field])]
+            else:
+                candidates = [entry for entry in toy_actions
+                              if int(entry["spellId"]) == int(row["spellId"])
+                              and int(entry[source_field]) == int(row[source_field])]
+            _require(len(candidates) <= 1,
+                     f"legacy SC1 entry maps to multiple canonical entries: {table_name}[{row['legacyId']}]")
+            entries.append({
+                "typeKey": type_key,
+                "typeId": type_ids[type_key],
+                "legacyId": int(row["legacyId"]),
+                "canonicalId": int(candidates[0]["collectionId"]) if candidates else 0,
+                "legacyOwned": bool(row["collected"]),
+                "legacyCatalogKnown": True,
+                "legacyAssetReady": int(row[source_field]) > 0 and int(row["spellId"]) > 0,
+                "sourceId": int(row[source_field]),
+                "actionId": int(row["spellId"]),
+            })
+
+    categories = []
+    for type_key, _, _ in table_specs:
+        category_entries = [entry for entry in entries if entry["typeKey"] == type_key]
+        legacy_basis = [{key: entry[key] for key in (
+            "legacyId", "legacyOwned", "legacyCatalogKnown", "legacyAssetReady", "sourceId", "actionId")}
+            for entry in category_entries]
+        categories.append({
+            "typeKey": type_key,
+            "typeId": type_ids[type_key],
+            "legacyMappingHash": _hash(legacy_basis),
+            "canonicalMappingHash": model["typeMappingHashes"][type_key],
+            "legacyEntryCount": len(category_entries),
+            "mappedEntryCount": sum(1 for entry in category_entries if entry["canonicalId"] > 0),
+        })
+
+    result = {
+        "schemaVersion": 1,
+        "sourceHash": hashlib.sha256(raw).hexdigest(),
+        "canonicalMappingHash": model["mappingHash"],
+        "categories": categories,
+        "entries": entries,
+    }
+    result["mappingHash"] = _hash({"categories": categories, "entries": entries})
     return result
 
 
@@ -630,7 +728,42 @@ def _toy_catalog_inc(model: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _legacy_shadow_catalog_inc(shadow: dict[str, Any]) -> str:
+    lines = [
+        "// Generated by tools/catalog/generate_catalog.py from server/ale/solo_collections.lua. Do not edit.",
+        f"static constexpr std::string_view GeneratedLegacySc1SourceHash = {_cpp_string(shadow['sourceHash'])};",
+        f"static constexpr std::string_view GeneratedLegacySc1MappingHash = {_cpp_string(shadow['mappingHash'])};",
+        f"static constexpr std::string_view GeneratedCanonicalMappingHash = {_cpp_string(shadow['canonicalMappingHash'])};",
+        "",
+        "static std::vector<LegacyShadowCategoryDefinition> LoadGeneratedLegacyShadowCategories()",
+        "{",
+        "    return {",
+    ]
+    for entry in shadow["categories"]:
+        lines.append(
+            "        {" + ", ".join([
+                f"CollectionTypeId{{{entry['typeId']}u}}", _cpp_string(entry["typeKey"]),
+                _cpp_string(entry["legacyMappingHash"]), _cpp_string(entry["canonicalMappingHash"]),
+                str(int(entry["legacyEntryCount"])) + "u", str(int(entry["mappedEntryCount"])) + "u",
+            ]) + "},"
+        )
+    lines += ["    };", "}", "", "static std::vector<LegacyShadowEntryDefinition> LoadGeneratedLegacyShadowEntries()", "{", "    return {"]
+    for entry in shadow["entries"]:
+        lines.append(
+            "        {" + ", ".join([
+                f"CollectionTypeId{{{entry['typeId']}u}}", str(int(entry["legacyId"])) + "u",
+                f"CollectionId{{{entry['canonicalId']}u}}",
+                "true" if entry["legacyOwned"] else "false",
+                "true" if entry["legacyCatalogKnown"] else "false",
+                "true" if entry["legacyAssetReady"] else "false",
+            ]) + "},"
+        )
+    lines += ["    };", "}", ""]
+    return "\n".join(lines)
+
+
 def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) -> dict[Path, str]:
+    legacy_shadow = _load_legacy_sc1_shadow(repo_root, model)
     manifest = deepcopy(model)
     missing = {
         "schemaVersion": 1,
@@ -645,6 +778,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     mount_actions_text = json.dumps(model["mountActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     companion_actions_text = json.dumps(model["companionActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     toy_actions_text = json.dumps(model["toyActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    legacy_shadow_text = json.dumps(legacy_shadow, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     client_collections = deepcopy(model["collections"])
     mount_actions_by_id = {
         int(entry["collectionId"]): entry for entry in model["mountActions"]["collections"]
@@ -691,6 +825,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     return {
         repo_root / "catalog/generated/catalog-manifest.json": json_text,
         repo_root / "catalog/generated/missing-resources.json": missing_text,
+        repo_root / "catalog/generated/legacy-sc1-shadow.json": legacy_shadow_text,
         repo_root / "addon/SoloCollections/Data/Generated/Catalog.lua": catalog_lua,
         repo_root / "addon/SoloCollections/Data/Generated/IdentityRegistry.lua": identity_lua,
         repo_root / "addon/SoloCollections/Data/Generated/PolicyRegistry.lua": policy_lua,
@@ -699,12 +834,14 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         module_root / "data/generated/solo_collections_companion_actions.json": companion_actions_text,
         module_root / "data/generated/solo_collections_toy_actions.json": toy_actions_text,
         module_root / "data/generated/solo_collections_missing_resources.json": missing_text,
+        module_root / "data/generated/solo_collections_legacy_sc1_shadow.json": legacy_shadow_text,
         module_root / "src/generated/SoloCollectionsIdentityData.inc": _identity_inc(model),
         module_root / "src/generated/SoloCollectionsPolicyData.inc": _policy_inc(model),
         module_root / "src/generated/SoloCollectionsProtocolCatalog.inc": _protocol_catalog_inc(model),
         module_root / "src/generated/SoloCollectionsMountCatalog.inc": _mount_catalog_inc(model),
         module_root / "src/generated/SoloCollectionsCompanionCatalog.inc": _companion_catalog_inc(model),
         module_root / "src/generated/SoloCollectionsToyCatalog.inc": _toy_catalog_inc(model),
+        module_root / "src/generated/SoloCollectionsLegacyShadowCatalog.inc": _legacy_shadow_catalog_inc(legacy_shadow),
     }
 
 
