@@ -30,11 +30,13 @@ class TestProvider final : public SC::CollectionProvider
 {
 public:
     TestProvider(std::uint16_t typeId, std::string typeKey,
-        std::vector<std::uint16_t> dependencies = {}, bool readOnlyOnMissing = false)
+        std::vector<std::uint16_t> dependencies = {}, bool readOnlyOnMissing = false,
+        SC::CollectionStorageMode storage = SC::CollectionStorageMode::Persisted)
     {
         _descriptor.TypeId = SC::CollectionTypeId(typeId);
         _descriptor.TypeKey = std::move(typeKey);
         _descriptor.ReadOnlyWhenDependencyMissing = readOnlyOnMissing;
+        _descriptor.Storage = storage;
         for (std::uint16_t dependency : dependencies)
             _descriptor.Dependencies.emplace_back(dependency);
     }
@@ -49,6 +51,45 @@ public:
         SC::CollectionResult result;
         result.Reason = SC::CollectionReasonCode::NotOwned;
         return result;
+    }
+
+private:
+    SC::CollectionProviderDescriptor _descriptor;
+};
+
+class ExternalTestProvider final : public SC::CollectionProvider
+{
+public:
+    ExternalTestProvider()
+    {
+        _descriptor.TypeId = SC::CollectionTypeId(std::uint16_t { 30 });
+        _descriptor.TypeKey = "synthetic_external";
+        _descriptor.Storage = SC::CollectionStorageMode::External;
+    }
+
+    SC::CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+
+    SC::CollectionResult Evaluate(SC::CollectionId collectionId) const override
+    {
+        SC::CollectionResult result;
+        bool known = collectionId == SC::CollectionId(300001);
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        result.Reason = known ? SC::CollectionReasonCode::NotOwned :
+            SC::CollectionReasonCode::UnknownCollection;
+        return result;
+    }
+
+    std::optional<bool> IsOwned(SC::AccountId accountId, SC::CollectionId collectionId) const override
+    {
+        return accountId == SC::AccountId(77) && collectionId == SC::CollectionId(300001);
+    }
+
+    std::optional<std::vector<SC::CollectionId>> OwnedByAccount(SC::AccountId accountId) const override
+    {
+        return accountId == SC::AccountId(77) ?
+            std::vector<SC::CollectionId> { SC::CollectionId(300001) } :
+            std::vector<SC::CollectionId> {};
     }
 
 private:
@@ -156,6 +197,61 @@ SC::AccountSessionId Session(std::uint64_t value)
 SC::CollectionKey Key(std::uint16_t typeId, std::uint32_t collectionId)
 {
     return { SC::CollectionTypeId(typeId), SC::CollectionId(collectionId) };
+}
+
+void TestSyntheticProviderStorageContracts()
+{
+    SC::CollectionProviderRegistry registry;
+    Require(registry.Register(std::make_unique<ExternalTestProvider>()).Accepted,
+        "external synthetic provider registration failed");
+    Require(registry.Register(std::make_unique<TestProvider>(
+        std::uint16_t { 31 }, "synthetic_persisted")).Accepted,
+        "persisted synthetic provider registration failed");
+    Require(registry.Register(std::make_unique<TestProvider>(
+        std::uint16_t { 32 }, "synthetic_disabled", std::vector<std::uint16_t> { 99 })).Accepted,
+        "disabled synthetic provider registration failed");
+    Require(registry.Register(std::make_unique<TestProvider>(
+        std::uint16_t { 33 }, "synthetic_readonly", std::vector<std::uint16_t> { 98 }, true,
+        SC::CollectionStorageMode::External)).Accepted,
+        "read-only synthetic provider registration failed");
+    Require(registry.Finalize().Success, "synthetic storage registry did not finalize");
+    Require(registry.State(SC::CollectionTypeId(30))->Mode == SC::CollectionProviderMode::Enabled &&
+        registry.State(SC::CollectionTypeId(31))->Mode == SC::CollectionProviderMode::Enabled,
+        "healthy providers were affected by another provider dependency failure");
+    Require(registry.State(SC::CollectionTypeId(32))->Mode == SC::CollectionProviderMode::Disabled &&
+        registry.State(SC::CollectionTypeId(33))->Mode == SC::CollectionProviderMode::ReadOnly,
+        "missing dependencies did not degrade providers independently");
+
+    SC::CollectionProvider const* external = registry.Find(SC::CollectionTypeId(30));
+    Require(external && external->Descriptor().Storage == SC::CollectionStorageMode::External,
+        "external provider lost its explicit storage mode");
+    SC::CollectionResult visible = external->Evaluate(SC::CollectionId(300001));
+    Require(visible.Availability.CatalogKnown && visible.Availability.AssetReady &&
+        external->IsOwned(Account(77), SC::CollectionId(300001)).value_or(false),
+        "external provider could not display its authoritative state");
+    SC::AccountCollectionCache emptyGenericTable;
+    Require(!emptyGenericTable.IsOwned(Account(77), Key(30, 300001)),
+        "external provider unexpectedly required a generic unlock row");
+    auto externalOwned = external->OwnedByAccount(Account(77));
+    Require(externalOwned && *externalOwned ==
+        std::vector<SC::CollectionId> { SC::CollectionId(300001) },
+        "external provider account projection was not readable");
+
+    SC::CollectionProvider const* persisted = registry.Find(SC::CollectionTypeId(31));
+    Require(persisted && persisted->Descriptor().Storage == SC::CollectionStorageMode::Persisted,
+        "persisted provider lost the unified account storage mode");
+    SC::AccountCollectionCache accountCollections;
+    auto opened = accountCollections.OpenSession(Account(77), Session(770), 0);
+    Require(accountCollections.CompleteLoad(
+        Account(77), opened.Generation, {}, SC::CollectionRevision(10)),
+        "persisted provider account fixture did not load");
+    SC::CollectionDelta unlock {
+        Key(31, 310001), SC::CollectionDeltaKind::Unlock, SC::CollectionRevision(11)
+    };
+    Require(accountCollections.QueueDelta(Account(77), unlock) == SC::DeltaQueueResult::Applied &&
+        accountCollections.IsOwned(Account(77), unlock.Key) &&
+        accountCollections.Snapshot(Account(77))->Revision == SC::CollectionRevision(11),
+        "persisted provider did not reuse account ownership and revision state");
 }
 
 void TestTwoSessionsShareOneLoad()
@@ -630,6 +726,7 @@ int main()
         TestDuplicateAndTombstoneFailures();
         TestCyclesAndMissingDependencies();
         TestRegistrationOrderIndependence();
+        TestSyntheticProviderStorageContracts();
         TestTwoSessionsShareOneLoad();
         TestLogoutBeforeCallback();
         TestUnlockDuringLoad();

@@ -216,6 +216,34 @@ void TestAccountScopedDeltaFanout()
         "second same-account session did not receive the account delta");
     Require(otherAccount.empty(), "collection delta leaked to a different account");
 }
+
+void TestSyntheticPersistedProviderRevisionSync()
+{
+    SC::AccountCollectionCache cache;
+    auto opened = cache.OpenSession(Account(77), Session(770), 0);
+    Require(cache.CompleteLoad(Account(77), opened.Generation, {}, SC::CollectionRevision(10)),
+        "synthetic persisted provider cache did not become ready");
+    SC::Sc2Server server(cache, "2026.07.20.2", "wotlk-3.3.5a-local-1", "phase10-provider", {
+        { SC::CollectionTypeId(std::uint16_t { 31 }),
+          "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", true },
+    });
+    server.OpenSession(Account(77), Session(770));
+    (void)server.HandleInbound(Session(770),
+        "H|1|7777777777777777|0.2.0-dev|2026.07.20.2|wotlk-3.3.5a-local-1", 0);
+    (void)server.DrainOutbound(Session(770), 32);
+
+    SC::CollectionDelta unlock {
+        { SC::CollectionTypeId(std::uint16_t { 31 }), SC::CollectionId(std::uint32_t { 310001 }) },
+        SC::CollectionDeltaKind::Unlock, SC::CollectionRevision(std::uint64_t { 11 })
+    };
+    Require(cache.QueueDelta(Account(77), unlock) == SC::DeltaQueueResult::Applied,
+        "synthetic persisted provider delta did not update the account cache");
+    server.OnCollectionDeltaCommitted(Account(77), unlock);
+    std::vector<std::string> outbound = server.DrainOutbound(Session(770), 32);
+    Require(outbound.size() == 1 && outbound[0].starts_with("D|") &&
+        outbound[0].find("|31|11|A|310001") != std::string::npos,
+        "synthetic persisted provider did not reuse revisioned SC2 delta sync");
+}
 }
 
 int main()
@@ -228,6 +256,7 @@ int main()
         TestReplayOldNonceAndRateLimit();
         TestAuthoritativeActionHandler();
         TestAccountScopedDeltaFanout();
+        TestSyntheticPersistedProviderRevisionSync();
         std::cout << "SoloCollections SC2 protocol tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

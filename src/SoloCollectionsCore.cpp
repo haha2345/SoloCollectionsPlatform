@@ -163,6 +163,7 @@ public:
         _descriptor.TypeId = SetCollectionTypeId;
         _descriptor.TypeKey = "set";
         _descriptor.Dependencies = { SetAppearanceDependencyTypeId };
+        _descriptor.Storage = CollectionStorageMode::Derived;
     }
 
     [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }

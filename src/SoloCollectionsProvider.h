@@ -20,12 +20,20 @@ enum class CollectionProviderMode : std::uint8_t
     Disabled = 3,
 };
 
+enum class CollectionStorageMode : std::uint8_t
+{
+    Persisted = 1,
+    Derived = 2,
+    External = 3,
+};
+
 struct CollectionProviderDescriptor
 {
     CollectionTypeId TypeId;
     std::string TypeKey;
     std::vector<CollectionTypeId> Dependencies;
     bool ReadOnlyWhenDependencyMissing = false;
+    CollectionStorageMode Storage = CollectionStorageMode::Persisted;
 };
 
 class CollectionProvider
