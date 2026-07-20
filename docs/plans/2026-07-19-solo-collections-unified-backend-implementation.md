@@ -1114,7 +1114,7 @@ feat: apply sets and outfits atomically
 
 ## 15. 阶段 10：验证未来扩展合同
 
-阶段状态：🚧 进行中（任务 10.1–10.2 已完成；任务 10.3–10.4 待实施）
+阶段状态：🚧 进行中（任务 10.1–10.3 已完成；任务 10.4 待实施）
 
 ### 任务 10.1：synthetic 新职业
 
@@ -1168,6 +1168,22 @@ Lua 错误；synthetic 调用依次返回 `MODEL_MISSING global false false`、
 - 缺少模型/贴图时禁用相关预览或动作，不崩客户端。
 
 ### 任务 10.3：synthetic 新收藏 provider
+
+状态：✅ 已完成（`mod-solo-collections` `adc4baa`）
+
+实现记录：provider descriptor 新增显式 `PERSISTED`、`DERIVED`、`EXTERNAL` 存储模式。账号服务按
+模式路由：EXTERNAL 直接读取 provider 的权威状态，不要求账号缓存或通用 unlock 行；DERIVED 只读
+provider 投影，不回落到同 type 的通用 unlock 行；只有运行状态为 Enabled 且存储模式为 PERSISTED
+的 provider 可以进入统一 `TryUnlock` mutation。未知目录 ID、Disabled、ReadOnly、Derived 和
+External 的写请求均在数据库调用前 fail closed。正式套装 provider 已明确标记为 DERIVED，继续只从
+canonical appearance 计算完成度。
+
+原生测试注册 type 30 只读 EXTERNAL provider：账号 77 可以读取 collection `300001`，同时独立
+通用账号缓存中不存在该键，证明展示不依赖 `account_collection_unlock`。type 31 最小 PERSISTED
+provider 复用相同账号缓存、revision `10 -> 11` 和 SC2 delta，线包包含
+`type=31, revision=11, op=A, collection=310001`。另两个 provider 分别因缺依赖降级为 Disabled 和
+ReadOnly，type 30/31 仍保持 Enabled，证明故障隔离。模块 105 项 Python 测试、两个原生 C++ 测试
+目标和 Release `worldserver` 构建全部通过。
 
 - 增加一个只读 EXTERNAL provider，证明不写通用 unlock 表也能显示。
 - 增加一个最小账号持久化 provider，证明可以复用 unlock/revision/sync。
