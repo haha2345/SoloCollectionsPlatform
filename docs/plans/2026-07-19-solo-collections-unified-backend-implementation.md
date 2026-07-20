@@ -1114,7 +1114,7 @@ feat: apply sets and outfits atomically
 
 ## 15. 阶段 10：验证未来扩展合同
 
-阶段状态：🚧 进行中（任务 10.1 已完成；任务 10.2–10.4 待实施）
+阶段状态：🚧 进行中（任务 10.1–10.2 已完成；任务 10.3–10.4 待实施）
 
 ### 任务 10.1：synthetic 新职业
 
@@ -1141,6 +1141,26 @@ runtime `999` 不获得 warrior 能力。随后将同一 logical class 的 runti
 - 测试 runtime ID 改变不影响账号收藏和目录 ID。
 
 ### 任务 10.2：synthetic 新种族
+
+状态：✅ 已完成（`SoloCollections` `ce75075`；`mod-solo-collections` `bd72dd9`）
+
+实现记录：测试专用 `earthen` 注册为 logicalRaceId `601`、runtime ID `102`，并验证重映射为
+`302` 后旧 runtime 失效且 logical identity 不变。组合资格上下文现在保留 logicalRaceId、raceKey、
+factionKey 和种族能力；`earthen` 的 `ALLIANCE` 阵营与 `appearance.stoneform` 能力通过声明式策略。
+身份生成器为每个种族确定性生成 `appearanceOverrideProfile`、`clientAssetVersion` 和 `modelProfile`，
+新种族可覆盖默认 profile，而不需要修改类别 provider。
+
+服务端与 AddOn 新增一致的种族展示资源解析：缺少专属镜头时返回 `global`；资源包版本不匹配、模型
+缺失或贴图缺失时分别返回明确原因，并保持 preview/action 均禁用。只有版本、模型和贴图全部就绪
+才启用展示和动作。客户端实现对 nil/未知 identity 与缺失 resource table 安全返回，不调用模型 API，
+因此不会把缺资源升级为客户端崩溃。
+
+验证结果：新目录 mapping hash 为
+`68dc8d9b0f275bde0e56f398f2e9a1a28cee16407b2247bba835cd505e268c4e`；AddOn/目录 167 项、模块
+101 项 Python 测试、两个原生 C++ 测试目标和 Release `worldserver` 构建全部通过。部署校验为
+source 39、target 39、matched 40、missing/mismatched/target-only 均为 0。真实客户端 `/reload` 后无
+Lua 错误；synthetic 调用依次返回 `MODEL_MISSING global false false`、
+`TEXTURE_MISSING global false false` 和 `OK global true true`。
 
 - 注册独立 logicalRaceId 和 runtime 测试映射。
 - 验证阵营、外观 override、客户端资源版本和模型 profile。
