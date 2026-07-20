@@ -12,8 +12,6 @@ namespace SoloCollections
 {
 namespace
 {
-constexpr std::uint32_t ProtocolVersion = 1;
-
 bool IsLowerHex(std::string_view value, std::size_t size)
 {
     return value.size() == size && std::all_of(value.begin(), value.end(), [](char character)

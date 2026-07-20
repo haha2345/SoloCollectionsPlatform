@@ -5,9 +5,11 @@
 #include "Categories/Appearance/SoloCollectionsAppearanceCatalog.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
+#include "SoloCollectionsIdentity.h"
 #include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsProtocol.h"
 #include "SoloCollectionsProtocolScript.h"
 #include "SoloCollectionsSetCatalog.h"
 #include "SoloCollectionsShadowService.h"
@@ -24,6 +26,7 @@
 #include <chrono>
 #include <memory>
 #include <stdexcept>
+#include <string_view>
 
 namespace SoloCollections
 {
@@ -222,8 +225,27 @@ public:
     void OnStartup() override
     {
         InitializeBackendConfiguration();
+        LOG_INFO("module.solocollections.health",
+            "event=startup_versions schema={} catalog={} identity={} protocol={} asset={}",
+            AccountStoreSchemaVersion, Sc2CatalogVersion(), Sc2IdentityVersion(),
+            Sc2ProtocolVersion, Sc2AssetPackVersion());
+
         auto catalogStarted = std::chrono::steady_clock::now();
-        std::size_t appearanceEntries = GetAppearanceCatalog().Collections().size();
+        std::size_t appearanceEntries = 0;
+        try
+        {
+            IdentityRegistry const& identities = GetIdentityRegistry();
+            if (!identities.IsValid())
+                throw std::runtime_error("generated identity registry is invalid");
+            appearanceEntries = GetAppearanceCatalog().Collections().size();
+        }
+        catch (...)
+        {
+            LOG_ERROR("module.solocollections.catalog",
+                "event=catalog_startup result=exception catalog_version={} identity_version={}",
+                Sc2CatalogVersion(), Sc2IdentityVersion());
+            throw;
+        }
         std::uint64_t catalogMicroseconds = static_cast<std::uint64_t>(
             std::chrono::duration_cast<std::chrono::microseconds>(
                 std::chrono::steady_clock::now() - catalogStarted).count());
@@ -231,39 +253,61 @@ public:
             "event=appearance_catalog_load result=ready entries={} elapsed_us={}",
             appearanceEntries, catalogMicroseconds);
         CollectionProviderRegistry& registry = GetCollectionProviderRegistry();
-        RegistryRegistrationResult registration = registry.Register(std::make_unique<SyntheticCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections provider registration failed: " + registration.Message);
-        registration = registry.Register(std::make_unique<MountCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections mount provider registration failed: " + registration.Message);
-        registration = registry.Register(std::make_unique<CompanionCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections companion provider registration failed: " + registration.Message);
-        registration = registry.Register(std::make_unique<ToyCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections toy provider registration failed: " + registration.Message);
-        registration = registry.Register(std::make_unique<AppearanceCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections appearance provider registration failed: " + registration.Message);
-        registration = registry.Register(std::make_unique<SetCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections set provider registration failed: " + registration.Message);
-        registration = registry.Register(std::make_unique<TitleCollectionProvider>());
-        if (!registration.Accepted)
-            throw std::runtime_error("SoloCollections title provider registration failed: " + registration.Message);
+        auto registerProvider = [&registry](std::string_view providerKey,
+            std::unique_ptr<CollectionProvider> provider)
+        {
+            RegistryRegistrationResult registration;
+            try
+            {
+                registration = registry.Register(std::move(provider));
+            }
+            catch (...)
+            {
+                LOG_ERROR("module.solocollections.provider",
+                    "event=provider_registration result=exception provider={}", providerKey);
+                throw;
+            }
+            if (registration.Accepted)
+                return;
+            LOG_ERROR("module.solocollections.provider",
+                "event=provider_registration result=rejected provider={} reason={}",
+                providerKey, static_cast<std::uint16_t>(registration.Reason));
+            throw std::runtime_error("SoloCollections provider registration failed");
+        };
+        registerProvider("synthetic", std::make_unique<SyntheticCollectionProvider>());
+        registerProvider("mount", std::make_unique<MountCollectionProvider>());
+        registerProvider("companion", std::make_unique<CompanionCollectionProvider>());
+        registerProvider("toy", std::make_unique<ToyCollectionProvider>());
+        registerProvider("appearance", std::make_unique<AppearanceCollectionProvider>());
+        registerProvider("set", std::make_unique<SetCollectionProvider>());
+        registerProvider("title", std::make_unique<TitleCollectionProvider>());
 
-        RegistryFinalizeResult finalized = registry.Finalize();
+        RegistryFinalizeResult finalized;
+        try
+        {
+            finalized = registry.Finalize();
+        }
+        catch (...)
+        {
+            LOG_ERROR("module.solocollections.provider",
+                "event=provider_finalize result=exception");
+            throw;
+        }
         if (!finalized.Success)
-            throw std::runtime_error("SoloCollections provider finalization failed: " + finalized.Message);
+        {
+            LOG_ERROR("module.solocollections.provider",
+                "event=provider_finalize result=rejected reason={}",
+                static_cast<std::uint16_t>(finalized.Reason));
+            throw std::runtime_error("SoloCollections provider finalization failed");
+        }
 
         (void)GetAccountCollectionCache();
         GetAccountCollectionStore().SetWritesEnabled(IsCppBackendOwner());
         if (GetBackendMode() != BackendMode::Lua)
             GetAccountCollectionStore().Initialize();
 
-        LOG_INFO("module", "SoloCollections provider registry initialized with {} provider(s); "
-            "account cache initialized with explicit cross-thread locking; backend={} writes_enabled={}.",
+        LOG_INFO("module.solocollections.provider",
+            "event=provider_registry result=ready providers={} backend={} writes_enabled={}",
             registry.TopologicalOrder().size(), BackendModeName(GetBackendMode()),
             GetAccountCollectionStore().WritesEnabled() ? 1 : 0);
     }

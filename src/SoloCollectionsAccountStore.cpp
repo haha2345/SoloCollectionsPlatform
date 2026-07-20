@@ -58,8 +58,9 @@ public:
                 _diagnostics.SchemaState = ready ? AccountStoreSchemaState::Ready : AccountStoreSchemaState::Failed;
                 if (!ready)
                 {
-                    LOG_ERROR("module.solocollections.store",
-                        "event=schema_check result=failed expected_version=1 pending_loads={}", _deferredLoads.size());
+                    LOG_ERROR("module.solocollections.database",
+                        "event=schema_check result=failed expected_version={} pending_loads={}",
+                        AccountStoreSchemaVersion, _deferredLoads.size());
                     for (auto const& [accountId, load] : _deferredLoads)
                     {
                         (void)accountId;
@@ -70,7 +71,8 @@ public:
                     return;
                 }
 
-                LOG_INFO("module.solocollections.store", "event=schema_check result=ready schema_version=1");
+                LOG_INFO("module.solocollections.store", "event=schema_check result=ready schema_version={}",
+                    AccountStoreSchemaVersion);
                 std::vector<DeferredLoad> deferred;
                 deferred.reserve(_deferredLoads.size());
                 for (auto const& [accountId, load] : _deferredLoads)
@@ -183,7 +185,7 @@ public:
                 {
                     (void)GetAccountCollectionCache().FailLoad(accountId, generation);
                     ++_diagnostics.FailedLoads;
-                    LOG_ERROR("module.solocollections.store",
+                    LOG_ERROR("module.solocollections.database",
                         "event=account_load result=failed account={} character={} generation={}",
                         accountId.Value(), playerGuid, generation.Value());
                     return;
@@ -287,7 +289,7 @@ public:
                 if (!committed)
                 {
                     ++_diagnostics.FailedMutations;
-                    LOG_ERROR("module.solocollections.store",
+                    LOG_ERROR("module.solocollections.database",
                         "event=mutation_commit result=failed account={} type={} collection={} generation={} revision={}",
                         mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
                         mutation.Generation.Value(), nextRevision.Value());
@@ -354,7 +356,7 @@ public:
         }
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid())
         {
-            LOG_ERROR("module.solocollections.audit",
+            LOG_ERROR("module.solocollections.database",
                 "event=rejected_mutation_audit result=unavailable account={} type={} collection={} reason={}",
                 mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
                 ToStableReasonCode(reason));
@@ -376,9 +378,17 @@ public:
         callback.AfterComplete([this, mutation, reason](bool committed)
         {
             --_pendingAudits;
+            if (!committed)
+            {
+                LOG_ERROR("module.solocollections.database",
+                    "event=rejected_mutation_audit result=failed account={} type={} collection={} reason={}",
+                    mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                    ToStableReasonCode(reason));
+                return;
+            }
             LOG_INFO("module.solocollections.audit",
-                "event=rejected_mutation_audit result={} account={} type={} collection={} reason={}",
-                committed ? "committed" : "failed", mutation.Account.Value(), mutation.Key.TypeId.Value(),
+                "event=rejected_mutation_audit result=committed account={} type={} collection={} reason={}",
+                mutation.Account.Value(), mutation.Key.TypeId.Value(),
                 mutation.Key.Id.Value(), ToStableReasonCode(reason));
         });
         return true;

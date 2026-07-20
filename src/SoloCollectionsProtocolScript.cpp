@@ -111,6 +111,31 @@ Sc2AccountEventSink& GetSc2EventSink()
 }
 }
 
+std::uint32_t Sc2CatalogSchemaVersion()
+{
+    return GeneratedCatalogSchemaVersion;
+}
+
+std::string_view Sc2CatalogVersion()
+{
+    return GeneratedCatalogVersion;
+}
+
+std::string_view Sc2IdentityVersion()
+{
+    return GeneratedIdentityVersion;
+}
+
+std::string_view Sc2MetadataVersion()
+{
+    return GeneratedSc2MetadataVersion;
+}
+
+std::string_view Sc2AssetPackVersion()
+{
+    return GeneratedSc2AssetPackVersion;
+}
+
 void Sc2ProtocolOpenSession(Player* player)
 {
     if (!IsCppBackendOwner() || !player || !player->GetSession())

@@ -9,6 +9,8 @@
 
 namespace SoloCollections
 {
+inline constexpr std::uint16_t Sc2ProtocolVersion = 1;
+
 struct Sc2Limits
 {
     static constexpr std::size_t MaxBodyBytes = 240;

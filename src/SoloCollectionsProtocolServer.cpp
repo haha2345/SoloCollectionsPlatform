@@ -157,7 +157,7 @@ void Sc2Server::QueueHandshake(SessionState& session)
 
     Sc2Message acknowledgement;
     acknowledgement.Kind = Sc2MessageKind::HelloAck;
-    acknowledgement.ProtocolVersion = 1;
+    acknowledgement.ProtocolVersion = Sc2ProtocolVersion;
     acknowledgement.SessionNonce = session.Nonce;
     acknowledgement.Revision = snapshot ? snapshot->Revision.Value() : 0;
     acknowledgement.EnabledCategoryFlags = flagStream.str();
@@ -311,7 +311,7 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         session.Bucket = TokenBucket { BucketCapacity, nowMs };
         session.Replays.clear();
         session.Outbound.clear();
-        if (message.ProtocolVersion != 1)
+        if (message.ProtocolVersion != Sc2ProtocolVersion)
         {
             QueueError(session, 0, "UNSUPPORTED_VERSION");
             return true;

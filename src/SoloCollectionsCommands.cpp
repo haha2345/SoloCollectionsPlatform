@@ -148,14 +148,18 @@ public:
             else
                 ++enabled;
         }
+        std::size_t pendingWrites = store.PendingMutations + store.PendingAudits +
+            store.PendingMigrationMarkers;
 
         handler->PSendSysMessage(
-            "SoloCollections backend={} writes={} shadow={} schema={} providers={}/{}/{} cache_entries={} sessions={} states={}/{}/{} "
+            "SoloCollections backend={} writes={} shadow={} schema={} providers_ready={} providers_readonly={} "
+            "providers_disabled={} online_accounts={} cache_entries={} sessions={} states={}/{}/{} pending_writes={} "
             "pending_loads={} pending_mutations={} pending_audits={} pending_deltas={} evictions={}",
             BackendModeName(GetBackendMode()), store.WritesEnabled ? 1 : 0,
             IsShadowComparisonEnabled() ? 1 : 0, SchemaStateName(store.SchemaState),
-            enabled, readOnly, disabled, cache.EntryCount,
+            enabled, readOnly, disabled, cache.SessionCount, cache.EntryCount,
             cache.SessionCount, cache.LoadingCount, cache.ReadyCount, cache.FailedCount,
+            pendingWrites,
             store.PendingLoads, store.PendingMutations, store.PendingAudits,
             cache.PendingDeltaCount, cache.EvictionScheduledCount);
         handler->PSendSysMessage(

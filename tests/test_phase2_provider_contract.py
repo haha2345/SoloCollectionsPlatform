@@ -47,7 +47,8 @@ class ProviderRegistryContractTests(unittest.TestCase):
         loader = LOADER_PATH.read_text(encoding="utf-8")
         self.assertIn("class SyntheticCollectionProvider", core)
         self.assertIn('"synthetic"', core)
-        self.assertIn("registry.Register(std::make_unique<SyntheticCollectionProvider>())", core)
+        self.assertIn('registerProvider("synthetic", std::make_unique<SyntheticCollectionProvider>())', core)
+        self.assertIn("registration = registry.Register(std::move(provider))", core)
         self.assertIn("registry.Finalize()", core)
         self.assertIn("AddSC_solo_collections_core", loader)
 

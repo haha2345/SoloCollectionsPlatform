@@ -11,6 +11,8 @@
 
 namespace SoloCollections
 {
+inline constexpr std::uint32_t AccountStoreSchemaVersion = 1;
+
 enum class CollectionMutationKind : std::uint8_t
 {
     Grant = 1,
