@@ -26,6 +26,14 @@ local PET_MODEL_LIMIT_PER_SECOND = 8
 local PET_SUMMON_LIMIT_PER_SECOND = 2
 local TOY_USE_LIMIT_PER_SECOND = 4
 
+local function logInfo(message)
+    if type(PrintInfo) == "function" then
+        PrintInfo("[SoloCollections] " .. tostring(message))
+    end
+end
+
+logInfo("event=sc1_bridge_load enabled=" .. tostring(ENABLED))
+
 local MOUNTS = {
     [1] = { creatureId = 24379, spellId = 43688, collected = true },
     [2] = { creatureId = 18545, spellId = 40192, collected = false },
@@ -433,6 +441,9 @@ local function handleToyUse(sender, requestIdText, toyIdText)
 end
 
 local function onAddonMessage(event, sender, messageType, prefix, message, target)
+    if prefix == PREFIX and message == REQUEST then
+        logInfo("event=sc1_handshake result=received enabled=" .. tostring(ENABLED))
+    end
     if not ENABLED then
         return true
     end
@@ -451,6 +462,7 @@ local function onAddonMessage(event, sender, messageType, prefix, message, targe
 
     if message == REQUEST then
         sender:SendAddonMessage(PREFIX, RESPONSE, CHAT_MSG_WHISPER, sender)
+        logInfo("event=sc1_handshake result=accepted")
         return true
     end
 

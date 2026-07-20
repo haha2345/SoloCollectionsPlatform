@@ -434,6 +434,13 @@ class BridgeContractTests(unittest.TestCase):
             "if prefix ~= PREFIX then",
         ):
             self.assertIn(guard, text)
+        for observable in (
+            'PrintInfo("[SoloCollections] " .. tostring(message))',
+            'event=sc1_bridge_load enabled=',
+            'event=sc1_handshake result=received enabled=',
+            'event=sc1_handshake result=accepted',
+        ):
+            self.assertIn(observable, text)
         for forbidden in (
             "WorldDBQuery",
             "CharDBQuery",
