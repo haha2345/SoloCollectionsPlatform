@@ -442,6 +442,71 @@ function Catalog.Query(category, query, filters, page, pageSize)
     return pageRecords, page, totalPages, total
 end
 
+function Catalog.RunSyntheticAppearanceBenchmark(count)
+    count = math.max(1, math.min(50000, math.floor(tonumber(count) or 17000)))
+    local timer = type(debugprofilestop) == "function" and debugprofilestop or function() return GetTime() * 1000 end
+    local memoryBefore = collectgarbage("count")
+    local started = timer()
+    local source = {}
+    local slots = { "HEAD", "SHOULDER", "CHEST", "MAINHAND", "OFFHAND" }
+    for index = 1, count do
+        source[index] = {
+            id = index,
+            itemId = 100000 + index,
+            itemIds = { 100000 + index },
+            slot = slots[((index - 1) % #slots) + 1],
+            armorType = "ALL",
+            weaponType = "ALL",
+            name = "synthetic appearance " .. index,
+            source = "performance baseline",
+            collected = index % 3 == 0,
+            favorite = false,
+        }
+    end
+    local loadedAt = timer()
+    local filters = resolvedFilters({
+        collected = true,
+        uncollected = true,
+        favorites = false,
+        classToken = "ALL",
+        armorType = "ALL",
+        slot = "ALL",
+        weaponType = "ALL",
+    })
+    local matches = {}
+    for _, sourceRecord in ipairs(source) do
+        local record = copyRecord(sourceRecord)
+        if filterMatches("APPEARANCES", record, "synthetic appearance", filters, true) then
+            matches[#matches + 1] = record
+        end
+    end
+    local filteredAt = timer()
+    local firstPage = {}
+    local lastPage = {}
+    local pageSize = 18
+    for index = 1, math.min(pageSize, #matches) do
+        firstPage[#firstPage + 1] = matches[index]
+    end
+    local firstLastIndex = math.max(1, #matches - pageSize + 1)
+    for index = firstLastIndex, #matches do
+        lastPage[#lastPage + 1] = matches[index]
+    end
+    local pagedAt = timer()
+    local memoryPeak = collectgarbage("count")
+    source = nil
+    matches = nil
+    firstPage = nil
+    lastPage = nil
+    collectgarbage("collect")
+    return {
+        count = count,
+        loadMs = loadedAt - started,
+        filterMs = filteredAt - loadedAt,
+        pageMs = pagedAt - filteredAt,
+        peakMemoryKb = math.max(0, memoryPeak - memoryBefore),
+    }
+end
+
 function Catalog.GetProgress(category, filters)
     local collected = 0
     local total = 0
