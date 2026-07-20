@@ -98,8 +98,9 @@ class CatalogGeneratorTests(unittest.TestCase):
 
     def test_type_dependency_cycle_is_rejected(self):
         types = self.read_json("catalog/source/collection_types.json")
-        types["entries"][0]["dependencies"] = ["set"]
-        types["entries"][-1]["dependencies"] = ["synthetic"]
+        by_key = {entry["typeKey"]: entry for entry in types["entries"]}
+        by_key["synthetic"]["dependencies"] = ["set"]
+        by_key["set"]["dependencies"] = ["synthetic"]
         self.write_json("catalog/source/collection_types.json", types)
         with self.assertRaisesRegex(generator.CatalogError, "dependency cycle"):
             generator.build_model(self.source)

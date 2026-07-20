@@ -43,7 +43,7 @@ local VALID_POINTS = {
     BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
 }
 
-local VALID_MAIN_TABS = { MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true }
+local VALID_MAIN_TABS = { MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true, TITLES = true }
 local VALID_WARDROBE_TABS = { ITEMS = true, SETS = true }
 local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()
 local VALID_SLOTS = {

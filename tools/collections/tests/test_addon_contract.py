@@ -28,6 +28,7 @@ EXPECTED_LOAD_ORDER = [
     "UI\\Pets.lua",
     "UI\\Toys.lua",
     "UI\\Wardrobe.lua",
+    "UI\\Titles.lua",
     "UI\\CollectionsFrame.lua",
     "Core\\Bootstrap.lua",
 ]
@@ -84,9 +85,9 @@ class AddonContractTests(unittest.TestCase):
         for api in FORBIDDEN_APIS:
             self.assertNotIn(api, text)
 
-    def test_four_main_tabs_and_two_wardrobe_views_are_declared(self):
+    def test_five_main_tabs_and_two_wardrobe_views_are_declared(self):
         text = all_lua_text()
-        for token in ('"MOUNTS"', '"PETS"', '"TOYS"', '"WARDROBE"'):
+        for token in ('"MOUNTS"', '"PETS"', '"TOYS"', '"WARDROBE"', '"TITLES"'):
             self.assertIn(token, text)
         self.assertIn('"ITEMS"', text)
         self.assertIn('"SETS"', text)
@@ -544,13 +545,13 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("table.insert(nextFrameQueue, callback)", defer_region)
         self.assertIn("table.insert(page.scModelTasks", schedule_region)
 
-    def test_four_main_tabs_are_anchored_outside_the_journal(self):
+    def test_five_main_tabs_are_anchored_outside_the_journal(self):
         journal = read_text(ADDON / "UI" / "CollectionsFrame.lua")
         tab_keys = re.findall(
-            r'\{\s*key\s*=\s*"(MOUNTS|PETS|TOYS|WARDROBE)"',
+            r'\{\s*key\s*=\s*"(MOUNTS|PETS|TOYS|WARDROBE|TITLES)"',
             journal,
         )
-        self.assertEqual(["MOUNTS", "PETS", "TOYS", "WARDROBE"], tab_keys)
+        self.assertEqual(["MOUNTS", "PETS", "TOYS", "WARDROBE", "TITLES"], tab_keys)
         self.assertIn("JOURNAL_HEIGHT = 793", journal)
         self.assertRegex(
             journal,

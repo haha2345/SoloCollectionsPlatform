@@ -66,6 +66,17 @@
       "dependencies": ["appearance"],
       "features": ["VIEW", "PROGRESS", "ACTION"],
       "name": {"enUS": "Sets", "zhCN": "套装"}
+    },
+    {
+      "typeId": 15,
+      "typeKey": "title",
+      "ordinal": 6,
+      "lifecycle": "active",
+      "catalogMode": "EXTERNAL",
+      "providerKey": "title",
+      "dependencies": [],
+      "features": ["VIEW"],
+      "name": {"enUS": "Titles", "zhCN": "头衔"}
     }
   ]
 }
