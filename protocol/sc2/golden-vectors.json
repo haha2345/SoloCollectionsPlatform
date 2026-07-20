@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "protocolVersion": 1,
+  "packets": [
+    {
+      "name": "hello",
+      "message": {
+        "kind": "HELLO",
+        "protocolVersion": 1,
+        "clientNonce": "fedcba9876543210",
+        "clientBuild": "0.2.0-dev",
+        "metadataVersion": "2026.07.19",
+        "assetPackVersion": "local-1"
+      },
+      "wire": "H|1|fedcba9876543210|0.2.0-dev|2026.07.19|local-1"
+    },
+    {
+      "name": "hello_ack",
+      "message": {
+        "kind": "HELLO_ACK",
+        "protocolVersion": 1,
+        "sessionNonce": "0123456789abcdef",
+        "accountRevision": 42,
+        "enabledCategoryFlags": "0000001f",
+        "metadataVersion": "2026.07.19",
+        "assetPackVersion": "local-1",
+        "backendBuild": "phase5-dev",
+        "categoryCount": 5
+      },
+      "wire": "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|phase5-dev|5"
+    },
+    {
+      "name": "category_map",
+      "message": {
+        "kind": "CATEGORY_MAP",
+        "sessionNonce": "0123456789abcdef",
+        "typeId": 1,
+        "mappingHash": "bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac"
+      },
+      "wire": "M|0123456789abcdef|1|bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac"
+    },
+    {
+      "name": "snapshot_begin",
+      "message": {
+        "kind": "SNAPSHOT_BEGIN",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 17,
+        "typeId": 1,
+        "total": 1,
+        "baseRevision": 42,
+        "checksum": "179c036b",
+        "payloadBytes": 14
+      },
+      "wire": "B|0123456789abcdef|17|1|1|42|179c036b|14"
+    },
+    {
+      "name": "snapshot_chunk",
+      "message": {
+        "kind": "SNAPSHOT_CHUNK",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 17,
+        "seq": 1,
+        "payload": "1,2,z,10,1z,2s"
+      },
+      "wire": "C|0123456789abcdef|17|1|1,2,z,10,1z,2s"
+    },
+    {
+      "name": "snapshot_end",
+      "message": {
+        "kind": "SNAPSHOT_END",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 17,
+        "checksum": "179c036b"
+      },
+      "wire": "E|0123456789abcdef|17|179c036b"
+    },
+    {
+      "name": "delta",
+      "message": {
+        "kind": "DELTA",
+        "sessionNonce": "0123456789abcdef",
+        "typeId": 2,
+        "revision": 43,
+        "operation": "A",
+        "collectionId": 1001
+      },
+      "wire": "D|0123456789abcdef|2|43|A|1001"
+    },
+    {
+      "name": "action_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 99,
+        "typeId": 1,
+        "collectionId": 1001,
+        "actionId": "SUMMON",
+        "target": "-"
+      },
+      "wire": "Q|0123456789abcdef|99|1|1001|SUMMON|-"
+    },
+    {
+      "name": "action_result",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 99,
+        "status": "LOADING",
+        "typeId": 1,
+        "collectionId": 1001,
+        "revision": 43
+      },
+      "wire": "R|0123456789abcdef|99|LOADING|1|1001|43"
+    },
+    {
+      "name": "resync",
+      "message": {
+        "kind": "RESYNC",
+        "sessionNonce": "0123456789abcdef",
+        "reason": "REVISION_GAP",
+        "typeId": 0,
+        "revision": 43
+      },
+      "wire": "S|0123456789abcdef|REVISION_GAP|0|43"
+    },
+    {
+      "name": "error",
+      "message": {
+        "kind": "ERROR",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 99,
+        "reason": "REPLAYED_REQUEST"
+      },
+      "wire": "X|0123456789abcdef|99|REPLAYED_REQUEST"
+    }
+  ],
+  "checksums": [
+    {
+      "name": "empty-owned-set",
+      "payload": "-",
+      "adler32": "002e002e"
+    },
+    {
+      "name": "base36-owned-set",
+      "payload": "1,2,z,10,1z,2s",
+      "adler32": "179c036b"
+    },
+    {
+      "name": "small-sequence",
+      "payload": "1,2,3,4,5",
+      "adler32": "086001b0"
+    },
+    {
+      "name": "high-base36-digits",
+      "payload": "zzzzzz",
+      "adler32": "0a0802dd"
+    }
+  ]
+}

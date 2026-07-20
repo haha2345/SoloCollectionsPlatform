@@ -640,7 +640,11 @@ AddOn 137 项 Python 测试、模块 53 项 Python 测试和 MSVC 原生测试�
 
 ## 10. 阶段 5：SC2 和客户端真实状态层
 
+阶段状态：🚧 进行中（任务 5.1 已完成）
+
 ### 任务 5.1：固定 wire schema 和 golden vectors
+
+状态：✅ 已完成
 
 仓库：`SoloCollections`
 
@@ -655,6 +659,11 @@ AddOn 137 项 Python 测试、模块 53 项 Python 测试和 MSVC 原生测试�
 - nonce、requestId、transferId、seq/total、revision 和 checksum。
 
 生成 golden vectors，供 Python、Lua 和 C++ 使用相同输入输出验证。单包按不超过 Core 255 字节限制设计，并预留前缀、频道和字段开销。
+
+验证记录：已落地 `protocol/sc2/schema.json`、跨语言共用
+`golden-vectors.json`、严格 Python 参考 codec 和 wire contract 文档；SC2 body
+上限固定为 240 字节、chunk payload 上限为 160 字节，11 类消息的 round-trip、
+checksum、确定性分片、非规范字段和超长包拒绝测试通过。
 
 建议提交：
 
