@@ -90,7 +90,9 @@ ticks rather than emitted in a single burst.
 The stable action status set includes `ACCEPTED`, `LOADING`, `NOT_OWNED`,
 `CATALOG_MISMATCH`, `ASSET_MISMATCH`, `UNKNOWN_IDENTITY`, class/race/skill
 restrictions, `INVALID_TARGET_SLOT`, `DB_UNAVAILABLE`, `RATE_LIMITED`,
-`INVALID_REQUEST`, and `UNSUPPORTED`. Exact enum lists live in the schema.
+`INVALID_REQUEST`, and `UNSUPPORTED`. Transport errors also use stable codes,
+including `LOADING`, `DB_UNAVAILABLE`, `RATE_LIMITED`, and replay/version errors.
+Exact enum lists live in the schema.
 
 ## Reference verification
 
