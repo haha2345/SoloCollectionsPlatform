@@ -28,7 +28,6 @@ EXPECTED_LOAD_ORDER = [
     "UI\\Pets.lua",
     "UI\\Toys.lua",
     "UI\\Wardrobe.lua",
-    "UI\\Titles.lua",
     "UI\\CollectionsFrame.lua",
     "Core\\Bootstrap.lua",
 ]

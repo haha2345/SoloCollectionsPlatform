@@ -16,7 +16,7 @@ class TitleViewContractTests(unittest.TestCase):
         self.assertEqual(["VIEW"], title["features"])
 
     def test_title_page_uses_native_catalog_and_server_ownership(self):
-        text = read_text(ADDON / "UI" / "Titles.lua")
+        text = read_text(ADDON / "UI" / "CollectionsFrame.lua")
         for token in (
             "GetNumTitles",
             "GetTitleName",
@@ -36,10 +36,11 @@ class TitleViewContractTests(unittest.TestCase):
         for forbidden in ("SetCurrentTitle", "RequestAction", "TryUnlock", ".titles add", ".titles remove"):
             self.assertNotIn(forbidden, text)
 
-    def test_title_page_is_loaded_before_collections_frame(self):
+    def test_title_page_is_embedded_for_legacy_toc_hot_reload(self):
         toc = read_text(ADDON / "SoloCollections.toc")
-        self.assertLess(toc.index("UI\\Titles.lua"), toc.index("UI\\CollectionsFrame.lua"))
+        self.assertNotIn("UI\\Titles.lua", toc)
         frame = read_text(ADDON / "UI" / "CollectionsFrame.lua")
+        self.assertLess(frame.index("function UI.CreateTitlesPage"), frame.index("function UI.CreateCollectionsFrame"))
         self.assertIn('key = "TITLES"', frame)
         self.assertIn("TITLES = UI.CreateTitlesPage(contentHost)", frame)
 
