@@ -640,7 +640,7 @@ AddOn 137 项 Python 测试、模块 53 项 Python 测试和 MSVC 原生测试�
 
 ## 10. 阶段 5：SC2 和客户端真实状态层
 
-阶段状态：🚧 进行中（任务 5.1–5.2 已完成）
+阶段状态：✅ 已完成（任务 5.1–5.3）
 
 ### 任务 5.1：固定 wire schema 和 golden vectors
 
@@ -700,6 +700,8 @@ feat: implement hardened SC2 server protocol
 
 ### 任务 5.3：升级客户端 Bridge
 
+状态：✅ 已完成（SoloCollections `3e6df74`）
+
 主要文件：
 
 - `addon/SoloCollections/Core/Bridge.lua`
@@ -716,6 +718,15 @@ feat: implement hardened SC2 server protocol
 - Loading/Ready/Failed/Mismatch 状态。
 - SavedVariables 不覆盖服务端 owned。
 - category 级降级，不因外观不可用而禁用全部页面。
+
+完成记录：客户端现以独立 `SC2` 前缀主动握手，按类别暂存并原子提交快照，
+对 revision 跳号、超时、缺片、冲突重复和旧 nonce 执行有界 resync/静默丢弃。
+目录查询通过 `CollectionState.ResolveOwned` 叠加权威 owned，SavedVariables 只保存
+连接诊断，不保存 owned。148 项 Python 回归、Lua 5.2 语法检查与协议 harness
+通过；两套客户端部署校验均为 40/40。真实客户端账号 `admin`、角色“啊啊水电费”
+首次登录和两次 `/reload` 均返回 `Ready`、revision `4`、空 synthetic 快照、
+`SoloCollectionsDB.owned == nil`，且无 Lua 错误。运行 worldserver SHA-256 为
+`ADDFE74CA3BA95090D31DDB797E8B91EFAEA95F57AECB119E8F3DA1B35DC5E07`。
 
 建议提交：
 
