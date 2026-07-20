@@ -40,6 +40,12 @@ class Phase11ShadowContractTests(unittest.TestCase):
         self.assertIn('GetConfigValue("SoloCollections.Backend")', LUA_TEXT)
         self.assertIn('BACKEND ~= "cpp"', LUA_TEXT)
         self.assertIn('if ENABLED then\n    RegisterServerEvent(30, onAddonMessage)', LUA_TEXT)
+        self.assertIn('RegisterServerEvent(30, onRetiredAddonMessage)', LUA_TEXT)
+        self.assertIn('UPGRADE_RESPONSE = "UPGRADE_REQUIRED|2"', LUA_TEXT)
+        retired = LUA_TEXT.split("local function onRetiredAddonMessage", 1)[1].split("if ENABLED then", 1)[0]
+        self.assertIn("sender:SendAddonMessage", retired)
+        for forbidden in ("handleModel", "handleSummon", "handlePet", "handleToy", "CharDB", "WorldDB"):
+            self.assertNotIn(forbidden, retired)
         self.assertIn("if (GetBackendMode() == BackendMode::Lua)\n            return;", CORE)
         self.assertIn("SetWritesEnabled(IsCppBackendOwner())", CORE)
         self.assertIn("if (!IsCppBackendOwner())\n        return true;", PROTOCOL)
