@@ -109,13 +109,13 @@ SoloCollections.GeneratedCatalog = {
     },
     collections = {
         {
-            actionId = 48778,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100000,
             collectionKey = "mount.acherus_deathcharger",
+            displayCreatureId = 28302,
             lifecycle = "active",
             name = {
                 enUS = "Acherus Deathcharger",
@@ -124,18 +124,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 0,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 48778,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60025,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100001,
             collectionKey = "mount.albino_drake",
+            displayCreatureId = 32158,
             lifecycle = "active",
             name = {
                 enUS = "Albino Drake",
@@ -144,18 +143,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 1,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60025,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 43688,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100002,
             collectionKey = "mount.amani_war_bear",
+            displayCreatureId = 24379,
             lifecycle = "active",
             name = {
                 enUS = "Amani War Bear",
@@ -164,18 +162,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 2,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 43688,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16056,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100003,
             collectionKey = "mount.ancient_frostsaber",
+            displayCreatureId = 10322,
             lifecycle = "active",
             name = {
                 enUS = "Ancient Frostsaber",
@@ -184,18 +181,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 3,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16056,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66906,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100004,
             collectionKey = "mount.argent_charger",
+            displayCreatureId = 35179,
             lifecycle = "active",
             name = {
                 enUS = "Argent Charger",
@@ -204,18 +200,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 4,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66906,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63844,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100005,
             collectionKey = "mount.argent_hippogryph",
+            displayCreatureId = 33857,
             lifecycle = "active",
             name = {
                 enUS = "Argent Hippogryph",
@@ -224,18 +219,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 5,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63844,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 67466,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100006,
             collectionKey = "mount.argent_warhorse",
+            displayCreatureId = 35445,
             lifecycle = "active",
             name = {
                 enUS = "Argent Warhorse",
@@ -244,18 +238,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 6,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 67466,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61230,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100007,
             collectionKey = "mount.armored_blue_wind_rider",
+            displayCreatureId = 32336,
             lifecycle = "active",
             name = {
                 enUS = "Armored Blue Wind Rider",
@@ -264,18 +257,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 7,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61230,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60114,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100008,
             collectionKey = "mount.armored_brown_bear",
+            displayCreatureId = 32206,
             lifecycle = "active",
             name = {
                 enUS = "Armored Brown Bear",
@@ -284,18 +276,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 8,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60114,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60116,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100009,
             collectionKey = "mount.armored_brown_bear.creature_32207",
+            displayCreatureId = 32207,
             lifecycle = "active",
             name = {
                 enUS = "Armored Brown Bear",
@@ -304,18 +295,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 9,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60116,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61229,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100010,
             collectionKey = "mount.armored_snowy_gryphon",
+            displayCreatureId = 32335,
             lifecycle = "active",
             name = {
                 enUS = "Armored Snowy Gryphon",
@@ -324,18 +314,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 10,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61229,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 40192,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100011,
             collectionKey = "mount.ashes_of_al_ar",
+            displayCreatureId = 18545,
             lifecycle = "active",
             name = {
                 enUS = "Ashes of Al'ar",
@@ -344,18 +333,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 11,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 40192,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59567,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100012,
             collectionKey = "mount.azure_drake",
+            displayCreatureId = 31694,
             lifecycle = "active",
             name = {
                 enUS = "Azure Drake",
@@ -364,18 +352,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 12,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59567,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41514,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100013,
             collectionKey = "mount.azure_netherwing_drake",
+            displayCreatureId = 23456,
             lifecycle = "active",
             name = {
                 enUS = "Azure Netherwing Drake",
@@ -384,18 +371,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 13,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41514,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 51412,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100014,
             collectionKey = "mount.big_battle_bear",
+            displayCreatureId = 28363,
             lifecycle = "active",
             name = {
                 enUS = "Big Battle Bear",
@@ -404,18 +390,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 14,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 51412,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 58983,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100015,
             collectionKey = "mount.big_blizzard_bear",
+            displayCreatureId = 31319,
             lifecycle = "active",
             name = {
                 enUS = "Big Blizzard Bear",
@@ -424,18 +409,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 15,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 58983,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 71342,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100016,
             collectionKey = "mount.big_love_rocket",
+            displayCreatureId = 38204,
             lifecycle = "active",
             name = {
                 enUS = "Big Love Rocket",
@@ -444,18 +428,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 16,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 71342,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22719,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100017,
             collectionKey = "mount.black_battlestrider",
+            displayCreatureId = 14334,
             lifecycle = "active",
             name = {
                 enUS = "Black Battlestrider",
@@ -464,18 +447,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 17,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22719,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 62048,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100018,
             collectionKey = "mount.black_dragonhawk_mount",
+            displayCreatureId = 25064,
             lifecycle = "active",
             name = {
                 enUS = "Black Dragonhawk Mount",
@@ -484,18 +466,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 18,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 62048,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59650,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100019,
             collectionKey = "mount.black_drake",
+            displayCreatureId = 31778,
             lifecycle = "active",
             name = {
                 enUS = "Black Drake",
@@ -504,18 +485,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 19,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59650,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35022,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100020,
             collectionKey = "mount.black_hawkstrider",
+            displayCreatureId = 20222,
             lifecycle = "active",
             name = {
                 enUS = "Black Hawkstrider",
@@ -524,18 +504,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 20,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35022,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16055,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100021,
             collectionKey = "mount.black_nightsaber",
+            displayCreatureId = 7322,
             lifecycle = "active",
             name = {
                 enUS = "Black Nightsaber",
@@ -544,18 +523,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 21,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16055,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59572,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100022,
             collectionKey = "mount.black_polar_bear",
+            displayCreatureId = 31699,
             lifecycle = "active",
             name = {
                 enUS = "Black Polar Bear",
@@ -564,18 +542,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 22,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59572,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59976,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100023,
             collectionKey = "mount.black_proto_drake",
+            displayCreatureId = 31912,
             lifecycle = "active",
             name = {
                 enUS = "Black Proto-Drake",
@@ -584,18 +561,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 23,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59976,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 26656,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100024,
             collectionKey = "mount.black_qiraji_battle_tank",
+            displayCreatureId = 15711,
             lifecycle = "active",
             name = {
                 enUS = "Black Qiraji Battle Tank",
@@ -604,18 +580,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 24,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 26656,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17461,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100025,
             collectionKey = "mount.black_ram",
+            displayCreatureId = 4780,
             lifecycle = "active",
             name = {
                 enUS = "Black Ram",
@@ -624,18 +599,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 25,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17461,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 64977,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100026,
             collectionKey = "mount.black_skeletal_horse",
+            displayCreatureId = 34238,
             lifecycle = "active",
             name = {
                 enUS = "Black Skeletal Horse",
@@ -644,18 +618,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 26,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 64977,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 470,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100027,
             collectionKey = "mount.black_stallion",
+            displayCreatureId = 308,
             lifecycle = "active",
             name = {
                 enUS = "Black Stallion",
@@ -664,18 +637,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 27,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 470,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60118,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100028,
             collectionKey = "mount.black_war_bear",
+            displayCreatureId = 32203,
             lifecycle = "active",
             name = {
                 enUS = "Black War Bear",
@@ -684,18 +656,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 28,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60118,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60119,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100029,
             collectionKey = "mount.black_war_bear.creature_32205",
+            displayCreatureId = 32205,
             lifecycle = "active",
             name = {
                 enUS = "Black War Bear",
@@ -704,18 +675,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 29,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60119,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 48027,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100030,
             collectionKey = "mount.black_war_elekk",
+            displayCreatureId = 26439,
             lifecycle = "active",
             name = {
                 enUS = "Black War Elekk",
@@ -724,18 +694,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 30,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 48027,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22718,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100031,
             collectionKey = "mount.black_war_kodo",
+            displayCreatureId = 14333,
             lifecycle = "active",
             name = {
                 enUS = "Black War Kodo",
@@ -744,18 +713,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 31,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22718,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59785,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100032,
             collectionKey = "mount.black_war_mammoth",
+            displayCreatureId = 31849,
             lifecycle = "active",
             name = {
                 enUS = "Black War Mammoth",
@@ -764,18 +732,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 32,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59785,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59788,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100033,
             collectionKey = "mount.black_war_mammoth.creature_31850",
+            displayCreatureId = 31850,
             lifecycle = "active",
             name = {
                 enUS = "Black War Mammoth",
@@ -784,18 +751,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 33,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59788,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22720,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100034,
             collectionKey = "mount.black_war_ram",
+            displayCreatureId = 14335,
             lifecycle = "active",
             name = {
                 enUS = "Black War Ram",
@@ -804,18 +770,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 34,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22720,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22721,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100035,
             collectionKey = "mount.black_war_raptor",
+            displayCreatureId = 14330,
             lifecycle = "active",
             name = {
                 enUS = "Black War Raptor",
@@ -824,18 +789,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 35,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22721,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22717,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100036,
             collectionKey = "mount.black_war_steed",
+            displayCreatureId = 14332,
             lifecycle = "active",
             name = {
                 enUS = "Black War Steed",
@@ -844,18 +808,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 36,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22717,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22723,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100037,
             collectionKey = "mount.black_war_tiger",
+            displayCreatureId = 14336,
             lifecycle = "active",
             name = {
                 enUS = "Black War Tiger",
@@ -864,18 +827,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 37,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22723,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22724,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100038,
             collectionKey = "mount.black_war_wolf",
+            displayCreatureId = 14329,
             lifecycle = "active",
             name = {
                 enUS = "Black War Wolf",
@@ -884,18 +846,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 38,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22724,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 64658,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100039,
             collectionKey = "mount.black_wolf",
+            displayCreatureId = 356,
             lifecycle = "active",
             name = {
                 enUS = "Black Wolf",
@@ -904,18 +865,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 39,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 64658,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 74856,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100040,
             collectionKey = "mount.blazing_hippogryph",
+            displayCreatureId = 40165,
             lifecycle = "active",
             name = {
                 enUS = "Blazing Hippogryph",
@@ -924,18 +884,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 40,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 74856,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 72808,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100041,
             collectionKey = "mount.bloodbathed_frostbrood_vanquisher",
+            displayCreatureId = 38778,
             lifecycle = "active",
             name = {
                 enUS = "Bloodbathed Frostbrood Vanquisher",
@@ -944,18 +903,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 41,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 72808,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61996,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100042,
             collectionKey = "mount.blue_dragonhawk",
+            displayCreatureId = 31239,
             lifecycle = "active",
             name = {
                 enUS = "Blue Dragonhawk",
@@ -964,18 +922,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 42,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61996,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59568,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100043,
             collectionKey = "mount.blue_drake",
+            displayCreatureId = 31695,
             lifecycle = "active",
             name = {
                 enUS = "Blue Drake",
@@ -984,18 +941,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 43,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59568,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35020,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100044,
             collectionKey = "mount.blue_hawkstrider",
+            displayCreatureId = 20220,
             lifecycle = "active",
             name = {
                 enUS = "Blue Hawkstrider",
@@ -1004,18 +960,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 44,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35020,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10969,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100045,
             collectionKey = "mount.blue_mechanostrider",
+            displayCreatureId = 7749,
             lifecycle = "active",
             name = {
                 enUS = "Blue Mechanostrider",
@@ -1024,18 +979,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 45,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10969,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59996,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100046,
             collectionKey = "mount.blue_proto_drake",
+            displayCreatureId = 32151,
             lifecycle = "active",
             name = {
                 enUS = "Blue Proto-Drake",
@@ -1044,18 +998,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 46,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59996,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 25953,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100047,
             collectionKey = "mount.blue_qiraji_battle_tank",
+            displayCreatureId = 15666,
             lifecycle = "active",
             name = {
                 enUS = "Blue Qiraji Battle Tank",
@@ -1064,18 +1017,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 47,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 25953,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39803,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100048,
             collectionKey = "mount.blue_riding_nether_ray",
+            displayCreatureId = 22978,
             lifecycle = "active",
             name = {
                 enUS = "Blue Riding Nether Ray",
@@ -1084,18 +1036,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 48,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39803,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17463,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100049,
             collectionKey = "mount.blue_skeletal_horse",
+            displayCreatureId = 11154,
             lifecycle = "active",
             name = {
                 enUS = "Blue Skeletal Horse",
@@ -1104,18 +1055,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 49,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17463,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32244,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100050,
             collectionKey = "mount.blue_wind_rider",
+            displayCreatureId = 18364,
             lifecycle = "active",
             name = {
                 enUS = "Blue Wind Rider",
@@ -1124,18 +1074,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 50,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32244,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 50869,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100051,
             collectionKey = "mount.brewfest_kodo",
+            displayCreatureId = 30507,
             lifecycle = "active",
             name = {
                 enUS = "Brewfest Kodo",
@@ -1144,18 +1093,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 51,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 50869,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 43899,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100052,
             collectionKey = "mount.brewfest_ram",
+            displayCreatureId = 23588,
             lifecycle = "active",
             name = {
                 enUS = "Brewfest Ram",
@@ -1164,18 +1112,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 52,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 43899,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 49378,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100053,
             collectionKey = "mount.brewfest_riding_kodo",
+            displayCreatureId = 27706,
             lifecycle = "active",
             name = {
                 enUS = "Brewfest Riding Kodo",
@@ -1184,18 +1131,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 53,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 49378,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59569,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100054,
             collectionKey = "mount.bronze_drake",
+            displayCreatureId = 31717,
             lifecycle = "active",
             name = {
                 enUS = "Bronze Drake",
@@ -1204,18 +1150,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 54,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59569,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34406,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100055,
             collectionKey = "mount.brown_elekk",
+            displayCreatureId = 19658,
             lifecycle = "active",
             name = {
                 enUS = "Brown Elekk",
@@ -1224,18 +1169,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 55,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34406,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 458,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100056,
             collectionKey = "mount.brown_horse",
+            displayCreatureId = 284,
             lifecycle = "active",
             name = {
                 enUS = "Brown Horse",
@@ -1244,18 +1188,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 56,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 458,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 18990,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100057,
             collectionKey = "mount.brown_kodo",
+            displayCreatureId = 11689,
             lifecycle = "active",
             name = {
                 enUS = "Brown Kodo",
@@ -1264,18 +1207,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 57,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 18990,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59573,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100058,
             collectionKey = "mount.brown_polar_bear",
+            displayCreatureId = 31700,
             lifecycle = "active",
             name = {
                 enUS = "Brown Polar Bear",
@@ -1284,18 +1226,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 58,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59573,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 6899,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100059,
             collectionKey = "mount.brown_ram",
+            displayCreatureId = 4779,
             lifecycle = "active",
             name = {
                 enUS = "Brown Ram",
@@ -1304,18 +1245,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 59,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 6899,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17464,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100060,
             collectionKey = "mount.brown_skeletal_horse",
+            displayCreatureId = 11155,
             lifecycle = "active",
             name = {
                 enUS = "Brown Skeletal Horse",
@@ -1324,18 +1264,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 60,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17464,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 6654,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100061,
             collectionKey = "mount.brown_wolf",
+            displayCreatureId = 4272,
             lifecycle = "active",
             name = {
                 enUS = "Brown Wolf",
@@ -1344,18 +1283,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 61,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 6654,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 58615,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100062,
             collectionKey = "mount.brutal_nether_drake",
+            displayCreatureId = 31124,
             lifecycle = "active",
             name = {
                 enUS = "Brutal Nether Drake",
@@ -1364,18 +1302,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 62,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 58615,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 75614,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100063,
             collectionKey = "mount.celestial_steed",
+            displayCreatureId = 40625,
             lifecycle = "active",
             name = {
                 enUS = "Celestial Steed",
@@ -1384,18 +1321,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 63,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 75614,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 43927,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100064,
             collectionKey = "mount.cenarion_war_hippogryph",
+            displayCreatureId = 24488,
             lifecycle = "active",
             name = {
                 enUS = "Cenarion War Hippogryph",
@@ -1404,18 +1340,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 64,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 43927,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23214,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100065,
             collectionKey = "mount.charger",
+            displayCreatureId = 14565,
             lifecycle = "active",
             name = {
                 enUS = "Charger",
@@ -1424,18 +1359,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 65,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23214,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 6648,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100066,
             collectionKey = "mount.chestnut_mare",
+            displayCreatureId = 4269,
             lifecycle = "active",
             name = {
                 enUS = "Chestnut Mare",
@@ -1444,18 +1378,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 66,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 6648,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41515,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100067,
             collectionKey = "mount.cobalt_netherwing_drake",
+            displayCreatureId = 23460,
             lifecycle = "active",
             name = {
                 enUS = "Cobalt Netherwing Drake",
@@ -1464,18 +1397,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 67,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41515,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39315,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100068,
             collectionKey = "mount.cobalt_riding_talbuk",
+            displayCreatureId = 22510,
             lifecycle = "active",
             name = {
                 enUS = "Cobalt Riding Talbuk",
@@ -1484,18 +1416,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 68,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39315,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34896,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100069,
             collectionKey = "mount.cobalt_war_talbuk",
+            displayCreatureId = 20072,
             lifecycle = "active",
             name = {
                 enUS = "Cobalt War Talbuk",
@@ -1504,18 +1435,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 69,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34896,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 73313,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100070,
             collectionKey = "mount.crimson_deathcharger",
+            displayCreatureId = 39046,
             lifecycle = "active",
             name = {
                 enUS = "Crimson Deathcharger",
@@ -1524,18 +1454,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 70,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 73313,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 68188,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100071,
             collectionKey = "mount.crusader_s_black_warhorse",
+            displayCreatureId = 35878,
             lifecycle = "active",
             name = {
                 enUS = "Crusader's Black Warhorse",
@@ -1544,18 +1473,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 71,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 68188,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 68187,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100072,
             collectionKey = "mount.crusader_s_white_warhorse",
+            displayCreatureId = 35876,
             lifecycle = "active",
             name = {
                 enUS = "Crusader's White Warhorse",
@@ -1564,18 +1492,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 72,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 68187,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39316,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100073,
             collectionKey = "mount.dark_riding_talbuk",
+            displayCreatureId = 22511,
             lifecycle = "active",
             name = {
                 enUS = "Dark Riding Talbuk",
@@ -1584,18 +1511,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 73,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39316,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34790,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100074,
             collectionKey = "mount.dark_war_talbuk",
+            displayCreatureId = 20149,
             lifecycle = "active",
             name = {
                 enUS = "Dark War Talbuk",
@@ -1604,18 +1530,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 74,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34790,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63635,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100075,
             collectionKey = "mount.darkspear_raptor",
+            displayCreatureId = 33299,
             lifecycle = "active",
             name = {
                 enUS = "Darkspear Raptor",
@@ -1624,18 +1549,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 75,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63635,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63637,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100076,
             collectionKey = "mount.darnassian_nightsaber",
+            displayCreatureId = 33298,
             lifecycle = "active",
             name = {
                 enUS = "Darnassian Nightsaber",
@@ -1644,18 +1568,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 76,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63637,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 64927,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100077,
             collectionKey = "mount.deadly_gladiator_s_frost_wyrm",
+            displayCreatureId = 34225,
             lifecycle = "active",
             name = {
                 enUS = "Deadly Gladiator's Frost Wyrm",
@@ -1664,18 +1587,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 77,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 64927,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 6653,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100078,
             collectionKey = "mount.dire_wolf",
+            displayCreatureId = 4271,
             lifecycle = "active",
             name = {
                 enUS = "Dire Wolf",
@@ -1684,18 +1606,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 78,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 6653,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23161,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100079,
             collectionKey = "mount.dreadsteed",
+            displayCreatureId = 14505,
             lifecycle = "active",
             name = {
                 enUS = "Dreadsteed",
@@ -1704,18 +1625,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 79,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23161,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32239,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100080,
             collectionKey = "mount.ebon_gryphon",
+            displayCreatureId = 18357,
             lifecycle = "active",
             name = {
                 enUS = "Ebon Gryphon",
@@ -1724,18 +1644,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 80,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32239,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 8395,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100081,
             collectionKey = "mount.emerald_raptor",
+            displayCreatureId = 6075,
             lifecycle = "active",
             name = {
                 enUS = "Emerald Raptor",
@@ -1744,18 +1663,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 81,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 8395,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63639,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100082,
             collectionKey = "mount.exodar_elekk",
+            displayCreatureId = 33416,
             lifecycle = "active",
             name = {
                 enUS = "Exodar Elekk",
@@ -1764,18 +1682,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 82,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63639,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 5784,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100083,
             collectionKey = "mount.felsteed",
+            displayCreatureId = 304,
             lifecycle = "active",
             name = {
                 enUS = "Felsteed",
@@ -1784,18 +1701,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 83,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 5784,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 36702,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100084,
             collectionKey = "mount.fiery_warhorse",
+            displayCreatureId = 21354,
             lifecycle = "active",
             name = {
                 enUS = "Fiery Warhorse",
@@ -1804,18 +1720,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 84,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 36702,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17458,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100085,
             collectionKey = "mount.fluorescent_green_mechanostrider",
+            displayCreatureId = 10178,
             lifecycle = "active",
             name = {
                 enUS = "Fluorescent Green Mechanostrider",
@@ -1824,18 +1739,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 85,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17458,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61451,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100086,
             collectionKey = "mount.flying_carpet",
+            displayCreatureId = 33029,
             lifecycle = "active",
             name = {
                 enUS = "Flying Carpet",
@@ -1844,18 +1758,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 86,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61451,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 44153,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100087,
             collectionKey = "mount.flying_machine",
+            displayCreatureId = 24653,
             lifecycle = "active",
             name = {
                 enUS = "Flying Machine",
@@ -1864,18 +1777,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 87,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 44153,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63643,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100088,
             collectionKey = "mount.forsaken_warhorse",
+            displayCreatureId = 33414,
             lifecycle = "active",
             name = {
                 enUS = "Forsaken Warhorse",
@@ -1884,18 +1796,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 88,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63643,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17460,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100089,
             collectionKey = "mount.frost_ram",
+            displayCreatureId = 4778,
             lifecycle = "active",
             name = {
                 enUS = "Frost Ram",
@@ -1904,18 +1815,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 89,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17460,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23509,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100090,
             collectionKey = "mount.frostwolf_howler",
+            displayCreatureId = 14744,
             lifecycle = "active",
             name = {
                 enUS = "Frostwolf Howler",
@@ -1924,18 +1834,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 90,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23509,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 75596,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100091,
             collectionKey = "mount.frosty_flying_carpet",
+            displayCreatureId = 40533,
             lifecycle = "active",
             name = {
                 enUS = "Frosty Flying Carpet",
@@ -1944,18 +1853,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 91,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 75596,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65439,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100092,
             collectionKey = "mount.furious_gladiator_s_frost_wyrm",
+            displayCreatureId = 34425,
             lifecycle = "active",
             name = {
                 enUS = "Furious Gladiator's Frost Wyrm",
@@ -1964,18 +1872,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 92,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65439,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63638,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100093,
             collectionKey = "mount.gnomeregan_mechanostrider",
+            displayCreatureId = 33301,
             lifecycle = "active",
             name = {
                 enUS = "Gnomeregan Mechanostrider",
@@ -1984,18 +1891,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 93,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63638,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32235,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100094,
             collectionKey = "mount.golden_gryphon",
+            displayCreatureId = 18360,
             lifecycle = "active",
             name = {
                 enUS = "Golden Gryphon",
@@ -2004,18 +1910,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 94,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32235,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16060,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100095,
             collectionKey = "mount.golden_sabercat",
+            displayCreatureId = 10338,
             lifecycle = "active",
             name = {
                 enUS = "Golden Sabercat",
@@ -2024,18 +1929,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 95,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16060,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61467,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100096,
             collectionKey = "mount.grand_black_war_mammoth",
+            displayCreatureId = 31861,
             lifecycle = "active",
             name = {
                 enUS = "Grand Black War Mammoth",
@@ -2044,18 +1948,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 96,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61467,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61465,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100097,
             collectionKey = "mount.grand_black_war_mammoth.creature_31862",
+            displayCreatureId = 31862,
             lifecycle = "active",
             name = {
                 enUS = "Grand Black War Mammoth",
@@ -2064,18 +1967,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 97,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61465,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60136,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100098,
             collectionKey = "mount.grand_caravan_mammoth",
+            displayCreatureId = 32212,
             lifecycle = "active",
             name = {
                 enUS = "Grand Caravan Mammoth",
@@ -2084,18 +1986,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 98,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60136,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60140,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100099,
             collectionKey = "mount.grand_caravan_mammoth.creature_32213",
+            displayCreatureId = 32213,
             lifecycle = "active",
             name = {
                 enUS = "Grand Caravan Mammoth",
@@ -2104,18 +2005,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 99,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60140,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61469,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100100,
             collectionKey = "mount.grand_ice_mammoth",
+            displayCreatureId = 31857,
             lifecycle = "active",
             name = {
                 enUS = "Grand Ice Mammoth",
@@ -2124,18 +2024,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 100,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61469,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61470,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100101,
             collectionKey = "mount.grand_ice_mammoth.creature_31858",
+            displayCreatureId = 31858,
             lifecycle = "active",
             name = {
                 enUS = "Grand Ice Mammoth",
@@ -2144,18 +2043,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 101,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61470,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35710,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100102,
             collectionKey = "mount.gray_elekk",
+            displayCreatureId = 20846,
             lifecycle = "active",
             name = {
                 enUS = "Gray Elekk",
@@ -2164,18 +2062,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 102,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35710,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 18989,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100103,
             collectionKey = "mount.gray_kodo",
+            displayCreatureId = 12149,
             lifecycle = "active",
             name = {
                 enUS = "Gray Kodo",
@@ -2184,18 +2081,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 103,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 18989,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 6777,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100104,
             collectionKey = "mount.gray_ram",
+            displayCreatureId = 4710,
             lifecycle = "active",
             name = {
                 enUS = "Gray Ram",
@@ -2204,18 +2100,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 104,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 6777,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 459,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100105,
             collectionKey = "mount.gray_wolf",
+            displayCreatureId = 4268,
             lifecycle = "active",
             name = {
                 enUS = "Gray Wolf",
@@ -2224,18 +2119,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 105,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 459,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35713,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100106,
             collectionKey = "mount.great_blue_elekk",
+            displayCreatureId = 20848,
             lifecycle = "active",
             name = {
                 enUS = "Great Blue Elekk",
@@ -2244,18 +2138,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 106,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35713,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 49379,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100107,
             collectionKey = "mount.great_brewfest_kodo",
+            displayCreatureId = 27707,
             lifecycle = "active",
             name = {
                 enUS = "Great Brewfest Kodo",
@@ -2264,18 +2157,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 107,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 49379,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23249,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100108,
             collectionKey = "mount.great_brown_kodo",
+            displayCreatureId = 14549,
             lifecycle = "active",
             name = {
                 enUS = "Great Brown Kodo",
@@ -2284,18 +2176,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 108,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23249,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34407,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100109,
             collectionKey = "mount.great_elite_elekk",
+            displayCreatureId = 19659,
             lifecycle = "active",
             name = {
                 enUS = "Great Elite Elekk",
@@ -2304,18 +2195,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 109,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34407,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65641,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100110,
             collectionKey = "mount.great_golden_kodo",
+            displayCreatureId = 34558,
             lifecycle = "active",
             name = {
                 enUS = "Great Golden Kodo",
@@ -2324,18 +2214,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 110,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65641,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23248,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100111,
             collectionKey = "mount.great_gray_kodo",
+            displayCreatureId = 14550,
             lifecycle = "active",
             name = {
                 enUS = "Great Gray Kodo",
@@ -2344,18 +2233,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 111,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23248,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35712,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100112,
             collectionKey = "mount.great_green_elekk",
+            displayCreatureId = 20849,
             lifecycle = "active",
             name = {
                 enUS = "Great Green Elekk",
@@ -2364,18 +2252,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 112,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35712,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35714,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100113,
             collectionKey = "mount.great_purple_elekk",
+            displayCreatureId = 20850,
             lifecycle = "active",
             name = {
                 enUS = "Great Purple Elekk",
@@ -2384,18 +2271,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 113,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35714,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65637,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100114,
             collectionKey = "mount.great_red_elekk",
+            displayCreatureId = 34551,
             lifecycle = "active",
             name = {
                 enUS = "Great Red Elekk",
@@ -2404,18 +2290,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 114,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65637,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23247,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100115,
             collectionKey = "mount.great_white_kodo",
+            displayCreatureId = 14542,
             lifecycle = "active",
             name = {
                 enUS = "Great White Kodo",
@@ -2424,18 +2309,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 115,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23247,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 18991,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100116,
             collectionKey = "mount.green_kodo",
+            displayCreatureId = 12151,
             lifecycle = "active",
             name = {
                 enUS = "Green Kodo",
@@ -2444,18 +2328,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 116,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 18991,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17453,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100117,
             collectionKey = "mount.green_mechanostrider",
+            displayCreatureId = 11147,
             lifecycle = "active",
             name = {
                 enUS = "Green Mechanostrider",
@@ -2464,18 +2347,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 117,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17453,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61294,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100118,
             collectionKey = "mount.green_proto_drake",
+            displayCreatureId = 32562,
             lifecycle = "active",
             name = {
                 enUS = "Green Proto-Drake",
@@ -2484,18 +2366,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 118,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61294,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 26056,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100119,
             collectionKey = "mount.green_qiraji_battle_tank",
+            displayCreatureId = 15715,
             lifecycle = "active",
             name = {
                 enUS = "Green Qiraji Battle Tank",
@@ -2504,18 +2385,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 119,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 26056,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39798,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100120,
             collectionKey = "mount.green_riding_nether_ray",
+            displayCreatureId = 22958,
             lifecycle = "active",
             name = {
                 enUS = "Green Riding Nether Ray",
@@ -2524,18 +2404,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 120,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39798,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17465,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100121,
             collectionKey = "mount.green_skeletal_warhorse",
+            displayCreatureId = 11156,
             lifecycle = "active",
             name = {
                 enUS = "Green Skeletal Warhorse",
@@ -2544,18 +2423,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 121,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17465,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32245,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100122,
             collectionKey = "mount.green_wind_rider",
+            displayCreatureId = 18365,
             lifecycle = "active",
             name = {
                 enUS = "Green Wind Rider",
@@ -2564,18 +2442,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 122,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32245,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 48025,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100123,
             collectionKey = "mount.headless_horseman_s_mount",
+            displayCreatureId = 27153,
             lifecycle = "active",
             name = {
                 enUS = "Headless Horseman's Mount",
@@ -2584,18 +2461,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 123,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 48025,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59797,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100124,
             collectionKey = "mount.ice_mammoth",
+            displayCreatureId = 31854,
             lifecycle = "active",
             name = {
                 enUS = "Ice Mammoth",
@@ -2604,18 +2480,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 124,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59797,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59799,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100125,
             collectionKey = "mount.ice_mammoth.creature_31855",
+            displayCreatureId = 31855,
             lifecycle = "active",
             name = {
                 enUS = "Ice Mammoth",
@@ -2624,18 +2499,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 125,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59799,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 72807,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100126,
             collectionKey = "mount.icebound_frostbrood_vanquisher",
+            displayCreatureId = 38695,
             lifecycle = "active",
             name = {
                 enUS = "Icebound Frostbrood Vanquisher",
@@ -2644,18 +2518,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 126,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 72807,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17459,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100127,
             collectionKey = "mount.icy_blue_mechanostrider_mod_a",
+            displayCreatureId = 11150,
             lifecycle = "active",
             name = {
                 enUS = "Icy Blue Mechanostrider Mod A",
@@ -2664,18 +2537,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 127,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17459,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 72286,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100128,
             collectionKey = "mount.invincible",
+            displayCreatureId = 38545,
             lifecycle = "active",
             name = {
                 enUS = "Invincible",
@@ -2684,18 +2556,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 128,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 72286,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63956,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100129,
             collectionKey = "mount.ironbound_proto_drake",
+            displayCreatureId = 33892,
             lifecycle = "active",
             name = {
                 enUS = "Ironbound Proto-Drake",
@@ -2704,18 +2575,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 129,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63956,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63636,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100130,
             collectionKey = "mount.ironforge_ram",
+            displayCreatureId = 33408,
             lifecycle = "active",
             name = {
                 enUS = "Ironforge Ram",
@@ -2724,18 +2594,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 130,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63636,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17450,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100131,
             collectionKey = "mount.ivory_raptor",
+            displayCreatureId = 7706,
             lifecycle = "active",
             name = {
                 enUS = "Ivory Raptor",
@@ -2744,18 +2613,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 131,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17450,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65917,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100132,
             collectionKey = "mount.magic_rooster",
+            displayCreatureId = 34655,
             lifecycle = "active",
             name = {
                 enUS = "Magic Rooster",
@@ -2764,18 +2632,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 132,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65917,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61309,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100133,
             collectionKey = "mount.magnificent_flying_carpet",
+            displayCreatureId = 33030,
             lifecycle = "active",
             name = {
                 enUS = "Magnificent Flying Carpet",
@@ -2784,18 +2651,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 133,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61309,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 55531,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100134,
             collectionKey = "mount.mechano_hog",
+            displayCreatureId = 29929,
             lifecycle = "active",
             name = {
                 enUS = "Mechano-hog",
@@ -2804,18 +2670,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 134,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 55531,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60424,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100135,
             collectionKey = "mount.mekgineer_s_chopper",
+            displayCreatureId = 32286,
             lifecycle = "active",
             name = {
                 enUS = "Mekgineer's Chopper",
@@ -2824,18 +2689,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 135,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60424,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 44744,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100136,
             collectionKey = "mount.merciless_nether_drake",
+            displayCreatureId = 24743,
             lifecycle = "active",
             name = {
                 enUS = "Merciless Nether Drake",
@@ -2844,18 +2708,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 136,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 44744,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63796,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100137,
             collectionKey = "mount.mimiron_s_head",
+            displayCreatureId = 33848,
             lifecycle = "active",
             name = {
                 enUS = "Mimiron's Head",
@@ -2864,18 +2727,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 137,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63796,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16084,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100138,
             collectionKey = "mount.mottled_red_raptor",
+            displayCreatureId = 7704,
             lifecycle = "active",
             name = {
                 enUS = "Mottled Red Raptor",
@@ -2884,18 +2746,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 138,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16084,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 29059,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100139,
             collectionKey = "mount.naxxramas_deathcharger",
+            displayCreatureId = 11195,
             lifecycle = "active",
             name = {
                 enUS = "Naxxramas Deathcharger",
@@ -2904,18 +2765,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 139,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 29059,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10798,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100140,
             collectionKey = "mount.obsidian_raptor",
+            displayCreatureId = 7703,
             lifecycle = "active",
             name = {
                 enUS = "Obsidian Raptor",
@@ -2924,18 +2784,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 140,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10798,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66846,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100141,
             collectionKey = "mount.ochre_skeletal_warhorse",
+            displayCreatureId = 35169,
             lifecycle = "active",
             name = {
                 enUS = "Ochre Skeletal Warhorse",
@@ -2944,18 +2803,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 141,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66846,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41513,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100142,
             collectionKey = "mount.onyx_netherwing_drake",
+            displayCreatureId = 23455,
             lifecycle = "active",
             name = {
                 enUS = "Onyx Netherwing Drake",
@@ -2964,18 +2822,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 142,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41513,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 69395,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100143,
             collectionKey = "mount.onyxian_drake",
+            displayCreatureId = 36837,
             lifecycle = "active",
             name = {
                 enUS = "Onyxian Drake",
@@ -2984,18 +2841,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 143,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 69395,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63640,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100144,
             collectionKey = "mount.orgrimmar_wolf",
+            displayCreatureId = 33409,
             lifecycle = "active",
             name = {
                 enUS = "Orgrimmar Wolf",
@@ -3004,18 +2860,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 144,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63640,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16082,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100145,
             collectionKey = "mount.palomino",
+            displayCreatureId = 306,
             lifecycle = "active",
             name = {
                 enUS = "Palomino",
@@ -3024,18 +2879,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 145,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16082,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 472,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100146,
             collectionKey = "mount.pinto",
+            displayCreatureId = 307,
             lifecycle = "active",
             name = {
                 enUS = "Pinto",
@@ -3044,18 +2898,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 146,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 472,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60021,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100147,
             collectionKey = "mount.plagued_proto_drake",
+            displayCreatureId = 32156,
             lifecycle = "active",
             name = {
                 enUS = "Plagued Proto-Drake",
@@ -3064,18 +2917,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 147,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60021,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16058,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100148,
             collectionKey = "mount.primal_leopard",
+            displayCreatureId = 10336,
             lifecycle = "active",
             name = {
                 enUS = "Primal Leopard",
@@ -3084,18 +2936,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 148,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16058,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35711,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100149,
             collectionKey = "mount.purple_elekk",
+            displayCreatureId = 20847,
             lifecycle = "active",
             name = {
                 enUS = "Purple Elekk",
@@ -3104,18 +2955,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 149,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35711,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35018,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100150,
             collectionKey = "mount.purple_hawkstrider",
+            displayCreatureId = 20217,
             lifecycle = "active",
             name = {
                 enUS = "Purple Hawkstrider",
@@ -3124,18 +2974,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 150,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35018,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17455,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100151,
             collectionKey = "mount.purple_mechanostrider",
+            displayCreatureId = 11148,
             lifecycle = "active",
             name = {
                 enUS = "Purple Mechanostrider",
@@ -3144,18 +2993,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 151,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17455,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41516,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100152,
             collectionKey = "mount.purple_netherwing_drake",
+            displayCreatureId = 23458,
             lifecycle = "active",
             name = {
                 enUS = "Purple Netherwing Drake",
@@ -3164,18 +3012,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 152,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41516,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39801,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100153,
             collectionKey = "mount.purple_riding_nether_ray",
+            displayCreatureId = 22975,
             lifecycle = "active",
             name = {
                 enUS = "Purple Riding Nether Ray",
@@ -3184,18 +3031,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 153,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39801,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23246,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100154,
             collectionKey = "mount.purple_skeletal_warhorse",
+            displayCreatureId = 14558,
             lifecycle = "active",
             name = {
                 enUS = "Purple Skeletal Warhorse",
@@ -3204,18 +3050,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 154,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23246,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66090,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100155,
             collectionKey = "mount.quel_dorei_steed",
+            displayCreatureId = 33840,
             lifecycle = "active",
             name = {
                 enUS = "Quel'dorei Steed",
@@ -3224,18 +3069,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 155,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66090,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41252,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100156,
             collectionKey = "mount.raven_lord",
+            displayCreatureId = 23408,
             lifecycle = "active",
             name = {
                 enUS = "Raven Lord",
@@ -3244,18 +3088,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 156,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41252,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17456,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100157,
             collectionKey = "mount.red_and_blue_mechanostrider",
+            displayCreatureId = 11149,
             lifecycle = "active",
             name = {
                 enUS = "Red and Blue Mechanostrider",
@@ -3264,18 +3107,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 157,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17456,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61997,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100158,
             collectionKey = "mount.red_dragonhawk",
+            displayCreatureId = 32944,
             lifecycle = "active",
             name = {
                 enUS = "Red Dragonhawk",
@@ -3284,18 +3126,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 158,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61997,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59570,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100159,
             collectionKey = "mount.red_drake",
+            displayCreatureId = 31697,
             lifecycle = "active",
             name = {
                 enUS = "Red Drake",
@@ -3304,18 +3145,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 159,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59570,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34795,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100160,
             collectionKey = "mount.red_hawkstrider",
+            displayCreatureId = 19280,
             lifecycle = "active",
             name = {
                 enUS = "Red Hawkstrider",
@@ -3324,18 +3164,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 160,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34795,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10873,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100161,
             collectionKey = "mount.red_mechanostrider",
+            displayCreatureId = 7739,
             lifecycle = "active",
             name = {
                 enUS = "Red Mechanostrider",
@@ -3344,18 +3183,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 161,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10873,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59961,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100162,
             collectionKey = "mount.red_proto_drake",
+            displayCreatureId = 31902,
             lifecycle = "active",
             name = {
                 enUS = "Red Proto-Drake",
@@ -3364,18 +3202,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 162,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59961,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 26054,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100163,
             collectionKey = "mount.red_qiraji_battle_tank",
+            displayCreatureId = 15716,
             lifecycle = "active",
             name = {
                 enUS = "Red Qiraji Battle Tank",
@@ -3384,18 +3221,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 163,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 26054,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39800,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100164,
             collectionKey = "mount.red_riding_nether_ray",
+            displayCreatureId = 22976,
             lifecycle = "active",
             name = {
                 enUS = "Red Riding Nether Ray",
@@ -3404,18 +3240,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 164,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39800,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17462,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100165,
             collectionKey = "mount.red_skeletal_horse",
+            displayCreatureId = 11153,
             lifecycle = "active",
             name = {
                 enUS = "Red Skeletal Horse",
@@ -3424,18 +3259,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 165,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17462,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 22722,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100166,
             collectionKey = "mount.red_skeletal_warhorse",
+            displayCreatureId = 14331,
             lifecycle = "active",
             name = {
                 enUS = "Red Skeletal Warhorse",
@@ -3444,18 +3278,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 166,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 22722,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16080,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100167,
             collectionKey = "mount.red_wolf",
+            displayCreatureId = 4270,
             lifecycle = "active",
             name = {
                 enUS = "Red Wolf",
@@ -3464,18 +3297,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 167,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16080,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 67336,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100168,
             collectionKey = "mount.relentless_gladiator_s_frost_wyrm",
+            displayCreatureId = 35362,
             lifecycle = "active",
             name = {
                 enUS = "Relentless Gladiator's Frost Wyrm",
@@ -3484,18 +3316,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 168,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 67336,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 30174,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100169,
             collectionKey = "mount.riding_turtle",
+            displayCreatureId = 17266,
             lifecycle = "active",
             name = {
                 enUS = "Riding Turtle",
@@ -3504,18 +3335,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 169,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 30174,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17481,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100170,
             collectionKey = "mount.rivendare_s_deathcharger",
+            displayCreatureId = 30542,
             lifecycle = "active",
             name = {
                 enUS = "Rivendare's Deathcharger",
@@ -3524,18 +3354,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 170,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17481,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63963,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100171,
             collectionKey = "mount.rusted_proto_drake",
+            displayCreatureId = 33904,
             lifecycle = "active",
             name = {
                 enUS = "Rusted Proto-Drake",
@@ -3544,18 +3373,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 171,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63963,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 64731,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100172,
             collectionKey = "mount.sea_turtle",
+            displayCreatureId = 34187,
             lifecycle = "active",
             name = {
                 enUS = "Sea Turtle",
@@ -3564,18 +3392,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 172,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 64731,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66087,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100173,
             collectionKey = "mount.silver_covenant_hippogryph",
+            displayCreatureId = 35147,
             lifecycle = "active",
             name = {
                 enUS = "Silver Covenant Hippogryph",
@@ -3584,18 +3411,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 173,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66087,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39802,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100174,
             collectionKey = "mount.silver_riding_nether_ray",
+            displayCreatureId = 22977,
             lifecycle = "active",
             name = {
                 enUS = "Silver Riding Nether Ray",
@@ -3604,18 +3430,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 174,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39802,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39317,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100175,
             collectionKey = "mount.silver_riding_talbuk",
+            displayCreatureId = 22512,
             lifecycle = "active",
             name = {
                 enUS = "Silver Riding Talbuk",
@@ -3624,18 +3449,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 175,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39317,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34898,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100176,
             collectionKey = "mount.silver_war_talbuk",
+            displayCreatureId = 20152,
             lifecycle = "active",
             name = {
                 enUS = "Silver War Talbuk",
@@ -3644,18 +3468,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 176,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34898,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63642,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100177,
             collectionKey = "mount.silvermoon_hawkstrider",
+            displayCreatureId = 33418,
             lifecycle = "active",
             name = {
                 enUS = "Silvermoon Hawkstrider",
@@ -3664,18 +3487,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 177,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63642,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 8980,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100178,
             collectionKey = "mount.skeletal_horse",
+            displayCreatureId = 6486,
             lifecycle = "active",
             name = {
                 enUS = "Skeletal Horse",
@@ -3684,18 +3506,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 178,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 8980,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32240,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100179,
             collectionKey = "mount.snowy_gryphon",
+            displayCreatureId = 18359,
             lifecycle = "active",
             name = {
                 enUS = "Snowy Gryphon",
@@ -3704,18 +3525,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 179,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32240,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 42776,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100180,
             collectionKey = "mount.spectral_tiger",
+            displayCreatureId = 24003,
             lifecycle = "active",
             name = {
                 enUS = "Spectral Tiger",
@@ -3724,18 +3544,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 180,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 42776,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10789,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100181,
             collectionKey = "mount.spotted_frostsaber",
+            displayCreatureId = 7687,
             lifecycle = "active",
             name = {
                 enUS = "Spotted Frostsaber",
@@ -3744,18 +3563,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 181,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10789,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23510,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100182,
             collectionKey = "mount.stormpike_battle_charger",
+            displayCreatureId = 14745,
             lifecycle = "active",
             name = {
                 enUS = "Stormpike Battle Charger",
@@ -3764,18 +3582,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 182,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23510,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63232,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100183,
             collectionKey = "mount.stormwind_steed",
+            displayCreatureId = 33297,
             lifecycle = "active",
             name = {
                 enUS = "Stormwind Steed",
@@ -3784,18 +3601,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 183,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63232,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66847,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100184,
             collectionKey = "mount.striped_dawnsaber",
+            displayCreatureId = 35168,
             lifecycle = "active",
             name = {
                 enUS = "Striped Dawnsaber",
@@ -3804,18 +3620,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 184,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66847,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 8394,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100185,
             collectionKey = "mount.striped_frostsaber",
+            displayCreatureId = 6074,
             lifecycle = "active",
             name = {
                 enUS = "Striped Frostsaber",
@@ -3824,18 +3639,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 185,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 8394,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10793,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100186,
             collectionKey = "mount.striped_nightsaber",
+            displayCreatureId = 7690,
             lifecycle = "active",
             name = {
                 enUS = "Striped Nightsaber",
@@ -3844,18 +3658,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 186,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10793,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34767,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100187,
             collectionKey = "mount.summon_charger",
+            displayCreatureId = 20030,
             lifecycle = "active",
             name = {
                 enUS = "Summon Charger",
@@ -3864,18 +3677,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 187,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34767,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34769,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100188,
             collectionKey = "mount.summon_warhorse",
+            displayCreatureId = 20029,
             lifecycle = "active",
             name = {
                 enUS = "Summon Warhorse",
@@ -3884,18 +3696,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 188,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34769,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66088,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100189,
             collectionKey = "mount.sunreaver_dragonhawk",
+            displayCreatureId = 35148,
             lifecycle = "active",
             name = {
                 enUS = "Sunreaver Dragonhawk",
@@ -3904,18 +3715,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 189,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66088,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 66091,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100190,
             collectionKey = "mount.sunreaver_hawkstrider",
+            displayCreatureId = 33841,
             lifecycle = "active",
             name = {
                 enUS = "Sunreaver Hawkstrider",
@@ -3924,18 +3734,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 190,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 66091,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 68057,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100191,
             collectionKey = "mount.swift_alliance_steed",
+            displayCreatureId = 35808,
             lifecycle = "active",
             name = {
                 enUS = "Swift Alliance Steed",
@@ -3944,18 +3753,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 191,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 68057,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32242,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100192,
             collectionKey = "mount.swift_blue_gryphon",
+            displayCreatureId = 18406,
             lifecycle = "active",
             name = {
                 enUS = "Swift Blue Gryphon",
@@ -3964,18 +3772,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 192,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32242,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23241,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100193,
             collectionKey = "mount.swift_blue_raptor",
+            displayCreatureId = 14545,
             lifecycle = "active",
             name = {
                 enUS = "Swift Blue Raptor",
@@ -3984,18 +3791,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 193,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23241,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 43900,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100194,
             collectionKey = "mount.swift_brewfest_ram",
+            displayCreatureId = 24368,
             lifecycle = "active",
             name = {
                 enUS = "Swift Brewfest Ram",
@@ -4004,18 +3810,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 194,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 43900,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23238,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100195,
             collectionKey = "mount.swift_brown_ram",
+            displayCreatureId = 14546,
             lifecycle = "active",
             name = {
                 enUS = "Swift Brown Ram",
@@ -4024,18 +3829,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 195,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23238,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23229,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100196,
             collectionKey = "mount.swift_brown_steed",
+            displayCreatureId = 14561,
             lifecycle = "active",
             name = {
                 enUS = "Swift Brown Steed",
@@ -4044,18 +3848,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 196,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23229,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23250,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100197,
             collectionKey = "mount.swift_brown_wolf",
+            displayCreatureId = 14540,
             lifecycle = "active",
             name = {
                 enUS = "Swift Brown Wolf",
@@ -4064,18 +3867,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 197,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23250,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65646,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100198,
             collectionKey = "mount.swift_burgundy_wolf",
+            displayCreatureId = 34555,
             lifecycle = "active",
             name = {
                 enUS = "Swift Burgundy Wolf",
@@ -4084,18 +3886,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 198,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65646,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23220,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100199,
             collectionKey = "mount.swift_dawnsaber",
+            displayCreatureId = 14557,
             lifecycle = "active",
             name = {
                 enUS = "Swift Dawnsaber",
@@ -4104,18 +3905,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 199,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23220,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23221,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100200,
             collectionKey = "mount.swift_frostsaber",
+            displayCreatureId = 14556,
             lifecycle = "active",
             name = {
                 enUS = "Swift Frostsaber",
@@ -4124,18 +3924,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 200,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23221,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23239,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100201,
             collectionKey = "mount.swift_gray_ram",
+            displayCreatureId = 14548,
             lifecycle = "active",
             name = {
                 enUS = "Swift Gray Ram",
@@ -4144,18 +3943,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 201,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23239,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65640,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100202,
             collectionKey = "mount.swift_gray_steed",
+            displayCreatureId = 34557,
             lifecycle = "active",
             name = {
                 enUS = "Swift Gray Steed",
@@ -4164,18 +3962,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 202,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65640,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23252,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100203,
             collectionKey = "mount.swift_gray_wolf",
+            displayCreatureId = 14541,
             lifecycle = "active",
             name = {
                 enUS = "Swift Gray Wolf",
@@ -4184,18 +3981,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 203,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23252,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32290,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100204,
             collectionKey = "mount.swift_green_gryphon",
+            displayCreatureId = 18375,
             lifecycle = "active",
             name = {
                 enUS = "Swift Green Gryphon",
@@ -4204,18 +4000,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 204,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32290,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35025,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100205,
             collectionKey = "mount.swift_green_hawkstrider",
+            displayCreatureId = 20224,
             lifecycle = "active",
             name = {
                 enUS = "Swift Green Hawkstrider",
@@ -4224,18 +4019,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 205,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35025,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23225,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100206,
             collectionKey = "mount.swift_green_mechanostrider",
+            displayCreatureId = 14553,
             lifecycle = "active",
             name = {
                 enUS = "Swift Green Mechanostrider",
@@ -4244,18 +4038,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 206,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23225,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32295,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100207,
             collectionKey = "mount.swift_green_wind_rider",
+            displayCreatureId = 18378,
             lifecycle = "active",
             name = {
                 enUS = "Swift Green Wind Rider",
@@ -4264,18 +4057,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 207,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32295,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 68056,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100208,
             collectionKey = "mount.swift_horde_wolf",
+            displayCreatureId = 35809,
             lifecycle = "active",
             name = {
                 enUS = "Swift Horde Wolf",
@@ -4284,18 +4076,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 208,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 68056,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23219,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100209,
             collectionKey = "mount.swift_mistsaber",
+            displayCreatureId = 14555,
             lifecycle = "active",
             name = {
                 enUS = "Swift Mistsaber",
@@ -4304,18 +4095,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 209,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23219,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61442,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100210,
             collectionKey = "mount.swift_mooncloth_carpet",
+            displayCreatureId = 32634,
             lifecycle = "active",
             name = {
                 enUS = "Swift Mooncloth Carpet",
@@ -4324,18 +4114,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 210,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61442,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65638,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100211,
             collectionKey = "mount.swift_moonsaber",
+            displayCreatureId = 34550,
             lifecycle = "active",
             name = {
                 enUS = "Swift Moonsaber",
@@ -4344,18 +4133,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 211,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65638,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 37015,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100212,
             collectionKey = "mount.swift_nether_drake",
+            displayCreatureId = 21510,
             lifecycle = "active",
             name = {
                 enUS = "Swift Nether Drake",
@@ -4364,18 +4152,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 212,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 37015,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23242,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100213,
             collectionKey = "mount.swift_olive_raptor",
+            displayCreatureId = 14543,
             lifecycle = "active",
             name = {
                 enUS = "Swift Olive Raptor",
@@ -4384,18 +4171,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 213,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23242,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23243,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100214,
             collectionKey = "mount.swift_orange_raptor",
+            displayCreatureId = 14544,
             lifecycle = "active",
             name = {
                 enUS = "Swift Orange Raptor",
@@ -4404,18 +4190,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 214,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23243,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23227,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100215,
             collectionKey = "mount.swift_palomino",
+            displayCreatureId = 14559,
             lifecycle = "active",
             name = {
                 enUS = "Swift Palomino",
@@ -4424,18 +4209,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 215,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23227,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 33660,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100216,
             collectionKey = "mount.swift_pink_hawkstrider",
+            displayCreatureId = 19281,
             lifecycle = "active",
             name = {
                 enUS = "Swift Pink Hawkstrider",
@@ -4444,18 +4228,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 216,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 33660,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32292,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100217,
             collectionKey = "mount.swift_purple_gryphon",
+            displayCreatureId = 18362,
             lifecycle = "active",
             name = {
                 enUS = "Swift Purple Gryphon",
@@ -4464,18 +4247,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 217,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32292,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35027,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100218,
             collectionKey = "mount.swift_purple_hawkstrider",
+            displayCreatureId = 20223,
             lifecycle = "active",
             name = {
                 enUS = "Swift Purple Hawkstrider",
@@ -4484,18 +4266,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 218,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35027,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65644,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100219,
             collectionKey = "mount.swift_purple_raptor",
+            displayCreatureId = 34549,
             lifecycle = "active",
             name = {
                 enUS = "Swift Purple Raptor",
@@ -4504,18 +4285,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 219,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65644,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32297,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100220,
             collectionKey = "mount.swift_purple_wind_rider",
+            displayCreatureId = 18379,
             lifecycle = "active",
             name = {
                 enUS = "Swift Purple Wind Rider",
@@ -4524,18 +4304,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 220,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32297,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 24242,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100221,
             collectionKey = "mount.swift_razzashi_raptor",
+            displayCreatureId = 15090,
             lifecycle = "active",
             name = {
                 enUS = "Swift Razzashi Raptor",
@@ -4544,18 +4323,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 221,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 24242,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32289,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100222,
             collectionKey = "mount.swift_red_gryphon",
+            displayCreatureId = 18376,
             lifecycle = "active",
             name = {
                 enUS = "Swift Red Gryphon",
@@ -4564,18 +4342,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 222,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32289,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65639,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100223,
             collectionKey = "mount.swift_red_hawkstrider",
+            displayCreatureId = 34556,
             lifecycle = "active",
             name = {
                 enUS = "Swift Red Hawkstrider",
@@ -4584,18 +4361,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 223,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65639,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32246,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100224,
             collectionKey = "mount.swift_red_wind_rider",
+            displayCreatureId = 18377,
             lifecycle = "active",
             name = {
                 enUS = "Swift Red Wind Rider",
@@ -4604,18 +4380,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 224,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32246,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 42777,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100225,
             collectionKey = "mount.swift_spectral_tiger",
+            displayCreatureId = 24004,
             lifecycle = "active",
             name = {
                 enUS = "Swift Spectral Tiger",
@@ -4624,18 +4399,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 225,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 42777,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61446,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100226,
             collectionKey = "mount.swift_spellfire_carpet",
+            displayCreatureId = 32636,
             lifecycle = "active",
             name = {
                 enUS = "Swift Spellfire Carpet",
@@ -4644,18 +4418,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 226,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61446,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23338,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100227,
             collectionKey = "mount.swift_stormsaber",
+            displayCreatureId = 14602,
             lifecycle = "active",
             name = {
                 enUS = "Swift Stormsaber",
@@ -4664,18 +4437,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 227,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23338,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23251,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100228,
             collectionKey = "mount.swift_timber_wolf",
+            displayCreatureId = 14539,
             lifecycle = "active",
             name = {
                 enUS = "Swift Timber Wolf",
@@ -4684,18 +4456,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 228,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23251,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65643,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100229,
             collectionKey = "mount.swift_violet_ram",
+            displayCreatureId = 34554,
             lifecycle = "active",
             name = {
                 enUS = "Swift Violet Ram",
@@ -4704,18 +4475,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 229,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65643,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 35028,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100230,
             collectionKey = "mount.swift_warstrider",
+            displayCreatureId = 20225,
             lifecycle = "active",
             name = {
                 enUS = "Swift Warstrider",
@@ -4724,18 +4494,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 230,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 35028,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 46628,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100231,
             collectionKey = "mount.swift_white_hawkstrider",
+            displayCreatureId = 26131,
             lifecycle = "active",
             name = {
                 enUS = "Swift White Hawkstrider",
@@ -4744,18 +4513,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 231,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 46628,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23223,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100232,
             collectionKey = "mount.swift_white_mechanostrider",
+            displayCreatureId = 14552,
             lifecycle = "active",
             name = {
                 enUS = "Swift White Mechanostrider",
@@ -4764,18 +4532,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 232,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23223,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23240,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100233,
             collectionKey = "mount.swift_white_ram",
+            displayCreatureId = 14547,
             lifecycle = "active",
             name = {
                 enUS = "Swift White Ram",
@@ -4784,18 +4551,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 233,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23240,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23228,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100234,
             collectionKey = "mount.swift_white_steed",
+            displayCreatureId = 14560,
             lifecycle = "active",
             name = {
                 enUS = "Swift White Steed",
@@ -4804,18 +4570,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 234,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23228,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 23222,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100235,
             collectionKey = "mount.swift_yellow_mechanostrider",
+            displayCreatureId = 14551,
             lifecycle = "active",
             name = {
                 enUS = "Swift Yellow Mechanostrider",
@@ -4824,18 +4589,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 235,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 23222,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32296,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100236,
             collectionKey = "mount.swift_yellow_wind_rider",
+            displayCreatureId = 18380,
             lifecycle = "active",
             name = {
                 enUS = "Swift Yellow Wind Rider",
@@ -4844,18 +4608,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 236,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32296,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 48954,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100237,
             collectionKey = "mount.swift_zhevra",
+            displayCreatureId = 27541,
             lifecycle = "active",
             name = {
                 enUS = "Swift Zhevra",
@@ -4864,18 +4627,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 237,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 48954,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 49322,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100238,
             collectionKey = "mount.swift_zhevra.creature_27684",
+            displayCreatureId = 27684,
             lifecycle = "active",
             name = {
                 enUS = "Swift Zhevra",
@@ -4884,18 +4646,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 238,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 49322,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 24252,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100239,
             collectionKey = "mount.swift_zulian_tiger",
+            displayCreatureId = 15104,
             lifecycle = "active",
             name = {
                 enUS = "Swift Zulian Tiger",
@@ -4904,18 +4665,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 239,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 24252,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39318,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100240,
             collectionKey = "mount.tan_riding_talbuk",
+            displayCreatureId = 22513,
             lifecycle = "active",
             name = {
                 enUS = "Tan Riding Talbuk",
@@ -4924,18 +4684,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 240,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39318,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34899,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100241,
             collectionKey = "mount.tan_war_talbuk",
+            displayCreatureId = 20150,
             lifecycle = "active",
             name = {
                 enUS = "Tan War Talbuk",
@@ -4944,18 +4703,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 241,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34899,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16059,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100242,
             collectionKey = "mount.tawny_sabercat",
+            displayCreatureId = 10337,
             lifecycle = "active",
             name = {
                 enUS = "Tawny Sabercat",
@@ -4964,18 +4722,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 242,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16059,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 32243,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100243,
             collectionKey = "mount.tawny_wind_rider",
+            displayCreatureId = 18363,
             lifecycle = "active",
             name = {
                 enUS = "Tawny Wind Rider",
@@ -4984,18 +4741,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 243,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 32243,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 18992,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100244,
             collectionKey = "mount.teal_kodo",
+            displayCreatureId = 12148,
             lifecycle = "active",
             name = {
                 enUS = "Teal Kodo",
@@ -5004,18 +4760,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 244,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 18992,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 63641,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100245,
             collectionKey = "mount.thunder_bluff_kodo",
+            displayCreatureId = 33300,
             lifecycle = "active",
             name = {
                 enUS = "Thunder Bluff Kodo",
@@ -5024,18 +4779,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 245,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 63641,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 580,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100246,
             collectionKey = "mount.timber_wolf",
+            displayCreatureId = 358,
             lifecycle = "active",
             name = {
                 enUS = "Timber Wolf",
@@ -5044,18 +4798,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 246,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 580,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60002,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100247,
             collectionKey = "mount.time_lost_proto_drake",
+            displayCreatureId = 32153,
             lifecycle = "active",
             name = {
                 enUS = "Time-Lost Proto-Drake",
@@ -5064,18 +4817,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 247,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60002,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61425,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100248,
             collectionKey = "mount.traveler_s_tundra_mammoth",
+            displayCreatureId = 32633,
             lifecycle = "active",
             name = {
                 enUS = "Traveler's Tundra Mammoth",
@@ -5084,18 +4836,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 248,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61425,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 61447,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100249,
             collectionKey = "mount.traveler_s_tundra_mammoth.creature_32640",
+            displayCreatureId = 32640,
             lifecycle = "active",
             name = {
                 enUS = "Traveler's Tundra Mammoth",
@@ -5104,18 +4855,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 249,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 61447,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 44151,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100250,
             collectionKey = "mount.turbo_charged_flying_machine",
+            displayCreatureId = 24654,
             lifecycle = "active",
             name = {
                 enUS = "Turbo-Charged Flying Machine",
@@ -5124,18 +4874,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 250,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 44151,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65642,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100251,
             collectionKey = "mount.turbostrider",
+            displayCreatureId = 34553,
             lifecycle = "active",
             name = {
                 enUS = "Turbostrider",
@@ -5144,18 +4893,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 251,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65642,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10796,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100252,
             collectionKey = "mount.turquoise_raptor",
+            displayCreatureId = 7707,
             lifecycle = "active",
             name = {
                 enUS = "Turquoise Raptor",
@@ -5164,18 +4912,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 252,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10796,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59571,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100253,
             collectionKey = "mount.twilight_drake",
+            displayCreatureId = 31698,
             lifecycle = "active",
             name = {
                 enUS = "Twilight Drake",
@@ -5184,18 +4931,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 253,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59571,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17454,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100254,
             collectionKey = "mount.unpainted_mechanostrider",
+            displayCreatureId = 10180,
             lifecycle = "active",
             name = {
                 enUS = "Unpainted Mechanostrider",
@@ -5204,18 +4950,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 254,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17454,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 49193,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100255,
             collectionKey = "mount.vengeful_nether_drake",
+            displayCreatureId = 27637,
             lifecycle = "active",
             name = {
                 enUS = "Vengeful Nether Drake",
@@ -5224,18 +4969,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 255,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 49193,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 64659,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100256,
             collectionKey = "mount.venomhide_ravasaur",
+            displayCreatureId = 34156,
             lifecycle = "active",
             name = {
                 enUS = "Venomhide Ravasaur",
@@ -5244,18 +4988,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 256,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 64659,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41517,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100257,
             collectionKey = "mount.veridian_netherwing_drake",
+            displayCreatureId = 23457,
             lifecycle = "active",
             name = {
                 enUS = "Veridian Netherwing Drake",
@@ -5264,18 +5007,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 257,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41517,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 41518,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100258,
             collectionKey = "mount.violet_netherwing_drake",
+            displayCreatureId = 23459,
             lifecycle = "active",
             name = {
                 enUS = "Violet Netherwing Drake",
@@ -5284,18 +5026,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 258,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 41518,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 60024,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100259,
             collectionKey = "mount.violet_proto_drake",
+            displayCreatureId = 32157,
             lifecycle = "active",
             name = {
                 enUS = "Violet Proto-Drake",
@@ -5304,18 +5045,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 259,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 60024,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 10799,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100260,
             collectionKey = "mount.violet_raptor",
+            displayCreatureId = 7708,
             lifecycle = "active",
             name = {
                 enUS = "Violet Raptor",
@@ -5324,18 +5064,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 260,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 10799,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 13819,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100261,
             collectionKey = "mount.warhorse",
+            displayCreatureId = 9158,
             lifecycle = "active",
             name = {
                 enUS = "Warhorse",
@@ -5344,18 +5083,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 261,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 13819,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 64657,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100262,
             collectionKey = "mount.white_kodo",
+            displayCreatureId = 34155,
             lifecycle = "active",
             name = {
                 enUS = "White Kodo",
@@ -5364,18 +5102,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 262,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 64657,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 15779,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100263,
             collectionKey = "mount.white_mechanostrider_mod_b",
+            displayCreatureId = 10179,
             lifecycle = "active",
             name = {
                 enUS = "White Mechanostrider Mod B",
@@ -5384,18 +5121,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 263,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 15779,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 54753,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100264,
             collectionKey = "mount.white_polar_bear",
+            displayCreatureId = 29596,
             lifecycle = "active",
             name = {
                 enUS = "White Polar Bear",
@@ -5404,18 +5140,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 264,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 54753,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 6898,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100265,
             collectionKey = "mount.white_ram",
+            displayCreatureId = 4777,
             lifecycle = "active",
             name = {
                 enUS = "White Ram",
@@ -5424,18 +5159,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 265,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 6898,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 39319,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100266,
             collectionKey = "mount.white_riding_talbuk",
+            displayCreatureId = 22514,
             lifecycle = "active",
             name = {
                 enUS = "White Riding Talbuk",
@@ -5444,18 +5178,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 266,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 39319,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 65645,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100267,
             collectionKey = "mount.white_skeletal_warhorse",
+            displayCreatureId = 34552,
             lifecycle = "active",
             name = {
                 enUS = "White Skeletal Warhorse",
@@ -5464,18 +5197,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 267,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 65645,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16083,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100268,
             collectionKey = "mount.white_stallion",
+            displayCreatureId = 305,
             lifecycle = "active",
             name = {
                 enUS = "White Stallion",
@@ -5484,18 +5216,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 268,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16083,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 34897,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100269,
             collectionKey = "mount.white_war_talbuk",
+            displayCreatureId = 20151,
             lifecycle = "active",
             name = {
                 enUS = "White War Talbuk",
@@ -5504,18 +5235,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 269,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 34897,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 54729,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100270,
             collectionKey = "mount.winged_steed_of_the_ebon_blade",
+            displayCreatureId = 29582,
             lifecycle = "active",
             name = {
                 enUS = "Winged Steed of the Ebon Blade",
@@ -5524,18 +5254,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 270,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 54729,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 16081,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100271,
             collectionKey = "mount.winter_wolf",
+            displayCreatureId = 359,
             lifecycle = "active",
             name = {
                 enUS = "Winter Wolf",
@@ -5544,18 +5273,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 271,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 16081,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 17229,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100272,
             collectionKey = "mount.winterspring_frostsaber",
+            displayCreatureId = 11021,
             lifecycle = "active",
             name = {
                 enUS = "Winterspring Frostsaber",
@@ -5564,18 +5292,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 272,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 17229,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59791,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100273,
             collectionKey = "mount.wooly_mammoth",
+            displayCreatureId = 31851,
             lifecycle = "active",
             name = {
                 enUS = "Wooly Mammoth",
@@ -5584,18 +5311,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 273,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59791,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 59793,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100274,
             collectionKey = "mount.wooly_mammoth.creature_31852",
+            displayCreatureId = 31852,
             lifecycle = "active",
             name = {
                 enUS = "Wooly Mammoth",
@@ -5604,18 +5330,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 274,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 59793,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 74918,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100275,
             collectionKey = "mount.wooly_white_rhino",
+            displayCreatureId = 40191,
             lifecycle = "active",
             name = {
                 enUS = "Wooly White Rhino",
@@ -5624,18 +5349,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 275,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 74918,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 71810,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100276,
             collectionKey = "mount.wrathful_gladiator_s_frost_wyrm",
+            displayCreatureId = 38361,
             lifecycle = "active",
             name = {
                 enUS = "Wrathful Gladiator's Frost Wyrm",
@@ -5644,18 +5368,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 276,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 71810,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 46197,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100277,
             collectionKey = "mount.x_51_nether_rocket",
+            displayCreatureId = 26192,
             lifecycle = "active",
             name = {
                 enUS = "X-51 Nether-Rocket",
@@ -5664,18 +5387,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 277,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 46197,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 46199,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100278,
             collectionKey = "mount.x_51_nether_rocket_x_treme",
+            displayCreatureId = 26164,
             lifecycle = "active",
             name = {
                 enUS = "X-51 Nether-Rocket X-TREME",
@@ -5684,18 +5406,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 278,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 46199,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 75973,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100279,
             collectionKey = "mount.x_53_touring_rocket",
+            displayCreatureId = 40725,
             lifecycle = "active",
             name = {
                 enUS = "X-53 Touring Rocket",
@@ -5704,18 +5425,17 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 279,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 75973,
             sourceKind = "spell",
             typeKey = "mount"
         },
         {
-            actionId = 26055,
             actionKind = "mount_spell",
             aliases = {},
             assetProfile = "wotlk_native",
             assetReady = true,
             collectionId = 100280,
             collectionKey = "mount.yellow_qiraji_battle_tank",
+            displayCreatureId = 15714,
             lifecycle = "active",
             name = {
                 enUS = "Yellow Qiraji Battle Tank",
@@ -5724,7 +5444,6 @@ SoloCollections.GeneratedCatalog = {
             ordinal = 280,
             policyKey = "unrestricted",
             sourceBuild = "3.3.5.12340",
-            sourceId = 26055,
             sourceKind = "spell",
             typeKey = "mount"
         }

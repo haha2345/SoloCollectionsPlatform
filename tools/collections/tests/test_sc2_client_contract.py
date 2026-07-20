@@ -49,6 +49,17 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertIn("ownershipKnown", catalog)
         self.assertIn("collectionState", catalog)
 
+    def test_mount_actions_submit_only_logical_collection_id(self):
+        bridge = (ADDON / "Core/Bridge.lua").read_text(encoding="utf-8")
+        catalog = (ADDON / "Core/Catalog.lua").read_text(encoding="utf-8")
+        generated = (ADDON / "Data/Generated/Catalog.lua").read_text(encoding="utf-8")
+        self.assertIn('B.RequestSC2Action(10, collectionId, "SUMMON", nil, callback)', bridge)
+        self.assertNotIn('"SUMMON|" .. requestId', bridge)
+        self.assertIn("getGeneratedMountSource", catalog)
+        self.assertIn("displayCreatureId", generated)
+        self.assertNotIn("spellId =", generated)
+        self.assertNotIn("actionId =", generated)
+
     def test_lua_state_harness_is_checked_in(self):
         harness = ROOT / "tools/collections/tests/lua/sc2_collection_state_harness.lua"
         self.assertTrue(harness.is_file())
