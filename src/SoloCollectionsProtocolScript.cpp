@@ -2,6 +2,7 @@
 
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsBackend.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
@@ -111,7 +112,7 @@ Sc2AccountEventSink& GetSc2EventSink()
 
 void Sc2ProtocolOpenSession(Player* player)
 {
-    if (!player || !player->GetSession())
+    if (!IsCppBackendOwner() || !player || !player->GetSession())
         return;
     GetSc2Server().OpenSession(AccountId(player->GetSession()->GetAccountId()), SessionId(player));
     GetSc2Server().SetExternalOwned(
@@ -120,13 +121,15 @@ void Sc2ProtocolOpenSession(Player* player)
 
 void Sc2ProtocolCloseSession(Player* player)
 {
-    if (player)
+    if (IsCppBackendOwner() && player)
         GetSc2Server().CloseSession(SessionId(player));
 }
 
 bool Sc2ProtocolCanUsePrivateChat(
     Player* player, std::uint32_t type, std::uint32_t language, std::string& message, Player* receiver)
 {
+    if (!IsCppBackendOwner())
+        return true;
     if (!player || !player->GetSession() || type != CHAT_MSG_WHISPER || language != LANG_ADDON ||
         receiver != player || !std::string_view(message).starts_with(WirePrefix))
         return true;
@@ -197,7 +200,7 @@ bool Sc2ProtocolCanUsePrivateChat(
 
 void Sc2ProtocolPumpAndSend(Player* player)
 {
-    if (!player || !player->GetSession())
+    if (!IsCppBackendOwner() || !player || !player->GetSession())
         return;
     AccountSessionId sessionId = SessionId(player);
     GetSc2Server().PumpSession(sessionId, MonotonicMilliseconds());

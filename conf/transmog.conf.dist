@@ -2,6 +2,31 @@
 
 
 ###################################################################################################
+#    SoloCollections backend ownership
+###################################################################################################
+#
+#    SoloCollections.Backend
+#        Description: Selects the only production action/write owner.
+#                     Lua     = ALE/SC1 owns production actions; C++ collection runtime is passive.
+#                     Compare = ALE/SC1 owns production actions; C++ loads read-only state and writes
+#                               structured shadow comparisons without DB writes, actions, or success deltas.
+#                     Cpp     = C++/SC2 is the single production action and collection write owner.
+#        Default:     Compare
+#
+#    SoloCollections.ShadowReportPath
+#        Description: Append-only JSONL export for Compare-mode login reports. Empty disables file export;
+#                     structured server logging remains enabled and failures are fail-open.
+#        Default:     "logs/solo-collections-shadow.jsonl"
+#
+
+SoloCollections.Backend = Compare
+SoloCollections.ShadowReportPath = "logs/solo-collections-shadow.jsonl"
+
+#
+###################################################################################################
+
+
+###################################################################################################
 #    Transmogrification config
 ###################################################################################################
 #

@@ -55,6 +55,7 @@ struct MutationStartResult
 
 struct AccountStoreDiagnostics
 {
+    bool WritesEnabled = false;
     AccountStoreSchemaState SchemaState = AccountStoreSchemaState::Checking;
     std::size_t PendingLoads = 0;
     std::size_t PendingMutations = 0;
@@ -125,6 +126,8 @@ public:
         MigrationMarkerRequest request, MigrationCheckCallback callback);
     [[nodiscard]] bool CompleteMigrationMarker(
         MigrationMarkerCompletion completion, MigrationCompleteCallback callback);
+    void SetWritesEnabled(bool enabled);
+    [[nodiscard]] bool WritesEnabled() const;
     void SetEventSink(AccountCollectionEventSink* sink);
 
     [[nodiscard]] AccountStoreDiagnostics Diagnostics() const;

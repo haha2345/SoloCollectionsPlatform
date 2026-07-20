@@ -1,5 +1,6 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsBackend.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
@@ -8,6 +9,7 @@
 #include "SoloCollectionsProvider.h"
 #include "SoloCollectionsProtocolScript.h"
 #include "SoloCollectionsSetCatalog.h"
+#include "SoloCollectionsShadowService.h"
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
 #include "SoloCollectionsTitleService.h"
@@ -218,6 +220,7 @@ public:
 
     void OnStartup() override
     {
+        InitializeBackendConfiguration();
         CollectionProviderRegistry& registry = GetCollectionProviderRegistry();
         RegistryRegistrationResult registration = registry.Register(std::make_unique<SyntheticCollectionProvider>());
         if (!registration.Accepted)
@@ -246,19 +249,28 @@ public:
             throw std::runtime_error("SoloCollections provider finalization failed: " + finalized.Message);
 
         (void)GetAccountCollectionCache();
-        GetAccountCollectionStore().Initialize();
+        GetAccountCollectionStore().SetWritesEnabled(IsCppBackendOwner());
+        if (GetBackendMode() != BackendMode::Lua)
+            GetAccountCollectionStore().Initialize();
 
         LOG_INFO("module", "SoloCollections provider registry initialized with {} provider(s); "
-            "account cache initialized with explicit cross-thread locking.", registry.TopologicalOrder().size());
+            "account cache initialized with explicit cross-thread locking; backend={} writes_enabled={}.",
+            registry.TopologicalOrder().size(), BackendModeName(GetBackendMode()),
+            GetAccountCollectionStore().WritesEnabled() ? 1 : 0);
     }
 
     void OnUpdate(std::uint32_t /*diff*/) override
     {
+        if (GetBackendMode() == BackendMode::Lua)
+            return;
         GetAccountCollectionStore().Update();
-        GetMountCollectionService().Update();
-        GetCompanionCollectionService().Update();
-        GetToyCollectionService().Update();
-        GetAppearanceService().Update();
+        if (IsCppBackendOwner())
+        {
+            GetMountCollectionService().Update();
+            GetCompanionCollectionService().Update();
+            GetToyCollectionService().Update();
+            GetAppearanceService().Update();
+        }
         (void)GetAccountCollectionCache().EvictExpired(MonotonicMilliseconds());
     }
 };
@@ -276,7 +288,7 @@ public:
 
     void OnPlayerLogin(Player* player) override
     {
-        if (!player || !player->GetSession())
+        if (!player || !player->GetSession() || GetBackendMode() == BackendMode::Lua)
             return;
 
         AccountId accountId(player->GetSession()->GetAccountId());
@@ -285,11 +297,16 @@ public:
             accountId, AccountSessionId(playerGuid), MonotonicMilliseconds());
         if (opened.Accepted && opened.ShouldStartLoad)
             GetAccountCollectionStore().BeginLoad(accountId, playerGuid, opened.Generation);
-        GetMountCollectionService().OnPlayerLogin(player);
-        GetCompanionCollectionService().OnPlayerLogin(player);
-        GetToyCollectionService().OnPlayerLogin(player);
-        GetAppearanceService().OnPlayerLogin(player);
-        Sc2ProtocolOpenSession(player);
+        if (IsCppBackendOwner())
+        {
+            GetMountCollectionService().OnPlayerLogin(player);
+            GetCompanionCollectionService().OnPlayerLogin(player);
+            GetToyCollectionService().OnPlayerLogin(player);
+            GetAppearanceService().OnPlayerLogin(player);
+            Sc2ProtocolOpenSession(player);
+        }
+        else
+            ShadowComparisonOnPlayerLogin(player);
     }
 
     void OnPlayerLogout(Player* player) override
@@ -297,8 +314,15 @@ public:
         if (!player || !player->GetSession())
             return;
 
-        Sc2ProtocolCloseSession(player);
-        GetAppearanceService().OnPlayerLogout(player);
+        if (GetBackendMode() == BackendMode::Lua)
+            return;
+        if (IsCppBackendOwner())
+        {
+            Sc2ProtocolCloseSession(player);
+            GetAppearanceService().OnPlayerLogout(player);
+        }
+        else
+            ShadowComparisonOnPlayerLogout(player);
         (void)GetAccountCollectionCache().CloseSession(
             AccountId(player->GetSession()->GetAccountId()),
             AccountSessionId(player->GetGUID().GetCounter()), MonotonicMilliseconds());
@@ -306,18 +330,27 @@ public:
 
     void OnPlayerUpdate(Player* player, std::uint32_t diff) override
     {
-        Sc2ProtocolPumpAndSend(player);
-        GetAppearanceService().OnPlayerUpdate(player, diff);
+        if (IsCppBackendOwner())
+        {
+            Sc2ProtocolPumpAndSend(player);
+            GetAppearanceService().OnPlayerUpdate(player, diff);
+        }
+        else if (IsShadowComparisonEnabled())
+            ShadowComparisonOnPlayerUpdate(player);
     }
 
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId) override
     {
+        if (!IsCppBackendOwner())
+            return;
         GetMountCollectionService().OnPlayerLearnSpell(player, spellId);
         GetCompanionCollectionService().OnPlayerLearnSpell(player, spellId);
     }
 
     void OnPlayerStoreNewItem(Player* player, Item* item, std::uint32_t /*count*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnToyItem(player, item);
         // Player::StoreNewItem is the shared convergence path for mail,
         // trade, auction, buyback, GM delivery, and other inventory stores.
@@ -326,12 +359,16 @@ public:
 
     void OnPlayerCreateItem(Player* player, Item* item, std::uint32_t /*count*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnToyItem(player, item);
         OnAppearanceItem(player, item, AppearanceUnlockTrigger::Craft);
     }
 
     void OnPlayerQuestRewardItem(Player* player, Item* item, std::uint32_t /*count*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnToyItem(player, item);
         // This callback contains only the reward item actually granted; never
         // infer ownership from every candidate in RewardChoiceItemId.
@@ -342,6 +379,8 @@ public:
         std::uint8_t /*count*/, std::uint8_t /*bag*/, std::uint8_t /*slot*/, ItemTemplate const* /*pProto*/,
         Creature* pVendor, VendorItem const* /*crItem*/, bool /*bStore*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnToyItem(player, item);
         OnAppearanceItem(player, item, pVendor ? AppearanceUnlockTrigger::Vendor :
             AppearanceUnlockTrigger::InventoryStore);
@@ -350,25 +389,32 @@ public:
     void OnPlayerEquip(Player* player, Item* item, std::uint8_t /*bag*/,
         std::uint8_t /*slot*/, bool /*update*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnAppearanceItem(player, item, AppearanceUnlockTrigger::Equipment);
     }
 
     void OnPlayerLootItem(Player* player, Item* item, std::uint32_t /*count*/,
         ObjectGuid /*lootGuid*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnAppearanceItem(player, item, AppearanceUnlockTrigger::Loot);
     }
 
     void OnPlayerGroupRollRewardItem(Player* player, Item* item, std::uint32_t /*count*/,
         RollVote /*voteType*/, Roll* /*roll*/) override
     {
+        if (!IsCppBackendOwner())
+            return;
         OnAppearanceItem(player, item, AppearanceUnlockTrigger::GroupRoll);
     }
 
     bool OnPlayerCanUseChat(Player* player, std::uint32_t type, std::uint32_t language,
         std::string& message, Player* receiver) override
     {
-        return Sc2ProtocolCanUsePrivateChat(player, type, language, message, receiver);
+        return IsCppBackendOwner() ?
+            Sc2ProtocolCanUsePrivateChat(player, type, language, message, receiver) : true;
     }
 
 private:

@@ -1,5 +1,6 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsBackend.h"
 #include "SoloCollectionsProvider.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 
@@ -143,9 +144,11 @@ public:
         }
 
         handler->PSendSysMessage(
-            "SoloCollections schema={} providers={}/{}/{} cache_entries={} sessions={} states={}/{}/{} "
+            "SoloCollections backend={} writes={} shadow={} schema={} providers={}/{}/{} cache_entries={} sessions={} states={}/{}/{} "
             "pending_loads={} pending_mutations={} pending_audits={} pending_deltas={} evictions={}",
-            SchemaStateName(store.SchemaState), enabled, readOnly, disabled, cache.EntryCount,
+            BackendModeName(GetBackendMode()), store.WritesEnabled ? 1 : 0,
+            IsShadowComparisonEnabled() ? 1 : 0, SchemaStateName(store.SchemaState),
+            enabled, readOnly, disabled, cache.EntryCount,
             cache.SessionCount, cache.LoadingCount, cache.ReadyCount, cache.FailedCount,
             store.PendingLoads, store.PendingMutations, store.PendingAudits,
             cache.PendingDeltaCount, cache.EvictionScheduledCount);

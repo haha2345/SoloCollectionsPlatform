@@ -1,0 +1,70 @@
+import hashlib
+import json
+import unittest
+from pathlib import Path
+
+
+ROOT = Path(__file__).resolve().parents[1]
+BACKEND_H = (ROOT / "src/SoloCollectionsBackend.h").read_text(encoding="utf-8")
+BACKEND = (ROOT / "src/SoloCollectionsBackend.cpp").read_text(encoding="utf-8")
+CORE = (ROOT / "src/SoloCollectionsCore.cpp").read_text(encoding="utf-8")
+PROTOCOL = (ROOT / "src/SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
+STORE = (ROOT / "src/SoloCollectionsAccountStore.cpp").read_text(encoding="utf-8")
+SHADOW = (ROOT / "src/SoloCollectionsShadowService.cpp").read_text(encoding="utf-8")
+COMPARISON = (ROOT / "src/SoloCollectionsShadowComparison.cpp").read_text(encoding="utf-8")
+CONFIG = (ROOT / "conf/transmog.conf.dist").read_text(encoding="utf-8")
+GENERATED = json.loads((ROOT / "data/generated/solo_collections_legacy_sc1_shadow.json").read_text(encoding="utf-8"))
+LUA = ROOT.parent / "SoloCollections" / "server" / "ale" / "solo_collections.lua"
+
+
+class Phase11ShadowContractTests(unittest.TestCase):
+    def test_backend_modes_are_explicit_and_compare_is_the_phase_default(self):
+        for token in ("Lua = 1", "Compare = 2", "Cpp = 3"):
+            self.assertIn(token, BACKEND_H)
+        self.assertIn('"SoloCollections.Backend", "Compare"', BACKEND)
+        self.assertIn("SoloCollections.Backend = Compare", CONFIG)
+        self.assertIn("SoloCollections.ShadowReportPath", CONFIG)
+        self.assertIn("fallback=Lua writes_enabled=0 actions_enabled=0", BACKEND)
+
+    def test_compare_mode_keeps_cpp_writes_actions_and_success_deltas_disabled(self):
+        self.assertIn("SetWritesEnabled(IsCppBackendOwner())", CORE)
+        self.assertIn("if (!_writesEnabled)", STORE)
+        self.assertIn("CollectionReasonCode::ReadOnly", STORE)
+        self.assertIn("result=shadow_suppressed", STORE)
+        self.assertIn("if (!IsCppBackendOwner())\n        return true;", PROTOCOL)
+        self.assertIn("if (!IsCppBackendOwner())\n            return;", CORE)
+        self.assertIn("writes=0 actions=0 success_deltas=0", SHADOW)
+
+    def test_shadow_login_waits_for_read_only_account_load_and_exports_structured_results(self):
+        self.assertIn("ShadowComparisonOnPlayerLogin(player)", CORE)
+        self.assertIn("AccountCacheLoadState::Loading", SHADOW)
+        self.assertIn("GetAccountCollectionService().OwnedByType", SHADOW)
+        self.assertIn("GetAccountCollectionService().Evaluate", SHADOW)
+        self.assertIn("event=shadow_compare", SHADOW)
+        self.assertIn("event=shadow_difference", SHADOW)
+        self.assertIn("solo-collections-shadow.jsonl", BACKEND)
+        self.assertIn("std::filesystem::create_directories", SHADOW)
+        self.assertIn("result=directory_failed", SHADOW)
+        self.assertIn("std::ios::app", SHADOW)
+        self.assertIn("catch (...)", SHADOW)
+        for forbidden in ("CharacterDatabase", "BeginMutation", "CastSpell", "SendDirectMessage"):
+            self.assertNotIn(forbidden, SHADOW)
+
+    def test_generated_mapping_is_bound_to_the_same_legacy_lua_source(self):
+        self.assertEqual(hashlib.sha256(LUA.read_bytes()).hexdigest(), GENERATED["sourceHash"])
+        by_type = {entry["typeKey"]: entry for entry in GENERATED["categories"]}
+        self.assertEqual((24, 24), (by_type["mount"]["legacyEntryCount"], by_type["mount"]["mappedEntryCount"]))
+        self.assertEqual((24, 24), (by_type["companion"]["legacyEntryCount"], by_type["companion"]["mappedEntryCount"]))
+        self.assertEqual((36, 4), (by_type["toy"]["legacyEntryCount"], by_type["toy"]["mappedEntryCount"]))
+
+    def test_comparison_covers_owned_ids_hash_catalog_and_availability(self):
+        for token in (
+            "CategoryHashMismatchCount", "CatalogMismatchCount", "OwnedMismatchCount",
+            "AvailabilityMismatchCount", "LegacyOwnedIds", "CanonicalOwnedIds",
+            "ExtraCanonicalOwned", "UnmappedEntryCount",
+        ):
+            self.assertIn(token, COMPARISON + (ROOT / "src/SoloCollectionsShadowComparison.h").read_text(encoding="utf-8"))
+
+
+if __name__ == "__main__":
+    unittest.main()

@@ -4,6 +4,7 @@
 #include "SoloCollectionsIdentity.h"
 #include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsShadowComparison.h"
 #include "SoloCollectionsToyCatalog.h"
 
 #include <cstdlib>
@@ -716,6 +717,47 @@ void TestGeneratedToyCatalog()
     Require(actionKinds.size() == 4, "toy action registry no longer covers every reviewed handler kind");
     Require(!catalog.FindByItem(6948), "teleport item entered the toy allowlist");
 }
+
+void TestReadOnlyShadowComparison()
+{
+    std::vector<SC::LegacyShadowCategoryDefinition> matchingCategories {
+        { SC::CollectionTypeId(10), "mount", "same", "same", 1, 1 },
+    };
+    std::vector<SC::LegacyShadowEntryDefinition> matchingLegacy {
+        { SC::CollectionTypeId(10), 1, SC::CollectionId(100), true, true, true },
+    };
+    std::vector<SC::ShadowObservedState> matchingObserved {
+        { { SC::CollectionTypeId(10), SC::CollectionId(100) }, true, true, true },
+    };
+    SC::ShadowComparisonReport matching = SC::CompareLegacyShadow(
+        matchingCategories, matchingLegacy, matchingObserved);
+    Require(matching.ExactMatch() && matching.LegacyOwnedIds == matching.CanonicalOwnedIds,
+        "matching shadow projection produced a difference");
+
+    std::vector<SC::LegacyShadowCategoryDefinition> categories {
+        { SC::CollectionTypeId(10), "mount", "legacy-mount", "canonical-mount", 2, 2 },
+        { SC::CollectionTypeId(12), "toy", "same", "same", 1, 0 },
+    };
+    std::vector<SC::LegacyShadowEntryDefinition> legacy {
+        { SC::CollectionTypeId(10), 1, SC::CollectionId(100), true, true, true },
+        { SC::CollectionTypeId(10), 2, SC::CollectionId(101), false, true, true },
+        { SC::CollectionTypeId(12), 1, SC::CollectionId(), true, true, true },
+    };
+    std::vector<SC::ShadowObservedState> observed {
+        { { SC::CollectionTypeId(10), SC::CollectionId(100) }, true, true, true },
+        { { SC::CollectionTypeId(10), SC::CollectionId(101) }, true, true, true },
+        { { SC::CollectionTypeId(12), SC::CollectionId(999) }, true, true, true },
+    };
+    SC::ShadowComparisonReport report = SC::CompareLegacyShadow(categories, legacy, observed);
+    Require(!report.ExactMatch() && report.LegacyEntryCount == 3 && report.MappedEntryCount == 2 &&
+        report.UnmappedEntryCount == 1, "shadow ID coverage was not reported");
+    Require(report.LegacyOwnedCount == 2 && report.CanonicalOwnedCount == 3 &&
+        report.OwnedMismatchCount == 2, "shadow owned count/ID differences were not reported");
+    Require(report.CategoryHashMismatchCount == 1 && report.CatalogMismatchCount == 0 &&
+        report.AvailabilityMismatchCount == 0, "shadow hash/availability comparison changed");
+    Require(report.Differences.size() == 3 && report.Differences.back().ExtraCanonicalOwned,
+        "unmapped and extra canonical ownership were not exportable");
+}
 }
 
 int main()
@@ -743,6 +785,7 @@ int main()
         TestGeneratedMountCatalog();
         TestGeneratedCompanionCatalog();
         TestGeneratedToyCatalog();
+        TestReadOnlyShadowComparison();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

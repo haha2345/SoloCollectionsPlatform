@@ -197,6 +197,8 @@ public:
 
     MutationStartResult BeginMutation(AccountCollectionMutation mutation)
     {
+        if (!_writesEnabled)
+            return { false, CollectionReasonCode::ReadOnly, {} };
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid() ||
             !mutation.Generation.IsValid() || !mutation.Key.TypeId.IsValid() || !mutation.Key.Id.IsValid() ||
             StableSourceKind(mutation.SourceKind) == 0)
@@ -323,6 +325,14 @@ public:
 
     bool RecordRejectedMutation(AccountCollectionMutation const& mutation, CollectionReasonCode reason)
     {
+        if (!_writesEnabled)
+        {
+            LOG_DEBUG("module.solocollections.audit",
+                "event=rejected_mutation_audit result=shadow_suppressed account={} type={} collection={} reason={}",
+                mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                ToStableReasonCode(reason));
+            return false;
+        }
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid())
         {
             LOG_ERROR("module.solocollections.audit",
@@ -433,6 +443,8 @@ public:
 
     bool CompleteMigrationMarker(MigrationMarkerCompletion completion, MigrationCompleteCallback callback)
     {
+        if (!_writesEnabled)
+            return false;
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !completion.Account.IsValid() ||
             completion.MigrationId == 0 || completion.MigrationVersion == 0 || !callback)
             return false;
@@ -461,6 +473,7 @@ public:
     AccountStoreDiagnostics Diagnostics() const
     {
         AccountStoreDiagnostics result = _diagnostics;
+        result.WritesEnabled = _writesEnabled;
         result.PendingLoads = _loadingAccounts.size() + _deferredLoads.size();
         result.PendingMutations = _pendingMutations.size();
         result.PendingAudits = _pendingAudits;
@@ -479,6 +492,16 @@ public:
         _eventSink = sink;
     }
 
+    void SetWritesEnabled(bool enabled)
+    {
+        _writesEnabled = enabled;
+    }
+
+    bool WritesEnabled() const
+    {
+        return _writesEnabled;
+    }
+
 private:
     QueryCallbackProcessor _queryCallbacks;
     AsyncCallbackProcessor<TransactionCallback> _transactionCallbacks;
@@ -491,6 +514,7 @@ private:
     AccountCollectionEventSink* _eventSink = nullptr;
     AccountStoreDiagnostics _diagnostics;
     bool _initialized = false;
+    bool _writesEnabled = false;
 };
 
 AccountCollectionStore::AccountCollectionStore() : _impl(std::make_unique<Impl>()) { }
@@ -553,6 +577,16 @@ bool AccountCollectionStore::CompleteMigrationMarker(
     MigrationMarkerCompletion completion, MigrationCompleteCallback callback)
 {
     return _impl->CompleteMigrationMarker(completion, std::move(callback));
+}
+
+void AccountCollectionStore::SetWritesEnabled(bool enabled)
+{
+    _impl->SetWritesEnabled(enabled);
+}
+
+bool AccountCollectionStore::WritesEnabled() const
+{
+    return _impl->WritesEnabled();
 }
 
 void AccountCollectionStore::SetEventSink(AccountCollectionEventSink* sink)

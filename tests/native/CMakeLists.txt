@@ -11,6 +11,7 @@ add_executable(solo_collections_domain_tests
     ../../src/SoloCollectionsIdentity.cpp
     ../../src/SoloCollectionsMountCatalog.cpp
     ../../src/SoloCollectionsProvider.cpp
+    ../../src/SoloCollectionsShadowComparison.cpp
     ../../src/SoloCollectionsToyCatalog.cpp
 )
 
