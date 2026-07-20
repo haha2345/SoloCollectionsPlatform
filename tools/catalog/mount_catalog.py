@@ -398,12 +398,18 @@ def generate(args: argparse.Namespace) -> dict[str, Any]:
     ids_data = read_json(args.ids)
     old_reservations = ids_data["reservations"].get("collections", [])
     generated_keys = {row["collectionKey"] for row in groups}
-    tombstones = [row for row in old_reservations if row["key"] not in generated_keys]
+    mount_reservations = [row for row in old_reservations if row["key"].startswith("mount.")]
+    other_reservations = [row for row in old_reservations if not row["key"].startswith("mount.")]
+    tombstones = [row for row in mount_reservations if row["key"] not in generated_keys]
     require(not tombstones, "existing collection reservations disappeared; tombstone them explicitly before regeneration")
-    ids_data["reservations"]["collections"] = [
+    regenerated_mounts = [
         {"id": row["collectionId"], "key": row["collectionKey"], "ordinal": row["ordinal"], "lifecycle": "active"}
         for row in groups
     ]
+    require(not ({row["ordinal"] for row in regenerated_mounts} & {row["ordinal"] for row in other_reservations}),
+            "new mount ordinals collide with another collection provider; reserve new IDs in the unified catalog")
+    ids_data["reservations"]["collections"] = sorted(
+        regenerated_mounts + other_reservations, key=lambda row: int(row["ordinal"]))
     write_json(args.ids, ids_data)
 
     report = [

@@ -1787,6 +1787,174 @@
         "key": "mount.yellow_qiraji_battle_tank",
         "lifecycle": "active",
         "ordinal": 280
+      },
+      {
+        "id": 100281,
+        "key": "companion.worg_pup",
+        "lifecycle": "active",
+        "ordinal": 281
+      },
+      {
+        "id": 100282,
+        "key": "companion.smolderweb_hatchling",
+        "lifecycle": "active",
+        "ordinal": 282
+      },
+      {
+        "id": 100283,
+        "key": "companion.emerald_whelpling",
+        "lifecycle": "active",
+        "ordinal": 283
+      },
+      {
+        "id": 100284,
+        "key": "companion.vampiric_batling",
+        "lifecycle": "active",
+        "ordinal": 284
+      },
+      {
+        "id": 100285,
+        "key": "companion.stinker",
+        "lifecycle": "active",
+        "ordinal": 285
+      },
+      {
+        "id": 100286,
+        "key": "companion.sinister_squashling",
+        "lifecycle": "active",
+        "ordinal": 286
+      },
+      {
+        "id": 100287,
+        "key": "companion.tiny_sporebat",
+        "lifecycle": "active",
+        "ordinal": 287
+      },
+      {
+        "id": 100288,
+        "key": "companion.speedy",
+        "lifecycle": "active",
+        "ordinal": 288
+      },
+      {
+        "id": 100289,
+        "key": "companion.phoenix_hatchling",
+        "lifecycle": "active",
+        "ordinal": 289
+      },
+      {
+        "id": 100290,
+        "key": "companion.ghostly_skull",
+        "lifecycle": "active",
+        "ordinal": 290
+      },
+      {
+        "id": 100291,
+        "key": "companion.hyacinth_macaw",
+        "lifecycle": "active",
+        "ordinal": 291
+      },
+      {
+        "id": 100292,
+        "key": "companion.disgusting_oozeling",
+        "lifecycle": "active",
+        "ordinal": 292
+      },
+      {
+        "id": 100293,
+        "key": "companion.mr_wiggles",
+        "lifecycle": "active",
+        "ordinal": 293
+      },
+      {
+        "id": 100294,
+        "key": "companion.lifelike_toad",
+        "lifecycle": "active",
+        "ordinal": 294
+      },
+      {
+        "id": 100295,
+        "key": "companion.dragon_kite",
+        "lifecycle": "active",
+        "ordinal": 295
+      },
+      {
+        "id": 100296,
+        "key": "companion.firefly",
+        "lifecycle": "active",
+        "ordinal": 296
+      },
+      {
+        "id": 100297,
+        "key": "companion.zergling",
+        "lifecycle": "active",
+        "ordinal": 297
+      },
+      {
+        "id": 100298,
+        "key": "companion.panda_cub",
+        "lifecycle": "active",
+        "ordinal": 298
+      },
+      {
+        "id": 100299,
+        "key": "companion.frosty",
+        "lifecycle": "active",
+        "ordinal": 299
+      },
+      {
+        "id": 100300,
+        "key": "companion.bananas",
+        "lifecycle": "active",
+        "ordinal": 300
+      },
+      {
+        "id": 100301,
+        "key": "companion.mr_chilly",
+        "lifecycle": "active",
+        "ordinal": 301
+      },
+      {
+        "id": 100302,
+        "key": "companion.giant_sewer_rat",
+        "lifecycle": "active",
+        "ordinal": 302
+      },
+      {
+        "id": 100303,
+        "key": "companion.spring_rabbit",
+        "lifecycle": "active",
+        "ordinal": 303
+      },
+      {
+        "id": 100304,
+        "key": "companion.onyxian_whelpling",
+        "lifecycle": "active",
+        "ordinal": 304
+      },
+      {
+        "id": 100305,
+        "key": "toy.orb_of_the_sindorei",
+        "lifecycle": "active",
+        "ordinal": 305
+      },
+      {
+        "id": 100306,
+        "key": "toy.elunes_candle",
+        "lifecycle": "active",
+        "ordinal": 306
+      },
+      {
+        "id": 100307,
+        "key": "toy.fishing_chair",
+        "lifecycle": "active",
+        "ordinal": 307
+      },
+      {
+        "id": 100308,
+        "key": "toy.unusual_compass",
+        "lifecycle": "active",
+        "ordinal": 308
       }
     ],
     "races": [

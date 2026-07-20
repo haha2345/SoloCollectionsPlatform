@@ -6245,11 +6245,745 @@
       "sourceId": 26055,
       "sourceKind": "spell",
       "typeKey": "mount"
+    },
+    {
+      "actionId": 15999,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100281,
+      "collectionKey": "companion.worg_pup",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Worg Pup",
+        "zhCN": "座狼幼崽"
+      },
+      "ordinal": 281,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 15999,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 16450,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100282,
+      "collectionKey": "companion.smolderweb_hatchling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Smolderweb Hatchling",
+        "zhCN": "烟网小蜘蛛"
+      },
+      "ordinal": 282,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 16450,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 10698,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100283,
+      "collectionKey": "companion.emerald_whelpling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Emerald Whelpling",
+        "zhCN": "绿色翼手龙"
+      },
+      "ordinal": 283,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 10698,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 51851,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100284,
+      "collectionKey": "companion.vampiric_batling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Vampiric Batling",
+        "zhCN": "吸血鬼小蝶"
+      },
+      "ordinal": 284,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 51851,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 40990,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100285,
+      "collectionKey": "companion.stinker",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Stinker",
+        "zhCN": "臭臭"
+      },
+      "ordinal": 285,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 40990,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 42609,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100286,
+      "collectionKey": "companion.sinister_squashling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Sinister Squashling",
+        "zhCN": "邪恶的南瓜娃娃"
+      },
+      "ordinal": 286,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 42609,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 45082,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100287,
+      "collectionKey": "companion.tiny_sporebat",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Tiny Sporebat",
+        "zhCN": "迷你孢子蝙"
+      },
+      "ordinal": 287,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 45082,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 28738,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100288,
+      "collectionKey": "companion.speedy",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Speedy",
+        "zhCN": "跳跳"
+      },
+      "ordinal": 288,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 28738,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 46599,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100289,
+      "collectionKey": "companion.phoenix_hatchling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Phoenix Hatchling",
+        "zhCN": "凤凰宝宝"
+      },
+      "ordinal": 289,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 46599,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 53316,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100290,
+      "collectionKey": "companion.ghostly_skull",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Ghostly Skull",
+        "zhCN": "幽灵颅骨"
+      },
+      "ordinal": 290,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 53316,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 10682,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100291,
+      "collectionKey": "companion.hyacinth_macaw",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Hyacinth Macaw",
+        "zhCN": "花羽鹦鹉"
+      },
+      "ordinal": 291,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 10682,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 25162,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100292,
+      "collectionKey": "companion.disgusting_oozeling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Disgusting Oozeling",
+        "zhCN": "恶心的软泥怪"
+      },
+      "ordinal": 292,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 25162,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 28739,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100293,
+      "collectionKey": "companion.mr_wiggles",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Mr. Wiggles",
+        "zhCN": "哼哼先生"
+      },
+      "ordinal": 293,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 28739,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 19772,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100294,
+      "collectionKey": "companion.lifelike_toad",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Lifelike Toad",
+        "zhCN": "仿真机械蛙"
+      },
+      "ordinal": 294,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 19772,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 45127,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100295,
+      "collectionKey": "companion.dragon_kite",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Dragon Kite",
+        "zhCN": "龙鹰风筝"
+      },
+      "ordinal": 295,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 45127,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 36034,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100296,
+      "collectionKey": "companion.firefly",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Firefly",
+        "zhCN": "火蝇"
+      },
+      "ordinal": 296,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 36034,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 17709,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100297,
+      "collectionKey": "companion.zergling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Zergling",
+        "zhCN": "跳虫"
+      },
+      "ordinal": 297,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 17709,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 17707,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100298,
+      "collectionKey": "companion.panda_cub",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Panda Cub",
+        "zhCN": "熊猫幼崽"
+      },
+      "ordinal": 298,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 17707,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 52615,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100299,
+      "collectionKey": "companion.frosty",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Frosty",
+        "zhCN": "冰霜幼龙"
+      },
+      "ordinal": 299,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 52615,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 40549,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100300,
+      "collectionKey": "companion.bananas",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Bananas",
+        "zhCN": "香蕉爱好者"
+      },
+      "ordinal": 300,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 40549,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 55068,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100301,
+      "collectionKey": "companion.mr_chilly",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Mr. Chilly",
+        "zhCN": "寒冰先生"
+      },
+      "ordinal": 301,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 55068,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 59250,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100302,
+      "collectionKey": "companion.giant_sewer_rat",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Giant Sewer Rat",
+        "zhCN": "巨型下水道老鼠"
+      },
+      "ordinal": 302,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 59250,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 61725,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100303,
+      "collectionKey": "companion.spring_rabbit",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Spring Rabbit",
+        "zhCN": "春季兔"
+      },
+      "ordinal": 303,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 61725,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 69002,
+      "actionKind": "COMPANION_SPELL",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100304,
+      "collectionKey": "companion.onyxian_whelpling",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Onyxian Whelpling",
+        "zhCN": "奥妮克希亚幼龙"
+      },
+      "ordinal": 304,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 69002,
+      "sourceKind": "spell",
+      "typeKey": "companion"
+    },
+    {
+      "actionId": 46354,
+      "actionKind": "SPELL_SELF",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100305,
+      "collectionKey": "toy.orb_of_the_sindorei",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Orb of the Sin'dorei",
+        "zhCN": "辛多雷宝珠"
+      },
+      "ordinal": 305,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 35275,
+      "sourceKind": "item",
+      "typeKey": "toy"
+    },
+    {
+      "actionId": 26374,
+      "actionKind": "SPELL_TARGET",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100306,
+      "collectionKey": "toy.elunes_candle",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Elune's Candle",
+        "zhCN": "艾露恩的蜡烛"
+      },
+      "ordinal": 306,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 21713,
+      "sourceKind": "item",
+      "typeKey": "toy"
+    },
+    {
+      "actionId": 42766,
+      "actionKind": "ITEM_USE",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100307,
+      "collectionKey": "toy.fishing_chair",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Fishing Chair",
+        "zhCN": "钓鱼椅"
+      },
+      "ordinal": 307,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 33223,
+      "sourceKind": "item",
+      "typeKey": "toy"
+    },
+    {
+      "actionId": 64385,
+      "actionKind": "CUSTOM_HANDLER",
+      "aliases": [],
+      "assetProfile": "wotlk_native",
+      "assetReady": true,
+      "collectionId": 100308,
+      "collectionKey": "toy.unusual_compass",
+      "lifecycle": "active",
+      "name": {
+        "enUS": "Unusual Compass",
+        "zhCN": "不寻常的指南针"
+      },
+      "ordinal": 308,
+      "policyKey": "unrestricted",
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 45984,
+      "sourceKind": "item",
+      "typeKey": "toy"
     }
   ],
+  "companionActions": {
+    "entries": [
+      {
+        "collectionId": 100281,
+        "collectionKey": "companion.worg_pup",
+        "creatureId": 10259,
+        "ordinal": 281,
+        "spellId": 15999
+      },
+      {
+        "collectionId": 100282,
+        "collectionKey": "companion.smolderweb_hatchling",
+        "creatureId": 10598,
+        "ordinal": 282,
+        "spellId": 16450
+      },
+      {
+        "collectionId": 100283,
+        "collectionKey": "companion.emerald_whelpling",
+        "creatureId": 7545,
+        "ordinal": 283,
+        "spellId": 10698
+      },
+      {
+        "collectionId": 100284,
+        "collectionKey": "companion.vampiric_batling",
+        "creatureId": 28513,
+        "ordinal": 284,
+        "spellId": 51851
+      },
+      {
+        "collectionId": 100285,
+        "collectionKey": "companion.stinker",
+        "creatureId": 23274,
+        "ordinal": 285,
+        "spellId": 40990
+      },
+      {
+        "collectionId": 100286,
+        "collectionKey": "companion.sinister_squashling",
+        "creatureId": 23909,
+        "ordinal": 286,
+        "spellId": 42609
+      },
+      {
+        "collectionId": 100287,
+        "collectionKey": "companion.tiny_sporebat",
+        "creatureId": 25062,
+        "ordinal": 287,
+        "spellId": 45082
+      },
+      {
+        "collectionId": 100288,
+        "collectionKey": "companion.speedy",
+        "creatureId": 16547,
+        "ordinal": 288,
+        "spellId": 28738
+      },
+      {
+        "collectionId": 100289,
+        "collectionKey": "companion.phoenix_hatchling",
+        "creatureId": 26119,
+        "ordinal": 289,
+        "spellId": 46599
+      },
+      {
+        "collectionId": 100290,
+        "collectionKey": "companion.ghostly_skull",
+        "creatureId": 29147,
+        "ordinal": 290,
+        "spellId": 53316
+      },
+      {
+        "collectionId": 100291,
+        "collectionKey": "companion.hyacinth_macaw",
+        "creatureId": 7391,
+        "ordinal": 291,
+        "spellId": 10682
+      },
+      {
+        "collectionId": 100292,
+        "collectionKey": "companion.disgusting_oozeling",
+        "creatureId": 15429,
+        "ordinal": 292,
+        "spellId": 25162
+      },
+      {
+        "collectionId": 100293,
+        "collectionKey": "companion.mr_wiggles",
+        "creatureId": 16548,
+        "ordinal": 293,
+        "spellId": 28739
+      },
+      {
+        "collectionId": 100294,
+        "collectionKey": "companion.lifelike_toad",
+        "creatureId": 12419,
+        "ordinal": 294,
+        "spellId": 19772
+      },
+      {
+        "collectionId": 100295,
+        "collectionKey": "companion.dragon_kite",
+        "creatureId": 25110,
+        "ordinal": 295,
+        "spellId": 45127
+      },
+      {
+        "collectionId": 100296,
+        "collectionKey": "companion.firefly",
+        "creatureId": 21076,
+        "ordinal": 296,
+        "spellId": 36034
+      },
+      {
+        "collectionId": 100297,
+        "collectionKey": "companion.zergling",
+        "creatureId": 11327,
+        "ordinal": 297,
+        "spellId": 17709
+      },
+      {
+        "collectionId": 100298,
+        "collectionKey": "companion.panda_cub",
+        "creatureId": 11325,
+        "ordinal": 298,
+        "spellId": 17707
+      },
+      {
+        "collectionId": 100299,
+        "collectionKey": "companion.frosty",
+        "creatureId": 28883,
+        "ordinal": 299,
+        "spellId": 52615
+      },
+      {
+        "collectionId": 100300,
+        "collectionKey": "companion.bananas",
+        "creatureId": 23234,
+        "ordinal": 300,
+        "spellId": 40549
+      },
+      {
+        "collectionId": 100301,
+        "collectionKey": "companion.mr_chilly",
+        "creatureId": 29726,
+        "ordinal": 301,
+        "spellId": 55068
+      },
+      {
+        "collectionId": 100302,
+        "collectionKey": "companion.giant_sewer_rat",
+        "creatureId": 31575,
+        "ordinal": 302,
+        "spellId": 59250
+      },
+      {
+        "collectionId": 100303,
+        "collectionKey": "companion.spring_rabbit",
+        "creatureId": 32791,
+        "ordinal": 303,
+        "spellId": 61725
+      },
+      {
+        "collectionId": 100304,
+        "collectionKey": "companion.onyxian_whelpling",
+        "creatureId": 36607,
+        "ordinal": 304,
+        "spellId": 69002
+      }
+    ],
+    "mappingHash": "08fb8129152abf3e21d7bb0b9d39d97197460ecf05642af7e99440c3b8bc50d9",
+    "schemaVersion": 1
+  },
   "identityOverrides": [],
-  "mappingHash": "50aaa024cce18a1cc7f2c903f876341a790f2c0bdb5363d6000177dc32ddf505",
-  "metadataVersion": "2026.07.20.1",
+  "mappingHash": "13ac183ea3c19693918fcde368d50640a0c6c9f8b1ccea1a4ad30e03ff60b4de",
+  "metadataVersion": "2026.07.20.2",
   "mountActions": {
     "candidateHash": "ba414a13d43783698251b283ccd3d19030560f44b3e3238931b83e1a73d0249e",
     "collections": [
@@ -17768,12 +18502,84 @@
     }
   ],
   "schemaVersion": 1,
+  "toyActions": {
+    "entries": [
+      {
+        "accountCooldownMs": 0,
+        "actionKind": "SPELL_SELF",
+        "allowInCombat": false,
+        "collectionId": 100305,
+        "collectionKey": "toy.orb_of_the_sindorei",
+        "consumesMaterial": false,
+        "cooldownScope": "CHARACTER",
+        "customHandler": "",
+        "itemId": 35275,
+        "ordinal": 305,
+        "replayPolicy": "SC2_REQUEST_ID",
+        "riskFlags": [],
+        "spellId": 46354,
+        "targetPolicy": "SELF"
+      },
+      {
+        "accountCooldownMs": 0,
+        "actionKind": "SPELL_TARGET",
+        "allowInCombat": false,
+        "collectionId": 100306,
+        "collectionKey": "toy.elunes_candle",
+        "consumesMaterial": false,
+        "cooldownScope": "CHARACTER",
+        "customHandler": "",
+        "itemId": 21713,
+        "ordinal": 306,
+        "replayPolicy": "SC2_REQUEST_ID",
+        "riskFlags": [],
+        "spellId": 26374,
+        "targetPolicy": "CURRENT_TARGET"
+      },
+      {
+        "accountCooldownMs": 0,
+        "actionKind": "ITEM_USE",
+        "allowInCombat": false,
+        "collectionId": 100307,
+        "collectionKey": "toy.fishing_chair",
+        "consumesMaterial": false,
+        "cooldownScope": "CHARACTER",
+        "customHandler": "",
+        "itemId": 33223,
+        "ordinal": 307,
+        "replayPolicy": "SC2_REQUEST_ID",
+        "riskFlags": [
+          "PERSISTENT_OBJECT"
+        ],
+        "spellId": 42766,
+        "targetPolicy": "SELF"
+      },
+      {
+        "accountCooldownMs": 5000,
+        "actionKind": "CUSTOM_HANDLER",
+        "allowInCombat": true,
+        "collectionId": 100308,
+        "collectionKey": "toy.unusual_compass",
+        "consumesMaterial": false,
+        "cooldownScope": "ACCOUNT",
+        "customHandler": "unusual_compass",
+        "itemId": 45984,
+        "ordinal": 308,
+        "replayPolicy": "SC2_REQUEST_ID",
+        "riskFlags": [],
+        "spellId": 64385,
+        "targetPolicy": "SELF"
+      }
+    ],
+    "mappingHash": "05a5895e065332b50ffde6d9528299b308457b0549c9fb50554220a935f981d2",
+    "schemaVersion": 1
+  },
   "typeMappingHashes": {
     "appearance": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-    "companion": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "companion": "e854b1b83a01f3f1672a0907099c5f912caab741bba304c2660c0ccbf0bb9efc",
     "mount": "6801854cfc6bd1107424d0910a66183bfee100f328d6f468d8a4007f8b7e54b9",
     "set": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
     "synthetic": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-    "toy": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    "toy": "b7d2d5feecc85d98de6f97c12851938514d6020997ed62a40be80cfa007ecfb5"
   }
 }
