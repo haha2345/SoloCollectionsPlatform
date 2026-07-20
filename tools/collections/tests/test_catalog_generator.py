@@ -55,6 +55,16 @@ class CatalogGeneratorTests(unittest.TestCase):
         second = generator.render_outputs(generator.build_model(self.source), ROOT, MODULE_ROOT)
         self.assertEqual(first, second)
 
+    def test_protocol_catalog_descriptor_is_generated_for_cpp(self):
+        outputs = generator.render_outputs(generator.build_model(self.source), ROOT, MODULE_ROOT)
+        target = MODULE_ROOT / "src/generated/SoloCollectionsProtocolCatalog.inc"
+        self.assertIn(target, outputs)
+        rendered = outputs[target]
+        self.assertIn("GeneratedSc2MetadataVersion", rendered)
+        self.assertIn("GeneratedSc2AssetPackVersion", rendered)
+        self.assertIn("LoadGeneratedSc2Categories", rendered)
+        self.assertIn("typeMappingHashes", generator.build_model(self.source))
+
     def test_localized_metadata_does_not_change_mapping_hash(self):
         before = generator.build_model(self.source)["mappingHash"]
         classes = self.read_json("catalog/source/classes.json")

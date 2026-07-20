@@ -640,7 +640,7 @@ AddOn 137 项 Python 测试、模块 53 项 Python 测试和 MSVC 原生测试�
 
 ## 10. 阶段 5：SC2 和客户端真实状态层
 
-阶段状态：🚧 进行中（任务 5.1 已完成）
+阶段状态：🚧 进行中（任务 5.1–5.2 已完成）
 
 ### 任务 5.1：固定 wire schema 和 golden vectors
 
@@ -673,6 +673,8 @@ protocol: define versioned SC2 wire contract
 
 ### 任务 5.2：实现服务端 codec 和限流
 
+状态：✅ 已完成（mod-solo-collections `9c52a35`）
+
 仓库：`mod-solo-collections`
 
 实现：
@@ -683,6 +685,12 @@ protocol: define versioned SC2 wire contract
 - 多 tick 出站队列。
 - 只接受约定的 AddOn whisper/self channel。
 - 未 ready 时返回 LOADING，不返回空 owned 集合。
+
+验证记录：C++ codec 与 Python golden vectors 字节一致；原生测试覆盖 confirmed
+empty snapshot、`LOADING`、分 tick 队列、旧 nonce、重复 requestId 和 token bucket。
+模块 57 项 Python 测试与两个 MSVC 原生测试目标通过。真实 AzerothCore 已重新配置
+并编译成功，新协议源文件进入 `modules.vcxproj`；worldserver 构建产物 SHA-256 为
+`ADDFE74CA3BA95090D31DDB797E8B91EFAEA95F57AECB119E8F3DA1B35DC5E07`。
 
 建议提交：
 
