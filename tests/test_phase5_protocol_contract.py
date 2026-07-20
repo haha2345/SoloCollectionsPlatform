@@ -63,6 +63,12 @@ class Phase5ProtocolContractTests(unittest.TestCase):
         self.assertIn("OwnedByType", header)
         self.assertIn("AccountCacheLoadState::Ready", source[source.index("OwnedByType"):])
 
+    def test_protocol_sessions_are_locked_across_world_and_map_threads(self):
+        header = (ROOT / "src/SoloCollectionsProtocolServer.h").read_text(encoding="utf-8")
+        source = (ROOT / "src/SoloCollectionsProtocolServer.cpp").read_text(encoding="utf-8")
+        self.assertIn("mutable std::mutex _mutex", header)
+        self.assertGreaterEqual(source.count("std::scoped_lock lock(_mutex)"), 8)
+
 
 if __name__ == "__main__":
     unittest.main()

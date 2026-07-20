@@ -8,14 +8,8 @@
 namespace SoloCollections
 {
 AccountCollectionCache::AccountCollectionCache(std::uint64_t evictionDelayMs)
-    : _ownerThread(std::this_thread::get_id()), _evictionDelayMs(evictionDelayMs)
+    : _evictionDelayMs(evictionDelayMs)
 {
-}
-
-void AccountCollectionCache::AssertOwnerThread() const
-{
-    if (std::this_thread::get_id() != _ownerThread)
-        throw std::logic_error("AccountCollectionCache must only be accessed from its owner world thread.");
 }
 
 LoginGeneration AccountCollectionCache::NextGeneration()
@@ -28,7 +22,7 @@ LoginGeneration AccountCollectionCache::NextGeneration()
 AccountSessionOpenResult AccountCollectionCache::OpenSession(
     AccountId accountId, AccountSessionId sessionId, std::uint64_t /*nowMs*/)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     if (!accountId.IsValid() || !sessionId.IsValid())
         return {};
 
@@ -51,7 +45,7 @@ AccountSessionOpenResult AccountCollectionCache::OpenSession(
 bool AccountCollectionCache::CloseSession(
     AccountId accountId, AccountSessionId sessionId, std::uint64_t nowMs)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.Sessions.erase(sessionId) == 0)
         return false;
@@ -80,7 +74,7 @@ void AccountCollectionCache::ApplyDelta(Entry& entry, CollectionDelta const& del
 bool AccountCollectionCache::CompleteLoad(AccountId accountId, LoginGeneration generation,
     std::set<CollectionKey> owned, CollectionRevision revision)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.Generation != generation ||
         entry->second.State != AccountCacheLoadState::Loading)
@@ -116,7 +110,7 @@ bool AccountCollectionCache::CompleteLoad(AccountId accountId, LoginGeneration g
 
 bool AccountCollectionCache::FailLoad(AccountId accountId, LoginGeneration generation)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.Generation != generation ||
         entry->second.State != AccountCacheLoadState::Loading)
@@ -128,7 +122,7 @@ bool AccountCollectionCache::FailLoad(AccountId accountId, LoginGeneration gener
 
 std::optional<LoginGeneration> AccountCollectionCache::RetryFailed(AccountId accountId)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.State != AccountCacheLoadState::Failed ||
         entry->second.Sessions.empty())
@@ -143,7 +137,7 @@ std::optional<LoginGeneration> AccountCollectionCache::RetryFailed(AccountId acc
 
 std::optional<LoginGeneration> AccountCollectionCache::BeginReload(AccountId accountId)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.Sessions.empty())
         return std::nullopt;
@@ -158,7 +152,7 @@ std::optional<LoginGeneration> AccountCollectionCache::BeginReload(AccountId acc
 
 DeltaQueueResult AccountCollectionCache::QueueDelta(AccountId accountId, CollectionDelta delta)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || !delta.Key.TypeId.IsValid() || !delta.Key.Id.IsValid() ||
         !delta.Revision.IsValid())
@@ -184,7 +178,7 @@ DeltaQueueResult AccountCollectionCache::QueueDelta(AccountId accountId, Collect
 
 std::vector<CollectionDelta> AccountCollectionCache::DrainReadyDeltas(AccountId accountId)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.State != AccountCacheLoadState::Ready)
         return {};
@@ -196,7 +190,7 @@ std::vector<CollectionDelta> AccountCollectionCache::DrainReadyDeltas(AccountId 
 
 std::size_t AccountCollectionCache::EvictExpired(std::uint64_t nowMs)
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     std::size_t evicted = 0;
     for (auto entry = _entries.begin(); entry != _entries.end();)
     {
@@ -214,7 +208,7 @@ std::size_t AccountCollectionCache::EvictExpired(std::uint64_t nowMs)
 
 std::optional<AccountCacheSnapshot> AccountCollectionCache::Snapshot(AccountId accountId) const
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end())
         return std::nullopt;
@@ -232,7 +226,7 @@ std::optional<AccountCacheSnapshot> AccountCollectionCache::Snapshot(AccountId a
 std::optional<std::vector<CollectionId>> AccountCollectionCache::OwnedByType(
     AccountId accountId, CollectionTypeId typeId) const
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     if (entry == _entries.end() || entry->second.State != AccountCacheLoadState::Ready || !typeId.IsValid())
         return std::nullopt;
@@ -246,7 +240,7 @@ std::optional<std::vector<CollectionId>> AccountCollectionCache::OwnedByType(
 
 AccountCacheDiagnostics AccountCollectionCache::Diagnostics() const
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     AccountCacheDiagnostics diagnostics;
     diagnostics.EntryCount = _entries.size();
     for (auto const& [accountId, entry] : _entries)
@@ -268,7 +262,7 @@ AccountCacheDiagnostics AccountCollectionCache::Diagnostics() const
 
 bool AccountCollectionCache::IsOwned(AccountId accountId, CollectionKey const& key) const
 {
-    AssertOwnerThread();
+    std::scoped_lock lock(_mutex);
     auto entry = _entries.find(accountId);
     return entry != _entries.end() && entry->second.State == AccountCacheLoadState::Ready &&
         entry->second.Owned.contains(key);

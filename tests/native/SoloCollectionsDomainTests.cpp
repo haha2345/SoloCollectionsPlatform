@@ -10,6 +10,7 @@
 #include <set>
 #include <stdexcept>
 #include <string>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -236,23 +237,21 @@ void TestFailedLoadRetry()
         "failed-generation callback was accepted after retry");
 }
 
-void TestWorldThreadConfinement()
+void TestExplicitCrossThreadLocking()
 {
     SC::AccountCollectionCache cache(100);
-    bool rejected = false;
-    std::thread worker([&cache, &rejected]()
+    auto opened = cache.OpenSession(Account(6), Session(60), 0);
+    Require(cache.CompleteLoad(Account(6), opened.Generation, { Key(10, 600) },
+        SC::CollectionRevision(std::uint64_t { 1 })), "cross-thread fixture did not load");
+    bool observed = false;
+    std::thread worker([&cache, &observed]()
     {
-        try
-        {
-            (void)cache.Snapshot(Account(6));
-        }
-        catch (std::logic_error const&)
-        {
-            rejected = true;
-        }
+        auto snapshot = cache.Snapshot(Account(6));
+        observed = snapshot && snapshot->State == SC::AccountCacheLoadState::Ready &&
+            cache.IsOwned(Account(6), Key(10, 600));
     });
     worker.join();
-    Require(rejected, "cross-thread cache access was not rejected");
+    Require(observed, "explicit cache lock did not permit a synchronized map-worker read");
 }
 
 void TestExplicitReloadAndDiagnostics()
@@ -450,7 +449,7 @@ int main()
         TestUnlockDuringLoad();
         TestRelogAndDelayedEviction();
         TestFailedLoadRetry();
-        TestWorldThreadConfinement();
+        TestExplicitCrossThreadLocking();
         TestExplicitReloadAndDiagnostics();
         TestExtensibleIdentityRegistry();
         TestEligibilityResourceAndOverrideOrder();

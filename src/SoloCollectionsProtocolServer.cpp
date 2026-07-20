@@ -50,6 +50,7 @@ Sc2Server::Sc2Server(AccountCollectionCache& cache, std::string metadataVersion,
 
 void Sc2Server::OpenSession(AccountId accountId, AccountSessionId sessionId)
 {
+    std::scoped_lock lock(_mutex);
     if (!accountId.IsValid() || !sessionId.IsValid())
         return;
     SessionState& session = _sessions[sessionId];
@@ -59,6 +60,7 @@ void Sc2Server::OpenSession(AccountId accountId, AccountSessionId sessionId)
 
 void Sc2Server::CloseSession(AccountSessionId sessionId)
 {
+    std::scoped_lock lock(_mutex);
     _sessions.erase(sessionId);
 }
 
@@ -254,6 +256,7 @@ void Sc2Server::QueueCurrentState(SessionState& session)
 bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs,
     ActionHandler const& actionHandler)
 {
+    std::scoped_lock lock(_mutex);
     auto found = _sessions.find(sessionId);
     if (found == _sessions.end())
         return false;
@@ -340,6 +343,7 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
 
 void Sc2Server::PumpSession(AccountSessionId sessionId, std::uint64_t /*nowMs*/)
 {
+    std::scoped_lock lock(_mutex);
     auto found = _sessions.find(sessionId);
     if (found != _sessions.end() && found->second.Active && found->second.AwaitingSnapshot)
     {
@@ -351,6 +355,7 @@ void Sc2Server::PumpSession(AccountSessionId sessionId, std::uint64_t /*nowMs*/)
 
 std::vector<std::string> Sc2Server::DrainOutbound(AccountSessionId sessionId, std::size_t maximum)
 {
+    std::scoped_lock lock(_mutex);
     std::vector<std::string> packets;
     auto found = _sessions.find(sessionId);
     if (found == _sessions.end() || maximum == 0)
@@ -367,12 +372,14 @@ std::vector<std::string> Sc2Server::DrainOutbound(AccountSessionId sessionId, st
 
 std::string Sc2Server::SessionNonce(AccountSessionId sessionId) const
 {
+    std::scoped_lock lock(_mutex);
     auto found = _sessions.find(sessionId);
     return found == _sessions.end() ? std::string {} : found->second.Nonce;
 }
 
 void Sc2Server::OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta const& delta)
 {
+    std::scoped_lock lock(_mutex);
     for (auto& [sessionId, session] : _sessions)
     {
         (void)sessionId;
@@ -391,6 +398,7 @@ void Sc2Server::OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta 
 
 bool Sc2Server::OnAccountResyncRequested(AccountId accountId)
 {
+    std::scoped_lock lock(_mutex);
     bool queued = false;
     for (auto& [sessionId, session] : _sessions)
     {

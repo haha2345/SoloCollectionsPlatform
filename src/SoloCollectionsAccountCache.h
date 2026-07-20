@@ -6,9 +6,9 @@
 #include <cstddef>
 #include <cstdint>
 #include <map>
+#include <mutex>
 #include <optional>
 #include <set>
-#include <thread>
 #include <vector>
 
 namespace SoloCollections
@@ -88,9 +88,9 @@ struct AccountCacheDiagnostics
     std::size_t EvictionScheduledCount = 0;
 };
 
-// This cache is deliberately world-thread confined. Database workers may
-// produce immutable load results, but callbacks must marshal back to the owner
-// thread before calling CompleteLoad or any other cache operation.
+// Player hooks can run on map workers while database callbacks and maintenance
+// run on the world thread. Every cache entry is therefore protected by one
+// explicit mutex; callers never rely on single-player server timing.
 class AccountCollectionCache
 {
 public:
@@ -116,7 +116,6 @@ public:
         AccountId accountId, CollectionTypeId typeId) const;
     [[nodiscard]] AccountCacheDiagnostics Diagnostics() const;
     [[nodiscard]] bool IsOwned(AccountId accountId, CollectionKey const& key) const;
-    [[nodiscard]] std::thread::id OwnerThread() const noexcept { return _ownerThread; }
 
 private:
     struct Entry
@@ -131,12 +130,11 @@ private:
         std::optional<std::uint64_t> EvictAfterMs;
     };
 
-    void AssertOwnerThread() const;
     [[nodiscard]] LoginGeneration NextGeneration();
     static void ApplyDelta(Entry& entry, CollectionDelta const& delta);
 
     std::map<AccountId, Entry> _entries;
-    std::thread::id _ownerThread;
+    mutable std::mutex _mutex;
     std::uint64_t _evictionDelayMs;
     std::uint64_t _lastGeneration = 0;
 };

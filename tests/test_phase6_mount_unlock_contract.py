@@ -39,6 +39,10 @@ class MountUnlockContractTests(unittest.TestCase):
         self.assertIn("character_spell", STORE_CPP)
         self.assertNotIn("cs.disabled", STORE_CPP)
         self.assertIn("CompleteMigrationMarker", SERVICE)
+        self.assertIn("GetMountCollectionService().Update()", CORE)
+        player_update = CORE[CORE.index("void OnPlayerUpdate"):CORE.index("void OnPlayerLearnSpell")]
+        self.assertNotIn("GetMountCollectionService", player_update)
+        self.assertIn("std::mutex _mutex", SERVICE)
 
     def test_account_mutations_are_serial_and_emit_revision_deltas(self):
         self.assertIn("HasPendingMutation(account)", SERVICE)

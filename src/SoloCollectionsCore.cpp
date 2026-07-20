@@ -103,12 +103,13 @@ public:
         GetAccountCollectionStore().Initialize();
 
         LOG_INFO("module", "SoloCollections provider registry initialized with {} provider(s); "
-            "account cache initialized with world-thread confinement.", registry.TopologicalOrder().size());
+            "account cache initialized with explicit cross-thread locking.", registry.TopologicalOrder().size());
     }
 
     void OnUpdate(std::uint32_t /*diff*/) override
     {
         GetAccountCollectionStore().Update();
+        GetMountCollectionService().Update();
         (void)GetAccountCollectionCache().EvictExpired(MonotonicMilliseconds());
     }
 };
@@ -148,7 +149,6 @@ public:
 
     void OnPlayerUpdate(Player* player, std::uint32_t /*diff*/) override
     {
-        GetMountCollectionService().OnPlayerUpdate(player);
         Sc2ProtocolPumpAndSend(player);
     }
 

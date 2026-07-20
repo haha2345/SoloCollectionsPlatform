@@ -27,10 +27,11 @@ class AccountCacheContractTests(unittest.TestCase):
         self.assertIn("ApplyDelta(entry->second, delta)", SOURCE)
         self.assertIn("DeltaQueueResult::Deferred", SOURCE)
 
-    def test_cache_has_an_explicit_world_thread_policy(self):
-        self.assertIn("std::thread::id _ownerThread", HEADER)
-        self.assertIn("AssertOwnerThread();", SOURCE)
-        self.assertIn("std::this_thread::get_id() != _ownerThread", SOURCE)
+    def test_cache_has_an_explicit_cross_thread_lock_policy(self):
+        self.assertIn("mutable std::mutex _mutex", HEADER)
+        self.assertIn("std::scoped_lock lock(_mutex)", SOURCE)
+        self.assertNotIn("AssertOwnerThread", SOURCE)
+        self.assertIn("TestExplicitCrossThreadLocking", NATIVE)
 
     def test_required_session_races_have_native_coverage(self):
         for test_name in (

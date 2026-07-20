@@ -22,7 +22,7 @@ public:
 
     void OnPlayerLogin(Player* player);
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId);
-    void OnPlayerUpdate(Player* player);
+    void Update();
     [[nodiscard]] std::string ExecuteSummon(Player* player, CollectionId collectionId);
 
 private:

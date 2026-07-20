@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <deque>
 #include <map>
+#include <mutex>
 #include <set>
 #include <utility>
 
@@ -68,9 +69,14 @@ public:
     {
         if (!player || !player->GetSession())
             return;
+        std::scoped_lock lock(_mutex);
         AccountId account = PlayerAccount(player);
         MountAccountState& state = _accounts[account];
         state.LoginCharacterGuid = player->GetGUID().GetCounter();
+        for (MountCollectionDefinition const& definition : GetMountCatalog().Collections())
+            for (std::uint32_t spellId : definition.UnlockSpellIds)
+                if (player->HasSpell(spellId))
+                    state.CandidateSpells.insert(spellId);
     }
 
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId)
@@ -80,6 +86,7 @@ public:
         MountCollectionDefinition const* definition = GetMountCatalog().FindByUnlockSpell(spellId);
         if (!definition)
             return;
+        std::scoped_lock lock(_mutex);
         AccountId account = PlayerAccount(player);
         MountAccountState& state = _accounts[account];
         state.LoginCharacterGuid = player->GetGUID().GetCounter();
@@ -89,23 +96,20 @@ public:
             account.Value(), state.LoginCharacterGuid, spellId, definition->Id.Value());
     }
 
-    void OnPlayerUpdate(Player* player)
+    void Update()
     {
-        if (!player || !player->GetSession())
-            return;
-        AccountId account = PlayerAccount(player);
-        auto found = _accounts.find(account);
-        if (found == _accounts.end())
-            return;
-        MountAccountState& state = found->second;
-        std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(account);
-        if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
-            return;
-        state.Generation = snapshot->Generation;
+        std::scoped_lock lock(_mutex);
+        for (auto& [account, state] : _accounts)
+        {
+            std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(account);
+            if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
+                continue;
+            state.Generation = snapshot->Generation;
 
-        if (state.Phase == MigrationPhase::AwaitingReady)
-            BeginMigrationCheck(player, account, state);
-        Advance(account, state);
+            if (state.Phase == MigrationPhase::AwaitingReady)
+                BeginMigrationCheck(account, state);
+            Advance(account, state);
+        }
     }
 
     std::string ExecuteSummon(Player* player, CollectionId collectionId)
@@ -217,18 +221,14 @@ private:
         state.Pending.push_back({ definition.Id, spellId, characterGuid, sourceKind, false });
     }
 
-    void BeginMigrationCheck(Player* player, AccountId account, MountAccountState& state)
+    void BeginMigrationCheck(AccountId account, MountAccountState& state)
     {
-        for (MountCollectionDefinition const& definition : GetMountCatalog().Collections())
-            for (std::uint32_t spellId : definition.UnlockSpellIds)
-                if (player->HasSpell(spellId))
-                    state.CandidateSpells.insert(spellId);
-
         state.Phase = MigrationPhase::CheckingMarker;
         bool started = GetAccountCollectionStore().CheckMigrationMarker(
             { account, MountSpellMigrationId, MountSpellMigrationVersion },
             [this, account](bool succeeded, bool completed, std::vector<std::uint32_t> databaseSpells)
             {
+                std::scoped_lock lock(_mutex);
                 auto found = _accounts.find(account);
                 if (found == _accounts.end())
                     return;
@@ -323,6 +323,7 @@ private:
                 state.ImportedCount, state.RejectedCount },
             [this, account](bool committed)
             {
+                std::scoped_lock lock(_mutex);
                 auto found = _accounts.find(account);
                 if (found == _accounts.end())
                     return;
@@ -337,6 +338,7 @@ private:
     }
 
     std::map<AccountId, MountAccountState> _accounts;
+    std::mutex _mutex;
 };
 
 MountCollectionService::MountCollectionService() : _impl(std::make_unique<Impl>()) { }
@@ -352,9 +354,9 @@ void MountCollectionService::OnPlayerLearnSpell(Player* player, std::uint32_t sp
     _impl->OnPlayerLearnSpell(player, spellId);
 }
 
-void MountCollectionService::OnPlayerUpdate(Player* player)
+void MountCollectionService::Update()
 {
-    _impl->OnPlayerUpdate(player);
+    _impl->Update();
 }
 
 std::string MountCollectionService::ExecuteSummon(Player* player, CollectionId collectionId)

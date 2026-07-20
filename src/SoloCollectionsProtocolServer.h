@@ -9,6 +9,7 @@
 #include <deque>
 #include <functional>
 #include <map>
+#include <mutex>
 #include <random>
 #include <string>
 #include <vector>
@@ -84,6 +85,7 @@ private:
     std::vector<Sc2CategoryDefinition> _categories;
     std::map<AccountSessionId, SessionState> _sessions;
     std::mt19937_64 _random;
+    mutable std::mutex _mutex;
 };
 }
 
