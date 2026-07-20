@@ -20,6 +20,7 @@ Cant transmogrify rediculus items // Foereaper: would be fun to stab people with
 -- Cant think of any good way to handle this easily, could rip flagged items from cata DB
 */
 #include "Transmogrification.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "Chat.h"
 #include "ScriptedCreature.h"
 #include "ItemTemplate.h"
@@ -101,7 +102,8 @@ std::vector<ItemTemplate const*> GetValidTransmogs(Player* player, Item* target,
     if (sT->GetUseCollectionSystem())
     {
         uint32 accountId = player->GetSession()->GetAccountId();
-        for (uint32 itemId : sT->GetCollectedAppearances(accountId))
+        for (uint32 itemId : SoloCollections::GetAppearanceService().CollectedSources(
+                SoloCollections::AccountId(accountId)))
         {
             ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(itemId);
             if (!sourceTemplate)
@@ -152,7 +154,8 @@ void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEn
     }
 
     uint8 slot = selection->second;
-    TransmogApplyResult result = sT->TryApplyCollectedAppearance(player, itemEntry, slot, creature->GetGUID(), source);
+    TransmogApplyResult result = SoloCollections::GetAppearanceService().TryApplyCollectedAppearance(
+        player, itemEntry, slot, creature->GetGUID(), source);
     if (result.IsSuccess())
     {
         session->SendAreaTriggerMessage("{}", Tstr(session, LANG_TRANSMOG_OK));
@@ -351,7 +354,8 @@ public:
                     return true;
                 }
 
-                TransmogApplyResult result = sT->TryApplyCollectedPreset(player, preset->second, creature->GetGUID());
+                TransmogApplyResult result = SoloCollections::GetAppearanceService().TryApplyCollectedPreset(
+                    player, preset->second, creature->GetGUID());
                 if (!result.IsSuccess())
                     ChatHandler(session).SendNotification(Tstr(session, result.Code));
                 OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 6, action);
@@ -778,12 +782,12 @@ private:
         tempStream << std::hex << ItemQualityColors[itemTemplate->Quality];
         std::string itemQuality = tempStream.str();
         bool showChatMessage = !(player->GetPlayerSetting("mod-transmog", SETTING_HIDE_TRANSMOG).value) && !sT->CanNeverTransmog(itemTemplate);
-        if (sT->AddCollectedAppearance(accountId, itemId))
+        if (SoloCollections::GetAppearanceService().TryUnlockLegacy(
+                SoloCollections::AccountId(accountId), itemId))
         {
             if (showChatMessage)
                 ChatHandler(session).PSendSysMessage(R"(|c{}|Hitem:{}:0:0:0:0:0:0:0:0|h[{}]|h|r {})", itemQuality, itemId, itemName, Tstr(session, LANG_TRANSMOG_ADDED_APPEARANCE));
 
-            CharacterDatabase.Execute("INSERT INTO custom_unlocked_appearances (account_id, item_template_id) VALUES ({}, {})", accountId, itemId);
         }
     }
 
@@ -1073,7 +1077,7 @@ public:
         CharacterDatabase.Execute("DELETE FROM `custom_transmogrification_sets` WHERE NOT EXISTS(SELECT 1 FROM characters WHERE characters.guid = custom_transmogrification_sets.Owner)");
 #endif
 
-        sT->LoadCollections();
+        (void)SoloCollections::GetAppearanceService().LoadLegacyCollections();
     }
 };
 

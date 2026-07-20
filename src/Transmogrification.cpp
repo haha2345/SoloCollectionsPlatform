@@ -1,4 +1,5 @@
 #include "Transmogrification.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "ItemTemplate.h"
 #include "DatabaseEnv.h"
 #include "SpellMgr.h"
@@ -484,32 +485,6 @@ void Transmogrification::ApplyCommittedFakeEntry(Player* player, uint32 newEntry
     UpdateItem(player, itemTransmogrified);
 }
 
-bool Transmogrification::AddCollectedAppearance(uint32 accountId, uint32 itemId)
-{
-    if (!collectionCache.contains(accountId))
-    {
-        collectionCache.insert({ accountId, {itemId} });
-        return true;
-    }
-
-    auto res = collectionCache[accountId].insert(itemId);
-    bool inserted = res.second;
-    return inserted;
-}
-
-bool Transmogrification::HasCollectedAppearance(uint32 accountId, uint32 itemId) const
-{
-    auto account = collectionCache.find(accountId);
-    return account != collectionCache.end() && account->second.find(itemId) != account->second.end();
-}
-
-std::unordered_set<uint32> const& Transmogrification::GetCollectedAppearances(uint32 accountId) const
-{
-    static std::unordered_set<uint32> const emptyAppearances;
-    auto account = collectionCache.find(accountId);
-    return account != collectionCache.end() ? account->second : emptyAppearances;
-}
-
 TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, ObjectGuid interactionGuid,
     TransmogApplySource source) const
 {
@@ -600,7 +575,8 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
             if (GetUseCollectionSystem())
             {
                 uint32 accountId = player->GetSession()->GetAccountId();
-                if (!HasCollectedAppearance(accountId, request.SourceItemEntry))
+                if (!SoloCollections::GetAppearanceService().HasCollectedSource(
+                        SoloCollections::AccountId(accountId), request.SourceItemEntry))
                 {
                     LOG_WARN("module", "Transmogrification::PreflightApply - Account {} rejected uncollected source item {}.",
                         accountId, request.SourceItemEntry);
@@ -1359,49 +1335,6 @@ bool Transmogrification::IsPlusFeatureEligible(ObjectGuid const &playerGuid, uin
     }
 
     return false;
-}
-
-bool Transmogrification::LoadCollections()
-{
-    if (!GetUseCollectionSystem())
-    {
-        collectionCacheMap emptyCache;
-        collectionCache.swap(emptyCache);
-        collectionCacheHealth = CollectionCacheHealth::Disabled;
-        LOG_INFO("module", "Transmog appearance collection cache is disabled.");
-        return true;
-    }
-
-    LOG_INFO("module", "Loading transmog appearance collection cache....");
-    QueryResult result = CharacterDatabase.Query(
-        "SELECT 0 AS row_kind, 0 AS account_id, 0 AS item_template_id "
-        "UNION ALL "
-        "SELECT 1 AS row_kind, account_id, item_template_id FROM custom_unlocked_appearances");
-    if (!result)
-    {
-        collectionCacheHealth = CollectionCacheHealth::QueryFailed;
-        LOG_ERROR("module", "Transmogrification::LoadCollections - Query failed; previous cache with {} accounts retained.",
-            collectionCache.size());
-        return false;
-    }
-
-    collectionCacheMap refreshedCache;
-    uint32 collectedAppearanceCount = 0;
-    do
-    {
-        if ((*result)[0].Get<uint8>() == 0)
-            continue;
-
-        uint32 accountId = (*result)[1].Get<uint32>();
-        uint32 itemId = (*result)[2].Get<uint32>();
-        if (refreshedCache[accountId].insert(itemId).second)
-            ++collectedAppearanceCount;
-    } while (result->NextRow());
-
-    collectionCache.swap(refreshedCache);
-    collectionCacheHealth = CollectionCacheHealth::Healthy;
-    LOG_INFO("module", "Loaded {} collected appearances into cache", collectedAppearanceCount);
-    return true;
 }
 
 bool Transmogrification::GetEnableTransmogInfo() const

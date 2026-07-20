@@ -52,14 +52,6 @@ enum class TransmogApplySource : uint8
     Preset
 };
 
-enum class CollectionCacheHealth : uint8
-{
-    Uninitialized,
-    Healthy,
-    QueryFailed,
-    Disabled
-};
-
 enum TransmogStrings : uint32
 {
     // Transmog result strings
@@ -207,7 +199,6 @@ public:
     typedef std::unordered_map<ObjectGuid, ObjectGuid> transmogData;
     typedef std::unordered_map<ObjectGuid, uint32> transmog2Data;
     typedef std::unordered_map<ObjectGuid, transmog2Data> transmogMap;
-    typedef std::unordered_map<uint32, std::unordered_set<uint32>> collectionCacheMap;
     typedef std::unordered_map<uint32, std::string> searchStringMap;
     typedef std::unordered_map<uint32, std::vector<uint32>> transmogPlusData;
     typedef std::unordered_map<ObjectGuid, uint8> selectedSlotMap;
@@ -300,8 +291,6 @@ public:
     bool CanNeverTransmog(ItemTemplate const* itemTemplate);
 
     void LoadConfig(bool reload); // world-thread only
-    bool LoadCollections();
-
     std::string GetItemIcon(uint32 entry, uint32 width, uint32 height, int x, int y) const;
     std::string GetSlotIcon(uint8 slot, uint32 width, uint32 height, int x, int y) const;
     const char * GetSlotName(uint8 slot, WorldSession* session) const;
@@ -310,11 +299,6 @@ public:
     uint32 GetFakeEntry(ObjectGuid itemGUID) const;
     void UpdateItem(Player* player, Item* item) const;
     void DeleteFakeEntry(Player* player, uint8 slot, Item* itemTransmogrified, CharacterDatabaseTransaction* trans = nullptr);
-    bool AddCollectedAppearance(uint32 accountId, uint32 itemId);
-    [[nodiscard]] bool HasCollectedAppearance(uint32 accountId, uint32 itemId) const;
-    [[nodiscard]] std::unordered_set<uint32> const& GetCollectedAppearances(uint32 accountId) const;
-    [[nodiscard]] CollectionCacheHealth GetCollectionCacheHealth() const { return collectionCacheHealth; }
-
     TransmogApplyResult TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
 #ifdef PRESETS
@@ -380,8 +364,6 @@ public:
 private:
     // Reloadable caches are replaced as complete snapshots on the world thread.
     transmogPlusData plusDataMap;
-    collectionCacheMap collectionCache;
-    CollectionCacheHealth collectionCacheHealth = CollectionCacheHealth::Uninitialized;
     std::set<uint32> Allowed;
     std::set<uint32> NotAllowed;
 

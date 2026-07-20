@@ -1,5 +1,6 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
 #include "SoloCollectionsMountCatalog.h"
@@ -134,6 +135,25 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class AppearanceCollectionProvider final : public CollectionProvider
+{
+public:
+    AppearanceCollectionProvider()
+    {
+        _descriptor.TypeId = AppearanceCollectionTypeId;
+        _descriptor.TypeKey = "appearance";
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        return GetAppearanceService().Evaluate(collectionId);
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class SoloCollectionsCoreWorldScript final : public WorldScript
 {
 public:
@@ -155,6 +175,9 @@ public:
         registration = registry.Register(std::make_unique<ToyCollectionProvider>());
         if (!registration.Accepted)
             throw std::runtime_error("SoloCollections toy provider registration failed: " + registration.Message);
+        registration = registry.Register(std::make_unique<AppearanceCollectionProvider>());
+        if (!registration.Accepted)
+            throw std::runtime_error("SoloCollections appearance provider registration failed: " + registration.Message);
 
         RegistryFinalizeResult finalized = registry.Finalize();
         if (!finalized.Success)

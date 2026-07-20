@@ -10,6 +10,10 @@ HEADER = (ROOT / "src" / "Transmogrification.h").read_text(encoding="utf-8")
 IMPLEMENTATION = (ROOT / "src" / "Transmogrification.cpp").read_text(encoding="utf-8")
 SCRIPTS = (ROOT / "src" / "transmog_scripts.cpp").read_text(encoding="utf-8")
 COMMANDS = (ROOT / "src" / "cs_transmog.cpp").read_text(encoding="utf-8")
+APPEARANCE_HEADER = (ROOT / "src" / "Categories" / "Appearance" /
+                     "SoloCollectionsAppearanceService.h").read_text(encoding="utf-8")
+APPEARANCE_SERVICE = (ROOT / "src" / "Categories" / "Appearance" /
+                      "SoloCollectionsAppearanceService.cpp").read_text(encoding="utf-8")
 
 
 class AppearanceAuthorizationContractTests(unittest.TestCase):
@@ -29,11 +33,11 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
 
         self.assertIn("player->GetSession()->GetAccountId()", preflight)
-        self.assertIn("HasCollectedAppearance(accountId, request.SourceItemEntry)", preflight)
+        self.assertIn("GetAppearanceService().HasCollectedSource", preflight)
         self.assertIn("GetItemTemplate(request.SourceItemEntry)", preflight)
         self.assertIn("player->GetItemByEntry(request.SourceItemEntry)", preflight)
         self.assertLess(
-            preflight.index("HasCollectedAppearance(accountId, request.SourceItemEntry)"),
+            preflight.index("GetAppearanceService().HasCollectedSource"),
             preflight.index("plan.Appearances.push_back(prepared)"),
         )
 
@@ -44,9 +48,9 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         self.assertIn("summon->GetOwner() != player", IMPLEMENTATION)
 
     def test_gossip_vendor_and_presets_all_use_the_facade(self):
-        calls = re.findall(r"TryApplyCollectedAppearance\s*\([^;]+;", SCRIPTS, re.DOTALL)
+        calls = re.findall(r"GetAppearanceService\(\)\.TryApplyCollectedAppearance\s*\([^;]+;", SCRIPTS, re.DOTALL)
         self.assertEqual(1, len(calls))
-        self.assertEqual(1, SCRIPTS.count("TryApplyCollectedPreset("))
+        self.assertEqual(1, SCRIPTS.count("GetAppearanceService().TryApplyCollectedPreset("))
         self.assertIn("TransmogApplySource::Gossip", SCRIPTS)
         self.assertIn("TransmogApplySource::Vendor", SCRIPTS)
         self.assertIn("TransmogApplySource::Preset", IMPLEMENTATION)
@@ -178,32 +182,32 @@ class AtomicApplyContractTests(unittest.TestCase):
 
 class AtomicReloadContractTests(unittest.TestCase):
     def test_collection_cache_is_private_and_consumers_use_read_only_api(self):
-        public_api = HEADER.split("private:", 1)[0]
-        self.assertNotIn("collectionCacheMap collectionCache", public_api)
-        self.assertIn("GetCollectedAppearances", public_api)
-        self.assertIn("HasCollectedAppearance", public_api)
-        self.assertNotIn("collectionCache", SCRIPTS)
-        self.assertNotIn("collectionCache", COMMANDS)
+        public_api = APPEARANCE_HEADER.split("private:", 1)[0]
+        self.assertNotIn("LegacyCollectionCache _legacyCollections", public_api)
+        self.assertIn("CollectedSources", public_api)
+        self.assertIn("HasCollectedSource", public_api)
+        self.assertNotIn("_legacyCollections", SCRIPTS)
+        self.assertNotIn("_legacyCollections", COMMANDS)
 
     def test_collection_query_distinguishes_empty_success_from_failure(self):
-        load = IMPLEMENTATION.split("bool Transmogrification::LoadCollections()", 1)[1].split(
-            "bool Transmogrification::GetEnableTransmogInfo", 1
+        load = APPEARANCE_SERVICE.split("bool AppearanceService::LoadLegacyCollections()", 1)[1].split(
+            "bool AppearanceService::TryUnlockLegacy", 1
         )[0]
         self.assertIn("SELECT 0 AS row_kind", load)
         self.assertIn("UNION ALL", load)
         self.assertIn("if (!result)", load)
-        self.assertIn("CollectionCacheHealth::QueryFailed", load)
-        self.assertIn("previous cache", load)
+        self.assertIn("AppearanceRepositoryHealth::QueryFailed", load)
+        self.assertIn("previous_accounts", load)
 
     def test_successful_reload_replaces_snapshot_and_removes_revoked_rows(self):
-        load = IMPLEMENTATION.split("bool Transmogrification::LoadCollections()", 1)[1].split(
-            "bool Transmogrification::GetEnableTransmogInfo", 1
+        load = APPEARANCE_SERVICE.split("bool AppearanceService::LoadLegacyCollections()", 1)[1].split(
+            "bool AppearanceService::TryUnlockLegacy", 1
         )[0]
-        self.assertIn("collectionCacheMap refreshedCache", load)
-        self.assertIn("refreshedCache[accountId].insert(itemId)", load)
-        self.assertIn("collectionCache.swap(refreshedCache)", load)
-        self.assertLess(load.index("if (!result)"), load.index("collectionCache.swap(refreshedCache)"))
-        self.assertIn("CollectionCacheHealth::Healthy", load)
+        self.assertIn("LegacyCollectionCache refreshed", load)
+        self.assertIn("refreshed[fields[1].Get<std::uint32_t>()].insert", load)
+        self.assertIn("_legacyCollections.swap(refreshed)", load)
+        self.assertLess(load.index("if (!result)"), load.index("_legacyCollections.swap(refreshed)"))
+        self.assertIn("AppearanceRepositoryHealth::Healthy", load)
 
     def test_config_sets_and_plus_cache_swap_only_after_complete_parse(self):
         parser = IMPLEMENTATION.split("bool ParseItemEntrySet", 1)[1].split(
@@ -230,7 +234,7 @@ class AtomicReloadContractTests(unittest.TestCase):
             reload_handler.index("LoadModulesConfigs(true, false)"),
             reload_handler.index("sTransmogrification->LoadConfig(true)"),
         )
-        self.assertIn("if (sTransmogrification->LoadCollections())", reload_handler)
+        self.assertIn("if (SoloCollections::GetAppearanceService().LoadLegacyCollections())", reload_handler)
         self.assertIn("previous cache retained", reload_handler)
 
 

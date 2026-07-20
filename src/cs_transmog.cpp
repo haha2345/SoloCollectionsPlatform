@@ -21,6 +21,7 @@
 #include "Player.h"
 #include "ScriptMgr.h"
 #include "Transmogrification.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "Tokenize.h"
 #include "DatabaseEnv.h"
 #include "SpellMgr.h"
@@ -66,7 +67,8 @@ public:
         uint32 accountId = player->GetSession()->GetAccountId();
         handler->PSendModuleSysMessage("mod-transmog", LANG_TRANSMOG_CMD_BEGIN_SYNC);
 
-        for (uint32 itemId : sTransmogrification->GetCollectedAppearances(accountId))
+        for (uint32 itemId : SoloCollections::GetAppearanceService().CollectedSources(
+                SoloCollections::AccountId(accountId)))
             handler->PSendSysMessage("TRANSMOG_SYNC:{}", itemId);
 
         handler->PSendModuleSysMessage("mod-transmog", LANG_TRANSMOG_CMD_COMPLETE_SYNC);
@@ -152,7 +154,8 @@ public:
         std::string playerName = player->GetName();
         std::string nameLink = handler->playerLink(playerName);
 
-        if (sTransmogrification->AddCollectedAppearance(accountId, itemId))
+        if (SoloCollections::GetAppearanceService().TryUnlockLegacy(
+                SoloCollections::AccountId(accountId), itemId))
         {
             // Notify target of new item in appearance collection
             if (target && !(target->GetPlayerSetting("mod-transmog", SETTING_HIDE_TRANSMOG).value) && !sTransmogrification->CanNeverTransmog(itemTemplate))
@@ -162,7 +165,6 @@ public:
             if (isNotConsole && target != handler->GetPlayer())
                 handler->PSendSysMessage(R"(|c{}|Hitem:{}:0:0:0:0:0:0:0:0|h[{}]|h|r has been added to the appearance collection of Player {}.)", itemQuality.c_str(), itemId, itemName.c_str(), nameLink);
 
-            CharacterDatabase.Execute("INSERT INTO custom_unlocked_appearances (account_id, item_template_id) VALUES ({}, {})", accountId, itemId);
         }
         else
         {
@@ -238,9 +240,9 @@ public:
                         continue;
                     }
 
-                    if (sTransmogrification->AddCollectedAppearance(accountId, itemId))
+                    if (SoloCollections::GetAppearanceService().TryUnlockLegacy(
+                            SoloCollections::AccountId(accountId), itemId))
                     {
-                        CharacterDatabase.Execute("INSERT INTO custom_unlocked_appearances (account_id, item_template_id) VALUES ({}, {})", accountId, itemId);
                         added = true;
                     }
                 }
@@ -583,7 +585,8 @@ public:
         else
         {
             uint32 accountId = sCharacterCache->GetCharacterAccountIdByGuid(playerGuid);
-            bool inCollection = sTransmogrification->HasCollectedAppearance(accountId, srcItem->ItemId);
+            bool inCollection = SoloCollections::GetAppearanceService().HasCollectedSource(
+                SoloCollections::AccountId(accountId), srcItem->ItemId);
             collOk = inCollection;
             collLine += inCollection
                 ? "[+] " + okMsg
@@ -613,7 +616,7 @@ public:
         sConfigMgr->LoadModulesConfigs(true, false);
         sTransmogrification->LoadConfig(true);
         handler->SendSysMessage("Transmog module config files and runtime values reloaded.");
-        if (sTransmogrification->LoadCollections())
+        if (SoloCollections::GetAppearanceService().LoadLegacyCollections())
             handler->SendSysMessage("Transmog collections reloaded.");
         else
             handler->SendSysMessage("Transmog collection reload failed; previous cache retained.");
