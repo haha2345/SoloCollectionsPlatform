@@ -51,6 +51,16 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
         self.assertIn('collection.typeKey == "appearance"', source)
         self.assertIn('string.match(alias, "^item:(%d+)$")', source)
 
+    def test_client_submits_only_canonical_id_and_equipment_slot_for_apply(self):
+        bridge = (ROOT / "addon" / "SoloCollections" / "Core" / "Bridge.lua").read_text(encoding="utf-8")
+        wardrobe = (ROOT / "addon" / "SoloCollections" / "UI" / "Wardrobe.lua").read_text(encoding="utf-8")
+        self.assertIn("function B.ApplyAppearance(collectionId, equipmentSlot, callback)", bridge)
+        self.assertIn('B.RequestSC2Action(13, collectionId, "APPLY", equipmentSlot + 1', bridge)
+        self.assertNotIn("sourceItemId", bridge.split("function B.ApplyAppearance", 1)[1])
+        self.assertIn("EQUIPMENT_SLOT_BY_APPEARANCE_SLOT", wardrobe)
+        self.assertIn("SC.Bridge.ApplyAppearance(record.id, equipmentSlot", wardrobe)
+        self.assertIn("Shift + 左键", wardrobe)
+
 
 if __name__ == "__main__":
     unittest.main()

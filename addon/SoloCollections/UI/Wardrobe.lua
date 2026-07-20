@@ -33,6 +33,44 @@ local CUSTOM_CAMERA_HUMAN_FEMALE = {
     FEET = 0x5348,
 }
 
+local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
+    HEAD = 0,
+    SHOULDER = 2,
+    SHIRT = 3,
+    CHEST = 4,
+    WAIST = 5,
+    LEGS = 6,
+    FEET = 7,
+    WRIST = 8,
+    HANDS = 9,
+    BACK = 14,
+    MAINHAND = 15,
+    OFFHAND = 16,
+    TABARD = 18,
+}
+
+local function showAppearanceActionResult(ok, reason)
+    local message
+    if ok then
+        message = "外观已应用。"
+    elseif reason == "NOT_ENOUGH_MONEY" then
+        message = "你没有足够的钱。"
+    elseif reason == "NOT_ENOUGH_TOKENS" then
+        message = "你的筹码不够。"
+    elseif reason == "NOT_OWNED" then
+        message = "尚未收藏此外观。"
+    elseif reason == "INVALID_TARGET_SLOT" then
+        message = "对应装备栏没有可幻化物品。"
+    else
+        message = "外观应用失败：" .. tostring(reason or "UNKNOWN")
+    end
+    if UIErrorsFrame and UIErrorsFrame.AddMessage then
+        UIErrorsFrame:AddMessage(message, ok and 0.35 or 1, ok and 1 or 0.35, 0.2, 1)
+    elseif DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff9f40SoloCollections:|r " .. message)
+    end
+end
+
 -- Retail obtains an appearance-specific UI camera from client data. That API
 -- does not exist in 3.3.5, so the same 18-model layout uses slot-specific
 -- camera profiles built from the WotLK DressUpModel API. SetCamera establishes
@@ -241,6 +279,9 @@ local function showItemTooltip(owner, record)
         GameTooltip:AddLine("武器类型：" .. record.weaponTypeLabel, 0.52, 0.82, 1.00, true)
     end
     GameTooltip:AddLine(record.collected and "已收集" or "未收集 · 仍可预览", record.collected and 0.38 or 0.62, record.collected and 0.90 or 0.58, 0.32)
+    if record.collected then
+        GameTooltip:AddLine("Shift + 左键：应用到当前装备", 1.00, 0.82, 0.18)
+    end
     GameTooltip:Show()
 end
 
@@ -1656,6 +1697,18 @@ function UI.CreateWardrobePage(parent)
             if button == "RightButton" then
                 Catalog.ToggleDemoFavorite("APPEARANCES", itemModel.scRecord.id)
                 page:Refresh()
+            elseif IsShiftKeyDown() then
+                local record = itemModel.scRecord
+                local equipmentSlot = EQUIPMENT_SLOT_BY_APPEARANCE_SLOT[record.slot]
+                if not record.collected then
+                    showAppearanceActionResult(false, "NOT_OWNED")
+                elseif not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
+                    showAppearanceActionResult(false, "BRIDGE_UNAVAILABLE")
+                elseif equipmentSlot == nil then
+                    showAppearanceActionResult(false, "INVALID_TARGET_SLOT")
+                else
+                    SC.Bridge.ApplyAppearance(record.id, equipmentSlot, showAppearanceActionResult)
+                end
             else
                 selectItem(itemModel.scRecord)
             end
