@@ -469,6 +469,23 @@ function B.ApplyAppearance(collectionId, equipmentSlot, callback)
     return B.RequestSC2Action(13, collectionId, "APPLY", equipmentSlot + 1, callback)
 end
 
+function B.ApplySet(collectionId, variantIndex, callback)
+    if not isPositiveInteger(collectionId) or
+        (variantIndex ~= nil and not isPositiveInteger(variantIndex)) then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_REQUEST")
+        end
+        return nil
+    end
+    if not B.sc2Connected then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    return B.RequestSC2Action(14, collectionId, "APPLY", variantIndex, callback)
+end
+
 local function handleModelReady(requestIdText, mountIdText)
     local requestId = tonumber(requestIdText)
     local mountId = tonumber(mountIdText)
