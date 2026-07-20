@@ -743,7 +743,7 @@ feat: consume authoritative SC2 collection state
 
 ## 11. 阶段 6：第一个完整纵切——坐骑
 
-阶段状态：🚧 实施中（任务 6.1 已完成）
+阶段状态：🚧 实施中（任务 6.1–6.2 已完成）
 
 ### 任务 6.1：生成 WotLK 坐骑候选和审核目录
 
@@ -770,17 +770,30 @@ feat: consume authoritative SC2 collection state
 要求 review-policy Hash 精确匹配，来源数据漂移时拒绝生成；稳定 ID、候选覆盖、
 同名不同 creature 不误合并、生成确定性和客户端/服务端 Hash 一致性测试通过。
 正式目录 mapping Hash 为
-`6e1b9d8b365b9a77166e55e523d2f0875a8a9cccacb98a3b2c6ef5a307dd3c6e`，
+`50aaa024cce18a1cc7f2c903f876341a790f2c0bdb5363d6000177dc32ddf505`，
 坐骑动作 mapping Hash 为
-`0b1d90cbd65119a9a3d2d55bf51c7334888aaffab5f894d383303af0d3b0b5f5`。
+`17c52b9646bf66082de182a2e728abf664c049a2da3c69a1ccd07baf765dd91f`。
 
 ### 任务 6.2：实现坐骑解锁
+
+状态：✅ 已完成（mod-solo-collections `5ffa2ce`）
 
 - `OnPlayerLearnSpell` 只处理新学习事件。
 - 首次迁移在 `OnPlayerLogin` 法术加载完成后扫描已有有效法术。
 - migration marker 防止每次登录反复导入。
 - 遗忘法术不自动撤销账号收藏。
 - 同账号所有在线角色收到一个连续 revision delta。
+
+完成记录：生产 allowlist 已生成原生 C++ 双向索引，只有审核通过的 spellId 能映射
+到 mount collectionId。`OnPlayerLearnSpell` 仅处理 Core 确认新加入 spellbook 的事件
+并只发起 Grant；没有遗忘法术撤销路径。首次登录等待账号缓存 Ready 和角色法术加载
+完成后，以当前角色 `HasSpell` 和同账号离线角色未 disabled 的 `character_spell` 合集
+执行一次迁移；`sc_migration_marker` 版本命中时不再返回或扫描法术。账号内迁移和实时
+学习共用单一串行 mutation 队列，每次成功提交沿用账号当前 revision + 1，并通过已有
+SC2 account event sink 向所有在线 session 广播 delta。迁移全部成功/明确拒绝后才写
+marker，数据库失败不会伪造完成。61 项 Python 契约测试、两个 MSVC 原生测试目标和
+真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；构建产物 SHA-256 为
+`D797519BC70E807892555B8533F99A3DBB75959E030C2D710F52A0F2BB3B1E9D`。
 
 ### 任务 6.3：实现安全召唤
 

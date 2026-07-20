@@ -328,7 +328,10 @@ def build_groups(accepted: list[dict[str, Any]], existing: dict[str, dict[str, A
             "actionVariants": [{
                 "spellId": row["spellId"], "raceMasks": sorted({ability["raceMask"] for ability in row["skillLineAbilities"] if ability["skillLine"] == MOUNT_SKILL_LINE}),
                 "classMasks": sorted({ability["classMask"] for ability in row["skillLineAbilities"] if ability["skillLine"] == MOUNT_SKILL_LINE}),
-                "minimumRidingSkill": max([ability["minSkillRank"] for ability in row["skillLineAbilities"] if ability["skillLine"] == MOUNT_SKILL_LINE] or [0]),
+                "minimumRidingSkill": max(
+                    [source["requiredSkillRank"] for source in row["itemSources"] if source["requiredSkill"] == 762] +
+                    [source["requiredSkillRank"] for source in row["trainerSources"] if source["requiredSkill"] == 762] + [0]
+                ),
                 "isFlying": row["isFlying"], "speedEffects": row["speedEffects"],
                 "sourceItemIds": [source["itemId"] for source in row["itemSources"]],
                 "sourceQuestIds": [source["questId"] for source in row["questSources"]],
