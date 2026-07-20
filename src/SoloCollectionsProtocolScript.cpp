@@ -18,6 +18,7 @@
 #include "Transmogrification.h"
 
 #include "Chat.h"
+#include "Log.h"
 #include "Player.h"
 #include "SharedDefines.h"
 #include "WorldPacket.h"
@@ -135,6 +136,13 @@ bool Sc2ProtocolCanUsePrivateChat(
         return true;
 
     std::string_view body(message.data() + WirePrefix.size(), message.size() - WirePrefix.size());
+    Sc2DecodeResult decoded = DecodeSc2Body(body);
+    if (!decoded.Success)
+    {
+        LOG_WARN("module.solocollections.protocol",
+            "event=protocol_reject result=bad_message account={} character={} bytes={}",
+            player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), body.size());
+    }
     GetSc2Server().SetExternalOwned(
         SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
