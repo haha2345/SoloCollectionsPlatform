@@ -328,8 +328,8 @@ def _parse_legacy_sc1_table(lua_text: str, table_name: str) -> list[dict[str, An
 def _load_legacy_sc1_shadow(repo_root: Path, model: dict[str, Any]) -> dict[str, Any]:
     path = repo_root / "server" / "ale" / "solo_collections.lua"
     try:
-        raw = path.read_bytes()
-        lua_text = raw.decode("utf-8")
+        lua_text = path.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
+        raw = lua_text.encode("utf-8")
     except (OSError, UnicodeDecodeError) as exc:
         raise CatalogError(f"cannot read legacy SC1 bridge {path}: {exc}") from exc
 
