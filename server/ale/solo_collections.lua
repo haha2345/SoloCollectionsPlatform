@@ -13,7 +13,16 @@ local function isEnabled(value)
     return true
 end
 
-local ENABLED = isEnabled(GetConfigValue("SoloCollections.Enabled"))
+local function getBackendMode()
+    local value = GetConfigValue("SoloCollections.Backend")
+    if value == nil or value == "" then
+        return "compare"
+    end
+    return string.lower(tostring(value))
+end
+
+local BACKEND = getBackendMode()
+local ENABLED = isEnabled(GetConfigValue("SoloCollections.Enabled")) and BACKEND ~= "cpp"
 local PREFIX = "SC1"
 local REQUEST = "HELLO|1"
 local RESPONSE = "HELLO_ACK|1|DEMO"
@@ -32,7 +41,7 @@ local function logInfo(message)
     end
 end
 
-logInfo("event=sc1_bridge_load enabled=" .. tostring(ENABLED))
+logInfo("event=sc1_bridge_load enabled=" .. tostring(ENABLED) .. " backend=" .. BACKEND)
 
 local MOUNTS = {
     [1] = { creatureId = 24379, spellId = 43688, collected = true },
@@ -500,4 +509,8 @@ local function onAddonMessage(event, sender, messageType, prefix, message, targe
     return true
 end
 
-RegisterServerEvent(30, onAddonMessage)
+if ENABLED then
+    RegisterServerEvent(30, onAddonMessage)
+else
+    logInfo("event=sc1_bridge_register result=disabled backend=" .. BACKEND)
+end

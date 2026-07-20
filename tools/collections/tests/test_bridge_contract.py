@@ -441,6 +441,14 @@ class BridgeContractTests(unittest.TestCase):
             'event=sc1_handshake result=accepted',
         ):
             self.assertIn(observable, text)
+        for ownership_guard in (
+            'GetConfigValue("SoloCollections.Backend")',
+            'return "compare"',
+            'BACKEND ~= "cpp"',
+            'if ENABLED then\n    RegisterServerEvent(30, onAddonMessage)',
+            'event=sc1_bridge_register result=disabled backend=',
+        ):
+            self.assertIn(ownership_guard, text)
         for forbidden in (
             "WorldDBQuery",
             "CharDBQuery",
