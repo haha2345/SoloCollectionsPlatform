@@ -24,3 +24,15 @@ must not be used for a GitHub release.
 for manual distribution: AddOn zip, ALE Lua, SoloCam DLL/patcher, the two MPQs,
 two release READMEs, and `SHA256SUMS.txt`. It refuses to overwrite an existing
 version directory. Binary distribution rights still require a separate audit.
+
+## Unified C++ backend release
+
+`tools/release/build_unified_release.py` is the release path for the unified
+backend. It packages the AddOn and `mod-solo-collections` from committed Git
+objects, records the three repository commits and compatibility versions, and
+creates `release-manifest.json` plus `SHA256SUMS.txt`. It rejects client
+EXE/DLL/MPQ files, database credentials, and Windows-local absolute paths.
+
+The older PowerShell packagers remain historical/local-media tooling and must
+not be used to publish the unified backend because they include the retired ALE
+bridge and optional client media.
