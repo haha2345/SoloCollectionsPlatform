@@ -531,19 +531,6 @@ TransmogApplyResult AppearanceService::TryApplyCollectedAppearances(Player* play
         player, appearances, interactionGuid, source, noCost);
 }
 
-TransmogApplyResult AppearanceService::TryApplyCollectedPreset(Player* player,
-    std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid)
-{
-#ifdef PRESETS
-    return sTransmogrification->TryApplyCollectedPreset(player, appearances, interactionGuid);
-#else
-    (void)player;
-    (void)appearances;
-    (void)interactionGuid;
-    return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
-#endif
-}
-
 TransmogApplyResult AppearanceService::TryApplyCanonicalAppearance(Player* player,
     CollectionId appearanceId, std::uint8_t slot, ObjectGuid interactionGuid,
     TransmogApplySource source, bool noCost)

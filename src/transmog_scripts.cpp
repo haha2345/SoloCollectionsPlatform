@@ -21,6 +21,7 @@ Cant transmogrify rediculus items // Foereaper: would be fun to stab people with
 */
 #include "Transmogrification.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
+#include "SoloCollectionsOutfitService.h"
 #include "Chat.h"
 #include "ScriptedCreature.h"
 #include "ItemTemplate.h"
@@ -323,10 +324,14 @@ public:
                 }
                 if (sT->GetEnableSetInfo())
                     AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/INV_Misc_Book_11:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_HOWSETSWORK), EQUIPMENT_SLOT_END + 10, 0);
-                for (Transmogrification::presetIdMap::const_iterator it = sT->presetByName[player->GetGUID()].begin(); it != sT->presetByName[player->GetGUID()].end(); ++it)
-                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/INV_Misc_Statue_02:30:30:-18:0|t" + it->second, EQUIPMENT_SLOT_END + 6, it->first);
+                SoloCollections::OutfitService::OutfitMap const& outfits =
+                    SoloCollections::GetOutfitService().List(player->GetGUID());
+                for (auto const& [outfitId, outfit] : outfits)
+                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG,
+                        "|TInterface/ICONS/INV_Misc_Statue_02:30:30:-18:0|t" + outfit.Name,
+                        EQUIPMENT_SLOT_END + 6, outfitId);
 
-                if (sT->presetByName[player->GetGUID()].size() < sT->GetMaxSets())
+                if (outfits.size() < sT->GetMaxSets())
                     AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/GuildBankFrame/UI-GuildBankFrame-NewTab:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_SAVESET), EQUIPMENT_SLOT_END + 8, 0);
                 AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_BACK), EQUIPMENT_SLOT_END + 1, 0);
                 SendGossipMenuFor(player, DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
@@ -338,24 +343,8 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                auto playerPresets = sT->presetById.find(player->GetGUID());
-                if (playerPresets == sT->presetById.end())
-                {
-                    ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SRC_ENTRY));
-                    OnGossipHello(player, creature);
-                    return true;
-                }
-
-                auto preset = playerPresets->second.find(action);
-                if (preset == playerPresets->second.end())
-                {
-                    ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SRC_ENTRY));
-                    OnGossipHello(player, creature);
-                    return true;
-                }
-
-                TransmogApplyResult result = SoloCollections::GetAppearanceService().TryApplyCollectedPreset(
-                    player, preset->second, creature->GetGUID());
+                TransmogApplyResult result = SoloCollections::GetOutfitService().Apply(
+                    player, static_cast<uint8>(action), creature->GetGUID());
                 if (!result.IsSuccess())
                     ChatHandler(session).SendNotification(Tstr(session, result.Code));
                 OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 6, action);
@@ -367,12 +356,23 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                // action = presetID
-                for (Transmogrification::slotMap::const_iterator it = sT->presetById[player->GetGUID()][action].begin(); it != sT->presetById[player->GetGUID()][action].end(); ++it)
-                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, sT->GetItemIcon(it->second, 30, 30, -18, 0) + sT->GetItemLink(it->second, session), sender, action);
+                SoloCollections::OutfitRecord const* outfit =
+                    SoloCollections::GetOutfitService().Find(player->GetGUID(), static_cast<uint8>(action));
+                if (!outfit)
+                {
+                    ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SRC_ENTRY));
+                    OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 4, 0);
+                    return true;
+                }
+                for (auto const& [slot, entry] : outfit->Appearances)
+                {
+                    (void)slot;
+                    AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG,
+                        sT->GetItemIcon(entry, 30, 30, -18, 0) + sT->GetItemLink(entry, session), sender, action);
+                }
 
-                AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/INV_Misc_Statue_02:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_USESET), EQUIPMENT_SLOT_END + 5, action, Tstr(session, LANG_TRANSMOG_CONFIRM_USESET) + sT->presetByName[player->GetGUID()][action], 0, false);
-                AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/PaperDollInfoFrame/UI-GearManager-LeaveItem-Opaque:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_DELETESET), EQUIPMENT_SLOT_END + 7, action, Tstr(session, LANG_TRANSMOG_CONFIRM_DELETESET) + sT->presetByName[player->GetGUID()][action] + "?", 0, false);
+                AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/INV_Misc_Statue_02:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_USESET), EQUIPMENT_SLOT_END + 5, action, Tstr(session, LANG_TRANSMOG_CONFIRM_USESET) + outfit->Name, 0, false);
+                AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/PaperDollInfoFrame/UI-GearManager-LeaveItem-Opaque:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_DELETESET), EQUIPMENT_SLOT_END + 7, action, Tstr(session, LANG_TRANSMOG_CONFIRM_DELETESET) + outfit->Name + "?", 0, false);
                 AddGossipItemFor(player, GOSSIP_ICON_MONEY_BAG, "|TInterface/ICONS/Ability_Spy:30:30:-18:0|t" + Tstr(session, LANG_TRANSMOG_BACK), EQUIPMENT_SLOT_END + 4, 0);
                 SendGossipMenuFor(player, DEFAULT_GOSSIP_MESSAGE, creature->GetGUID());
             } break;
@@ -383,17 +383,17 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                // action = presetID
-                CharacterDatabase.Execute("DELETE FROM `custom_transmogrification_sets` WHERE Owner = {} AND PresetID = {}", player->GetGUID().GetCounter(), action);
-                sT->presetById[player->GetGUID()][action].clear();
-                sT->presetById[player->GetGUID()].erase(action);
-                sT->presetByName[player->GetGUID()].erase(action);
+                TransmogApplyResult result = SoloCollections::GetOutfitService().Delete(
+                    player, static_cast<uint8>(action));
+                if (!result.IsSuccess())
+                    ChatHandler(session).SendNotification(Tstr(session, result.Code));
 
                 OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 4, 0);
             } break;
             case EQUIPMENT_SLOT_END + 8: // Save preset
             {
-                if (!sT->GetEnableSets() || sT->presetByName[player->GetGUID()].size() >= sT->GetMaxSets())
+                if (!sT->GetEnableSets() ||
+                    SoloCollections::GetOutfitService().List(player->GetGUID()).size() >= sT->GetMaxSets())
                 {
                     OnGossipHello(player, creature);
                     return true;
@@ -472,62 +472,9 @@ public:
             OnGossipHello(player, creature);
             return true;
         }
-        std::string name(code);
-        if (name.find('"') != std::string::npos || name.find('\\') != std::string::npos)
-            ChatHandler(player->GetSession()).SendNotification(Tstr(player->GetSession(), LANG_TRANSMOG_PRESET_ERR_INVALID_NAME));
-        else
-        {
-            for (uint8 presetID = 0; presetID < sT->GetMaxSets(); ++presetID) // should never reach over max
-            {
-                if (sT->presetByName[player->GetGUID()].find(presetID) != sT->presetByName[player->GetGUID()].end())
-                    continue; // Just remember never to use presetByName[pGUID][presetID] when finding etc!
-
-                int32 cost = 0;
-                std::map<uint8, uint32> items;
-                for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
-                {
-                    if (!sT->GetSlotName(slot, player->GetSession()))
-                        continue;
-                    if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
-                    {
-                        uint32 entry = sT->GetFakeEntry(newItem->GetGUID());
-                        if (!entry)
-                            continue;
-                        if (entry != HIDDEN_ITEM_ID)
-                        {
-                            const ItemTemplate* temp = sObjectMgr->GetItemTemplate(entry);
-                            if (!temp)
-                                continue;
-                            if (!sT->SuitableForTransmogrification(player, temp))
-                                continue;
-                            cost += sT->GetSpecialPrice(temp);
-                        }
-                        items[slot] = entry;
-                    }
-                }
-                if (items.empty())
-                    break; // no transmogrified items were found to be saved
-                cost *= sT->GetSetCostModifier();
-                cost += sT->GetSetCopperCost();
-                if (!player->HasEnoughMoney(cost))
-                {
-                    ChatHandler(player->GetSession()).SendNotification(Tstr(player->GetSession(), LANG_TRANSMOG_NOT_ENOUGH_MONEY));
-                    break;
-                }
-
-                std::ostringstream ss;
-                for (std::map<uint8, uint32>::iterator it = items.begin(); it != items.end(); ++it)
-                {
-                    ss << uint32(it->first) << ' ' << it->second << ' ';
-                    sT->presetById[player->GetGUID()][presetID][it->first] = it->second;
-                }
-                sT->presetByName[player->GetGUID()][presetID] = name; // Make sure code doesnt mess up SQL!
-                CharacterDatabase.Execute("REPLACE INTO `custom_transmogrification_sets` (`Owner`, `PresetID`, `SetName`, `SetData`) VALUES ({}, {}, \"{}\", \"{}\")", player->GetGUID().GetCounter(), uint32(presetID), name, ss.str());
-                if (cost)
-                    player->ModifyMoney(-cost);
-                break;
-            }
-        }
+        TransmogApplyResult result = SoloCollections::GetOutfitService().Save(player, code);
+        if (!result.IsSuccess())
+            ChatHandler(player->GetSession()).SendNotification(Tstr(player->GetSession(), result.Code));
         //OnGossipSelect(player, creature, EQUIPMENT_SLOT_END+4, 0);
         CloseGossipMenuFor(player); // Wait for SetMoney to get fixed, issue #10053
         return true;

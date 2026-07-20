@@ -15,6 +15,7 @@ APPEARANCE_HEADER = (ROOT / "src" / "Categories" / "Appearance" /
 APPEARANCE_SERVICE = (ROOT / "src" / "Categories" / "Appearance" /
                       "SoloCollectionsAppearanceService.cpp").read_text(encoding="utf-8")
 CORE = (ROOT / "src" / "SoloCollectionsCore.cpp").read_text(encoding="utf-8")
+OUTFIT_SERVICE = (ROOT / "src" / "SoloCollectionsOutfitService.cpp").read_text(encoding="utf-8")
 
 
 class AppearanceAuthorizationContractTests(unittest.TestCase):
@@ -48,13 +49,13 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         self.assertIn("IsTransmogVendor(interaction->GetEntry())", IMPLEMENTATION)
         self.assertIn("summon->GetOwner() != player", IMPLEMENTATION)
 
-    def test_gossip_vendor_and_presets_all_use_the_facade(self):
+    def test_gossip_vendor_and_outfits_all_use_the_facade(self):
         calls = re.findall(r"GetAppearanceService\(\)\.TryApplyCollectedAppearance\s*\([^;]+;", SCRIPTS, re.DOTALL)
         self.assertEqual(1, len(calls))
-        self.assertEqual(1, SCRIPTS.count("GetAppearanceService().TryApplyCollectedPreset("))
+        self.assertEqual(1, SCRIPTS.count("GetOutfitService().Apply("))
         self.assertIn("TransmogApplySource::Gossip", SCRIPTS)
         self.assertIn("TransmogApplySource::Vendor", SCRIPTS)
-        self.assertIn("TransmogApplySource::Preset", IMPLEMENTATION)
+        self.assertIn("TransmogApplySource::Outfit", OUTFIT_SERVICE)
 
     def test_missing_selection_cannot_default_to_equipment_slot_zero(self):
         indexed_access = "selectionCache[player->GetGUID()]"
@@ -111,24 +112,20 @@ class AtomicApplyContractTests(unittest.TestCase):
         self.assertNotIn("ModifyMoney", preflight)
         self.assertNotIn("transaction->Append", preflight)
 
-    def test_multi_slot_preset_is_preflighted_and_committed_once(self):
+    def test_multi_slot_outfit_is_preflighted_and_committed_once(self):
         single = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::TryApplyCollectedAppearance", 1
         )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedAppearances", 1)[0]
         multi = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::TryApplyCollectedAppearances", 1
-        )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedPreset", 1)[0]
-        preset = IMPLEMENTATION.split(
-            "TransmogApplyResult Transmogrification::TryApplyCollectedPreset", 1
-        )[1].split("#endif", 1)[0]
-        self.assertIn("source == TransmogApplySource::Preset", single)
+        )[1].split("bool Transmogrification::CanTransmogrifyItemWithItem", 1)[0]
+        self.assertIn("source == TransmogApplySource::Outfit", single)
         self.assertIn("TryApplyCollectedAppearances", single)
         self.assertIn("PreflightApply(player, requests", multi)
         self.assertIn("CommitApplyPlan(player, plan)", multi)
-        self.assertIn("TryApplyCollectedAppearances", preset)
-        self.assertIn("TransmogApplySource::Preset, true", preset)
-        self.assertEqual(1, SCRIPTS.count("TryApplyCollectedPreset("))
-        self.assertNotRegex(SCRIPTS, r"for \([^)]*preset[^)]*\)[\s\S]{0,500}TryApplyCollectedAppearance")
+        self.assertIn("TryApplyCollectedAppearances", OUTFIT_SERVICE)
+        self.assertIn("TransmogApplySource::Outfit, true", OUTFIT_SERVICE)
+        self.assertNotIn("TryApplyCollectedPreset", SCRIPTS + IMPLEMENTATION)
 
     def test_database_success_precedes_cost_and_cache_mutation(self):
         commit = IMPLEMENTATION.split(

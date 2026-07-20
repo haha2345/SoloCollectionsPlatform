@@ -50,7 +50,7 @@ enum class TransmogApplySource : uint8
 {
     Gossip,
     Vendor,
-    Preset,
+    Outfit,
     Addon
 };
 
@@ -213,13 +213,6 @@ public:
     bool EnableSetInfo;
     uint32 SetNpcText;
 
-    typedef std::map<uint8, uint32> slotMap;
-    typedef std::map<uint8, slotMap> presetData;
-    typedef std::unordered_map<ObjectGuid, presetData> presetDataMap;
-    presetDataMap presetById; // presetById[pGUID][presetID][slot] = entry
-    typedef std::map<uint8, std::string> presetIdMap;
-    typedef std::unordered_map<ObjectGuid, presetIdMap> presetNameMap;
-    presetNameMap presetByName; // presetByName[pGUID][presetID] = presetName
     searchStringMap searchStringByPlayer;
 
     bool EnableSets;
@@ -306,10 +299,6 @@ public:
     TransmogApplyResult TryApplyCollectedAppearances(Player* player,
         std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
         TransmogApplySource source, bool noCost = false);
-#ifdef PRESETS
-    TransmogApplyResult TryApplyCollectedPreset(Player* player, slotMap const& appearances,
-        ObjectGuid interactionGuid);
-#endif
     bool CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     bool SuitableForTransmogrification(Player* player, ItemTemplate const* proto) const;
     bool SuitableForTransmogrification(ObjectGuid guid, ItemTemplate const* proto) const;

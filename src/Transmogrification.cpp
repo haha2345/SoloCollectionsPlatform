@@ -1,5 +1,6 @@
 #include "Transmogrification.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
+#include "SoloCollectionsOutfitService.h"
 #include "ItemTemplate.h"
 #include "DatabaseEnv.h"
 #include "SpellMgr.h"
@@ -47,53 +48,7 @@ Transmogrification* Transmogrification::instance()
 #ifdef PRESETS
 void Transmogrification::LoadPlayerSets(ObjectGuid pGUID)
 {
-    LOG_DEBUG("module", "Transmogrification::LoadPlayerSets");
-
-    for (presetData::iterator it = presetById[pGUID].begin(); it != presetById[pGUID].end(); ++it)
-        it->second.clear();
-
-    presetById[pGUID].clear();
-
-    presetByName[pGUID].clear();
-
-    QueryResult result = CharacterDatabase.Query("SELECT `PresetID`, `SetName`, `SetData` FROM `custom_transmogrification_sets` WHERE Owner = {}", pGUID.GetCounter());
-    if (result)
-    {
-        do
-        {
-            uint8 PresetID = (*result)[0].Get<uint8>();
-            std::string SetName = (*result)[1].Get<std::string>();
-            std::istringstream SetData((*result)[2].Get<std::string>());
-            while (SetData.good())
-            {
-                uint32 slot;
-                uint32 entry;
-                SetData >> slot >> entry;
-                if (SetData.fail())
-                    break;
-                if (slot >= EQUIPMENT_SLOT_END)
-                {
-                    LOG_ERROR("module", "Item entry (FakeEntry: {}, player: {}, slot: {}, presetId: {}) has invalid slot, ignoring.", entry, pGUID.ToString(), slot, PresetID);
-                    continue;
-                }
-                if (entry == HIDDEN_ITEM_ID || sObjectMgr->GetItemTemplate(entry))
-                    presetById[pGUID][PresetID][slot] = entry; // Transmogrification::Preset(presetName, fakeEntry);
-            }
-
-            if (!presetById[pGUID][PresetID].empty())
-            {
-                presetByName[pGUID][PresetID] = SetName;
-                // load all presets anyways
-                //if (presetByName[pGUID].size() >= GetMaxSets())
-                //    break;
-            }
-            else // should be deleted on startup, so  this never runs (shouldnt..)
-            {
-                presetById[pGUID].erase(PresetID);
-                CharacterDatabase.Execute("DELETE FROM `custom_transmogrification_sets` WHERE Owner = {} AND PresetID = {}", pGUID.GetCounter(), PresetID);
-            }
-        } while (result->NextRow());
-    }
+    SoloCollections::GetOutfitService().Load(pGUID);
 }
 
 bool Transmogrification::GetEnableSets() const
@@ -115,11 +70,7 @@ int32 Transmogrification::GetSetCopperCost() const
 
 void Transmogrification::UnloadPlayerSets(ObjectGuid pGUID)
 {
-    for (presetData::iterator it = presetById[pGUID].begin(); it != presetById[pGUID].end(); ++it)
-        it->second.clear();
-    presetById[pGUID].clear();
-
-    presetByName[pGUID].clear();
+    SoloCollections::GetOutfitService().Unload(pGUID);
 }
 #endif
 
@@ -536,7 +487,7 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
     if (!player || !player->GetSession() || requests.empty())
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
-    if (noCost && source != TransmogApplySource::Preset)
+    if (noCost && source != TransmogApplySource::Outfit)
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
     if (TransmogStrings interactionResult = ValidateApplyInteraction(player, interactionGuid, source);
@@ -699,7 +650,7 @@ TransmogApplyResult Transmogrification::CommitApplyPlan(Player* player, Appearan
 TransmogApplyResult Transmogrification::TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
     ObjectGuid interactionGuid, TransmogApplySource source, bool noCost)
 {
-    if (source == TransmogApplySource::Preset)
+    if (source == TransmogApplySource::Outfit)
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
     return TryApplyCollectedAppearances(
@@ -721,15 +672,6 @@ TransmogApplyResult Transmogrification::TryApplyCollectedAppearances(Player* pla
     TransmogApplyResult result = PreflightApply(player, requests, interactionGuid, source, noCost, plan);
     return result.IsSuccess() ? CommitApplyPlan(player, plan) : result;
 }
-
-#ifdef PRESETS
-TransmogApplyResult Transmogrification::TryApplyCollectedPreset(Player* player, slotMap const& appearances,
-    ObjectGuid interactionGuid)
-{
-    return TryApplyCollectedAppearances(
-        player, appearances, interactionGuid, TransmogApplySource::Preset, true);
-}
-#endif
 
 bool Transmogrification::CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* target, ItemTemplate const* source) const
 {

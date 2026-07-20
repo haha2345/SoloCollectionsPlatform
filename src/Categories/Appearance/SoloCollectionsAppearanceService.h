@@ -95,8 +95,6 @@ public:
     [[nodiscard]] TransmogApplyResult TryApplyCollectedAppearances(Player* player,
         std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid,
         TransmogApplySource source, bool noCost = false);
-    [[nodiscard]] TransmogApplyResult TryApplyCollectedPreset(Player* player,
-        std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid);
     [[nodiscard]] TransmogApplyResult TryApplyCanonicalAppearance(Player* player,
         CollectionId appearanceId, std::uint8_t slot, ObjectGuid interactionGuid,
         TransmogApplySource source, bool noCost = false);
