@@ -855,10 +855,21 @@ feat: deliver authoritative account-wide mount collection
 
 ### 任务 7.1：小宠物 provider
 
+状态：✅ 已完成（SoloCollections `71ebe41`；mod-solo-collections `d53de36`；
+toggle 状态修复 `0a0dc42` / `ad183c4`）
+
 - 候选只来自 companion/critter allowlist。
 - 排除猎人宠物、术士宠物、guardian 和任务临时召唤。
 - 实现账号解锁、召唤、替换、同一宠物 toggle 和状态校正。
 - 传送、地图切换、死亡、登出后不误操作战斗宠物。
+
+完成记录：正式目录只接受 24 条人工审核的 companion spell allowlist，生成稳定
+`collectionId=100281..100304` 的客户端/服务端目录；猎人宠物、术士宠物、guardian
+和任务临时召唤没有推断或兜底入口。账号解锁复用统一 mutation 队列、revision、SC2 delta
+和数据库表；召唤动作仅接受逻辑 collectionId，并由服务端解析 allowlist spell。实机在账号 1
+上验证了未拥有 `100283` 返回 `NOT_OWNED` 且不影响当前宠物；`100281` 召唤座狼幼崽后，
+`100282` 成功替换为烟网小蜘蛛；再次召唤同一宠物返回 `DISMISSED` 且实体消失。服务重启并
+重新登录后收到 `Ready 6 true`，已有宠物收藏仍可召唤，数据库最终保存两个宠物 unlock。
 
 建议提交：
 
@@ -868,11 +879,31 @@ feat: add account-wide companion collection
 
 ### 任务 7.2：玩具 provider 和 action registry
 
+状态：✅ 已完成（SoloCollections `71ebe41`；mod-solo-collections `d53de36`）
+
 - 不从“存在 Use Spell”自动推断玩具。
 - 人工目录声明 `SPELL_SELF`、`SPELL_TARGET`、`ITEM_USE` 或 `CUSTOM_HANDLER`。
 - 每个 handler 明确冷却、目标、区域、节日、专业、战斗和材料语义。
 - 传送、生成物品、经济变化和持久对象动作要求幂等/replay 防护。
 - 冷却采用角色级或账号级必须由每条目录明确声明。
+
+完成记录：首批四条显式目录分别覆盖 `SPELL_SELF`（辛多雷宝珠，`100305`）、
+`SPELL_TARGET`（艾露恩的蜡烛，`100306`）、`ITEM_USE`（钓鱼椅，`100307`）和
+`CUSTOM_HANDLER`（不寻常的指南针，`100308`）；每条记录独立声明 item、spell、目标、
+冷却作用域和处理器，不存在从 Use Spell 自动收录的路径。动作入口在服务端完成 owned、
+目录 hash、nonce、目标、冷却和 replay 校验后再执行。实机确认四条收藏把账号 revision
+从 7 连续提升到 11；辛多雷宝珠产生血精灵幻象，蜡烛无目标返回 `INVALID_REQUEST`、有目标
+返回 `ACCEPTED`，钓鱼椅完成施法并生成可见座椅，再次请求稳定拒绝且不生成第二个对象，
+指南针返回 `ACCEPTED` 并执行旋转效果；不存在的 `100309` 返回 `INVALID_REQUEST`。
+数据库最终保存四条 `typeId=12` unlock，revision 分别为 8、9、10、11。
+
+阶段验收：✅ 已完成。155 项 SoloCollections Python 测试、71 项模块 Python 测试、两个
+MSVC 原生测试目标、目录生成确定性与 hash 校验、真实 AzerothCore Release worldserver
+全量编译均通过。最终部署二进制 SHA-256 为
+`8ED6F6B74C1818F91D26BD201656D47EF86BF066EB9211C3C9A866C7D76DD427`；实机覆盖账号级
+解锁、服务重启恢复、小宠物召唤/替换/toggle、四类玩具动作以及未拥有、缺目标、重复请求和
+无效逻辑 ID 的稳定失败语义。账号 1 的 `sc_account_state.revision=11`，对应宠物与玩具六条
+unlock 按 revision 6..11 连续持久化。
 
 建议提交：
 
