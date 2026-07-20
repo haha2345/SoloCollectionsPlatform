@@ -71,6 +71,32 @@ local function showAppearanceActionResult(ok, reason)
     end
 end
 
+local function showSetActionResult(ok, reason)
+    local message
+    if ok then
+        message = "套装外观已原子应用。"
+    elseif reason == "NOT_OWNED" then
+        message = "尚未收集完整套装。"
+    elseif reason == "INVALID_TARGET_SLOT" then
+        message = "需要先在套装的每个目标栏位装备物品。"
+    elseif reason == "CLASS_RESTRICTED" then
+        message = "当前角色无法使用这个套装外观。"
+    elseif reason == "NOT_ENOUGH_MONEY" then
+        message = "你没有足够的钱。"
+    elseif reason == "NOT_ENOUGH_TOKENS" then
+        message = "你的筹码不够。"
+    elseif reason == "BRIDGE_UNAVAILABLE" then
+        message = "统一收藏服务尚未就绪。"
+    else
+        message = "套装应用失败：" .. tostring(reason or "UNKNOWN")
+    end
+    if UIErrorsFrame and UIErrorsFrame.AddMessage then
+        UIErrorsFrame:AddMessage(message, ok and 0.35 or 1, ok and 1 or 0.35, 0.2, 1)
+    elseif DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage("|cffff9f40SoloCollections:|r " .. message)
+    end
+end
+
 -- Retail obtains an appearance-specific UI camera from client data. That API
 -- does not exist in 3.3.5, so the same 18-model layout uses slot-specific
 -- camera profiles built from the WotLK DressUpModel API. SetCamera establishes
@@ -1162,6 +1188,14 @@ function UI.CreateWardrobePage(parent)
     reset:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -14, 13)
     reset:SetText("重置视角")
 
+    local applySet = CreateFrame("Button", nil, preview, "UIPanelButtonTemplate")
+    applySet:SetWidth(104)
+    applySet:SetHeight(25)
+    applySet:SetPoint("RIGHT", reset, "LEFT", -8, 0)
+    applySet:SetText("应用套装")
+    applySet:Disable()
+    page.scApplySet = applySet
+
     local pieces = CreateFrame("Frame", nil, preview)
     pieces:SetPoint("TOP", name, "BOTTOM", 0, -8)
     pieces:SetWidth((8 * SET_PIECE_SIZE) + (7 * SET_PIECE_SPACING))
@@ -1274,6 +1308,8 @@ function UI.CreateWardrobePage(parent)
 
     local function previewSet(record)
         if not record then return end
+        page.scSetSelectedRecord = record
+        if record.collected then applySet:Enable() else applySet:Disable() end
         model:ClearAllPoints()
         model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, -84)
         model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
@@ -1339,6 +1375,16 @@ function UI.CreateWardrobePage(parent)
         end
     end)
     reset:SetScript("OnClick", resetModelView)
+    applySet:SetScript("OnClick", function()
+        local record = page.scSetSelectedRecord
+        if not record or not record.collected then
+            showSetActionResult(false, "NOT_OWNED")
+        elseif not SC.Bridge or not SC.Bridge.ApplySet then
+            showSetActionResult(false, "BRIDGE_UNAVAILABLE")
+        else
+            SC.Bridge.ApplySet(record.id, nil, showSetActionResult)
+        end
+    end)
 
     local function selectItem(record)
         page.scItemSelectedId = record and record.id or nil
@@ -1846,6 +1892,8 @@ function UI.CreateWardrobePage(parent)
     function page:ClearSelection()
         self.scItemSelectedId = nil
         self.scSetSelectedId = nil
+        self.scSetSelectedRecord = nil
+        applySet:Disable()
         for _, itemModel in ipairs(self.scItemModels) do
             itemModel.scSelected:Hide()
         end

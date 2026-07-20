@@ -1227,6 +1227,11 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("local collectedPieces = tonumber(record.collectedCount) or 0", text)
         self.assertIn("local requiredPieces = tonumber(record.requiredCount) or #(record.itemIds or {})", text)
         self.assertNotIn('setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #(record.itemIds or {}))', text)
+        bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        self.assertIn("function B.ApplySet(collectionId, variantIndex, callback)", bridge)
+        self.assertIn('B.RequestSC2Action(14, collectionId, "APPLY", variantIndex, callback)', bridge)
+        self.assertIn('applySet:SetText("应用套装")', text)
+        self.assertIn("SC.Bridge.ApplySet(record.id, nil, showSetActionResult)", text)
 
     def test_wardrobe_set_view_ignores_item_slot_filter(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")

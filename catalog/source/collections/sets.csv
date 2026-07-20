@@ -1,9 +1,9 @@
 typeKey,collectionId,collectionKey,ordinal,lifecycle,name_enUS,name_zhCN,policyKey,sourceBuild,sourceKind,sourceId,actionKind,actionId,assetReady,assetProfile,aliases
-set,300000,set.arcanist_regalia,18499,active,Arcanist Regalia,奥术师套装,unrestricted,3.3.5.12340,item_set,201,,0,true,wotlk_native,itemset:201|variant:tier1
-set,300001,set.felheart_raiment,18500,active,Felheart Raiment,恶魔之心套装,unrestricted,3.3.5.12340,item_set,203,,0,true,wotlk_native,itemset:203|variant:tier1
-set,300002,set.nightslayer_armor,18501,active,Nightslayer Armor,夜幕杀手套装,unrestricted,3.3.5.12340,item_set,204,,0,true,wotlk_native,itemset:204|variant:tier1
-set,300003,set.cenarion_raiment,18502,active,Cenarion Raiment,塞纳里奥套装,unrestricted,3.3.5.12340,item_set,205,,0,true,wotlk_native,itemset:205|variant:tier1
-set,300004,set.giantstalker_armor,18503,active,Giantstalker Armor,巨人追猎者套装,unrestricted,3.3.5.12340,item_set,206,,0,true,wotlk_native,itemset:206|variant:tier1
-set,300005,set.earthfury,18504,active,The Earthfury,大地之怒套装,unrestricted,3.3.5.12340,item_set,207,,0,true,wotlk_native,itemset:207|variant:tier1
-set,300006,set.lawbringer_armor,18505,active,Lawbringer Armor,秩序之源套装,unrestricted,3.3.5.12340,item_set,208,,0,true,wotlk_native,itemset:208|variant:tier1
-set,300007,set.battlegear_of_might,18506,active,Battlegear of Might,力量套装,unrestricted,3.3.5.12340,item_set,209,,0,true,wotlk_native,itemset:209|variant:tier1
+set,300000,set.arcanist_regalia,18499,active,Arcanist Regalia,奥术师套装,unrestricted,3.3.5.12340,item_set,201,APPLY,300000,true,wotlk_native,itemset:201|variant:tier1
+set,300001,set.felheart_raiment,18500,active,Felheart Raiment,恶魔之心套装,unrestricted,3.3.5.12340,item_set,203,APPLY,300001,true,wotlk_native,itemset:203|variant:tier1
+set,300002,set.nightslayer_armor,18501,active,Nightslayer Armor,夜幕杀手套装,unrestricted,3.3.5.12340,item_set,204,APPLY,300002,true,wotlk_native,itemset:204|variant:tier1
+set,300003,set.cenarion_raiment,18502,active,Cenarion Raiment,塞纳里奥套装,unrestricted,3.3.5.12340,item_set,205,APPLY,300003,true,wotlk_native,itemset:205|variant:tier1
+set,300004,set.giantstalker_armor,18503,active,Giantstalker Armor,巨人追猎者套装,unrestricted,3.3.5.12340,item_set,206,APPLY,300004,true,wotlk_native,itemset:206|variant:tier1
+set,300005,set.earthfury,18504,active,The Earthfury,大地之怒套装,unrestricted,3.3.5.12340,item_set,207,APPLY,300005,true,wotlk_native,itemset:207|variant:tier1
+set,300006,set.lawbringer_armor,18505,active,Lawbringer Armor,秩序之源套装,unrestricted,3.3.5.12340,item_set,208,APPLY,300006,true,wotlk_native,itemset:208|variant:tier1
+set,300007,set.battlegear_of_might,18506,active,Battlegear of Might,力量套装,unrestricted,3.3.5.12340,item_set,209,APPLY,300007,true,wotlk_native,itemset:209|variant:tier1

@@ -73,6 +73,13 @@ class SetCatalogTests(unittest.TestCase):
         self.assertNotIn("set_collected", catalog + sets)
         self.assertNotIn("collected = true", sets)
 
+    def test_sets_publish_apply_actions_using_logical_set_ids(self):
+        manifest = json.loads((ROOT / "catalog/generated/catalog-manifest.json").read_text(encoding="utf-8"))
+        rows = [row for row in manifest["collections"] if row["typeKey"] == "set"]
+        self.assertEqual(8, len(rows))
+        self.assertTrue(all(row["actionKind"] == "APPLY" for row in rows))
+        self.assertTrue(all(row["actionId"] == row["collectionId"] for row in rows))
+
 
 if __name__ == "__main__":
     unittest.main()

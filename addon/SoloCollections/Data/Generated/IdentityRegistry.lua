@@ -519,7 +519,7 @@ SoloCollections.GeneratedIdentityData = {
             sourceId = 11
         }
     },
-    mappingHash = "deddbe3a001411c5e293ff85c33ac284e317b9132456798449c54a0bb7eca762",
+    mappingHash = "b2144a049c8e9bf06c1df019e78a353b331788792c02bee2411e13757ebf5054",
     races = {
         {
             aliases = {
