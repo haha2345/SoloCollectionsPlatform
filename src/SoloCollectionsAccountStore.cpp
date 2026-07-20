@@ -380,7 +380,7 @@ public:
             "SELECT 0 AS row_kind, CASE WHEN EXISTS(SELECT 1 FROM sc_migration_marker "
             "WHERE account_id = {} AND migration_id = {} AND migration_version >= {}) THEN 1 ELSE 0 END AS value "
             "UNION ALL SELECT 1 AS row_kind, cs.spell AS value FROM character_spell cs "
-            "INNER JOIN characters c ON c.guid = cs.guid WHERE c.account = {} AND cs.disabled = 0 "
+            "INNER JOIN characters c ON c.guid = cs.guid WHERE c.account = {} "
             "AND NOT EXISTS(SELECT 1 FROM sc_migration_marker WHERE account_id = {} AND migration_id = {} "
             "AND migration_version >= {})",
             request.Account.Value(), request.MigrationId, request.MigrationVersion, request.Account.Value(),

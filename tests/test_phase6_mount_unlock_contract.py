@@ -37,7 +37,7 @@ class MountUnlockContractTests(unittest.TestCase):
         self.assertIn("sc_migration_marker", STORE_CPP)
         self.assertIn("migration_version >=", STORE_CPP)
         self.assertIn("character_spell", STORE_CPP)
-        self.assertIn("cs.disabled = 0", STORE_CPP)
+        self.assertNotIn("cs.disabled", STORE_CPP)
         self.assertIn("CompleteMigrationMarker", SERVICE)
 
     def test_account_mutations_are_serial_and_emit_revision_deltas(self):
