@@ -1016,7 +1016,7 @@ feat: route appearance unlocks through collection service
 
 ## 14. 阶段 9：套装和玩家 Outfit
 
-阶段状态：🟡 进行中（任务 9.1–9.2 已完成，任务 9.3 待实施）
+阶段状态：✅ 已完成（任务 9.1–9.3 均已完成）
 
 ### 任务 9.1：套装目录和进度
 
@@ -1074,6 +1074,31 @@ canonical appearance，SC2 delta 将列表、成员和详情实时更新为 `8/8
 - 任一失败时零扣费、零部分外观修改。
 
 ### 任务 9.3：分离 Outfit
+
+状态：✅ 已完成（`mod-solo-collections` `859df87`）
+
+- 新增独立 `OutfitService`，以角色 `ObjectGuid` 为唯一缓存和持久化边界；继续兼容
+  `custom_transmogrification_sets`，但不引用账号 ID、`TryUnlock`、通用 unlock 表或套装派生
+  provider，因此 Outfit 既不是正式套装，也不会授予收藏。
+- 首版名称限制为 48 个 UTF-8 字节；拒绝空白名、控制字符和非法 UTF-8，并在写入前调用
+  `CharacterDatabase.EscapeString`。旧记录加载和新记录保存都验证 Outfit ID、最多 19 个槽位、
+  槽位范围、重复槽位及物品模板；无效旧记录 fail closed，不进入运行缓存。
+- 保存和删除使用可确认结果的数据库事务，只有提交成功后才更新内存和扣费；原 Gossip 代码只负责
+  展示和路由，不再拼接玩家输入 SQL，也不再直接维护公开 preset map。
+- Outfit 应用统一调用
+  `TryApplyCollectedAppearances(..., TransmogApplySource::Outfit, true)`，与正式套装复用同一套
+  `PreflightApply` / `CommitApplyPlan` 原子批量管线。
+
+运行证据（账号 1，角色“啊啊水电费”）：通过 Warpweaver 保存两槽 Outfit
+`O'Brien\测试`，数据库按 UTF-8 精确保存名称（HEX
+`4F27427269656E5CE6B58BE8AF95`）和 `SetData = '6 6084 7 2037 '`；退出并重新进入角色后，
+Gossip 仍能显示相同名称和两个成员。验收中将原两条幻化记录可逆移动到保留 owner，确认角色登录
+时两槽均无幻化，再由该 Outfit 一次应用恢复 `1410 -> 6084`、`1411 -> 2037`；应用没有额外扣费，
+账号 revision 保持 89，`type_id = 14` 始终为 0。最终精确删除测试 Outfit、恢复 6 金保存费用并
+重新进入角色；收尾状态为 Outfit 0 条、金币 990268、原两条幻化完整、保留 owner 0 条、revision 89、
+type 14 行数 0。模块 95 项测试、CMake 重新生成、Release worldserver 构建、六 provider 启动均通过；
+部署 worldserver SHA256 为
+`C11D738FD5DE16702F5A1B5E5B7CF3FC69B8B28B0B6966760BB1C3BF53809755`。
 
 - Outfit 是玩家保存方案，不是正式套装，也不授予收藏。
 - 明确首版保存范围：角色级；以后若改账号级必须单独 migration。
