@@ -1,6 +1,7 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsProvider.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 
 #include "Chat.h"
 #include "CommandScript.h"
@@ -302,20 +303,18 @@ public:
             return true;
         }
 
-        QueryResult result = CharacterDatabase.Query(
-            "SELECT "
-            "(SELECT COUNT(*) FROM custom_unlocked_appearances WHERE account_id = {}), "
-            "(SELECT COUNT(*) FROM sc_collection_unlock WHERE account_id = {})",
-            accountId->Value(), accountId->Value());
-        if (!result)
+        AppearanceMigrationReport report = GetAppearanceService().BuildMigrationDryRun(*accountId);
+        if (!report.Ready)
         {
-            handler->SendErrorMessage("SoloCollections {} dry-run query failed.", operation);
+            handler->SendErrorMessage("SoloCollections {} dry-run appearance repository is not ready.", operation);
             return true;
         }
-        Field* fields = result->Fetch();
         handler->PSendSysMessage(
-            "SoloCollections {} dry-run account={} legacy_appearances={} unified_unlocks={} writes=0",
-            operation, accountId->Value(), fields[0].Get<uint64>(), fields[1].Get<uint64>());
+            "SoloCollections {} dry-run account={} legacy={} valid={} canonical={} merged={} unknown={} "
+            "disabled={} missing_template={} conflicts={} writes=0",
+            operation, accountId->Value(), report.LegacySources, report.ValidSources,
+            report.CanonicalGroups, report.MergedSources, report.UnknownSources,
+            report.DisabledSources, report.MissingTemplates, report.Conflicts);
         return true;
     }
 };

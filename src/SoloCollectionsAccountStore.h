@@ -69,9 +69,16 @@ struct AccountStoreDiagnostics
 
 struct MigrationMarkerRequest
 {
+    enum class Source : std::uint8_t
+    {
+        CharacterSpell = 1,
+        LegacyAppearance = 2,
+    };
+
     AccountId Account;
     std::uint32_t MigrationId = 0;
     std::uint16_t MigrationVersion = 0;
+    Source SourceKind = Source::CharacterSpell;
 };
 
 struct MigrationMarkerCompletion : MigrationMarkerRequest
@@ -82,7 +89,7 @@ struct MigrationMarkerCompletion : MigrationMarkerRequest
 };
 
 using MigrationCheckCallback = std::function<void(
-    bool querySucceeded, bool alreadyCompleted, std::vector<std::uint32_t> existingSpellIds)>;
+    bool querySucceeded, bool alreadyCompleted, std::vector<std::uint32_t> sourceIds)>;
 using MigrationCompleteCallback = std::function<void(bool committed)>;
 
 class AccountCollectionEventSink

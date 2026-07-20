@@ -376,14 +376,28 @@ public:
         if (!_pendingMigrationChecks.insert(key).second)
             return false;
 
+        std::string sourceQuery;
+        if (request.SourceKind == MigrationMarkerRequest::Source::CharacterSpell)
+            sourceQuery = Acore::StringFormat(
+                "SELECT 1 AS row_kind, cs.spell AS value FROM character_spell cs "
+                "INNER JOIN characters c ON c.guid = cs.guid WHERE c.account = {} ", request.Account.Value());
+        else if (request.SourceKind == MigrationMarkerRequest::Source::LegacyAppearance)
+            sourceQuery = Acore::StringFormat(
+                "SELECT 1 AS row_kind, item_template_id AS value FROM custom_unlocked_appearances "
+                "WHERE account_id = {} ", request.Account.Value());
+        else
+        {
+            _pendingMigrationChecks.erase(key);
+            return false;
+        }
+
         std::string query = Acore::StringFormat(
             "SELECT 0 AS row_kind, CASE WHEN EXISTS(SELECT 1 FROM sc_migration_marker "
             "WHERE account_id = {} AND migration_id = {} AND migration_version >= {}) THEN 1 ELSE 0 END AS value "
-            "UNION ALL SELECT 1 AS row_kind, cs.spell AS value FROM character_spell cs "
-            "INNER JOIN characters c ON c.guid = cs.guid WHERE c.account = {} "
+            "UNION ALL {}"
             "AND NOT EXISTS(SELECT 1 FROM sc_migration_marker WHERE account_id = {} AND migration_id = {} "
             "AND migration_version >= {})",
-            request.Account.Value(), request.MigrationId, request.MigrationVersion, request.Account.Value(),
+            request.Account.Value(), request.MigrationId, request.MigrationVersion, sourceQuery,
             request.Account.Value(), request.MigrationId, request.MigrationVersion);
         _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(query).WithCallback(
             [this, key, callback = std::move(callback)](QueryResult result) mutable
@@ -392,7 +406,7 @@ public:
                 bool succeeded = static_cast<bool>(result);
                 bool completed = false;
                 bool sawSentinel = false;
-                std::vector<std::uint32_t> spells;
+                std::vector<std::uint32_t> sourceIds;
                 if (result)
                 {
                     do
@@ -406,13 +420,13 @@ public:
                             completed = value == 1;
                         }
                         else if (rowKind == 1 && value > 0 && value <= std::numeric_limits<std::uint32_t>::max())
-                            spells.push_back(static_cast<std::uint32_t>(value));
+                            sourceIds.push_back(static_cast<std::uint32_t>(value));
                         else
                             succeeded = false;
                     } while (succeeded && result->NextRow());
                 }
                 succeeded = succeeded && sawSentinel;
-                callback(succeeded, completed, std::move(spells));
+                callback(succeeded, completed, std::move(sourceIds));
             }));
         return true;
     }

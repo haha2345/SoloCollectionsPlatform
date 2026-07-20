@@ -196,6 +196,7 @@ public:
         GetMountCollectionService().Update();
         GetCompanionCollectionService().Update();
         GetToyCollectionService().Update();
+        GetAppearanceService().Update();
         (void)GetAccountCollectionCache().EvictExpired(MonotonicMilliseconds());
     }
 };
@@ -223,6 +224,7 @@ public:
         GetMountCollectionService().OnPlayerLogin(player);
         GetCompanionCollectionService().OnPlayerLogin(player);
         GetToyCollectionService().OnPlayerLogin(player);
+        GetAppearanceService().OnPlayerLogin(player);
         Sc2ProtocolOpenSession(player);
     }
 
