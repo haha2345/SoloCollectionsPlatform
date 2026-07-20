@@ -1016,7 +1016,29 @@ feat: route appearance unlocks through collection service
 
 ## 14. 阶段 9：套装和玩家 Outfit
 
+阶段状态：🟡 进行中（任务 9.1 已完成，任务 9.2–9.3 待实施）
+
 ### 任务 9.1：套装目录和进度
+
+状态：✅ 已完成（`SoloCollections` `351f4bc`、`02d9457`，
+`mod-solo-collections` `d6e03a6`）
+
+实现记录：新增声明式套装源目录、稳定 ID 预留和独立生成器，首批覆盖 8 个真实 T1 套装
+（logical set ID `300000..300007`）。每个成员都引用 type 13 canonical appearance，目录结构显式
+保留 variant、color、difficulty、lifecycle、required、同槽替代 source 等字段；生成映射哈希为
+`3f32527e1a67aa71ec878381751907258f99a1ec6dc049fce1a5caba92a8ff66`。客户端和服务端都只从
+required active appearance member group 动态计算分子/分母；type 14 provider 是只读派生投影，
+不会调用 `TryUnlock`，数据库也不保存 `set_collected` 或任何 type 14 unlock 行。套装列表、详情和
+成员图标统一读取相同的 type 13 派生状态，替代件和重复 source 不会重复增加分母。
+
+运行证据（账号 1，角色“啊啊水电费”）：初始 `SCSETSTATE Ready false`，战士“力量套装”列表与
+详情均为 `0/8`。直接获得 item `16864` 时，因其为 60 级装备后绑定物品且当前角色仅 3 级、物品
+尚未绑定，绑定策略正确延迟解锁，revision 保持 74。随后通过统一后端 GM grant 写入同一 canonical
+appearance `206898`，账号 revision 变为 75，唯一持久化行为是
+`(type_id=13, collection_id=206898, source_kind=GameMaster)`；`type_id=14` 行数仍为 0。SC2 delta
+到达后套装列表实时变为 `1/8`。实机同时发现并修复详情旧快照问题，重载后列表、成员图标和详情
+全部一致显示 `1/8`，无 Lua 错误。最终 AddOn 164 项、模块 87 项测试通过，目录 `--check`、Release
+worldserver 构建和六 provider 启动注册均已通过。
 
 - 套装成员引用 canonical appearance。
 - 支持替代件、同槽多件、配色/难度变体和禁用成员。
