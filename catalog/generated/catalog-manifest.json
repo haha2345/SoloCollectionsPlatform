@@ -6248,7 +6248,7 @@
     }
   ],
   "identityOverrides": [],
-  "mappingHash": "6e1b9d8b365b9a77166e55e523d2f0875a8a9cccacb98a3b2c6ef5a307dd3c6e",
+  "mappingHash": "50aaa024cce18a1cc7f2c903f876341a790f2c0bdb5363d6000177dc32ddf505",
   "metadataVersion": "2026.07.20.1",
   "mountActions": {
     "candidateHash": "ba414a13d43783698251b283ccd3d19030560f44b3e3238931b83e1a73d0249e",
@@ -6260,7 +6260,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -6299,7 +6299,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6341,7 +6341,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6379,7 +6379,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6417,7 +6417,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6455,7 +6455,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6497,7 +6497,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6535,7 +6535,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6577,7 +6577,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6615,7 +6615,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6653,7 +6653,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6695,7 +6695,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6737,7 +6737,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6779,7 +6779,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -6821,7 +6821,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6860,7 +6860,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -6893,7 +6893,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6926,7 +6926,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -6965,7 +6965,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -7005,7 +7005,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -7047,7 +7047,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -7085,7 +7085,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7123,7 +7123,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -7161,7 +7161,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -7203,7 +7203,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7241,7 +7241,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -7263,7 +7263,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7302,7 +7302,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -7340,7 +7340,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -7378,7 +7378,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7416,7 +7416,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7454,7 +7454,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -7474,7 +7474,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7513,7 +7513,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7552,7 +7552,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7590,7 +7590,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7628,7 +7628,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7667,7 +7667,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7706,7 +7706,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7745,7 +7745,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7784,7 +7784,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -7823,7 +7823,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -7845,7 +7845,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -7884,7 +7884,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -7917,7 +7917,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -7959,7 +7959,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8001,7 +8001,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8043,7 +8043,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8081,7 +8081,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8119,7 +8119,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8161,7 +8161,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8199,7 +8199,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8241,7 +8241,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8279,7 +8279,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -8321,7 +8321,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -8357,7 +8357,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8395,7 +8395,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -8433,7 +8433,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8475,7 +8475,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8513,7 +8513,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8551,7 +8551,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -8573,7 +8573,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8612,7 +8612,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -8650,7 +8650,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8688,7 +8688,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8726,7 +8726,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8764,7 +8764,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8806,7 +8806,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8839,7 +8839,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8881,7 +8881,7 @@
               2
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               1029
             ],
@@ -8919,7 +8919,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -8957,7 +8957,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -8999,7 +8999,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9038,7 +9038,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9077,7 +9077,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -9115,7 +9115,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9153,7 +9153,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9191,7 +9191,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9229,7 +9229,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9267,7 +9267,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9305,7 +9305,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9343,7 +9343,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -9385,7 +9385,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -9423,7 +9423,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -9463,7 +9463,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -9505,7 +9505,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -9543,7 +9543,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9581,7 +9581,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -9619,7 +9619,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9657,7 +9657,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -9695,7 +9695,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -9737,7 +9737,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -9779,7 +9779,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9817,7 +9817,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -9839,7 +9839,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9878,7 +9878,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -9916,7 +9916,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -9958,7 +9958,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -10000,7 +10000,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10038,7 +10038,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -10080,7 +10080,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10118,7 +10118,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10156,7 +10156,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10194,7 +10194,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10230,7 +10230,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10266,7 +10266,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10286,7 +10286,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10325,7 +10325,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10345,7 +10345,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10384,7 +10384,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -10422,7 +10422,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -10460,7 +10460,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -10498,7 +10498,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10536,7 +10536,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10574,7 +10574,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10612,7 +10612,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10650,7 +10650,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -10688,7 +10688,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10727,7 +10727,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10765,7 +10765,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10803,7 +10803,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10841,7 +10841,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10880,7 +10880,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10918,7 +10918,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -10956,7 +10956,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -10994,7 +10994,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11036,7 +11036,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -11074,7 +11074,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11116,7 +11116,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11154,7 +11154,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -11196,7 +11196,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -11229,7 +11229,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11267,7 +11267,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11305,7 +11305,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11347,7 +11347,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11385,7 +11385,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -11418,7 +11418,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11460,7 +11460,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11498,7 +11498,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -11520,7 +11520,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11559,7 +11559,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11593,7 +11593,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -11635,7 +11635,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               690
             ],
@@ -11673,7 +11673,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               1101
             ],
@@ -11711,7 +11711,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11753,7 +11753,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11795,7 +11795,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11833,7 +11833,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -11871,7 +11871,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -11909,7 +11909,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -11947,7 +11947,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -11989,7 +11989,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12031,7 +12031,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -12069,7 +12069,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -12091,7 +12091,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -12131,7 +12131,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12169,7 +12169,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12211,7 +12211,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -12249,7 +12249,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12287,7 +12287,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12325,7 +12325,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -12363,7 +12363,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12405,7 +12405,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12447,7 +12447,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -12485,7 +12485,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -12523,7 +12523,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -12561,7 +12561,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -12599,7 +12599,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12641,7 +12641,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12683,7 +12683,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12721,7 +12721,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12759,7 +12759,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12801,7 +12801,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12839,7 +12839,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -12881,7 +12881,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -12919,7 +12919,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -12958,7 +12958,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -12980,7 +12980,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13019,7 +13019,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -13061,7 +13061,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -13094,7 +13094,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13132,7 +13132,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -13174,7 +13174,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -13207,7 +13207,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -13249,7 +13249,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -13291,7 +13291,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13330,7 +13330,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13369,7 +13369,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13407,7 +13407,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -13445,7 +13445,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -13487,7 +13487,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -13526,7 +13526,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -13564,7 +13564,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13602,7 +13602,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13640,7 +13640,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -13678,7 +13678,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -13716,7 +13716,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -13754,7 +13754,7 @@
               2
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               512
             ],
@@ -13794,7 +13794,7 @@
               2
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               512
             ],
@@ -13830,7 +13830,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -13872,7 +13872,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13910,7 +13910,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -13948,7 +13948,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -13990,7 +13990,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14028,7 +14028,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14050,7 +14050,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -14087,7 +14087,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14125,7 +14125,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14163,7 +14163,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14201,7 +14201,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14240,7 +14240,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -14278,7 +14278,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14316,7 +14316,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14354,7 +14354,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14393,7 +14393,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14431,7 +14431,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -14473,7 +14473,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14511,7 +14511,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14549,7 +14549,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -14591,7 +14591,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14629,7 +14629,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14667,7 +14667,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -14700,7 +14700,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14739,7 +14739,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -14765,7 +14765,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -14806,7 +14806,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14844,7 +14844,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14882,7 +14882,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14920,7 +14920,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -14958,7 +14958,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -15000,7 +15000,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15038,7 +15038,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15077,7 +15077,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -15119,7 +15119,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15157,7 +15157,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -15199,7 +15199,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15238,7 +15238,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -15280,7 +15280,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15319,7 +15319,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -15352,7 +15352,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15390,7 +15390,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15428,7 +15428,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15467,7 +15467,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15506,7 +15506,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15544,7 +15544,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15582,7 +15582,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15620,7 +15620,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15658,7 +15658,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15696,7 +15696,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -15738,7 +15738,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -15776,7 +15776,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15814,7 +15814,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15852,7 +15852,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15891,7 +15891,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -15930,7 +15930,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -15968,7 +15968,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -16010,7 +16010,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16048,7 +16048,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16086,7 +16086,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16124,7 +16124,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -16166,7 +16166,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16204,7 +16204,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16242,7 +16242,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -16284,7 +16284,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16323,7 +16323,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16361,7 +16361,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -16403,7 +16403,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16441,7 +16441,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -16483,7 +16483,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16521,7 +16521,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -16563,7 +16563,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -16605,7 +16605,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -16647,7 +16647,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16685,7 +16685,7 @@
               2
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               1029
             ],
@@ -16724,7 +16724,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16762,7 +16762,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16800,7 +16800,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16839,7 +16839,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -16877,7 +16877,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16916,7 +16916,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -16955,7 +16955,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -16977,7 +16977,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -17016,7 +17016,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -17055,7 +17055,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -17088,7 +17088,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 0,
             "raceMasks": [
               0
             ],
@@ -17110,7 +17110,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -17149,7 +17149,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -17187,7 +17187,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -17225,7 +17225,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -17263,7 +17263,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 150,
             "raceMasks": [
               0
             ],
@@ -17301,7 +17301,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -17343,7 +17343,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -17386,7 +17386,7 @@
               0
             ],
             "isFlying": true,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 300,
             "raceMasks": [
               0
             ],
@@ -17429,7 +17429,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 225,
             "raceMasks": [
               0
             ],
@@ -17462,7 +17462,7 @@
               0
             ],
             "isFlying": false,
-            "minimumRidingSkill": 1,
+            "minimumRidingSkill": 75,
             "raceMasks": [
               0
             ],
@@ -17494,7 +17494,7 @@
         ]
       }
     ],
-    "mappingHash": "0b1d90cbd65119a9a3d2d55bf51c7334888aaffab5f894d383303af0d3b0b5f5",
+    "mappingHash": "17c52b9646bf66082de182a2e728abf664c049a2da3c69a1ccd07baf765dd91f",
     "reviewMethod": "EXACT_CREATURE_ENTRY_ONLY",
     "schemaVersion": 1,
     "sourceBuild": "3.3.5.12340"
@@ -17771,7 +17771,7 @@
   "typeMappingHashes": {
     "appearance": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
     "companion": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-    "mount": "87d1afad336f06a37f3b4f9dd217b9e91ba3ca65078fb6224a9f132233f528d7",
+    "mount": "6801854cfc6bd1107424d0910a66183bfee100f328d6f468d8a4007f8b7e54b9",
     "set": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
     "synthetic": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
     "toy": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"

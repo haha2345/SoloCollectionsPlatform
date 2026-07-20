@@ -5729,13 +5729,13 @@ SoloCollections.GeneratedCatalog = {
             typeKey = "mount"
         }
     },
-    mappingHash = "6e1b9d8b365b9a77166e55e523d2f0875a8a9cccacb98a3b2c6ef5a307dd3c6e",
+    mappingHash = "50aaa024cce18a1cc7f2c903f876341a790f2c0bdb5363d6000177dc32ddf505",
     metadataVersion = "2026.07.20.1",
     schemaVersion = 1,
     typeMappingHashes = {
         appearance = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         companion = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        mount = "87d1afad336f06a37f3b4f9dd217b9e91ba3ca65078fb6224a9f132233f528d7",
+        mount = "6801854cfc6bd1107424d0910a66183bfee100f328d6f468d8a4007f8b7e54b9",
         set = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         synthetic = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         toy = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
