@@ -23,17 +23,20 @@ AccountSessionOpenResult AccountCollectionCache::OpenSession(
     AccountId accountId, AccountSessionId sessionId, std::uint64_t /*nowMs*/)
 {
     std::scoped_lock lock(_mutex);
+    ++_openRequests;
     if (!accountId.IsValid() || !sessionId.IsValid())
         return {};
 
     auto existing = _entries.find(accountId);
     if (existing != _entries.end())
     {
+        ++_cacheHits;
         existing->second.Sessions.insert(sessionId);
         existing->second.EvictAfterMs.reset();
         return { true, false, existing->second.Generation, existing->second.State, CollectionReasonCode::Ok };
     }
 
+    ++_cacheMisses;
     Entry entry;
     entry.Generation = NextGeneration();
     entry.Sessions.insert(sessionId);
@@ -203,6 +206,7 @@ std::size_t AccountCollectionCache::EvictExpired(std::uint64_t nowMs)
         else
             ++entry;
     }
+    _totalEvictions += evicted;
     return evicted;
 }
 
@@ -243,6 +247,11 @@ AccountCacheDiagnostics AccountCollectionCache::Diagnostics() const
     std::scoped_lock lock(_mutex);
     AccountCacheDiagnostics diagnostics;
     diagnostics.EntryCount = _entries.size();
+    diagnostics.OpenRequests = _openRequests;
+    diagnostics.CacheHits = _cacheHits;
+    diagnostics.CacheMisses = _cacheMisses;
+    diagnostics.TotalEvictions = _totalEvictions;
+    diagnostics.EstimatedBytes = sizeof(*this) + (_entries.size() * sizeof(Entry));
     for (auto const& [accountId, entry] : _entries)
     {
         (void)accountId;
@@ -254,6 +263,12 @@ AccountCacheDiagnostics AccountCollectionCache::Diagnostics() const
         }
         diagnostics.SessionCount += entry.Sessions.size();
         diagnostics.PendingDeltaCount += entry.PendingDeltas.size();
+        diagnostics.OwnedEntryCount += entry.Owned.size();
+        diagnostics.ReadyDeltaCount += entry.ReadyDeltas.size();
+        diagnostics.EstimatedBytes += entry.Sessions.size() * sizeof(AccountSessionId);
+        diagnostics.EstimatedBytes += entry.Owned.size() * sizeof(CollectionKey);
+        diagnostics.EstimatedBytes += entry.PendingDeltas.size() * sizeof(CollectionDelta);
+        diagnostics.EstimatedBytes += entry.ReadyDeltas.size() * sizeof(CollectionDelta);
         if (entry.EvictAfterMs)
             ++diagnostics.EvictionScheduledCount;
     }

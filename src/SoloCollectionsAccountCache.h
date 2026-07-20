@@ -86,6 +86,13 @@ struct AccountCacheDiagnostics
     std::size_t SessionCount = 0;
     std::size_t PendingDeltaCount = 0;
     std::size_t EvictionScheduledCount = 0;
+    std::size_t OwnedEntryCount = 0;
+    std::size_t ReadyDeltaCount = 0;
+    std::uint64_t OpenRequests = 0;
+    std::uint64_t CacheHits = 0;
+    std::uint64_t CacheMisses = 0;
+    std::uint64_t TotalEvictions = 0;
+    std::uint64_t EstimatedBytes = 0;
 };
 
 // Player hooks can run on map workers while database callbacks and maintenance
@@ -137,6 +144,10 @@ private:
     mutable std::mutex _mutex;
     std::uint64_t _evictionDelayMs;
     std::uint64_t _lastGeneration = 0;
+    std::uint64_t _openRequests = 0;
+    std::uint64_t _cacheHits = 0;
+    std::uint64_t _cacheMisses = 0;
+    std::uint64_t _totalEvictions = 0;
 };
 
 AccountCollectionCache& GetAccountCollectionCache();

@@ -2,11 +2,14 @@
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsBackend.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsProtocolScript.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceCatalog.h"
 
 #include "Chat.h"
 #include "CommandScript.h"
 #include "DatabaseEnv.h"
+#include "Log.h"
 #include "Player.h"
 #include "QueryResult.h"
 #include "RBAC.h"
@@ -16,6 +19,8 @@
 #include "WorldSession.h"
 
 #include <optional>
+#include <chrono>
+#include <algorithm>
 #include <string>
 #include <string_view>
 #include <vector>
@@ -109,6 +114,7 @@ public:
         static ChatCommandTable soloCollectionsTable =
         {
             { "status",    HandleStatus,    RBAC_SC_STATUS,    Console::Yes },
+            { "benchmark", HandleBenchmark, RBAC_SC_STATUS,    Console::Yes },
             { "account",   HandleAccount,   RBAC_SC_ACCOUNT,   Console::Yes },
             { "grant",     HandleGrant,     RBAC_SC_WRITE,     Console::Yes },
             { "revoke",    HandleRevoke,    RBAC_SC_WRITE,     Console::Yes },
@@ -155,6 +161,66 @@ public:
         handler->PSendSysMessage(
             "SoloCollections totals loads_ok={} loads_failed={} mutations_ok={} mutations_failed={}",
             store.SuccessfulLoads, store.FailedLoads, store.SuccessfulMutations, store.FailedMutations);
+        Sc2ServerDiagnostics protocol = Sc2ProtocolDiagnostics();
+        handler->PSendSysMessage(
+            "SoloCollections cache opens={} hits={} misses={} total_evictions={} owned={} ready_deltas={} estimated_bytes={}",
+            cache.OpenRequests, cache.CacheHits, cache.CacheMisses, cache.TotalEvictions,
+            cache.OwnedEntryCount, cache.ReadyDeltaCount, cache.EstimatedBytes);
+        handler->PSendSysMessage(
+            "SoloCollections load queries={} rows={} last_us={} max_us={} total_us={} duplicate_grants={} tx_retries={}",
+            store.LoadQueryCount, store.LoadedUnlockRows, store.LastLoadMicroseconds,
+            store.MaxLoadMicroseconds, store.TotalLoadMicroseconds,
+            store.DuplicateGrantRequests, store.TransactionRetryAttempts);
+        handler->PSendSysMessage(
+            "SoloCollections sc2 sessions={} outbound={} snapshots={} chunks={} payload_bytes={} queue_last_us={} "
+            "queue_max_us={} sent_packets={} sent_bytes={} send_last_us={} send_max_us={}",
+            protocol.SessionCount, protocol.OutboundPacketCount, protocol.SnapshotTransfers,
+            protocol.SnapshotChunks, protocol.SnapshotPayloadBytes,
+            protocol.LastSnapshotQueueMicroseconds, protocol.MaxSnapshotQueueMicroseconds,
+            protocol.SentPackets, protocol.SentBytes,
+            protocol.LastSendMicroseconds, protocol.MaxSendMicroseconds);
+        return true;
+    }
+
+    static bool HandleBenchmark(ChatHandler* handler)
+    {
+        constexpr std::size_t BenchmarkEntries = 17'000;
+        AppearanceCatalog const& catalog = GetAppearanceCatalog();
+        std::vector<AppearanceCollectionDefinition const*> materialized;
+        materialized.reserve(BenchmarkEntries);
+        auto loadStarted = std::chrono::steady_clock::now();
+        auto const& collections = catalog.Collections();
+        for (std::size_t index = 0; index < BenchmarkEntries; ++index)
+            materialized.push_back(collections.empty() ? nullptr : &collections[index % collections.size()]);
+        auto filterStarted = std::chrono::steady_clock::now();
+        std::size_t filtered = static_cast<std::size_t>(std::count_if(
+            materialized.begin(), materialized.end(), [](AppearanceCollectionDefinition const* definition)
+            {
+                return definition && definition->DisplayId != 0 && definition->PrimarySourceItemId != 0;
+            }));
+        auto lookupStarted = std::chrono::steady_clock::now();
+        std::size_t found = 0;
+        for (AppearanceCollectionDefinition const* definition : materialized)
+            if (definition && catalog.Find(definition->Id))
+                ++found;
+        auto finished = std::chrono::steady_clock::now();
+        auto microseconds = [](auto start, auto end)
+        {
+            return std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        };
+        std::int64_t loadUs = microseconds(loadStarted, filterStarted);
+        std::int64_t filterUs = microseconds(filterStarted, lookupStarted);
+        std::int64_t lookupUs = microseconds(lookupStarted, finished);
+        handler->PSendSysMessage(
+            "SoloCollections benchmark scale={} catalog_entries={} materialized={} filtered={} found={} "
+            "load_us={} filter_us={} lookup_us={}",
+            BenchmarkEntries, collections.size(), materialized.size(), filtered, found,
+            loadUs, filterUs, lookupUs);
+        LOG_INFO("module.solocollections.performance",
+            "event=appearance_catalog_benchmark scale={} catalog_entries={} materialized={} filtered={} found={} "
+            "load_us={} filter_us={} lookup_us={}",
+            BenchmarkEntries, collections.size(), materialized.size(), filtered, found,
+            loadUs, filterUs, lookupUs);
         return true;
     }
 

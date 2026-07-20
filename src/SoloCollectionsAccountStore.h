@@ -66,6 +66,13 @@ struct AccountStoreDiagnostics
     std::uint64_t FailedLoads = 0;
     std::uint64_t SuccessfulMutations = 0;
     std::uint64_t FailedMutations = 0;
+    std::uint64_t LoadQueryCount = 0;
+    std::uint64_t LoadedUnlockRows = 0;
+    std::uint64_t LastLoadMicroseconds = 0;
+    std::uint64_t MaxLoadMicroseconds = 0;
+    std::uint64_t TotalLoadMicroseconds = 0;
+    std::uint64_t DuplicateGrantRequests = 0;
+    std::uint64_t TransactionRetryAttempts = 0;
 };
 
 struct MigrationMarkerRequest

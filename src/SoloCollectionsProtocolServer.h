@@ -24,6 +24,21 @@ struct Sc2CategoryDefinition
     bool External = false;
 };
 
+struct Sc2ServerDiagnostics
+{
+    std::size_t SessionCount = 0;
+    std::size_t OutboundPacketCount = 0;
+    std::uint64_t SnapshotTransfers = 0;
+    std::uint64_t SnapshotChunks = 0;
+    std::uint64_t SnapshotPayloadBytes = 0;
+    std::uint64_t LastSnapshotQueueMicroseconds = 0;
+    std::uint64_t MaxSnapshotQueueMicroseconds = 0;
+    std::uint64_t SentPackets = 0;
+    std::uint64_t SentBytes = 0;
+    std::uint64_t LastSendMicroseconds = 0;
+    std::uint64_t MaxSendMicroseconds = 0;
+};
+
 class Sc2Server
 {
 public:
@@ -43,6 +58,8 @@ public:
     [[nodiscard]] std::vector<std::string> DrainOutbound(
         AccountSessionId sessionId, std::size_t maximum = Sc2Limits::MaxPacketsPerTick);
     [[nodiscard]] std::string SessionNonce(AccountSessionId sessionId) const;
+    [[nodiscard]] Sc2ServerDiagnostics Diagnostics() const;
+    void RecordSendBatch(std::size_t packets, std::size_t bytes, std::uint64_t elapsedMicroseconds);
 
     void OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta const& delta);
     [[nodiscard]] bool OnAccountResyncRequested(AccountId accountId);
@@ -90,6 +107,7 @@ private:
     std::map<AccountSessionId, SessionState> _sessions;
     std::mt19937_64 _random;
     mutable std::mutex _mutex;
+    Sc2ServerDiagnostics _diagnostics;
 };
 }
 

@@ -148,26 +148,40 @@ bool Sc2ProtocolCanUsePrivateChat(
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
         [player](AccountId accountId, Sc2Message const& request)
         {
+            auto actionStarted = std::chrono::steady_clock::now();
+            auto finish = [&](std::string_view actionKind, std::string status)
+            {
+                std::uint64_t elapsedMicroseconds = static_cast<std::uint64_t>(
+                    std::chrono::duration_cast<std::chrono::microseconds>(
+                        std::chrono::steady_clock::now() - actionStarted).count());
+                LOG_INFO("module.solocollections.performance",
+                    "event=action_timing account={} character={} type={} collection={} action={} status={} elapsed_us={}",
+                    accountId.Value(), player->GetGUID().GetCounter(), request.TypeId,
+                    request.CollectionId, actionKind, status, elapsedMicroseconds);
+                return status;
+            };
             if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId())
-                return std::string("INVALID_REQUEST");
+                return finish("invalid", "INVALID_REQUEST");
             if (request.TypeId == MountCollectionTypeId.Value())
             {
                 if (request.ActionId != "SUMMON" || request.Target != "-")
-                    return std::string("INVALID_REQUEST");
-                return GetMountCollectionService().ExecuteSummon(player, CollectionId(request.CollectionId));
+                    return finish("mount", "INVALID_REQUEST");
+                return finish("mount", GetMountCollectionService().ExecuteSummon(
+                    player, CollectionId(request.CollectionId)));
             }
             if (request.TypeId == CompanionCollectionTypeId.Value())
             {
                 if (request.ActionId != "SUMMON" || request.Target != "-")
-                    return std::string("INVALID_REQUEST");
-                return GetCompanionCollectionService().ExecuteSummon(player, CollectionId(request.CollectionId));
+                    return finish("companion", "INVALID_REQUEST");
+                return finish("companion", GetCompanionCollectionService().ExecuteSummon(
+                    player, CollectionId(request.CollectionId)));
             }
             if (request.TypeId == ToyCollectionTypeId.Value())
             {
                 if (request.ActionId != "USE" || (request.Target != "-" && request.Target != "1"))
-                    return std::string("INVALID_REQUEST");
-                return GetToyCollectionService().ExecuteUse(
-                    player, CollectionId(request.CollectionId), request.Target == "1");
+                    return finish("toy", "INVALID_REQUEST");
+                return finish("toy", GetToyCollectionService().ExecuteUse(
+                    player, CollectionId(request.CollectionId), request.Target == "1"));
             }
             if (request.TypeId == AppearanceCollectionTypeId.Value())
             {
@@ -177,11 +191,11 @@ bool Sc2ProtocolCanUsePrivateChat(
                 if (request.ActionId != "APPLY" || parsed.ec != std::errc {} ||
                     parsed.ptr != request.Target.data() + request.Target.size() ||
                     encodedSlot == 0 || encodedSlot > EQUIPMENT_SLOT_END)
-                    return std::string("INVALID_TARGET_SLOT");
+                    return finish("appearance", "INVALID_TARGET_SLOT");
                 TransmogApplyResult result = GetAppearanceService().TryApplyCanonicalAppearance(
                     player, CollectionId(request.CollectionId), static_cast<std::uint8_t>(encodedSlot - 1),
                     ObjectGuid::Empty, TransmogApplySource::Addon, false);
-                return AppearanceApplyStatus(result);
+                return finish("appearance", AppearanceApplyStatus(result));
             }
             if (request.TypeId == SetCollectionTypeId.Value())
             {
@@ -192,16 +206,16 @@ bool Sc2ProtocolCanUsePrivateChat(
                         request.Target.data() + request.Target.size(), variantIndex);
                     if (parsed.ec != std::errc {} ||
                         parsed.ptr != request.Target.data() + request.Target.size() || variantIndex == 0)
-                        return std::string("INVALID_REQUEST");
+                        return finish("set", "INVALID_REQUEST");
                 }
                 if (request.ActionId != "APPLY")
-                    return std::string("INVALID_REQUEST");
+                    return finish("set", "INVALID_REQUEST");
                 TransmogApplyResult result = GetSetService().TryApply(
                     player, CollectionId(request.CollectionId), variantIndex,
                     ObjectGuid::Empty, TransmogApplySource::Addon);
-                return AppearanceApplyStatus(result);
+                return finish("set", AppearanceApplyStatus(result));
             }
-            return std::string("INVALID_REQUEST");
+            return finish("unknown", "INVALID_REQUEST");
         });
     return false;
 }
@@ -212,13 +226,29 @@ void Sc2ProtocolPumpAndSend(Player* player)
         return;
     AccountSessionId sessionId = SessionId(player);
     GetSc2Server().PumpSession(sessionId, MonotonicMilliseconds());
-    for (std::string const& body : GetSc2Server().DrainOutbound(sessionId, Sc2Limits::MaxPacketsPerTick))
+    std::vector<std::string> bodies = GetSc2Server().DrainOutbound(sessionId, Sc2Limits::MaxPacketsPerTick);
+    auto started = std::chrono::steady_clock::now();
+    std::size_t bytes = 0;
+    for (std::string const& body : bodies)
     {
+        bytes += body.size();
         WorldPacket packet;
         ChatHandler::BuildChatPacket(packet, CHAT_MSG_WHISPER, LANG_ADDON, player, player,
             std::string(WirePrefix) + body);
         player->SendDirectMessage(&packet);
     }
+    if (!bodies.empty())
+    {
+        std::uint64_t elapsedMicroseconds = static_cast<std::uint64_t>(
+            std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::steady_clock::now() - started).count());
+        GetSc2Server().RecordSendBatch(bodies.size(), bytes, elapsedMicroseconds);
+    }
+}
+
+Sc2ServerDiagnostics Sc2ProtocolDiagnostics()
+{
+    return GetSc2Server().Diagnostics();
 }
 }
 

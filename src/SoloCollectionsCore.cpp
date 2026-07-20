@@ -2,6 +2,7 @@
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsBackend.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceCatalog.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
 #include "SoloCollectionsMountCatalog.h"
@@ -221,6 +222,14 @@ public:
     void OnStartup() override
     {
         InitializeBackendConfiguration();
+        auto catalogStarted = std::chrono::steady_clock::now();
+        std::size_t appearanceEntries = GetAppearanceCatalog().Collections().size();
+        std::uint64_t catalogMicroseconds = static_cast<std::uint64_t>(
+            std::chrono::duration_cast<std::chrono::microseconds>(
+                std::chrono::steady_clock::now() - catalogStarted).count());
+        LOG_INFO("module.solocollections.performance",
+            "event=appearance_catalog_load result=ready entries={} elapsed_us={}",
+            appearanceEntries, catalogMicroseconds);
         CollectionProviderRegistry& registry = GetCollectionProviderRegistry();
         RegistryRegistrationResult registration = registry.Register(std::make_unique<SyntheticCollectionProvider>());
         if (!registration.Accepted)

@@ -6,6 +6,8 @@
 #include "QueryResult.h"
 #include "StringFormat.h"
 
+#include <algorithm>
+#include <chrono>
 #include <limits>
 #include <map>
 #include <set>
@@ -123,9 +125,19 @@ public:
             "ORDER BY row_kind, type_id, collection_id",
             load.Account.Value(), load.Account.Value());
 
+        ++_diagnostics.LoadQueryCount;
+        auto loadStarted = std::chrono::steady_clock::now();
         _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(query).WithCallback(
-            [this, accountId = load.Account, playerGuid = load.PlayerGuid, generation = load.Generation](QueryResult result)
+            [this, accountId = load.Account, playerGuid = load.PlayerGuid, generation = load.Generation,
+                loadStarted](QueryResult result)
             {
+                std::uint64_t elapsedMicroseconds = static_cast<std::uint64_t>(
+                    std::chrono::duration_cast<std::chrono::microseconds>(
+                        std::chrono::steady_clock::now() - loadStarted).count());
+                _diagnostics.LastLoadMicroseconds = elapsedMicroseconds;
+                _diagnostics.MaxLoadMicroseconds = std::max(
+                    _diagnostics.MaxLoadMicroseconds, elapsedMicroseconds);
+                _diagnostics.TotalLoadMicroseconds += elapsedMicroseconds;
                 _loadingAccounts.erase(accountId);
                 std::set<CollectionKey> owned;
                 CollectionRevision revision;
@@ -177,14 +189,18 @@ public:
                     return;
                 }
 
+                std::size_t loadedUnlockRows = owned.size();
                 bool accepted = GetAccountCollectionCache().CompleteLoad(
                     accountId, generation, std::move(owned), revision);
                 if (accepted)
                 {
+                    _diagnostics.LoadedUnlockRows += loadedUnlockRows;
                     ++_diagnostics.SuccessfulLoads;
-                    LOG_DEBUG("module.solocollections.store",
-                        "event=account_load result=ready account={} character={} generation={} revision={}",
-                        accountId.Value(), playerGuid, generation.Value(), revision.Value());
+                    LOG_INFO("module.solocollections.performance",
+                        "event=account_load result=ready account={} character={} generation={} revision={} "
+                        "queries=1 unlock_rows={} elapsed_us={}",
+                        accountId.Value(), playerGuid, generation.Value(), revision.Value(),
+                        loadedUnlockRows, elapsedMicroseconds);
                 }
                 else
                 {
@@ -213,7 +229,10 @@ public:
 
         bool owned = GetAccountCollectionCache().IsOwned(mutation.Account, mutation.Key);
         if (mutation.Kind == CollectionMutationKind::Grant && owned)
+        {
+            ++_diagnostics.DuplicateGrantRequests;
             return { false, CollectionReasonCode::AlreadyOwned, snapshot->Revision };
+        }
         if (mutation.Kind == CollectionMutationKind::Revoke && !owned)
             return { false, CollectionReasonCode::NotOwned, snapshot->Revision };
         if (snapshot->Revision.Value() == std::numeric_limits<std::uint64_t>::max())

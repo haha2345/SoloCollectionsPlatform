@@ -184,6 +184,7 @@ void Sc2Server::QueueCategorySnapshot(SessionState& session,
     Sc2CategoryDefinition const& category, std::uint64_t revision,
     std::vector<CollectionId> const& owned)
 {
+    auto started = std::chrono::steady_clock::now();
     std::vector<std::uint32_t> values;
     values.reserve(owned.size());
     for (CollectionId collectionId : owned)
@@ -228,6 +229,15 @@ void Sc2Server::QueueCategorySnapshot(SessionState& session,
     end.TransferId = transferId;
     end.Checksum = checksum;
     Queue(session, std::move(end));
+    std::uint64_t elapsedMicroseconds = static_cast<std::uint64_t>(
+        std::chrono::duration_cast<std::chrono::microseconds>(
+            std::chrono::steady_clock::now() - started).count());
+    ++_diagnostics.SnapshotTransfers;
+    _diagnostics.SnapshotChunks += chunks.size();
+    _diagnostics.SnapshotPayloadBytes += payload.size();
+    _diagnostics.LastSnapshotQueueMicroseconds = elapsedMicroseconds;
+    _diagnostics.MaxSnapshotQueueMicroseconds = std::max(
+        _diagnostics.MaxSnapshotQueueMicroseconds, elapsedMicroseconds);
 }
 
 void Sc2Server::QueueSnapshots(SessionState& session, AccountCacheSnapshot const& snapshot)
@@ -396,6 +406,30 @@ std::string Sc2Server::SessionNonce(AccountSessionId sessionId) const
     std::scoped_lock lock(_mutex);
     auto found = _sessions.find(sessionId);
     return found == _sessions.end() ? std::string {} : found->second.Nonce;
+}
+
+Sc2ServerDiagnostics Sc2Server::Diagnostics() const
+{
+    std::scoped_lock lock(_mutex);
+    Sc2ServerDiagnostics result = _diagnostics;
+    result.SessionCount = _sessions.size();
+    for (auto const& [sessionId, session] : _sessions)
+    {
+        (void)sessionId;
+        result.OutboundPacketCount += session.Outbound.size();
+    }
+    return result;
+}
+
+void Sc2Server::RecordSendBatch(
+    std::size_t packets, std::size_t bytes, std::uint64_t elapsedMicroseconds)
+{
+    std::scoped_lock lock(_mutex);
+    _diagnostics.SentPackets += packets;
+    _diagnostics.SentBytes += bytes;
+    _diagnostics.LastSendMicroseconds = elapsedMicroseconds;
+    _diagnostics.MaxSendMicroseconds = std::max(
+        _diagnostics.MaxSendMicroseconds, elapsedMicroseconds);
 }
 
 void Sc2Server::OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta const& delta)
