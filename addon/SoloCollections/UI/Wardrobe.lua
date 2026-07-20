@@ -501,7 +501,9 @@ local function createSetListRow(parent, width, onClick)
         UI.SetCollectedVisual(icon, record.collected, 0.52)
         name:SetText(record.name or "未知套装")
         name:SetTextColor(record.collected and 0.96 or 0.59, record.collected and 0.79 or 0.59, record.collected and 0.28 or 0.57)
-        detail:SetText(filterLabel(CLASS_FILTERS, record.classToken) .. "  ·  " .. #(record.itemIds or {}) .. " 件")
+        local owned = tonumber(record.collectedCount) or 0
+        local required = tonumber(record.requiredCount) or #(record.itemIds or {})
+        detail:SetText(filterLabel(CLASS_FILTERS, record.classToken) .. "  ·  " .. owned .. "/" .. required .. " 外观")
         if record.collected then
             iconBorder:SetBorderColor(0.66, 0.52, 0.24, 0.96)
         else

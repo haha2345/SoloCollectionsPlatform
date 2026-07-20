@@ -111095,6 +111095,54 @@
         "key": "appearance.d67447.s8.c4.sc2",
         "lifecycle": "active",
         "ordinal": 18498
+      },
+      {
+        "id": 300000,
+        "key": "set.arcanist_regalia",
+        "lifecycle": "active",
+        "ordinal": 18499
+      },
+      {
+        "id": 300001,
+        "key": "set.felheart_raiment",
+        "lifecycle": "active",
+        "ordinal": 18500
+      },
+      {
+        "id": 300002,
+        "key": "set.nightslayer_armor",
+        "lifecycle": "active",
+        "ordinal": 18501
+      },
+      {
+        "id": 300003,
+        "key": "set.cenarion_raiment",
+        "lifecycle": "active",
+        "ordinal": 18502
+      },
+      {
+        "id": 300004,
+        "key": "set.giantstalker_armor",
+        "lifecycle": "active",
+        "ordinal": 18503
+      },
+      {
+        "id": 300005,
+        "key": "set.earthfury",
+        "lifecycle": "active",
+        "ordinal": 18504
+      },
+      {
+        "id": 300006,
+        "key": "set.lawbringer_armor",
+        "lifecycle": "active",
+        "ordinal": 18505
+      },
+      {
+        "id": 300007,
+        "key": "set.battlegear_of_might",
+        "lifecycle": "active",
+        "ordinal": 18506
       }
     ],
     "races": [

@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 import re
+import json
 import unittest
 from copy import deepcopy
 
-from common import ADDON, extract_int, parse_lua_records, read_text
+from common import ADDON, ROOT, extract_int, parse_lua_records, read_text
 
 
 EXPECTED = {
@@ -12,7 +13,6 @@ EXPECTED = {
     "Pets.lua": (24, ("id", "creatureId", "spellId", "name", "icon", "source", "description", "collected", "favorite")),
     "Toys.lua": (36, ("id", "itemId", "spellId", "name", "icon", "source", "description", "collected", "favorite")),
     "Appearances.lua": (70, ("id", "itemId", "slot", "classMask", "name", "icon", "source", "collected", "favorite")),
-    "Sets.lua": (8, ("id", "classToken", "name", "icon", "itemIds", "collected", "favorite")),
 }
 
 
@@ -154,13 +154,13 @@ class CatalogContractTests(unittest.TestCase):
                 self.assertRegex(match.group(1), r"[\u4e00-\u9fff]", filename)
 
     def test_sets_have_multiple_item_ids(self):
-        path = ADDON / "Data" / "Sets.lua"
-        self.assertTrue(path.is_file(), f"missing {path}")
-        for record in parse_lua_records(path):
-            match = re.search(r"\bitemIds\s*=\s*\{([^}]*)\}", record)
-            self.assertIsNotNone(match)
-            item_ids = [int(value) for value in re.findall(r"\d+", match.group(1))]
-            self.assertGreaterEqual(len(item_ids), 4, record)
+        path = ROOT / "catalog/generated/set-catalog.json"
+        data = json.loads(path.read_text(encoding="utf-8"))
+        self.assertEqual(8, len(data["sets"]))
+        for definition in data["sets"]:
+            active = [variant for variant in definition["variants"] if variant["lifecycle"] == "active"]
+            self.assertTrue(active)
+            self.assertGreaterEqual(sum(len(member["sourceItemIds"]) for member in active[0]["members"]), 4)
 
     def test_lua_catalog_exposes_the_phase_one_service_contract(self):
         source = (ADDON / "Core" / "Catalog.lua").read_text(encoding="utf-8")
