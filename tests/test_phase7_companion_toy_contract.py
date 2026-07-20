@@ -30,12 +30,14 @@ class CompanionProviderContractTests(unittest.TestCase):
 
     def test_toggle_and_replacement_never_touch_combat_pet_state(self):
         service = (SRC / "SoloCollectionsCompanionService.cpp").read_text(encoding="utf-8")
+        protocol = (SRC / "SoloCollectionsProtocolServer.cpp").read_text(encoding="utf-8")
         self.assertIn("player->GetCompanionPet()", service)
         self.assertIn("UNIT_CREATED_BY_SPELL", service)
         self.assertIn("current->DespawnOrUnsummon()", service)
         self.assertNotIn("GetGuardianPet", service)
         self.assertNotIn("SetPetGUID", service)
         self.assertNotIn("GetCritterGUID", service)
+        self.assertIn('"DISMISSED"', protocol)
 
 
 class ToyProviderContractTests(unittest.TestCase):

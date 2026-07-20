@@ -33,6 +33,7 @@ void TestGoldenCodecVectors()
         "D|0123456789abcdef|2|43|A|1001",
         "Q|0123456789abcdef|99|1|1001|SUMMON|-",
         "R|0123456789abcdef|99|LOADING|1|1001|43",
+        "R|0123456789abcdef|100|DISMISSED|11|100281|43",
         "S|0123456789abcdef|REVISION_GAP|0|43",
         "X|0123456789abcdef|99|REPLAYED_REQUEST",
     };
@@ -161,6 +162,16 @@ void TestAuthoritativeActionHandler()
     std::vector<std::string> result = server.DrainOutbound(Session(400), 32);
     Require(called && result.size() == 1 && result[0].find("|ACCEPTED|10|100001|9") != std::string::npos,
         "authoritative action result was not correlated to the logical collection");
+
+    SC::Sc2Server::ActionHandler dismiss = [](SC::AccountId, SC::Sc2Message const&)
+    {
+        return std::string("DISMISSED");
+    };
+    request = "Q|" + nonce + "|9|10|100001|SUMMON|-";
+    Require(server.HandleInbound(Session(400), request, 2, dismiss), "dismiss action was not consumed");
+    result = server.DrainOutbound(Session(400), 32);
+    Require(result.size() == 1 && result[0].find("|DISMISSED|10|100001|9") != std::string::npos,
+        "successful companion toggle status was rejected by the protocol");
 }
 
 void TestAccountScopedDeltaFanout()
