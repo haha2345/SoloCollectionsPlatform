@@ -90,11 +90,33 @@ def write_zip(target: Path, entries: dict[str, bytes]) -> None:
 
 def addon_entries(repo: Path, commit: str) -> dict[str, bytes]:
     prefix = "addon/SoloCollections/"
-    entries = {
-        f"SoloCollections/{path.removeprefix(prefix)}": commit_file(repo, commit, path)
-        for path in commit_paths(repo, commit)
-        if path.startswith(prefix) and not path.startswith(prefix + "Media/Retail/")
+    media_prefix = prefix + "Media/"
+    source_manifest = json.loads(commit_file(repo, commit, media_prefix + "assets.json").decode("utf-8"))
+    project_media = set(source_manifest.get("files", {}))
+    entries: dict[str, bytes] = {}
+    for path in commit_paths(repo, commit):
+        if not path.startswith(prefix):
+            continue
+        if path.startswith(media_prefix):
+            media_relative = path.removeprefix(media_prefix)
+            if media_relative not in project_media:
+                continue
+        entries[f"SoloCollections/{path.removeprefix(prefix)}"] = commit_file(repo, commit, path)
+    missing_media = sorted(
+        relative for relative in project_media
+        if f"SoloCollections/Media/{relative}" not in entries
+    )
+    if missing_media:
+        raise ReleaseError(f"project-authored media missing from commit: {', '.join(missing_media)}")
+    release_media_manifest = {
+        "schemaVersion": int(source_manifest["schemaVersion"]),
+        "releaseScope": "project-authored-files-only",
+        "files": source_manifest["files"],
+        "externalClientMediaBundled": False,
     }
+    entries["SoloCollections/Media/assets.json"] = (
+        json.dumps(release_media_manifest, ensure_ascii=False, indent=2) + "\n"
+    ).encode("utf-8")
     entries["SoloCollections/LICENSE"] = commit_file(repo, commit, "LICENSE")
     entries["SoloCollections/THIRD_PARTY_NOTICES.md"] = commit_file(
         repo, commit, "THIRD_PARTY_NOTICES.md"

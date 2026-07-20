@@ -57,6 +57,12 @@ class UnifiedReleaseTests(unittest.TestCase):
             self.assertIn(token, document)
         self.assertIn("不包含客户端 EXE、DLL 或 MPQ", document)
 
+    def test_addon_packager_only_admits_manifested_project_media(self):
+        source = SCRIPT.read_text(encoding="utf-8")
+        self.assertIn('project_media = set(source_manifest.get("files", {}))', source)
+        self.assertIn('"releaseScope": "project-authored-files-only"', source)
+        self.assertIn('"externalClientMediaBundled": False', source)
+
 
 if __name__ == "__main__":
     unittest.main()
