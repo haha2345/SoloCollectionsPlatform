@@ -1229,7 +1229,7 @@ envelope，满足阶段出口。
 
 ## 16. 阶段 11：Lua 到 C++ 切换
 
-阶段状态：🚧 进行中（任务 11.1–11.2 已完成；任务 11.3 待实施）
+阶段状态：✅ 已完成（任务 11.1–11.3 已完成）
 
 ### 任务 11.1：shadow 比较
 
@@ -1294,6 +1294,31 @@ Cpp 登录也未产生新的幂等迁移或收藏写入。AddOn/目录 171 项�
 - 验证回滚时 C++ 停止写入后 Lua 可以读取兼容 schema。
 
 ### 任务 11.3：单写切换
+
+状态：✅ 已完成（`SoloCollections` `851e519`；`mod-solo-collections` `f61e300`、
+`069800f`）
+
+实现记录：生产配置已固定为 `SoloCollections.Backend = Cpp`，C++ 成为收藏、权限、revision、
+同步和动作的唯一 owner。ALE 在 `Cpp` 模式不注册 SC1 生产入口；AddOn 仅对严格匹配的旧
+`SC1 HELLO` 返回 `UPGRADE_REQUIRED|2`，其余旧请求不执行动作。SC2 协议在解码前验证消息，
+拒绝日志只记录账号、角色和字节数，不写入任意客户端文本。
+
+切换前运行文件备份位于
+`D:\AzerothCore_NPCBots_Clean\_codex_backups\phase11-single-writer\20260720-193011`；数据库
+迁移备份继续保留于 `phase11-switch-rehearsal\20260720-190728`，未删除旧兼容读取代码。最终部署
+`worldserver.exe` SHA-256 为
+`12CA1350AE6A109FC81D056B40B4A01B23E1086CB68B78C1AB82B25B269EDE09`。
+
+真实客户端验收覆盖同账号两角色与第二账号：账号 1 的“啊啊水电费”和 `Arthillin`，以及账号 7
+的 `Scqatest` 均返回 `SC1=false`、`SC2=true`、`upgrade_required`、`connected`。账号 1 两角色
+切换时 generation 从 1 增至 2、revision 保持 89；登出后缓存归零。账号 7 登录后服务端为
+`state=ready generation=3 revision=0 sessions=1`，数据库中 unlock/audit 均为 0，账号 1 的 71 条
+unlock 未串入；只产生三个零导入 migration marker，证明账号隔离。
+
+重启、断线和重新进入后 SC2 均恢复；篡改请求被记录为
+`event=protocol_reject result=bad_message account=1 character=14 bytes=37`，数据库四类快照前后不变，
+服务仍为 ready 且 pending 全为 0。AddOn/目录 171 项、模块 116 项 Python 测试、目录生成器
+`--check`、`git diff --check` 和集成 RelWithDebInfo `worldserver` 构建通过。
 
 - 将 C++ 设为唯一 owner。
 - 停用 `server/ale/solo_collections.lua` 的生产入口。
