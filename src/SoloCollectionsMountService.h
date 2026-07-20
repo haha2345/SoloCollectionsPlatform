@@ -5,6 +5,7 @@
 
 #include <cstdint>
 #include <memory>
+#include <string>
 
 class Player;
 
@@ -22,6 +23,7 @@ public:
     void OnPlayerLogin(Player* player);
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId);
     void OnPlayerUpdate(Player* player);
+    [[nodiscard]] std::string ExecuteSummon(Player* player, CollectionId collectionId);
 
 private:
     class Impl;

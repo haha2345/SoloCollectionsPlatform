@@ -3,11 +3,15 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsMountCatalog.h"
+#include "SoloCollectionsIdentity.h"
 
 #include "Log.h"
 #include "Player.h"
+#include "SharedDefines.h"
+#include "SpellMgr.h"
 #include "WorldSession.h"
 
+#include <algorithm>
 #include <deque>
 #include <map>
 #include <set>
@@ -102,6 +106,106 @@ public:
         if (state.Phase == MigrationPhase::AwaitingReady)
             BeginMigrationCheck(player, account, state);
         Advance(account, state);
+    }
+
+    std::string ExecuteSummon(Player* player, CollectionId collectionId)
+    {
+        if (!player || !player->GetSession() || !collectionId.IsValid())
+            return "INVALID_REQUEST";
+        AccountId account = PlayerAccount(player);
+        std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(account);
+        if (!snapshot || snapshot->State == AccountCacheLoadState::Loading)
+            return "LOADING";
+        if (snapshot->State == AccountCacheLoadState::Failed)
+            return "DB_UNAVAILABLE";
+
+        MountCollectionDefinition const* definition = GetMountCatalog().Find(collectionId);
+        if (!definition)
+            return "INVALID_REQUEST";
+        CollectionKey key { MountCollectionTypeId, collectionId };
+        if (!GetAccountCollectionCache().IsOwned(account, key))
+            return "NOT_OWNED";
+
+        IdentityRegistry const& identities = GetIdentityRegistry();
+        if (!identities.ResolveClass(player->getClass()).IsKnown() ||
+            !identities.ResolveRace(player->getRace()).IsKnown())
+            return "UNKNOWN_IDENTITY";
+        if (!player->IsAlive())
+            return "DEAD";
+        if (player->IsInCombat())
+            return "IN_COMBAT";
+        if (player->GetVehicle())
+            return "IN_VEHICLE";
+        if (player->IsInFlight())
+            return "ON_TAXI";
+        if (player->InBattleground())
+            return "BATTLEGROUND_RESTRICTED";
+        if (player->GetShapeshiftForm() != FORM_NONE)
+            return "SHAPESHIFT_RESTRICTED";
+        if (!player->IsOutdoors())
+            return "INDOORS";
+
+        std::uint32_t raceMask = player->getRaceMask();
+        std::uint32_t classMask = player->getClassMask();
+        auto maskMatches = [](std::vector<std::uint32_t> const& masks, std::uint32_t value)
+        {
+            return masks.empty() || std::any_of(masks.begin(), masks.end(), [value](std::uint32_t mask)
+            {
+                return mask == 0 || (mask & value) != 0;
+            });
+        };
+        bool raceCompatible = false;
+        bool classCompatible = false;
+        bool skillCompatible = false;
+        bool flightRejected = false;
+        bool locationRejected = false;
+        MountActionVariant const* selected = nullptr;
+        for (MountActionVariant const& variant : definition->ActionVariants)
+        {
+            if (!maskMatches(variant.RaceMasks, raceMask))
+                continue;
+            raceCompatible = true;
+            if (!maskMatches(variant.ClassMasks, classMask))
+                continue;
+            classCompatible = true;
+            if (player->GetSkillValue(SKILL_RIDING) < variant.MinimumRidingSkill)
+                continue;
+            skillCompatible = true;
+            SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(variant.SpellId);
+            if (!spellInfo)
+                continue;
+            SpellCastResult location = spellInfo->CheckLocation(
+                player->GetMapId(), player->GetZoneId(), player->GetAreaId(), player, true);
+            if (location != SPELL_CAST_OK)
+            {
+                flightRejected = flightRejected || variant.IsFlying;
+                locationRejected = locationRejected || !variant.IsFlying;
+                continue;
+            }
+            if (!selected || variant.MinimumRidingSkill > selected->MinimumRidingSkill ||
+                (variant.MinimumRidingSkill == selected->MinimumRidingSkill && variant.IsFlying && !selected->IsFlying))
+                selected = &variant;
+        }
+        if (!raceCompatible)
+            return "RACE_RESTRICTED";
+        if (!classCompatible)
+            return "CLASS_RESTRICTED";
+        if (!skillCompatible)
+            return "SKILL_REQUIRED";
+        if (!selected)
+            return flightRejected && !locationRejected ? "FLYING_NOT_ALLOWED" : "MAP_RESTRICTED";
+
+        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(selected->SpellId);
+        if (!spellInfo)
+            return "CAST_FAILED";
+        SpellCastResult castResult = player->CastSpell(
+            player, spellInfo, TRIGGERED_IGNORE_CASTER_MOUNTED_OR_ON_VEHICLE);
+        if (castResult != SPELL_CAST_OK)
+            return "CAST_FAILED";
+        LOG_INFO("module.solocollections.mount",
+            "event=mount_summon result=accepted account={} character={} collection={} spell={}",
+            account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), selected->SpellId);
+        return "ACCEPTED";
     }
 
 private:
@@ -251,6 +355,11 @@ void MountCollectionService::OnPlayerLearnSpell(Player* player, std::uint32_t sp
 void MountCollectionService::OnPlayerUpdate(Player* player)
 {
     _impl->OnPlayerUpdate(player);
+}
+
+std::string MountCollectionService::ExecuteSummon(Player* player, CollectionId collectionId)
+{
+    return _impl->ExecuteSummon(player, collectionId);
 }
 
 MountCollectionService& GetMountCollectionService()

@@ -135,6 +135,33 @@ void TestReplayOldNonceAndRateLimit()
         sawRateLimit = sawRateLimit || packet.ends_with("|RATE_LIMITED");
     Require(sawRateLimit, "token bucket never rate limited a burst");
 }
+
+void TestAuthoritativeActionHandler()
+{
+    SC::AccountCollectionCache cache;
+    auto opened = cache.OpenSession(Account(4), Session(400), 0);
+    Require(cache.CompleteLoad(Account(4), opened.Generation, {}, SC::CollectionRevision(std::uint64_t { 9 })),
+        "action cache fixture did not become ready");
+    SC::Sc2Server server = BuildServer(cache);
+    server.OpenSession(Account(4), Session(400));
+    (void)server.HandleInbound(Session(400), "H|1|3333333333333333|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    (void)server.DrainOutbound(Session(400), 32);
+    std::string nonce = server.SessionNonce(Session(400));
+    bool called = false;
+    SC::Sc2Server::ActionHandler handler = [&called](SC::AccountId account, SC::Sc2Message const& request)
+    {
+        called = true;
+        Require(account == Account(4), "action handler account was not server-derived");
+        Require(request.TypeId == 10 && request.CollectionId == 100001 && request.ActionId == "SUMMON" &&
+            request.Target == "-", "action handler received altered logical request fields");
+        return std::string("ACCEPTED");
+    };
+    std::string request = "Q|" + nonce + "|8|10|100001|SUMMON|-";
+    Require(server.HandleInbound(Session(400), request, 1, handler), "authoritative action was not consumed");
+    std::vector<std::string> result = server.DrainOutbound(Session(400), 32);
+    Require(called && result.size() == 1 && result[0].find("|ACCEPTED|10|100001|9") != std::string::npos,
+        "authoritative action result was not correlated to the logical collection");
+}
 }
 
 int main()
@@ -145,6 +172,7 @@ int main()
         TestLoadingIsNotAnEmptySnapshot();
         TestReadySnapshotIsQueuedAndBounded();
         TestReplayOldNonceAndRateLimit();
+        TestAuthoritativeActionHandler();
         std::cout << "SoloCollections SC2 protocol tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

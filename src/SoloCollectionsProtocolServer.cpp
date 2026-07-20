@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
+#include <iterator>
 #include <limits>
 #include <sstream>
 #include <stdexcept>
@@ -16,6 +17,18 @@ constexpr double TokensPerSecond = 6.0;
 constexpr std::uint64_t ReplayLifetimeMs = 30'000;
 constexpr std::size_t MaxReplayEntries = 128;
 constexpr std::size_t MaxOutboundPackets = 512;
+
+bool IsActionStatus(std::string_view value)
+{
+    constexpr std::string_view values[] = {
+        "ACCEPTED", "LOADING", "NOT_OWNED", "CATALOG_MISMATCH", "ASSET_MISMATCH",
+        "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED",
+        "INVALID_TARGET_SLOT", "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED",
+        "IN_COMBAT", "DEAD", "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED",
+        "MAP_RESTRICTED", "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED",
+    };
+    return std::find(std::begin(values), std::end(values), value) != std::end(values);
+}
 }
 
 Sc2Server::Sc2Server(AccountCollectionCache& cache, std::string metadataVersion,
@@ -238,7 +251,8 @@ void Sc2Server::QueueCurrentState(SessionState& session)
     QueueSnapshots(session, *snapshot);
 }
 
-bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs)
+bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs,
+    ActionHandler const& actionHandler)
 {
     auto found = _sessions.find(sessionId);
     if (found == _sessions.end())
@@ -302,6 +316,12 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
             result.Status = "LOADING";
         else if (snapshot->State == AccountCacheLoadState::Failed)
             result.Status = "DB_UNAVAILABLE";
+        else if (actionHandler)
+        {
+            result.Status = actionHandler(session.Account, message);
+            if (!IsActionStatus(result.Status))
+                result.Status = "INVALID_REQUEST";
+        }
         else
             result.Status = "UNSUPPORTED";
         Queue(session, std::move(result));

@@ -7,6 +7,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <deque>
+#include <functional>
 #include <map>
 #include <random>
 #include <string>
@@ -24,6 +25,7 @@ struct Sc2CategoryDefinition
 class Sc2Server
 {
 public:
+    using ActionHandler = std::function<std::string(AccountId, Sc2Message const&)>;
     Sc2Server(AccountCollectionCache& cache, std::string metadataVersion,
         std::string assetPackVersion, std::string backendBuild,
         std::vector<Sc2CategoryDefinition> categories);
@@ -31,7 +33,8 @@ public:
     void OpenSession(AccountId accountId, AccountSessionId sessionId);
     void CloseSession(AccountSessionId sessionId);
     [[nodiscard]] bool HandleInbound(
-        AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs);
+        AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs,
+        ActionHandler const& actionHandler = {});
     void PumpSession(AccountSessionId sessionId, std::uint64_t nowMs);
     [[nodiscard]] std::vector<std::string> DrainOutbound(
         AccountSessionId sessionId, std::size_t maximum = Sc2Limits::MaxPacketsPerTick);

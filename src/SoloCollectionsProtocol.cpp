@@ -296,7 +296,9 @@ Sc2DecodeResult DecodeSc2Body(std::string_view body)
                 !ParseUnsigned(fields[2], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.RequestId) ||
                 !IsOneOf(fields[3], { "ACCEPTED", "LOADING", "NOT_OWNED", "CATALOG_MISMATCH", "ASSET_MISMATCH",
                     "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED", "INVALID_TARGET_SLOT",
-                    "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED" }) ||
+                    "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED", "IN_COMBAT", "DEAD",
+                    "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED", "MAP_RESTRICTED",
+                    "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED" }) ||
                 !typeId(4) || !ParseUnsigned(fields[5], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.CollectionId) ||
                 !revision(6))
                 return Failure("invalid ACTION_RESULT");

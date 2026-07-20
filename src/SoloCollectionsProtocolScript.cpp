@@ -2,6 +2,8 @@
 
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsMountCatalog.h"
+#include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProtocolServer.h"
 #include "SoloCollectionsProvider.h"
 
@@ -100,7 +102,14 @@ bool Sc2ProtocolCanUsePrivateChat(
         return true;
 
     std::string_view body(message.data() + WirePrefix.size(), message.size() - WirePrefix.size());
-    (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds());
+    (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
+        [player](AccountId accountId, Sc2Message const& request)
+        {
+            if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId() ||
+                request.TypeId != MountCollectionTypeId.Value() || request.ActionId != "SUMMON" || request.Target != "-")
+                return std::string("INVALID_REQUEST");
+            return GetMountCollectionService().ExecuteSummon(player, CollectionId(request.CollectionId));
+        });
     return false;
 }
 
