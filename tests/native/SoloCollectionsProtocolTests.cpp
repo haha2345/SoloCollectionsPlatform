@@ -162,6 +162,49 @@ void TestAuthoritativeActionHandler()
     Require(called && result.size() == 1 && result[0].find("|ACCEPTED|10|100001|9") != std::string::npos,
         "authoritative action result was not correlated to the logical collection");
 }
+
+void TestAccountScopedDeltaFanout()
+{
+    SC::AccountCollectionCache cache;
+    auto first = cache.OpenSession(Account(5), Session(500), 0);
+    (void)cache.OpenSession(Account(5), Session(501), 0);
+    auto isolated = cache.OpenSession(Account(6), Session(600), 0);
+    Require(cache.CompleteLoad(Account(5), first.Generation, {}, SC::CollectionRevision(std::uint64_t { 1 })),
+        "shared-account cache fixture did not become ready");
+    Require(cache.CompleteLoad(Account(6), isolated.Generation, {}, SC::CollectionRevision(std::uint64_t { 1 })),
+        "isolated-account cache fixture did not become ready");
+
+    SC::Sc2Server server = BuildServer(cache);
+    server.OpenSession(Account(5), Session(500));
+    server.OpenSession(Account(5), Session(501));
+    server.OpenSession(Account(6), Session(600));
+    (void)server.HandleInbound(Session(500),
+        "H|1|5555555555555500|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    (void)server.HandleInbound(Session(501),
+        "H|1|5555555555555501|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    (void)server.HandleInbound(Session(600),
+        "H|1|6666666666666600|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    (void)server.DrainOutbound(Session(500), 32);
+    (void)server.DrainOutbound(Session(501), 32);
+    (void)server.DrainOutbound(Session(600), 32);
+
+    SC::CollectionDelta delta {
+        { SC::CollectionTypeId(std::uint16_t { 1 }), SC::CollectionId(std::uint32_t { 42 }) },
+        SC::CollectionDeltaKind::Unlock, SC::CollectionRevision(std::uint64_t { 2 })
+    };
+    server.OnCollectionDeltaCommitted(Account(5), delta);
+
+    std::vector<std::string> firstSession = server.DrainOutbound(Session(500), 32);
+    std::vector<std::string> secondSession = server.DrainOutbound(Session(501), 32);
+    std::vector<std::string> otherAccount = server.DrainOutbound(Session(600), 32);
+    Require(firstSession.size() == 1 && firstSession[0].starts_with("D|") &&
+        firstSession[0].find("|1|2|A|42") != std::string::npos,
+        "first session did not receive its account delta");
+    Require(secondSession.size() == 1 && secondSession[0].starts_with("D|") &&
+        secondSession[0].find("|1|2|A|42") != std::string::npos,
+        "second same-account session did not receive the account delta");
+    Require(otherAccount.empty(), "collection delta leaked to a different account");
+}
 }
 
 int main()
@@ -173,6 +216,7 @@ int main()
         TestReadySnapshotIsQueuedAndBounded();
         TestReplayOldNonceAndRateLimit();
         TestAuthoritativeActionHandler();
+        TestAccountScopedDeltaFanout();
         std::cout << "SoloCollections SC2 protocol tests passed" << std::endl;
         return EXIT_SUCCESS;
     }
