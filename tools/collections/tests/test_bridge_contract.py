@@ -446,9 +446,14 @@ class BridgeContractTests(unittest.TestCase):
             'return "compare"',
             'BACKEND ~= "cpp"',
             'if ENABLED then\n    RegisterServerEvent(30, onAddonMessage)',
-            'event=sc1_bridge_register result=disabled backend=',
+            'RegisterServerEvent(30, onRetiredAddonMessage)',
+            'event=sc1_bridge_register result=retired backend=',
+            'UPGRADE_RESPONSE = "UPGRADE_REQUIRED|2"',
         ):
             self.assertIn(ownership_guard, text)
+        client_bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        self.assertIn('B.upgradeResponse = "UPGRADE_REQUIRED|2"', client_bridge)
+        self.assertIn('B.Finish(false, "upgrade_required")', client_bridge)
         for forbidden in (
             "WorldDBQuery",
             "CharDBQuery",
