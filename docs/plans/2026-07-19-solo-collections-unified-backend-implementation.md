@@ -536,7 +536,7 @@ feat: add collection diagnostics and audited admin commands
 
 ## 9. 阶段 4：目录生成器和身份扩展
 
-阶段状态：🚧 实现已完成（任务 4.1–4.3）；真实客户端登录验收待完成
+阶段状态：✅ 已完成（任务 4.1–4.3）
 
 ### 任务 4.1：建立单一目录源
 
@@ -632,8 +632,10 @@ AddOn 137 项 Python 测试、模块 53 项 Python 测试和 MSVC 原生测试�
 源文件进入真实模块构建。构建产物已部署，运行文件 SHA-256 为
 `82D166136ABA69E662811A56CD5B5BC1F98BFE4D73065982B9600BB01B7C639C`，
 启动日志确认 worldserver ready、provider/cache 初始化和 schema ready。两个真实
-客户端 AddOn 目录均已部署且 parity 校验无缺失、差异或多余文件；客户端内加载
-验收等待用户完成登录认证后继续。
+客户端 AddOn 目录均已部署且 parity 校验无缺失、差异或多余文件。完全退出并重启
+真实客户端后，游戏内自检返回 `IdentityRegistry=table`、`/sc` 处理器为 `function`、
+职业筛选项共 11 项；`/sc` 收藏界面和外观页正常打开，生成的“全部职业 + 10 个
+职业”下拉完整显示，当前角色正确识别为战士，未出现 Lua 错误框。
 - 同一源数据可重新生成两仓库配套输出且 diff 确定。
 
 ## 10. 阶段 5：SC2 和客户端真实状态层
