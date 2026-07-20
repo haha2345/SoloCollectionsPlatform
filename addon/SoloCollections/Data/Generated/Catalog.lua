@@ -107,14 +107,5635 @@ SoloCollections.GeneratedCatalog = {
             typeKey = "set"
         }
     },
-    collections = {},
-    mappingHash = "bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac",
+    collections = {
+        {
+            actionId = 48778,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100000,
+            collectionKey = "mount.acherus_deathcharger",
+            lifecycle = "active",
+            name = {
+                enUS = "Acherus Deathcharger",
+                zhCN = "Acherus Deathcharger"
+            },
+            ordinal = 0,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 48778,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60025,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100001,
+            collectionKey = "mount.albino_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Albino Drake",
+                zhCN = "白色幼龙的缰绳"
+            },
+            ordinal = 1,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60025,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 43688,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100002,
+            collectionKey = "mount.amani_war_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Amani War Bear",
+                zhCN = "阿曼尼战熊"
+            },
+            ordinal = 2,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 43688,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16056,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100003,
+            collectionKey = "mount.ancient_frostsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Ancient Frostsaber",
+                zhCN = "上古霜刃豹缰绳"
+            },
+            ordinal = 3,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16056,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66906,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100004,
+            collectionKey = "mount.argent_charger",
+            lifecycle = "active",
+            name = {
+                enUS = "Argent Charger",
+                zhCN = "银色军马"
+            },
+            ordinal = 4,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66906,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63844,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100005,
+            collectionKey = "mount.argent_hippogryph",
+            lifecycle = "active",
+            name = {
+                enUS = "Argent Hippogryph",
+                zhCN = "银色角鹰兽"
+            },
+            ordinal = 5,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63844,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 67466,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100006,
+            collectionKey = "mount.argent_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Argent Warhorse",
+                zhCN = "银色战马"
+            },
+            ordinal = 6,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 67466,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61230,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100007,
+            collectionKey = "mount.armored_blue_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Armored Blue Wind Rider",
+                zhCN = "装甲蓝色驭风者"
+            },
+            ordinal = 7,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61230,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60114,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100008,
+            collectionKey = "mount.armored_brown_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Armored Brown Bear",
+                zhCN = "装甲棕熊的缰绳"
+            },
+            ordinal = 8,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60114,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60116,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100009,
+            collectionKey = "mount.armored_brown_bear.creature_32207",
+            lifecycle = "active",
+            name = {
+                enUS = "Armored Brown Bear",
+                zhCN = "装甲棕熊的缰绳"
+            },
+            ordinal = 9,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60116,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61229,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100010,
+            collectionKey = "mount.armored_snowy_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Armored Snowy Gryphon",
+                zhCN = "装甲雪色狮鹫"
+            },
+            ordinal = 10,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61229,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 40192,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100011,
+            collectionKey = "mount.ashes_of_al_ar",
+            lifecycle = "active",
+            name = {
+                enUS = "Ashes of Al'ar",
+                zhCN = "奥的灰烬"
+            },
+            ordinal = 11,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 40192,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59567,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100012,
+            collectionKey = "mount.azure_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Azure Drake",
+                zhCN = "碧蓝幼龙的缰绳"
+            },
+            ordinal = 12,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59567,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41514,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100013,
+            collectionKey = "mount.azure_netherwing_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Azure Netherwing Drake",
+                zhCN = "青色灵翼幼龙的缰绳"
+            },
+            ordinal = 13,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41514,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 51412,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100014,
+            collectionKey = "mount.big_battle_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Big Battle Bear",
+                zhCN = "大战熊"
+            },
+            ordinal = 14,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 51412,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 58983,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100015,
+            collectionKey = "mount.big_blizzard_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Big Blizzard Bear",
+                zhCN = "暴雪巨熊"
+            },
+            ordinal = 15,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 58983,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 71342,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100016,
+            collectionKey = "mount.big_love_rocket",
+            lifecycle = "active",
+            name = {
+                enUS = "Big Love Rocket",
+                zhCN = "爱情火箭"
+            },
+            ordinal = 16,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 71342,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22719,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100017,
+            collectionKey = "mount.black_battlestrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Battlestrider",
+                zhCN = "黑色作战机械陆行鸟"
+            },
+            ordinal = 17,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22719,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 62048,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100018,
+            collectionKey = "mount.black_dragonhawk_mount",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Dragonhawk Mount",
+                zhCN = "Black Dragonhawk Mount"
+            },
+            ordinal = 18,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 62048,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59650,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100019,
+            collectionKey = "mount.black_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Drake",
+                zhCN = "黑色幼龙的缰绳"
+            },
+            ordinal = 19,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59650,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35022,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100020,
+            collectionKey = "mount.black_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Hawkstrider",
+                zhCN = "黑色陆行鸟"
+            },
+            ordinal = 20,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35022,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16055,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100021,
+            collectionKey = "mount.black_nightsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Nightsaber",
+                zhCN = "夜刃豹缰绳"
+            },
+            ordinal = 21,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16055,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59572,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100022,
+            collectionKey = "mount.black_polar_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Polar Bear",
+                zhCN = "黑色北极熊的缰绳"
+            },
+            ordinal = 22,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59572,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59976,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100023,
+            collectionKey = "mount.black_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Proto-Drake",
+                zhCN = "黑色始祖幼龙的缰绳"
+            },
+            ordinal = 23,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59976,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 26656,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100024,
+            collectionKey = "mount.black_qiraji_battle_tank",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Qiraji Battle Tank",
+                zhCN = "黑色其拉共鸣水晶"
+            },
+            ordinal = 24,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 26656,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17461,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100025,
+            collectionKey = "mount.black_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Ram",
+                zhCN = "黑山羊"
+            },
+            ordinal = 25,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17461,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 64977,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100026,
+            collectionKey = "mount.black_skeletal_horse",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Skeletal Horse",
+                zhCN = "黑色骷髅战马"
+            },
+            ordinal = 26,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 64977,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 470,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100027,
+            collectionKey = "mount.black_stallion",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Stallion",
+                zhCN = "黑马缰绳"
+            },
+            ordinal = 27,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 470,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60118,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100028,
+            collectionKey = "mount.black_war_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Bear",
+                zhCN = "黑色战熊的缰绳"
+            },
+            ordinal = 28,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60118,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60119,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100029,
+            collectionKey = "mount.black_war_bear.creature_32205",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Bear",
+                zhCN = "黑色战熊的缰绳"
+            },
+            ordinal = 29,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60119,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 48027,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100030,
+            collectionKey = "mount.black_war_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Elekk",
+                zhCN = "黑色作战雷象的缰绳"
+            },
+            ordinal = 30,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 48027,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22718,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100031,
+            collectionKey = "mount.black_war_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Kodo",
+                zhCN = "黑色作战科多兽"
+            },
+            ordinal = 31,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22718,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59785,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100032,
+            collectionKey = "mount.black_war_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Mammoth",
+                zhCN = "黑色猛犸战象的缰绳"
+            },
+            ordinal = 32,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59785,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59788,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100033,
+            collectionKey = "mount.black_war_mammoth.creature_31850",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Mammoth",
+                zhCN = "黑色猛犸战象的缰绳"
+            },
+            ordinal = 33,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59788,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22720,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100034,
+            collectionKey = "mount.black_war_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Ram",
+                zhCN = "黑色战羊"
+            },
+            ordinal = 34,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22720,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22721,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100035,
+            collectionKey = "mount.black_war_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Raptor",
+                zhCN = "黑色战斗迅猛龙之哨"
+            },
+            ordinal = 35,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22721,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22717,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100036,
+            collectionKey = "mount.black_war_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Steed",
+                zhCN = "黑色战驹缰绳"
+            },
+            ordinal = 36,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22717,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22723,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100037,
+            collectionKey = "mount.black_war_tiger",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Tiger",
+                zhCN = "黑色军用座虎缰绳"
+            },
+            ordinal = 37,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22723,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22724,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100038,
+            collectionKey = "mount.black_war_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Black War Wolf",
+                zhCN = "黑色战狼号角"
+            },
+            ordinal = 38,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22724,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 64658,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100039,
+            collectionKey = "mount.black_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Black Wolf",
+                zhCN = "黑狼号角"
+            },
+            ordinal = 39,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 64658,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 74856,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100040,
+            collectionKey = "mount.blazing_hippogryph",
+            lifecycle = "active",
+            name = {
+                enUS = "Blazing Hippogryph",
+                zhCN = "炽焰角鹰兽"
+            },
+            ordinal = 40,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 74856,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 72808,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100041,
+            collectionKey = "mount.bloodbathed_frostbrood_vanquisher",
+            lifecycle = "active",
+            name = {
+                enUS = "Bloodbathed Frostbrood Vanquisher",
+                zhCN = "浴血冰霜征服者缰绳"
+            },
+            ordinal = 41,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 72808,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61996,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100042,
+            collectionKey = "mount.blue_dragonhawk",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Dragonhawk",
+                zhCN = "蓝色龙鹰坐骑"
+            },
+            ordinal = 42,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61996,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59568,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100043,
+            collectionKey = "mount.blue_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Drake",
+                zhCN = "蓝色幼龙的缰绳"
+            },
+            ordinal = 43,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59568,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35020,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100044,
+            collectionKey = "mount.blue_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Hawkstrider",
+                zhCN = "蓝色陆行鸟"
+            },
+            ordinal = 44,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35020,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10969,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100045,
+            collectionKey = "mount.blue_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Mechanostrider",
+                zhCN = "蓝色机械陆行鸟"
+            },
+            ordinal = 45,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10969,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59996,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100046,
+            collectionKey = "mount.blue_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Proto-Drake",
+                zhCN = "蓝色始祖幼龙的缰绳"
+            },
+            ordinal = 46,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59996,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 25953,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100047,
+            collectionKey = "mount.blue_qiraji_battle_tank",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Qiraji Battle Tank",
+                zhCN = "蓝色其拉共鸣水晶"
+            },
+            ordinal = 47,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 25953,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39803,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100048,
+            collectionKey = "mount.blue_riding_nether_ray",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Riding Nether Ray",
+                zhCN = "蓝色骑乘虚空鳐"
+            },
+            ordinal = 48,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39803,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17463,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100049,
+            collectionKey = "mount.blue_skeletal_horse",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Skeletal Horse",
+                zhCN = "蓝色骸骨军马"
+            },
+            ordinal = 49,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17463,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32244,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100050,
+            collectionKey = "mount.blue_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Blue Wind Rider",
+                zhCN = "蓝色驭风者"
+            },
+            ordinal = 50,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32244,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 50869,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100051,
+            collectionKey = "mount.brewfest_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Brewfest Kodo",
+                zhCN = "Brewfest Kodo"
+            },
+            ordinal = 51,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 50869,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 43899,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100052,
+            collectionKey = "mount.brewfest_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Brewfest Ram",
+                zhCN = "美酒节赛羊"
+            },
+            ordinal = 52,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 43899,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 49378,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100053,
+            collectionKey = "mount.brewfest_riding_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Brewfest Riding Kodo",
+                zhCN = "美酒节科多兽"
+            },
+            ordinal = 53,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 49378,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59569,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100054,
+            collectionKey = "mount.bronze_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Bronze Drake",
+                zhCN = "青铜幼龙的缰绳"
+            },
+            ordinal = 54,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59569,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34406,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100055,
+            collectionKey = "mount.brown_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Elekk",
+                zhCN = "棕色雷象"
+            },
+            ordinal = 55,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34406,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 458,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100056,
+            collectionKey = "mount.brown_horse",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Horse",
+                zhCN = "棕马缰绳"
+            },
+            ordinal = 56,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 458,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 18990,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100057,
+            collectionKey = "mount.brown_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Kodo",
+                zhCN = "棕色科多兽"
+            },
+            ordinal = 57,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 18990,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59573,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100058,
+            collectionKey = "mount.brown_polar_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Polar Bear",
+                zhCN = "棕色北极熊的缰绳"
+            },
+            ordinal = 58,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59573,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 6899,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100059,
+            collectionKey = "mount.brown_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Ram",
+                zhCN = "棕山羊"
+            },
+            ordinal = 59,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 6899,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17464,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100060,
+            collectionKey = "mount.brown_skeletal_horse",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Skeletal Horse",
+                zhCN = "棕色骸骨军马"
+            },
+            ordinal = 60,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17464,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 6654,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100061,
+            collectionKey = "mount.brown_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Brown Wolf",
+                zhCN = "棕狼号角"
+            },
+            ordinal = 61,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 6654,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 58615,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100062,
+            collectionKey = "mount.brutal_nether_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Brutal Nether Drake",
+                zhCN = "野蛮角斗士的虚空幼龙"
+            },
+            ordinal = 62,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 58615,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 75614,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100063,
+            collectionKey = "mount.celestial_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Celestial Steed",
+                zhCN = "星骓"
+            },
+            ordinal = 63,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 75614,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 43927,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100064,
+            collectionKey = "mount.cenarion_war_hippogryph",
+            lifecycle = "active",
+            name = {
+                enUS = "Cenarion War Hippogryph",
+                zhCN = "塞纳里奥作战角鹰兽"
+            },
+            ordinal = 64,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 43927,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23214,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100065,
+            collectionKey = "mount.charger",
+            lifecycle = "active",
+            name = {
+                enUS = "Charger",
+                zhCN = "Charger"
+            },
+            ordinal = 65,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23214,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 6648,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100066,
+            collectionKey = "mount.chestnut_mare",
+            lifecycle = "active",
+            name = {
+                enUS = "Chestnut Mare",
+                zhCN = "栗色马缰绳"
+            },
+            ordinal = 66,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 6648,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41515,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100067,
+            collectionKey = "mount.cobalt_netherwing_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Cobalt Netherwing Drake",
+                zhCN = "蓝色灵翼幼龙的缰绳"
+            },
+            ordinal = 67,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41515,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39315,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100068,
+            collectionKey = "mount.cobalt_riding_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Cobalt Riding Talbuk",
+                zhCN = "蓝色骑乘塔布羊缰绳"
+            },
+            ordinal = 68,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39315,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34896,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100069,
+            collectionKey = "mount.cobalt_war_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Cobalt War Talbuk",
+                zhCN = "蓝色作战塔布羊缰绳"
+            },
+            ordinal = 69,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34896,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 73313,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100070,
+            collectionKey = "mount.crimson_deathcharger",
+            lifecycle = "active",
+            name = {
+                enUS = "Crimson Deathcharger",
+                zhCN = "血色死亡战马的缰绳"
+            },
+            ordinal = 70,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 73313,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 68188,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100071,
+            collectionKey = "mount.crusader_s_black_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Crusader's Black Warhorse",
+                zhCN = "十字军的黑色战马"
+            },
+            ordinal = 71,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 68188,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 68187,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100072,
+            collectionKey = "mount.crusader_s_white_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Crusader's White Warhorse",
+                zhCN = "十字军的白色战马"
+            },
+            ordinal = 72,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 68187,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39316,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100073,
+            collectionKey = "mount.dark_riding_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Dark Riding Talbuk",
+                zhCN = "暗色骑乘塔布羊缰绳"
+            },
+            ordinal = 73,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39316,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34790,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100074,
+            collectionKey = "mount.dark_war_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Dark War Talbuk",
+                zhCN = "暗色作战塔布羊缰绳"
+            },
+            ordinal = 74,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34790,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63635,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100075,
+            collectionKey = "mount.darkspear_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Darkspear Raptor",
+                zhCN = "暗矛迅猛龙"
+            },
+            ordinal = 75,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63635,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63637,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100076,
+            collectionKey = "mount.darnassian_nightsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Darnassian Nightsaber",
+                zhCN = "达纳苏斯夜刃豹"
+            },
+            ordinal = 76,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63637,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 64927,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100077,
+            collectionKey = "mount.deadly_gladiator_s_frost_wyrm",
+            lifecycle = "active",
+            name = {
+                enUS = "Deadly Gladiator's Frost Wyrm",
+                zhCN = "致命角斗士的冰霜巨龙"
+            },
+            ordinal = 77,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 64927,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 6653,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100078,
+            collectionKey = "mount.dire_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Dire Wolf",
+                zhCN = "恐狼号角"
+            },
+            ordinal = 78,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 6653,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23161,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100079,
+            collectionKey = "mount.dreadsteed",
+            lifecycle = "active",
+            name = {
+                enUS = "Dreadsteed",
+                zhCN = "Dreadsteed"
+            },
+            ordinal = 79,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23161,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32239,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100080,
+            collectionKey = "mount.ebon_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Ebon Gryphon",
+                zhCN = "黑色狮鹫"
+            },
+            ordinal = 80,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32239,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 8395,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100081,
+            collectionKey = "mount.emerald_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Emerald Raptor",
+                zhCN = "绿色迅猛龙之哨"
+            },
+            ordinal = 81,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 8395,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63639,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100082,
+            collectionKey = "mount.exodar_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Exodar Elekk",
+                zhCN = "埃索达雷象"
+            },
+            ordinal = 82,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63639,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 5784,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100083,
+            collectionKey = "mount.felsteed",
+            lifecycle = "active",
+            name = {
+                enUS = "Felsteed",
+                zhCN = "Felsteed"
+            },
+            ordinal = 83,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 5784,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 36702,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100084,
+            collectionKey = "mount.fiery_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Fiery Warhorse",
+                zhCN = "炽热战马的缰绳"
+            },
+            ordinal = 84,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 36702,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17458,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100085,
+            collectionKey = "mount.fluorescent_green_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Fluorescent Green Mechanostrider",
+                zhCN = "绿色荧光机械陆行鸟"
+            },
+            ordinal = 85,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17458,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61451,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100086,
+            collectionKey = "mount.flying_carpet",
+            lifecycle = "active",
+            name = {
+                enUS = "Flying Carpet",
+                zhCN = "飞毯"
+            },
+            ordinal = 86,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61451,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 44153,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100087,
+            collectionKey = "mount.flying_machine",
+            lifecycle = "active",
+            name = {
+                enUS = "Flying Machine",
+                zhCN = "飞行器控制台"
+            },
+            ordinal = 87,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 44153,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63643,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100088,
+            collectionKey = "mount.forsaken_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Forsaken Warhorse",
+                zhCN = "被遗忘者战马"
+            },
+            ordinal = 88,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63643,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17460,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100089,
+            collectionKey = "mount.frost_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Frost Ram",
+                zhCN = "霜山羊"
+            },
+            ordinal = 89,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17460,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23509,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100090,
+            collectionKey = "mount.frostwolf_howler",
+            lifecycle = "active",
+            name = {
+                enUS = "Frostwolf Howler",
+                zhCN = "霜狼嗥叫者的号角"
+            },
+            ordinal = 90,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23509,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 75596,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100091,
+            collectionKey = "mount.frosty_flying_carpet",
+            lifecycle = "active",
+            name = {
+                enUS = "Frosty Flying Carpet",
+                zhCN = "凝霜飞毯"
+            },
+            ordinal = 91,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 75596,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65439,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100092,
+            collectionKey = "mount.furious_gladiator_s_frost_wyrm",
+            lifecycle = "active",
+            name = {
+                enUS = "Furious Gladiator's Frost Wyrm",
+                zhCN = "狂怒角斗士的冰霜巨龙"
+            },
+            ordinal = 92,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65439,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63638,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100093,
+            collectionKey = "mount.gnomeregan_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Gnomeregan Mechanostrider",
+                zhCN = "诺莫瑞根机械陆行鸟"
+            },
+            ordinal = 93,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63638,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32235,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100094,
+            collectionKey = "mount.golden_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Golden Gryphon",
+                zhCN = "金色狮鹫"
+            },
+            ordinal = 94,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32235,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16060,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100095,
+            collectionKey = "mount.golden_sabercat",
+            lifecycle = "active",
+            name = {
+                enUS = "Golden Sabercat",
+                zhCN = "金色猎豹缰绳"
+            },
+            ordinal = 95,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16060,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61467,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100096,
+            collectionKey = "mount.grand_black_war_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Grand Black War Mammoth",
+                zhCN = "重型黑色猛犸战象的缰绳"
+            },
+            ordinal = 96,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61467,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61465,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100097,
+            collectionKey = "mount.grand_black_war_mammoth.creature_31862",
+            lifecycle = "active",
+            name = {
+                enUS = "Grand Black War Mammoth",
+                zhCN = "重型黑色猛犸战象的缰绳"
+            },
+            ordinal = 97,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61465,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60136,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100098,
+            collectionKey = "mount.grand_caravan_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Grand Caravan Mammoth",
+                zhCN = "Grand Caravan Mammoth"
+            },
+            ordinal = 98,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60136,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60140,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100099,
+            collectionKey = "mount.grand_caravan_mammoth.creature_32213",
+            lifecycle = "active",
+            name = {
+                enUS = "Grand Caravan Mammoth",
+                zhCN = "Grand Caravan Mammoth"
+            },
+            ordinal = 99,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60140,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61469,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100100,
+            collectionKey = "mount.grand_ice_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Grand Ice Mammoth",
+                zhCN = "重型冰雪猛犸象的缰绳"
+            },
+            ordinal = 100,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61469,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61470,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100101,
+            collectionKey = "mount.grand_ice_mammoth.creature_31858",
+            lifecycle = "active",
+            name = {
+                enUS = "Grand Ice Mammoth",
+                zhCN = "重型冰雪猛犸象的缰绳"
+            },
+            ordinal = 101,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61470,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35710,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100102,
+            collectionKey = "mount.gray_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Gray Elekk",
+                zhCN = "灰色雷象"
+            },
+            ordinal = 102,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35710,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 18989,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100103,
+            collectionKey = "mount.gray_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Gray Kodo",
+                zhCN = "灰色科多兽"
+            },
+            ordinal = 103,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 18989,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 6777,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100104,
+            collectionKey = "mount.gray_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Gray Ram",
+                zhCN = "灰山羊"
+            },
+            ordinal = 104,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 6777,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 459,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100105,
+            collectionKey = "mount.gray_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Gray Wolf",
+                zhCN = "灰狼号角"
+            },
+            ordinal = 105,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 459,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35713,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100106,
+            collectionKey = "mount.great_blue_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Blue Elekk",
+                zhCN = "重型蓝色雷象"
+            },
+            ordinal = 106,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35713,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 49379,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100107,
+            collectionKey = "mount.great_brewfest_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Brewfest Kodo",
+                zhCN = "大型美酒节科多兽"
+            },
+            ordinal = 107,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 49379,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23249,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100108,
+            collectionKey = "mount.great_brown_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Brown Kodo",
+                zhCN = "大型棕色科多兽"
+            },
+            ordinal = 108,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23249,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34407,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100109,
+            collectionKey = "mount.great_elite_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Elite Elekk",
+                zhCN = "重型精英雷象"
+            },
+            ordinal = 109,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34407,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65641,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100110,
+            collectionKey = "mount.great_golden_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Golden Kodo",
+                zhCN = "大型金色科多兽"
+            },
+            ordinal = 110,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65641,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23248,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100111,
+            collectionKey = "mount.great_gray_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Gray Kodo",
+                zhCN = "大型灰色科多兽"
+            },
+            ordinal = 111,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23248,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35712,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100112,
+            collectionKey = "mount.great_green_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Green Elekk",
+                zhCN = "重型绿色雷象"
+            },
+            ordinal = 112,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35712,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35714,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100113,
+            collectionKey = "mount.great_purple_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Purple Elekk",
+                zhCN = "重型紫色雷象"
+            },
+            ordinal = 113,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35714,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65637,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100114,
+            collectionKey = "mount.great_red_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Great Red Elekk",
+                zhCN = "重型红色雷象"
+            },
+            ordinal = 114,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65637,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23247,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100115,
+            collectionKey = "mount.great_white_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Great White Kodo",
+                zhCN = "大型白色科多兽"
+            },
+            ordinal = 115,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23247,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 18991,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100116,
+            collectionKey = "mount.green_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Kodo",
+                zhCN = "绿色科多兽"
+            },
+            ordinal = 116,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 18991,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17453,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100117,
+            collectionKey = "mount.green_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Mechanostrider",
+                zhCN = "绿色机械陆行鸟"
+            },
+            ordinal = 117,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17453,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61294,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100118,
+            collectionKey = "mount.green_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Proto-Drake",
+                zhCN = "绿色始祖幼龙的缰绳"
+            },
+            ordinal = 118,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61294,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 26056,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100119,
+            collectionKey = "mount.green_qiraji_battle_tank",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Qiraji Battle Tank",
+                zhCN = "绿色其拉共鸣水晶"
+            },
+            ordinal = 119,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 26056,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39798,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100120,
+            collectionKey = "mount.green_riding_nether_ray",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Riding Nether Ray",
+                zhCN = "绿色骑乘虚空鳐"
+            },
+            ordinal = 120,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39798,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17465,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100121,
+            collectionKey = "mount.green_skeletal_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Skeletal Warhorse",
+                zhCN = "绿色骸骨军马"
+            },
+            ordinal = 121,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17465,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32245,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100122,
+            collectionKey = "mount.green_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Green Wind Rider",
+                zhCN = "绿色驭风者"
+            },
+            ordinal = 122,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32245,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 48025,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100123,
+            collectionKey = "mount.headless_horseman_s_mount",
+            lifecycle = "active",
+            name = {
+                enUS = "Headless Horseman's Mount",
+                zhCN = "无头骑士的缰绳"
+            },
+            ordinal = 123,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 48025,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59797,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100124,
+            collectionKey = "mount.ice_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Ice Mammoth",
+                zhCN = "冰雪猛犸象的缰绳"
+            },
+            ordinal = 124,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59797,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59799,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100125,
+            collectionKey = "mount.ice_mammoth.creature_31855",
+            lifecycle = "active",
+            name = {
+                enUS = "Ice Mammoth",
+                zhCN = "冰雪猛犸象的缰绳"
+            },
+            ordinal = 125,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59799,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 72807,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100126,
+            collectionKey = "mount.icebound_frostbrood_vanquisher",
+            lifecycle = "active",
+            name = {
+                enUS = "Icebound Frostbrood Vanquisher",
+                zhCN = "缚寒冰霜征服者缰绳"
+            },
+            ordinal = 126,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 72807,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17459,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100127,
+            collectionKey = "mount.icy_blue_mechanostrider_mod_a",
+            lifecycle = "active",
+            name = {
+                enUS = "Icy Blue Mechanostrider Mod A",
+                zhCN = "冰蓝色机械陆行鸟A型"
+            },
+            ordinal = 127,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17459,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 72286,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100128,
+            collectionKey = "mount.invincible",
+            lifecycle = "active",
+            name = {
+                enUS = "Invincible",
+                zhCN = "无敌的缰绳"
+            },
+            ordinal = 128,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 72286,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63956,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100129,
+            collectionKey = "mount.ironbound_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Ironbound Proto-Drake",
+                zhCN = "铁箍始祖幼龙的缰绳"
+            },
+            ordinal = 129,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63956,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63636,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100130,
+            collectionKey = "mount.ironforge_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Ironforge Ram",
+                zhCN = "铁炉堡战羊"
+            },
+            ordinal = 130,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63636,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17450,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100131,
+            collectionKey = "mount.ivory_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Ivory Raptor",
+                zhCN = "白色迅猛龙之哨"
+            },
+            ordinal = 131,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17450,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65917,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100132,
+            collectionKey = "mount.magic_rooster",
+            lifecycle = "active",
+            name = {
+                enUS = "Magic Rooster",
+                zhCN = "魔法鸡蛋"
+            },
+            ordinal = 132,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65917,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61309,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100133,
+            collectionKey = "mount.magnificent_flying_carpet",
+            lifecycle = "active",
+            name = {
+                enUS = "Magnificent Flying Carpet",
+                zhCN = "华丽的飞毯"
+            },
+            ordinal = 133,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61309,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 55531,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100134,
+            collectionKey = "mount.mechano_hog",
+            lifecycle = "active",
+            name = {
+                enUS = "Mechano-hog",
+                zhCN = "机械路霸"
+            },
+            ordinal = 134,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 55531,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60424,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100135,
+            collectionKey = "mount.mekgineer_s_chopper",
+            lifecycle = "active",
+            name = {
+                enUS = "Mekgineer's Chopper",
+                zhCN = "机械师的摩托车"
+            },
+            ordinal = 135,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60424,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 44744,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100136,
+            collectionKey = "mount.merciless_nether_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Merciless Nether Drake",
+                zhCN = "残酷角斗士的虚空幼龙"
+            },
+            ordinal = 136,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 44744,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63796,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100137,
+            collectionKey = "mount.mimiron_s_head",
+            lifecycle = "active",
+            name = {
+                enUS = "Mimiron's Head",
+                zhCN = "米米尔隆的头部"
+            },
+            ordinal = 137,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63796,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16084,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100138,
+            collectionKey = "mount.mottled_red_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Mottled Red Raptor",
+                zhCN = "红色迅猛龙之哨"
+            },
+            ordinal = 138,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16084,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 29059,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100139,
+            collectionKey = "mount.naxxramas_deathcharger",
+            lifecycle = "active",
+            name = {
+                enUS = "Naxxramas Deathcharger",
+                zhCN = "纳克萨玛斯死亡战马缰绳"
+            },
+            ordinal = 139,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 29059,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10798,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100140,
+            collectionKey = "mount.obsidian_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Obsidian Raptor",
+                zhCN = "黑色迅猛龙之哨"
+            },
+            ordinal = 140,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10798,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66846,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100141,
+            collectionKey = "mount.ochre_skeletal_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Ochre Skeletal Warhorse",
+                zhCN = "赭色白骨战马"
+            },
+            ordinal = 141,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66846,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41513,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100142,
+            collectionKey = "mount.onyx_netherwing_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Onyx Netherwing Drake",
+                zhCN = "黑色灵翼幼龙的缰绳"
+            },
+            ordinal = 142,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41513,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 69395,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100143,
+            collectionKey = "mount.onyxian_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Onyxian Drake",
+                zhCN = "奥妮克希亚座龙缰绳"
+            },
+            ordinal = 143,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 69395,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63640,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100144,
+            collectionKey = "mount.orgrimmar_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Orgrimmar Wolf",
+                zhCN = "奥格瑞玛战狼"
+            },
+            ordinal = 144,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63640,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16082,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100145,
+            collectionKey = "mount.palomino",
+            lifecycle = "active",
+            name = {
+                enUS = "Palomino",
+                zhCN = "褐色马缰绳"
+            },
+            ordinal = 145,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16082,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 472,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100146,
+            collectionKey = "mount.pinto",
+            lifecycle = "active",
+            name = {
+                enUS = "Pinto",
+                zhCN = "杂色马缰绳"
+            },
+            ordinal = 146,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 472,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60021,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100147,
+            collectionKey = "mount.plagued_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Plagued Proto-Drake",
+                zhCN = "被感染的始祖幼龙的缰绳"
+            },
+            ordinal = 147,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60021,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16058,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100148,
+            collectionKey = "mount.primal_leopard",
+            lifecycle = "active",
+            name = {
+                enUS = "Primal Leopard",
+                zhCN = "原始猎豹缰绳"
+            },
+            ordinal = 148,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16058,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35711,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100149,
+            collectionKey = "mount.purple_elekk",
+            lifecycle = "active",
+            name = {
+                enUS = "Purple Elekk",
+                zhCN = "紫色雷象"
+            },
+            ordinal = 149,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35711,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35018,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100150,
+            collectionKey = "mount.purple_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Purple Hawkstrider",
+                zhCN = "紫色陆行鸟"
+            },
+            ordinal = 150,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35018,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17455,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100151,
+            collectionKey = "mount.purple_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Purple Mechanostrider",
+                zhCN = "紫色机械陆行鸟"
+            },
+            ordinal = 151,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17455,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41516,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100152,
+            collectionKey = "mount.purple_netherwing_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Purple Netherwing Drake",
+                zhCN = "紫色灵翼幼龙的缰绳"
+            },
+            ordinal = 152,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41516,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39801,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100153,
+            collectionKey = "mount.purple_riding_nether_ray",
+            lifecycle = "active",
+            name = {
+                enUS = "Purple Riding Nether Ray",
+                zhCN = "紫色骑乘虚空鳐"
+            },
+            ordinal = 153,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39801,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23246,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100154,
+            collectionKey = "mount.purple_skeletal_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Purple Skeletal Warhorse",
+                zhCN = "紫色骷髅战马"
+            },
+            ordinal = 154,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23246,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66090,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100155,
+            collectionKey = "mount.quel_dorei_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Quel'dorei Steed",
+                zhCN = "奎尔多雷战马"
+            },
+            ordinal = 155,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66090,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41252,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100156,
+            collectionKey = "mount.raven_lord",
+            lifecycle = "active",
+            name = {
+                enUS = "Raven Lord",
+                zhCN = "乌鸦之神的缰绳"
+            },
+            ordinal = 156,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41252,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17456,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100157,
+            collectionKey = "mount.red_and_blue_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Red and Blue Mechanostrider",
+                zhCN = "红蓝两色机械陆行鸟"
+            },
+            ordinal = 157,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17456,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61997,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100158,
+            collectionKey = "mount.red_dragonhawk",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Dragonhawk",
+                zhCN = "红色龙鹰坐骑"
+            },
+            ordinal = 158,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61997,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59570,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100159,
+            collectionKey = "mount.red_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Drake",
+                zhCN = "红色幼龙的缰绳"
+            },
+            ordinal = 159,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59570,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34795,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100160,
+            collectionKey = "mount.red_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Hawkstrider",
+                zhCN = "红色陆行鸟"
+            },
+            ordinal = 160,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34795,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10873,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100161,
+            collectionKey = "mount.red_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Mechanostrider",
+                zhCN = "红色机械陆行鸟"
+            },
+            ordinal = 161,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10873,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59961,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100162,
+            collectionKey = "mount.red_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Proto-Drake",
+                zhCN = "红色始祖幼龙的缰绳"
+            },
+            ordinal = 162,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59961,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 26054,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100163,
+            collectionKey = "mount.red_qiraji_battle_tank",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Qiraji Battle Tank",
+                zhCN = "红色其拉共鸣水晶"
+            },
+            ordinal = 163,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 26054,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39800,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100164,
+            collectionKey = "mount.red_riding_nether_ray",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Riding Nether Ray",
+                zhCN = "红色骑乘虚空鳐"
+            },
+            ordinal = 164,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39800,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17462,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100165,
+            collectionKey = "mount.red_skeletal_horse",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Skeletal Horse",
+                zhCN = "红色骸骨军马"
+            },
+            ordinal = 165,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17462,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 22722,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100166,
+            collectionKey = "mount.red_skeletal_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Skeletal Warhorse",
+                zhCN = "红色骷髅战马"
+            },
+            ordinal = 166,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 22722,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16080,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100167,
+            collectionKey = "mount.red_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Red Wolf",
+                zhCN = "赤狼号角"
+            },
+            ordinal = 167,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16080,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 67336,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100168,
+            collectionKey = "mount.relentless_gladiator_s_frost_wyrm",
+            lifecycle = "active",
+            name = {
+                enUS = "Relentless Gladiator's Frost Wyrm",
+                zhCN = "无情角斗士的冰霜巨龙"
+            },
+            ordinal = 168,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 67336,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 30174,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100169,
+            collectionKey = "mount.riding_turtle",
+            lifecycle = "active",
+            name = {
+                enUS = "Riding Turtle",
+                zhCN = "乌龟坐骑"
+            },
+            ordinal = 169,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 30174,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17481,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100170,
+            collectionKey = "mount.rivendare_s_deathcharger",
+            lifecycle = "active",
+            name = {
+                enUS = "Rivendare's Deathcharger",
+                zhCN = "死亡军马的缰绳"
+            },
+            ordinal = 170,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17481,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63963,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100171,
+            collectionKey = "mount.rusted_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Rusted Proto-Drake",
+                zhCN = "铁锈始祖幼龙的缰绳"
+            },
+            ordinal = 171,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63963,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 64731,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100172,
+            collectionKey = "mount.sea_turtle",
+            lifecycle = "active",
+            name = {
+                enUS = "Sea Turtle",
+                zhCN = "海龟"
+            },
+            ordinal = 172,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 64731,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66087,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100173,
+            collectionKey = "mount.silver_covenant_hippogryph",
+            lifecycle = "active",
+            name = {
+                enUS = "Silver Covenant Hippogryph",
+                zhCN = "银色盟约角鹰兽"
+            },
+            ordinal = 173,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66087,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39802,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100174,
+            collectionKey = "mount.silver_riding_nether_ray",
+            lifecycle = "active",
+            name = {
+                enUS = "Silver Riding Nether Ray",
+                zhCN = "银色骑乘虚空鳐"
+            },
+            ordinal = 174,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39802,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39317,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100175,
+            collectionKey = "mount.silver_riding_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Silver Riding Talbuk",
+                zhCN = "银色骑乘塔布羊缰绳"
+            },
+            ordinal = 175,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39317,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34898,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100176,
+            collectionKey = "mount.silver_war_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Silver War Talbuk",
+                zhCN = "银色作战塔布羊缰绳"
+            },
+            ordinal = 176,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34898,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63642,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100177,
+            collectionKey = "mount.silvermoon_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Silvermoon Hawkstrider",
+                zhCN = "银月城陆行鸟"
+            },
+            ordinal = 177,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63642,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 8980,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100178,
+            collectionKey = "mount.skeletal_horse",
+            lifecycle = "active",
+            name = {
+                enUS = "Skeletal Horse",
+                zhCN = "骸骨战马号角"
+            },
+            ordinal = 178,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 8980,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32240,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100179,
+            collectionKey = "mount.snowy_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Snowy Gryphon",
+                zhCN = "雪色狮鹫"
+            },
+            ordinal = 179,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32240,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 42776,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100180,
+            collectionKey = "mount.spectral_tiger",
+            lifecycle = "active",
+            name = {
+                enUS = "Spectral Tiger",
+                zhCN = "幽灵虎缰绳"
+            },
+            ordinal = 180,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 42776,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10789,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100181,
+            collectionKey = "mount.spotted_frostsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Spotted Frostsaber",
+                zhCN = "斑点霜刃豹缰绳"
+            },
+            ordinal = 181,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10789,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23510,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100182,
+            collectionKey = "mount.stormpike_battle_charger",
+            lifecycle = "active",
+            name = {
+                enUS = "Stormpike Battle Charger",
+                zhCN = "雷矛军用坐骑"
+            },
+            ordinal = 182,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23510,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63232,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100183,
+            collectionKey = "mount.stormwind_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Stormwind Steed",
+                zhCN = "暴风城战马"
+            },
+            ordinal = 183,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63232,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66847,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100184,
+            collectionKey = "mount.striped_dawnsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Striped Dawnsaber",
+                zhCN = "条纹晨刃豹的缰绳"
+            },
+            ordinal = 184,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66847,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 8394,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100185,
+            collectionKey = "mount.striped_frostsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Striped Frostsaber",
+                zhCN = "条纹霜刃豹缰绳"
+            },
+            ordinal = 185,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 8394,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10793,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100186,
+            collectionKey = "mount.striped_nightsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Striped Nightsaber",
+                zhCN = "条纹夜刃豹缰绳"
+            },
+            ordinal = 186,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10793,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34767,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100187,
+            collectionKey = "mount.summon_charger",
+            lifecycle = "active",
+            name = {
+                enUS = "Summon Charger",
+                zhCN = "Summon Charger"
+            },
+            ordinal = 187,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34767,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34769,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100188,
+            collectionKey = "mount.summon_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Summon Warhorse",
+                zhCN = "Summon Warhorse"
+            },
+            ordinal = 188,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34769,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66088,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100189,
+            collectionKey = "mount.sunreaver_dragonhawk",
+            lifecycle = "active",
+            name = {
+                enUS = "Sunreaver Dragonhawk",
+                zhCN = "夺日者龙鹰"
+            },
+            ordinal = 189,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66088,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 66091,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100190,
+            collectionKey = "mount.sunreaver_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Sunreaver Hawkstrider",
+                zhCN = "夺日者陆行鸟"
+            },
+            ordinal = 190,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 66091,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 68057,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100191,
+            collectionKey = "mount.swift_alliance_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Alliance Steed",
+                zhCN = "迅捷联盟战马"
+            },
+            ordinal = 191,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 68057,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32242,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100192,
+            collectionKey = "mount.swift_blue_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Blue Gryphon",
+                zhCN = "迅捷蓝色狮鹫"
+            },
+            ordinal = 192,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32242,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23241,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100193,
+            collectionKey = "mount.swift_blue_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Blue Raptor",
+                zhCN = "迅捷蓝色迅猛龙"
+            },
+            ordinal = 193,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23241,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 43900,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100194,
+            collectionKey = "mount.swift_brewfest_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Brewfest Ram",
+                zhCN = "迅捷美酒节赛羊"
+            },
+            ordinal = 194,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 43900,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23238,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100195,
+            collectionKey = "mount.swift_brown_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Brown Ram",
+                zhCN = "迅捷棕山羊"
+            },
+            ordinal = 195,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23238,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23229,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100196,
+            collectionKey = "mount.swift_brown_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Brown Steed",
+                zhCN = "迅捷棕马"
+            },
+            ordinal = 196,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23229,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23250,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100197,
+            collectionKey = "mount.swift_brown_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Brown Wolf",
+                zhCN = "迅捷棕狼号角"
+            },
+            ordinal = 197,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23250,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65646,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100198,
+            collectionKey = "mount.swift_burgundy_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Burgundy Wolf",
+                zhCN = "迅捷紫鬃战狼"
+            },
+            ordinal = 198,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65646,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23220,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100199,
+            collectionKey = "mount.swift_dawnsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Dawnsaber",
+                zhCN = "迅捷晨刃豹缰绳"
+            },
+            ordinal = 199,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23220,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23221,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100200,
+            collectionKey = "mount.swift_frostsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Frostsaber",
+                zhCN = "迅捷霜刃豹缰绳"
+            },
+            ordinal = 200,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23221,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23239,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100201,
+            collectionKey = "mount.swift_gray_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Gray Ram",
+                zhCN = "迅捷灰山羊"
+            },
+            ordinal = 201,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23239,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65640,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100202,
+            collectionKey = "mount.swift_gray_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Gray Steed",
+                zhCN = "迅捷灰色战马"
+            },
+            ordinal = 202,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65640,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23252,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100203,
+            collectionKey = "mount.swift_gray_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Gray Wolf",
+                zhCN = "迅捷灰狼号角"
+            },
+            ordinal = 203,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23252,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32290,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100204,
+            collectionKey = "mount.swift_green_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Green Gryphon",
+                zhCN = "迅捷绿色狮鹫"
+            },
+            ordinal = 204,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32290,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35025,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100205,
+            collectionKey = "mount.swift_green_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Green Hawkstrider",
+                zhCN = "迅捷绿色陆行鸟"
+            },
+            ordinal = 205,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35025,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23225,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100206,
+            collectionKey = "mount.swift_green_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Green Mechanostrider",
+                zhCN = "迅捷绿色机械陆行鸟"
+            },
+            ordinal = 206,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23225,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32295,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100207,
+            collectionKey = "mount.swift_green_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Green Wind Rider",
+                zhCN = "迅捷绿色驭风者"
+            },
+            ordinal = 207,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32295,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 68056,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100208,
+            collectionKey = "mount.swift_horde_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Horde Wolf",
+                zhCN = "迅捷部落战狼"
+            },
+            ordinal = 208,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 68056,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23219,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100209,
+            collectionKey = "mount.swift_mistsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Mistsaber",
+                zhCN = "迅捷雾刃豹缰绳"
+            },
+            ordinal = 209,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23219,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61442,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100210,
+            collectionKey = "mount.swift_mooncloth_carpet",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Mooncloth Carpet",
+                zhCN = "迅捷月布飞毯"
+            },
+            ordinal = 210,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61442,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65638,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100211,
+            collectionKey = "mount.swift_moonsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Moonsaber",
+                zhCN = "迅捷月刃豹"
+            },
+            ordinal = 211,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65638,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 37015,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100212,
+            collectionKey = "mount.swift_nether_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Nether Drake",
+                zhCN = "迅捷虚空幼龙"
+            },
+            ordinal = 212,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 37015,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23242,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100213,
+            collectionKey = "mount.swift_olive_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Olive Raptor",
+                zhCN = "迅捷绿色迅猛龙"
+            },
+            ordinal = 213,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23242,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23243,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100214,
+            collectionKey = "mount.swift_orange_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Orange Raptor",
+                zhCN = "迅捷橙色迅猛龙"
+            },
+            ordinal = 214,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23243,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23227,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100215,
+            collectionKey = "mount.swift_palomino",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Palomino",
+                zhCN = "迅捷褐色马"
+            },
+            ordinal = 215,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23227,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 33660,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100216,
+            collectionKey = "mount.swift_pink_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Pink Hawkstrider",
+                zhCN = "迅捷粉色陆行鸟"
+            },
+            ordinal = 216,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 33660,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32292,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100217,
+            collectionKey = "mount.swift_purple_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Purple Gryphon",
+                zhCN = "迅捷紫色狮鹫"
+            },
+            ordinal = 217,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32292,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35027,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100218,
+            collectionKey = "mount.swift_purple_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Purple Hawkstrider",
+                zhCN = "迅捷紫色陆行鸟"
+            },
+            ordinal = 218,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35027,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65644,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100219,
+            collectionKey = "mount.swift_purple_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Purple Raptor",
+                zhCN = "迅捷紫色迅猛龙"
+            },
+            ordinal = 219,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65644,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32297,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100220,
+            collectionKey = "mount.swift_purple_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Purple Wind Rider",
+                zhCN = "迅捷紫色驭风者"
+            },
+            ordinal = 220,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32297,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 24242,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100221,
+            collectionKey = "mount.swift_razzashi_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Razzashi Raptor",
+                zhCN = "拉扎什迅猛龙"
+            },
+            ordinal = 221,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 24242,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32289,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100222,
+            collectionKey = "mount.swift_red_gryphon",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Red Gryphon",
+                zhCN = "迅捷红色狮鹫"
+            },
+            ordinal = 222,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32289,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65639,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100223,
+            collectionKey = "mount.swift_red_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Red Hawkstrider",
+                zhCN = "迅捷红色陆行鸟"
+            },
+            ordinal = 223,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65639,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32246,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100224,
+            collectionKey = "mount.swift_red_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Red Wind Rider",
+                zhCN = "迅捷红色驭风者"
+            },
+            ordinal = 224,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32246,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 42777,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100225,
+            collectionKey = "mount.swift_spectral_tiger",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Spectral Tiger",
+                zhCN = "迅捷幽灵虎缰绳"
+            },
+            ordinal = 225,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 42777,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61446,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100226,
+            collectionKey = "mount.swift_spellfire_carpet",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Spellfire Carpet",
+                zhCN = "迅捷魔焰飞毯"
+            },
+            ordinal = 226,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61446,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23338,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100227,
+            collectionKey = "mount.swift_stormsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Stormsaber",
+                zhCN = "迅捷雷刃豹缰绳"
+            },
+            ordinal = 227,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23338,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23251,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100228,
+            collectionKey = "mount.swift_timber_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Timber Wolf",
+                zhCN = "迅捷森林狼号角"
+            },
+            ordinal = 228,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23251,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65643,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100229,
+            collectionKey = "mount.swift_violet_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Violet Ram",
+                zhCN = "迅捷紫色战羊"
+            },
+            ordinal = 229,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65643,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 35028,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100230,
+            collectionKey = "mount.swift_warstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Warstrider",
+                zhCN = "zzoldSwift Warstrider"
+            },
+            ordinal = 230,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 35028,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 46628,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100231,
+            collectionKey = "mount.swift_white_hawkstrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift White Hawkstrider",
+                zhCN = "迅捷白色陆行鸟"
+            },
+            ordinal = 231,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 46628,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23223,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100232,
+            collectionKey = "mount.swift_white_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift White Mechanostrider",
+                zhCN = "迅捷白色机械陆行鸟"
+            },
+            ordinal = 232,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23223,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23240,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100233,
+            collectionKey = "mount.swift_white_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift White Ram",
+                zhCN = "迅捷白山羊"
+            },
+            ordinal = 233,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23240,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23228,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100234,
+            collectionKey = "mount.swift_white_steed",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift White Steed",
+                zhCN = "迅捷白马"
+            },
+            ordinal = 234,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23228,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 23222,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100235,
+            collectionKey = "mount.swift_yellow_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Yellow Mechanostrider",
+                zhCN = "迅捷黄色机械陆行鸟"
+            },
+            ordinal = 235,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 23222,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32296,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100236,
+            collectionKey = "mount.swift_yellow_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Yellow Wind Rider",
+                zhCN = "迅捷黄色驭风者"
+            },
+            ordinal = 236,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32296,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 48954,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100237,
+            collectionKey = "mount.swift_zhevra",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Zhevra",
+                zhCN = "迅捷斑马"
+            },
+            ordinal = 237,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 48954,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 49322,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100238,
+            collectionKey = "mount.swift_zhevra.creature_27684",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Zhevra",
+                zhCN = "迅捷斑马"
+            },
+            ordinal = 238,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 49322,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 24252,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100239,
+            collectionKey = "mount.swift_zulian_tiger",
+            lifecycle = "active",
+            name = {
+                enUS = "Swift Zulian Tiger",
+                zhCN = "迅捷祖利安猛虎"
+            },
+            ordinal = 239,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 24252,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39318,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100240,
+            collectionKey = "mount.tan_riding_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Tan Riding Talbuk",
+                zhCN = "褐色骑乘塔布羊缰绳"
+            },
+            ordinal = 240,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39318,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34899,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100241,
+            collectionKey = "mount.tan_war_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "Tan War Talbuk",
+                zhCN = "褐色作战塔布羊缰绳"
+            },
+            ordinal = 241,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34899,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16059,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100242,
+            collectionKey = "mount.tawny_sabercat",
+            lifecycle = "active",
+            name = {
+                enUS = "Tawny Sabercat",
+                zhCN = "茶色猎豹缰绳"
+            },
+            ordinal = 242,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16059,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 32243,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100243,
+            collectionKey = "mount.tawny_wind_rider",
+            lifecycle = "active",
+            name = {
+                enUS = "Tawny Wind Rider",
+                zhCN = "茶色驭风者"
+            },
+            ordinal = 243,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 32243,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 18992,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100244,
+            collectionKey = "mount.teal_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Teal Kodo",
+                zhCN = "蓝色科多兽"
+            },
+            ordinal = 244,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 18992,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 63641,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100245,
+            collectionKey = "mount.thunder_bluff_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "Thunder Bluff Kodo",
+                zhCN = "雷霆崖科多兽"
+            },
+            ordinal = 245,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 63641,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 580,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100246,
+            collectionKey = "mount.timber_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Timber Wolf",
+                zhCN = "棕狼号角"
+            },
+            ordinal = 246,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 580,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60002,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100247,
+            collectionKey = "mount.time_lost_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Time-Lost Proto-Drake",
+                zhCN = "迷失始祖幼龙的缰绳"
+            },
+            ordinal = 247,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60002,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61425,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100248,
+            collectionKey = "mount.traveler_s_tundra_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Traveler's Tundra Mammoth",
+                zhCN = "旅行者的苔原猛犸象缰绳"
+            },
+            ordinal = 248,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61425,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 61447,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100249,
+            collectionKey = "mount.traveler_s_tundra_mammoth.creature_32640",
+            lifecycle = "active",
+            name = {
+                enUS = "Traveler's Tundra Mammoth",
+                zhCN = "旅行者的苔原猛犸象缰绳"
+            },
+            ordinal = 249,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 61447,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 44151,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100250,
+            collectionKey = "mount.turbo_charged_flying_machine",
+            lifecycle = "active",
+            name = {
+                enUS = "Turbo-Charged Flying Machine",
+                zhCN = "涡轮加速飞行器控制台"
+            },
+            ordinal = 250,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 44151,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65642,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100251,
+            collectionKey = "mount.turbostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Turbostrider",
+                zhCN = "涡轮机械陆行鸟"
+            },
+            ordinal = 251,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65642,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10796,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100252,
+            collectionKey = "mount.turquoise_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Turquoise Raptor",
+                zhCN = "青色迅猛龙之哨"
+            },
+            ordinal = 252,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10796,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59571,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100253,
+            collectionKey = "mount.twilight_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Twilight Drake",
+                zhCN = "暮光幼龙的缰绳"
+            },
+            ordinal = 253,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59571,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17454,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100254,
+            collectionKey = "mount.unpainted_mechanostrider",
+            lifecycle = "active",
+            name = {
+                enUS = "Unpainted Mechanostrider",
+                zhCN = "未涂色的机械陆行鸟"
+            },
+            ordinal = 254,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17454,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 49193,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100255,
+            collectionKey = "mount.vengeful_nether_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Vengeful Nether Drake",
+                zhCN = "复仇角斗士的虚空幼龙"
+            },
+            ordinal = 255,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 49193,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 64659,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100256,
+            collectionKey = "mount.venomhide_ravasaur",
+            lifecycle = "active",
+            name = {
+                enUS = "Venomhide Ravasaur",
+                zhCN = "毒皮暴掠龙哨"
+            },
+            ordinal = 256,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 64659,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41517,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100257,
+            collectionKey = "mount.veridian_netherwing_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Veridian Netherwing Drake",
+                zhCN = "绿色灵翼幼龙的缰绳"
+            },
+            ordinal = 257,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41517,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 41518,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100258,
+            collectionKey = "mount.violet_netherwing_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Violet Netherwing Drake",
+                zhCN = "红色灵翼幼龙的缰绳"
+            },
+            ordinal = 258,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 41518,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 60024,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100259,
+            collectionKey = "mount.violet_proto_drake",
+            lifecycle = "active",
+            name = {
+                enUS = "Violet Proto-Drake",
+                zhCN = "紫色始祖幼龙的缰绳"
+            },
+            ordinal = 259,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 60024,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 10799,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100260,
+            collectionKey = "mount.violet_raptor",
+            lifecycle = "active",
+            name = {
+                enUS = "Violet Raptor",
+                zhCN = "紫色迅猛龙之哨"
+            },
+            ordinal = 260,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 10799,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 13819,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100261,
+            collectionKey = "mount.warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "Warhorse",
+                zhCN = "Warhorse"
+            },
+            ordinal = 261,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 13819,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 64657,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100262,
+            collectionKey = "mount.white_kodo",
+            lifecycle = "active",
+            name = {
+                enUS = "White Kodo",
+                zhCN = "白色科多兽"
+            },
+            ordinal = 262,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 64657,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 15779,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100263,
+            collectionKey = "mount.white_mechanostrider_mod_b",
+            lifecycle = "active",
+            name = {
+                enUS = "White Mechanostrider Mod B",
+                zhCN = "白色机械陆行鸟B型"
+            },
+            ordinal = 263,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 15779,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 54753,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100264,
+            collectionKey = "mount.white_polar_bear",
+            lifecycle = "active",
+            name = {
+                enUS = "White Polar Bear",
+                zhCN = "北极熊挽具"
+            },
+            ordinal = 264,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 54753,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 6898,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100265,
+            collectionKey = "mount.white_ram",
+            lifecycle = "active",
+            name = {
+                enUS = "White Ram",
+                zhCN = "白山羊"
+            },
+            ordinal = 265,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 6898,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 39319,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100266,
+            collectionKey = "mount.white_riding_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "White Riding Talbuk",
+                zhCN = "白色骑乘塔布羊缰绳"
+            },
+            ordinal = 266,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 39319,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 65645,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100267,
+            collectionKey = "mount.white_skeletal_warhorse",
+            lifecycle = "active",
+            name = {
+                enUS = "White Skeletal Warhorse",
+                zhCN = "白骨战马"
+            },
+            ordinal = 267,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 65645,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16083,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100268,
+            collectionKey = "mount.white_stallion",
+            lifecycle = "active",
+            name = {
+                enUS = "White Stallion",
+                zhCN = "白马缰绳"
+            },
+            ordinal = 268,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16083,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 34897,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100269,
+            collectionKey = "mount.white_war_talbuk",
+            lifecycle = "active",
+            name = {
+                enUS = "White War Talbuk",
+                zhCN = "白色作战塔布羊缰绳"
+            },
+            ordinal = 269,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 34897,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 54729,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100270,
+            collectionKey = "mount.winged_steed_of_the_ebon_blade",
+            lifecycle = "active",
+            name = {
+                enUS = "Winged Steed of the Ebon Blade",
+                zhCN = "黑锋骸骨狮鹫"
+            },
+            ordinal = 270,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 54729,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 16081,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100271,
+            collectionKey = "mount.winter_wolf",
+            lifecycle = "active",
+            name = {
+                enUS = "Winter Wolf",
+                zhCN = "冰狼号角"
+            },
+            ordinal = 271,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 16081,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 17229,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100272,
+            collectionKey = "mount.winterspring_frostsaber",
+            lifecycle = "active",
+            name = {
+                enUS = "Winterspring Frostsaber",
+                zhCN = "冬泉霜刃豹缰绳"
+            },
+            ordinal = 272,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 17229,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59791,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100273,
+            collectionKey = "mount.wooly_mammoth",
+            lifecycle = "active",
+            name = {
+                enUS = "Wooly Mammoth",
+                zhCN = "长毛猛犸象的缰绳"
+            },
+            ordinal = 273,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59791,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 59793,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100274,
+            collectionKey = "mount.wooly_mammoth.creature_31852",
+            lifecycle = "active",
+            name = {
+                enUS = "Wooly Mammoth",
+                zhCN = "长毛猛犸象的缰绳"
+            },
+            ordinal = 274,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 59793,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 74918,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100275,
+            collectionKey = "mount.wooly_white_rhino",
+            lifecycle = "active",
+            name = {
+                enUS = "Wooly White Rhino",
+                zhCN = "白毛犀牛"
+            },
+            ordinal = 275,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 74918,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 71810,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100276,
+            collectionKey = "mount.wrathful_gladiator_s_frost_wyrm",
+            lifecycle = "active",
+            name = {
+                enUS = "Wrathful Gladiator's Frost Wyrm",
+                zhCN = "暴怒角斗士的冰霜巨龙"
+            },
+            ordinal = 276,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 71810,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 46197,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100277,
+            collectionKey = "mount.x_51_nether_rocket",
+            lifecycle = "active",
+            name = {
+                enUS = "X-51 Nether-Rocket",
+                zhCN = "X-51虚空火箭"
+            },
+            ordinal = 277,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 46197,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 46199,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100278,
+            collectionKey = "mount.x_51_nether_rocket_x_treme",
+            lifecycle = "active",
+            name = {
+                enUS = "X-51 Nether-Rocket X-TREME",
+                zhCN = "X-51虚空火箭特别加强版"
+            },
+            ordinal = 278,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 46199,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 75973,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100279,
+            collectionKey = "mount.x_53_touring_rocket",
+            lifecycle = "active",
+            name = {
+                enUS = "X-53 Touring Rocket",
+                zhCN = "X-53型观光火箭"
+            },
+            ordinal = 279,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 75973,
+            sourceKind = "spell",
+            typeKey = "mount"
+        },
+        {
+            actionId = 26055,
+            actionKind = "mount_spell",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100280,
+            collectionKey = "mount.yellow_qiraji_battle_tank",
+            lifecycle = "active",
+            name = {
+                enUS = "Yellow Qiraji Battle Tank",
+                zhCN = "黄色其拉共鸣水晶"
+            },
+            ordinal = 280,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceId = 26055,
+            sourceKind = "spell",
+            typeKey = "mount"
+        }
+    },
+    mappingHash = "6e1b9d8b365b9a77166e55e523d2f0875a8a9cccacb98a3b2c6ef5a307dd3c6e",
     metadataVersion = "2026.07.20.1",
     schemaVersion = 1,
     typeMappingHashes = {
         appearance = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         companion = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        mount = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        mount = "87d1afad336f06a37f3b4f9dd217b9e91ba3ca65078fb6224a9f132233f528d7",
         set = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         synthetic = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         toy = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"

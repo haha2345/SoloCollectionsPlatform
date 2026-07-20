@@ -743,7 +743,11 @@ feat: consume authoritative SC2 collection state
 
 ## 11. 阶段 6：第一个完整纵切——坐骑
 
+阶段状态：🚧 实施中（任务 6.1 已完成）
+
 ### 任务 6.1：生成 WotLK 坐骑候选和审核目录
+
+状态：✅ 已完成（SoloCollections 待本次提交；mod-solo-collections `f325385`）
 
 - 从 Spell/SkillLineAbility/Creature 等当前数据生成候选。
 - 只将经过规则和人工审核的条目加入正式 allowlist。
@@ -756,6 +760,19 @@ feat: consume authoritative SC2 collection state
 - 已接受目录。
 - 排除列表及原因。
 - 客户端/服务端映射和 Hash。
+
+完成记录：从当前 `3.3.5.12340` 的 `Spell.dbc`、`SkillLineAbility.dbc`、
+`CreatureDisplayInfo.dbc` 和运行 World DB 提取 396 个 mount aura 候选，生成的
+证据已脱敏且候选 Hash 固定为
+`ba414a13d43783698251b283ccd3d19030560f44b3e3238931b83e1a73d0249e`。
+审核接受 295 个玩家动作法术并按 mounted creature entry 完全一致规则归并为
+281 个逻辑坐骑；101 个 NPC/测试/非玩家/旧变体条目逐项记录排除原因。目录生成器
+要求 review-policy Hash 精确匹配，来源数据漂移时拒绝生成；稳定 ID、候选覆盖、
+同名不同 creature 不误合并、生成确定性和客户端/服务端 Hash 一致性测试通过。
+正式目录 mapping Hash 为
+`6e1b9d8b365b9a77166e55e523d2f0875a8a9cccacb98a3b2c6ef5a307dd3c6e`，
+坐骑动作 mapping Hash 为
+`0b1d90cbd65119a9a3d2d55bf51c7334888aaffab5f894d383303af0d3b0b5f5`。
 
 ### 任务 6.2：实现坐骑解锁
 

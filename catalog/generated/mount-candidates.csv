@@ -1,0 +1,397 @@
+spellId,name_enUS,creatureIds,skillLine777,hasItemSource,hasQuestSource,hasTrainerSource,decision,collectionId,reasonCode
+458,Brown Horse,284,true,true,false,false,ACCEPT,100056,
+459,Gray Wolf,4268,true,true,false,false,ACCEPT,100105,
+468,White Stallion,305,true,true,false,false,ACCEPT,100268,
+470,Black Stallion,308,true,true,false,false,ACCEPT,100027,
+471,Palamino,306,true,true,false,false,ACCEPT,100145,
+472,Pinto,307,true,true,false,false,ACCEPT,100146,
+578,Black Wolf,356,true,true,false,false,ACCEPT,100039,
+579,Red Wolf,4270,true,true,false,false,ACCEPT,100167,
+580,Timber Wolf,358,true,true,false,false,ACCEPT,100246,
+581,Winter Wolf,359,true,true,false,false,ACCEPT,100271,
+3363,Nether Drake,16597,true,false,false,false,EXCLUDE,,UNUSED_LEGACY_NO_ACQUISITION_SOURCE
+5784,Felsteed,304,true,false,true,false,ACCEPT,100083,
+6648,Chestnut Mare,4269,true,true,false,false,ACCEPT,100066,
+6653,Dire Wolf,4271,true,true,false,false,ACCEPT,100078,
+6654,Brown Wolf,4272,true,true,false,false,ACCEPT,100061,
+6777,Gray Ram,4710,true,true,false,false,ACCEPT,100104,
+6896,Black Ram,4780,true,true,false,false,ACCEPT,100025,
+6897,Blue Ram,4778,true,true,false,false,ACCEPT,100089,
+6898,White Ram,4777,true,true,false,false,ACCEPT,100265,
+6899,Brown Ram,4779,true,true,false,false,ACCEPT,100059,
+8394,Striped Frostsaber,6074,true,true,false,false,ACCEPT,100185,
+8395,Emerald Raptor,6075,true,true,false,false,ACCEPT,100081,
+8396,Summon Ivory Tallstrider,6076,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+8980,Skeletal Horse,6486,true,true,false,false,ACCEPT,100178,
+10787,Black Nightsaber,7322,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10788,Leopard,7684,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10789,Spotted Frostsaber,7687,true,true,false,false,ACCEPT,100181,
+10790,Tiger,7686,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10792,Spotted Panther,7689,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10793,Striped Nightsaber,7690,true,true,false,false,ACCEPT,100186,
+10795,Ivory Raptor,7706,true,true,false,false,ACCEPT,100131,
+10796,Turquoise Raptor,7707,true,true,false,false,ACCEPT,100252,
+10798,Obsidian Raptor,7703,true,true,false,false,ACCEPT,100140,
+10799,Violet Raptor,7708,true,true,false,false,ACCEPT,100260,
+10800,Summon Brown Tallstrider,7709,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10801,Summon Gray Tallstrider,7710,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10802,Summon Pink Tallstrider,7711,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10803,Summon Purple Tallstrider,7712,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10804,Summon Turquoise Tallstrider,7713,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+10873,Red Mechanostrider,7739,true,true,false,false,ACCEPT,100161,
+10969,Blue Mechanostrider,7749,true,true,false,false,ACCEPT,100045,
+13819,Warhorse,9158,true,false,true,false,ACCEPT,100261,
+15779,White Mechanostrider Mod B,10179,true,true,false,false,ACCEPT,100263,
+15780,Green Mechanostrider,10178,true,false,false,false,EXCLUDE,,SUPERSEDED_LEGACY_VARIANT
+15781,Steel Mechanostrider,10180,true,false,false,false,EXCLUDE,,SUPERSEDED_LEGACY_VARIANT
+16055,Black Nightsaber,7322,true,true,false,false,ACCEPT,100021,
+16056,Ancient Frostsaber,10322,true,true,false,false,ACCEPT,100003,
+16058,Primal Leopard,10336,true,true,false,false,ACCEPT,100148,
+16059,Tawny Sabercat,10337,true,true,false,false,ACCEPT,100242,
+16060,Golden Sabercat,10338,true,true,false,false,ACCEPT,100095,
+16080,Red Wolf,4270,true,true,false,false,ACCEPT,100167,
+16081,Winter Wolf,359,true,true,false,false,ACCEPT,100271,
+16082,Palomino,306,true,true,false,false,ACCEPT,100145,
+16083,White Stallion,305,true,true,false,false,ACCEPT,100268,
+16084,Mottled Red Raptor,7704,true,true,false,false,ACCEPT,100138,
+17229,Winterspring Frostsaber,11021,true,true,false,false,ACCEPT,100272,
+17450,Ivory Raptor,7706,true,true,false,false,ACCEPT,100131,
+17453,Green Mechanostrider,11147,true,true,false,false,ACCEPT,100117,
+17454,Unpainted Mechanostrider,10180,true,true,false,false,ACCEPT,100254,
+17455,Purple Mechanostrider,11148,true,true,false,false,ACCEPT,100151,
+17456,Red and Blue Mechanostrider,11149,true,true,false,false,ACCEPT,100157,
+17458,Fluorescent Green Mechanostrider,10178,true,true,false,false,ACCEPT,100085,
+17459,Icy Blue Mechanostrider Mod A,11150,true,true,false,false,ACCEPT,100127,
+17460,Frost Ram,4778,true,true,false,false,ACCEPT,100089,
+17461,Black Ram,4780,true,true,false,false,ACCEPT,100025,
+17462,Red Skeletal Horse,11153,true,true,false,false,ACCEPT,100165,
+17463,Blue Skeletal Horse,11154,true,true,false,false,ACCEPT,100049,
+17464,Brown Skeletal Horse,11155,true,true,false,false,ACCEPT,100060,
+17465,Green Skeletal Warhorse,11156,true,true,false,false,ACCEPT,100121,
+17481,Rivendare's Deathcharger,30542,true,true,false,false,ACCEPT,100170,
+18363,Riding Kodo,11689,true,true,false,false,ACCEPT,100057,
+18989,Gray Kodo,12149,true,true,false,false,ACCEPT,100103,
+18990,Brown Kodo,11689,true,true,false,false,ACCEPT,100057,
+18991,Green Kodo,12151,true,true,false,false,ACCEPT,100116,
+18992,Teal Kodo,12148,true,true,false,false,ACCEPT,100244,
+22717,Black War Steed,14332,true,true,false,false,ACCEPT,100036,
+22718,Black War Kodo,14333,true,true,false,false,ACCEPT,100031,
+22719,Black Battlestrider,14334,true,true,false,false,ACCEPT,100017,
+22720,Black War Ram,14335,true,true,false,false,ACCEPT,100034,
+22721,Black War Raptor,14330,true,true,false,false,ACCEPT,100035,
+22722,Red Skeletal Warhorse,14331,true,true,false,false,ACCEPT,100166,
+22723,Black War Tiger,14336,true,true,false,false,ACCEPT,100037,
+22724,Black War Wolf,14329,true,true,false,false,ACCEPT,100038,
+23161,Dreadsteed,14505,true,false,true,true,ACCEPT,100079,
+23214,Charger,14565,true,false,false,true,ACCEPT,100065,
+23219,Swift Mistsaber,14555,true,true,false,false,ACCEPT,100209,
+23220,Swift Dawnsaber,14557,true,true,false,false,ACCEPT,100199,
+23221,Swift Frostsaber,14556,true,true,false,false,ACCEPT,100200,
+23222,Swift Yellow Mechanostrider,14551,true,true,false,false,ACCEPT,100235,
+23223,Swift White Mechanostrider,14552,true,true,false,false,ACCEPT,100232,
+23225,Swift Green Mechanostrider,14553,true,true,false,false,ACCEPT,100206,
+23227,Swift Palomino,14559,true,true,false,false,ACCEPT,100215,
+23228,Swift White Steed,14560,true,true,false,false,ACCEPT,100234,
+23229,Swift Brown Steed,14561,true,true,false,false,ACCEPT,100196,
+23238,Swift Brown Ram,14546,true,true,false,false,ACCEPT,100195,
+23239,Swift Gray Ram,14548,true,true,false,false,ACCEPT,100201,
+23240,Swift White Ram,14547,true,true,false,false,ACCEPT,100233,
+23241,Swift Blue Raptor,14545,true,true,false,false,ACCEPT,100193,
+23242,Swift Olive Raptor,14543,true,true,false,false,ACCEPT,100213,
+23243,Swift Orange Raptor,14544,true,true,false,false,ACCEPT,100214,
+23246,Purple Skeletal Warhorse,14558,true,true,false,false,ACCEPT,100154,
+23247,Great White Kodo,14542,true,true,false,false,ACCEPT,100115,
+23248,Great Gray Kodo,14550,true,true,false,false,ACCEPT,100111,
+23249,Great Brown Kodo,14549,true,true,false,false,ACCEPT,100108,
+23250,Swift Brown Wolf,14540,true,true,false,false,ACCEPT,100197,
+23251,Swift Timber Wolf,14539,true,true,false,false,ACCEPT,100228,
+23252,Swift Gray Wolf,14541,true,true,false,false,ACCEPT,100203,
+23338,Swift Stormsaber,14602,true,true,false,false,ACCEPT,100227,
+23509,Frostwolf Howler,14744,true,true,false,false,ACCEPT,100090,
+23510,Stormpike Battle Charger,14745,true,true,false,false,ACCEPT,100182,
+24242,Swift Razzashi Raptor,15090,true,true,false,false,ACCEPT,100221,
+24252,Swift Zulian Tiger,15104,true,true,false,false,ACCEPT,100239,
+24576,Chromatic Mount,18768,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+25675,Reindeer,15524,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+25858,Reindeer,15665,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+25859,Reindeer,15665,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+25863,Black Qiraji Battle Tank,15711,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+25953,Blue Qiraji Battle Tank,15666,true,true,false,false,ACCEPT,100047,
+26054,Red Qiraji Battle Tank,15716,true,true,false,false,ACCEPT,100163,
+26055,Yellow Qiraji Battle Tank,15714,true,true,false,false,ACCEPT,100280,
+26056,Green Qiraji Battle Tank,15715,true,true,false,false,ACCEPT,100119,
+26332,Summon Mouth Tentacle,15778,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+26655,Black Qiraji Battle Tank,15711,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+26656,Black Qiraji Battle Tank,15711,true,true,false,false,ACCEPT,100024,
+28828,Nether Drake,16597,true,false,false,false,EXCLUDE,,UNUSED_LEGACY_NO_ACQUISITION_SOURCE
+29059,Naxxramas Deathcharger,11195,true,true,false,false,ACCEPT,100139,
+30174,Riding Turtle,17266,true,true,false,false,ACCEPT,100169,
+30829,Summon Kessel's Elekk,17643,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+30837,Summon Kessel's Elekk,14565,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+31700,Black Qiraji Battle Tank,32568,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+31973,Kessel's Elekk,17643,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+32235,Golden Gryphon,18360,true,true,false,false,ACCEPT,100094,
+32239,Ebon Gryphon,18357,true,true,false,false,ACCEPT,100080,
+32240,Snowy Gryphon,18359,true,true,false,false,ACCEPT,100179,
+32242,Swift Blue Gryphon,18406,true,true,false,false,ACCEPT,100192,
+32243,Tawny Wind Rider,18363,true,true,false,false,ACCEPT,100243,
+32244,Blue Wind Rider,18364,true,true,false,false,ACCEPT,100050,
+32245,Green Wind Rider,18365,true,true,false,false,ACCEPT,100122,
+32246,Swift Red Wind Rider,18377,true,true,false,false,ACCEPT,100224,
+32289,Swift Red Gryphon,18376,true,true,false,false,ACCEPT,100222,
+32290,Swift Green Gryphon,18375,true,true,false,false,ACCEPT,100204,
+32292,Swift Purple Gryphon,18362,true,true,false,false,ACCEPT,100217,
+32295,Swift Green Wind Rider,18378,true,true,false,false,ACCEPT,100207,
+32296,Swift Yellow Wind Rider,18380,true,true,false,false,ACCEPT,100236,
+32297,Swift Purple Wind Rider,18379,true,true,false,false,ACCEPT,100220,
+32345,Peep the Phoenix Mount,18545,true,true,false,false,EXCLUDE,,TEST_SPELL
+32420,Old Crappy McWeakSauce,18474,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+33630,Blue Mechanostrider,7749,true,false,false,false,EXCLUDE,,SUPERSEDED_LEGACY_VARIANT
+33631,Video Mount,7749,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+33660,Swift Pink Hawkstrider,19281,true,true,false,false,ACCEPT,100216,
+34068,Summon Dodostrider,2188,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+34406,Brown Elekk,19658,true,true,false,false,ACCEPT,100055,
+34407,Great Elite Elekk,19659,true,true,false,false,ACCEPT,100109,
+34767,Summon Charger,20030,true,false,true,true,ACCEPT,100187,
+34769,Summon Warhorse,20029,true,false,false,false,ACCEPT,100188,
+34790,Dark War Talbuk,20149,true,true,false,false,ACCEPT,100074,
+34795,Red Hawkstrider,19280,true,true,false,false,ACCEPT,100160,
+34896,Cobalt War Talbuk,20072,true,true,false,false,ACCEPT,100069,
+34897,White War Talbuk,20151,true,true,false,false,ACCEPT,100269,
+34898,Silver War Talbuk,20152,true,true,false,false,ACCEPT,100176,
+34899,Tan War Talbuk,20150,true,true,false,false,ACCEPT,100241,
+35018,Purple Hawkstrider,20217,true,true,false,false,ACCEPT,100150,
+35020,Blue Hawkstrider,20220,true,true,false,false,ACCEPT,100044,
+35022,Black Hawkstrider,20222,true,true,false,false,ACCEPT,100020,
+35025,Swift Green Hawkstrider,20224,true,true,false,false,ACCEPT,100205,
+35027,Swift Purple Hawkstrider,20223,true,true,false,false,ACCEPT,100218,
+35028,Swift Warstrider,20225,true,true,false,false,ACCEPT,100230,
+35710,Gray Elekk,20846,true,true,false,false,ACCEPT,100102,
+35711,Purple Elekk,20847,true,true,false,false,ACCEPT,100149,
+35712,Great Green Elekk,20849,true,true,false,false,ACCEPT,100112,
+35713,Great Blue Elekk,20848,true,true,false,false,ACCEPT,100106,
+35714,Great Purple Elekk,20850,true,true,false,false,ACCEPT,100113,
+36702,Fiery Warhorse,21354,true,true,false,false,ACCEPT,100084,
+37015,Swift Nether Drake,21510,true,true,false,false,ACCEPT,100212,
+39315,Cobalt Riding Talbuk,22510,true,true,false,false,ACCEPT,100068,
+39316,Dark Riding Talbuk,22511,true,true,false,false,ACCEPT,100073,
+39317,Silver Riding Talbuk,22512,true,true,false,false,ACCEPT,100175,
+39318,Tan Riding Talbuk,22513,true,true,false,false,ACCEPT,100240,
+39319,White Riding Talbuk,22514,true,true,false,false,ACCEPT,100266,
+39450,Tallstrider,7712,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+39798,Green Riding Nether Ray,22958,true,true,false,false,ACCEPT,100120,
+39800,Red Riding Nether Ray,22976,true,true,false,false,ACCEPT,100164,
+39801,Purple Riding Nether Ray,22975,true,true,false,false,ACCEPT,100153,
+39802,Silver Riding Nether Ray,22977,true,true,false,false,ACCEPT,100174,
+39803,Blue Riding Nether Ray,22978,true,true,false,false,ACCEPT,100048,
+39910,Riding Clefthoof,22512,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+39949,Mount (Test Anim),284,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+40192,Ashes of Al'ar,18545,true,true,false,false,ACCEPT,100011,
+40212,Dragonmaw Nether Drake,16597,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+41252,Raven Lord,23408,true,true,false,false,ACCEPT,100156,
+41513,Onyx Netherwing Drake,23455,true,true,false,false,ACCEPT,100142,
+41514,Azure Netherwing Drake,23456,true,true,false,false,ACCEPT,100013,
+41515,Cobalt Netherwing Drake,23460,true,true,false,false,ACCEPT,100067,
+41516,Purple Netherwing Drake,23458,true,true,false,false,ACCEPT,100152,
+41517,Veridian Netherwing Drake,23457,true,true,false,false,ACCEPT,100257,
+41518,Violet Netherwing Drake,23459,true,true,false,false,ACCEPT,100258,
+42363,Dan's Steam Tank Form,23756,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42387,Dan's Steam Tank Form (Self),23756,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42667,Flying Broom,23952,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42668,Swift Flying Broom,30305,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42680,Magic Broom,23966,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42683,Swift Magic Broom,23966,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42692,Rickety Magic Broom,23966,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+42776,Spectral Tiger,24003,true,true,false,false,ACCEPT,100180,
+42777,Swift Spectral Tiger,24004,true,true,false,false,ACCEPT,100225,
+42929,[DNT] Test Mount,21635,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+43688,Amani War Bear,24379,true,true,false,false,ACCEPT,100002,
+43810,Frost Wyrm,24447,true,false,false,false,EXCLUDE,,NPC_OR_TEST_MOUNT
+43880,Ramstein's Swift Work Ram,24463,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+43883,Rental Racing Ram,24462,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+43899,Brewfest Ram,23588,true,true,false,false,ACCEPT,100052,
+43900,Swift Brewfest Ram,24368,true,true,false,false,ACCEPT,100194,
+43927,Cenarion War Hippogryph,24488,true,true,false,false,ACCEPT,100064,
+44151,Turbo-Charged Flying Machine,24654,true,true,false,false,ACCEPT,100250,
+44153,Flying Machine,24653,true,true,false,false,ACCEPT,100087,
+44317,Merciless Nether Drake,21510,true,false,false,false,ACCEPT,100212,
+44655,Flying Reindeer,24906,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+44744,Merciless Nether Drake,24743,true,true,false,false,ACCEPT,100136,
+44824,Flying Reindeer,24906,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+44825,Flying Reindeer,24906,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+44827,Flying Reindeer,24906,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+45177,Copy of Riding Turtle,17266,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+46197,X-51 Nether-Rocket,26192,true,true,false,false,ACCEPT,100277,
+46199,X-51 Nether-Rocket X-TREME,26164,true,true,false,false,ACCEPT,100278,
+46628,Swift White Hawkstrider,26131,true,true,false,false,ACCEPT,100231,
+46980,Northrend Nerubian Mount (Test),26616,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+47037,Swift War  Elekk,26439,true,false,false,false,ACCEPT,100030,
+47977,Magic Broom,23966,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+48023,Headless Horseman's Mount,27153,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+48024,Headless Horseman's Mount,27153,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+48025,Headless Horseman's Mount,27153,true,true,false,false,ACCEPT,100123,
+48027,Black War Elekk,26439,true,true,false,false,ACCEPT,100030,
+48778,Acherus Deathcharger,28302,true,false,true,false,ACCEPT,100000,
+48954,Swift Zhevra,27541,true,true,false,false,ACCEPT,100237,
+49193,Vengeful Nether Drake,27637,true,true,false,false,ACCEPT,100255,
+49322,Swift Zhevra,27684,true,true,false,false,ACCEPT,100238,
+49378,Brewfest Riding Kodo,27706,true,true,false,false,ACCEPT,100053,
+49379,Great Brewfest Kodo,27707,true,true,false,false,ACCEPT,100107,
+49908,Pink Elekk,27902,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+50281,Black Warp Stalker,27976,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+50869,Brewfest Kodo,30507,true,false,false,false,ACCEPT,100051,
+50870,Brewfest Ram,24368,true,false,false,false,ACCEPT,100194,
+51412,Big Battle Bear,28363,true,true,false,false,ACCEPT,100014,
+51617,Headless Horseman's Mount,27153,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+51621,Headless Horseman's Mount,27153,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+51960,Frost Wyrm Mount,28531,true,false,false,false,EXCLUDE,,NPC_OR_TEST_MOUNT
+54726,Winged Steed of the Ebon Blade,29582,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+54727,Winged Steed of the Ebon Blade,29582,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+54729,Winged Steed of the Ebon Blade,29582,true,true,false,false,ACCEPT,100270,
+54753,White Polar Bear,29596,true,true,false,false,ACCEPT,100264,
+55164,Swift Spectral Gryphon,29767,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+55293,Amani War Bear,24379,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+55531,Mechano-hog,29929,true,true,false,false,ACCEPT,100134,
+58615,Brutal Nether Drake,31124,true,true,false,false,ACCEPT,100062,
+58819,Swift Brown Steed,14561,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+58983,Big Blizzard Bear,31319,true,true,false,false,ACCEPT,100015,
+58997,Big Blizzard Bear,31319,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+58999,Big Blizzard Bear,31319,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+59567,Azure Drake,31694,true,true,false,false,ACCEPT,100012,
+59568,Blue Drake,31695,true,true,false,false,ACCEPT,100043,
+59569,Bronze Drake,31717,true,true,false,false,ACCEPT,100054,
+59570,Red Drake,31697,true,true,false,false,ACCEPT,100159,
+59571,Twilight Drake,31698,true,true,false,false,ACCEPT,100253,
+59572,Black Polar Bear,31699,true,true,false,false,ACCEPT,100022,
+59573,Brown Polar Bear,31700,true,true,false,false,ACCEPT,100058,
+59650,Black Drake,31778,true,true,false,false,ACCEPT,100019,
+59785,Black War Mammoth,31849,true,true,false,false,ACCEPT,100032,
+59788,Black War Mammoth,31850,true,true,false,false,ACCEPT,100033,
+59791,Wooly Mammoth,31851,true,true,false,false,ACCEPT,100273,
+59793,Wooly Mammoth,31852,true,true,false,false,ACCEPT,100274,
+59797,Ice Mammoth,31854,true,true,false,false,ACCEPT,100124,
+59799,Ice Mammoth,31855,true,true,false,false,ACCEPT,100125,
+59802,Grand Ice Mammoth,31857,true,false,false,false,ACCEPT,100100,
+59804,Grand Ice Mammoth,31858,true,false,false,false,ACCEPT,100101,
+59961,Red Proto-Drake,31902,true,true,false,false,ACCEPT,100162,
+59976,Black Proto-Drake,31912,true,true,false,false,ACCEPT,100023,
+59996,Blue Proto-Drake,32151,true,true,false,false,ACCEPT,100046,
+60002,Time-Lost Proto-Drake,32153,true,true,false,false,ACCEPT,100247,
+60021,Plagued Proto-Drake,32156,true,true,false,false,ACCEPT,100147,
+60024,Violet Proto-Drake,32157,true,true,false,false,ACCEPT,100259,
+60025,Albino Drake,32158,true,true,false,false,ACCEPT,100001,
+60114,Armored Brown Bear,32206,true,true,false,false,ACCEPT,100008,
+60116,Armored Brown Bear,32207,true,true,false,false,ACCEPT,100009,
+60118,Black War Bear,32203,true,true,false,false,ACCEPT,100028,
+60119,Black War Bear,32205,true,true,false,false,ACCEPT,100029,
+60120,Summon Loaner Wind Rider,32208,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+60136,Grand Caravan Mammoth,32212,true,false,false,false,ACCEPT,100098,
+60140,Grand Caravan Mammoth,32213,true,false,false,false,ACCEPT,100099,
+60424,Mekgineer's Chopper,32286,true,true,false,false,ACCEPT,100135,
+61229,Armored Snowy Gryphon,32335,true,true,false,false,ACCEPT,100010,
+61230,Armored Blue Wind Rider,32336,true,true,false,false,ACCEPT,100007,
+61289,Borrowed Broom,23966,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+61294,Green Proto-Drake,32562,true,true,false,false,ACCEPT,100118,
+61309,Magnificent Flying Carpet,33030,true,true,false,false,ACCEPT,100133,
+61425,Traveler's Tundra Mammoth,32633,true,true,false,false,ACCEPT,100248,
+61442,Swift Mooncloth Carpet,32634,true,true,false,false,ACCEPT,100210,
+61444,Swift Shadoweave Carpet,32635,true,false,false,false,EXCLUDE,,UNUSED_PROFESSION_TEST_VARIANT
+61446,Swift Spellfire Carpet,32636,true,true,false,false,ACCEPT,100226,
+61447,Traveler's Tundra Mammoth,32640,true,true,false,false,ACCEPT,100249,
+61451,Flying Carpet,33029,true,true,false,false,ACCEPT,100086,
+61465,Grand Black War Mammoth,31862,true,true,false,false,ACCEPT,100097,
+61467,Grand Black War Mammoth,31861,true,true,false,false,ACCEPT,100096,
+61469,Grand Ice Mammoth,31857,true,true,false,false,ACCEPT,100100,
+61470,Grand Ice Mammoth,31858,true,true,false,false,ACCEPT,100101,
+61983,Dan's Test Mount,32931,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+61996,Blue Dragonhawk,31239,true,true,false,false,ACCEPT,100042,
+61997,Red Dragonhawk,32944,true,true,false,false,ACCEPT,100158,
+62048,Black Dragonhawk Mount,25064,true,false,false,false,ACCEPT,100018,
+63232,Stormwind Steed,33297,true,true,false,false,ACCEPT,100183,
+63635,Darkspear Raptor,33299,true,true,false,false,ACCEPT,100075,
+63636,Ironforge Ram,33408,true,true,false,false,ACCEPT,100130,
+63637,Darnassian Nightsaber,33298,true,true,false,false,ACCEPT,100076,
+63638,Gnomeregan Mechanostrider,33301,true,true,false,false,ACCEPT,100093,
+63639,Exodar Elekk,33416,true,true,false,false,ACCEPT,100082,
+63640,Orgrimmar Wolf,33409,true,true,false,false,ACCEPT,100144,
+63641,Thunder Bluff Kodo,33300,true,true,false,false,ACCEPT,100245,
+63642,Silvermoon Hawkstrider,33418,true,true,false,false,ACCEPT,100177,
+63643,Forsaken Warhorse,33414,true,true,false,false,ACCEPT,100088,
+63796,Mimiron's Head,33848,true,true,false,false,ACCEPT,100137,
+63844,Argent Hippogryph,33857,true,true,false,false,ACCEPT,100005,
+63956,Ironbound Proto-Drake,33892,true,true,false,false,ACCEPT,100129,
+63963,Rusted Proto-Drake,33904,true,true,false,false,ACCEPT,100171,
+64656,Blue Skeletal Warhorse,34154,true,false,false,false,EXCLUDE,,UNUSED_TEST_VARIANT
+64657,White Kodo,34155,true,true,false,false,ACCEPT,100262,
+64658,Black Wolf,356,true,true,false,false,ACCEPT,100039,
+64659,Venomhide Ravasaur,34156,true,true,false,false,ACCEPT,100256,
+64681,Loaned Gryphon,32198,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+64731,Sea Turtle,34187,true,true,false,false,ACCEPT,100172,
+64761,Loaned Wind Rider,32208,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+64927,Deadly Gladiator's Frost Wyrm,34225,true,true,false,false,ACCEPT,100077,
+64977,Black Skeletal Horse,34238,true,true,false,false,ACCEPT,100026,
+64992,Big Blizzard Bear [PH],31319,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+64993,Big Blizzard Bear [PH],31319,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+65439,Furious Gladiator's Frost Wyrm,34425,true,true,false,false,ACCEPT,100092,
+65637,Great Red Elekk,34551,true,true,false,false,ACCEPT,100114,
+65638,Swift Moonsaber,34550,true,true,false,false,ACCEPT,100211,
+65639,Swift Red Hawkstrider,34556,true,true,false,false,ACCEPT,100223,
+65640,Swift Gray Steed,34557,true,true,false,false,ACCEPT,100202,
+65641,Great Golden Kodo,34558,true,true,false,false,ACCEPT,100110,
+65642,Turbostrider,34553,true,true,false,false,ACCEPT,100251,
+65643,Swift Violet Ram,34554,true,true,false,false,ACCEPT,100229,
+65644,Swift Purple Raptor,34549,true,true,false,false,ACCEPT,100219,
+65645,White Skeletal Warhorse,34552,true,true,false,false,ACCEPT,100267,
+65646,Swift Burgundy Wolf,34555,true,true,false,false,ACCEPT,100198,
+65917,Magic Rooster,34655,true,true,false,false,ACCEPT,100132,
+66087,Silver Covenant Hippogryph,35147,true,true,false,false,ACCEPT,100173,
+66088,Sunreaver Dragonhawk,35148,true,true,false,false,ACCEPT,100189,
+66090,Quel'dorei Steed,33840,true,true,false,false,ACCEPT,100155,
+66091,Sunreaver Hawkstrider,33841,true,true,false,false,ACCEPT,100190,
+66122,Magic Rooster,34655,true,false,false,false,EXCLUDE,,INTERNAL_VARIANT_NOT_LEARNED
+66123,Magic Rooster,34731,true,false,false,false,EXCLUDE,,INTERNAL_VARIANT_NOT_LEARNED
+66124,Magic Rooster,34732,true,false,false,false,EXCLUDE,,INTERNAL_VARIANT_NOT_LEARNED
+66846,Ochre Skeletal Warhorse,35169,true,true,false,false,ACCEPT,100141,
+66847,Striped Dawnsaber,35168,true,true,false,false,ACCEPT,100184,
+66906,Argent Charger,35179,true,true,false,false,ACCEPT,100004,
+66907,Argent Warhorse,35180,true,false,false,false,EXCLUDE,,SUPERSEDED_UNUSED_VARIANT
+67336,Relentless Gladiator's Frost Wyrm,35362,true,true,false,false,ACCEPT,100168,
+67466,Argent Warhorse,35445,true,true,false,false,ACCEPT,100006,
+68056,Swift Horde Wolf,35809,true,true,false,false,ACCEPT,100208,
+68057,Swift Alliance Steed,35808,true,true,false,false,ACCEPT,100191,
+68187,Crusader's White Warhorse,35876,true,true,false,false,ACCEPT,100072,
+68188,Crusader's Black Warhorse,35878,true,true,false,false,ACCEPT,100071,
+68768,Little White Stallion,36483,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+68769,Little Ivory Raptor,36484,false,true,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+69395,Onyxian Drake,36837,true,true,false,false,ACCEPT,100143,
+71342,Big Love Rocket,38204,true,true,false,false,ACCEPT,100016,
+71343,Big Love Rocket,38204,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+71344,Big Love Rocket,38204,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+71345,Big Love Rocket,38204,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+71346,Big Love Rocket,38204,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+71347,Big Love Rocket,38204,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+71810,Wrathful Gladiator's Frost Wyrm,38361,true,true,false,false,ACCEPT,100276,
+72281,Invincible,38545,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+72282,Invincible,38545,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+72283,Invincible,38545,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+72284,Invincible,38545,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+72286,Invincible,38545,true,true,false,false,ACCEPT,100128,
+72807,Icebound Frostbrood Vanquisher,38695,true,true,false,false,ACCEPT,100126,
+72808,Bloodbathed Frostbrood Vanquisher,38778,true,true,false,false,ACCEPT,100041,
+73313,Crimson Deathcharger,39046,true,true,false,false,ACCEPT,100070,
+74854,Blazing Hippogryph,40165,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+74855,Blazing Hippogryph,40165,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+74856,Blazing Hippogryph,40165,true,true,false,false,ACCEPT,100040,
+74918,Wooly White Rhino,40191,true,true,false,false,ACCEPT,100275,
+75387,Tiny Mooncloth Carpet,40426,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75596,Frosty Flying Carpet,40533,true,true,false,false,ACCEPT,100091,
+75614,Celestial Steed,40625,true,true,false,false,ACCEPT,100063,
+75617,Celestial Steed,40625,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75618,Celestial Steed,40625,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75619,Celestial Steed,40625,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75620,Celestial Steed,40625,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75957,X-53 Touring Rocket,40725,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75972,X-53 Touring Rocket,40725,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+75973,X-53 Touring Rocket,40725,true,true,false,false,ACCEPT,100279,
+76153,Celestial Steed,40625,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
+76154,X-53 Touring Rocket,40725,false,false,false,false,EXCLUDE,,NOT_PLAYER_MOUNT_SKILL_LINE
