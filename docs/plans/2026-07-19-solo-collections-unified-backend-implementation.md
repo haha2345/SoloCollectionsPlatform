@@ -1114,7 +1114,25 @@ feat: apply sets and outfits atomically
 
 ## 15. 阶段 10：验证未来扩展合同
 
+阶段状态：🚧 进行中（任务 10.1 已完成；任务 10.2–10.4 待实施）
+
 ### 任务 10.1：synthetic 新职业
+
+状态：✅ 已完成（`mod-solo-collections` `35cd087`）
+
+实现记录：新增 `BuildClassEligibilityContext`，将 `IdentityRegistry` 的职业解析结果转换为 provider
+统一消费的 capability-first 上下文，并保留稳定 `LogicalClassId`。未知 runtime ID 只生成
+`IdentityKnown = false` 的空能力上下文，不注入 warrior 或任何其他 WotLK 默认职业。测试专用
+`chronomancer` 不进入正式生成目录：它独立使用 logicalClassId `501`、初始 runtime ID `101`、
+`class.caster` 兼容 profile 和 `class.chronomancer` 客户端资源 profile，并显式授予
+`armor.cloth`、`weapon.staff`、`appearance.timeweave` 三项能力。
+
+原生合同分别验证三项显式策略允许，`armor.plate` 拒绝，未注册 policy 返回空并 fail closed，未知
+runtime `999` 不获得 warrior 能力。随后将同一 logical class 的 runtime ID 从 `101` 重映射为
+`202`；旧 runtime 映射立即失效，而 logicalClassId 与 classKey 保持不变。账号缓存预先加载稳定
+目录键 `(typeId=13, collectionId=260001)`，重映射后 ownership 和按类型返回的 catalog ID 均保持
+不变，证明 runtime 身份不进入账号收藏主键。验证结果：模块 98 项 Python 合同测试全部通过，
+原生 domain/protocol 两个 C++ 测试目标通过，Release `worldserver` 重新编译通过。
 
 - 注册一个不属于当前 WotLK 列表的测试职业。
 - 分配独立 logicalClassId、runtime 测试映射和能力 profile。
