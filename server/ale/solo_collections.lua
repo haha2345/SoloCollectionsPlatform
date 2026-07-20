@@ -26,6 +26,7 @@ local ENABLED = isEnabled(GetConfigValue("SoloCollections.Enabled")) and BACKEND
 local PREFIX = "SC1"
 local REQUEST = "HELLO|1"
 local RESPONSE = "HELLO_ACK|1|DEMO"
+local UPGRADE_RESPONSE = "UPGRADE_REQUIRED|2"
 local CHAT_MSG_WHISPER = 7
 local SUMMON_ACCEPTED = "ACCEPTED"
 local TOTAL_LIMIT_PER_SECOND = 20
@@ -509,8 +510,18 @@ local function onAddonMessage(event, sender, messageType, prefix, message, targe
     return true
 end
 
+local function onRetiredAddonMessage(event, sender, messageType, prefix, message, target)
+    if prefix ~= PREFIX or message ~= REQUEST or not sender then
+        return true
+    end
+    sender:SendAddonMessage(PREFIX, UPGRADE_RESPONSE, CHAT_MSG_WHISPER, sender)
+    logInfo("event=sc1_retired result=upgrade_required target=SC2")
+    return true
+end
+
 if ENABLED then
     RegisterServerEvent(30, onAddonMessage)
 else
-    logInfo("event=sc1_bridge_register result=disabled backend=" .. BACKEND)
+    RegisterServerEvent(30, onRetiredAddonMessage)
+    logInfo("event=sc1_bridge_register result=retired backend=" .. BACKEND .. " target=SC2")
 end

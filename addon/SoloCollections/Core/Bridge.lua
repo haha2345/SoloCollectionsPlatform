@@ -8,6 +8,7 @@ B.prefix = "SC1"
 B.version = 1
 B.request = "HELLO|1"
 B.response = "HELLO_ACK|1|DEMO"
+B.upgradeResponse = "UPGRADE_REQUIRED|2"
 B.timeout = 3
 B.connected = false
 B.demoMode = true
@@ -717,6 +718,10 @@ function B.OnMessage(prefix, message, channel, sender)
         return
     end
 
+    if B.waiting and message == B.upgradeResponse then
+        B.Finish(false, "upgrade_required")
+        return
+    end
     if not B.waiting then
         return
     end
