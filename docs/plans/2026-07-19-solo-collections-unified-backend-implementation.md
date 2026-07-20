@@ -776,7 +776,7 @@ feat: consume authoritative SC2 collection state
 
 ### 任务 6.2：实现坐骑解锁
 
-状态：✅ 已完成（mod-solo-collections `5ffa2ce`）
+状态：✅ 已完成（mod-solo-collections `5ffa2ce`；NPCBots 架构兼容修复 `993ebb8`）
 
 - `OnPlayerLearnSpell` 只处理新学习事件。
 - 首次迁移在 `OnPlayerLogin` 法术加载完成后扫描已有有效法术。
@@ -787,13 +787,14 @@ feat: consume authoritative SC2 collection state
 完成记录：生产 allowlist 已生成原生 C++ 双向索引，只有审核通过的 spellId 能映射
 到 mount collectionId。`OnPlayerLearnSpell` 仅处理 Core 确认新加入 spellbook 的事件
 并只发起 Grant；没有遗忘法术撤销路径。首次登录等待账号缓存 Ready 和角色法术加载
-完成后，以当前角色 `HasSpell` 和同账号离线角色未 disabled 的 `character_spell` 合集
-执行一次迁移；`sc_migration_marker` 版本命中时不再返回或扫描法术。账号内迁移和实时
+完成后，以当前角色 `HasSpell` 和同账号离线角色的 `character_spell` 合集执行一次迁移；
+当前 NPCBots 字符库不含 `disabled` 列，查询以该分支实际持久化架构为准。
+`sc_migration_marker` 版本命中时不再返回或扫描法术。账号内迁移和实时
 学习共用单一串行 mutation 队列，每次成功提交沿用账号当前 revision + 1，并通过已有
 SC2 account event sink 向所有在线 session 广播 delta。迁移全部成功/明确拒绝后才写
-marker，数据库失败不会伪造完成。61 项 Python 契约测试、两个 MSVC 原生测试目标和
+marker，数据库失败不会伪造完成。63 项 Python 契约测试、两个 MSVC 原生测试目标和
 真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；构建产物 SHA-256 为
-`D797519BC70E807892555B8533F99A3DBB75959E030C2D710F52A0F2BB3B1E9D`。
+`2191D5E03D2E4B11056824D86110AED0DB75D9A4ECA20693BD769E8D067687C4`。
 
 ### 任务 6.3：实现安全召唤
 
@@ -814,7 +815,7 @@ account、类型、动作和目标；客户端伪造 spellId、creatureId 或 ow
 代码中不存在预先 `Dismount`，只有全部检查通过后才以 Core 的 mounted/vehicle 兼容触发标志
 施放新坐骑。154 项客户端 Python 测试、63 项模块 Python 测试、两个 MSVC 原生测试目标、
 23 个 Lua 文件语法检查和真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；构建产物
-SHA-256 为 `7A9D98BE14A669E770B609C65E299083CB4A9B82CC09BD7DABF61A335EB38940`。
+SHA-256 为 `2191D5E03D2E4B11056824D86110AED0DB75D9A4ECA20693BD769E8D067687C4`。
 
 阶段验收：
 
