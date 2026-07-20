@@ -21,6 +21,7 @@ struct Sc2CategoryDefinition
     CollectionTypeId TypeId;
     std::string MappingHash;
     bool Enabled = false;
+    bool External = false;
 };
 
 class Sc2Server
@@ -33,6 +34,8 @@ public:
 
     void OpenSession(AccountId accountId, AccountSessionId sessionId);
     void CloseSession(AccountSessionId sessionId);
+    void SetExternalOwned(AccountSessionId sessionId, CollectionTypeId typeId,
+        std::vector<CollectionId> owned);
     [[nodiscard]] bool HandleInbound(
         AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs,
         ActionHandler const& actionHandler = {});
@@ -65,6 +68,7 @@ private:
         TokenBucket Bucket;
         ReplayCache Replays;
         OutboundQueue Outbound;
+        std::map<CollectionTypeId, std::vector<CollectionId>> ExternalOwned;
     };
 
     [[nodiscard]] bool ConsumeToken(SessionState& session, std::uint64_t nowMs);

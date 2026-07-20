@@ -10,6 +10,7 @@
 #include "SoloCollectionsSetCatalog.h"
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
+#include "SoloCollectionsTitleService.h"
 
 #include "Item.h"
 #include "Player.h"
@@ -189,6 +190,26 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class TitleCollectionProvider final : public CollectionProvider
+{
+public:
+    TitleCollectionProvider()
+    {
+        _descriptor.TypeId = TitleCollectionTypeId;
+        _descriptor.TypeKey = "title";
+        _descriptor.Storage = CollectionStorageMode::External;
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        return GetTitleService().Evaluate(collectionId);
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class SoloCollectionsCoreWorldScript final : public WorldScript
 {
 public:
@@ -216,6 +237,9 @@ public:
         registration = registry.Register(std::make_unique<SetCollectionProvider>());
         if (!registration.Accepted)
             throw std::runtime_error("SoloCollections set provider registration failed: " + registration.Message);
+        registration = registry.Register(std::make_unique<TitleCollectionProvider>());
+        if (!registration.Accepted)
+            throw std::runtime_error("SoloCollections title provider registration failed: " + registration.Message);
 
         RegistryFinalizeResult finalized = registry.Finalize();
         if (!finalized.Success)

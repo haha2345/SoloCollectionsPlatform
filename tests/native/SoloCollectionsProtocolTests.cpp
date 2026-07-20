@@ -244,6 +244,38 @@ void TestSyntheticPersistedProviderRevisionSync()
         outbound[0].find("|31|11|A|310001") != std::string::npos,
         "synthetic persisted provider did not reuse revisioned SC2 delta sync");
 }
+
+void TestExternalTitleSnapshotsAreSessionScoped()
+{
+    SC::AccountCollectionCache cache;
+    auto opened = cache.OpenSession(Account(88), Session(880), 0);
+    (void)cache.OpenSession(Account(88), Session(881), 0);
+    Require(cache.CompleteLoad(Account(88), opened.Generation, {}, SC::CollectionRevision(12)),
+        "external title cache fixture did not become ready");
+    SC::Sc2Server server(cache, "2026.07.20.3", "wotlk-3.3.5a-local-1", "phase10-title", {
+        { SC::CollectionTypeId(std::uint16_t { 15 }),
+          "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", true, true },
+    });
+    server.OpenSession(Account(88), Session(880));
+    server.OpenSession(Account(88), Session(881));
+    server.SetExternalOwned(Session(880), SC::CollectionTypeId(std::uint16_t { 15 }), {
+        SC::CollectionId(5), SC::CollectionId(1), SC::CollectionId(5)
+    });
+    (void)server.HandleInbound(Session(880),
+        "H|1|8888888888888880|0.2.0-dev|2026.07.20.3|wotlk-3.3.5a-local-1", 0);
+    (void)server.HandleInbound(Session(881),
+        "H|1|8888888888888881|0.2.0-dev|2026.07.20.3|wotlk-3.3.5a-local-1", 0);
+    std::vector<std::string> owned = server.DrainOutbound(Session(880), 32);
+    std::vector<std::string> empty = server.DrainOutbound(Session(881), 32);
+    bool sawOwnedPayload = false;
+    bool sawEmptyPayload = false;
+    for (std::string const& packet : owned)
+        sawOwnedPayload = sawOwnedPayload || packet.find("|1,5") != std::string::npos;
+    for (std::string const& packet : empty)
+        sawEmptyPayload = sawEmptyPayload || packet.ends_with("|-");
+    Require(sawOwnedPayload, "external title ownership was not sorted, deduplicated and snapshotted");
+    Require(sawEmptyPayload, "external title ownership leaked between character sessions");
+}
 }
 
 int main()
@@ -257,6 +289,7 @@ int main()
         TestAuthoritativeActionHandler();
         TestAccountScopedDeltaFanout();
         TestSyntheticPersistedProviderRevisionSync();
+        TestExternalTitleSnapshotsAreSessionScoped();
         std::cout << "SoloCollections SC2 protocol tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

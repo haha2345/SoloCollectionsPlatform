@@ -13,6 +13,7 @@
 #include "SoloCollectionsSetService.h"
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
+#include "SoloCollectionsTitleService.h"
 #include "Transmogrification.h"
 
 #include "Chat.h"
@@ -70,6 +71,9 @@ Sc2Server& GetSc2Server()
         {
             CollectionProviderRuntimeState const* state = providers.State(category.TypeId);
             category.Enabled = state && state->Mode != CollectionProviderMode::Disabled;
+            CollectionProvider const* provider = providers.Find(category.TypeId);
+            category.External = provider &&
+                provider->Descriptor().Storage == CollectionStorageMode::External;
         }
         return Sc2Server(GetAccountCollectionCache(), std::string(GeneratedSc2MetadataVersion),
             std::string(GeneratedSc2AssetPackVersion), std::string(BackendBuild), std::move(categories));
@@ -110,6 +114,8 @@ void Sc2ProtocolOpenSession(Player* player)
     if (!player || !player->GetSession())
         return;
     GetSc2Server().OpenSession(AccountId(player->GetSession()->GetAccountId()), SessionId(player));
+    GetSc2Server().SetExternalOwned(
+        SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
 }
 
 void Sc2ProtocolCloseSession(Player* player)
@@ -126,6 +132,8 @@ bool Sc2ProtocolCanUsePrivateChat(
         return true;
 
     std::string_view body(message.data() + WirePrefix.size(), message.size() - WirePrefix.size());
+    GetSc2Server().SetExternalOwned(
+        SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
         [player](AccountId accountId, Sc2Message const& request)
         {

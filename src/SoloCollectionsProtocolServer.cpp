@@ -65,6 +65,18 @@ void Sc2Server::CloseSession(AccountSessionId sessionId)
     _sessions.erase(sessionId);
 }
 
+void Sc2Server::SetExternalOwned(AccountSessionId sessionId, CollectionTypeId typeId,
+    std::vector<CollectionId> owned)
+{
+    std::scoped_lock lock(_mutex);
+    auto session = _sessions.find(sessionId);
+    if (session == _sessions.end() || !typeId.IsValid())
+        return;
+    std::sort(owned.begin(), owned.end());
+    owned.erase(std::unique(owned.begin(), owned.end()), owned.end());
+    session->second.ExternalOwned[typeId] = std::move(owned);
+}
+
 bool Sc2Server::ConsumeToken(SessionState& session, std::uint64_t nowMs)
 {
     if (nowMs > session.Bucket.LastRefillMs)
@@ -224,7 +236,15 @@ void Sc2Server::QueueSnapshots(SessionState& session, AccountCacheSnapshot const
     {
         if (!category.Enabled)
             continue;
-        std::optional<std::vector<CollectionId>> owned = _cache.OwnedByType(session.Account, category.TypeId);
+        std::optional<std::vector<CollectionId>> owned;
+        if (category.External)
+        {
+            auto external = session.ExternalOwned.find(category.TypeId);
+            owned = external == session.ExternalOwned.end() ?
+                std::vector<CollectionId> {} : external->second;
+        }
+        else
+            owned = _cache.OwnedByType(session.Account, category.TypeId);
         if (!owned)
         {
             QueueError(session, 0, "LOADING");
