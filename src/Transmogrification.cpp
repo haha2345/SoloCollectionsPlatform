@@ -702,8 +702,23 @@ TransmogApplyResult Transmogrification::TryApplyCollectedAppearance(Player* play
     if (source == TransmogApplySource::Preset)
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
+    return TryApplyCollectedAppearances(
+        player, { { slot, sourceItemEntry } }, interactionGuid, source, noCost);
+}
+
+TransmogApplyResult Transmogrification::TryApplyCollectedAppearances(Player* player,
+    std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
+    TransmogApplySource source, bool noCost)
+{
+    if (appearances.empty())
+        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+
+    std::vector<AppearanceApplyRequest> requests;
+    requests.reserve(appearances.size());
+    for (auto const& [slot, itemEntry] : appearances)
+        requests.push_back({ slot, itemEntry == HIDDEN_ITEM_ID ? UINT_MAX : itemEntry });
     AppearanceApplyPlan plan;
-    TransmogApplyResult result = PreflightApply(player, { { slot, sourceItemEntry } }, interactionGuid, source, noCost, plan);
+    TransmogApplyResult result = PreflightApply(player, requests, interactionGuid, source, noCost, plan);
     return result.IsSuccess() ? CommitApplyPlan(player, plan) : result;
 }
 
@@ -711,14 +726,8 @@ TransmogApplyResult Transmogrification::TryApplyCollectedAppearance(Player* play
 TransmogApplyResult Transmogrification::TryApplyCollectedPreset(Player* player, slotMap const& appearances,
     ObjectGuid interactionGuid)
 {
-    std::vector<AppearanceApplyRequest> requests;
-    requests.reserve(appearances.size());
-    for (auto const& [slot, itemEntry] : appearances)
-        requests.push_back({ slot, itemEntry == HIDDEN_ITEM_ID ? UINT_MAX : itemEntry });
-
-    AppearanceApplyPlan plan;
-    TransmogApplyResult result = PreflightApply(player, requests, interactionGuid, TransmogApplySource::Preset, true, plan);
-    return result.IsSuccess() ? CommitApplyPlan(player, plan) : result;
+    return TryApplyCollectedAppearances(
+        player, appearances, interactionGuid, TransmogApplySource::Preset, true);
 }
 #endif
 

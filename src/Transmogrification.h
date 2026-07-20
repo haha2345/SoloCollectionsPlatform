@@ -12,6 +12,7 @@
 #include "ItemTemplate.h"
 #include "QuestDef.h"
 #include "ItemTemplate.h"
+#include <map>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -302,6 +303,9 @@ public:
     void DeleteFakeEntry(Player* player, uint8 slot, Item* itemTransmogrified, CharacterDatabaseTransaction* trans = nullptr);
     TransmogApplyResult TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
+    TransmogApplyResult TryApplyCollectedAppearances(Player* player,
+        std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
+        TransmogApplySource source, bool noCost = false);
 #ifdef PRESETS
     TransmogApplyResult TryApplyCollectedPreset(Player* player, slotMap const& appearances,
         ObjectGuid interactionGuid);

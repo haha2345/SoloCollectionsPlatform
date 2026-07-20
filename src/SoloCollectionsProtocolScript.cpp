@@ -9,6 +9,8 @@
 #include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProtocolServer.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsSetCatalog.h"
+#include "SoloCollectionsSetService.h"
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
 #include "Transmogrification.h"
@@ -160,6 +162,24 @@ bool Sc2ProtocolCanUsePrivateChat(
                 TransmogApplyResult result = GetAppearanceService().TryApplyCanonicalAppearance(
                     player, CollectionId(request.CollectionId), static_cast<std::uint8_t>(encodedSlot - 1),
                     ObjectGuid::Empty, TransmogApplySource::Addon, false);
+                return AppearanceApplyStatus(result);
+            }
+            if (request.TypeId == SetCollectionTypeId.Value())
+            {
+                std::uint32_t variantIndex = 0;
+                if (request.Target != "-")
+                {
+                    auto parsed = std::from_chars(request.Target.data(),
+                        request.Target.data() + request.Target.size(), variantIndex);
+                    if (parsed.ec != std::errc {} ||
+                        parsed.ptr != request.Target.data() + request.Target.size() || variantIndex == 0)
+                        return std::string("INVALID_REQUEST");
+                }
+                if (request.ActionId != "APPLY")
+                    return std::string("INVALID_REQUEST");
+                TransmogApplyResult result = GetSetService().TryApply(
+                    player, CollectionId(request.CollectionId), variantIndex,
+                    ObjectGuid::Empty, TransmogApplySource::Addon);
                 return AppearanceApplyStatus(result);
             }
             return std::string("INVALID_REQUEST");

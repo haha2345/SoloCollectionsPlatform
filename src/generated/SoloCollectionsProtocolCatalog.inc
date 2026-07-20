@@ -10,6 +10,6 @@ static std::vector<Sc2CategoryDefinition> LoadGeneratedSc2Categories()
         { CollectionTypeId(std::uint16_t { 11 }), "e854b1b83a01f3f1672a0907099c5f912caab741bba304c2660c0ccbf0bb9efc", false },
         { CollectionTypeId(std::uint16_t { 12 }), "b7d2d5feecc85d98de6f97c12851938514d6020997ed62a40be80cfa007ecfb5", false },
         { CollectionTypeId(std::uint16_t { 13 }), "ac32696a412e0667392840518e10f025bbd5de36311cd16d29c2f43518202e53", false },
-        { CollectionTypeId(std::uint16_t { 14 }), "794d07e09ca6d4ac003d4d5e8847889768a8dec8c8fba2a8adfbd17ae6b91848", false },
+        { CollectionTypeId(std::uint16_t { 14 }), "3b4c4653b4b118bdb7c5ebb6727a7cdfedd4826044f16c09c4a5c752edb8a9ad", false },
     };
 }

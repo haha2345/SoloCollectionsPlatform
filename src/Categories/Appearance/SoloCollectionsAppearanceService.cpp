@@ -523,6 +523,14 @@ TransmogApplyResult AppearanceService::TryApplyCollectedAppearance(Player* playe
         player, sourceItemEntry, slot, interactionGuid, source, noCost);
 }
 
+TransmogApplyResult AppearanceService::TryApplyCollectedAppearances(Player* player,
+    std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid,
+    TransmogApplySource source, bool noCost)
+{
+    return sTransmogrification->TryApplyCollectedAppearances(
+        player, appearances, interactionGuid, source, noCost);
+}
+
 TransmogApplyResult AppearanceService::TryApplyCollectedPreset(Player* player,
     std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid)
 {
@@ -540,11 +548,23 @@ TransmogApplyResult AppearanceService::TryApplyCanonicalAppearance(Player* playe
     CollectionId appearanceId, std::uint8_t slot, ObjectGuid interactionGuid,
     TransmogApplySource source, bool noCost)
 {
-    std::optional<std::uint32_t> sourceItemId = ResolveOwnedSource(player, appearanceId, slot);
-    if (!sourceItemId)
-        return { LANG_TRANSMOG_MISSING_SRC_ITEM };
-    return sTransmogrification->TryApplyCollectedAppearance(
-        player, *sourceItemId, slot, interactionGuid, source, noCost);
+    return TryApplyCanonicalAppearances(
+        player, { { slot, appearanceId } }, interactionGuid, source, noCost);
+}
+
+TransmogApplyResult AppearanceService::TryApplyCanonicalAppearances(Player* player,
+    std::map<std::uint8_t, CollectionId> const& appearances, ObjectGuid interactionGuid,
+    TransmogApplySource source, bool noCost)
+{
+    std::map<std::uint8_t, std::uint32_t> resolved;
+    for (auto const& [slot, appearanceId] : appearances)
+    {
+        std::optional<std::uint32_t> sourceItemId = ResolveOwnedSource(player, appearanceId, slot);
+        if (!sourceItemId)
+            return { LANG_TRANSMOG_MISSING_SRC_ITEM };
+        resolved.emplace(slot, *sourceItemId);
+    }
+    return TryApplyCollectedAppearances(player, resolved, interactionGuid, source, noCost);
 }
 
 AppearanceService& GetAppearanceService()

@@ -114,13 +114,19 @@ class AtomicApplyContractTests(unittest.TestCase):
     def test_multi_slot_preset_is_preflighted_and_committed_once(self):
         single = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::TryApplyCollectedAppearance", 1
+        )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedAppearances", 1)[0]
+        multi = IMPLEMENTATION.split(
+            "TransmogApplyResult Transmogrification::TryApplyCollectedAppearances", 1
         )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedPreset", 1)[0]
         preset = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::TryApplyCollectedPreset", 1
         )[1].split("#endif", 1)[0]
         self.assertIn("source == TransmogApplySource::Preset", single)
-        self.assertIn("PreflightApply(player, requests", preset)
-        self.assertIn("CommitApplyPlan(player, plan)", preset)
+        self.assertIn("TryApplyCollectedAppearances", single)
+        self.assertIn("PreflightApply(player, requests", multi)
+        self.assertIn("CommitApplyPlan(player, plan)", multi)
+        self.assertIn("TryApplyCollectedAppearances", preset)
+        self.assertIn("TransmogApplySource::Preset, true", preset)
         self.assertEqual(1, SCRIPTS.count("TryApplyCollectedPreset("))
         self.assertNotRegex(SCRIPTS, r"for \([^)]*preset[^)]*\)[\s\S]{0,500}TryApplyCollectedAppearance")
 
