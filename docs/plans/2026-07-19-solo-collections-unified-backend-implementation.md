@@ -2,7 +2,7 @@
 
 日期：2026-07-19
 
-状态：实施中
+状态：✅ 已完成（阶段 0–12）
 
 设计依据：[2026-07-19-solo-collections-unified-backend-design.md](2026-07-19-solo-collections-unified-backend-design.md)
 
