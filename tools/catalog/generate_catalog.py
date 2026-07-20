@@ -183,6 +183,41 @@ def _parse_collections(source_root: Path, type_keys: set[str]) -> list[dict[str,
     return sorted(entries, key=lambda row: row["ordinal"])
 
 
+def _load_mount_actions(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
+    path = source_root / "mount_actions.json"
+    mount_collections = [entry for entry in collections if entry["typeKey"] == "mount"]
+    if not path.exists():
+        _require(not mount_collections, "mount_actions.json is required when mount collections exist")
+        return {"schemaVersion": 1, "collections": [], "mappingHash": _hash({"schemaVersion": 1, "collections": []})}
+    actions = deepcopy(_read_json(path))
+    _require(actions.get("schemaVersion") == 1, "unsupported mount action schema version")
+    entries = actions.get("collections")
+    _require(isinstance(entries, list), "mount action collections must be an array")
+    _unique(entries, ("collectionId", "collectionKey", "ordinal"), "mount actions")
+    _validate_ordinals(entries, "ordinal", "mount actions")
+    source_by_key = {entry["collectionKey"]: entry for entry in mount_collections}
+    _require(len(entries) == len(source_by_key), "mount action coverage must match mount catalog")
+    seen_spells: set[int] = set()
+    for entry in entries:
+        source = source_by_key.get(entry["collectionKey"])
+        _require(source is not None, f"mount action references unknown collection: {entry['collectionKey']}")
+        _require(int(entry["collectionId"]) == source["collectionId"], f"mount action collectionId mismatch: {entry['collectionKey']}")
+        _require(int(entry["ordinal"]) == source["ordinal"], f"mount action ordinal mismatch: {entry['collectionKey']}")
+        unlocks = entry.get("unlockSpellIds")
+        variants = entry.get("actionVariants")
+        _require(isinstance(unlocks, list) and unlocks, f"mount action has no unlock spells: {entry['collectionKey']}")
+        _require(isinstance(variants, list) and variants, f"mount action has no action variants: {entry['collectionKey']}")
+        variant_ids = [int(variant["spellId"]) for variant in variants]
+        _require(sorted(map(int, unlocks)) == sorted(variant_ids), f"mount unlock/action variants differ: {entry['collectionKey']}")
+        _require(not (set(variant_ids) & seen_spells), f"mount spell is mapped to multiple collections: {entry['collectionKey']}")
+        seen_spells.update(variant_ids)
+        _require(int(entry["canonicalSpellId"]) in variant_ids, f"canonical mount spell is not an action variant: {entry['collectionKey']}")
+    claimed_hash = actions.pop("mappingHash", "")
+    _require(claimed_hash == _hash(actions), "mount action mappingHash is stale")
+    actions["mappingHash"] = claimed_hash
+    return actions
+
+
 def _load_policies(source_root: Path, class_keys: set[str], race_keys: set[str]) -> list[dict[str, Any]]:
     policies = [_read_json(path) for path in sorted((source_root / "policies").glob("*.json"), key=lambda value: value.name)]
     _require(policies, "at least one policy is required")
@@ -284,6 +319,7 @@ def build_model(source_root: Path) -> dict[str, Any]:
         identity = (override.get("collectionKey"), override.get("classKey", ""), override.get("raceKey", ""))
         _require(identity not in seen_override, f"duplicate identity override: {identity}")
         seen_override.add(identity)
+    mount_actions = _load_mount_actions(source_root, collections)
     model = {
         "schemaVersion": 1,
         "metadataVersion": versions["metadataVersion"],
@@ -294,15 +330,18 @@ def build_model(source_root: Path) -> dict[str, Any]:
         "races": sorted(races, key=lambda row: row["ordinal"]),
         "policies": policies,
         "collections": collections,
+        "mountActions": mount_actions,
         "aliases": aliases,
         "identityOverrides": sorted(overrides, key=lambda row: (row.get("collectionKey", ""), row.get("classKey", ""), row.get("raceKey", ""))),
     }
     mapping_basis = _canonical_for_hash(model)
     model["mappingHash"] = _hash(mapping_basis)
-    model["typeMappingHashes"] = {
-        entry["typeKey"]: _hash([row for row in mapping_basis["collections"] if row["typeKey"] == entry["typeKey"]])
-        for entry in model["collectionTypes"]
-    }
+    model["typeMappingHashes"] = {}
+    for entry in model["collectionTypes"]:
+        basis: Any = [row for row in mapping_basis["collections"] if row["typeKey"] == entry["typeKey"]]
+        if entry["typeKey"] == "mount":
+            basis = {"collections": basis, "actions": mapping_basis["mountActions"]}
+        model["typeMappingHashes"][entry["typeKey"]] = _hash(basis)
     return model
 
 
@@ -422,6 +461,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     }
     json_text = json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     missing_text = json.dumps(missing, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    mount_actions_text = json.dumps(model["mountActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     catalog_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedCatalog = " + _lua({
         "schemaVersion": model["schemaVersion"], "metadataVersion": model["metadataVersion"],
         "assetPackVersion": model["assetPackVersion"], "mappingHash": model["mappingHash"],
@@ -443,6 +483,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         repo_root / "addon/SoloCollections/Data/Generated/IdentityRegistry.lua": identity_lua,
         repo_root / "addon/SoloCollections/Data/Generated/PolicyRegistry.lua": policy_lua,
         module_root / "data/generated/solo_collections_catalog_manifest.json": json_text,
+        module_root / "data/generated/solo_collections_mount_actions.json": mount_actions_text,
         module_root / "data/generated/solo_collections_missing_resources.json": missing_text,
         module_root / "src/generated/SoloCollectionsIdentityData.inc": _identity_inc(model),
         module_root / "src/generated/SoloCollectionsPolicyData.inc": _policy_inc(model),
