@@ -8,14 +8,15 @@ namespace SoloCollections
 {
 namespace
 {
+// The 3.3.5 client title APIs use CharTitlesEntry::ID as their catalog index.
+// bit_index belongs only to the player's known-title bit mask and is not a collection ID.
 CharTitlesEntry const* FindByCollectionId(CollectionId collectionId)
 {
     if (!collectionId.IsValid())
         return nullptr;
-    std::uint32_t bitIndex = collectionId.Value() - 1;
     for (std::uint32_t row = 0; row < sCharTitlesStore.GetNumRows(); ++row)
         if (CharTitlesEntry const* title = sCharTitlesStore.LookupEntry(row))
-            if (title->bit_index == bitIndex)
+            if (title->ID == collectionId.Value())
                 return title;
     return nullptr;
 }
@@ -39,7 +40,7 @@ std::vector<CollectionId> TitleService::OwnedByPlayer(Player const* player) cons
     for (std::uint32_t row = 0; row < sCharTitlesStore.GetNumRows(); ++row)
         if (CharTitlesEntry const* title = sCharTitlesStore.LookupEntry(row))
             if (player->HasTitle(title))
-                owned.emplace_back(title->bit_index + 1);
+                owned.emplace_back(title->ID);
     return owned;
 }
 

@@ -21,9 +21,10 @@ class TitleProviderContractTests(unittest.TestCase):
         self.assertNotIn("TryUnlock", SERVICE)
         self.assertNotIn("account_collection_unlock", SERVICE)
 
-    def test_core_title_bits_map_to_client_title_indices(self):
-        self.assertIn("title->bit_index == bitIndex", SERVICE)
-        self.assertIn("title->bit_index + 1", SERVICE)
+    def test_dbc_title_ids_map_to_client_title_indices(self):
+        self.assertIn("title->ID == collectionId.Value()", SERVICE)
+        self.assertIn("owned.emplace_back(title->ID)", SERVICE)
+        self.assertNotIn("title->bit_index", SERVICE)
         self.assertIn("player->HasTitle(title)", SERVICE)
         self.assertIn("sCharTitlesStore", SERVICE)
 
