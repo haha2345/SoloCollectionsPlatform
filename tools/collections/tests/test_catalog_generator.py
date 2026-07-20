@@ -60,6 +60,9 @@ class CatalogGeneratorTests(unittest.TestCase):
         target = MODULE_ROOT / "src/generated/SoloCollectionsProtocolCatalog.inc"
         self.assertIn(target, outputs)
         rendered = outputs[target]
+        self.assertIn("GeneratedCatalogSchemaVersion", rendered)
+        self.assertIn("GeneratedCatalogVersion", rendered)
+        self.assertIn("GeneratedIdentityVersion", rendered)
         self.assertIn("GeneratedSc2MetadataVersion", rendered)
         self.assertIn("GeneratedSc2AssetPackVersion", rendered)
         self.assertIn("LoadGeneratedSc2Categories", rendered)
