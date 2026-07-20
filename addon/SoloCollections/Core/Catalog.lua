@@ -211,6 +211,61 @@ local function overlayCollectionState(category, record, fallback)
     return record
 end
 
+local function deriveSetState(record)
+    local collectionState = SC.CollectionState
+    local categoryState = collectionState and collectionState.GetCategoryState and
+        collectionState.GetCategoryState("APPEARANCES") or "Demo"
+    local ownershipKnown = categoryState == "Ready"
+    local bestOwned = 0
+    local bestRequired = 0
+    local complete = false
+    local selectedVariant
+    for _, variant in ipairs(record.variants or {}) do
+        if variant.lifecycle == "active" then
+            local owned = 0
+            local required = 0
+            for _, member in ipairs(variant.members or {}) do
+                if member.lifecycle == "active" and member.required then
+                    required = required + 1
+                    local memberOwned = false
+                    for _, appearanceId in ipairs(member.appearanceIds or {}) do
+                        if collectionState and collectionState.IsOwnedByType and
+                            collectionState.IsOwnedByType(13, appearanceId) then
+                            memberOwned = true
+                            break
+                        end
+                    end
+                    if memberOwned then owned = owned + 1 end
+                end
+            end
+            local variantComplete = required > 0 and owned == required
+            if variantComplete or bestRequired == 0 or owned * bestRequired > bestOwned * required then
+                bestOwned = owned
+                bestRequired = required
+                selectedVariant = variant
+            end
+            if variantComplete then
+                complete = true
+                break
+            end
+        end
+    end
+    record.collectedCount = bestOwned
+    record.requiredCount = bestRequired
+    record.collected = complete
+    record.ownershipKnown = ownershipKnown
+    record.collectionState = ownershipKnown and "Derived" or categoryState
+    record.selectedVariant = selectedVariant
+    return record
+end
+
+local function resolveRecordState(category, record, fallback)
+    if category == "SETS" then
+        return deriveSetState(record)
+    end
+    return overlayCollectionState(category, record, fallback)
+end
+
 local function getSource(category)
     if category == "MOUNTS" and SC.GeneratedCatalog then
         return getGeneratedMountSource()
@@ -351,7 +406,7 @@ function Catalog.Get(category)
         return result
     end
     for index, sourceRecord in ipairs(source) do
-        local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
         record.favorite = getFavorite(category, record)
         result[index] = record
     end
@@ -363,7 +418,7 @@ function Catalog.QueryAll(category, query, filters)
     local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
     for _, sourceRecord in ipairs(source) do
-        local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
         if filterMatches(category, record, query, activeFilters, true) then
             record.favorite = getFavorite(category, record)
             table.insert(matches, record)
@@ -393,7 +448,7 @@ function Catalog.GetProgress(category, filters)
     local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
     for _, sourceRecord in ipairs(source) do
-        local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
         if filterMatches(category, record, "", activeFilters, false) then
             total = total + 1
             if record.collected then
@@ -408,7 +463,7 @@ function Catalog.ToggleDemoFavorite(category, id)
     local source = getSource(category) or {}
     for _, sourceRecord in ipairs(source) do
         if sourceRecord.id == id then
-            local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
+            local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
             if isCollectibleCompanion(category) and not record.collected then
                 ensureFavoriteStore(category)[id] = false
                 return false

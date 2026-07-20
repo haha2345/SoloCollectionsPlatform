@@ -663,7 +663,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
             entry["requiresTarget"] = action["targetPolicy"] == "CURRENT_TARGET"
         elif entry["typeKey"] == "appearance":
             entry["displayItemId"] = int(entry["sourceId"])
-        if entry["typeKey"] in {"mount", "companion", "toy", "appearance"}:
+        if entry["typeKey"] in {"mount", "companion", "toy", "appearance", "set"}:
             # The client renders metadata only. Spell/item resolution and all
             # authorization remain server-side; the wire request carries a
             # stable typeId + collectionId and an optional target selector.
