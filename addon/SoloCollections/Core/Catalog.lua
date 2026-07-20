@@ -74,6 +74,21 @@ local function copyRecord(source)
     return copy
 end
 
+local function overlayCollectionState(category, record, fallback)
+    local collectionState = SC.CollectionState
+    if collectionState and collectionState.ResolveOwned then
+        local collected, ownershipKnown, state = SC.CollectionState.ResolveOwned(category, record.id, fallback)
+        record.collected = collected
+        record.ownershipKnown = ownershipKnown
+        record.collectionState = state
+    else
+        record.collected = fallback and true or false
+        record.ownershipKnown = false
+        record.collectionState = "Demo"
+    end
+    return record
+end
+
 local function getSource(category)
     local key = CATEGORY_KEYS[category]
     if not key or not SC.Data then
@@ -202,8 +217,8 @@ function Catalog.Get(category)
         return result
     end
     for index, sourceRecord in ipairs(source) do
-        local record = copyRecord(sourceRecord)
-        record.favorite = getFavorite(category, sourceRecord)
+        local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        record.favorite = getFavorite(category, record)
         result[index] = record
     end
     return result
@@ -214,9 +229,9 @@ function Catalog.QueryAll(category, query, filters)
     local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
     for _, sourceRecord in ipairs(source) do
-        if filterMatches(category, sourceRecord, query, activeFilters, true) then
-            local record = copyRecord(sourceRecord)
-            record.favorite = getFavorite(category, sourceRecord)
+        local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        if filterMatches(category, record, query, activeFilters, true) then
+            record.favorite = getFavorite(category, record)
             table.insert(matches, record)
         end
     end
@@ -243,7 +258,8 @@ function Catalog.GetProgress(category, filters)
     local total = 0
     local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
-    for _, record in ipairs(source) do
+    for _, sourceRecord in ipairs(source) do
+        local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
         if filterMatches(category, record, "", activeFilters, false) then
             total = total + 1
             if record.collected then
@@ -256,8 +272,9 @@ end
 
 function Catalog.ToggleDemoFavorite(category, id)
     local source = getSource(category) or {}
-    for _, record in ipairs(source) do
-        if record.id == id then
+    for _, sourceRecord in ipairs(source) do
+        if sourceRecord.id == id then
+            local record = overlayCollectionState(category, copyRecord(sourceRecord), sourceRecord.collected)
             if isCollectibleCompanion(category) and not record.collected then
                 ensureFavoriteStore(category)[id] = false
                 return false

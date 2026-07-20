@@ -2,6 +2,7 @@ local SC = SoloCollections
 
 local B = SC.Bridge or {}
 SC.Bridge = B
+local CS = SC.CollectionState
 
 B.prefix = "SC1"
 B.version = 1
@@ -13,6 +14,12 @@ B.demoMode = true
 B.features = {}
 B.waiting = false
 B.attempted = false
+B.sc2Prefix = "SC2"
+B.sc2Version = 1
+B.sc2Timeout = 5
+B.sc2Connected = false
+B.sc2Waiting = false
+B.sc2Attempted = false
 
 local requestTimeout = 5
 local requestSerial = 0
@@ -21,8 +28,10 @@ local pendingSummons = {}
 local pendingPetModels = {}
 local pendingPetSummons = {}
 local pendingToyUses = {}
+local sc2PendingActions = {}
 local timerFrame = CreateFrame("Frame")
 local prefixRegistered = false
+local sc2PrefixRegistered = false
 
 local function isPositiveInteger(value)
     return type(value) == "number" and value > 0 and value == math.floor(value)
@@ -43,6 +52,21 @@ local function ensurePrefixRegistered()
     return prefixRegistered
 end
 
+local function ensureSC2PrefixRegistered()
+    if sc2PrefixRegistered then
+        return true
+    end
+    if not RegisterAddonMessagePrefix then
+        sc2PrefixRegistered = true
+        return true
+    end
+    local ok, registered = pcall(RegisterAddonMessagePrefix, B.sc2Prefix)
+    if ok and registered ~= false then
+        sc2PrefixRegistered = true
+    end
+    return sc2PrefixRegistered
+end
+
 local function saveState(status)
     if not SC.db then
         return
@@ -60,6 +84,43 @@ local function saveState(status)
         end
     end
     SC.db.bridge.features = savedFeatures
+end
+
+local function saveSC2State(status)
+    if not SC.db then
+        return
+    end
+    if type(SC.db.bridge) ~= "table" then
+        SC.db.bridge = {}
+    end
+    if type(SC.db.bridge.sc2) ~= "table" then
+        SC.db.bridge.sc2 = {}
+    end
+    local state = SC.db.bridge.sc2
+    state.status = status
+    state.connected = B.sc2Connected
+    state.state = CS and CS.GetState and CS.GetState() or "Failed"
+    state.revision = CS and CS.GetRevision and CS.GetRevision() or "0"
+    state.backendBuild = CS and CS.backendBuild or ""
+end
+
+local function newClientNonce()
+    local high = math.floor((time and time() or 0) % 4294967296)
+    local low = math.floor(((GetTime and GetTime() or 0) * 1000 + math.random(0, 2147483647)) % 4294967296)
+    return string.format("%08x%08x", high, low)
+end
+
+if CS then
+    CS.SetSender(function(body)
+        local playerName = UnitName("player")
+        if playerName and playerName ~= "" then
+            SendAddonMessage(B.sc2Prefix, body, "WHISPER", playerName)
+        end
+    end)
+    CS.SetChangedCallback(function(state)
+        B.sc2Connected = CS.HasAuthority and CS.HasAuthority() and state ~= "Failed"
+        saveSC2State(state == "Ready" and "connected" or string.lower(state or "failed"))
+    end)
 end
 
 function B.Finish(connected, status)
@@ -111,6 +172,14 @@ local function expirePendingRequests(now)
             end
         end
     end
+    for requestId, pending in pairs(sc2PendingActions) do
+        if now >= pending.deadline then
+            sc2PendingActions[requestId] = nil
+            if type(pending.callback) == "function" then
+                pcall(pending.callback, false, "TIMEOUT")
+            end
+        end
+    end
 end
 
 local function onTimerUpdate(self, elapsed)
@@ -119,6 +188,20 @@ local function onTimerUpdate(self, elapsed)
         if B.elapsed >= B.timeout then
             B.Finish(false, "fallback")
         end
+    end
+    if B.sc2Waiting then
+        B.sc2Elapsed = B.sc2Elapsed + elapsed
+        if B.sc2Elapsed >= B.sc2Timeout then
+            B.sc2Waiting = false
+            B.sc2Connected = false
+            if CS and CS.MarkUnavailable then
+                CS.MarkUnavailable()
+            end
+            saveSC2State("fallback")
+        end
+    end
+    if CS and CS.Update then
+        CS.Update(GetTime())
     end
     expirePendingRequests(GetTime())
 end
@@ -152,9 +235,89 @@ function B.Connect(force)
     SendAddonMessage(B.prefix, B.request, "WHISPER", playerName)
 end
 
+function B.ConnectSC2(force)
+    if B.sc2Attempted and not force then
+        return
+    end
+    B.sc2Attempted = true
+    B.sc2Waiting = true
+    B.sc2Connected = false
+    B.sc2Elapsed = 0
+
+    if not CS or not ensureSC2PrefixRegistered() then
+        B.sc2Waiting = false
+        saveSC2State("fallback")
+        return
+    end
+
+    local playerName = UnitName("player")
+    if not playerName or playerName == "" then
+        B.sc2Waiting = false
+        saveSC2State("fallback")
+        return
+    end
+
+    local generated = SC.GeneratedCatalog or {}
+    local clientNonce = newClientNonce()
+    CS.BeginConnect(clientNonce)
+    local body = table.concat({
+        "H",
+        tostring(B.sc2Version),
+        clientNonce,
+        tostring(SC.VERSION or "unknown"),
+        tostring(generated.metadataVersion or "unknown"),
+        tostring(generated.assetPackVersion or "unknown"),
+    }, "|")
+    saveSC2State("waiting")
+    SendAddonMessage(B.sc2Prefix, body, "WHISPER", playerName)
+end
+
+function B.Reconnect()
+    B.Connect(true)
+    B.ConnectSC2(true)
+end
+
 function B.OnLogin()
     B.attempted = false
+    B.sc2Attempted = false
     B.Connect()
+    B.ConnectSC2()
+end
+
+function B.RequestSC2Action(typeId, collectionId, actionId, target, callback)
+    if not B.sc2Connected or not CS or not CS.sessionNonce or
+        not isPositiveInteger(typeId) or not isPositiveInteger(collectionId) or
+        not isPositiveInteger(actionId) or not CS.categories[typeId] or
+        CS.categories[typeId].state ~= "Ready" then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    if target ~= nil and not isPositiveInteger(target) then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_TARGET_SLOT")
+        end
+        return nil
+    end
+    local playerName = UnitName("player")
+    if not playerName or playerName == "" then
+        return nil
+    end
+    requestSerial = requestSerial + 1
+    local requestId = requestSerial
+    sc2PendingActions[requestId] = {
+        deadline = GetTime() + requestTimeout,
+        typeId = typeId,
+        collectionId = collectionId,
+        callback = callback,
+    }
+    local body = table.concat({
+        "Q", CS.sessionNonce, tostring(requestId), tostring(typeId), tostring(collectionId),
+        tostring(actionId), target and tostring(target) or "-",
+    }, "|")
+    SendAddonMessage(B.sc2Prefix, body, "WHISPER", playerName)
+    return requestId
 end
 
 function B.RequestModel(mountId, callback)
@@ -468,6 +631,38 @@ local function handleToyUseResult(requestIdText, status, payload)
 end
 
 function B.OnMessage(prefix, message, channel, sender)
+    if prefix == B.sc2Prefix then
+        if channel ~= "WHISPER" or sender ~= UnitName("player") or type(message) ~= "string" or not CS then
+            return
+        end
+        local event, detail, reason = CS.HandleMessage(message, GetTime())
+        if event == "HELLO_ACK" then
+            B.sc2Waiting = false
+            B.sc2Connected = true
+            saveSC2State("connected")
+        elseif event == "ACTION_RESULT" then
+            local fields = detail
+            local requestId = tonumber(fields[3])
+            local pending = requestId and sc2PendingActions[requestId] or nil
+            if pending and pending.typeId == tonumber(fields[5]) and pending.collectionId == tonumber(fields[6]) then
+                sc2PendingActions[requestId] = nil
+                if type(pending.callback) == "function" then
+                    pcall(pending.callback, fields[4] == "ACCEPTED", fields[4])
+                end
+            end
+        elseif event == "ERROR" then
+            local requestId = tonumber(detail)
+            local pending = requestId and sc2PendingActions[requestId] or nil
+            if pending then
+                sc2PendingActions[requestId] = nil
+                if type(pending.callback) == "function" then
+                    pcall(pending.callback, false, reason)
+                end
+            end
+            saveSC2State(reason == "LOADING" and "waiting" or "failed")
+        end
+        return
+    end
     if B.prefix ~= prefix then
         return
     end
