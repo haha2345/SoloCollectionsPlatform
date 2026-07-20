@@ -5,7 +5,9 @@
 
 #include <cstddef>
 #include <cstdint>
+#include <functional>
 #include <memory>
+#include <vector>
 
 namespace SoloCollections
 {
@@ -57,11 +59,31 @@ struct AccountStoreDiagnostics
     std::size_t PendingLoads = 0;
     std::size_t PendingMutations = 0;
     std::size_t PendingAudits = 0;
+    std::size_t PendingMigrationChecks = 0;
+    std::size_t PendingMigrationMarkers = 0;
     std::uint64_t SuccessfulLoads = 0;
     std::uint64_t FailedLoads = 0;
     std::uint64_t SuccessfulMutations = 0;
     std::uint64_t FailedMutations = 0;
 };
+
+struct MigrationMarkerRequest
+{
+    AccountId Account;
+    std::uint32_t MigrationId = 0;
+    std::uint16_t MigrationVersion = 0;
+};
+
+struct MigrationMarkerCompletion : MigrationMarkerRequest
+{
+    CollectionRevision CompletedRevision;
+    std::uint32_t ImportedCount = 0;
+    std::uint32_t RejectedCount = 0;
+};
+
+using MigrationCheckCallback = std::function<void(
+    bool querySucceeded, bool alreadyCompleted, std::vector<std::uint32_t> existingSpellIds)>;
+using MigrationCompleteCallback = std::function<void(bool committed)>;
 
 class AccountCollectionEventSink
 {
@@ -92,6 +114,10 @@ public:
         AccountCollectionMutation const& mutation, CollectionReasonCode reason);
     [[nodiscard]] bool RequestResync(AccountId accountId);
     [[nodiscard]] bool HasPendingMutation(AccountId accountId) const;
+    [[nodiscard]] bool CheckMigrationMarker(
+        MigrationMarkerRequest request, MigrationCheckCallback callback);
+    [[nodiscard]] bool CompleteMigrationMarker(
+        MigrationMarkerCompletion completion, MigrationCompleteCallback callback);
     void SetEventSink(AccountCollectionEventSink* sink);
 
     [[nodiscard]] AccountStoreDiagnostics Diagnostics() const;

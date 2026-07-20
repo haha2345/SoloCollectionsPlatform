@@ -367,12 +367,91 @@ public:
         return _pendingMutations.contains(accountId);
     }
 
+    bool CheckMigrationMarker(MigrationMarkerRequest request, MigrationCheckCallback callback)
+    {
+        if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !request.Account.IsValid() ||
+            request.MigrationId == 0 || request.MigrationVersion == 0 || !callback)
+            return false;
+        auto key = std::make_pair(request.Account, request.MigrationId);
+        if (!_pendingMigrationChecks.insert(key).second)
+            return false;
+
+        std::string query = Acore::StringFormat(
+            "SELECT 0 AS row_kind, CASE WHEN EXISTS(SELECT 1 FROM sc_migration_marker "
+            "WHERE account_id = {} AND migration_id = {} AND migration_version >= {}) THEN 1 ELSE 0 END AS value "
+            "UNION ALL SELECT 1 AS row_kind, cs.spell AS value FROM character_spell cs "
+            "INNER JOIN characters c ON c.guid = cs.guid WHERE c.account = {} AND cs.disabled = 0 "
+            "AND NOT EXISTS(SELECT 1 FROM sc_migration_marker WHERE account_id = {} AND migration_id = {} "
+            "AND migration_version >= {})",
+            request.Account.Value(), request.MigrationId, request.MigrationVersion, request.Account.Value(),
+            request.Account.Value(), request.MigrationId, request.MigrationVersion);
+        _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(query).WithCallback(
+            [this, key, callback = std::move(callback)](QueryResult result) mutable
+            {
+                _pendingMigrationChecks.erase(key);
+                bool succeeded = static_cast<bool>(result);
+                bool completed = false;
+                bool sawSentinel = false;
+                std::vector<std::uint32_t> spells;
+                if (result)
+                {
+                    do
+                    {
+                        Field* fields = result->Fetch();
+                        std::uint64_t rowKind = fields[0].Get<std::uint64_t>();
+                        std::uint64_t value = fields[1].Get<std::uint64_t>();
+                        if (rowKind == 0 && !sawSentinel)
+                        {
+                            sawSentinel = true;
+                            completed = value == 1;
+                        }
+                        else if (rowKind == 1 && value > 0 && value <= std::numeric_limits<std::uint32_t>::max())
+                            spells.push_back(static_cast<std::uint32_t>(value));
+                        else
+                            succeeded = false;
+                    } while (succeeded && result->NextRow());
+                }
+                succeeded = succeeded && sawSentinel;
+                callback(succeeded, completed, std::move(spells));
+            }));
+        return true;
+    }
+
+    bool CompleteMigrationMarker(MigrationMarkerCompletion completion, MigrationCompleteCallback callback)
+    {
+        if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !completion.Account.IsValid() ||
+            completion.MigrationId == 0 || completion.MigrationVersion == 0 || !callback)
+            return false;
+        auto key = std::make_pair(completion.Account, completion.MigrationId);
+        if (!_pendingMigrationMarkers.insert(key).second)
+            return false;
+
+        CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
+        transaction->Append(
+            "INSERT INTO sc_migration_marker(account_id, migration_id, migration_version, completed_revision, imported_count, rejected_count) "
+            "VALUES ({}, {}, {}, {}, {}, {}) ON DUPLICATE KEY UPDATE migration_version=VALUES(migration_version), "
+            "completed_revision=VALUES(completed_revision), imported_count=VALUES(imported_count), "
+            "rejected_count=VALUES(rejected_count), completed_at=CURRENT_TIMESTAMP(3)",
+            completion.Account.Value(), completion.MigrationId, completion.MigrationVersion,
+            completion.CompletedRevision.Value(), completion.ImportedCount, completion.RejectedCount);
+        TransactionCallback& transactionCallback = _transactionCallbacks.AddCallback(
+            CharacterDatabase.AsyncCommitTransaction(transaction));
+        transactionCallback.AfterComplete([this, key, callback = std::move(callback)](bool committed) mutable
+        {
+            _pendingMigrationMarkers.erase(key);
+            callback(committed);
+        });
+        return true;
+    }
+
     AccountStoreDiagnostics Diagnostics() const
     {
         AccountStoreDiagnostics result = _diagnostics;
         result.PendingLoads = _loadingAccounts.size() + _deferredLoads.size();
         result.PendingMutations = _pendingMutations.size();
         result.PendingAudits = _pendingAudits;
+        result.PendingMigrationChecks = _pendingMigrationChecks.size();
+        result.PendingMigrationMarkers = _pendingMigrationMarkers.size();
         return result;
     }
 
@@ -392,6 +471,8 @@ private:
     std::map<AccountId, DeferredLoad> _deferredLoads;
     std::set<AccountId> _loadingAccounts;
     std::map<AccountId, AccountCollectionMutation> _pendingMutations;
+    std::set<std::pair<AccountId, std::uint32_t>> _pendingMigrationChecks;
+    std::set<std::pair<AccountId, std::uint32_t>> _pendingMigrationMarkers;
     std::size_t _pendingAudits = 0;
     AccountCollectionEventSink* _eventSink = nullptr;
     AccountStoreDiagnostics _diagnostics;
@@ -446,6 +527,18 @@ bool AccountCollectionStore::RequestResync(AccountId accountId)
 bool AccountCollectionStore::HasPendingMutation(AccountId accountId) const
 {
     return _impl->HasPendingMutation(accountId);
+}
+
+bool AccountCollectionStore::CheckMigrationMarker(
+    MigrationMarkerRequest request, MigrationCheckCallback callback)
+{
+    return _impl->CheckMigrationMarker(request, std::move(callback));
+}
+
+bool AccountCollectionStore::CompleteMigrationMarker(
+    MigrationMarkerCompletion completion, MigrationCompleteCallback callback)
+{
+    return _impl->CompleteMigrationMarker(completion, std::move(callback));
 }
 
 void AccountCollectionStore::SetEventSink(AccountCollectionEventSink* sink)

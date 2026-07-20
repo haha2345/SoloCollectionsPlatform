@@ -1,6 +1,7 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsEligibility.h"
 #include "SoloCollectionsIdentity.h"
+#include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsProvider.h"
 
 #include <cstdlib>
@@ -421,6 +422,19 @@ void TestEligibilityUnknownIdentityViewOnly()
     Require(generated.IsValid() && generated.Find("unrestricted") && generated.Find("appearance.plate"),
         "generated policy registry is invalid");
 }
+
+void TestGeneratedMountCatalog()
+{
+    SC::MountCatalog const& catalog = SC::GetMountCatalog();
+    Require(catalog.Collections().size() == 281, "generated mount catalog count changed without review");
+    SC::MountCollectionDefinition const* acherus = catalog.FindByUnlockSpell(48778);
+    Require(acherus && acherus->Id == SC::CollectionId(100000), "Acherus mount spell lookup failed");
+    Require(catalog.Find(acherus->Id) == acherus, "mount collection reverse lookup failed");
+    Require(!catalog.FindByUnlockSpell(32345), "reviewed test mount spell entered the production lookup");
+    SC::MountCollectionDefinition const* gryphon = catalog.FindByUnlockSpell(32292);
+    Require(gryphon && gryphon->ActionVariants.front().MinimumRidingSkill == 300 &&
+        gryphon->ActionVariants.front().IsFlying, "mount action requirements were not generated");
+}
 }
 
 int main()
@@ -442,6 +456,7 @@ int main()
         TestEligibilityResourceAndOverrideOrder();
         TestEligibilityDeclarativeAndFallbackOrder();
         TestEligibilityUnknownIdentityViewOnly();
+        TestGeneratedMountCatalog();
         std::cout << "SoloCollections native domain tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

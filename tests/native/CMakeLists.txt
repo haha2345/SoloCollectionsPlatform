@@ -8,6 +8,7 @@ add_executable(solo_collections_domain_tests
     ../../src/SoloCollectionsAccountCache.cpp
     ../../src/SoloCollectionsEligibility.cpp
     ../../src/SoloCollectionsIdentity.cpp
+    ../../src/SoloCollectionsMountCatalog.cpp
     ../../src/SoloCollectionsProvider.cpp
 )
 

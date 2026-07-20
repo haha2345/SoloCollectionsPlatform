@@ -1,5 +1,7 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsMountCatalog.h"
+#include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProvider.h"
 #include "SoloCollectionsProtocolScript.h"
 
@@ -49,6 +51,34 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class MountCollectionProvider final : public CollectionProvider
+{
+public:
+    MountCollectionProvider()
+    {
+        _descriptor.TypeId = MountCollectionTypeId;
+        _descriptor.TypeKey = "mount";
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override
+    {
+        return _descriptor;
+    }
+
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        MountCollectionDefinition const* definition = GetMountCatalog().Find(collectionId);
+        result.Reason = definition ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = definition != nullptr;
+        result.Availability.AssetReady = definition != nullptr;
+        return result;
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class SoloCollectionsCoreWorldScript final : public WorldScript
 {
 public:
@@ -61,6 +91,9 @@ public:
         RegistryRegistrationResult registration = registry.Register(std::make_unique<SyntheticCollectionProvider>());
         if (!registration.Accepted)
             throw std::runtime_error("SoloCollections provider registration failed: " + registration.Message);
+        registration = registry.Register(std::make_unique<MountCollectionProvider>());
+        if (!registration.Accepted)
+            throw std::runtime_error("SoloCollections mount provider registration failed: " + registration.Message);
 
         RegistryFinalizeResult finalized = registry.Finalize();
         if (!finalized.Success)
@@ -85,7 +118,7 @@ class SoloCollectionsCorePlayerScript final : public PlayerScript
 public:
     SoloCollectionsCorePlayerScript() : PlayerScript(
         "SoloCollectionsCorePlayerScript", { PLAYERHOOK_ON_LOGIN, PLAYERHOOK_ON_LOGOUT,
-            PLAYERHOOK_ON_UPDATE, PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
+            PLAYERHOOK_ON_UPDATE, PLAYERHOOK_ON_LEARN_SPELL, PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
 
     void OnPlayerLogin(Player* player) override
     {
@@ -98,6 +131,7 @@ public:
             accountId, AccountSessionId(playerGuid), MonotonicMilliseconds());
         if (opened.Accepted && opened.ShouldStartLoad)
             GetAccountCollectionStore().BeginLoad(accountId, playerGuid, opened.Generation);
+        GetMountCollectionService().OnPlayerLogin(player);
         Sc2ProtocolOpenSession(player);
     }
 
@@ -114,7 +148,13 @@ public:
 
     void OnPlayerUpdate(Player* player, std::uint32_t /*diff*/) override
     {
+        GetMountCollectionService().OnPlayerUpdate(player);
         Sc2ProtocolPumpAndSend(player);
+    }
+
+    void OnPlayerLearnSpell(Player* player, std::uint32_t spellId) override
+    {
+        GetMountCollectionService().OnPlayerLearnSpell(player, spellId);
     }
 
     bool OnPlayerCanUseChat(Player* player, std::uint32_t type, std::uint32_t language,
