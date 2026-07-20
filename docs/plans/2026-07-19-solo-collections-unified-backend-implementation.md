@@ -1114,7 +1114,7 @@ feat: apply sets and outfits atomically
 
 ## 15. 阶段 10：验证未来扩展合同
 
-阶段状态：🚧 进行中（任务 10.1–10.3 已完成；任务 10.4 待实施）
+阶段状态：✅ 已完成（任务 10.1–10.4）
 
 ### 任务 10.1：synthetic 新职业
 
@@ -1191,6 +1191,28 @@ ReadOnly，type 30/31 仍保持 Enabled，证明故障隔离。模块 105 项 Py
 - provider 依赖缺失时安全降级。
 
 ### 任务 10.4：首个真实扩展类别
+
+状态：✅ 已完成（`SoloCollections` `59998c6`、`83b5d52`；`mod-solo-collections`
+`972df2e`、`c22fdb7`）
+
+实现记录：选择方案 2“只读头衔视图”，一次只实现一个真实扩展类别。服务端注册 type `15` 的
+`EXTERNAL` 只读 provider，直接复用当前角色的 Core 头衔状态；它不进入通用 `TryUnlock`，不写
+`account_collection_unlock`，也不引入新的 SC2 envelope 字段。客户端在现有收藏日志框架中新增
+“头衔（只读）”页，目录共 143 项，并分别显示目录可见、角色拥有、当前可用和资源已安装状态；
+页面不会授予或切换头衔。
+
+真实客户端首次对照发现服务端把 `CharTitlesEntry::bit_index + 1` 当成客户端目录 ID，导致授予
+“列兵”后统一后端错位显示“下士”。现已统一以 `CharTitlesEntry::ID` 作为 canonical collection ID；
+`bit_index` 仅用于 Core 的玩家已知头衔位图。修复后授予 title `1` 的探针返回
+`FIX1 1 true false`：客户端已知“列兵”、provider 的 ID `1` 为已拥有、ID `2` 保持未拥有；只读页
+首行显示“已拥有 / 当前可用（只读）”，次行显示“未拥有 / 当前不可用”。删除测试头衔并
+`/reload` 后探针返回 `FIX0 0 false false`，临时角色数据已完全清理。
+
+验证结果：AddOn/目录 170 项、模块 109 项 Python 测试全部通过，两个原生 C++ 测试目标通过，
+catalog mapping hash 为
+`9781ece5bd2d290c0b04ec9c233a5b8925fe18748f7db46a5853676b9203e86d`；RelWithDebInfo
+`worldserver` 已重新生成、编译、部署并完成真实客户端验收。新类别未修改通用账号表和 SC2
+envelope，满足阶段出口。
 
 推荐二选一作为框架样板：
 
