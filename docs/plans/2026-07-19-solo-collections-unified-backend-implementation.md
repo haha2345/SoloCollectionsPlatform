@@ -743,7 +743,7 @@ feat: consume authoritative SC2 collection state
 
 ## 11. 阶段 6：第一个完整纵切——坐骑
 
-阶段状态：🚧 实施中（任务 6.1–6.2 已完成）
+阶段状态：🚧 实施中（任务 6.1–6.3 已完成；待阶段实机验收）
 
 ### 任务 6.1：生成 WotLK 坐骑候选和审核目录
 
@@ -797,11 +797,24 @@ marker，数据库失败不会伪造完成。61 项 Python 契约测试、两个
 
 ### 任务 6.3：实现安全召唤
 
+状态：✅ 已完成（SoloCollections `2c1db61`；mod-solo-collections `b139237`）
+
 - 客户端只提交逻辑 mount collectionId。
 - 服务端解析当前角色动作法术。
 - 检查 owned、identity、骑术、地图、室内、飞行、战斗、死亡、载具、出租飞行、战场和形态。
 - 新坐骑检查成功前不卸下现有坐骑。
 - 返回真实、稳定的失败 reason code。
+
+完成记录：客户端正式坐骑目录只保留逻辑 collectionId 和展示 creatureId，不再暴露
+action spellId；召唤请求固定为 SC2 `typeId=10`、逻辑 collectionId、`SUMMON` 和空目标。
+服务端在 nonce、限流、重放和账号缓存检查之后才调用动作处理器，并重新核对 session
+account、类型、动作和目标；客户端伪造 spellId、creatureId 或 owned 状态均不能参与解析。
+服务端从生成目录选择满足当前角色种族、职业、骑术和地图限制的动作法术，并显式检查
+死亡、战斗、载具、出租飞行、战场、形态和室内状态；失败返回稳定 reason code。
+代码中不存在预先 `Dismount`，只有全部检查通过后才以 Core 的 mounted/vehicle 兼容触发标志
+施放新坐骑。154 项客户端 Python 测试、63 项模块 Python 测试、两个 MSVC 原生测试目标、
+23 个 Lua 文件语法检查和真实 AzerothCore `worldserver` RelWithDebInfo 编译通过；构建产物
+SHA-256 为 `7A9D98BE14A669E770B609C65E299083CB4A9B82CC09BD7DABF61A335EB38940`。
 
 阶段验收：
 
