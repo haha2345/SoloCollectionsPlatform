@@ -66,7 +66,8 @@ class Phase11ShadowContractTests(unittest.TestCase):
             self.assertNotIn(forbidden, SHADOW)
 
     def test_generated_mapping_is_bound_to_the_same_legacy_lua_source(self):
-        self.assertEqual(hashlib.sha256(LUA.read_bytes()).hexdigest(), GENERATED["sourceHash"])
+        source = LUA.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
+        self.assertEqual(hashlib.sha256(source.encode("utf-8")).hexdigest(), GENERATED["sourceHash"])
         by_type = {entry["typeKey"]: entry for entry in GENERATED["categories"]}
         self.assertEqual((24, 24), (by_type["mount"]["legacyEntryCount"], by_type["mount"]["mappedEntryCount"]))
         self.assertEqual((24, 24), (by_type["companion"]["legacyEntryCount"], by_type["companion"]["mappedEntryCount"]))
