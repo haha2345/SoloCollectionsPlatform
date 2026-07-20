@@ -28,6 +28,7 @@ ACTION_RE = re.compile(r"^[A-Z][A-Z0-9_]{0,31}$")
 
 ACTION_STATUSES = {
     "ACCEPTED",
+    "DISMISSED",
     "LOADING",
     "NOT_OWNED",
     "CATALOG_MISMATCH",

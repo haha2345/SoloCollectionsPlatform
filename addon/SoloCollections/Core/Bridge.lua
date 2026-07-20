@@ -612,7 +612,8 @@ function B.OnMessage(prefix, message, channel, sender)
             if pending and pending.typeId == tonumber(fields[5]) and pending.collectionId == tonumber(fields[6]) then
                 sc2PendingActions[requestId] = nil
                 if type(pending.callback) == "function" then
-                    pcall(pending.callback, fields[4] == "ACCEPTED", fields[4])
+                    local status = fields[4]
+                    pcall(pending.callback, status == "ACCEPTED" or status == "DISMISSED", status)
                 end
             end
         elseif event == "ERROR" then
