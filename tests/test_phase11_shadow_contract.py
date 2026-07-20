@@ -15,6 +15,7 @@ COMPARISON = (ROOT / "src/SoloCollectionsShadowComparison.cpp").read_text(encodi
 CONFIG = (ROOT / "conf/transmog.conf.dist").read_text(encoding="utf-8")
 GENERATED = json.loads((ROOT / "data/generated/solo_collections_legacy_sc1_shadow.json").read_text(encoding="utf-8"))
 LUA = ROOT.parent / "SoloCollections" / "server" / "ale" / "solo_collections.lua"
+LUA_TEXT = LUA.read_text(encoding="utf-8")
 
 
 class Phase11ShadowContractTests(unittest.TestCase):
@@ -34,6 +35,14 @@ class Phase11ShadowContractTests(unittest.TestCase):
         self.assertIn("if (!IsCppBackendOwner())\n        return true;", PROTOCOL)
         self.assertIn("if (!IsCppBackendOwner())\n            return;", CORE)
         self.assertIn("writes=0 actions=0 success_deltas=0", SHADOW)
+
+    def test_backend_modes_have_exactly_one_production_owner(self):
+        self.assertIn('GetConfigValue("SoloCollections.Backend")', LUA_TEXT)
+        self.assertIn('BACKEND ~= "cpp"', LUA_TEXT)
+        self.assertIn('if ENABLED then\n    RegisterServerEvent(30, onAddonMessage)', LUA_TEXT)
+        self.assertIn("if (GetBackendMode() == BackendMode::Lua)\n            return;", CORE)
+        self.assertIn("SetWritesEnabled(IsCppBackendOwner())", CORE)
+        self.assertIn("if (!IsCppBackendOwner())\n        return true;", PROTOCOL)
 
     def test_shadow_login_waits_for_read_only_account_load_and_exports_structured_results(self):
         self.assertIn("ShadowComparisonOnPlayerLogin(player)", CORE)
