@@ -1016,7 +1016,7 @@ feat: route appearance unlocks through collection service
 
 ## 14. 阶段 9：套装和玩家 Outfit
 
-阶段状态：🟡 进行中（任务 9.1 已完成，任务 9.2–9.3 待实施）
+阶段状态：🟡 进行中（任务 9.1–9.2 已完成，任务 9.3 待实施）
 
 ### 任务 9.1：套装目录和进度
 
@@ -1046,6 +1046,27 @@ worldserver 构建和六 provider 启动注册均已通过。
 - 套装完成度动态派生，不保存 `set_collected`。
 
 ### 任务 9.2：原子应用套装
+
+状态：✅ 已完成（`SoloCollections` `c5adbf7`，`mod-solo-collections` `fc70a9d`）
+
+实现记录：type 14 目录现在发布 `APPLY` action，并由 AddOn `ApplySet` 桥接到 SC2。服务端新增
+`SetService`，按 logical set ID、角色 logical class 和可选 variant 解析完整套装；required member
+只从账号已拥有的 type 13 canonical appearance 中选择兼容 source。HEAD/SHOULDER/SHIRT、
+CHEST/ROBE、WAIST/LEGS/FEET/WRIST/HANDS/BACK、MAINHAND/OFFHAND/TABARD 均使用显式槽位映射，
+未知槽、同一物理槽重复成员、缺少目标装备或不兼容 source 全部 fail closed。套装解析结果一次性进入
+共享 `TryApplyCollectedAppearances` 管线；该管线统一完成目标装备、收藏授权、identity/兼容性、隐藏外观、
+双手/副手、长袍/胸甲、金币和 token 预检，并且只调用一次数据库事务提交。任一预检或事务失败都发生在
+扣费和运行时 fake-entry 修改之前。客户端仅在动态派生的套装完成状态为真时启用“应用套装”按钮。
+
+运行证据（账号 1，角色“啊啊水电费”）：在力量套装保持 `1/8` 时直接调用 type 14 APPLY，返回
+`SCSETAPPLY false NOT_OWNED`；金币保持 `990268`、`custom_transmogrification` 仍为原有两行
+`(1410,6084)`、`(1411,2037)`，type 14 unlock 行仍为 0。随后使用正式 GM grant 临时补齐其余 7 个
+canonical appearance，SC2 delta 将列表、成员和详情实时更新为 `8/8`，按钮同步启用。点击应用后，
+3 级角色的锁甲目标与 60 级板甲 source 被兼容性预检拒绝，返回
+`SCSETFULL false CLASS_RESTRICTED`；金币、两行既有幻化和 type 14 行数再次保持不变，证明没有部分应用
+或扣费。7 个临时授权均通过正式 revoke 回滚，账号最终 revision 为 89，力量套装和按钮实时恢复为
+`1/8`/禁用。AddOn 165 项、模块 89 项测试通过，目录 `--check`、Release worldserver 构建、部署哈希
+`38E2B2086DDDDA9F5E1B4C3B22D1A6F98D80BC326C69A3D8AFEDFDBE4C548DAE` 和六 provider 启动注册均已通过。
 
 - 预检全部目标槽、目标装备、source、identity、兼容性、金币和 token。
 - 无目标装备的槽位不能生成装备。
