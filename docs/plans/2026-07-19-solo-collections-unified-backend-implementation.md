@@ -915,6 +915,13 @@ feat: add explicit toy catalog and safe action handlers
 
 ### 任务 8.1：建立 `AppearanceService`
 
+状态：✅ 已完成（`mod-solo-collections` `e5e0802`）
+
+实现记录：旧 transmog 收藏缓存、持久化和应用行为已收口到
+`Categories/Appearance/SoloCollectionsAppearanceService`；Gossip、vendor、preset、GM 命令和
+最终 apply preflight 均只经过 facade，外部不再直接访问旧 `collectionCache`。独立
+`AppearanceCollectionProvider` 已注册为 type 13，并保持类别级 ready/disabled 语义。
+
 - 将已加固的 `mod-transmog` 规则、显示和持久化代码移动到 `Categories/Appearance` 与 `Transmog`。
 - 所有收藏查询经过 `AccountCollectionService`。
 - 移除外部对 `collectionCache` 的直接访问。
@@ -922,6 +929,15 @@ feat: add explicit toy catalog and safe action handlers
 - 模块未 ready 时外观类别只读/禁用，其他类别继续工作。
 
 ### 任务 8.2：建立 canonical appearance
+
+状态：✅ 已完成（`SoloCollections` `f3b9403`，`mod-solo-collections` `d241b59`）
+
+实现记录：基于当前 world `item_template` 生成 18,190 个 canonical appearance 和 27,082 个
+唯一 source item，稳定映射哈希为
+`f418b28486adc98ba8b2d59fd98059a99ba31c9f44f4366189e151264a92f92b`。分组签名包含
+display、归一化 slot family、item class/subclass compatibility family，并预留显式 source override
+表。服务端目录采用扁平只读数组，MSVC 编译由十分钟级降至约 16 秒；客户端实机可打开
+canonical 外观物品页并正常分页、筛选和预览，同一 group 只显示一条且 aliases 保留全部来源。
 
 - 生成 `appearanceId -> source itemIds`。
 - 分组至少包含 display、slot family 和 compatibility family。
@@ -931,6 +947,15 @@ feat: add explicit toy catalog and safe action handlers
 
 ### 任务 8.3：迁移旧收藏
 
+状态：✅ 已完成（`mod-solo-collections` `d241b59`）
+
+运行证据（账号 1，角色“啊啊水电费”）：迁移前旧表 65 条、账号 revision 11；dry-run 分类为
+63 条有效 source、62 个 canonical group、1 条合并、2 条未知（不可见的戒指/饰品
+`42991`、`50255`）、0 条缺模板、0 条冲突。正式迁移写入 type 13 共 62 条，revision 连续为
+12..73；`sc_migration_marker` migration 3/version 1 记录 `completed_revision=73`、
+`imported_count=62`、`rejected_count=2`。逐项 reconcile 证明 62 个有效 canonical group 全部 owned，
+旧表 65 条完整保留且无生产写入。
+
 - 以 `custom_unlocked_appearances` 为旧数据唯一来源。
 - migration dry-run 输出：有效、合并、未知、禁用、缺模板和冲突。
 - 正式迁移幂等，并写 migration marker。
@@ -938,6 +963,17 @@ feat: add explicit toy catalog and safe action handlers
 - 失败时保留旧表，不立即删除。
 
 ### 任务 8.4：统一所有解锁 hook
+
+状态：🟡 实现完成，运行验收中（`SoloCollections` `7e8b884`，
+`mod-solo-collections` `86f3062`）
+
+实现记录：装备、拾取、制造、实际任务奖励、vendor/store、团队掷骰和历史扫描统一进入账号级
+幂等队列，最终串行调用 `AccountCollectionService::TryUnlock`；mail、trade、auction、buyback 和
+GM delivery 通过共享 store hook 与 5 秒低频 inventory reconcile 收敛。可退款物品、BOP 可交易
+窗口和未绑定 BoE 采用显式延迟策略；旧的“解锁全部任务选择候选”逻辑与旧表 INSERT 已删除。
+SC2 apply 只接收 canonical appearanceId 和装备槽，服务端重新校验 owned、选择真实兼容 source
+并执行费用/角色/目标槽检查。静态测试与 Release 构建已通过，尚待本次部署后的实机 apply 与
+新 acquisition 验收后改为 ✅。
 
 - 装备、拾取、制造、任务、商店、邮件、交易、拍卖、回购、GM 和历史扫描最终进入幂等 `TryUnlock`。
 - BoE、可退款和 BOP 可交易窗口采用明确绑定政策。
