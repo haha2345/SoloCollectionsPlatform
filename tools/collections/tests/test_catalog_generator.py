@@ -65,6 +65,23 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertIn("LoadGeneratedSc2Categories", rendered)
         self.assertIn("typeMappingHashes", generator.build_model(self.source))
 
+    def test_legacy_sc1_shadow_mapping_is_generated_from_the_tracked_lua(self):
+        outputs = generator.render_outputs(generator.build_model(self.source), ROOT, MODULE_ROOT)
+        json_target = ROOT / "catalog/generated/legacy-sc1-shadow.json"
+        cpp_target = MODULE_ROOT / "src/generated/SoloCollectionsLegacyShadowCatalog.inc"
+        self.assertIn(json_target, outputs)
+        self.assertIn(cpp_target, outputs)
+        shadow = json.loads(outputs[json_target])
+        by_type = {entry["typeKey"]: entry for entry in shadow["categories"]}
+        self.assertEqual((24, 24), (by_type["mount"]["legacyEntryCount"], by_type["mount"]["mappedEntryCount"]))
+        self.assertEqual((24, 24), (by_type["companion"]["legacyEntryCount"], by_type["companion"]["mappedEntryCount"]))
+        self.assertEqual((36, 4), (by_type["toy"]["legacyEntryCount"], by_type["toy"]["mappedEntryCount"]))
+        self.assertEqual(
+            generator.hashlib.sha256((ROOT / "server/ale/solo_collections.lua").read_bytes()).hexdigest(),
+            shadow["sourceHash"],
+        )
+        self.assertIn("LoadGeneratedLegacyShadowEntries", outputs[cpp_target])
+
     def test_race_presentation_profiles_inherit_the_asset_pack_version(self):
         model = generator.build_model(self.source)
         expected_version = model["assetPackVersion"]
