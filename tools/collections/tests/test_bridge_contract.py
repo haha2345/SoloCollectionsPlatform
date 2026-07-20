@@ -277,52 +277,40 @@ class BridgeContractTests(unittest.TestCase):
             "a top-level waiting guard must not swallow asynchronous bridge responses",
         )
 
-    def test_client_exposes_independent_pet_model_and_summon_requests(self):
+    def test_client_keeps_pet_model_preview_separate_from_authoritative_summon(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
             "pendingPetModels",
-            "pendingPetSummons",
             "function B.RequestPetModel(petId, callback)",
-            "function B.SummonPet(petId, callback)",
+            "function B.SummonPet(collectionId, callback)",
             '"PET_MODEL|"',
-            '"PET_SUMMON|"',
             'string.match(message, "^PET_MODEL_READY|(%d+)|(%d+)$")',
-            'string.match(message, "^PET_SUMMON_RESULT|(%d+)|(.+)$")',
         ):
             self.assertIn(token, bridge)
-        for function_name, pending_table in (
-            ("B.RequestPetModel", "pendingPetModels"),
-            ("B.SummonPet", "pendingPetSummons"),
-        ):
-            request = function_region(bridge, function_name)
-            self.assertIn("isPositiveInteger(petId)", request)
-            self.assertIn(f"{pending_table}[requestId] = {{", request)
-            self.assertIn("petId = petId", request)
+        preview = function_region(bridge, "B.RequestPetModel")
+        self.assertIn("isPositiveInteger(petId)", preview)
+        self.assertIn("pendingPetModels[requestId] = {", preview)
+        summon = function_region(bridge, "B.SummonPet")
+        self.assertIn("isPositiveInteger(collectionId)", summon)
+        self.assertIn("if not B.sc2Connected then", summon)
+        self.assertIn('B.RequestSC2Action(11, collectionId, "SUMMON", nil, callback)', summon)
 
     def test_client_exposes_correlated_toy_use_requests(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
-            "pendingToyUses",
-            "function B.UseToy(toyId, callback)",
-            '"TOY_USE|"',
-            'string.match(message, "^TOY_USE_RESULT|(%d+)|(.+)$")',
-            "handleToyUseResult(",
+            "function B.UseToy(collectionId, callback)",
+            'collection.typeKey == "toy"',
+            "collection.requiresTarget",
         ):
             self.assertIn(token, bridge)
         request = function_region(bridge, "B.UseToy")
         for token in (
-            "isPositiveInteger(toyId)",
-            'if not B.connected then',
+            "isPositiveInteger(collectionId)",
+            'if not B.sc2Connected then',
             '"BRIDGE_UNAVAILABLE"',
-            "pendingToyUses[requestId] = {",
-            "toyId = toyId",
-            "deadline = GetTime() + requestTimeout",
+            'B.RequestSC2Action(12, collectionId, "USE", target, callback)',
         ):
             self.assertIn(token, request)
-        handler = function_region(bridge, "handleToyUseResult")
-        self.assertIn("local pending = pendingToyUses[requestId]", handler)
-        self.assertIn("pending.toyId ~= toyId", handler)
-        self.assertIn("pendingToyUses[requestId] = nil", handler)
 
     def test_client_request_timeouts_clear_all_pending_tables(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")

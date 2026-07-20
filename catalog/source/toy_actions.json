@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "collectionId": 100305,
+      "collectionKey": "toy.orb_of_the_sindorei",
+      "ordinal": 305,
+      "itemId": 35275,
+      "actionKind": "SPELL_SELF",
+      "spellId": 46354,
+      "targetPolicy": "SELF",
+      "cooldownScope": "CHARACTER",
+      "accountCooldownMs": 0,
+      "allowInCombat": false,
+      "consumesMaterial": false,
+      "customHandler": "",
+      "replayPolicy": "SC2_REQUEST_ID",
+      "riskFlags": []
+    },
+    {
+      "collectionId": 100306,
+      "collectionKey": "toy.elunes_candle",
+      "ordinal": 306,
+      "itemId": 21713,
+      "actionKind": "SPELL_TARGET",
+      "spellId": 26374,
+      "targetPolicy": "CURRENT_TARGET",
+      "cooldownScope": "CHARACTER",
+      "accountCooldownMs": 0,
+      "allowInCombat": false,
+      "consumesMaterial": false,
+      "customHandler": "",
+      "replayPolicy": "SC2_REQUEST_ID",
+      "riskFlags": []
+    },
+    {
+      "collectionId": 100307,
+      "collectionKey": "toy.fishing_chair",
+      "ordinal": 307,
+      "itemId": 33223,
+      "actionKind": "ITEM_USE",
+      "spellId": 42766,
+      "targetPolicy": "SELF",
+      "cooldownScope": "CHARACTER",
+      "accountCooldownMs": 0,
+      "allowInCombat": false,
+      "consumesMaterial": false,
+      "customHandler": "",
+      "replayPolicy": "SC2_REQUEST_ID",
+      "riskFlags": ["PERSISTENT_OBJECT"]
+    },
+    {
+      "collectionId": 100308,
+      "collectionKey": "toy.unusual_compass",
+      "ordinal": 308,
+      "itemId": 45984,
+      "actionKind": "CUSTOM_HANDLER",
+      "spellId": 64385,
+      "targetPolicy": "SELF",
+      "cooldownScope": "ACCOUNT",
+      "accountCooldownMs": 5000,
+      "allowInCombat": true,
+      "consumesMaterial": false,
+      "customHandler": "unusual_compass",
+      "replayPolicy": "SC2_REQUEST_ID",
+      "riskFlags": []
+    }
+  ]
+}

@@ -5446,17 +5446,553 @@ SoloCollections.GeneratedCatalog = {
             sourceBuild = "3.3.5.12340",
             sourceKind = "spell",
             typeKey = "mount"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100281,
+            collectionKey = "companion.worg_pup",
+            displayCreatureId = 10259,
+            lifecycle = "active",
+            name = {
+                enUS = "Worg Pup",
+                zhCN = "座狼幼崽"
+            },
+            ordinal = 281,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100282,
+            collectionKey = "companion.smolderweb_hatchling",
+            displayCreatureId = 10598,
+            lifecycle = "active",
+            name = {
+                enUS = "Smolderweb Hatchling",
+                zhCN = "烟网小蜘蛛"
+            },
+            ordinal = 282,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100283,
+            collectionKey = "companion.emerald_whelpling",
+            displayCreatureId = 7545,
+            lifecycle = "active",
+            name = {
+                enUS = "Emerald Whelpling",
+                zhCN = "绿色翼手龙"
+            },
+            ordinal = 283,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100284,
+            collectionKey = "companion.vampiric_batling",
+            displayCreatureId = 28513,
+            lifecycle = "active",
+            name = {
+                enUS = "Vampiric Batling",
+                zhCN = "吸血鬼小蝶"
+            },
+            ordinal = 284,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100285,
+            collectionKey = "companion.stinker",
+            displayCreatureId = 23274,
+            lifecycle = "active",
+            name = {
+                enUS = "Stinker",
+                zhCN = "臭臭"
+            },
+            ordinal = 285,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100286,
+            collectionKey = "companion.sinister_squashling",
+            displayCreatureId = 23909,
+            lifecycle = "active",
+            name = {
+                enUS = "Sinister Squashling",
+                zhCN = "邪恶的南瓜娃娃"
+            },
+            ordinal = 286,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100287,
+            collectionKey = "companion.tiny_sporebat",
+            displayCreatureId = 25062,
+            lifecycle = "active",
+            name = {
+                enUS = "Tiny Sporebat",
+                zhCN = "迷你孢子蝙"
+            },
+            ordinal = 287,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100288,
+            collectionKey = "companion.speedy",
+            displayCreatureId = 16547,
+            lifecycle = "active",
+            name = {
+                enUS = "Speedy",
+                zhCN = "跳跳"
+            },
+            ordinal = 288,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100289,
+            collectionKey = "companion.phoenix_hatchling",
+            displayCreatureId = 26119,
+            lifecycle = "active",
+            name = {
+                enUS = "Phoenix Hatchling",
+                zhCN = "凤凰宝宝"
+            },
+            ordinal = 289,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100290,
+            collectionKey = "companion.ghostly_skull",
+            displayCreatureId = 29147,
+            lifecycle = "active",
+            name = {
+                enUS = "Ghostly Skull",
+                zhCN = "幽灵颅骨"
+            },
+            ordinal = 290,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100291,
+            collectionKey = "companion.hyacinth_macaw",
+            displayCreatureId = 7391,
+            lifecycle = "active",
+            name = {
+                enUS = "Hyacinth Macaw",
+                zhCN = "花羽鹦鹉"
+            },
+            ordinal = 291,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100292,
+            collectionKey = "companion.disgusting_oozeling",
+            displayCreatureId = 15429,
+            lifecycle = "active",
+            name = {
+                enUS = "Disgusting Oozeling",
+                zhCN = "恶心的软泥怪"
+            },
+            ordinal = 292,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100293,
+            collectionKey = "companion.mr_wiggles",
+            displayCreatureId = 16548,
+            lifecycle = "active",
+            name = {
+                enUS = "Mr. Wiggles",
+                zhCN = "哼哼先生"
+            },
+            ordinal = 293,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100294,
+            collectionKey = "companion.lifelike_toad",
+            displayCreatureId = 12419,
+            lifecycle = "active",
+            name = {
+                enUS = "Lifelike Toad",
+                zhCN = "仿真机械蛙"
+            },
+            ordinal = 294,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100295,
+            collectionKey = "companion.dragon_kite",
+            displayCreatureId = 25110,
+            lifecycle = "active",
+            name = {
+                enUS = "Dragon Kite",
+                zhCN = "龙鹰风筝"
+            },
+            ordinal = 295,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100296,
+            collectionKey = "companion.firefly",
+            displayCreatureId = 21076,
+            lifecycle = "active",
+            name = {
+                enUS = "Firefly",
+                zhCN = "火蝇"
+            },
+            ordinal = 296,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100297,
+            collectionKey = "companion.zergling",
+            displayCreatureId = 11327,
+            lifecycle = "active",
+            name = {
+                enUS = "Zergling",
+                zhCN = "跳虫"
+            },
+            ordinal = 297,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100298,
+            collectionKey = "companion.panda_cub",
+            displayCreatureId = 11325,
+            lifecycle = "active",
+            name = {
+                enUS = "Panda Cub",
+                zhCN = "熊猫幼崽"
+            },
+            ordinal = 298,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100299,
+            collectionKey = "companion.frosty",
+            displayCreatureId = 28883,
+            lifecycle = "active",
+            name = {
+                enUS = "Frosty",
+                zhCN = "冰霜幼龙"
+            },
+            ordinal = 299,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100300,
+            collectionKey = "companion.bananas",
+            displayCreatureId = 23234,
+            lifecycle = "active",
+            name = {
+                enUS = "Bananas",
+                zhCN = "香蕉爱好者"
+            },
+            ordinal = 300,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100301,
+            collectionKey = "companion.mr_chilly",
+            displayCreatureId = 29726,
+            lifecycle = "active",
+            name = {
+                enUS = "Mr. Chilly",
+                zhCN = "寒冰先生"
+            },
+            ordinal = 301,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100302,
+            collectionKey = "companion.giant_sewer_rat",
+            displayCreatureId = 31575,
+            lifecycle = "active",
+            name = {
+                enUS = "Giant Sewer Rat",
+                zhCN = "巨型下水道老鼠"
+            },
+            ordinal = 302,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100303,
+            collectionKey = "companion.spring_rabbit",
+            displayCreatureId = 32791,
+            lifecycle = "active",
+            name = {
+                enUS = "Spring Rabbit",
+                zhCN = "春季兔"
+            },
+            ordinal = 303,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "COMPANION_SPELL",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100304,
+            collectionKey = "companion.onyxian_whelpling",
+            displayCreatureId = 36607,
+            lifecycle = "active",
+            name = {
+                enUS = "Onyxian Whelpling",
+                zhCN = "奥妮克希亚幼龙"
+            },
+            ordinal = 304,
+            policyKey = "unrestricted",
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "spell",
+            typeKey = "companion"
+        },
+        {
+            actionKind = "SPELL_SELF",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100305,
+            collectionKey = "toy.orb_of_the_sindorei",
+            displayItemId = 35275,
+            lifecycle = "active",
+            name = {
+                enUS = "Orb of the Sin'dorei",
+                zhCN = "辛多雷宝珠"
+            },
+            ordinal = 305,
+            policyKey = "unrestricted",
+            requiresTarget = false,
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "item",
+            typeKey = "toy"
+        },
+        {
+            actionKind = "SPELL_TARGET",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100306,
+            collectionKey = "toy.elunes_candle",
+            displayItemId = 21713,
+            lifecycle = "active",
+            name = {
+                enUS = "Elune's Candle",
+                zhCN = "艾露恩的蜡烛"
+            },
+            ordinal = 306,
+            policyKey = "unrestricted",
+            requiresTarget = true,
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "item",
+            typeKey = "toy"
+        },
+        {
+            actionKind = "ITEM_USE",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100307,
+            collectionKey = "toy.fishing_chair",
+            displayItemId = 33223,
+            lifecycle = "active",
+            name = {
+                enUS = "Fishing Chair",
+                zhCN = "钓鱼椅"
+            },
+            ordinal = 307,
+            policyKey = "unrestricted",
+            requiresTarget = false,
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "item",
+            typeKey = "toy"
+        },
+        {
+            actionKind = "CUSTOM_HANDLER",
+            aliases = {},
+            assetProfile = "wotlk_native",
+            assetReady = true,
+            collectionId = 100308,
+            collectionKey = "toy.unusual_compass",
+            displayItemId = 45984,
+            lifecycle = "active",
+            name = {
+                enUS = "Unusual Compass",
+                zhCN = "不寻常的指南针"
+            },
+            ordinal = 308,
+            policyKey = "unrestricted",
+            requiresTarget = false,
+            sourceBuild = "3.3.5.12340",
+            sourceKind = "item",
+            typeKey = "toy"
         }
     },
-    mappingHash = "50aaa024cce18a1cc7f2c903f876341a790f2c0bdb5363d6000177dc32ddf505",
-    metadataVersion = "2026.07.20.1",
+    mappingHash = "13ac183ea3c19693918fcde368d50640a0c6c9f8b1ccea1a4ad30e03ff60b4de",
+    metadataVersion = "2026.07.20.2",
     schemaVersion = 1,
     typeMappingHashes = {
         appearance = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        companion = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        companion = "e854b1b83a01f3f1672a0907099c5f912caab741bba304c2660c0ccbf0bb9efc",
         mount = "6801854cfc6bd1107424d0910a66183bfee100f328d6f468d8a4007f8b7e54b9",
         set = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
         synthetic = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
-        toy = "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        toy = "b7d2d5feecc85d98de6f97c12851938514d6020997ed62a40be80cfa007ecfb5"
     }
 }

@@ -45,7 +45,12 @@ class StableIdTests(unittest.TestCase):
         ordinal = len(ids["reservations"]["collections"])
         csv_path = self.source / "collections" / "companions.csv"
         with csv_path.open("a", encoding="utf-8", newline="") as handle:
-            handle.write(f"companion,1000,test_companion,{ordinal},active,Test Companion,测试宠物,unrestricted,3.3.5.12340,spell,123,spell,123,true,companion.test,TEST_COMPANION\n")
+            handle.write(f"companion,1000,test_companion,{ordinal},active,Test Companion,测试宠物,unrestricted,3.3.5.12340,spell,123,COMPANION_SPELL,123,true,companion.test,TEST_COMPANION\n")
+        actions = self.load("catalog/source/companion_actions.json")
+        actions["entries"].append(
+            {"collectionId": 1000, "collectionKey": "test_companion", "ordinal": ordinal, "creatureId": 999999}
+        )
+        self.save("catalog/source/companion_actions.json", actions)
 
         with self.assertRaisesRegex(generator.CatalogError, "unreserved collections identity"):
             generator.build_model(self.source)

@@ -24,6 +24,8 @@ local DEFAULT_FILTERS = {
 
 local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
 local generatedMountSource = nil
+local generatedCompanionSource = nil
+local generatedToySource = nil
 
 local function getGeneratedMountSource()
     if generatedMountSource then
@@ -47,6 +49,55 @@ local function getGeneratedMountSource()
         end
     end
     return generatedMountSource
+end
+
+local function getGeneratedCompanionSource()
+    if generatedCompanionSource then
+        return generatedCompanionSource
+    end
+    generatedCompanionSource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "companion" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            table.insert(generatedCompanionSource, {
+                id = collection.collectionId,
+                creatureId = collection.displayCreatureId,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = "Interface\\Icons\\INV_Box_PetCarrier_01",
+                source = "账号收藏",
+                description = "由 SoloCollections 服务端权威目录提供。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedCompanionSource
+end
+
+local function getGeneratedToySource()
+    if generatedToySource then
+        return generatedToySource
+    end
+    generatedToySource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "toy" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            table.insert(generatedToySource, {
+                id = collection.collectionId,
+                itemId = collection.displayItemId,
+                requiresTarget = collection.requiresTarget and true or false,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = "Interface\\Icons\\INV_Misc_Toy_10",
+                source = "账号收藏",
+                description = "由 SoloCollections 服务端权威动作目录提供。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedToySource
 end
 
 local function resolvedWeaponType(record)
@@ -117,6 +168,12 @@ end
 local function getSource(category)
     if category == "MOUNTS" and SC.GeneratedCatalog then
         return getGeneratedMountSource()
+    end
+    if category == "PETS" and SC.GeneratedCatalog then
+        return getGeneratedCompanionSource()
+    end
+    if category == "TOYS" and SC.GeneratedCatalog then
+        return getGeneratedToySource()
     end
     local key = CATEGORY_KEYS[category]
     if not key or not SC.Data then

@@ -409,70 +409,45 @@ function B.RequestPetModel(petId, callback)
     return requestId
 end
 
-function B.SummonPet(petId, callback)
-    if not isPositiveInteger(petId) then
+function B.SummonPet(collectionId, callback)
+    if not isPositiveInteger(collectionId) then
         if type(callback) == "function" then
             pcall(callback, false, "INVALID_PET_ID")
         end
         return nil
     end
-    if not B.connected then
+    if not B.sc2Connected then
         if type(callback) == "function" then
             pcall(callback, false, "BRIDGE_UNAVAILABLE")
         end
         return nil
     end
-
-    local playerName = UnitName("player")
-    if not playerName or playerName == "" then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
-        end
-        return nil
-    end
-
-    requestSerial = requestSerial + 1
-    local requestId = requestSerial
-    pendingPetSummons[requestId] = {
-        petId = petId,
-        deadline = GetTime() + requestTimeout,
-        callback = callback,
-    }
-    SendAddonMessage(B.prefix, "PET_SUMMON|" .. requestId .. "|" .. petId, "WHISPER", playerName)
-    return requestId
+    return B.RequestSC2Action(11, collectionId, "SUMMON", nil, callback)
 end
 
-function B.UseToy(toyId, callback)
-    if not isPositiveInteger(toyId) then
+function B.UseToy(collectionId, callback)
+    if not isPositiveInteger(collectionId) then
         if type(callback) == "function" then
             pcall(callback, false, "INVALID_TOY_ID")
         end
         return nil
     end
-    if not B.connected then
+    if not B.sc2Connected then
         if type(callback) == "function" then
             pcall(callback, false, "BRIDGE_UNAVAILABLE")
         end
         return nil
     end
-
-    local playerName = UnitName("player")
-    if not playerName or playerName == "" then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+    local target = nil
+    for _, collection in ipairs((SC.GeneratedCatalog or {}).collections or {}) do
+        if collection.typeKey == "toy" and collection.collectionId == collectionId then
+            if collection.requiresTarget then
+                target = 1
+            end
+            break
         end
-        return nil
     end
-
-    requestSerial = requestSerial + 1
-    local requestId = requestSerial
-    pendingToyUses[requestId] = {
-        toyId = toyId,
-        deadline = GetTime() + requestTimeout,
-        callback = callback,
-    }
-    SendAddonMessage(B.prefix, "TOY_USE|" .. requestId .. "|" .. toyId, "WHISPER", playerName)
-    return requestId
+    return B.RequestSC2Action(12, collectionId, "USE", target, callback)
 end
 
 local function handleModelReady(requestIdText, mountIdText)

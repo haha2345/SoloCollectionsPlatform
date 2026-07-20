@@ -1,1 +1,5 @@
 typeKey,collectionId,collectionKey,ordinal,lifecycle,name_enUS,name_zhCN,policyKey,sourceBuild,sourceKind,sourceId,actionKind,actionId,assetReady,assetProfile,aliases
+toy,100305,toy.orb_of_the_sindorei,305,active,Orb of the Sin'dorei,辛多雷宝珠,unrestricted,3.3.5.12340,item,35275,SPELL_SELF,46354,true,wotlk_native,
+toy,100306,toy.elunes_candle,306,active,Elune's Candle,艾露恩的蜡烛,unrestricted,3.3.5.12340,item,21713,SPELL_TARGET,26374,true,wotlk_native,
+toy,100307,toy.fishing_chair,307,active,Fishing Chair,钓鱼椅,unrestricted,3.3.5.12340,item,33223,ITEM_USE,42766,true,wotlk_native,
+toy,100308,toy.unusual_compass,308,active,Unusual Compass,不寻常的指南针,unrestricted,3.3.5.12340,item,45984,CUSTOM_HANDLER,64385,true,wotlk_native,

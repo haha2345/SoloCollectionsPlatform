@@ -218,6 +218,96 @@ def _load_mount_actions(source_root: Path, collections: list[dict[str, Any]]) ->
     return actions
 
 
+def _load_companion_actions(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
+    path = source_root / "companion_actions.json"
+    sources = [entry for entry in collections if entry["typeKey"] == "companion"]
+    _require(path.exists() or not sources, "companion_actions.json is required when companion collections exist")
+    if not sources:
+        empty = {"schemaVersion": 1, "entries": []}
+        return {**empty, "mappingHash": _hash(empty)}
+    data = deepcopy(_read_json(path))
+    _require(data.get("schemaVersion") == 1, "unsupported companion action schema version")
+    entries = data.get("entries")
+    _require(isinstance(entries, list), "companion action entries must be an array")
+    _unique(entries, ("collectionId", "collectionKey", "ordinal", "creatureId"), "companion actions")
+    source_by_key = {entry["collectionKey"]: entry for entry in sources}
+    _require(len(entries) == len(source_by_key), "companion action coverage must match companion catalog")
+    normalized: list[dict[str, Any]] = []
+    seen_spells: set[int] = set()
+    for entry in entries:
+        source = source_by_key.get(entry["collectionKey"])
+        _require(source is not None, f"companion action references unknown collection: {entry['collectionKey']}")
+        _require(int(entry["collectionId"]) == source["collectionId"], f"companion collectionId mismatch: {entry['collectionKey']}")
+        _require(int(entry["ordinal"]) == source["ordinal"], f"companion ordinal mismatch: {entry['collectionKey']}")
+        _require(source["sourceKind"] == "spell" and source["actionKind"] == "COMPANION_SPELL",
+                 f"companion source/action kind is not explicit: {entry['collectionKey']}")
+        spell_id = int(source["actionId"])
+        _require(spell_id > 0 and int(source["sourceId"]) == spell_id,
+                 f"companion unlock/action spell differs: {entry['collectionKey']}")
+        _require(spell_id not in seen_spells, f"companion spell is mapped twice: {spell_id}")
+        seen_spells.add(spell_id)
+        normalized.append({
+            "collectionId": source["collectionId"], "collectionKey": source["collectionKey"],
+            "ordinal": source["ordinal"], "spellId": spell_id, "creatureId": int(entry["creatureId"]),
+        })
+    result = {"schemaVersion": 1, "entries": sorted(normalized, key=lambda row: row["ordinal"])}
+    result["mappingHash"] = _hash(result)
+    return result
+
+
+def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
+    path = source_root / "toy_actions.json"
+    sources = [entry for entry in collections if entry["typeKey"] == "toy"]
+    _require(path.exists() or not sources, "toy_actions.json is required when toy collections exist")
+    if not sources:
+        empty = {"schemaVersion": 1, "entries": []}
+        return {**empty, "mappingHash": _hash(empty)}
+    data = deepcopy(_read_json(path))
+    _require(data.get("schemaVersion") == 1, "unsupported toy action schema version")
+    entries = data.get("entries")
+    _require(isinstance(entries, list), "toy action entries must be an array")
+    _unique(entries, ("collectionId", "collectionKey", "ordinal", "itemId"), "toy actions")
+    source_by_key = {entry["collectionKey"]: entry for entry in sources}
+    _require(len(entries) == len(source_by_key), "toy action coverage must match toy catalog")
+    action_kinds = {"SPELL_SELF", "SPELL_TARGET", "ITEM_USE", "CUSTOM_HANDLER"}
+    target_policies = {"SELF", "CURRENT_TARGET"}
+    cooldown_scopes = {"CHARACTER", "ACCOUNT"}
+    risk_flags = {"TELEPORT", "GENERATES_ITEM", "ECONOMY", "PERSISTENT_OBJECT"}
+    for entry in entries:
+        source = source_by_key.get(entry["collectionKey"])
+        _require(source is not None, f"toy action references unknown collection: {entry['collectionKey']}")
+        _require(int(entry["collectionId"]) == source["collectionId"], f"toy collectionId mismatch: {entry['collectionKey']}")
+        _require(int(entry["ordinal"]) == source["ordinal"], f"toy ordinal mismatch: {entry['collectionKey']}")
+        _require(source["sourceKind"] == "item" and int(source["sourceId"]) == int(entry["itemId"]),
+                 f"toy source item mismatch: {entry['collectionKey']}")
+        _require(entry.get("actionKind") in action_kinds and source["actionKind"] == entry["actionKind"],
+                 f"toy action kind mismatch: {entry['collectionKey']}")
+        _require(int(source["actionId"]) == int(entry["spellId"]) and int(entry["spellId"]) > 0,
+                 f"toy action spell mismatch: {entry['collectionKey']}")
+        _require(entry.get("targetPolicy") in target_policies, f"invalid toy target policy: {entry['collectionKey']}")
+        _require(entry.get("cooldownScope") in cooldown_scopes, f"invalid toy cooldown scope: {entry['collectionKey']}")
+        _require(isinstance(entry.get("accountCooldownMs"), int) and entry["accountCooldownMs"] >= 0,
+                 f"invalid toy account cooldown: {entry['collectionKey']}")
+        _require(entry["cooldownScope"] != "ACCOUNT" or entry["accountCooldownMs"] > 0,
+                 f"account-scoped toy requires a logical cooldown: {entry['collectionKey']}")
+        _require(isinstance(entry.get("allowInCombat"), bool) and isinstance(entry.get("consumesMaterial"), bool),
+                 f"toy combat/material semantics must be explicit: {entry['collectionKey']}")
+        _require(isinstance(entry.get("riskFlags"), list) and set(entry["riskFlags"]) <= risk_flags,
+                 f"invalid toy risk flags: {entry['collectionKey']}")
+        _require(entry.get("replayPolicy") == "SC2_REQUEST_ID",
+                 f"toy action lacks request replay protection: {entry['collectionKey']}")
+        if entry["actionKind"] == "CUSTOM_HANDLER":
+            _require(bool(entry.get("customHandler")), f"custom toy handler missing: {entry['collectionKey']}")
+        else:
+            _require(not entry.get("customHandler"), f"non-custom toy declares handler: {entry['collectionKey']}")
+        if entry["actionKind"] == "SPELL_TARGET":
+            _require(entry["targetPolicy"] == "CURRENT_TARGET", f"targeted toy lacks target policy: {entry['collectionKey']}")
+    normalized = sorted(entries, key=lambda row: int(row["ordinal"]))
+    result = {"schemaVersion": 1, "entries": normalized}
+    result["mappingHash"] = _hash(result)
+    return result
+
+
 def _load_policies(source_root: Path, class_keys: set[str], race_keys: set[str]) -> list[dict[str, Any]]:
     policies = [_read_json(path) for path in sorted((source_root / "policies").glob("*.json"), key=lambda value: value.name)]
     _require(policies, "at least one policy is required")
@@ -320,6 +410,8 @@ def build_model(source_root: Path) -> dict[str, Any]:
         _require(identity not in seen_override, f"duplicate identity override: {identity}")
         seen_override.add(identity)
     mount_actions = _load_mount_actions(source_root, collections)
+    companion_actions = _load_companion_actions(source_root, collections)
+    toy_actions = _load_toy_actions(source_root, collections)
     model = {
         "schemaVersion": 1,
         "metadataVersion": versions["metadataVersion"],
@@ -331,6 +423,8 @@ def build_model(source_root: Path) -> dict[str, Any]:
         "policies": policies,
         "collections": collections,
         "mountActions": mount_actions,
+        "companionActions": companion_actions,
+        "toyActions": toy_actions,
         "aliases": aliases,
         "identityOverrides": sorted(overrides, key=lambda row: (row.get("collectionKey", ""), row.get("classKey", ""), row.get("raceKey", ""))),
     }
@@ -341,6 +435,10 @@ def build_model(source_root: Path) -> dict[str, Any]:
         basis: Any = [row for row in mapping_basis["collections"] if row["typeKey"] == entry["typeKey"]]
         if entry["typeKey"] == "mount":
             basis = {"collections": basis, "actions": mapping_basis["mountActions"]}
+        elif entry["typeKey"] == "companion":
+            basis = {"collections": basis, "actions": mapping_basis["companionActions"]}
+        elif entry["typeKey"] == "toy":
+            basis = {"collections": basis, "actions": mapping_basis["toyActions"]}
         model["typeMappingHashes"][entry["typeKey"]] = _hash(basis)
     return model
 
@@ -484,6 +582,49 @@ def _mount_catalog_inc(model: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def _companion_catalog_inc(model: dict[str, Any]) -> str:
+    lines = [
+        "// Generated by tools/catalog/generate_catalog.py. Do not edit.", "",
+        "static std::vector<CompanionCollectionDefinition> LoadGeneratedCompanionCollections()", "{", "    return {",
+    ]
+    for entry in model["companionActions"]["entries"]:
+        lines.append(
+            "        {" + ", ".join([
+                f"CollectionId{{{entry['collectionId']}u}}", _cpp_string(entry["collectionKey"]),
+                str(int(entry["spellId"])) + "u", str(int(entry["creatureId"])) + "u",
+            ]) + "},"
+        )
+    lines += ["    };", "}", ""]
+    return "\n".join(lines)
+
+
+def _toy_catalog_inc(model: dict[str, Any]) -> str:
+    action_names = {
+        "SPELL_SELF": "ToyActionKind::SpellSelf", "SPELL_TARGET": "ToyActionKind::SpellTarget",
+        "ITEM_USE": "ToyActionKind::ItemUse", "CUSTOM_HANDLER": "ToyActionKind::CustomHandler",
+    }
+    target_names = {"SELF": "ToyTargetPolicy::Self", "CURRENT_TARGET": "ToyTargetPolicy::CurrentTarget"}
+    cooldown_names = {"CHARACTER": "ToyCooldownScope::Character", "ACCOUNT": "ToyCooldownScope::Account"}
+    lines = [
+        "// Generated by tools/catalog/generate_catalog.py. Do not edit.", "",
+        "static std::vector<ToyCollectionDefinition> LoadGeneratedToyCollections()", "{", "    return {",
+    ]
+    for entry in model["toyActions"]["entries"]:
+        lines.append(
+            "        {" + ", ".join([
+                f"CollectionId{{{entry['collectionId']}u}}", _cpp_string(entry["collectionKey"]),
+                str(int(entry["itemId"])) + "u", action_names[entry["actionKind"]],
+                str(int(entry["spellId"])) + "u", target_names[entry["targetPolicy"]],
+                cooldown_names[entry["cooldownScope"]], str(int(entry["accountCooldownMs"])) + "u",
+                "true" if entry["allowInCombat"] else "false",
+                "true" if entry["consumesMaterial"] else "false",
+                _cpp_string(entry["customHandler"]), _cpp_strings(entry["riskFlags"]),
+            ]) + "},"
+        )
+    lines += ["    };", "}", ""]
+    return "\n".join(lines)
+
+
 def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) -> dict[Path, str]:
     manifest = deepcopy(model)
     missing = {
@@ -497,19 +638,35 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     json_text = json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     missing_text = json.dumps(missing, ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     mount_actions_text = json.dumps(model["mountActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    companion_actions_text = json.dumps(model["companionActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
+    toy_actions_text = json.dumps(model["toyActions"], ensure_ascii=False, sort_keys=True, indent=2) + "\n"
     client_collections = deepcopy(model["collections"])
     mount_actions_by_id = {
         int(entry["collectionId"]): entry for entry in model["mountActions"]["collections"]
     }
+    companion_actions_by_id = {
+        int(entry["collectionId"]): entry for entry in model["companionActions"]["entries"]
+    }
+    toy_actions_by_id = {
+        int(entry["collectionId"]): entry for entry in model["toyActions"]["entries"]
+    }
     for entry in client_collections:
-        if entry["typeKey"] != "mount":
-            continue
-        action = mount_actions_by_id[int(entry["collectionId"])]
-        entry["displayCreatureId"] = int(action["creatureIds"][0])
-        # The client can render a mount, but action spell resolution remains
-        # server-only. The wire request contains only typeId + collectionId.
-        entry.pop("actionId", None)
-        entry.pop("sourceId", None)
+        if entry["typeKey"] == "mount":
+            action = mount_actions_by_id[int(entry["collectionId"])]
+            entry["displayCreatureId"] = int(action["creatureIds"][0])
+        elif entry["typeKey"] == "companion":
+            action = companion_actions_by_id[int(entry["collectionId"])]
+            entry["displayCreatureId"] = int(action["creatureId"])
+        elif entry["typeKey"] == "toy":
+            action = toy_actions_by_id[int(entry["collectionId"])]
+            entry["displayItemId"] = int(action["itemId"])
+            entry["requiresTarget"] = action["targetPolicy"] == "CURRENT_TARGET"
+        if entry["typeKey"] in {"mount", "companion", "toy"}:
+            # The client renders metadata only. Spell/item resolution and all
+            # authorization remain server-side; the wire request carries a
+            # stable typeId + collectionId and an optional target selector.
+            entry.pop("actionId", None)
+            entry.pop("sourceId", None)
     catalog_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedCatalog = " + _lua({
         "schemaVersion": model["schemaVersion"], "metadataVersion": model["metadataVersion"],
         "assetPackVersion": model["assetPackVersion"], "mappingHash": model["mappingHash"],
@@ -532,11 +689,15 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         repo_root / "addon/SoloCollections/Data/Generated/PolicyRegistry.lua": policy_lua,
         module_root / "data/generated/solo_collections_catalog_manifest.json": json_text,
         module_root / "data/generated/solo_collections_mount_actions.json": mount_actions_text,
+        module_root / "data/generated/solo_collections_companion_actions.json": companion_actions_text,
+        module_root / "data/generated/solo_collections_toy_actions.json": toy_actions_text,
         module_root / "data/generated/solo_collections_missing_resources.json": missing_text,
         module_root / "src/generated/SoloCollectionsIdentityData.inc": _identity_inc(model),
         module_root / "src/generated/SoloCollectionsPolicyData.inc": _policy_inc(model),
         module_root / "src/generated/SoloCollectionsProtocolCatalog.inc": _protocol_catalog_inc(model),
         module_root / "src/generated/SoloCollectionsMountCatalog.inc": _mount_catalog_inc(model),
+        module_root / "src/generated/SoloCollectionsCompanionCatalog.inc": _companion_catalog_inc(model),
+        module_root / "src/generated/SoloCollectionsToyCatalog.inc": _toy_catalog_inc(model),
     }
 
 

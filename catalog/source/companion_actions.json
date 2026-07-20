@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {"collectionId": 100281, "collectionKey": "companion.worg_pup", "ordinal": 281, "creatureId": 10259},
+    {"collectionId": 100282, "collectionKey": "companion.smolderweb_hatchling", "ordinal": 282, "creatureId": 10598},
+    {"collectionId": 100283, "collectionKey": "companion.emerald_whelpling", "ordinal": 283, "creatureId": 7545},
+    {"collectionId": 100284, "collectionKey": "companion.vampiric_batling", "ordinal": 284, "creatureId": 28513},
+    {"collectionId": 100285, "collectionKey": "companion.stinker", "ordinal": 285, "creatureId": 23274},
+    {"collectionId": 100286, "collectionKey": "companion.sinister_squashling", "ordinal": 286, "creatureId": 23909},
+    {"collectionId": 100287, "collectionKey": "companion.tiny_sporebat", "ordinal": 287, "creatureId": 25062},
+    {"collectionId": 100288, "collectionKey": "companion.speedy", "ordinal": 288, "creatureId": 16547},
+    {"collectionId": 100289, "collectionKey": "companion.phoenix_hatchling", "ordinal": 289, "creatureId": 26119},
+    {"collectionId": 100290, "collectionKey": "companion.ghostly_skull", "ordinal": 290, "creatureId": 29147},
+    {"collectionId": 100291, "collectionKey": "companion.hyacinth_macaw", "ordinal": 291, "creatureId": 7391},
+    {"collectionId": 100292, "collectionKey": "companion.disgusting_oozeling", "ordinal": 292, "creatureId": 15429},
+    {"collectionId": 100293, "collectionKey": "companion.mr_wiggles", "ordinal": 293, "creatureId": 16548},
+    {"collectionId": 100294, "collectionKey": "companion.lifelike_toad", "ordinal": 294, "creatureId": 12419},
+    {"collectionId": 100295, "collectionKey": "companion.dragon_kite", "ordinal": 295, "creatureId": 25110},
+    {"collectionId": 100296, "collectionKey": "companion.firefly", "ordinal": 296, "creatureId": 21076},
+    {"collectionId": 100297, "collectionKey": "companion.zergling", "ordinal": 297, "creatureId": 11327},
+    {"collectionId": 100298, "collectionKey": "companion.panda_cub", "ordinal": 298, "creatureId": 11325},
+    {"collectionId": 100299, "collectionKey": "companion.frosty", "ordinal": 299, "creatureId": 28883},
+    {"collectionId": 100300, "collectionKey": "companion.bananas", "ordinal": 300, "creatureId": 23234},
+    {"collectionId": 100301, "collectionKey": "companion.mr_chilly", "ordinal": 301, "creatureId": 29726},
+    {"collectionId": 100302, "collectionKey": "companion.giant_sewer_rat", "ordinal": 302, "creatureId": 31575},
+    {"collectionId": 100303, "collectionKey": "companion.spring_rabbit", "ordinal": 303, "creatureId": 32791},
+    {"collectionId": 100304, "collectionKey": "companion.onyxian_whelpling", "ordinal": 304, "creatureId": 36607}
+  ]
+}
