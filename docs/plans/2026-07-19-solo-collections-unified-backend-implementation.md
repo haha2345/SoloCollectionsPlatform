@@ -1335,7 +1335,7 @@ release: switch SoloCollections backend ownership to C++
 
 ## 17. 阶段 12：性能、监控和发布
 
-阶段状态：实施中（任务 12.1 已完成）
+阶段状态：✅ 已完成（任务 12.1、12.2、12.3 均已完成）
 
 ### 任务 12.1：性能基线
 
@@ -1385,12 +1385,31 @@ SHA-256 为 `D66BC3C525E3D4A3DC870DED3DC08075F31D853F88D7BC21D80E5B36FAF6687C`�
 
 ### 任务 12.2：诊断和健康状态
 
+状态：✅ 已完成（`SoloCollections` `fdeb6ba`；`mod-solo-collections` `f9377da`）
+
 - 模块启动打印 schema、catalog、identity、protocol 和 asset versions。
 - `.solocollections status` 显示 provider ready 状态、在线账号缓存和 pending 写入。
 - DB 错误、目录错误、协议滥用和 provider 异常使用不同日志类别。
 - 日志不输出完整大快照、密码、数据库凭据或任意客户端文本。
 
+实现记录：schema 和 SC2 protocol 版本改为共享常量，目录生成器同时生成 catalog、identity、
+metadata 和 asset 版本；启动日志以 `module.solocollections.health` 输出
+`schema=1 catalog=2026.07.20.2 identity=2026.07.20.2 protocol=1 asset=wotlk-3.3.5a-local-1`。
+provider 注册/终结、目录初始化、数据库失败和协议滥用分别使用
+`module.solocollections.provider`、`.catalog`、`.database` 和 `.protocol`，日志契约禁止记录客户端
+action/target/payload、完整快照、密码和凭据。`.solocollections status` 增加
+`providers_ready/readOnly/disabled`、`online_accounts`、`cache_entries` 和聚合 `pending_writes`。
+
+验证结果：集成 RelWithDebInfo `worldserver` 构建和冷启动成功，部署 SHA-256 为
+`F5050EB407606DA7DBC0F5F05D49F56433B976482CBEBE1169D0C9E5E0A73811`。真实账号登录后状态为
+provider `7/0/0`、`online_accounts=1`、`cache_entries=1`、`pending_writes=0`、ready state 1，
+一次联合查询加载 71 行；启动日志确认 provider registry 和 schema 均 ready。模块 123 项及
+AddOn/目录 174 项阶段测试通过，随后发布阶段扩展后的超集测试继续通过。
+
 ### 任务 12.3：发布编排
+
+状态：✅ 已完成（发布器 `71a7884`；clean-checkout 修复 `5b6ba0e`、`4d62fc5`、`faf148d`、
+`21cabc7`；module CI/边界 `9a74768`、`c7504c3`）
 
 SoloCollections 发布包记录：
 
@@ -1409,6 +1428,19 @@ SoloCollections 发布包记录：
 - 不包含提取的游戏资产、客户端 EXE/DLL、数据库凭据和本地路径。
 - 保留 GPL/AGPL 和第三方 notice。
 - 安装文档明确 AddOn、C++ module、SQL 和客户端资源的独立边界。
+
+实现记录：`tools/release/build_unified_release.py` 只从已提交 Git 对象组装 AddOn 和 C++ module，
+生成 `release-manifest.json` 与 `SHA256SUMS.txt`。manifest 固定记录三个仓库 commit、SC2 v1、
+整体及七个类别 mapping hash、`wotlk-3.3.5a-local-1`、SQL schema v1 和 append-only migration
+`2026_07_20_00`。安全门拒绝 EXE/DLL/MPQ/PDB/DB、运行时配置/凭据、Windows 本地绝对路径，
+并依据 `Media/assets.json` 仅收入九个项目自有媒体文件，Retail/外部客户端媒体全部排除。
+发布根目录和两个 zip 均保留 GPL-3.0-or-later、AGPL-3.0 与第三方 notices；
+`docs/UNIFIED_BACKEND_INSTALLATION.zh-CN.md` 分开说明 AddOn、C++ module、SQL 和客户端资源。
+
+验证结果：两个全新 F 盘 detached worktree 均为 clean status；SoloCollections 178 项、SoloCam
+32 项（9 项因无外部客户端二进制按契约跳过）、x86 native 单元测试和 DLL 构建通过；module
+126 项通过，实际 AzerothCore 集成树的 `worldserver` 构建通过。预发布包包含 AddOn 37 个成员、
+module 121 个成员和 8 个 SHA-256 条目，逐项复算无差异，未发现禁止后缀或 `Media/Retail` 成员。
 
 ## 18. 自动测试布局
 
