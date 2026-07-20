@@ -112,6 +112,8 @@ public:
     [[nodiscard]] std::size_t EvictExpired(std::uint64_t nowMs);
 
     [[nodiscard]] std::optional<AccountCacheSnapshot> Snapshot(AccountId accountId) const;
+    [[nodiscard]] std::optional<std::vector<CollectionId>> OwnedByType(
+        AccountId accountId, CollectionTypeId typeId) const;
     [[nodiscard]] AccountCacheDiagnostics Diagnostics() const;
     [[nodiscard]] bool IsOwned(AccountId accountId, CollectionKey const& key) const;
     [[nodiscard]] std::thread::id OwnerThread() const noexcept { return _ownerThread; }

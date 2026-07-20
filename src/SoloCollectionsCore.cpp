@@ -1,6 +1,7 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsProvider.h"
+#include "SoloCollectionsProtocolScript.h"
 
 #include "Player.h"
 #include "Log.h"
@@ -83,7 +84,8 @@ class SoloCollectionsCorePlayerScript final : public PlayerScript
 {
 public:
     SoloCollectionsCorePlayerScript() : PlayerScript(
-        "SoloCollectionsCorePlayerScript", { PLAYERHOOK_ON_LOGIN, PLAYERHOOK_ON_LOGOUT }) { }
+        "SoloCollectionsCorePlayerScript", { PLAYERHOOK_ON_LOGIN, PLAYERHOOK_ON_LOGOUT,
+            PLAYERHOOK_ON_UPDATE, PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
 
     void OnPlayerLogin(Player* player) override
     {
@@ -96,6 +98,7 @@ public:
             accountId, AccountSessionId(playerGuid), MonotonicMilliseconds());
         if (opened.Accepted && opened.ShouldStartLoad)
             GetAccountCollectionStore().BeginLoad(accountId, playerGuid, opened.Generation);
+        Sc2ProtocolOpenSession(player);
     }
 
     void OnPlayerLogout(Player* player) override
@@ -103,9 +106,21 @@ public:
         if (!player || !player->GetSession())
             return;
 
+        Sc2ProtocolCloseSession(player);
         (void)GetAccountCollectionCache().CloseSession(
             AccountId(player->GetSession()->GetAccountId()),
             AccountSessionId(player->GetGUID().GetCounter()), MonotonicMilliseconds());
+    }
+
+    void OnPlayerUpdate(Player* player, std::uint32_t /*diff*/) override
+    {
+        Sc2ProtocolPumpAndSend(player);
+    }
+
+    bool OnPlayerCanUseChat(Player* player, std::uint32_t type, std::uint32_t language,
+        std::string& message, Player* receiver) override
+    {
+        return Sc2ProtocolCanUsePrivateChat(player, type, language, message, receiver);
     }
 };
 }

@@ -1,0 +1,87 @@
+#ifndef SOLO_COLLECTIONS_PROTOCOL_SERVER_H
+#define SOLO_COLLECTIONS_PROTOCOL_SERVER_H
+
+#include "SoloCollectionsAccountCache.h"
+#include "SoloCollectionsProtocol.h"
+
+#include <cstddef>
+#include <cstdint>
+#include <deque>
+#include <map>
+#include <random>
+#include <string>
+#include <vector>
+
+namespace SoloCollections
+{
+struct Sc2CategoryDefinition
+{
+    CollectionTypeId TypeId;
+    std::string MappingHash;
+    bool Enabled = false;
+};
+
+class Sc2Server
+{
+public:
+    Sc2Server(AccountCollectionCache& cache, std::string metadataVersion,
+        std::string assetPackVersion, std::string backendBuild,
+        std::vector<Sc2CategoryDefinition> categories);
+
+    void OpenSession(AccountId accountId, AccountSessionId sessionId);
+    void CloseSession(AccountSessionId sessionId);
+    [[nodiscard]] bool HandleInbound(
+        AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs);
+    void PumpSession(AccountSessionId sessionId, std::uint64_t nowMs);
+    [[nodiscard]] std::vector<std::string> DrainOutbound(
+        AccountSessionId sessionId, std::size_t maximum = Sc2Limits::MaxPacketsPerTick);
+    [[nodiscard]] std::string SessionNonce(AccountSessionId sessionId) const;
+
+    void OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta const& delta);
+    [[nodiscard]] bool OnAccountResyncRequested(AccountId accountId);
+
+private:
+    struct TokenBucket
+    {
+        double Tokens = 12.0;
+        std::uint64_t LastRefillMs = 0;
+    };
+
+    using ReplayCache = std::map<std::uint32_t, std::uint64_t>;
+    using OutboundQueue = std::deque<std::string>;
+
+    struct SessionState
+    {
+        AccountId Account;
+        bool Active = false;
+        bool AwaitingSnapshot = false;
+        std::string ClientNonce;
+        std::string Nonce;
+        std::uint32_t NextTransferId = 1;
+        TokenBucket Bucket;
+        ReplayCache Replays;
+        OutboundQueue Outbound;
+    };
+
+    [[nodiscard]] bool ConsumeToken(SessionState& session, std::uint64_t nowMs);
+    void CleanupReplays(SessionState& session, std::uint64_t nowMs);
+    void Queue(SessionState& session, Sc2Message message);
+    void QueueError(SessionState& session, std::uint32_t requestId, std::string reason);
+    void QueueHandshake(SessionState& session);
+    void QueueCurrentState(SessionState& session);
+    void QueueSnapshots(SessionState& session, AccountCacheSnapshot const& snapshot);
+    void QueueCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category,
+        std::uint64_t revision, std::vector<CollectionId> const& owned);
+    [[nodiscard]] std::string NewNonce();
+
+    AccountCollectionCache& _cache;
+    std::string _metadataVersion;
+    std::string _assetPackVersion;
+    std::string _backendBuild;
+    std::vector<Sc2CategoryDefinition> _categories;
+    std::map<AccountSessionId, SessionState> _sessions;
+    std::mt19937_64 _random;
+};
+}
+
+#endif

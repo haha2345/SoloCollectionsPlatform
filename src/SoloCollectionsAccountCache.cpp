@@ -229,6 +229,21 @@ std::optional<AccountCacheSnapshot> AccountCollectionCache::Snapshot(AccountId a
     };
 }
 
+std::optional<std::vector<CollectionId>> AccountCollectionCache::OwnedByType(
+    AccountId accountId, CollectionTypeId typeId) const
+{
+    AssertOwnerThread();
+    auto entry = _entries.find(accountId);
+    if (entry == _entries.end() || entry->second.State != AccountCacheLoadState::Ready || !typeId.IsValid())
+        return std::nullopt;
+
+    std::vector<CollectionId> owned;
+    for (CollectionKey const& key : entry->second.Owned)
+        if (key.TypeId == typeId)
+            owned.push_back(key.Id);
+    return owned;
+}
+
 AccountCacheDiagnostics AccountCollectionCache::Diagnostics() const
 {
     AssertOwnerThread();
