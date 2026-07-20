@@ -491,6 +491,12 @@ TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, Obj
     if (!player || !player->GetSession() || !IsEnabled())
         return LANG_TRANSMOG_INVALID_SRC_ENTRY;
 
+    // SC2 authenticates an AddOn action to the player's active world session.
+    // It submits only a canonical appearance ID and equipment slot; source
+    // resolution and all collection/cost checks remain server-side below.
+    if (source == TransmogApplySource::Addon)
+        return LANG_TRANSMOG_OK;
+
     uint32 requiredNpcFlag = source == TransmogApplySource::Vendor ? UNIT_NPC_FLAG_VENDOR : UNIT_NPC_FLAG_NONE;
     Creature* interaction = player->GetNPCIfCanInteractWith(interactionGuid, requiredNpcFlag);
     if (!interaction || !IsTransmogVendor(interaction->GetEntry()))

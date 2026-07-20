@@ -5,11 +5,15 @@
 #include "SoloCollectionsProvider.h"
 #include "Transmogrification.h"
 
+#include "Bag.h"
 #include "DatabaseEnv.h"
+#include "Item.h"
 #include "Log.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "QueryResult.h"
+
+#include <algorithm>
 
 namespace SoloCollections
 {
@@ -17,6 +21,24 @@ namespace
 {
 constexpr std::uint32_t AppearanceMigrationId = 3;
 constexpr std::uint16_t AppearanceMigrationVersion = 1;
+constexpr std::uint32_t InventoryReconcileIntervalMs = 5000;
+
+char const* UnlockTriggerName(AppearanceUnlockTrigger trigger)
+{
+    switch (trigger)
+    {
+        case AppearanceUnlockTrigger::Equipment: return "equipment";
+        case AppearanceUnlockTrigger::Loot: return "loot";
+        case AppearanceUnlockTrigger::Craft: return "craft";
+        case AppearanceUnlockTrigger::QuestReward: return "quest_reward";
+        case AppearanceUnlockTrigger::InventoryStore: return "inventory_store";
+        case AppearanceUnlockTrigger::Vendor: return "vendor";
+        case AppearanceUnlockTrigger::GroupRoll: return "group_roll";
+        case AppearanceUnlockTrigger::HistoricalReconcile: return "historical_reconcile";
+        case AppearanceUnlockTrigger::GameMaster: return "game_master";
+    }
+    return "unknown";
+}
 
 struct AnalyzedMigration
 {
@@ -66,9 +88,41 @@ void AppearanceService::OnPlayerLogin(Player* player)
 {
     if (!player || !player->GetSession())
         return;
+    {
+        std::scoped_lock lock(_mutex);
+        MigrationState& state = _migrations[AccountId(player->GetSession()->GetAccountId())];
+        state.LoginCharacterGuid = player->GetGUID().GetCounter();
+        _inventoryReconcileElapsed[player->GetGUID().GetCounter()] = 0;
+    }
+    ScanHistoricalInventory(player);
+}
+
+void AppearanceService::OnPlayerUpdate(Player* player, std::uint32_t diff)
+{
+    if (!player || !player->GetSession())
+        return;
+    bool shouldScan = false;
+    {
+        std::scoped_lock lock(_mutex);
+        std::uint32_t& elapsed = _inventoryReconcileElapsed[player->GetGUID().GetCounter()];
+        elapsed = diff >= InventoryReconcileIntervalMs - std::min(elapsed, InventoryReconcileIntervalMs) ?
+            InventoryReconcileIntervalMs : elapsed + diff;
+        if (elapsed >= InventoryReconcileIntervalMs)
+        {
+            elapsed = 0;
+            shouldScan = true;
+        }
+    }
+    if (shouldScan)
+        ScanHistoricalInventory(player);
+}
+
+void AppearanceService::OnPlayerLogout(Player* player)
+{
+    if (!player)
+        return;
     std::scoped_lock lock(_mutex);
-    MigrationState& state = _migrations[AccountId(player->GetSession()->GetAccountId())];
-    state.LoginCharacterGuid = player->GetGUID().GetCounter();
+    _inventoryReconcileElapsed.erase(player->GetGUID().GetCounter());
 }
 
 void AppearanceService::Update()
@@ -82,6 +136,129 @@ void AppearanceService::Update()
             BeginMigrationCheck(accountId, state);
         if (state.Phase == MigrationPhase::Importing)
             AdvanceMigration(accountId, state);
+    }
+    AdvanceQueuedUnlocks();
+}
+
+AppearanceUnlockQueueResult AppearanceService::QueueCanonicalUnlock(AccountId accountId,
+    std::uint32_t characterGuid, std::uint32_t sourceItemId, CollectionSourceKind sourceKind,
+    AppearanceUnlockTrigger trigger, std::uint32_t actorAccountId, std::uint32_t actorGuid)
+{
+    AppearanceCollectionDefinition const* definition = GetAppearanceCatalog().FindBySource(sourceItemId);
+    if (!accountId.IsValid() || !definition)
+        return AppearanceUnlockQueueResult::Rejected;
+    if (GetAccountCollectionService().Evaluate(
+            accountId, { AppearanceCollectionTypeId, definition->Id }).IsSuccess())
+        return AppearanceUnlockQueueResult::AlreadyOwned;
+
+    std::scoped_lock lock(_mutex);
+    if (!_queuedAppearanceIds[accountId].insert(definition->Id).second)
+        return AppearanceUnlockQueueResult::Queued;
+    _pendingUnlocks[accountId].push_back({ definition->Id, sourceItemId, characterGuid,
+        sourceKind, trigger, actorAccountId, actorGuid });
+    return AppearanceUnlockQueueResult::Queued;
+}
+
+AppearanceUnlockQueueResult AppearanceService::OnItemAcquired(
+    Player* player, Item* item, AppearanceUnlockTrigger trigger)
+{
+    if (!player || !player->GetSession() || !item)
+        return AppearanceUnlockQueueResult::Rejected;
+    ItemTemplate const* itemTemplate = item->GetTemplate();
+    if (!itemTemplate || (itemTemplate->Class != ITEM_CLASS_ARMOR && itemTemplate->Class != ITEM_CLASS_WEAPON))
+        return AppearanceUnlockQueueResult::Rejected;
+    if (item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_REFUNDABLE) ||
+        (item->HasFlag(ITEM_FIELD_FLAGS, ITEM_FIELD_FLAG_BOP_TRADEABLE) && !sTransmogrification->GetAllowTradeable()) ||
+        (itemTemplate->Bonding != ItemBondingType::BIND_WHEN_PICKED_UP && !item->IsSoulBound()))
+        return AppearanceUnlockQueueResult::DeferredByBindingPolicy;
+    if (!sTransmogrification->GetTrackUnusableItems() &&
+        !sTransmogrification->SuitableForTransmogrification(player, itemTemplate))
+        return AppearanceUnlockQueueResult::Rejected;
+
+    return QueueCanonicalUnlock(AccountId(player->GetSession()->GetAccountId()),
+        player->GetGUID().GetCounter(), itemTemplate->ItemId, CollectionSourceKind::Gameplay, trigger);
+}
+
+AppearanceUnlockQueueResult AppearanceService::QueueGameMasterUnlock(AccountId accountId,
+    std::uint32_t characterGuid, std::uint32_t sourceItemId,
+    std::uint32_t actorAccountId, std::uint32_t actorGuid)
+{
+    if (!GetAccountCollectionService().IsReady(accountId))
+        return AppearanceUnlockQueueResult::Rejected;
+    return QueueCanonicalUnlock(accountId, characterGuid, sourceItemId,
+        CollectionSourceKind::GameMaster, AppearanceUnlockTrigger::GameMaster,
+        actorAccountId, actorGuid);
+}
+
+void AppearanceService::ScanHistoricalInventory(Player* player)
+{
+    if (!player || !player->GetSession() || !sTransmogrification->GetUseCollectionSystem())
+        return;
+    auto scan = [this, player](Item* item)
+    {
+        if (item)
+            (void)OnItemAcquired(player, item, AppearanceUnlockTrigger::HistoricalReconcile);
+    };
+    for (std::uint8_t slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
+        scan(player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot));
+    for (std::uint8_t slot = INVENTORY_SLOT_ITEM_START; slot < INVENTORY_SLOT_ITEM_END; ++slot)
+        scan(player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot));
+    for (std::uint8_t bagPos = INVENTORY_SLOT_BAG_START; bagPos < INVENTORY_SLOT_BAG_END; ++bagPos)
+        if (Bag* bag = player->GetBagByPos(bagPos))
+            for (std::uint32_t slot = 0; slot < bag->GetBagSize(); ++slot)
+                scan(player->GetItemByPos(bagPos, slot));
+    for (std::uint8_t slot = BANK_SLOT_ITEM_START; slot < BANK_SLOT_ITEM_END; ++slot)
+        scan(player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot));
+    for (std::uint8_t bagPos = BANK_SLOT_BAG_START; bagPos < BANK_SLOT_BAG_END; ++bagPos)
+        if (Bag* bag = player->GetBagByPos(bagPos))
+            for (std::uint32_t slot = 0; slot < bag->GetBagSize(); ++slot)
+                scan(player->GetItemByPos(bagPos, slot));
+}
+
+void AppearanceService::AdvanceQueuedUnlocks()
+{
+    for (auto account = _pendingUnlocks.begin(); account != _pendingUnlocks.end();)
+    {
+        AccountId accountId = account->first;
+        std::deque<PendingUnlock>& queue = account->second;
+        if (queue.empty())
+        {
+            _queuedAppearanceIds.erase(accountId);
+            account = _pendingUnlocks.erase(account);
+            continue;
+        }
+        if (!GetAccountCollectionService().IsReady(accountId) ||
+            GetAccountCollectionStore().HasPendingMutation(accountId))
+        {
+            ++account;
+            continue;
+        }
+
+        PendingUnlock const& pending = queue.front();
+        CollectionResult owned = GetAccountCollectionService().Evaluate(
+            accountId, { AppearanceCollectionTypeId, pending.Appearance });
+        if (owned.IsSuccess())
+        {
+            _queuedAppearanceIds[accountId].erase(pending.Appearance);
+            queue.pop_front();
+            continue;
+        }
+        MutationStartResult started = GetAccountCollectionService().TryUnlock(accountId,
+            { AppearanceCollectionTypeId, pending.Appearance }, pending.SourceKind,
+            pending.SourceItemId, pending.CharacterGuid, pending.ActorAccountId, pending.ActorGuid);
+        if (started.Accepted || started.Reason == CollectionReasonCode::PendingOperation ||
+            started.Reason == CollectionReasonCode::NotReady)
+        {
+            ++account;
+            continue;
+        }
+        if (started.Reason != CollectionReasonCode::AlreadyOwned)
+            LOG_WARN("module.solocollections.appearance",
+                "event=appearance_unlock result=rejected account={} character={} appearance={} item={} trigger={} reason={}",
+                accountId.Value(), pending.CharacterGuid, pending.Appearance.Value(), pending.SourceItemId,
+                UnlockTriggerName(pending.Trigger), ToStableReasonCode(started.Reason));
+        _queuedAppearanceIds[accountId].erase(pending.Appearance);
+        queue.pop_front();
     }
 }
 
@@ -251,24 +428,6 @@ bool AppearanceService::LoadLegacyCollections()
     _health = AppearanceRepositoryHealth::Healthy;
     LOG_INFO("module.solocollections.appearance",
         "event=legacy_load result=ready accounts={}", _legacyCollections.size());
-    return true;
-}
-
-bool AppearanceService::TryUnlockLegacy(AccountId accountId, std::uint32_t sourceItemId)
-{
-    if (!accountId.IsValid() || sourceItemId == 0)
-        return false;
-
-    {
-        std::scoped_lock lock(_mutex);
-        if (_health != AppearanceRepositoryHealth::Healthy ||
-            !_legacyCollections[accountId.Value()].insert(sourceItemId).second)
-            return false;
-    }
-
-    CharacterDatabase.Execute(
-        "INSERT IGNORE INTO custom_unlocked_appearances (account_id, item_template_id) VALUES ({}, {})",
-        accountId.Value(), sourceItemId);
     return true;
 }
 

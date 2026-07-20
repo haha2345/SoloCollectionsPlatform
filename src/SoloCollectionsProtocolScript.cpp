@@ -2,6 +2,7 @@
 
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
+#include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
 #include "SoloCollectionsMountCatalog.h"
@@ -10,6 +11,7 @@
 #include "SoloCollectionsProvider.h"
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
+#include "Transmogrification.h"
 
 #include "Chat.h"
 #include "Player.h"
@@ -18,6 +20,7 @@
 #include "WorldSession.h"
 
 #include <chrono>
+#include <charconv>
 #include <string_view>
 
 namespace SoloCollections
@@ -38,6 +41,21 @@ std::uint64_t MonotonicMilliseconds()
 AccountSessionId SessionId(Player* player)
 {
     return AccountSessionId(player->GetGUID().GetCounter());
+}
+
+std::string AppearanceApplyStatus(TransmogApplyResult const& result)
+{
+    switch (result.Code)
+    {
+        case LANG_TRANSMOG_OK: return "ACCEPTED";
+        case LANG_TRANSMOG_NOT_ENOUGH_MONEY: return "NOT_ENOUGH_MONEY";
+        case LANG_TRANSMOG_NOT_ENOUGH_TOKENS: return "NOT_ENOUGH_TOKENS";
+        case LANG_TRANSMOG_INVALID_SLOT:
+        case LANG_TRANSMOG_MISSING_DEST_ITEM: return "INVALID_TARGET_SLOT";
+        case LANG_TRANSMOG_MISSING_SRC_ITEM: return "NOT_OWNED";
+        case LANG_TRANSMOG_INVALID_ITEMS: return "CLASS_RESTRICTED";
+        default: return "UNSUPPORTED";
+    }
 }
 
 Sc2Server& GetSc2Server()
@@ -129,6 +147,20 @@ bool Sc2ProtocolCanUsePrivateChat(
                     return std::string("INVALID_REQUEST");
                 return GetToyCollectionService().ExecuteUse(
                     player, CollectionId(request.CollectionId), request.Target == "1");
+            }
+            if (request.TypeId == AppearanceCollectionTypeId.Value())
+            {
+                std::uint32_t encodedSlot = 0;
+                auto parsed = std::from_chars(request.Target.data(),
+                    request.Target.data() + request.Target.size(), encodedSlot);
+                if (request.ActionId != "APPLY" || parsed.ec != std::errc {} ||
+                    parsed.ptr != request.Target.data() + request.Target.size() ||
+                    encodedSlot == 0 || encodedSlot > EQUIPMENT_SLOT_END)
+                    return std::string("INVALID_TARGET_SLOT");
+                TransmogApplyResult result = GetAppearanceService().TryApplyCanonicalAppearance(
+                    player, CollectionId(request.CollectionId), static_cast<std::uint8_t>(encodedSlot - 1),
+                    ObjectGuid::Empty, TransmogApplySource::Addon, false);
+                return AppearanceApplyStatus(result);
             }
             return std::string("INVALID_REQUEST");
         });

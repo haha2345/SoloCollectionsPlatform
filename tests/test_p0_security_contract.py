@@ -14,6 +14,7 @@ APPEARANCE_HEADER = (ROOT / "src" / "Categories" / "Appearance" /
                      "SoloCollectionsAppearanceService.h").read_text(encoding="utf-8")
 APPEARANCE_SERVICE = (ROOT / "src" / "Categories" / "Appearance" /
                       "SoloCollectionsAppearanceService.cpp").read_text(encoding="utf-8")
+CORE = (ROOT / "src" / "SoloCollectionsCore.cpp").read_text(encoding="utf-8")
 
 
 class AppearanceAuthorizationContractTests(unittest.TestCase):
@@ -72,25 +73,22 @@ class TemplateSafetyContractTests(unittest.TestCase):
         self.assertNotIn("TransmogStrings ApplyAppearance", HEADER)
 
     def test_store_hook_and_database_helpers_reject_null_items(self):
-        hook = SCRIPTS.split("void OnPlayerAfterStoreOrEquipNewItem", 1)[1].split(
-            "void OnPlayerCompleteQuest", 1
+        hook = CORE.split("void OnPlayerAfterStoreOrEquipNewItem", 1)[1].split(
+            "void OnPlayerEquip", 1
         )[0]
-        self.assertIn("if (!item)", hook)
-        self.assertIn("Received a null item", hook)
+        self.assertIn("OnAppearanceItem(player, item", hook)
+        item_helper = APPEARANCE_SERVICE.split("AppearanceService::OnItemAcquired", 1)[1].split(
+            "AppearanceService::QueueGameMasterUnlock", 1
+        )[0]
+        self.assertIn("!player || !player->GetSession() || !item", item_helper)
+        self.assertIn("if (!itemTemplate", item_helper)
 
-        item_helper = SCRIPTS.split("void AddToDatabase(Player* player, Item* item)", 1)[1].split(
-            "void AddToDatabase(Player* player, ItemTemplate const* itemTemplate)", 1
+    def test_quest_unlock_uses_only_the_item_actually_granted(self):
+        quest_hook = CORE.split("void OnPlayerQuestRewardItem", 1)[1].split(
+            "void OnPlayerAfterStoreOrEquipNewItem", 1
         )[0]
-        self.assertIn("if (!player || !item)", item_helper)
-        self.assertIn("if (!itemTemplate)", item_helper)
-
-    def test_missing_quest_reward_templates_are_skipped_and_logged(self):
-        quest_hook = SCRIPTS.split("void OnPlayerCompleteQuest", 1)[1].split(
-            "void OnPlayerAfterSetVisibleItemSlot", 1
-        )[0]
-        self.assertGreaterEqual(quest_hook.count("if (itemTemplate)"), 2)
-        self.assertIn("choice reward item", quest_hook)
-        self.assertIn("reward item", quest_hook)
+        self.assertIn("AppearanceUnlockTrigger::QuestReward", quest_hook)
+        self.assertNotIn("RewardChoiceItemId", SCRIPTS)
 
     def test_item_links_mirror_images_and_portable_spell_are_null_safe(self):
         self.assertIn('return "(Unknown item: " + std::to_string(entry)', IMPLEMENTATION)
@@ -191,7 +189,7 @@ class AtomicReloadContractTests(unittest.TestCase):
 
     def test_collection_query_distinguishes_empty_success_from_failure(self):
         load = APPEARANCE_SERVICE.split("bool AppearanceService::LoadLegacyCollections()", 1)[1].split(
-            "bool AppearanceService::TryUnlockLegacy", 1
+            "bool AppearanceService::HasCollectedSource", 1
         )[0]
         self.assertIn("SELECT 0 AS row_kind", load)
         self.assertIn("UNION ALL", load)
@@ -201,7 +199,7 @@ class AtomicReloadContractTests(unittest.TestCase):
 
     def test_successful_reload_replaces_snapshot_and_removes_revoked_rows(self):
         load = APPEARANCE_SERVICE.split("bool AppearanceService::LoadLegacyCollections()", 1)[1].split(
-            "bool AppearanceService::TryUnlockLegacy", 1
+            "bool AppearanceService::HasCollectedSource", 1
         )[0]
         self.assertIn("LegacyCollectionCache refreshed", load)
         self.assertIn("refreshed[fields[1].Get<std::uint32_t>()].insert", load)

@@ -36,7 +36,8 @@ class AppearanceServiceContractTests(unittest.TestCase):
         self.assertIn("LegacyCollectionCache _legacyCollections", header.split("private:", 1)[1])
         self.assertIn("std::scoped_lock", implementation)
         self.assertIn("_legacyCollections.swap(refreshed)", implementation)
-        self.assertEqual(2, implementation.count("custom_unlocked_appearances"))
+        self.assertEqual(1, implementation.count("custom_unlocked_appearances"))
+        self.assertNotIn("INSERT IGNORE INTO custom_unlocked_appearances", implementation)
 
     def test_appearance_provider_is_independently_registered(self):
         core = (SRC / "SoloCollectionsCore.cpp").read_text(encoding="utf-8")
@@ -97,6 +98,63 @@ class AppearanceServiceContractTests(unittest.TestCase):
         self.assertIn("BuildMigrationDryRun", commands)
         self.assertIn("writes=0", commands)
         self.assertIn("missing_template", commands)
+
+    def test_every_appearance_acquisition_path_converges_on_the_unified_queue(self):
+        core = (SRC / "SoloCollectionsCore.cpp").read_text(encoding="utf-8")
+        service = (APPEARANCE / "SoloCollectionsAppearanceService.cpp").read_text(encoding="utf-8")
+        for hook in (
+            "PLAYERHOOK_ON_EQUIP", "PLAYERHOOK_ON_LOOT_ITEM", "PLAYERHOOK_ON_CREATE_ITEM",
+            "PLAYERHOOK_ON_STORE_NEW_ITEM", "PLAYERHOOK_ON_QUEST_REWARD_ITEM",
+            "PLAYERHOOK_ON_AFTER_STORE_OR_EQUIP_NEW_ITEM", "PLAYERHOOK_ON_GROUP_ROLL_REWARD_ITEM",
+        ):
+            self.assertIn(hook, core)
+        for trigger in (
+            "Equipment", "Loot", "Craft", "QuestReward", "InventoryStore", "Vendor", "GroupRoll",
+        ):
+            self.assertIn(f"AppearanceUnlockTrigger::{trigger}", core)
+        self.assertIn("mail,", core)
+        self.assertIn("trade,", core)
+        self.assertIn("auction,", core)
+        self.assertIn("buyback,", core)
+        self.assertIn("GetAccountCollectionService().TryUnlock", service)
+        self.assertIn("AdvanceQueuedUnlocks", service)
+
+    def test_binding_policy_and_low_frequency_reconcile_are_explicit(self):
+        service = (APPEARANCE / "SoloCollectionsAppearanceService.cpp").read_text(encoding="utf-8")
+        self.assertIn("ITEM_FIELD_FLAG_REFUNDABLE", service)
+        self.assertIn("ITEM_FIELD_FLAG_BOP_TRADEABLE", service)
+        self.assertIn("GetAllowTradeable", service)
+        self.assertIn("BIND_WHEN_PICKED_UP", service)
+        self.assertIn("InventoryReconcileIntervalMs = 5000", service)
+        self.assertIn("ScanHistoricalInventory", service)
+
+    def test_only_the_reward_actually_granted_can_unlock_and_gm_uses_unified_queue(self):
+        core = (SRC / "SoloCollectionsCore.cpp").read_text(encoding="utf-8")
+        legacy_scripts = (SRC / "transmog_scripts.cpp").read_text(encoding="utf-8")
+        gm_commands = (SRC / "cs_transmog.cpp").read_text(encoding="utf-8")
+        self.assertIn("OnPlayerQuestRewardItem", core)
+        self.assertNotIn("RewardChoiceItemId", legacy_scripts)
+        self.assertNotIn("TryUnlockLegacy", legacy_scripts + gm_commands)
+        self.assertIn("QueueGameMasterUnlock", gm_commands)
+
+    def test_legacy_appearance_table_has_no_production_writer(self):
+        production = "\n".join(
+            path.read_text(encoding="utf-8", errors="replace")
+            for path in SRC.rglob("*") if path.suffix in {".cpp", ".h"}
+        )
+        self.assertNotIn("INSERT IGNORE INTO custom_unlocked_appearances", production)
+
+    def test_sc2_apply_resolves_the_owned_source_on_the_server(self):
+        protocol = (SRC / "SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
+        transmog_header = (SRC / "Transmogrification.h").read_text(encoding="utf-8")
+        transmog = (SRC / "Transmogrification.cpp").read_text(encoding="utf-8")
+        self.assertIn("AppearanceCollectionTypeId.Value()", protocol)
+        self.assertIn('request.ActionId != "APPLY"', protocol)
+        self.assertIn("TryApplyCanonicalAppearance", protocol)
+        self.assertIn("TransmogApplySource::Addon", protocol)
+        self.assertIn("Addon", transmog_header)
+        self.assertIn("SC2 authenticates an AddOn action", transmog)
+        self.assertNotIn("sourceItemId", protocol.split("request.TypeId == AppearanceCollectionTypeId.Value()", 1)[1])
 
 
 if __name__ == "__main__":

@@ -154,8 +154,12 @@ public:
         std::string playerName = player->GetName();
         std::string nameLink = handler->playerLink(playerName);
 
-        if (SoloCollections::GetAppearanceService().TryUnlockLegacy(
-                SoloCollections::AccountId(accountId), itemId))
+        SoloCollections::AppearanceUnlockQueueResult unlockResult =
+            SoloCollections::GetAppearanceService().QueueGameMasterUnlock(
+                SoloCollections::AccountId(accountId), guid.GetCounter(), itemId,
+                handler->GetSession() ? handler->GetSession()->GetAccountId() : 0,
+                handler->GetPlayer() ? handler->GetPlayer()->GetGUID().GetCounter() : 0);
+        if (unlockResult == SoloCollections::AppearanceUnlockQueueResult::Queued)
         {
             // Notify target of new item in appearance collection
             if (target && !(target->GetPlayerSetting("mod-transmog", SETTING_HIDE_TRANSMOG).value) && !sTransmogrification->CanNeverTransmog(itemTemplate))
@@ -166,7 +170,7 @@ public:
                 handler->PSendSysMessage(R"(|c{}|Hitem:{}:0:0:0:0:0:0:0:0|h[{}]|h|r has been added to the appearance collection of Player {}.)", itemQuality.c_str(), itemId, itemName.c_str(), nameLink);
 
         }
-        else
+        else if (unlockResult == SoloCollections::AppearanceUnlockQueueResult::AlreadyOwned)
         {
             // Feedback of failed command execution to GM
             if (isNotConsole)
@@ -174,6 +178,11 @@ public:
                 handler->PSendSysMessage(R"(Player {} already has item |c{}|Hitem:{}:0:0:0:0:0:0:0:0|h[{}]|h|r in the appearance collection.)", nameLink, itemQuality.c_str(), itemId, itemName.c_str());
                 handler->SetSentErrorMessage(true);
             }
+        }
+        else
+        {
+            handler->SendErrorMessage("The item could not be queued for the unified appearance collection.");
+            handler->SetSentErrorMessage(true);
         }
 
         return true;
@@ -240,11 +249,17 @@ public:
                         continue;
                     }
 
-                    if (SoloCollections::GetAppearanceService().TryUnlockLegacy(
-                            SoloCollections::AccountId(accountId), itemId))
+                    SoloCollections::AppearanceUnlockQueueResult unlockResult =
+                        SoloCollections::GetAppearanceService().QueueGameMasterUnlock(
+                            SoloCollections::AccountId(accountId), guid.GetCounter(), itemId,
+                            handler->GetSession() ? handler->GetSession()->GetAccountId() : 0,
+                            handler->GetPlayer() ? handler->GetPlayer()->GetGUID().GetCounter() : 0);
+                    if (unlockResult == SoloCollections::AppearanceUnlockQueueResult::Queued)
                     {
                         added = true;
                     }
+                    else if (unlockResult == SoloCollections::AppearanceUnlockQueueResult::Rejected)
+                        error = LANG_TRANSMOG_CMD_ADD_FORBIDDEN;
                 }
             }
         }

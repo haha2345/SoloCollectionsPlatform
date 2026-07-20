@@ -49,7 +49,8 @@ enum class TransmogApplySource : uint8
 {
     Gossip,
     Vendor,
-    Preset
+    Preset,
+    Addon
 };
 
 enum TransmogStrings : uint32

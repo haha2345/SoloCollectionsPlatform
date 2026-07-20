@@ -208,7 +208,9 @@ public:
         "SoloCollectionsCorePlayerScript", { PLAYERHOOK_ON_LOGIN, PLAYERHOOK_ON_LOGOUT,
             PLAYERHOOK_ON_UPDATE, PLAYERHOOK_ON_LEARN_SPELL, PLAYERHOOK_ON_STORE_NEW_ITEM,
             PLAYERHOOK_ON_CREATE_ITEM, PLAYERHOOK_ON_QUEST_REWARD_ITEM,
-            PLAYERHOOK_ON_AFTER_STORE_OR_EQUIP_NEW_ITEM, PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
+            PLAYERHOOK_ON_AFTER_STORE_OR_EQUIP_NEW_ITEM, PLAYERHOOK_ON_EQUIP,
+            PLAYERHOOK_ON_LOOT_ITEM, PLAYERHOOK_ON_GROUP_ROLL_REWARD_ITEM,
+            PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
 
     void OnPlayerLogin(Player* player) override
     {
@@ -234,14 +236,16 @@ public:
             return;
 
         Sc2ProtocolCloseSession(player);
+        GetAppearanceService().OnPlayerLogout(player);
         (void)GetAccountCollectionCache().CloseSession(
             AccountId(player->GetSession()->GetAccountId()),
             AccountSessionId(player->GetGUID().GetCounter()), MonotonicMilliseconds());
     }
 
-    void OnPlayerUpdate(Player* player, std::uint32_t /*diff*/) override
+    void OnPlayerUpdate(Player* player, std::uint32_t diff) override
     {
         Sc2ProtocolPumpAndSend(player);
+        GetAppearanceService().OnPlayerUpdate(player, diff);
     }
 
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId) override
@@ -253,23 +257,50 @@ public:
     void OnPlayerStoreNewItem(Player* player, Item* item, std::uint32_t /*count*/) override
     {
         OnToyItem(player, item);
+        // Player::StoreNewItem is the shared convergence path for mail,
+        // trade, auction, buyback, GM delivery, and other inventory stores.
+        OnAppearanceItem(player, item, AppearanceUnlockTrigger::InventoryStore);
     }
 
     void OnPlayerCreateItem(Player* player, Item* item, std::uint32_t /*count*/) override
     {
         OnToyItem(player, item);
+        OnAppearanceItem(player, item, AppearanceUnlockTrigger::Craft);
     }
 
     void OnPlayerQuestRewardItem(Player* player, Item* item, std::uint32_t /*count*/) override
     {
         OnToyItem(player, item);
+        // This callback contains only the reward item actually granted; never
+        // infer ownership from every candidate in RewardChoiceItemId.
+        OnAppearanceItem(player, item, AppearanceUnlockTrigger::QuestReward);
     }
 
     void OnPlayerAfterStoreOrEquipNewItem(Player* player, std::uint32_t /*vendorslot*/, Item* item,
         std::uint8_t /*count*/, std::uint8_t /*bag*/, std::uint8_t /*slot*/, ItemTemplate const* /*pProto*/,
-        Creature* /*pVendor*/, VendorItem const* /*crItem*/, bool /*bStore*/) override
+        Creature* pVendor, VendorItem const* /*crItem*/, bool /*bStore*/) override
     {
         OnToyItem(player, item);
+        OnAppearanceItem(player, item, pVendor ? AppearanceUnlockTrigger::Vendor :
+            AppearanceUnlockTrigger::InventoryStore);
+    }
+
+    void OnPlayerEquip(Player* player, Item* item, std::uint8_t /*bag*/,
+        std::uint8_t /*slot*/, bool /*update*/) override
+    {
+        OnAppearanceItem(player, item, AppearanceUnlockTrigger::Equipment);
+    }
+
+    void OnPlayerLootItem(Player* player, Item* item, std::uint32_t /*count*/,
+        ObjectGuid /*lootGuid*/) override
+    {
+        OnAppearanceItem(player, item, AppearanceUnlockTrigger::Loot);
+    }
+
+    void OnPlayerGroupRollRewardItem(Player* player, Item* item, std::uint32_t /*count*/,
+        RollVote /*voteType*/, Roll* /*roll*/) override
+    {
+        OnAppearanceItem(player, item, AppearanceUnlockTrigger::GroupRoll);
     }
 
     bool OnPlayerCanUseChat(Player* player, std::uint32_t type, std::uint32_t language,
@@ -283,6 +314,12 @@ private:
     {
         if (item)
             GetToyCollectionService().OnItemAcquired(player, item->GetEntry());
+    }
+
+    static void OnAppearanceItem(Player* player, Item* item, AppearanceUnlockTrigger trigger)
+    {
+        if (item)
+            (void)GetAppearanceService().OnItemAcquired(player, item, trigger);
     }
 };
 }
