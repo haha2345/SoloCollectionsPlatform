@@ -913,6 +913,8 @@ feat: add explicit toy catalog and safe action handlers
 
 ## 13. 阶段 8：将外观完整迁入统一服务
 
+阶段状态：✅ 已完成（任务 8.1–8.4）
+
 ### 任务 8.1：建立 `AppearanceService`
 
 状态：✅ 已完成（`mod-solo-collections` `e5e0802`）
@@ -964,7 +966,7 @@ canonical 外观物品页并正常分页、筛选和预览，同一 group 只显
 
 ### 任务 8.4：统一所有解锁 hook
 
-状态：🟡 实现完成，运行验收中（`SoloCollections` `7e8b884`，
+状态：✅ 已完成（`SoloCollections` `7e8b884`，
 `mod-solo-collections` `86f3062`）
 
 实现记录：装备、拾取、制造、实际任务奖励、vendor/store、团队掷骰和历史扫描统一进入账号级
@@ -972,8 +974,17 @@ canonical 外观物品页并正常分页、筛选和预览，同一 group 只显
 GM delivery 通过共享 store hook 与 5 秒低频 inventory reconcile 收敛。可退款物品、BOP 可交易
 窗口和未绑定 BoE 采用显式延迟策略；旧的“解锁全部任务选择候选”逻辑与旧表 INSERT 已删除。
 SC2 apply 只接收 canonical appearanceId 和装备槽，服务端重新校验 owned、选择真实兼容 source
-并执行费用/角色/目标槽检查。静态测试与 Release 构建已通过，尚待本次部署后的实机 apply 与
-新 acquisition 验收后改为 ✅。
+并执行费用/角色/目标槽检查。静态测试、Release 构建和真实客户端闭环均已通过。
+
+运行证据（账号 1，角色“啊啊水电费”）：部署二进制 SHA-256 为
+`5780649F92D8F10083051353C5182E7FF9D96D5043840C1F9250ECD8CDFD892A`。以尚未拥有的
+canonical appearance `201194`（唯一 source item `2037`，脚部/锁甲兼容族）请求脚部槽位 7，
+客户端返回 `SCAPPLY false NOT_OWNED`；前后 `sc_account_state.revision=73`、owned=0、audit=0，
+装备 GUID 1411 无 `custom_transmogrification` 行，证明拒绝路径零副作用。随后通过真实 GM
+delivery 获得 item 2037，统一 store/acquisition hook 写入 type 13、revision 74、
+`source_kind=Gameplay`、`source_id=2037`、`character_guid=14` 的唯一 unlock/audit；再次请求返回
+`SCAPPLY true ACCEPTED`，角色脚部模型立即变化，装备 GUID 1411 的 `FakeEntry=2037`。账号最终
+type 13 共 63 条、revision 12..74 连续，重复 `(account,type,collection)` 行为 0。
 
 - 装备、拾取、制造、任务、商店、邮件、交易、拍卖、回购、GM 和历史扫描最终进入幂等 `TryUnlock`。
 - BoE、可退款和 BOP 可交易窗口采用明确绑定政策。
@@ -985,6 +996,14 @@ SC2 apply 只接收 canonical appearanceId 和装备槽，服务端重新校验 
 - 相同显示但不同兼容族不会错误合并。
 - source 从 world DB 删除不会崩溃。
 - 当前角色不可用不影响账号已拥有显示。
+
+验收结果：✅ 全部通过。AddOn 未收藏 canonical 请求已在本阶段实机返回 `NOT_OWNED` 且零副作用；
+NPC/vendor/普通命令的同一安全 facade、越权拒绝和错误会话路径已由阶段 1 的真实客户端安全基线
+覆盖。18,190 组目录测试验证 `(displayId, slotFamily, compatibilityFamily)` 签名唯一，并存在同
+display 的多兼容族样本；`ResolveOwnedSource` 对每个运行时 `item_template` 显式空值跳过，缺失来源
+只返回稳定失败而不解引用；账号 owned snapshot 与当前角色的 source 可用性分离，实机 canonical
+目录可显示账号收藏，兼容 source 只在最终 apply 时解析。最终回归为 AddOn 160 项、模块 84 项全部
+通过，两个工作树均保持干净。
 
 建议提交序列：
 
