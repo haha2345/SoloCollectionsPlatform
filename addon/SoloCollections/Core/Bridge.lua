@@ -450,6 +450,25 @@ function B.UseToy(collectionId, callback)
     return B.RequestSC2Action(12, collectionId, "USE", target, callback)
 end
 
+function B.ApplyAppearance(collectionId, equipmentSlot, callback)
+    if not isPositiveInteger(collectionId) or type(equipmentSlot) ~= "number" or
+        equipmentSlot ~= math.floor(equipmentSlot) or equipmentSlot < 0 or equipmentSlot > 18 then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_TARGET_SLOT")
+        end
+        return nil
+    end
+    if not B.sc2Connected then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    -- Target is encoded as slot + 1 because '-' is reserved for actions with
+    -- no target and the SC2 numeric target grammar is strictly positive.
+    return B.RequestSC2Action(13, collectionId, "APPLY", equipmentSlot + 1, callback)
+end
+
 local function handleModelReady(requestIdText, mountIdText)
     local requestId = tonumber(requestIdText)
     local mountId = tonumber(mountIdText)
