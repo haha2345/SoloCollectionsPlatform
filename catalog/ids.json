@@ -99,6 +99,12 @@
         "key": "set",
         "lifecycle": "active",
         "ordinal": 5
+      },
+      {
+        "id": 15,
+        "key": "title",
+        "lifecycle": "active",
+        "ordinal": 6
       }
     ],
     "collections": [

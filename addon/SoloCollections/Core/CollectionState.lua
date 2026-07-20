@@ -31,6 +31,7 @@ local CATEGORY_TYPE_KEYS = {
     TOYS = "toy",
     APPEARANCES = "appearance",
     SETS = "set",
+    TITLES = "title",
 }
 
 local typeDefinitions = {}

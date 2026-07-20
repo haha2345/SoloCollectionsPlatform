@@ -12,6 +12,7 @@ local TAB_DEFINITIONS = {
     { key = "PETS", label = "小宠物", title = "小宠物" },
     { key = "TOYS", label = "玩具箱", title = "玩具箱" },
     { key = "WARDROBE", label = "外观", title = "外观" },
+    { key = "TITLES", label = "头衔", title = "头衔（只读）" },
 }
 
 local function getResponsiveScale()
@@ -76,6 +77,8 @@ function UI.RefreshActivePage()
         activeKey = "TOYS"
     elseif SC.db.mainTab == "WARDROBE" then
         activeKey = "WARDROBE"
+    elseif SC.db.mainTab == "TITLES" then
+        activeKey = "TITLES"
     end
     for key, page in pairs(frame.scPages) do
         if key == activeKey then
@@ -149,14 +152,16 @@ function UI.SetMainTab(key)
         frame.scPortrait:SetTexture(UI.Media.tabs[selected] or UI.Media.launcher)
         frame.scPortrait:SetTexCoord(0.07, 0.93, 0.07, 0.93)
     end
-    if selected == "MOUNTS" or selected == "PETS" then
+    if selected == "MOUNTS" or selected == "PETS" or selected == "TITLES" then
         frame.scCollectionCount:Show()
         if selected == "MOUNTS" then
             frame.scCollectionCount:SetLabel("所有坐骑")
-        else
+        elseif selected == "PETS" then
             frame.scCollectionCount:SetLabel("所有小宠物")
+        else
+            frame.scCollectionCount:SetLabel("已获头衔")
         end
-        if SC.Catalog and SC.Catalog.GetProgress then
+        if selected ~= "TITLES" and SC.Catalog and SC.Catalog.GetProgress then
             local collected, total = SC.Catalog.GetProgress(selected)
             frame.scCollectionCount:SetCount(collected, total)
             frame.scProgress:SetProgress(collected, total)
@@ -308,6 +313,7 @@ function UI.CreateCollectionsFrame()
         PETS = UI.CreatePetsPage(contentHost),
         TOYS = UI.CreateToysPage(contentHost),
         WARDROBE = UI.CreateWardrobePage(contentHost),
+        TITLES = UI.CreateTitlesPage(contentHost),
     }
 
     UI.CollectionsFrame = frame
