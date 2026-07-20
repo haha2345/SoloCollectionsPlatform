@@ -27,6 +27,13 @@ local DEFAULTS = {
         connected = false,
         demoMode = true,
         features = {},
+        sc2 = {
+            status = "idle",
+            connected = false,
+            state = "Loading",
+            revision = "0",
+            backendBuild = "",
+        },
     },
 }
 
@@ -56,6 +63,11 @@ local VALID_WEAPON_TYPES = {
     WAND = true, FISHING_POLE = true, SHIELD = true, OFFHAND_ITEM = true,
 }
 local VALID_BRIDGE_STATUS = { idle = true, waiting = true, connected = true, fallback = true }
+local VALID_SC2_STATUS = {
+    idle = true, waiting = true, connected = true, fallback = true,
+    loading = true, failed = true, mismatch = true,
+}
+local VALID_SC2_STATE = { Loading = true, Ready = true, Failed = true, Mismatch = true }
 
 local function repairScalar(target, key, expectedType, default)
     if type(target[key]) ~= expectedType then
@@ -129,6 +141,14 @@ local function normalizeDatabase(db)
     repairScalar(db.bridge, "connected", "boolean", DEFAULTS.bridge.connected)
     repairScalar(db.bridge, "demoMode", "boolean", DEFAULTS.bridge.demoMode)
     repairScalar(db.bridge, "features", "table", {})
+    repairScalar(db.bridge, "sc2", "table", {})
+    repairEnum(db.bridge.sc2, "status", VALID_SC2_STATUS, DEFAULTS.bridge.sc2.status)
+    repairScalar(db.bridge.sc2, "connected", "boolean", DEFAULTS.bridge.sc2.connected)
+    repairEnum(db.bridge.sc2, "state", VALID_SC2_STATE, DEFAULTS.bridge.sc2.state)
+    if type(db.bridge.sc2.revision) ~= "string" or not string.match(db.bridge.sc2.revision, "^%d+$") then
+        db.bridge.sc2.revision = DEFAULTS.bridge.sc2.revision
+    end
+    repairScalar(db.bridge.sc2, "backendBuild", "string", DEFAULTS.bridge.sc2.backendBuild)
 end
 
 function SC:InitializeDatabase()
@@ -209,6 +229,9 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         DEFAULT_CHAT_FRAME:AddMessage("SoloCollections debug: " .. (SC.db.debug and "on" or "off"))
     elseif command == "reconnect" and SC.Bridge and SC.Bridge.Connect then
         SC.Bridge.Connect(true)
+        if SC.Bridge.ConnectSC2 then
+            SC.Bridge.ConnectSC2(true)
+        end
     else
         SC:ToggleJournal()
     end

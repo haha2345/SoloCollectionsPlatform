@@ -17,6 +17,7 @@ EXPECTED_LOAD_ORDER = [
     "Data\\Appearances.lua",
     "Data\\Sets.lua",
     "Core\\IdentityRegistry.lua",
+    "Core\\CollectionState.lua",
     "Core\\Catalog.lua",
     "Core\\Bridge.lua",
     "Core\\M2Camera.lua",
