@@ -222,74 +222,39 @@ class BridgeContractTests(unittest.TestCase):
             self.assertIn(token, bridge)
         self.assertNotIn('SC.db.bridge.features = B.connected and "DEMO" or ""', bridge)
 
-    def test_client_exposes_correlated_model_and_summon_requests(self):
+    def test_client_exposes_correlated_sc2_preview_and_summon_requests(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
+            "function B.RequestCreaturePreview(typeId, collectionId, callback)",
             "function B.RequestModel(mountId, callback)",
             "function B.SummonMount(collectionId, callback)",
             "requestSerial",
-            "pendingModels",
             "sc2PendingActions",
-            '"MODEL|"',
-            "MODEL_READY|",
+            '"PREVIEW"',
             '"SUMMON"',
+            "B.RequestSC2Action(typeId, collectionId, \"PREVIEW\", nil, callback)",
             "B.RequestSC2Action(10, collectionId",
-            "pendingModels[requestId]",
         ):
             self.assertIn(token, bridge)
-        self.assertRegex(
-            bridge,
-            r'string\.match\(message,\s*"\^MODEL_READY\|\(%d\+\)\|\(%d\+\)\$"\)',
-        )
-        self.assertRegex(bridge, r"pending\.mountId\s*~=\s*mountId")
-        on_message = function_region(bridge, "B.OnMessage")
-        model_ready = function_region(bridge, "handleModelReady")
-        for handler, pending_table in ((model_ready, "pendingModels"),):
-            self.assertIn(f"local pending = {pending_table}[requestId]", handler)
-            self.assertIn("pending.mountId ~= mountId", handler)
-            self.assertIn(f"{pending_table}[requestId] = nil", handler)
-            self.assertRegex(
-                handler,
-                r"(?:pending\.callback\(|pcall\(\s*pending\.callback\s*,)",
-            )
-        self.assertIn("handleModelReady(", on_message)
-        self.assertIn("handleSummonResult(", on_message)
-        async_positions = [
-            on_message.find("handleModelReady("),
-            on_message.find("handleSummonResult("),
-        ]
-        self.assertTrue(all(position >= 0 for position in async_positions))
-        for authentication_guard in (
-            "B.prefix ~= prefix",
-            'channel ~= "WHISPER"',
-            'sender ~= UnitName("player")',
-        ):
-            guard_position = on_message.find(authentication_guard)
-            self.assertGreaterEqual(guard_position, 0)
-            self.assertLess(
-                guard_position,
-                min(async_positions),
-                f"{authentication_guard} must run before asynchronous dispatch",
-            )
-        waiting_guard = on_message.find("if not B.waiting")
-        self.assertTrue(
-            waiting_guard < 0 or waiting_guard > max(async_positions),
-            "a top-level waiting guard must not swallow asynchronous bridge responses",
-        )
+        self.assertNotIn("pendingModels", bridge)
+        self.assertNotIn("MODEL_READY|", bridge)
+        preview = function_region(bridge, "B.RequestCreaturePreview")
+        self.assertIn("typeId ~= 10 and typeId ~= 11", preview)
+        self.assertIn("isPositiveInteger(collectionId)", preview)
+        self.assertIn('B.RequestSC2Action(typeId, collectionId, "PREVIEW", nil, callback)', preview)
 
     def test_client_keeps_pet_model_preview_separate_from_authoritative_summon(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
-            "pendingPetModels",
             "function B.RequestPetModel(petId, callback)",
             "function B.SummonPet(collectionId, callback)",
-            '"PET_MODEL|"',
-            'string.match(message, "^PET_MODEL_READY|(%d+)|(%d+)$")',
+            "B.RequestCreaturePreview(11, petId, callback)",
         ):
             self.assertIn(token, bridge)
+        self.assertNotIn("pendingPetModels", bridge)
+        self.assertNotIn("PET_MODEL_READY|", bridge)
         preview = function_region(bridge, "B.RequestPetModel")
-        self.assertIn("isPositiveInteger(petId)", preview)
-        self.assertIn("pendingPetModels[requestId] = {", preview)
+        self.assertIn("B.RequestCreaturePreview(11, petId, callback)", preview)
         summon = function_region(bridge, "B.SummonPet")
         self.assertIn("isPositiveInteger(collectionId)", summon)
         self.assertIn("if not B.sc2Connected then", summon)
@@ -320,11 +285,10 @@ class BridgeContractTests(unittest.TestCase):
         self.assertLessEqual(float(timeout.group(1)), 10)
         expiry = function_region(bridge, "expirePendingRequests")
         for pending_table in (
-            "pendingModels",
             "pendingSummons",
-            "pendingPetModels",
             "pendingPetSummons",
             "pendingToyUses",
+            "sc2PendingActions",
         ):
             self.assertIn(f"pairs({pending_table})", expiry)
             self.assertIn(f"{pending_table}[requestId] = nil", expiry)
@@ -355,22 +319,21 @@ class BridgeContractTests(unittest.TestCase):
         ):
             self.assertIn(token, validator)
 
-        for function_name, pending_table, verb in (("B.RequestModel", "pendingModels", "MODEL"),):
-            request = function_region(bridge, function_name)
-            for token in (
-                "isPositiveInteger(mountId)",
-                'if not B.connected then',
-                '"BRIDGE_UNAVAILABLE"',
-                "requestSerial = requestSerial + 1",
-                f"{pending_table}[requestId] = {{",
-                "mountId = mountId",
-                "deadline = GetTime() + requestTimeout",
-                "callback = callback",
-                f'"{verb}|"',
-                '"WHISPER"',
-                'UnitName("player")',
-            ):
-                self.assertIn(token, request)
+        request = function_region(bridge, "B.RequestSC2Action")
+        for token in (
+            "isPositiveInteger(typeId)",
+            "isPositiveInteger(collectionId)",
+            'if not B.sc2Connected',
+            '"BRIDGE_UNAVAILABLE"',
+            "requestSerial = requestSerial + 1",
+            "sc2PendingActions[requestId] = {",
+            "deadline = GetTime() + requestTimeout",
+            "callback = callback",
+            '"Q", CS.sessionNonce',
+            '"WHISPER"',
+            'UnitName("player")',
+        ):
+            self.assertIn(token, request)
 
         summon = function_region(bridge, "B.SummonMount")
         for token in (
@@ -417,6 +380,33 @@ class BridgeContractTests(unittest.TestCase):
             handler,
             "server error reasons must be a single safe protocol token",
         )
+
+    def test_cpp_creature_preview_uses_only_sc2_and_has_no_sc1_pending_path(self):
+        bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        preview = function_region(bridge, "B.RequestCreaturePreview")
+        self.assertIn('B.RequestSC2Action(typeId, collectionId, "PREVIEW", nil, callback)', preview)
+        for wrapper, type_id in (("B.RequestModel", 10), ("B.RequestPetModel", 11)):
+            region = function_region(bridge, wrapper)
+            self.assertIn(f"B.RequestCreaturePreview({type_id}", region)
+            self.assertNotIn("B.connected", region)
+            self.assertNotIn("SendAddonMessage", region)
+            self.assertNotIn("B.prefix", region)
+        for retired in ("pendingModels", "pendingPetModels", "MODEL_READY", "PET_MODEL_READY"):
+            self.assertNotIn(retired, bridge)
+
+    def test_failed_creature_preview_callback_cannot_reach_set_creature(self):
+        for name in ("Mounts.lua", "Pets.lua"):
+            page = read_text(ADDON / "UI" / name)
+            start = page.index("    local function requestModel(record)")
+            end = page.index("    local function selectRecord(record)", start)
+            request = page[start:end]
+            self.assertIn("function(ok, reason)", request)
+            self.assertIn("if not ok then", request)
+            self.assertIn('unavailable:SetText("模型预览暂不可用")', request)
+            self.assertNotIn("model:SetCreature", request)
+            self.assertLess(request.index("if not ok then"), request.index("applyModel(record, generation)"))
+            failed = request[request.index("if not ok then") : request.index("applyModel(record, generation)")]
+            self.assertIn("return", failed)
 
     def test_server_bridge_has_no_database_or_inventory_mutations(self):
         self.assertTrue(SERVER_LUA.is_file(), f"missing {SERVER_LUA}")

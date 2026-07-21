@@ -421,7 +421,7 @@ class AddonContractTests(unittest.TestCase):
             'Catalog.QueryAll("PETS"',
             'Catalog.GetProgress("PETS"',
             'Catalog.ToggleDemoFavorite("PETS", record.id)',
-            "SC.Bridge.RequestPetModel(record.id,",
+            "SC.Bridge.RequestCreaturePreview(11, record.id,",
             "SC.Bridge.SummonPet(record.id,",
             "function page:Refresh()",
             "function page:ClearSelection()",
@@ -577,7 +577,7 @@ class AddonContractTests(unittest.TestCase):
             "ClearModel()",
             "SetCreature(",
             "self:GetModel()",
-            "SC.Bridge.RequestModel(",
+            "SC.Bridge.RequestCreaturePreview(10,",
             "scModelGeneration",
             'SetScript("OnMouseDown"',
             'SetScript("OnMouseUp"',
@@ -685,7 +685,7 @@ class AddonContractTests(unittest.TestCase):
             "infoButton:SetWidth(38)",
             "infoButton:SetHeight(38)",
             'infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")',
-            "SC.Bridge.RequestModel(record.id,",
+            "SC.Bridge.RequestCreaturePreview(10, record.id,",
             "deferNextFrame(",
             "GetModel()",
         ):
@@ -694,6 +694,8 @@ class AddonContractTests(unittest.TestCase):
             mounts,
             r"MODEL_RETRY_DELAYS\s*=\s*\{\s*0\.1\s*,\s*0\.25\s*,\s*0\.5\s*\}",
         )
+        self.assertRegex(mounts, r"MODEL_MAX_WINDOW\s*=\s*2")
+        self.assertIn('unavailable:SetText("模型预览暂不可用")', mount_page)
         self.assertRegex(
             mount_page,
             r"retryIndex\s*=\s*retryIndex\s*\+\s*1",

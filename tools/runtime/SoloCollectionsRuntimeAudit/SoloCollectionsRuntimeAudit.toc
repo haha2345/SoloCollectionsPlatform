@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: SoloCollections Runtime Audit
+## Notes: QA-only read-only model audit. Never include in release bundles.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsRuntimeAuditDB
+
+RuntimeAudit.lua
