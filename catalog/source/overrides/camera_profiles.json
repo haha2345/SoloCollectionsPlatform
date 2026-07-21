@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "reference": {
+    "cameraProfile": "race.human",
+    "sex": "FEMALE",
+    "slots": [
+      {"slot": "HEAD", "sentinel": 21313, "verticalOffset": 0.55, "distanceScale": 0.32, "minimumDistance": 0.55, "horizontalOffset": 0.0, "yawOffset": 0.0},
+      {"slot": "SHOULDER", "sentinel": 21314, "verticalOffset": 0.4, "distanceScale": 0.16, "minimumDistance": 0.52, "horizontalOffset": 0.1, "yawOffset": 0.0},
+      {"slot": "BACK", "sentinel": 21321, "verticalOffset": 0.25, "distanceScale": 0.27, "minimumDistance": 0.65, "horizontalOffset": 0.0, "yawOffset": 3.14159265},
+      {"slot": "CHEST", "sentinel": 21315, "verticalOffset": 0.25, "distanceScale": 0.27, "minimumDistance": 0.58, "horizontalOffset": 0.0, "yawOffset": 0.0},
+      {"slot": "WRIST", "sentinel": 21316, "verticalOffset": 0.12, "distanceScale": 0.2, "minimumDistance": 0.48, "horizontalOffset": 0.1, "yawOffset": 0.0},
+      {"slot": "HANDS", "sentinel": 21317, "verticalOffset": 0.08, "distanceScale": 0.24, "minimumDistance": 0.48, "horizontalOffset": 0.1, "yawOffset": 0.0},
+      {"slot": "WAIST", "sentinel": 21318, "verticalOffset": 0.1, "distanceScale": 0.27, "minimumDistance": 0.58, "horizontalOffset": 0.0, "yawOffset": 0.0},
+      {"slot": "LEGS", "sentinel": 21319, "verticalOffset": -0.02, "distanceScale": 0.27, "minimumDistance": 0.58, "horizontalOffset": 0.0, "yawOffset": 0.0},
+      {"slot": "FEET", "sentinel": 21320, "verticalOffset": -0.38, "distanceScale": 0.3, "minimumDistance": 0.68, "horizontalOffset": 0.0, "yawOffset": 0.0}
+    ]
+  },
+  "priorityReview": ["race.tauren", "race.troll", "race.undead", "race.gnome"],
+  "entries": [
+    {"cameraProfile": "race.gnome", "sex": "MALE", "slot": "CHEST", "centerZCorrection": -0.05, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "MALE", "slot": "WRIST", "centerZCorrection": -0.08, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "MALE", "slot": "HANDS", "centerZCorrection": -0.12, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "MALE", "slot": "WAIST", "centerZCorrection": -0.18, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "MALE", "slot": "LEGS", "centerZCorrection": -0.3, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "MALE", "slot": "FEET", "centerZCorrection": -0.25, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "FEMALE", "slot": "CHEST", "centerZCorrection": -0.05, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "FEMALE", "slot": "WRIST", "centerZCorrection": -0.08, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "FEMALE", "slot": "HANDS", "centerZCorrection": -0.12, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "FEMALE", "slot": "WAIST", "centerZCorrection": -0.18, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "FEMALE", "slot": "LEGS", "centerZCorrection": -0.3, "status": "scaled"},
+    {"cameraProfile": "race.gnome", "sex": "FEMALE", "slot": "FEET", "centerZCorrection": -0.25, "status": "scaled"}
+  ]
+}

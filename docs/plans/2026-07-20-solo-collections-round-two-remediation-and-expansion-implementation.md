@@ -815,6 +815,8 @@ ui: unify thin collection borders and center toy grid
 
 ### 任务 5.1：建立单一相机 profile 源
 
+- [x] 已完成（2026-07-22）。新增单一 canonical/override 源、DBC/M2 fail-closed 提取器和 Lua/C++ 双投影；20 个原生角色模型、3 个 DBC、归一化 bounds、preview display 与 SHA-256 均写入外部 evidence manifest，客户端资产本体不进 Git。详情见 `docs/reports/2026-07-22-character-camera-profile-generation-and-runtime-matrix.md`。
+
 新增建议：
 
 ```text
@@ -837,6 +839,8 @@ docs/reports/2026-07-20-character-camera-profile-generation.md
 外部 DBC/M2 只作输入，不进入 Git。报告保存路径、build、SHA-256、解析结果和归一化尺寸，不保存客户端资产本体。
 
 ### 任务 5.2：生成首轮比例 profile
+
+- [x] 已完成（2026-07-22）。按 human/female reference 尺寸生成 10×2×9 共 180 条 profile，171 个新 sentinel 为 `0x6000..0x60AA` 且与所有保留区间无冲突；human/female 9 条逐值保留，侏儒按槽位使用显式 offset override，其余优先种族保持可审计 `scaled` 基线。
 
 对每个模型计算：
 
@@ -862,6 +866,8 @@ centerZ = (maxZ + minZ) / 2
 牛头人、巨魔、亡灵和侏儒优先准备 override，因为体型、站姿和模型原点最容易破坏纯比例结果。HD 模型或自定义种族使用不同 `clientAssetProfile`，不得复用原版 verified 结果。
 
 ### 任务 5.3：泛化 SoloCam profile 查找
+
+- [x] 已完成（2026-07-22）。SoloCam 已泛化为生成表唯一 sentinel 查找，AddOn 按 logical race/client asset profile、sex、slot 选择；四种迁移模式、Lua/C++ version/hash 一致性、同 tick camera 1 fail-safe、x86 native 构建与部署均通过。
 
 修改：
 
@@ -905,6 +911,8 @@ Compare 不得改变画面或保存第二份可变配置。全部 180 条切换�
 - x86 SoloCam native 测试和 DLL 构建通过。
 
 ### 真实客户端验收
+
+- [x] 已完成（2026-07-22）。接受运行 `20260722-063149-157` 覆盖 20 页、180 行和 21 张截图：180/180 模型路径与视觉审阅通过，human/female 无回归，巨魔异步换装后相机重应用稳定，侏儒按槽位校准；`/reload`、未知种族、未知 sex 和 asset mismatch 回退全部通过。逐行记录见 `catalog/review/cameras/runtime-matrix.csv`。
 
 第一闸门：20 个种族/性别组合逐一验证 `HEAD/CHEST/FEET`，用于尽早发现尺寸算法失败，不能替代完整验收。
 
@@ -1961,7 +1969,7 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] UI 仅在 PREVIEW 成功且 generation 匹配时加载模型，失败有明确提示。
 - [x] 坐骑、宠物、玩具状态边为细边，选中态独立；玩具三列左右 margin 对称。（2026-07-22；七档真实客户端矩阵全部 READY，见阶段 4 报告。）
 - [x] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。（2026-07-22；21/21 READY、正式衣橱与 stock fallback 证据见阶段 3 报告。）
-- [ ] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。
+- [x] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。（2026-07-22；接受运行 `20260722-063149-157`，见阶段 5 报告与逐行审阅 CSV。）
 - [ ] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。
 - [ ] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。
 - [ ] ItemSet 单一 normalized model 取代双手工事实源；牧师 T1 存在；单/多/不限职业正确；最终 active 数有完整审核依据。

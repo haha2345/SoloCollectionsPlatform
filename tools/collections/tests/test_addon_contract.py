@@ -11,6 +11,7 @@ EXPECTED_LOAD_ORDER = [
     "Data\\Generated\\Catalog.lua",
     "Data\\Generated\\IdentityRegistry.lua",
     "Data\\Generated\\PolicyRegistry.lua",
+    "Data\\Generated\\CameraProfiles.lua",
     "Data\\Mounts.lua",
     "Data\\Pets.lua",
     "Data\\Toys.lua",
@@ -1000,7 +1001,8 @@ class AddonContractTests(unittest.TestCase):
             "local function finishPendingItemModelView(model)",
             'model:SetUnit("player")',
             "model:Undress()",
-            "model:SetCamera(profile.camera)",
+            "model:SetCamera(model.scClientCameraSentinel)",
+            "model:SetCamera(1)",
             "model:GetModelScale()",
             "model:GetPosition()",
             "model:SetModelScale(nativeScale * (profile.scaleMultiplier or 1.00))",
@@ -1205,7 +1207,8 @@ class AddonContractTests(unittest.TestCase):
             text.index("local function applyItemModelRecord(model, record)")
         ]
 
-        self.assertIn("model:SetCamera(profile.camera)", camera_region)
+        self.assertIn("model:SetCamera(model.scClientCameraSentinel)", camera_region)
+        self.assertGreaterEqual(camera_region.count("model:SetCamera(1)"), 2)
         self.assertNotIn("SetPosition", camera_region)
         self.assertNotIn("SetRotation", camera_region)
         self.assertNotIn("SetModelScale", camera_region)

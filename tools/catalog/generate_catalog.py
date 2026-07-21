@@ -1046,11 +1046,24 @@ def _validate_appearance_presentation_evidence(repo_root: Path, source_root: Pat
     _require(actual == expected, "appearance presentation report does not match supplied evidence")
 
 
+def _validate_character_camera_profiles(repo_root: Path) -> None:
+    module_path = Path(__file__).with_name("character_camera_profiles.py")
+    spec = importlib.util.spec_from_file_location("solo_character_camera_profiles", module_path)
+    _require(spec is not None and spec.loader is not None, "cannot load character camera profile generator")
+    camera_generator = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(camera_generator)
+    try:
+        camera_generator.check(repo_root)
+    except (OSError, camera_generator.CameraProfileError) as exc:
+        raise CatalogError(f"character camera profiles rejected: {exc}") from exc
+
+
 def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_root: Path, check: bool) -> int:
     module_root = validate_module_root(repo_root, module_root)
     print(f"catalog module target: {module_root}")
     _validate_creature_presentation_evidence(source_root, evidence_root)
     _validate_appearance_presentation_evidence(repo_root, source_root, evidence_root)
+    _validate_character_camera_profiles(repo_root)
     model = build_model(source_root)
     outputs = render_outputs(model, repo_root, module_root)
     drift: list[Path] = []

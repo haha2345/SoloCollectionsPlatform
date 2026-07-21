@@ -43,7 +43,7 @@ constexpr std::size_t kMaximumTrackedModels = 64;
 struct TrackedModel
 {
     void* model = nullptr;
-    const HumanFemaleCameraProfile* profile = nullptr;
+    const CharacterCameraProfile* profile = nullptr;
     bool waitingForFallback = false;
     ItemCameraPose pendingItemPose{};
     ItemCameraPose activeItemPose{};
@@ -121,7 +121,7 @@ SyntheticCreatureRecord* AcquireDirectDisplayRecord(
     return result;
 }
 
-void ActivateHumanFemaleProfile(void* model, const HumanFemaleCameraProfile* profile)
+void ActivateCharacterProfile(void* model, const CharacterCameraProfile* profile)
 {
     EnterCriticalSection(&g_trackingLock);
     if (auto* tracked = FindTrackedModel(model, true))
@@ -186,7 +186,7 @@ void DeactivateCustomCamera(void* model)
 
 struct CameraOverride
 {
-    const HumanFemaleCameraProfile* humanFemaleProfile = nullptr;
+    const CharacterCameraProfile* characterProfile = nullptr;
     ItemCameraPose itemPose{};
     bool itemCameraActive = false;
 };
@@ -199,7 +199,7 @@ bool GetCameraOverride(void* model, CameraOverride& override)
     {
         if (tracked->profile && !tracked->waitingForFallback)
         {
-            override.humanFemaleProfile = tracked->profile;
+            override.characterProfile = tracked->profile;
             hasOverride = true;
         }
         else if (tracked->itemCameraActive)
@@ -239,9 +239,9 @@ void __fastcall HookSetCameraByIndex(void* simpleModel, void*, std::uint32_t ind
         return;
     }
 
-    if (const auto* profile = FindHumanFemaleCameraProfile(index))
+    if (const auto* profile = FindCharacterCameraProfile(index))
     {
-        ActivateHumanFemaleProfile(simpleModel, profile);
+        ActivateCharacterProfile(simpleModel, profile);
         g_originalSetCameraByIndex(simpleModel, Client12340::NativeDressingRoomCamera);
         return;
     }
@@ -291,9 +291,9 @@ void __cdecl HookRenderSimpleModel(void* simpleModel)
 
     CameraVector position{};
     CameraVector target{};
-    const bool cameraBuilt = override.humanFemaleProfile
-        ? BuildHumanFemaleCamera(
-            *override.humanFemaleProfile,
+    const bool cameraBuilt = override.characterProfile
+        ? BuildCharacterCamera(
+            *override.characterProfile,
             nativePosition,
             nativeTarget,
             position,
