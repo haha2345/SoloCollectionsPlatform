@@ -125,9 +125,10 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertRegex(self.source, r'BACK\s*=\s*\{[^}]*rotation\s*=\s*3\.14')
 
     def test_item_cards_use_thin_retail_style_borders(self):
-        self.assertIn("local function createThinCardBorder", self.source)
-        self.assertIn("createThinCardBorder(itemHitFrame, 1)", self.source)
-        self.assertIn("createThinCardBorder(itemHitFrame, 2)", self.source)
+        self.assertIn("function UI.CreateThinCardBorder", self.templates)
+        self.assertNotIn("local function createThinCardBorder", self.source)
+        self.assertIn("UI.CreateThinCardBorder(itemHitFrame, 1)", self.source)
+        self.assertIn("UI.CreateThinCardBorder(itemHitFrame, 2)", self.source)
         self.assertIn("itemModel.scBorder:SetCollected(record.collected)", self.source)
         self.assertNotRegex(
             self.source,

@@ -4,7 +4,9 @@ local Catalog = SC.Catalog
 
 local VISIBLE_TILES = 18
 local GRID_COLUMNS = 3
-local TILE_WIDTH = 282
+local GRID_PADDING_X = 16
+local GRID_PADDING_TOP = 12
+local GRID_COLUMN_GAP = 6
 local TILE_HEIGHT = 72
 local COLLECTED_NAME_COLOR = { 1.00, 0.82, 0.18 }
 local UNCOLLECTED_NAME_COLOR = { 0.46, 0.43, 0.39 }
@@ -235,7 +237,7 @@ function UI.CreateToysPage(parent)
     end, "MENU")
 
     for index = 1, VISIBLE_TILES do
-        local tile = UI.CreateIconTile(grid, TILE_WIDTH, TILE_HEIGHT, selectRecord)
+        local tile = UI.CreateIconTile(grid, 1, TILE_HEIGHT, selectRecord)
         tile.scIcon:ClearAllPoints()
         tile.scIcon:SetWidth(52)
         tile.scIcon:SetHeight(52)
@@ -247,9 +249,6 @@ function UI.CreateToysPage(parent)
         tile.scName:SetJustifyH("LEFT")
         tile.scName:SetJustifyV("MIDDLE")
 
-        local column = (index - 1) % GRID_COLUMNS
-        local row = math.floor((index - 1) / GRID_COLUMNS)
-        tile:SetPoint("TOPLEFT", grid, "TOPLEFT", column * TILE_WIDTH, -(row * TILE_HEIGHT))
         tile:RegisterForClicks("LeftButtonUp", "RightButtonUp")
         tile:RegisterForDrag("LeftButton")
         tile:SetScript("OnClick", function(self, button)
@@ -282,6 +281,38 @@ function UI.CreateToysPage(parent)
         end)
         page.scTiles[index] = tile
     end
+
+    local function layoutTiles()
+        local gridWidth = math.floor((grid:GetWidth() or 0) + 0.5)
+        if gridWidth <= (2 * GRID_PADDING_X) then
+            return
+        end
+        local tileWidth = math.floor(
+            (gridWidth - (2 * GRID_PADDING_X) - ((GRID_COLUMNS - 1) * GRID_COLUMN_GAP))
+                / GRID_COLUMNS
+        )
+        local blockWidth = (GRID_COLUMNS * tileWidth) + ((GRID_COLUMNS - 1) * GRID_COLUMN_GAP)
+        local leftMargin = math.floor((gridWidth - blockWidth) / 2)
+        for index, tile in ipairs(page.scTiles) do
+            local column = (index - 1) % GRID_COLUMNS
+            local row = math.floor((index - 1) / GRID_COLUMNS)
+            tile:ClearAllPoints()
+            tile:SetWidth(tileWidth)
+            tile:SetPoint(
+                "TOPLEFT",
+                grid,
+                "TOPLEFT",
+                leftMargin + (column * (tileWidth + GRID_COLUMN_GAP)),
+                -(GRID_PADDING_TOP + (row * TILE_HEIGHT))
+            )
+        end
+        page.scTileWidth = tileWidth
+        page.scGridLeftMargin = leftMargin
+        page.scGridRightMargin = gridWidth - leftMargin - blockWidth
+    end
+
+    grid:SetScript("OnSizeChanged", layoutTiles)
+    layoutTiles()
 
     local controls = UI.CreatePageControls(page, function()
         page.scPage = math.max(1, page.scPage - 1)
@@ -386,6 +417,7 @@ function UI.CreateToysPage(parent)
     end)
 
     page.scGrid = grid
+    page.scLayoutTiles = layoutTiles
     page.scGridBackground = gridBackground
     page.scControls = controls
     page.scInteractionHint = interactionHint

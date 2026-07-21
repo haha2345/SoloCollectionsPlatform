@@ -125,6 +125,64 @@ function UI.SetCollectedVisual(texture, collected, uncollectedAlpha)
     end
 end
 
+function UI.CreateThinCardBorder(parent, thickness)
+    local border = CreateFrame("Frame", nil, parent)
+    border:SetAllPoints(parent)
+    border:SetFrameLevel(parent:GetFrameLevel() + 1)
+
+    local size = thickness or 1
+    local top = border:CreateTexture(nil, "OVERLAY")
+    top:SetTexture(WHITE_TEXTURE)
+    top:SetPoint("TOPLEFT", border, "TOPLEFT", 0, 0)
+    top:SetPoint("TOPRIGHT", border, "TOPRIGHT", 0, 0)
+    top:SetHeight(size)
+
+    local bottom = border:CreateTexture(nil, "OVERLAY")
+    bottom:SetTexture(WHITE_TEXTURE)
+    bottom:SetPoint("BOTTOMLEFT", border, "BOTTOMLEFT", 0, 0)
+    bottom:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 0, 0)
+    bottom:SetHeight(size)
+
+    local left = border:CreateTexture(nil, "OVERLAY")
+    left:SetTexture(WHITE_TEXTURE)
+    left:SetPoint("TOPLEFT", border, "TOPLEFT", 0, -size)
+    left:SetPoint("BOTTOMLEFT", border, "BOTTOMLEFT", 0, size)
+    left:SetWidth(size)
+
+    local right = border:CreateTexture(nil, "OVERLAY")
+    right:SetTexture(WHITE_TEXTURE)
+    right:SetPoint("TOPRIGHT", border, "TOPRIGHT", 0, -size)
+    right:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 0, size)
+    right:SetWidth(size)
+
+    border.scEdges = { top, bottom, left, right }
+
+    function border:SetBorderColor(red, green, blue, alpha)
+        for _, edge in ipairs(self.scEdges) do
+            edge:SetVertexColor(red, green, blue, alpha or 1)
+        end
+    end
+
+    function border:SetCollected(collected)
+        if collected then
+            self:SetBorderColor(0.58, 0.43, 0.16, 1)
+        else
+            self:SetBorderColor(0.38, 0.39, 0.40, 1)
+        end
+    end
+
+    return border
+end
+
+function UI.CreateCollectionCardBorders(parent)
+    local collection = UI.CreateThinCardBorder(parent, 1)
+    collection:SetCollected(false)
+    local selected = UI.CreateThinCardBorder(parent, 2)
+    selected:SetBorderColor(1.00, 0.78, 0.14, 1)
+    selected:Hide()
+    return collection, selected
+end
+
 -- The source image contains a complete 128px journal border. These nine
 -- sampled regions remain crisp when the frame is resized by the page shell.
 function UI.ApplyNineSlice(owner, texturePath, size)
@@ -758,15 +816,15 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     setAllPoints(selected, row, 1)
     selected:Hide()
 
-    local icon = row:CreateTexture(nil, "ARTWORK")
-    icon:SetWidth(38)
-    icon:SetHeight(38)
-    icon:SetPoint("LEFT", row, "LEFT", 4, 0)
+    local iconHolder = CreateFrame("Frame", nil, row)
+    iconHolder:SetWidth(38)
+    iconHolder:SetHeight(38)
+    iconHolder:SetPoint("LEFT", row, "LEFT", 4, 0)
+    local icon = iconHolder:CreateTexture(nil, "ARTWORK")
+    icon:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 1, -1)
+    icon:SetPoint("BOTTOMRIGHT", iconHolder, "BOTTOMRIGHT", -1, 1)
     UI.SetFallbackTexture(icon)
-    local iconFrame = row:CreateTexture(nil, "OVERLAY")
-    iconFrame:SetTexture(UI.Media.uncollectedFrame)
-    iconFrame:SetPoint("TOPLEFT", icon, "TOPLEFT", -3, 3)
-    iconFrame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 3, -3)
+    local collectionBorder, selectedBorder = UI.CreateCollectionCardBorders(iconHolder)
 
     local name = createLabel(row, "GameFontNormal", "", COLORS.gold)
     name:SetPoint("TOPLEFT", icon, "TOPRIGHT", 9, -4)
@@ -809,7 +867,7 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
         UI.SetCollectedVisual(icon, record.collected)
         name:SetText(record.name or "未知坐骑")
         source:SetText(record.source or record.description or "")
-        iconFrame:SetTexture(record.collected and UI.Media.collectedFrame or UI.Media.uncollectedFrame)
+        collectionBorder:SetCollected(record.collected)
         if record.collected then collectedTint:Show() else collectedTint:Hide() end
         if record.favorite then star:Show() else star:Hide() end
         self:Show()
@@ -817,14 +875,22 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
 
     function row:SetSelected(value)
         self.scSelected = value and true or false
-        if self.scSelected then selected:Show() else selected:Hide() end
+        if self.scSelected then
+            selected:Show()
+            selectedBorder:Show()
+        else
+            selected:Hide()
+            selectedBorder:Hide()
+        end
     end
 
     row.scBackground = background
     row.scCollectedTint = collectedTint
     row.scSelectedTexture = selected
     row.scIcon = icon
-    row.scIconFrame = iconFrame
+    row.scIconFrame = collectionBorder
+    row.scCollectionBorder = collectionBorder
+    row.scSelectionBorder = selectedBorder
     row.scName = name
     row.scDetail = source
     row.scStar = star
@@ -843,15 +909,15 @@ function UI.CreateListRow(parent, width, height, onClick)
     setAllPoints(selected, row, 1)
     selected:Hide()
 
-    local icon = row:CreateTexture(nil, "ARTWORK")
-    icon:SetWidth((height or 56) - 10)
-    icon:SetHeight((height or 56) - 10)
-    icon:SetPoint("LEFT", row, "LEFT", 5, 0)
+    local iconHolder = CreateFrame("Frame", nil, row)
+    iconHolder:SetWidth((height or 56) - 10)
+    iconHolder:SetHeight((height or 56) - 10)
+    iconHolder:SetPoint("LEFT", row, "LEFT", 5, 0)
+    local icon = iconHolder:CreateTexture(nil, "ARTWORK")
+    icon:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 1, -1)
+    icon:SetPoint("BOTTOMRIGHT", iconHolder, "BOTTOMRIGHT", -1, 1)
     UI.SetFallbackTexture(icon)
-    local iconFrame = row:CreateTexture(nil, "OVERLAY")
-    iconFrame:SetTexture(UI.Media.uncollectedFrame)
-    iconFrame:SetPoint("TOPLEFT", icon, "TOPLEFT", -3, 3)
-    iconFrame:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 3, -3)
+    local collectionBorder, selectedBorder = UI.CreateCollectionCardBorders(iconHolder)
 
     local name = createLabel(row, "GameFontNormal", "", COLORS.gold)
     name:SetPoint("TOPLEFT", icon, "TOPRIGHT", 9, -6)
@@ -875,16 +941,24 @@ function UI.CreateListRow(parent, width, height, onClick)
         UI.SetIconTexture(icon, record.icon)
         name:SetText(record.name or "未知收藏")
         detail:SetText(record.source or record.description or "")
-        iconFrame:SetTexture(record.collected and UI.Media.collectedFrame or UI.Media.uncollectedFrame)
+        collectionBorder:SetCollected(record.collected)
         UI.SetCollectedVisual(icon, record.collected)
         if record.favorite then star:Show() else star:Hide() end
         self:Show()
     end
     function row:SetSelected(value)
-        if value then selected:Show() else selected:Hide() end
+        if value then
+            selected:Show()
+            selectedBorder:Show()
+        else
+            selected:Hide()
+            selectedBorder:Hide()
+        end
     end
     row.scIcon = icon
-    row.scIconFrame = iconFrame
+    row.scIconFrame = collectionBorder
+    row.scCollectionBorder = collectionBorder
+    row.scSelectionBorder = selectedBorder
     row.scName = name
     row.scDetail = detail
     row.scStar = star
@@ -905,10 +979,7 @@ function UI.CreateIconTile(parent, width, height, onClick)
     icon:SetHeight(68)
     icon:SetPoint("TOP", tile, "TOP", 0, -5)
     UI.SetFallbackTexture(icon)
-    local border = tile:CreateTexture(nil, "OVERLAY")
-    border:SetTexture(UI.Media.uncollectedFrame)
-    border:SetPoint("TOPLEFT", icon, "TOPLEFT", -5, 5)
-    border:SetPoint("BOTTOMRIGHT", icon, "BOTTOMRIGHT", 5, -5)
+    local border, selectedBorder = UI.CreateCollectionCardBorders(tile)
     local name = createLabel(tile, "GameFontHighlightSmall", "", COLORS.cream)
     name:SetPoint("TOPLEFT", icon, "BOTTOMLEFT", -10, -6)
     name:SetPoint("TOPRIGHT", icon, "BOTTOMRIGHT", 10, -6)
@@ -920,7 +991,7 @@ function UI.CreateIconTile(parent, width, height, onClick)
     star:Hide()
 
     tile:SetScript("OnEnter", function() hover:Show() end)
-    tile:SetScript("OnLeave", function() if not tile.scSelected then hover:Hide() end end)
+    tile:SetScript("OnLeave", function() hover:Hide() end)
     tile:SetScript("OnClick", function(self)
         if onClick then onClick(self, self.scRecord) end
     end)
@@ -929,17 +1000,23 @@ function UI.CreateIconTile(parent, width, height, onClick)
         if not record then self:Hide() return end
         UI.SetIconTexture(icon, record.icon)
         name:SetText(record.name or "未知收藏")
-        border:SetTexture(record.collected and UI.Media.collectedFrame or UI.Media.uncollectedFrame)
+        border:SetCollected(record.collected)
         UI.SetCollectedVisual(icon, record.collected, 0.52)
         if record.favorite then star:Show() else star:Hide() end
         self:Show()
     end
     function tile:SetSelected(value)
         self.scSelected = value and true or false
-        if self.scSelected then hover:Show() else hover:Hide() end
+        if self.scSelected then
+            selectedBorder:Show()
+        else
+            selectedBorder:Hide()
+        end
     end
     tile.scIcon = icon
     tile.scBorder = border
+    tile.scSelectionBorder = selectedBorder
+    tile.scHover = hover
     tile.scName = name
     tile.scStar = star
     return tile

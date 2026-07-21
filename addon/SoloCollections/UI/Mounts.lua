@@ -120,10 +120,7 @@ function UI.CreateMountsPage(parent)
     local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
     infoIcon:SetAllPoints(infoButton)
     UI.SetFallbackTexture(infoIcon)
-    local infoBorder = infoButton:CreateTexture(nil, "OVERLAY")
-    infoBorder:SetTexture(UI.Media.uncollectedFrame)
-    infoBorder:SetPoint("TOPLEFT", infoButton, "TOPLEFT", -3, 3)
-    infoBorder:SetPoint("BOTTOMRIGHT", infoButton, "BOTTOMRIGHT", 3, -3)
+    local infoBorder, infoSelectedBorder = UI.CreateCollectionCardBorders(infoButton)
 
     local name = createDetailLabel(detail, "GameFontNormalLarge", { 1, 0.82, 0.18 })
     name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
@@ -520,7 +517,8 @@ function UI.CreateMountsPage(parent)
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
         UI.SetCollectedVisual(infoIcon, record.collected)
-        infoBorder:SetTexture(record.collected and UI.Media.collectedFrame or UI.Media.uncollectedFrame)
+        infoBorder:SetCollected(record.collected)
+        infoSelectedBorder:Show()
         name:SetText(record.name or "未知坐骑")
         source:SetText("来源：" .. (record.source or "未知"))
         description:SetText(record.description or "暂无说明。")
@@ -598,6 +596,8 @@ function UI.CreateMountsPage(parent)
         favorite:SetText("设为偏好")
         favorite:Disable()
         UI.SetFallbackTexture(infoIcon)
+        infoBorder:SetCollected(false)
+        infoSelectedBorder:Hide()
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
@@ -749,6 +749,8 @@ function UI.CreateMountsPage(parent)
     page.scUnavailable = unavailable
     page.scInfoButton = infoButton
     page.scInfoIcon = infoIcon
+    page.scInfoBorder = infoBorder
+    page.scInfoSelectedBorder = infoSelectedBorder
     page.scName = name
     page.scSource = source
     page.scDescription = description
