@@ -162,6 +162,7 @@ foreach ($name in $dbcNames) {
 $repositoryInputs = [ordered]@{
     'catalog/review/mounts/evidence.json' = 'parsed-world-and-dbc-evidence'
     'catalog/review/mounts/review-policy.json' = 'review-policy'
+    'catalog/review/companions/evidence.json' = 'parsed-world-and-dbc-evidence'
     'catalog/generated/catalog-manifest.json' = 'generated-baseline'
     'catalog/generated/appearance-sources.json' = 'generated-baseline'
     'catalog/source/versions.json' = 'catalog-version'

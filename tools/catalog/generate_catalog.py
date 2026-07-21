@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import importlib.util
 import json
 import re
 import sys
@@ -309,6 +310,44 @@ def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> d
     return result
 
 
+def _load_creature_presentations(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
+    path = source_root / "creature_presentations.json"
+    data = deepcopy(_read_json(path))
+    _require(data.get("schemaVersion") == 1, "unsupported creature presentation schema version")
+    entries = data.get("entries")
+    _require(isinstance(entries, list), "creature presentation entries must be an array")
+    _require(data.get("presentationHash") == _hash(entries), "creature presentation hash is stale")
+    expected = {
+        (entry["typeKey"], int(entry["collectionId"])): entry
+        for entry in collections
+        if entry["typeKey"] in {"mount", "companion"}
+    }
+    actual: dict[tuple[str, int], dict[str, Any]] = {}
+    for entry in entries:
+        identity = (entry.get("typeKey"), int(entry.get("collectionId", 0)))
+        _require(identity not in actual, f"duplicate creature presentation: {identity}")
+        source = expected.get(identity)
+        _require(source is not None, f"creature presentation references unknown collection: {identity}")
+        _require(entry.get("collectionKey") == source["collectionKey"],
+                 f"creature presentation key mismatch: {source['collectionKey']}")
+        _require(entry.get("lifecycle") == source["lifecycle"],
+                 f"creature presentation lifecycle mismatch: {source['collectionKey']}")
+        _require(entry.get("presentationStatus") in {"READY", "DISABLED", "EXCLUDED"},
+                 f"invalid creature presentation status: {source['collectionKey']}")
+        _require(int(entry.get("previewCreatureEntry", 0)) > 0,
+                 f"invalid preview creature Entry: {source['collectionKey']}")
+        if source["lifecycle"] == "active":
+            _require(entry["presentationStatus"] == "READY",
+                     f"active creature presentation is not ready: {source['collectionKey']}")
+            _require(int(entry.get("iconSpellId", 0)) > 0,
+                     f"active creature presentation has no icon spell: {source['collectionKey']}")
+            _require(re.match(r"^Interface[\\/]Icons[\\/]", str(entry.get("iconTexture", "")), re.IGNORECASE) is not None,
+                     f"active creature presentation has no native icon: {source['collectionKey']}")
+        actual[identity] = entry
+    _require(set(actual) == set(expected), "creature presentation coverage must match mount/companion catalog")
+    return data
+
+
 def _parse_legacy_sc1_table(lua_text: str, table_name: str) -> list[dict[str, Any]]:
     table = re.search(rf"(?ms)^local\s+{re.escape(table_name)}\s*=\s*\{{(.*?)^\}}", lua_text)
     _require(table is not None, f"legacy SC1 table is missing: {table_name}")
@@ -445,7 +484,12 @@ def _derive_class(entry: dict[str, Any]) -> dict[str, Any]:
 
 def _canonical_for_hash(model: dict[str, Any]) -> dict[str, Any]:
     def clean(value: Any, key: str = "") -> Any:
-        if key in {"name", "icon", "metadataVersion"}:
+        if key in {
+            "name", "icon", "metadataVersion", "iconSpellId", "spellIconId", "iconTexture",
+            "presentationStatus", "presentationReasonCode", "presentationHash",
+            "presentationEvidenceHash", "presentationEvidenceId", "presentationEvidencePackHash",
+            "deprecatedAliases",
+        }:
             return None
         if isinstance(value, dict):
             return {child_key: cleaned for child_key in sorted(value) if (cleaned := clean(value[child_key], child_key)) is not None}
@@ -513,6 +557,21 @@ def build_model(source_root: Path) -> dict[str, Any]:
     mount_actions = _load_mount_actions(source_root, collections)
     companion_actions = _load_companion_actions(source_root, collections)
     toy_actions = _load_toy_actions(source_root, collections)
+    creature_presentations = _load_creature_presentations(source_root, collections)
+    presentation_by_identity = {
+        (entry["typeKey"], int(entry["collectionId"])): entry
+        for entry in creature_presentations["entries"]
+    }
+    for entry in collections:
+        presentation = presentation_by_identity.get((entry["typeKey"], int(entry["collectionId"])))
+        if presentation is None:
+            continue
+        entry["previewCreatureEntry"] = int(presentation["previewCreatureEntry"])
+        entry["iconSpellId"] = int(presentation["iconSpellId"])
+        entry["spellIconId"] = int(presentation["spellIconId"])
+        entry["iconTexture"] = presentation["iconTexture"]
+        entry["presentationStatus"] = presentation["presentationStatus"]
+        entry["presentationReasonCode"] = presentation.get("reasonCode", "")
     model = {
         "schemaVersion": 1,
         "metadataVersion": versions["metadataVersion"],
@@ -528,7 +587,23 @@ def build_model(source_root: Path) -> dict[str, Any]:
         "toyActions": toy_actions,
         "aliases": aliases,
         "identityOverrides": sorted(overrides, key=lambda row: (row.get("collectionKey", ""), row.get("classKey", ""), row.get("raceKey", ""))),
+        "presentationEvidenceHash": creature_presentations["presentationHash"],
+        "presentationEvidenceId": creature_presentations["evidenceId"],
+        "presentationEvidencePackHash": creature_presentations["evidencePackHash"],
+        "deprecatedAliases": {"displayCreatureId": "previewCreatureEntry"},
     }
+    presentation_basis = [
+        {
+            key: entry.get(key)
+            for key in (
+                "typeKey", "collectionId", "collectionKey", "name", "lifecycle", "assetReady",
+                "assetProfile", "previewCreatureEntry", "iconSpellId", "spellIconId", "iconTexture",
+                "presentationStatus", "presentationReasonCode",
+            )
+        }
+        for entry in collections
+    ]
+    model["presentationHash"] = _hash(presentation_basis)
     mapping_basis = _canonical_for_hash(model)
     model["mappingHash"] = _hash(mapping_basis)
     model["typeMappingHashes"] = {}
@@ -794,11 +869,9 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     }
     for entry in client_collections:
         if entry["typeKey"] == "mount":
-            action = mount_actions_by_id[int(entry["collectionId"])]
-            entry["displayCreatureId"] = int(action["creatureIds"][0])
+            entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
         elif entry["typeKey"] == "companion":
-            action = companion_actions_by_id[int(entry["collectionId"])]
-            entry["displayCreatureId"] = int(action["creatureId"])
+            entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
         elif entry["typeKey"] == "toy":
             action = toy_actions_by_id[int(entry["collectionId"])]
             entry["displayItemId"] = int(action["itemId"])
@@ -815,7 +888,11 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         "schemaVersion": model["schemaVersion"], "metadataVersion": model["metadataVersion"],
         "assetPackVersion": model["assetPackVersion"], "mappingHash": model["mappingHash"],
         "collectionTypes": model["collectionTypes"], "collections": client_collections,
-        "typeMappingHashes": model["typeMappingHashes"],
+        "typeMappingHashes": model["typeMappingHashes"], "presentationHash": model["presentationHash"],
+        "presentationEvidenceHash": model["presentationEvidenceHash"],
+        "presentationEvidenceId": model["presentationEvidenceId"],
+        "presentationEvidencePackHash": model["presentationEvidencePackHash"],
+        "deprecatedAliases": model["deprecatedAliases"],
     }) + "\n"
     identity_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedIdentityData = " + _lua({
         "schemaVersion": model["schemaVersion"], "mappingHash": model["mappingHash"],
@@ -851,15 +928,29 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
 def validate_module_root(repo_root: Path, module_root: Path) -> Path:
     module_root = module_root.resolve()
     _require(module_root != repo_root.resolve(), "module root must not be the SoloCollections repository")
-    _require(module_root.name == "mod-solo-collections", "module root basename must be mod-solo-collections")
     _require((module_root / ".git").exists(), "module root must be a Git checkout")
     _require((module_root / "src/SoloCollectionsTypes.h").is_file(), "module root does not contain SoloCollectionsTypes.h")
     return module_root
 
 
-def generate(repo_root: Path, source_root: Path, module_root: Path, check: bool) -> int:
+def _validate_creature_presentation_evidence(source_root: Path, evidence_root: Path) -> None:
+    module_path = Path(__file__).with_name("creature_presentations.py")
+    spec = importlib.util.spec_from_file_location("solo_creature_presentations", module_path)
+    _require(spec is not None and spec.loader is not None, "cannot load creature presentation generator")
+    presentation_generator = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(presentation_generator)
+    try:
+        expected = presentation_generator.build_presentations(evidence_root)
+    except (OSError, presentation_generator.PresentationError) as exc:
+        raise CatalogError(f"creature presentation evidence rejected: {exc}") from exc
+    actual = _read_json(source_root / "creature_presentations.json")
+    _require(actual == expected, "creature presentations do not match the supplied evidence root")
+
+
+def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_root: Path, check: bool) -> int:
     module_root = validate_module_root(repo_root, module_root)
     print(f"catalog module target: {module_root}")
+    _validate_creature_presentation_evidence(source_root, evidence_root)
     model = build_model(source_root)
     outputs = render_outputs(model, repo_root, module_root)
     drift: list[Path] = []
@@ -884,13 +975,14 @@ def generate(repo_root: Path, source_root: Path, module_root: Path, check: bool)
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--module-root", required=True, type=Path)
+    parser.add_argument("--evidence-root", required=True, type=Path)
     parser.add_argument("--source-root", type=Path)
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
     repo_root = Path(__file__).resolve().parents[2]
     source_root = args.source_root.resolve() if args.source_root else repo_root / "catalog/source"
     try:
-        return generate(repo_root, source_root, args.module_root, args.check)
+        return generate(repo_root, source_root, args.module_root, args.evidence_root.resolve(), args.check)
     except CatalogError as exc:
         print(f"catalog error: {exc}", file=sys.stderr)
         return 2

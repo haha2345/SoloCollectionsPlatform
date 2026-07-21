@@ -59,6 +59,24 @@ class StableIdTests(unittest.TestCase):
             {"id": 1000, "key": "test_companion", "ordinal": ordinal, "lifecycle": "active"}
         )
         self.save("catalog/ids.json", ids)
+        presentations = self.load("catalog/source/creature_presentations.json")
+        presentations["entries"].append(
+            {
+                "typeKey": "companion",
+                "collectionId": 1000,
+                "collectionKey": "test_companion",
+                "lifecycle": "active",
+                "presentationStatus": "READY",
+                "reasonCode": "",
+                "previewCreatureEntry": 999999,
+                "iconSpellId": 123,
+                "spellIconId": 1,
+                "iconTexture": "Interface\\Icons\\Test_Companion",
+                "sourceBuild": "3.3.5.12340",
+            }
+        )
+        presentations["presentationHash"] = generator._hash(presentations["entries"])
+        self.save("catalog/source/creature_presentations.json", presentations)
         populated = generator.build_model(self.source)
         empty = generator.build_model(ROOT / "catalog" / "source")
         self.assertNotEqual(empty["mappingHash"], populated["mappingHash"])

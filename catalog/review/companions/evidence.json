@@ -1,0 +1,450 @@
+{
+  "entries": [
+    {
+      "collectionId": 100281,
+      "collectionKey": "companion.worg_pup",
+      "creature": {
+        "displayIds": [
+          9563,
+          9572
+        ],
+        "displayResourcesPresent": true,
+        "entry": 10259,
+        "name": "��������",
+        "subname": ""
+      },
+      "iconSpellId": 15999,
+      "ordinal": 281,
+      "previewCreatureEntry": 10259,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100282,
+      "collectionKey": "companion.smolderweb_hatchling",
+      "creature": {
+        "displayIds": [
+          9997
+        ],
+        "displayResourcesPresent": true,
+        "entry": 10598,
+        "name": "����С֩��",
+        "subname": ""
+      },
+      "iconSpellId": 16450,
+      "ordinal": 282,
+      "previewCreatureEntry": 10598,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100283,
+      "collectionKey": "companion.emerald_whelpling",
+      "creature": {
+        "displayIds": [
+          6291
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7545,
+        "name": "��������",
+        "subname": ""
+      },
+      "iconSpellId": 10698,
+      "ordinal": 283,
+      "previewCreatureEntry": 7545,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100284,
+      "collectionKey": "companion.vampiric_batling",
+      "creature": {
+        "displayIds": [
+          4185
+        ],
+        "displayResourcesPresent": true,
+        "entry": 28513,
+        "name": "��Ѫ���𱦱�",
+        "subname": ""
+      },
+      "iconSpellId": 51851,
+      "ordinal": 284,
+      "previewCreatureEntry": 28513,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100285,
+      "collectionKey": "companion.stinker",
+      "creature": {
+        "displayIds": [
+          16633
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23274,
+        "name": "����",
+        "subname": ""
+      },
+      "iconSpellId": 40990,
+      "ordinal": 285,
+      "previewCreatureEntry": 23274,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100286,
+      "collectionKey": "companion.sinister_squashling",
+      "creature": {
+        "displayIds": [
+          21900
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23909,
+        "name": "а����Ϲ�����",
+        "subname": ""
+      },
+      "iconSpellId": 42609,
+      "ordinal": 286,
+      "previewCreatureEntry": 23909,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100287,
+      "collectionKey": "companion.tiny_sporebat",
+      "creature": {
+        "displayIds": [
+          22855
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25062,
+        "name": "����������",
+        "subname": ""
+      },
+      "iconSpellId": 45082,
+      "ordinal": 287,
+      "previewCreatureEntry": 25062,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100288,
+      "collectionKey": "companion.speedy",
+      "creature": {
+        "displayIds": [
+          16259
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16547,
+        "name": "��ë��",
+        "subname": ""
+      },
+      "iconSpellId": 28738,
+      "ordinal": 288,
+      "previewCreatureEntry": 16547,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100289,
+      "collectionKey": "companion.phoenix_hatchling",
+      "creature": {
+        "displayIds": [
+          23574
+        ],
+        "displayResourcesPresent": true,
+        "entry": 26119,
+        "name": "��˱���",
+        "subname": ""
+      },
+      "iconSpellId": 46599,
+      "ordinal": 289,
+      "previewCreatureEntry": 26119,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100290,
+      "collectionKey": "companion.ghostly_skull",
+      "creature": {
+        "displayIds": [
+          28089
+        ],
+        "displayResourcesPresent": true,
+        "entry": 29147,
+        "name": "��Ӱ����",
+        "subname": ""
+      },
+      "iconSpellId": 53316,
+      "ordinal": 290,
+      "previewCreatureEntry": 29147,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100291,
+      "collectionKey": "companion.hyacinth_macaw",
+      "creature": {
+        "displayIds": [
+          6192
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7391,
+        "name": "��������",
+        "subname": ""
+      },
+      "iconSpellId": 10682,
+      "ordinal": 291,
+      "previewCreatureEntry": 7391,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100292,
+      "collectionKey": "companion.disgusting_oozeling",
+      "creature": {
+        "displayIds": [
+          15436
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15429,
+        "name": "���ĵ������",
+        "subname": ""
+      },
+      "iconSpellId": 25162,
+      "ordinal": 292,
+      "previewCreatureEntry": 15429,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100293,
+      "collectionKey": "companion.mr_wiggles",
+      "creature": {
+        "displayIds": [
+          16257
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16548,
+        "name": "�ߺ�����",
+        "subname": ""
+      },
+      "iconSpellId": 28739,
+      "ordinal": 293,
+      "previewCreatureEntry": 16548,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100294,
+      "collectionKey": "companion.lifelike_toad",
+      "creature": {
+        "displayIds": [
+          901
+        ],
+        "displayResourcesPresent": true,
+        "entry": 12419,
+        "name": "��������",
+        "subname": ""
+      },
+      "iconSpellId": 19772,
+      "ordinal": 294,
+      "previewCreatureEntry": 12419,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100295,
+      "collectionKey": "companion.dragon_kite",
+      "creature": {
+        "displayIds": [
+          22966,
+          22990,
+          22991,
+          22992
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25110,
+        "name": "������",
+        "subname": ""
+      },
+      "iconSpellId": 45127,
+      "ordinal": 295,
+      "previewCreatureEntry": 25110,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100296,
+      "collectionKey": "companion.firefly",
+      "creature": {
+        "displayIds": [
+          20042
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21076,
+        "name": "ө���",
+        "subname": ""
+      },
+      "iconSpellId": 36034,
+      "ordinal": 296,
+      "previewCreatureEntry": 21076,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100297,
+      "collectionKey": "companion.zergling",
+      "creature": {
+        "displayIds": [
+          10993
+        ],
+        "displayResourcesPresent": true,
+        "entry": 11327,
+        "name": "������",
+        "subname": ""
+      },
+      "iconSpellId": 17709,
+      "ordinal": 297,
+      "previewCreatureEntry": 11327,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100298,
+      "collectionKey": "companion.panda_cub",
+      "creature": {
+        "displayIds": [
+          10990
+        ],
+        "displayResourcesPresent": true,
+        "entry": 11325,
+        "name": "��è����",
+        "subname": ""
+      },
+      "iconSpellId": 17707,
+      "ordinal": 298,
+      "previewCreatureEntry": 11325,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100299,
+      "collectionKey": "companion.frosty",
+      "creature": {
+        "displayIds": [
+          28456
+        ],
+        "displayResourcesPresent": true,
+        "entry": 28883,
+        "name": "˪˪",
+        "subname": ""
+      },
+      "iconSpellId": 52615,
+      "ordinal": 299,
+      "previewCreatureEntry": 28883,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100300,
+      "collectionKey": "companion.bananas",
+      "creature": {
+        "displayIds": [
+          21362
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23234,
+        "name": "����",
+        "subname": ""
+      },
+      "iconSpellId": 40549,
+      "ordinal": 300,
+      "previewCreatureEntry": 23234,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100301,
+      "collectionKey": "companion.mr_chilly",
+      "creature": {
+        "displayIds": [
+          26452
+        ],
+        "displayResourcesPresent": true,
+        "entry": 29726,
+        "name": "Сߴ",
+        "subname": ""
+      },
+      "iconSpellId": 55068,
+      "ordinal": 301,
+      "previewCreatureEntry": 29726,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100302,
+      "collectionKey": "companion.giant_sewer_rat",
+      "creature": {
+        "displayIds": [
+          27627
+        ],
+        "displayResourcesPresent": true,
+        "entry": 31575,
+        "name": "������ˮ������",
+        "subname": ""
+      },
+      "iconSpellId": 59250,
+      "ordinal": 302,
+      "previewCreatureEntry": 31575,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100303,
+      "collectionKey": "companion.spring_rabbit",
+      "creature": {
+        "displayIds": [
+          6302
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32791,
+        "name": "����",
+        "subname": ""
+      },
+      "iconSpellId": 61725,
+      "ordinal": 303,
+      "previewCreatureEntry": 32791,
+      "reasonCode": "",
+      "status": "READY"
+    },
+    {
+      "collectionId": 100304,
+      "collectionKey": "companion.onyxian_whelpling",
+      "creature": {
+        "displayIds": [
+          30356
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36607,
+        "name": "���ݿ�ϣ��������",
+        "subname": ""
+      },
+      "iconSpellId": 69002,
+      "ordinal": 304,
+      "previewCreatureEntry": 36607,
+      "reasonCode": "",
+      "status": "READY"
+    }
+  ],
+  "evidenceHash": "cebeda9426070ccf693a45390cf5bd07032a6b247dc292179b546aa417bde8b6",
+  "reviewMethod": "EXACT_CREATURE_ENTRY_ONLY",
+  "schemaVersion": 1,
+  "sourceBuild": "3.3.5.12340",
+  "sources": {
+    "CreatureDisplayInfo.dbc": "1f1a4f5d9d8ed1af1a0be65e8171ed962f2c3e12e213de748e2850515bd3f68b",
+    "catalog-manifest.json": "6552ea6efd23f68bdf3c1a7f8ac13049adf8a241b4686ac470756544f6a668ff",
+    "companion_actions.json": "b49661d2544b97c21da10c51aa72e224a28d0bf093c8e069fcab00a1c4d4dfba",
+    "worldDatabase": "runtime World DB (credentials omitted)"
+  }
+}

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import subprocess
 import sys
 import unittest
@@ -9,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-MODULE_ROOT = ROOT.parent / "mod-solo-collections"
+MODULE_ROOT = Path(os.environ.get("SOLOCOLLECTIONS_MODULE_ROOT", ROOT.parent / "mod-solo-collections"))
 GENERATOR_PATH = ROOT / "tools" / "catalog" / "set_catalog.py"
 SPEC = importlib.util.spec_from_file_location("solo_set_catalog", GENERATOR_PATH)
 generator = importlib.util.module_from_spec(SPEC)

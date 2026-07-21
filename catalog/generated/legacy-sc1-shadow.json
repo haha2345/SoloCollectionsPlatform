@@ -1,8 +1,8 @@
 {
-  "canonicalMappingHash": "9781ece5bd2d290c0b04ec9c233a5b8925fe18748f7db46a5853676b9203e86d",
+  "canonicalMappingHash": "98fb49094bcb45a2efa143b3c49e3c8f3c752856de0c59068808ba0831b04b00",
   "categories": [
     {
-      "canonicalMappingHash": "6801854cfc6bd1107424d0910a66183bfee100f328d6f468d8a4007f8b7e54b9",
+      "canonicalMappingHash": "742d6e4fdff57cc001ed6ad491c4f1e630c5b10c26fa46625ba82d5a679e8386",
       "legacyEntryCount": 24,
       "legacyMappingHash": "7b12977bbb4eead704f2d5dcb23d8bfec70be215c577f9aa95fc8ab803cbc917",
       "mappedEntryCount": 24,
@@ -10,7 +10,7 @@
       "typeKey": "mount"
     },
     {
-      "canonicalMappingHash": "e854b1b83a01f3f1672a0907099c5f912caab741bba304c2660c0ccbf0bb9efc",
+      "canonicalMappingHash": "f7a2316404395ecc63debdb836dde8ea59736d38343e24c1a1d1e22137fbf4bf",
       "legacyEntryCount": 24,
       "legacyMappingHash": "f7a8f14cee3832b7b851d036910599613c85bbd78b7817e85dd4b6eaa2b8bffa",
       "mappedEntryCount": 24,
@@ -952,7 +952,7 @@
       "typeKey": "toy"
     }
   ],
-  "mappingHash": "a4511d990955f31f96598156ccad4070a37f280428c739597fc3b67b46494c9e",
+  "mappingHash": "982f6aeca46ec3d9ffca266a53d46816b6482dc5592ab654a82667bb50a636e8",
   "schemaVersion": 1,
   "sourceHash": "d7ceac7ef484bd7e33ef5d3b710b70ca2cfbe7a452cf0d54eaeae79ebf492620"
 }
