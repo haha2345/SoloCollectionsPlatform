@@ -39,9 +39,10 @@ local function getGeneratedMountSource()
             local names = collection.name or {}
             table.insert(generatedMountSource, {
                 id = collection.collectionId,
-                creatureId = collection.displayCreatureId,
+                previewCreatureEntry = collection.previewCreatureEntry or collection.displayCreatureId,
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
-                icon = "Interface\\Icons\\Ability_Mount_RidingHorse",
+                icon = collection.iconTexture,
+                presentationStatus = collection.presentationStatus,
                 source = "账号收藏",
                 description = "由 SoloCollections 服务端权威目录提供。",
                 collected = false,
@@ -63,9 +64,10 @@ local function getGeneratedCompanionSource()
             local names = collection.name or {}
             table.insert(generatedCompanionSource, {
                 id = collection.collectionId,
-                creatureId = collection.displayCreatureId,
+                previewCreatureEntry = collection.previewCreatureEntry or collection.displayCreatureId,
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
-                icon = "Interface\\Icons\\INV_Box_PetCarrier_01",
+                icon = collection.iconTexture,
+                presentationStatus = collection.presentationStatus,
                 source = "账号收藏",
                 description = "由 SoloCollections 服务端权威目录提供。",
                 collected = false,

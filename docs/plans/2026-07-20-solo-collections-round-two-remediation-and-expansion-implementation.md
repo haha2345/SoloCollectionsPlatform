@@ -387,6 +387,8 @@ docs: record round two regression baseline
 
 ### 任务 1.1：生成 Creature 类展示证据
 
+- [x] 已完成（2026-07-22）。新增 fail-closed `creature_presentations.py`，以命名 evidence pack 输入解析 `Spell.dbc`/`SpellIcon.dbc`，并从只读 World 查询生成 24/24 READY 的宠物 CreatureTemplate/Display 证据；正式投影为 281 个坐骑 101 个不同图标、24 个宠物 23 个不同图标，零缺失。
+
 仓库：`SoloCollections`
 
 主要文件：
@@ -410,6 +412,8 @@ catalog/source/creature_presentations.json           # 新增建议
 
 ### 任务 1.2：扩展主目录生成器
 
+- [x] 已完成（2026-07-22）。`generate_catalog.py` 已按 `(typeKey, collectionId)` 联接 305 条 presentation，输出 `previewCreatureEntry`、原生图标字段、`presentationStatus`、独立 presentation hash 和单版本 deprecated alias；`metadataVersion` 提升至 `2026.07.22.1`，asset pack 未变化，并用合同测试证明纯图标变更不污染 mapping hash。
+
 主要文件：
 
 ```text
@@ -428,6 +432,8 @@ catalog/source/versions.json
 - 提升 `metadataVersion`。只有 collection/preview Entry 映射变化时才重算 mount/companion type mapping hash；纯图标修复只更新 presentation hash。只在实际客户端资源包变化时提升 `assetPackVersion`。
 
 ### 任务 1.3：迁移 AddOn 适配层
+
+- [x] 已完成（2026-07-22）。生成目录分支已改用逐条 `iconTexture` 和 `previewCreatureEntry`，保留 3.3.5 图标裁切且不再出现整类马/宠物笼图标；冷 WDB 实机覆盖坐骑代表类别与全部 24 个宠物，列表/详情和 `/reload` 均通过。模型预览明确仍留给阶段 2，证据见 `docs/reports/2026-07-22-stage1-creature-presentations.md`。
 
 主要文件：
 

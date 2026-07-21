@@ -104,6 +104,11 @@ class AddonContractTests(unittest.TestCase):
         ):
             self.assertNotIn(forbidden, text)
 
+    def test_generated_catalog_branch_has_no_global_mount_or_pet_icon(self):
+        catalog = read_text(ADDON / "Core" / "Catalog.lua")
+        self.assertNotIn("Ability_Mount_RidingHorse", catalog)
+        self.assertNotIn("INV_Box_PetCarrier_01", catalog)
+
     def test_launcher_is_bottom_right_draggable_and_persistent(self):
         path = ADDON / "UI" / "Launcher.lua"
         self.assertTrue(path.is_file(), f"missing {path}")
@@ -446,7 +451,7 @@ class AddonContractTests(unittest.TestCase):
             'SetScript("OnMouseUp"',
             "favorite:Disable()",
             "if not record.collected then",
-            "model:SetCreature(record.creatureId)",
+            "model:SetCreature(record.previewCreatureEntry)",
         ):
             self.assertIn(token, pets)
         self.assertNotIn("model:SetCamera(", pets)
@@ -640,7 +645,7 @@ class AddonContractTests(unittest.TestCase):
             apply_model.index("setCreatureAndVerify()", apply_model.index("setCreatureAndVerify = function"))
         ]
         self.assertIn("model:ClearModel()", set_creature)
-        self.assertIn("model:SetCreature(record.creatureId)", set_creature)
+        self.assertIn("model:SetCreature(record.previewCreatureEntry)", set_creature)
         self.assertIn("scheduleModel(0, generation, verifyModel)", set_creature)
         fail_model = apply_model[
             apply_model.index("local function failModel") : apply_model.index("local function retryLoad")
