@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "capturedUtc": "2026-07-21T16:41:54.0035644Z",
+  "evidence": {
+    "evidenceId": "round2-20260722-baseline-v2c",
+    "packHash": "dde997dcf72e087c3baf159d6a9ddbd268d2c983f312f8d223c389658b116720",
+    "manifestSha256": "c452bc0da890eceda84a33953ec0131078a5e65932eec521d145a0ecf555dcc8",
+    "worldSnapshotQueryVersion": "mount-catalog-exact-entry-v1"
+  },
+  "executables": [
+    {
+      "name": "python",
+      "version": "3.10.6",
+      "locator": "python.exe (installed tool)",
+      "sha256": "32ce1d2650ea8b9d394f5b8f94677d27888dccdc3713365bf903a8c465c9d776"
+    },
+    {
+      "name": "cmake",
+      "version": "4.3.3",
+      "locator": "cmake.exe (installed tool)",
+      "sha256": "70fa92ce2ac9f54b0ae395b0b3790d9147ef2ebdbd7c4e0bb20852aac581baea"
+    },
+    {
+      "name": "ctest",
+      "version": "4.3.3",
+      "locator": "ctest.exe (installed tool)",
+      "sha256": "ef43b316fc627f66c608f396150f807a61d906d6b532aaff64acf24f3b39d34c"
+    },
+    {
+      "name": "luac51",
+      "version": "Lua 5.1.5",
+      "locator": "luac51.exe (F-drive validation tool)",
+      "sha256": "fff06a53036b0c67506af9c847989e3a4d645d89d76dc3e545d309a3bfd47f55"
+    },
+    {
+      "name": "msvc-x64",
+      "version": "19.51.36248.0",
+      "locator": "cl.exe (MSVC x64 toolchain)",
+      "sha256": "dc8426b8760d92cf757df3d10b9f0244a95b454ff43194a58161568a0ec70d53"
+    },
+    {
+      "name": "msvc-x86",
+      "version": "19.51.36248.0",
+      "locator": "cl.exe (MSVC x86 toolchain)",
+      "sha256": "03129f7da230110e4f9d5bd39cd022a017436655120e4955b98c56c566f15188"
+    }
+  ],
+  "parsers": [
+    {
+      "name": "mount-catalog",
+      "version": "repository-5c47e6e",
+      "path": "tools/catalog/mount_catalog.py",
+      "sha256": "605789336a3de1e6b03369faf0057b6c486010f0ec6ee83b006c78806a2c4cf4"
+    },
+    {
+      "name": "appearance-catalog",
+      "version": "repository-5c47e6e",
+      "path": "tools/catalog/appearance_catalog.py",
+      "sha256": "c3f53581a0ed0790f52d50971a809e04df096166a1c13c3a884ae9042c9a7ae5"
+    },
+    {
+      "name": "weapon-asset-builder",
+      "version": "repository-5c47e6e",
+      "path": "client-extension/SoloCam/scripts/build_creature_weapon_assets.py",
+      "sha256": "686c4fa300ceab337319d4228d951a06853c9034ae3baa11f91cb5801eaf3936"
+    },
+    {
+      "name": "m2-texture-patcher",
+      "version": "repository-5c47e6e",
+      "path": "client-extension/SoloCam/scripts/patch_item_m2_textures.py",
+      "sha256": "0bdab87c825954cd5e94970ed94ca027ebe3001fc519035e40b95a0ade3acf21"
+    },
+    {
+      "name": "storm-mpq-wrapper",
+      "version": "repository-5c47e6e",
+      "path": "tools/mpq/StormMpq.ps1",
+      "sha256": "ecbba8c047a15ae8c7e276cb411f7f7e747bb72232d2ed777f92bffd988f47d8"
+    }
+  ],
+  "storagePolicy": {
+    "installedToolsOnCReadOnly": true,
+    "outputsAndCachesRequiredOnF": true
+  }
+}
