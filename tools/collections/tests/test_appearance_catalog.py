@@ -61,6 +61,52 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
         self.assertIn("SC.Bridge.ApplyAppearance(record.id, equipmentSlot", wardrobe)
         self.assertIn("Shift + 左键", wardrobe)
 
+    def test_verified_standalone_presentations_join_canonical_ids(self):
+        report = json.loads(
+            (ROOT / "catalog/generated/appearance-presentation-report.json").read_text(encoding="utf-8")
+        )
+        manifest = json.loads(
+            (ROOT / "catalog/generated/catalog-manifest.json").read_text(encoding="utf-8")
+        )
+        self.assertEqual(21, report["presentationCount"])
+        self.assertEqual(set(range(40000, 40021)), {
+            row["syntheticDisplayId"] for row in report["entries"]
+        })
+        canonical = {
+            row["collectionId"]: row for row in manifest["collections"]
+            if row["typeKey"] == "appearance"
+        }
+        for row in report["entries"]:
+            projected = canonical[row["appearanceId"]]
+            self.assertEqual("STANDALONE", projected["renderMode"])
+            self.assertEqual(row["syntheticDisplayId"], projected["syntheticDisplayId"])
+            self.assertEqual(row["modelPath"], projected["modelPath"])
+            self.assertIn(row["sourceAlias"], projected["aliases"])
+
+    def test_weapon_render_modes_are_explicit_and_fail_closed(self):
+        manifest = json.loads(
+            (ROOT / "catalog/generated/catalog-manifest.json").read_text(encoding="utf-8")
+        )
+        rows = [row for row in manifest["collections"] if row["typeKey"] == "appearance"]
+        modes = {"BODY": 0, "STANDALONE": 0, "UNAVAILABLE": 0}
+        for row in rows:
+            modes[row["renderMode"]] += 1
+            slots = {alias.split(":", 1)[1] for alias in row["aliases"] if alias.startswith("slot:")}
+            if slots & {"MAINHAND", "OFFHAND"}:
+                self.assertIn(row["renderMode"], {"STANDALONE", "UNAVAILABLE"})
+            else:
+                self.assertEqual("BODY", row["renderMode"])
+        self.assertEqual(21, modes["STANDALONE"])
+        self.assertGreater(modes["UNAVAILABLE"], 0)
+
+    def test_renderer_uses_synthetic_display_only_at_adapter_boundary(self):
+        wardrobe = (ROOT / "addon/SoloCollections/UI/Wardrobe.lua").read_text(encoding="utf-8")
+        generated = (ROOT / "addon/SoloCollections/Data/Generated/Catalog.lua").read_text(encoding="utf-8")
+        self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + record.syntheticDisplayId", wardrobe)
+        self.assertNotIn("creatureDisplayId", wardrobe)
+        self.assertNotIn("creatureDisplayId", generated)
+        self.assertIn('unavailableText:SetText("独立模型资源尚未生成")', wardrobe)
+
 
 if __name__ == "__main__":
     unittest.main()
