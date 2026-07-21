@@ -3,7 +3,7 @@ from __future__ import annotations
 import unittest
 import re
 
-from common import ADDON, all_lua_text, read_text
+from common import ADDON, ROOT, all_lua_text, read_text
 
 
 EXPECTED_LOAD_ORDER = [
@@ -787,8 +787,99 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("local VISIBLE_TILES = 18", toys)
         self.assertIn("tile.scIcon:ClearAllPoints()", toys)
         self.assertIn("tile.scName:SetJustifyH(\"LEFT\")", toys)
-        self.assertIn("local TILE_WIDTH = 282", toys)
+        self.assertIn("local GRID_PADDING_X = 16", toys)
+        self.assertIn("local GRID_PADDING_TOP = 12", toys)
+        self.assertIn("local GRID_COLUMN_GAP = 6", toys)
         self.assertIn("local TILE_HEIGHT = 72", toys)
+        self.assertNotIn("local TILE_WIDTH =", toys)
+        self.assertIn("local function layoutTiles()", toys)
+        self.assertIn('grid:SetScript("OnSizeChanged", layoutTiles)', toys)
+        self.assertIn("local leftMargin = math.floor((gridWidth - blockWidth) / 2)", toys)
+        self.assertIn("column * (tileWidth + GRID_COLUMN_GAP)", toys)
+        self.assertIn("GRID_PADDING_TOP + (row * TILE_HEIGHT)", toys)
+
+        for grid_width in (848, 1014, 1354, 1908, 2548, 3428):
+            tile_width = (grid_width - (2 * 16) - (2 * 6)) // 3
+            block_width = (3 * tile_width) + (2 * 6)
+            left_margin = (grid_width - block_width) // 2
+            right_margin = grid_width - left_margin - block_width
+            self.assertLessEqual(abs(left_margin - right_margin), 1)
+        self.assertEqual((848 - (2 * 16) - (2 * 6)) // 3, 268)
+
+    def test_active_collection_templates_use_independent_thin_state_borders(self):
+        templates = read_text(ADDON / "UI" / "Templates.lua")
+        wardrobe = read_text(ADDON / "UI" / "Wardrobe.lua")
+        mounts = read_text(ADDON / "UI" / "Mounts.lua")
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        toys = read_text(ADDON / "UI" / "Toys.lua")
+
+        for token in (
+            "function UI.CreateThinCardBorder(parent, thickness)",
+            "function UI.CreateCollectionCardBorders(parent)",
+            "local collection = UI.CreateThinCardBorder(parent, 1)",
+            "local selected = UI.CreateThinCardBorder(parent, 2)",
+            "collection:SetCollected(false)",
+            "selected:SetBorderColor(1.00, 0.78, 0.14, 1)",
+            "self:SetBorderColor(0.58, 0.43, 0.16, 1)",
+            "self:SetBorderColor(0.38, 0.39, 0.40, 1)",
+        ):
+            self.assertIn(token, templates)
+
+        self.assertNotIn("local function createThinCardBorder", wardrobe)
+        self.assertGreaterEqual(wardrobe.count("UI.CreateThinCardBorder("), 5)
+        for active_source in (mounts, pets, toys):
+            self.assertNotIn("UI.Media.collectedFrame", active_source)
+            self.assertNotIn("UI.Media.uncollectedFrame", active_source)
+
+        selected_match = re.search(
+            r"function tile:SetSelected\(value\)(.*?)\n    end",
+            templates,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(selected_match)
+        set_selected = selected_match.group(1)
+        self.assertIn("selectedBorder:Show()", set_selected)
+        self.assertIn("selectedBorder:Hide()", set_selected)
+        self.assertNotIn("SetCollected", set_selected)
+        self.assertNotIn("hover:Show()", set_selected)
+
+    def test_phase_four_runtime_audit_covers_layout_state_and_reload_contracts(self):
+        audit = read_text(ROOT / "tools" / "runtime" / "SoloCollectionsLayoutAudit" / "LayoutAudit.lua")
+        toc = read_text(ROOT / "tools" / "runtime" / "SoloCollectionsLayoutAudit" / "SoloCollectionsLayoutAudit.toc")
+        for token in (
+            "## SavedVariables: SoloCollectionsLayoutAuditDB",
+            "## Dependencies: SoloCollections",
+        ):
+            self.assertIn(token, toc)
+        for token in (
+            "GetScreenWidth()",
+            "GetScreenHeight()",
+            'GetCVar("uiScale")',
+            "UIParent:GetEffectiveScale()",
+            "toyPage.scLayoutTiles()",
+            "math.abs(leftMargin - rightMargin) <= 1.01",
+            "visibleCounts.one == 1",
+            "visibleCounts.two == 2",
+            "visibleCounts.four == 4",
+            "visibleCounts.full == 18",
+            "firstCollectionAfterSelection",
+            "hoverVisible",
+            "reloadRestored",
+            "Screenshot()",
+        ):
+            self.assertIn(token, audit)
+        runner = read_text(ROOT / "tools" / "runtime" / "Start-SoloCollectionsLayoutAudit.ps1")
+        for token in (
+            "[Security.SecureString]$Password",
+            "Assert-AbsoluteNonCPath",
+            "Set-ConfigValue $lines 'gxResolution' $Resolution",
+            "Set-ConfigValue $lines 'uiScale'",
+            "Invoke-Reload $processName $commandScript",
+            "SoloCollectionsLayoutAudit.lua",
+            "EnsureDesktopAtLeast",
+            "RestoreDesktop()",
+        ):
+            self.assertIn(token, runner)
 
     def test_toy_box_enriches_tooltips_and_refreshes_item_cache_safely(self):
         toys_path = ADDON / "UI" / "Toys.lua"

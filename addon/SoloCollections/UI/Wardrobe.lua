@@ -379,57 +379,6 @@ local function isM2CameraTunableRecord(record)
         and SC.M2Camera.NormalizePose
 end
 
-local function createThinCardBorder(parent, thickness)
-    local border = CreateFrame("Frame", nil, parent)
-    border:SetAllPoints(parent)
-    border:SetFrameLevel(parent:GetFrameLevel() + 1)
-
-    local size = thickness or 1
-    local top = border:CreateTexture(nil, "OVERLAY")
-    top:SetTexture("Interface\\Buttons\\WHITE8X8")
-    top:SetPoint("TOPLEFT", border, "TOPLEFT", 0, 0)
-    top:SetPoint("TOPRIGHT", border, "TOPRIGHT", 0, 0)
-    top:SetHeight(size)
-
-    local bottom = border:CreateTexture(nil, "OVERLAY")
-    bottom:SetTexture("Interface\\Buttons\\WHITE8X8")
-    bottom:SetPoint("BOTTOMLEFT", border, "BOTTOMLEFT", 0, 0)
-    bottom:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 0, 0)
-    bottom:SetHeight(size)
-
-    local left = border:CreateTexture(nil, "OVERLAY")
-    left:SetTexture("Interface\\Buttons\\WHITE8X8")
-    left:SetPoint("TOPLEFT", border, "TOPLEFT", 0, -size)
-    left:SetPoint("BOTTOMLEFT", border, "BOTTOMLEFT", 0, size)
-    left:SetWidth(size)
-
-    local right = border:CreateTexture(nil, "OVERLAY")
-    right:SetTexture("Interface\\Buttons\\WHITE8X8")
-    right:SetPoint("TOPRIGHT", border, "TOPRIGHT", 0, -size)
-    right:SetPoint("BOTTOMRIGHT", border, "BOTTOMRIGHT", 0, size)
-    right:SetWidth(size)
-
-    border.scEdges = { top, bottom, left, right }
-
-    function border:SetBorderColor(red, green, blue, alpha)
-        for _, edge in ipairs(self.scEdges) do
-            edge:SetVertexColor(red, green, blue, alpha or 1)
-        end
-    end
-
-    function border:SetCollected(collected)
-        if collected then
-            self:SetBorderColor(0.58, 0.43, 0.16, 1)
-        else
-            -- Retail distinguishes an uncollected appearance with its border;
-            -- it does not cover the model with a broad gray veil.
-            self:SetBorderColor(0.38, 0.39, 0.40, 1)
-        end
-    end
-
-    return border
-end
-
 -- Retail set-list icons use a restrained glass rim rather than the broad
 -- yellow collected-frame texture used by the original prototype. Keeping this
 -- row local to Wardrobe avoids changing the visual language of mount/pet rows.
@@ -488,7 +437,7 @@ local function createSetListRow(parent, width, onClick)
     glass:SetHeight(17)
     glass:SetGradientAlpha("VERTICAL", 0.80, 0.88, 0.94, 0.02, 0.92, 0.96, 1.00, 0.18)
 
-    local iconBorder = createThinCardBorder(iconHolder, 1)
+    local iconBorder = UI.CreateThinCardBorder(iconHolder, 1)
     iconBorder:SetBorderColor(0.44, 0.46, 0.48, 0.92)
 
     local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
@@ -1275,7 +1224,7 @@ function UI.CreateWardrobePage(parent)
         glass:SetHeight(15)
         glass:SetGradientAlpha("VERTICAL", 0.72, 0.82, 0.92, 0.015, 0.90, 0.95, 1.00, 0.16)
 
-        local border = createThinCardBorder(piece, 1)
+        local border = UI.CreateThinCardBorder(piece, 1)
         border:SetBorderColor(0.46, 0.47, 0.49, 0.92)
 
         local highlight = piece:CreateTexture(nil, "HIGHLIGHT")
@@ -1761,10 +1710,10 @@ function UI.CreateWardrobePage(parent)
         cardBackground:SetAllPoints(itemCard)
         cardBackground:SetVertexColor(0.02, 0.015, 0.01, 0.94)
 
-        local border = createThinCardBorder(itemHitFrame, 1)
+        local border = UI.CreateThinCardBorder(itemHitFrame, 1)
         border:SetCollected(false)
 
-        local selected = createThinCardBorder(itemHitFrame, 2)
+        local selected = UI.CreateThinCardBorder(itemHitFrame, 2)
         selected:SetBorderColor(1.00, 0.78, 0.14, 1)
         selected:Hide()
 
@@ -1893,7 +1842,7 @@ function UI.CreateWardrobePage(parent)
     setScrollbarThumb:SetWidth(16)
     setScrollbarThumb:SetHeight(24)
     setScrollbar:SetThumbTexture(setScrollbarThumb)
-    local setScrollbarBorder = createThinCardBorder(setScrollbar, 1)
+    local setScrollbarBorder = UI.CreateThinCardBorder(setScrollbar, 1)
     setScrollbarBorder:SetBorderColor(0.33, 0.34, 0.35, 0.62)
 
     setScrollbar:SetScript("OnValueChanged", function(self, value)

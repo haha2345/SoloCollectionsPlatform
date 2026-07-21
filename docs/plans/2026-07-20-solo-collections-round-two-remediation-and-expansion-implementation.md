@@ -721,6 +721,8 @@ addon: forbid body fallback for standalone weapon slots
 
 ### 任务 4.1：抽取公共细边组件
 
+- [x] 已完成（2026-07-22）。`UI.CreateThinCardBorder()` 与 `UI.CreateCollectionCardBorders()` 已抽到先加载的 `Templates.lua`；坐骑/宠物列表、详情、玩具和衣橱共享 1px 收藏边与独立 2px 选中边，active 模板不再引用粗 TGA 状态框。状态颜色、厚度和 `SetSelected()` 不改收藏边均有自动测试与真实客户端证据。
+
 主要文件：
 
 ```text
@@ -746,6 +748,8 @@ addon/SoloCollections/UI/Toys.lua
 推荐方案不再让 active 模板使用 `collected-frame.tga`/`uncollected-frame.tga` 覆盖图标，因此无需重绘或重新提交媒体。如果选择重绘素材，必须另行更新 `Media/assets.json` Hash 和像素合同。
 
 ### 任务 4.2：玩具网格改为约束布局
+
+- [x] 已完成（2026-07-22）。玩具网格改为 3×6 动态约束布局，848 logical px 容器得到 268px tile、16/16 左右 margin 和 6px 列间距；1/2/4/18 条、满页/残页、hover/selected/collected 独立状态及两次 `/reload` 已在七档分辨率/UI Scale 矩阵通过。证据见 `docs/reports/2026-07-22-stage4-thin-borders-and-toy-grid.md`。
 
 `Toys.lua` 目标常量：
 
@@ -784,6 +788,8 @@ y = -(paddingTop + row * tileHeight)
 - 公共 helper 抽取后同步调整 SoloCam 的 Wardrobe 集成测试。
 
 ### 真实客户端验收
+
+- [x] 已完成（2026-07-22）。1024×768、1366×768、1920×1080（1.00/0.80/0.64）、2560×1440、3440×1440 均生成目标像素尺寸截图并写出两轮 READY 记录；3440 档使用临时 3840×2160 DSR 与 DPI-aware 审计进程，结束后恢复桌面模式。
 
 分辨率/UI Scale 至少覆盖：
 
@@ -1953,7 +1959,7 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] `Backend=Cpp`、ALE 关闭、空 WDB 下，281 个坐骑和全部正式宠物零空模型。
 - [x] PREVIEW 未收藏可查看，但 SUMMON/USE/APPLY 仍由 C++ owned/资格校验；PREVIEW 零 DB/revision/实体副作用。
 - [x] UI 仅在 PREVIEW 成功且 generation 匹配时加载模型，失败有明确提示。
-- [ ] 坐骑、宠物、玩具状态边为细边，选中态独立；玩具三列左右 margin 对称。
+- [x] 坐骑、宠物、玩具状态边为细边，选中态独立；玩具三列左右 margin 对称。（2026-07-22；七档真实客户端矩阵全部 READY，见阶段 4 报告。）
 - [x] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。（2026-07-22；21/21 READY、正式衣橱与 stock fallback 证据见阶段 3 报告。）
 - [ ] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。
 - [ ] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。
