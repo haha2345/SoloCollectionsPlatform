@@ -341,6 +341,8 @@ F:\1_projects\wow_projects\SoloCollectionsPlatform\SoloCollections\_work\evidenc
 
 ### 任务 0.3：定义空缓存验收方法
 
+- [x] 已完成（2026-07-22）。已实现 fail-closed 的备份/恢复状态机、逐步 append-only journal、测试期间新 WDB 隔离清单和幂等恢复；4 个自动测试通过，并在 `D:\Games\wow335\World of Warcraft11` 的实际 `zhCN` WDB 上完成 9 文件备份后原样恢复与 Hash 核对。实际冷启动扫描结果继续记录在任务 0.1 基线报告和阶段 2 实机验收中。
+
 - 实现 `tools/runtime/Backup-ClientWdb.ps1` 与 `Restore-ClientWdb.ps1`。脚本接收显式 `-ClientRoot`、`-Locale` 和 F 盘 `-BackupRoot`，解析并验证目标位于 `<ClientRoot>\Cache\WDB\<locale>` 内；先复制并生成 SHA-256 manifest，再把原目录改名为同根的 `.cold-test-<timestamp>`，不直接递归删除不明目录。
 - 验收命令合同：
 
