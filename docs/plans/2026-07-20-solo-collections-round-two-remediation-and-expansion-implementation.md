@@ -629,6 +629,8 @@ addon: migrate collection previews from SC1 to SC2
 
 ### 任务 3.1：迁移 21 个展示描述
 
+- [x] 已完成（2026-07-22）。21 个 verified presentation 已迁入 canonical source，唯一覆盖 `40000..40020`；生成器对 canonical 联接、source alias、M2/skin/BLP 与命名 evidence Hash fail closed，旧 demo id 不成为 identity。证据见 `docs/reports/2026-07-22-stage3-standalone-weapon-presentations.md`。
+
 仓库：`SoloCollections`
 
 新增建议：
@@ -665,6 +667,8 @@ addon/SoloCollections/Data/Appearances.lua
 
 ### 任务 3.2：让 canonical 投影保留展示字段
 
+- [x] 已完成（2026-07-22）。生成目录与 AddOn 投影已保留正式展示字段，明确生成 `BODY=12233`、`STANDALONE=21`、`UNAVAILABLE=5936`；展示数据不进入服务端授权 mapping hash，`creatureDisplayId` 仅在 renderer adapter 临时翻译且不进入 schema。
+
 修改：
 
 ```text
@@ -679,6 +683,8 @@ addon/SoloCollections/Data/Generated/Catalog.lua
 - 收藏 owned、应用资格和 source item 解析仍只来自 canonical 服务端目录，presentation 不进入服务端授权。
 
 ### 任务 3.3：封闭错误 fallback
+
+- [x] 已完成（2026-07-22）。正式衣橱按显式 renderMode 渲染；缺资源记录隐藏角色并显示 unavailable。新增 2 秒 `GetModel()`/canonical path 就绪闸门，stock `Wow.exe` 缺 SoloCam 时也安全转 unavailable；真实客户端证明独立武器仅显示武器且无角色回退。
 
 修改：
 
@@ -1948,7 +1954,7 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] PREVIEW 未收藏可查看，但 SUMMON/USE/APPLY 仍由 C++ owned/资格校验；PREVIEW 零 DB/revision/实体副作用。
 - [x] UI 仅在 PREVIEW 成功且 generation 匹配时加载模型，失败有明确提示。
 - [ ] 坐骑、宠物、玩具状态边为细边，选中态独立；玩具三列左右 margin 对称。
-- [ ] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。
+- [x] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。（2026-07-22；21/21 READY、正式衣橱与 stock fallback 证据见阶段 3 报告。）
 - [ ] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。
 - [ ] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。
 - [ ] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。

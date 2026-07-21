@@ -147,17 +147,41 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertRegex(self.bootstrap, r'\bOFFHAND\s*=\s*true')
         self.assertIn('CreateFrame("PlayerModel", nil, itemCard)', self.source)
         self.assertIn("isStandaloneItemRecord", self.source)
-        self.assertIn("record.creatureDisplayId", self.source)
+        self.assertIn("record.syntheticDisplayId", self.source)
+        self.assertIn('record.renderMode == "STANDALONE"', self.source)
         self.assertIn("DIRECT_DISPLAY_REQUEST_BASE", self.source)
         self.assertRegex(
             self.source,
-            r"model:SetCreature\(DIRECT_DISPLAY_REQUEST_BASE\s*\+\s*record\.creatureDisplayId\)",
+            r"model:SetCreature\(DIRECT_DISPLAY_REQUEST_BASE\s*\+\s*record\.syntheticDisplayId\)",
         )
         self.assertIn("HookPlayerModelSetCreature", self.client_source)
         self.assertIn("TryDecodeDisplayInfoRequest", self.client_source)
         self.assertIn("PlayerModelSetCreatureRecord", self.client_source)
         self.assertIn("PlayerModelSetCreature", self.client_addresses)
         self.assertNotIn("ReplaceIconTexture(record.replacementTexture)", self.source)
+
+    def test_unverified_weapon_never_falls_back_to_player_body(self):
+        self.assertIn('renderKind = STANDALONE_ITEM_SLOTS[record.slot] and "UNAVAILABLE" or "BODY"', self.source)
+        self.assertIn('if renderKind == "UNAVAILABLE" then', self.source)
+        self.assertIn('unavailableText:SetText("独立模型资源尚未生成")', self.source)
+        unavailable = self.source.split('if renderKind == "UNAVAILABLE" then', 1)[1].split(
+            'if renderKind == "STANDALONE" then', 1
+        )[0]
+        self.assertNotIn('model:SetUnit("player")', unavailable)
+        self.assertNotIn("model:TryOn", unavailable)
+
+    def test_missing_standalone_bridge_fails_closed_after_model_ready_window(self):
+        self.assertIn("local STANDALONE_MODEL_READY_FRAMES = 120", self.source)
+        self.assertIn("string.lower(actualModel) == string.lower(expectedModel)", self.source)
+        self.assertIn("showStandaloneItemUnavailable(self)", self.source)
+        self.assertIn("itemObjectModel.scHostModel = itemModel", self.source)
+        fallback = self.source.split("local function showStandaloneItemUnavailable", 1)[1].split(
+            "local function queueStandaloneItemTransform", 1
+        )[0]
+        self.assertIn('host.scRenderKind = "UNAVAILABLE"', fallback)
+        self.assertIn("host:Hide()", fallback)
+        self.assertIn("host.scUnavailable:Show()", fallback)
+        self.assertNotIn('host:SetUnit("player")', fallback)
 
     def test_standalone_weapon_models_receive_explicit_lighting(self):
         self.assertIn("local function applyStandaloneItemLighting", self.source)

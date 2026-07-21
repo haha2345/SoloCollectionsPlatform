@@ -330,9 +330,12 @@ end
 
 local function isStandaloneItemRecord(record)
     return record
+        and record.renderMode == "STANDALONE"
         and STANDALONE_ITEM_SLOTS[record.slot]
-        and ((type(record.creatureDisplayId) == "number" and record.creatureDisplayId > 0)
-            or (type(record.modelPath) == "string" and record.modelPath ~= ""))
+        and type(record.syntheticDisplayId) == "number"
+        and record.syntheticDisplayId >= 40000
+        and record.syntheticDisplayId <= 40020
+        and type(record.modelPath) == "string" and record.modelPath ~= ""
 end
 
 -- A stable camera key lets one in-game adjustment apply to every sample of a
@@ -614,12 +617,32 @@ local function applyStandaloneItemView(model)
 end
 
 local STANDALONE_TRANSFORM_SETTLE_FRAMES = 6
+local STANDALONE_MODEL_READY_FRAMES = 120
 
 local function cancelStandaloneItemTransformQueue(model)
     if not model then return end
     model.scStandaloneTransformQueued = nil
     model.scStandaloneTransformFrames = nil
     model:SetScript("OnUpdate", nil)
+end
+
+local function showStandaloneItemUnavailable(model)
+    local host = model and model.scHostModel
+    local record = model and model.scRecord
+    cancelStandaloneItemTransformQueue(model)
+    if model then
+        model:ClearModel()
+        model:Hide()
+    end
+    if not host then return end
+    host:SetScript("OnUpdate", nil)
+    host:ClearModel()
+    host:Hide()
+    host.scRenderKind = "UNAVAILABLE"
+    if host.scUnavailableIcon then
+        UI.SetIconTexture(host.scUnavailableIcon, record and record.icon)
+    end
+    if host.scUnavailable then host.scUnavailable:Show() end
 end
 
 local function queueStandaloneItemTransform(model)
@@ -641,7 +664,14 @@ local function queueStandaloneItemTransform(model)
             applyStandaloneItemTransform(self)
         end
         if self.scStandaloneTransformFrames >= STANDALONE_TRANSFORM_SETTLE_FRAMES then
-            cancelStandaloneItemTransformQueue(self)
+            local actualModel = self.GetModel and self:GetModel() or nil
+            local expectedModel = self.scRecord and self.scRecord.modelPath or nil
+            if type(actualModel) == "string" and type(expectedModel) == "string"
+                and string.lower(actualModel) == string.lower(expectedModel) then
+                cancelStandaloneItemTransformQueue(self)
+            elseif self.scStandaloneTransformFrames >= STANDALONE_MODEL_READY_FRAMES then
+                showStandaloneItemUnavailable(self)
+            end
         end
     end)
 end
@@ -660,7 +690,7 @@ local function applyStandaloneItemRecord(model, record)
 
     local unchanged = model.scRecordId == record.id
         and model.scRecord
-        and model.scRecord.creatureDisplayId == record.creatureDisplayId
+        and model.scRecord.syntheticDisplayId == record.syntheticDisplayId
         and model.scRecord.modelPath == record.modelPath
     model.scRecord = record
     -- A pooled PlayerModel may have shown another record on the previous page.
@@ -671,12 +701,10 @@ local function applyStandaloneItemRecord(model, record)
     if not unchanged then
         model.scRecordId = record.id
         model:ClearModel()
-        if record.creatureDisplayId and model.SetCreature then
+        if record.syntheticDisplayId and model.SetCreature then
             pcall(function()
-                model:SetCreature(DIRECT_DISPLAY_REQUEST_BASE + record.creatureDisplayId)
+                model:SetCreature(DIRECT_DISPLAY_REQUEST_BASE + record.syntheticDisplayId)
             end)
-        else
-            pcall(function() model:SetModel(record.modelPath) end)
         end
     end
     applyStandaloneItemView(model)
@@ -911,17 +939,37 @@ local function applyItemModelRecord(model, record)
         model:Hide()
         applyStandaloneItemRecord(objectModel, nil)
         if model.scCard then model.scCard:Hide() end
+        if model.scUnavailable then model.scUnavailable:Hide() end
         return
     end
 
     local profile = WARDROBE_MODEL_PROFILES[record.slot] or WARDROBE_MODEL_PROFILES.DEFAULT
-    local renderKind = isStandaloneItemRecord(record) and "STANDALONE" or "BODY"
+    local renderKind = record.renderMode
+    if renderKind ~= "BODY" and renderKind ~= "STANDALONE" and renderKind ~= "UNAVAILABLE" then
+        renderKind = STANDALONE_ITEM_SLOTS[record.slot] and "UNAVAILABLE" or "BODY"
+    end
+    if renderKind == "STANDALONE" and not isStandaloneItemRecord(record) then
+        renderKind = "UNAVAILABLE"
+    end
     local unchanged = model.scRecordId == record.id
         and model.scProfile == profile
         and model.scRenderKind == renderKind
     model.scRecord = record
     model.scProfile = profile
     if model.scCard then model.scCard:Show() end
+    if model.scUnavailable then model.scUnavailable:Hide() end
+
+    if renderKind == "UNAVAILABLE" then
+        model.scRecordId = record.id
+        model.scRenderKind = renderKind
+        model:SetScript("OnUpdate", nil)
+        model:ClearModel()
+        model:Hide()
+        applyStandaloneItemRecord(objectModel, nil)
+        if model.scUnavailableIcon then UI.SetIconTexture(model.scUnavailableIcon, record.icon) end
+        if model.scUnavailable then model.scUnavailable:Show() end
+        return
+    end
 
     if renderKind == "STANDALONE" then
         model.scRecordId = record.id
@@ -1689,6 +1737,20 @@ function UI.CreateWardrobePage(parent)
         itemObjectModel:SetAllPoints(itemCard)
         itemObjectModel:Hide()
 
+        local unavailable = CreateFrame("Frame", nil, itemCard)
+        unavailable:SetAllPoints(itemCard)
+        unavailable:SetFrameLevel(itemModel:GetFrameLevel() + 1)
+        local unavailableIcon = unavailable:CreateTexture(nil, "ARTWORK")
+        unavailableIcon:SetWidth(48)
+        unavailableIcon:SetHeight(48)
+        unavailableIcon:SetPoint("CENTER", unavailable, "CENTER", 0, 14)
+        local unavailableText = unavailable:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+        unavailableText:SetPoint("TOPLEFT", unavailableIcon, "BOTTOMLEFT", -18, -7)
+        unavailableText:SetPoint("TOPRIGHT", unavailableIcon, "BOTTOMRIGHT", 18, -7)
+        unavailableText:SetJustifyH("CENTER")
+        unavailableText:SetText("独立模型资源尚未生成")
+        unavailable:Hide()
+
         local itemHitFrame = CreateFrame("Button", nil, itemCard)
         itemHitFrame:SetAllPoints(itemCard)
         itemHitFrame:SetFrameLevel(itemModel:GetFrameLevel() + 2)
@@ -1780,6 +1842,9 @@ function UI.CreateWardrobePage(parent)
         itemHitFrame:SetScript("OnLeave", function() GameTooltip:Hide() end)
         itemModel.scCard = itemCard
         itemModel.scObjectModel = itemObjectModel
+        itemObjectModel.scHostModel = itemModel
+        itemModel.scUnavailable = unavailable
+        itemModel.scUnavailableIcon = unavailableIcon
         itemModel.scHitFrame = itemHitFrame
         itemModel.scBorder = border
         itemModel.scSelected = selected
@@ -2188,6 +2253,7 @@ function UI.CreateWardrobePage(parent)
             itemModel:ClearModel()
             itemModel:Hide()
             applyStandaloneItemRecord(itemModel.scObjectModel, nil)
+            if itemModel.scUnavailable then itemModel.scUnavailable:Hide() end
             if itemModel.scCard then itemModel.scCard:Hide() end
         end
         model:ClearModel()
