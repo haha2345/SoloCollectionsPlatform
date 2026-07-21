@@ -348,6 +348,33 @@ def _load_creature_presentations(source_root: Path, collections: list[dict[str, 
     return data
 
 
+def _load_appearance_presentations(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
+    path = source_root.parent / "generated" / "appearance-presentation-report.json"
+    data = deepcopy(_read_json(path))
+    _require(data.get("schemaVersion") == 1, "unsupported appearance presentation schema version")
+    entries = data.get("entries")
+    _require(isinstance(entries, list) and len(entries) == 21,
+             "appearance presentation report must contain 21 verified entries")
+    expected = {
+        int(entry["collectionId"]): entry
+        for entry in collections if entry["typeKey"] == "appearance"
+    }
+    actual: dict[int, dict[str, Any]] = {}
+    for entry in entries:
+        appearance_id = int(entry.get("appearanceId", 0))
+        source = expected.get(appearance_id)
+        _require(source is not None, f"appearance presentation references unknown canonical ID: {appearance_id}")
+        _require(entry.get("collectionKey") == source["collectionKey"],
+                 f"appearance presentation key drift: {appearance_id}")
+        _require(entry.get("sourceAlias") in source.get("aliases", []),
+                 f"appearance presentation source alias drift: {appearance_id}")
+        _require(entry.get("presentationStatus") == "verified",
+                 f"appearance presentation is not verified: {appearance_id}")
+        _require(appearance_id not in actual, f"duplicate appearance presentation: {appearance_id}")
+        actual[appearance_id] = entry
+    return data
+
+
 def _parse_legacy_sc1_table(lua_text: str, table_name: str) -> list[dict[str, Any]]:
     table = re.search(rf"(?ms)^local\s+{re.escape(table_name)}\s*=\s*\{{(.*?)^\}}", lua_text)
     _require(table is not None, f"legacy SC1 table is missing: {table_name}")
@@ -488,7 +515,9 @@ def _canonical_for_hash(model: dict[str, Any]) -> dict[str, Any]:
             "name", "icon", "metadataVersion", "iconSpellId", "spellIconId", "iconTexture",
             "presentationStatus", "presentationReasonCode", "presentationHash",
             "presentationEvidenceHash", "presentationEvidenceId", "presentationEvidencePackHash",
-            "deprecatedAliases",
+            "appearancePresentationHash", "appearancePresentationEvidence", "deprecatedAliases",
+            "syntheticDisplayId", "modelPath", "modelScale", "weaponType", "weaponCategory",
+            "cameraTuningKey", "m2Camera", "presentationStatus", "renderMode",
         }:
             return None
         if isinstance(value, dict):
@@ -561,6 +590,7 @@ def build_model(source_root: Path) -> dict[str, Any]:
     companion_actions = _load_companion_actions(source_root, collections)
     toy_actions = _load_toy_actions(source_root, collections)
     creature_presentations = _load_creature_presentations(source_root, collections)
+    appearance_presentations = _load_appearance_presentations(source_root, collections)
     presentation_by_identity = {
         (entry["typeKey"], int(entry["collectionId"])): entry
         for entry in creature_presentations["entries"]
@@ -575,6 +605,25 @@ def build_model(source_root: Path) -> dict[str, Any]:
         entry["iconTexture"] = presentation["iconTexture"]
         entry["presentationStatus"] = presentation["presentationStatus"]
         entry["presentationReasonCode"] = presentation.get("reasonCode", "")
+    appearance_by_id = {
+        int(entry["appearanceId"]): entry for entry in appearance_presentations["entries"]
+    }
+    weapon_slots = {"MAINHAND", "OFFHAND"}
+    for entry in collections:
+        if entry["typeKey"] != "appearance":
+            continue
+        slot = next((alias.split(":", 1)[1] for alias in entry.get("aliases", [])
+                     if alias.startswith("slot:")), "")
+        presentation = appearance_by_id.get(int(entry["collectionId"]))
+        if presentation is not None:
+            for key in ("syntheticDisplayId", "modelPath", "modelScale", "weaponType",
+                        "weaponCategory", "cameraTuningKey", "m2Camera", "presentationStatus"):
+                entry[key] = deepcopy(presentation[key])
+            entry["renderMode"] = "STANDALONE"
+        elif slot in weapon_slots:
+            entry["renderMode"] = "UNAVAILABLE"
+        else:
+            entry["renderMode"] = "BODY"
     model = {
         "schemaVersion": 1,
         "metadataVersion": versions["metadataVersion"],
@@ -593,6 +642,11 @@ def build_model(source_root: Path) -> dict[str, Any]:
         "presentationEvidenceHash": creature_presentations["presentationHash"],
         "presentationEvidenceId": creature_presentations["evidenceId"],
         "presentationEvidencePackHash": creature_presentations["evidencePackHash"],
+        "appearancePresentationHash": _hash(appearance_presentations["entries"]),
+        "appearancePresentationEvidence": {
+            "weaponManifestSha256": appearance_presentations["weaponManifestSha256"],
+            "verificationSha256": appearance_presentations["verificationSha256"],
+        },
         "deprecatedAliases": {"displayCreatureId": "previewCreatureEntry"},
     }
     presentation_basis = [
@@ -602,6 +656,8 @@ def build_model(source_root: Path) -> dict[str, Any]:
                 "typeKey", "collectionId", "collectionKey", "name", "lifecycle", "assetReady",
                 "assetProfile", "previewCreatureEntry", "iconSpellId", "spellIconId", "iconTexture",
                 "presentationStatus", "presentationReasonCode",
+                "renderMode", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
+                "weaponCategory", "cameraTuningKey", "m2Camera",
             )
         }
         for entry in collections
@@ -915,6 +971,8 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         "presentationEvidenceHash": model["presentationEvidenceHash"],
         "presentationEvidenceId": model["presentationEvidenceId"],
         "presentationEvidencePackHash": model["presentationEvidencePackHash"],
+        "appearancePresentationHash": model["appearancePresentationHash"],
+        "appearancePresentationEvidence": model["appearancePresentationEvidence"],
         "deprecatedAliases": model["deprecatedAliases"],
     }) + "\n"
     identity_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedIdentityData = " + _lua({
@@ -970,10 +1028,29 @@ def _validate_creature_presentation_evidence(source_root: Path, evidence_root: P
     _require(actual == expected, "creature presentations do not match the supplied evidence root")
 
 
+def _validate_appearance_presentation_evidence(repo_root: Path, source_root: Path, evidence_root: Path) -> None:
+    module_path = Path(__file__).with_name("appearance_presentations.py")
+    spec = importlib.util.spec_from_file_location("solo_appearance_presentations", module_path)
+    _require(spec is not None and spec.loader is not None, "cannot load appearance presentation generator")
+    presentation_generator = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(presentation_generator)
+    try:
+        expected = presentation_generator.build_report(
+            source_root / "appearance_presentations.json",
+            repo_root / "catalog/generated/appearance-sources.json",
+            evidence_root,
+        )
+    except (OSError, presentation_generator.PresentationError) as exc:
+        raise CatalogError(f"appearance presentation evidence rejected: {exc}") from exc
+    actual = _read_json(repo_root / "catalog/generated/appearance-presentation-report.json")
+    _require(actual == expected, "appearance presentation report does not match supplied evidence")
+
+
 def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_root: Path, check: bool) -> int:
     module_root = validate_module_root(repo_root, module_root)
     print(f"catalog module target: {module_root}")
     _validate_creature_presentation_evidence(source_root, evidence_root)
+    _validate_appearance_presentation_evidence(repo_root, source_root, evidence_root)
     model = build_model(source_root)
     outputs = render_outputs(model, repo_root, module_root)
     drift: list[Path] = []
