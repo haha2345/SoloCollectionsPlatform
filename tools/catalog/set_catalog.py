@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -209,11 +210,16 @@ def outputs(repo: Path, module: Path, model: dict[str, Any]) -> dict[Path, bytes
 def main() -> int:
     repo = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--module-root", type=Path, default=repo.parent / "mod-solo-collections")
+    parser.add_argument(
+        "--module-root",
+        type=Path,
+        default=Path(os.environ.get("SOLOCOLLECTIONS_MODULE_ROOT", repo.parent / "mod-solo-collections")),
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     module = args.module_root.resolve()
-    _require(module.name == "mod-solo-collections" and (module / "src").is_dir(), f"invalid module root: {module}")
+    _require((module / ".git").exists(), f"module root is not a Git checkout: {module}")
+    _require((module / "src/SoloCollectionsTypes.h").is_file(), f"invalid module root: {module}")
     source = json.loads((repo / "catalog/source/sets.json").read_text(encoding="utf-8"))
     appearances = json.loads((repo / "catalog/generated/appearance-sources.json").read_text(encoding="utf-8"))
     model = build_model(source, appearances)

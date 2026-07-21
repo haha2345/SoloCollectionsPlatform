@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -13,7 +14,10 @@ from common import ROOT
 
 
 GENERATOR_PATH = ROOT / "tools" / "catalog" / "generate_catalog.py"
-MODULE_ROOT = ROOT.parent / "mod-solo-collections"
+MODULE_ROOT = Path(os.environ.get("SOLOCOLLECTIONS_MODULE_ROOT", ROOT.parent / "mod-solo-collections"))
+if not MODULE_ROOT.exists() and (ROOT.parent / "round-two-module").exists():
+    MODULE_ROOT = ROOT.parent / "round-two-module"
+EVIDENCE_ROOT = Path(os.environ["SOLOCOLLECTIONS_EVIDENCE_ROOT"]) if os.environ.get("SOLOCOLLECTIONS_EVIDENCE_ROOT") else None
 SPEC = importlib.util.spec_from_file_location("solo_catalog_generator", GENERATOR_PATH)
 generator = importlib.util.module_from_spec(SPEC)
 assert SPEC and SPEC.loader
@@ -40,8 +44,18 @@ class CatalogGeneratorTests(unittest.TestCase):
         )
 
     def test_checked_in_outputs_are_current(self):
+        if EVIDENCE_ROOT is None or not EVIDENCE_ROOT.is_dir():
+            self.skipTest("external evidence pack is required for the fail-closed generator check")
         result = subprocess.run(
-            [sys.executable, str(GENERATOR_PATH), "--module-root", str(MODULE_ROOT), "--check"],
+            [
+                sys.executable,
+                str(GENERATOR_PATH),
+                "--module-root",
+                str(MODULE_ROOT),
+                "--evidence-root",
+                str(EVIDENCE_ROOT),
+                "--check",
+            ],
             cwd=ROOT,
             text=True,
             capture_output=True,
@@ -92,6 +106,53 @@ class CatalogGeneratorTests(unittest.TestCase):
             self.assertEqual(race["compatibilityProfile"], race["appearanceOverrideProfile"])
             self.assertEqual(race["clientAssetProfile"], race["modelProfile"])
 
+    def test_active_creature_presentations_have_native_icons_and_preview_entries(self):
+        model = generator.build_model(self.source)
+        creatures = [
+            entry
+            for entry in model["collections"]
+            if entry["lifecycle"] == "active" and entry["typeKey"] in {"mount", "companion"}
+        ]
+        self.assertEqual(305, len(creatures))
+        for entry in creatures:
+            self.assertEqual("READY", entry["presentationStatus"], entry["collectionKey"])
+            self.assertGreater(entry["previewCreatureEntry"], 0, entry["collectionKey"])
+            self.assertGreater(entry["iconSpellId"], 0, entry["collectionKey"])
+            self.assertRegex(entry["iconTexture"].lower(), r"^interface[\\/]icons[\\/]", entry["collectionKey"])
+
+        mount_icons = {entry["iconTexture"].lower() for entry in creatures if entry["typeKey"] == "mount"}
+        companion_icons = {entry["iconTexture"].lower() for entry in creatures if entry["typeKey"] == "companion"}
+        self.assertGreaterEqual(len(mount_icons), 100)
+        self.assertGreaterEqual(len(companion_icons), 20)
+
+    def test_icon_only_changes_presentation_hash_but_preview_changes_mapping_hash(self):
+        before = generator.build_model(self.source)
+        presentations = self.read_json("catalog/source/creature_presentations.json")
+        presentations["entries"][0]["iconTexture"] = "Interface\\Icons\\Temporary_Test_Icon"
+        presentations["presentationHash"] = generator._hash(presentations["entries"])
+        self.write_json("catalog/source/creature_presentations.json", presentations)
+        icon_changed = generator.build_model(self.source)
+        self.assertEqual(before["mappingHash"], icon_changed["mappingHash"])
+        self.assertEqual(before["typeMappingHashes"], icon_changed["typeMappingHashes"])
+        self.assertNotEqual(before["presentationHash"], icon_changed["presentationHash"])
+
+        presentations["entries"][0]["previewCreatureEntry"] += 1
+        changed_type = presentations["entries"][0]["typeKey"]
+        presentations["presentationHash"] = generator._hash(presentations["entries"])
+        self.write_json("catalog/source/creature_presentations.json", presentations)
+        preview_changed = generator.build_model(self.source)
+        self.assertNotEqual(before["mappingHash"], preview_changed["mappingHash"])
+        self.assertNotEqual(before["typeMappingHashes"][changed_type], preview_changed["typeMappingHashes"][changed_type])
+
+    def test_client_projection_contains_presentation_icon_but_no_action_spell(self):
+        outputs = generator.render_outputs(generator.build_model(self.source), ROOT, MODULE_ROOT)
+        rendered = outputs[ROOT / "addon/SoloCollections/Data/Generated/Catalog.lua"]
+        self.assertIn("iconSpellId", rendered)
+        self.assertIn("iconTexture", rendered)
+        self.assertIn("previewCreatureEntry", rendered)
+        self.assertNotIn("canonicalSpellId", rendered)
+        self.assertNotRegex(rendered, r"(?m)^\s+(?:actionId|spellId) = ")
+
     def test_localized_metadata_does_not_change_mapping_hash(self):
         before = generator.build_model(self.source)["mappingHash"]
         classes = self.read_json("catalog/source/classes.json")
@@ -102,7 +163,7 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertEqual(before, after)
 
     def test_module_target_guard_rejects_wrong_checkout(self):
-        with self.assertRaisesRegex(generator.CatalogError, "basename"):
+        with self.assertRaisesRegex(generator.CatalogError, "Git checkout"):
             generator.validate_module_root(ROOT, ROOT.parent)
 
     def test_alias_cycle_is_rejected(self):

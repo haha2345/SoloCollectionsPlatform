@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -9,7 +10,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-MODULE_ROOT = ROOT.parent / "mod-solo-collections"
+MODULE_ROOT = Path(os.environ.get("SOLOCOLLECTIONS_MODULE_ROOT", ROOT.parent / "mod-solo-collections"))
 TOOL_PATH = ROOT / "tools/catalog/mount_catalog.py"
 SPEC = importlib.util.spec_from_file_location("mount_catalog", TOOL_PATH)
 assert SPEC and SPEC.loader
