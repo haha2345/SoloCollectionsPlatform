@@ -296,6 +296,8 @@ R|nonce|requestId|ACCEPTED|typeId|collectionId|revision
 
 ### 任务 0.1：记录两仓库和运行数据基线
 
+- [x] 已完成（2026-07-22）。已冻结 AddOn/module/Core commit、版本与目录 Hash、正式 `281/24/4/8` 分母、9 个 DBC 输入、21 个独立武器、人类女性 9 条相机、玩具网格/TGA alpha 测量和空 WDB 六点失败截图；生成脱敏 evidence pack `round2-20260722-baseline-v2c` 与固定工具链 manifest，详情见 `docs/reports/2026-07-20-round-two-audit-baseline.md`。
+
 仓库：`SoloCollections`、`mod-solo-collections`
 
 新增建议：
