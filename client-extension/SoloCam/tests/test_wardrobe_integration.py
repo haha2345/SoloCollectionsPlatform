@@ -16,6 +16,7 @@ CLIENT_ROOT = Path(__file__).resolve().parents[1]
 CLIENT_SOURCE = CLIENT_ROOT / "src" / "SoloCam.cpp"
 CLIENT_ADDRESSES = CLIENT_ROOT / "src" / "ClientAddresses.hpp"
 ITEM_CAMERA_BRIDGE = CLIENT_ROOT / "src" / "ItemCameraBridge.cpp"
+CAMERA_PROFILES = ADDON_ROOT / "Data" / "Generated" / "CameraProfiles.lua"
 
 
 class WardrobeIntegrationTests(unittest.TestCase):
@@ -30,8 +31,9 @@ class WardrobeIntegrationTests(unittest.TestCase):
         cls.client_source = CLIENT_SOURCE.read_text(encoding="utf-8")
         cls.client_addresses = CLIENT_ADDRESSES.read_text(encoding="utf-8")
         cls.item_camera_bridge = ITEM_CAMERA_BRIDGE.read_text(encoding="utf-8")
+        cls.camera_profiles = CAMERA_PROFILES.read_text(encoding="utf-8")
 
-    def test_human_female_slot_scope_is_explicit(self):
+    def test_generated_character_camera_matrix_is_selected_by_identity(self):
         expected = {
             "HEAD": "0x5341",
             "SHOULDER": "0x5342",
@@ -45,13 +47,16 @@ class WardrobeIntegrationTests(unittest.TestCase):
         }
         for slot, sentinel in expected.items():
             self.assertRegex(
-                self.source,
+                self.camera_profiles,
                 rf"{slot}\s*=\s*{sentinel}",
                 f"missing custom camera handshake for {slot}",
             )
-        self.assertRegex(self.source, r'UnitSex\("player"\)\s*==\s*3')
-        self.assertRegex(self.source, r'raceToken\s*==\s*"Human"')
-        self.assertIn("CUSTOM_CAMERA_HUMAN_FEMALE[model.scRecord.slot]", self.source)
+        self.assertIn('local _, raceToken = UnitRace("player")', self.source)
+        self.assertIn('UnitSex("player")', self.source)
+        self.assertIn("SC.IdentityRegistry.ResolveCameraProfile()", self.source)
+        self.assertIn("cameraProfiles.GetSentinel(", self.source)
+        self.assertNotIn("CUSTOM_CAMERA_HUMAN_FEMALE", self.source)
+        self.assertIn('CameraProfiles.mode = CameraProfiles.mode or "Generated"', self.camera_profiles)
 
     def test_all_retail_body_slots_are_available_as_filters(self):
         for slot in (

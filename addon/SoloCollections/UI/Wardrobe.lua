@@ -21,18 +21,6 @@ local DEFAULT_ROTATION = 0.18
 -- client bridge decodes base + displayId and supplies the persistent internal
 -- creature-cache record required by PlayerModel.
 local DIRECT_DISPLAY_REQUEST_BASE = 0x6F000000
-local CUSTOM_CAMERA_HUMAN_FEMALE = {
-    HEAD = 0x5341,
-    SHOULDER = 0x5342,
-    BACK = 0x5349,
-    CHEST = 0x5343,
-    WRIST = 0x5344,
-    HANDS = 0x5345,
-    WAIST = 0x5346,
-    LEGS = 0x5347,
-    FEET = 0x5348,
-}
-
 local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
     HEAD = 0,
     SHOULDER = 2,
@@ -106,10 +94,8 @@ end
 --
 -- WotLK player models expose only camera 0 (portrait) and camera 1
 -- (dressing-room). Adding a third camera to the player M2 crashes the client,
--- so the client-extension PoC uses a slot-specific SetCamera handshake. The
--- extension recognizes the nine sentinels below and applies an independent
--- render-time camera for the corresponding human-female equipment slot;
--- the immediately following camera 1 call is a safe stock-client fallback.
+-- so SoloCam uses a generated race/sex/slot SetCamera handshake. The
+-- immediately following camera 1 call is a safe stock-client fallback.
 -- Legacy DressUpModel frames also keep the same fixed rectangle as their
 -- cards: the 3.3.5 renderer does not safely clip oversized 3D viewports.
 local WARDROBE_MODEL_PROFILES = {
@@ -660,24 +646,30 @@ local function applyStandaloneItemRecord(model, record)
     queueStandaloneItemTransform(model)
 end
 
-local function getHumanFemaleCameraSentinel(model)
+local function getCharacterCameraSentinel(model)
     if not model or not model.scRecord then
         return nil
     end
-    local sentinel = CUSTOM_CAMERA_HUMAN_FEMALE[model.scRecord.slot]
-    if not sentinel then
+    local cameraProfiles = SC.CameraProfiles
+    if not cameraProfiles or type(cameraProfiles.GetSentinel) ~= "function" then
         return nil
     end
     local _, raceToken = UnitRace("player")
-    if raceToken == "Human" and UnitSex("player") == 3 then
-        return sentinel
+    local clientAssetProfile = nil
+    if SC.IdentityRegistry and SC.IdentityRegistry.ResolveCameraProfile then
+        clientAssetProfile = SC.IdentityRegistry.ResolveCameraProfile()
     end
-    return nil
+    return cameraProfiles.GetSentinel(
+        raceToken,
+        UnitSex("player"),
+        model.scRecord.slot,
+        clientAssetProfile
+    )
 end
 
 local function selectItemModelCamera(model)
     local profile = model.scProfile or WARDROBE_MODEL_PROFILES.DEFAULT
-    model.scClientCameraSentinel = getHumanFemaleCameraSentinel(model)
+    model.scClientCameraSentinel = getCharacterCameraSentinel(model)
     model.scUsesClientCamera = model.scClientCameraSentinel ~= nil
     if model.SetCamera then
         if model.scUsesClientCamera then
@@ -689,7 +681,9 @@ local function selectItemModelCamera(model)
                 model:SetCamera(1)
             end)
         else
-            pcall(function() model:SetCamera(profile.camera) end)
+            -- Missing/unknown/mismatched generated profiles must use the
+            -- stock dressing-room camera, including HEAD.
+            pcall(function() model:SetCamera(1) end)
         end
     end
 end

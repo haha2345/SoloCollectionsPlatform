@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 struct CameraVector
@@ -9,7 +10,7 @@ struct CameraVector
     float z;
 };
 
-struct HumanFemaleCameraProfile
+struct CharacterCameraProfile
 {
     std::uint32_t sentinel;
     float verticalOffset;
@@ -44,13 +45,16 @@ struct ItemCameraPose
     CameraVector targetOffset{};
 };
 
-const HumanFemaleCameraProfile* FindHumanFemaleCameraProfile(std::uint32_t sentinel);
+const CharacterCameraProfile* FindCharacterCameraProfile(std::uint32_t sentinel);
+std::size_t GetCharacterCameraProfileCount();
+std::uint32_t GetCharacterCameraProfileVersion();
+const char* GetCharacterCameraProfileHash();
 
 // The native dressing-room camera supplies orientation. A slot profile moves
 // the target vertically/horizontally, changes the distance and can orbit the
 // view around the model, while remaining independent of UI frame position.
-bool BuildHumanFemaleCamera(
-    const HumanFemaleCameraProfile& profile,
+bool BuildCharacterCamera(
+    const CharacterCameraProfile& profile,
     const CameraVector& nativePosition,
     const CameraVector& nativeTarget,
     CameraVector& position,

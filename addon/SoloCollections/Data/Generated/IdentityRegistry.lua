@@ -519,7 +519,7 @@ SoloCollections.GeneratedIdentityData = {
             sourceId = 11
         }
     },
-    mappingHash = "1fc77655c08118c89e7bfb31e9a2cfd95cdc068ba473d8615adb6e1ff3706a7a",
+    mappingHash = "94623d6bce77babb677451c8a4287739d7f94170f963ca8e78a633d126b68a20",
     races = {
         {
             aliases = {
@@ -553,7 +553,7 @@ SoloCollections.GeneratedIdentityData = {
                 "ORC"
             },
             appearanceOverrideProfile = "race.orc",
-            cameraProfile = "global",
+            cameraProfile = "race.orc",
             capabilities = {},
             clientAssetProfile = "race.orc",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -579,7 +579,7 @@ SoloCollections.GeneratedIdentityData = {
                 "DWARF"
             },
             appearanceOverrideProfile = "race.dwarf",
-            cameraProfile = "global",
+            cameraProfile = "race.dwarf",
             capabilities = {},
             clientAssetProfile = "race.dwarf",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -605,7 +605,7 @@ SoloCollections.GeneratedIdentityData = {
                 "NIGHTELF"
             },
             appearanceOverrideProfile = "race.night_elf",
-            cameraProfile = "global",
+            cameraProfile = "race.night_elf",
             capabilities = {},
             clientAssetProfile = "race.night_elf",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -632,7 +632,7 @@ SoloCollections.GeneratedIdentityData = {
                 "UNDEAD"
             },
             appearanceOverrideProfile = "race.undead",
-            cameraProfile = "global",
+            cameraProfile = "race.undead",
             capabilities = {},
             clientAssetProfile = "race.undead",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -658,7 +658,7 @@ SoloCollections.GeneratedIdentityData = {
                 "TAUREN"
             },
             appearanceOverrideProfile = "race.tauren",
-            cameraProfile = "global",
+            cameraProfile = "race.tauren",
             capabilities = {},
             clientAssetProfile = "race.tauren",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -684,7 +684,7 @@ SoloCollections.GeneratedIdentityData = {
                 "GNOME"
             },
             appearanceOverrideProfile = "race.gnome",
-            cameraProfile = "global",
+            cameraProfile = "race.gnome",
             capabilities = {},
             clientAssetProfile = "race.gnome",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -710,7 +710,7 @@ SoloCollections.GeneratedIdentityData = {
                 "TROLL"
             },
             appearanceOverrideProfile = "race.troll",
-            cameraProfile = "global",
+            cameraProfile = "race.troll",
             capabilities = {},
             clientAssetProfile = "race.troll",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -736,7 +736,7 @@ SoloCollections.GeneratedIdentityData = {
                 "BLOODELF"
             },
             appearanceOverrideProfile = "race.blood_elf",
-            cameraProfile = "global",
+            cameraProfile = "race.blood_elf",
             capabilities = {},
             clientAssetProfile = "race.blood_elf",
             clientAssetVersion = "wotlk-3.3.5a-local-1",
@@ -762,7 +762,7 @@ SoloCollections.GeneratedIdentityData = {
                 "DRAENEI"
             },
             appearanceOverrideProfile = "race.draenei",
-            cameraProfile = "global",
+            cameraProfile = "race.draenei",
             capabilities = {},
             clientAssetProfile = "race.draenei",
             clientAssetVersion = "wotlk-3.3.5a-local-1",

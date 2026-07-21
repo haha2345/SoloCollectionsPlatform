@@ -9,6 +9,7 @@ SoloCollections.lua
 Data\Generated\Catalog.lua
 Data\Generated\IdentityRegistry.lua
 Data\Generated\PolicyRegistry.lua
+Data\Generated\CameraProfiles.lua
 Data\Mounts.lua
 Data\Pets.lua
 Data\Toys.lua

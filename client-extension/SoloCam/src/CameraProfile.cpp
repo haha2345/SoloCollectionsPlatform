@@ -9,26 +9,12 @@ constexpr float kMinimumHorizontalDistanceSquared = 0.0001f;
 constexpr float kMaximumItemCameraPitch = 1.45f;
 constexpr float kPi = 3.14159265f;
 
-constexpr HumanFemaleCameraProfile kProfiles[] = {
-    // Retail reference order: HEAD, SHOULDER, BACK, CHEST, WRIST, HANDS,
-    // WAIST, LEGS and FEET. Each target follows the visible crop in the
-    // supplied Retail wardrobe cards; values remain relative to the native
-    // human-female dressing-room camera and never use screen coordinates.
-    {0x5341, 0.55f, 0.32f, 0.55f, 0.00f, 0.00f}, // face and neck
-    {0x5342, 0.40f, 0.16f, 0.52f, 0.10f, 0.00f}, // front-facing single shoulder crop
-    {0x5349, 0.25f, 0.27f, 0.65f, 0.00f, 3.14159265f}, // rear torso and cloak
-    {0x5343, 0.25f, 0.27f, 0.58f, 0.00f, 0.00f}, // neck to waist, slightly farther than the first crop
-    {0x5344, 0.12f, 0.20f, 0.48f, 0.10f, 0.00f}, // centered right wrist, shifted upward in the card
-    {0x5345, 0.08f, 0.24f, 0.48f, 0.10f, 0.00f}, // right hand plus wrist in one crop
-    {0x5346, 0.10f, 0.27f, 0.58f, 0.00f, 0.00f}, // belt and hips
-    {0x5347, -0.02f, 0.27f, 0.58f, 0.00f, 0.00f}, // hips to knees
-    {0x5348, -0.38f, 0.30f, 0.68f, 0.00f, 0.00f}, // both boots and lower legs, retail-style centered crop
-};
+#include "generated/CharacterCameraProfiles.inc"
 }
 
-const HumanFemaleCameraProfile* FindHumanFemaleCameraProfile(std::uint32_t sentinel)
+const CharacterCameraProfile* FindCharacterCameraProfile(std::uint32_t sentinel)
 {
-    for (const auto& profile : kProfiles)
+    for (const auto& profile : kCharacterCameraProfiles)
     {
         if (profile.sentinel == sentinel)
         {
@@ -38,8 +24,23 @@ const HumanFemaleCameraProfile* FindHumanFemaleCameraProfile(std::uint32_t senti
     return nullptr;
 }
 
-bool BuildHumanFemaleCamera(
-    const HumanFemaleCameraProfile& profile,
+std::size_t GetCharacterCameraProfileCount()
+{
+    return sizeof(kCharacterCameraProfiles) / sizeof(kCharacterCameraProfiles[0]);
+}
+
+std::uint32_t GetCharacterCameraProfileVersion()
+{
+    return kCharacterCameraProfileVersion;
+}
+
+const char* GetCharacterCameraProfileHash()
+{
+    return kCharacterCameraProfileHash;
+}
+
+bool BuildCharacterCamera(
+    const CharacterCameraProfile& profile,
     const CameraVector& nativePosition,
     const CameraVector& nativeTarget,
     CameraVector& position,
