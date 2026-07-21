@@ -328,9 +328,9 @@ function UI.CreatePetsPage(parent)
             if page.scModelGeneration ~= generation then
                 return
             end
-            local loaded = record.creatureId and pcall(function()
+            local loaded = record.previewCreatureEntry and pcall(function()
                 model:ClearModel()
-                model:SetCreature(record.creatureId)
+                model:SetCreature(record.previewCreatureEntry)
             end)
             if not loaded then
                 failModel()

@@ -442,11 +442,11 @@ function UI.CreateMountsPage(parent)
             end
             candidatePath = nil
             candidateFrames = 0
-            local loaded = record.creatureId and pcall(function()
+            local loaded = record.previewCreatureEntry and pcall(function()
                 -- GetModel() may retain its old path after ClearModel() on
                 -- 3.3.5, so emptiness cannot be used as a load barrier.
                 model:ClearModel()
-                model:SetCreature(record.creatureId)
+                model:SetCreature(record.previewCreatureEntry)
             end)
             if not loaded then
                 failModel()
