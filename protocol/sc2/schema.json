@@ -47,6 +47,15 @@
     "S": "RESYNC",
     "X": "ERROR"
   },
+  "actionSemantics": {
+    "PREVIEW": {
+      "typeIds": [10, 11],
+      "target": "-",
+      "requiresOwned": false,
+      "sideEffects": "CREATURE_QUERY_CACHE_PRIME_ONLY",
+      "acceptedMeaning": "SERVER_QUERY_RESPONSE_QUEUED"
+    }
+  },
   "actionStatuses": [
     "ACCEPTED",
     "DISMISSED",

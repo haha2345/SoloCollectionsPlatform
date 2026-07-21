@@ -100,6 +100,19 @@
       "wire": "Q|0123456789abcdef|99|1|1001|SUMMON|-"
     },
     {
+      "name": "creature_preview_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 101,
+        "typeId": 10,
+        "collectionId": 100001,
+        "actionId": "PREVIEW",
+        "target": "-"
+      },
+      "wire": "Q|0123456789abcdef|101|10|100001|PREVIEW|-"
+    },
+    {
       "name": "action_result",
       "message": {
         "kind": "ACTION_RESULT",
@@ -124,6 +137,45 @@
         "revision": 43
       },
       "wire": "R|0123456789abcdef|100|DISMISSED|11|100281|43"
+    },
+    {
+      "name": "creature_preview_accepted",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 101,
+        "status": "ACCEPTED",
+        "typeId": 10,
+        "collectionId": 100001,
+        "revision": 43
+      },
+      "wire": "R|0123456789abcdef|101|ACCEPTED|10|100001|43"
+    },
+    {
+      "name": "catalog_mismatch_result",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 102,
+        "status": "CATALOG_MISMATCH",
+        "typeId": 10,
+        "collectionId": 100001,
+        "revision": 43
+      },
+      "wire": "R|0123456789abcdef|102|CATALOG_MISMATCH|10|100001|43"
+    },
+    {
+      "name": "asset_mismatch_result",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 103,
+        "status": "ASSET_MISMATCH",
+        "typeId": 11,
+        "collectionId": 100281,
+        "revision": 43
+      },
+      "wire": "R|0123456789abcdef|103|ASSET_MISMATCH|11|100281|43"
     },
     {
       "name": "resync",

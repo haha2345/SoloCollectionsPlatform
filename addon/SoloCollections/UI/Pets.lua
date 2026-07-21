@@ -9,6 +9,7 @@ local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
 local MODEL_RETRY_DELAYS = { 0.1, 0.25, 0.5 }
+local MODEL_MAX_WINDOW = 2
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -312,9 +313,11 @@ function UI.CreatePetsPage(parent)
         clearModelInteraction()
         model:ClearModel()
         unavailable:Hide()
+        rotateHint:Show()
         resetModelState()
 
         local retryIndex = 0
+        local modelDeadline = GetTime() + MODEL_MAX_WINDOW
         local setCreatureAndVerify
 
         local function failModel()
@@ -328,6 +331,10 @@ function UI.CreatePetsPage(parent)
             if page.scModelGeneration ~= generation then
                 return
             end
+            if GetTime() >= modelDeadline then
+                failModel()
+                return
+            end
             local loaded = record.previewCreatureEntry and pcall(function()
                 model:ClearModel()
                 model:SetCreature(record.previewCreatureEntry)
@@ -339,6 +346,10 @@ function UI.CreatePetsPage(parent)
 
             scheduleModel(0.35, generation, function()
                 if page.scModelGeneration ~= generation then
+                    return
+                end
+                if GetTime() >= modelDeadline then
+                    failModel()
                     return
                 end
                 if getModelPath() then
@@ -370,19 +381,30 @@ function UI.CreatePetsPage(parent)
         model:ClearModel()
         unavailable:Hide()
 
-        if SC.Bridge and type(SC.Bridge.RequestPetModel) == "function" then
-            SC.Bridge.RequestPetModel(record.id, function()
-                if page.scModelGeneration == generation then
-                    scheduleModel(0, generation, function()
-                        applyModel(record, generation)
-                    end)
-                end
-            end)
-        else
+        if not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
+            unavailable:SetText("模型预览暂不可用")
+            unavailable:Show()
+            rotateHint:Hide()
+            return
+        end
+        SC.Bridge.RequestCreaturePreview(11, record.id, function(ok, reason)
+            if page.scModelGeneration ~= generation then
+                return
+            end
+            if not ok then
+                clearModelInteraction()
+                resetModelState()
+                model:ClearModel()
+                model.scUnavailableReason = reason
+                unavailable:SetText("模型预览暂不可用")
+                unavailable:Show()
+                rotateHint:Hide()
+                return
+            end
             scheduleModel(0, generation, function()
                 applyModel(record, generation)
             end)
-        end
+        end)
     end
 
     local function selectRecord(record)

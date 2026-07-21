@@ -482,6 +482,8 @@ addon: consume typed creature presentation metadata
 
 ### 任务 2.1：增加服务端 Creature Preview service
 
+- [x] 已完成（2026-07-22）。新增只接收 `Player/typeId/collectionId` 的只读 preview service，以同源 generated catalog 解析可信 Entry，复用审计 commit `4cc67a3` 的 Creature Query handler；实际配置支持 `.transmog reload` 热关闭/恢复，clean Core x64 RelWithDebInfo 已构建并部署验证。
+
 仓库：`mod-solo-collections`
 
 新增建议：
@@ -545,6 +547,8 @@ SoloCollections.Preview.Enabled = 1
 
 ### 任务 2.2：接入现有 SC2 Q/R
 
+- [x] 已完成（2026-07-22）。SC2 Q 已接入 PREVIEW，所有动作执行 metadata 总闸门、PREVIEW 另执行 asset pack 闸门，并复用 nonce/replay/burst 12 + 6 token/s/结构化日志；native 测试证明未收藏 PREVIEW 可用而 SUMMON 仍为 `NOT_OWNED`，无持久化或实体副作用。
+
 请求：
 
 - mount：`typeId=10, actionId=PREVIEW, target=-`
@@ -565,6 +569,8 @@ SoloCollections.Preview.Enabled = 1
 协议布局不变，因此 `protocolVersion` 保持 1。更新 `schema.json` 的动作语义说明与 golden vector，加入 PREVIEW 请求和 `ACCEPTED/CATALOG_MISMATCH/ASSET_MISMATCH` 结果。`CATALOG_MISMATCH` 表示该 type mapping 不同；`ASSET_MISMATCH` 只来自现有握手声明的 assetPackVersion 不兼容，不能用它声称服务器检查了客户端磁盘文件。
 
 ### 任务 2.3：迁移客户端 Bridge
+
+- [x] 已完成（2026-07-22）。正式 AddOn 已删除 SC1 模型 pending/ready 路径，坐骑/宠物仅在 SC2 成功且 generation 匹配后加载；5 秒 Q/R 超时、2 秒模型窗口和 0.10/0.25/0.50 重试均固定为合同。冷 WDB QA 全扫 `305/305 READY`、零失败，详情见 `docs/reports/2026-07-22-stage2-sc2-creature-preview.md`。
 
 仓库：`SoloCollections`
 
@@ -1436,6 +1442,8 @@ deferred
 
 ### 任务 9.2：增加运行时目录审计工具
 
+- [x] 已完成（2026-07-22，随阶段 2 提前落地）。新增独立 QA AddOn、显式启动/导出脚本和 fail-closed 合同测试；以 4 PREVIEW/s 上限完成冷 WDB `281+24` 全扫，记录逐项状态、稳定 `GetModel()`、重试、耗时和 stale generation 探针，CSV/JSON 仅输出到 F 盘 `_work/runtime-audit`，正式 bundle 不包含该工具。
+
 新增一个不随正式 AddOn 发布的 QA 工具：
 
 ```text
@@ -1934,11 +1942,11 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 
 以下全部满足后，本轮才算完成：
 
-- [ ] `Catalog.lua` 不再为 active 坐骑/宠物批量写死默认图标。
-- [ ] Creature Entry 与 DisplayInfo ID 使用不同字段名和不同验证规则。
-- [ ] `Backend=Cpp`、ALE 关闭、空 WDB 下，281 个坐骑和全部正式宠物零空模型。
-- [ ] PREVIEW 未收藏可查看，但 SUMMON/USE/APPLY 仍由 C++ owned/资格校验；PREVIEW 零 DB/revision/实体副作用。
-- [ ] UI 仅在 PREVIEW 成功且 generation 匹配时加载模型，失败有明确提示。
+- [x] `Catalog.lua` 不再为 active 坐骑/宠物批量写死默认图标。
+- [x] Creature Entry 与 DisplayInfo ID 使用不同字段名和不同验证规则。
+- [x] `Backend=Cpp`、ALE 关闭、空 WDB 下，281 个坐骑和全部正式宠物零空模型。
+- [x] PREVIEW 未收藏可查看，但 SUMMON/USE/APPLY 仍由 C++ owned/资格校验；PREVIEW 零 DB/revision/实体副作用。
+- [x] UI 仅在 PREVIEW 成功且 generation 匹配时加载模型，失败有明确提示。
 - [ ] 坐骑、宠物、玩具状态边为细边，选中态独立；玩具三列左右 margin 对称。
 - [ ] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。
 - [ ] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。

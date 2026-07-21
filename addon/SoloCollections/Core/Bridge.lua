@@ -24,9 +24,7 @@ B.sc2Attempted = false
 
 local requestTimeout = 5
 local requestSerial = 0
-local pendingModels = {}
 local pendingSummons = {}
-local pendingPetModels = {}
 local pendingPetSummons = {}
 local pendingToyUses = {}
 local sc2PendingActions = {}
@@ -138,25 +136,9 @@ function B.Finish(connected, status)
 end
 
 local function expirePendingRequests(now)
-    for requestId, pending in pairs(pendingModels) do
-        if now >= pending.deadline then
-            pendingModels[requestId] = nil
-            if type(pending.callback) == "function" then
-                pcall(pending.callback, false, "TIMEOUT")
-            end
-        end
-    end
     for requestId, pending in pairs(pendingSummons) do
         if now >= pending.deadline then
             pendingSummons[requestId] = nil
-            if type(pending.callback) == "function" then
-                pcall(pending.callback, false, "TIMEOUT")
-            end
-        end
-    end
-    for requestId, pending in pairs(pendingPetModels) do
-        if now >= pending.deadline then
-            pendingPetModels[requestId] = nil
             if type(pending.callback) == "function" then
                 pcall(pending.callback, false, "TIMEOUT")
             end
@@ -326,37 +308,18 @@ function B.RequestSC2Action(typeId, collectionId, actionId, target, callback)
     return requestId
 end
 
+function B.RequestCreaturePreview(typeId, collectionId, callback)
+    if (typeId ~= 10 and typeId ~= 11) or not isPositiveInteger(collectionId) then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_COLLECTION_ID")
+        end
+        return nil
+    end
+    return B.RequestSC2Action(typeId, collectionId, "PREVIEW", nil, callback)
+end
+
 function B.RequestModel(mountId, callback)
-    if not isPositiveInteger(mountId) then
-        if type(callback) == "function" then
-            pcall(callback, false, "INVALID_MOUNT_ID")
-        end
-        return nil
-    end
-    if not B.connected then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
-        end
-        return nil
-    end
-
-    local playerName = UnitName("player")
-    if not playerName or playerName == "" then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
-        end
-        return nil
-    end
-
-    requestSerial = requestSerial + 1
-    local requestId = requestSerial
-    pendingModels[requestId] = {
-        mountId = mountId,
-        deadline = GetTime() + requestTimeout,
-        callback = callback,
-    }
-    SendAddonMessage(B.prefix, "MODEL|" .. requestId .. "|" .. mountId, "WHISPER", playerName)
-    return requestId
+    return B.RequestCreaturePreview(10, mountId, callback)
 end
 
 function B.SummonMount(collectionId, callback)
@@ -378,36 +341,7 @@ function B.SummonMount(collectionId, callback)
 end
 
 function B.RequestPetModel(petId, callback)
-    if not isPositiveInteger(petId) then
-        if type(callback) == "function" then
-            pcall(callback, false, "INVALID_PET_ID")
-        end
-        return nil
-    end
-    if not B.connected then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
-        end
-        return nil
-    end
-
-    local playerName = UnitName("player")
-    if not playerName or playerName == "" then
-        if type(callback) == "function" then
-            pcall(callback, false, "BRIDGE_UNAVAILABLE")
-        end
-        return nil
-    end
-
-    requestSerial = requestSerial + 1
-    local requestId = requestSerial
-    pendingPetModels[requestId] = {
-        petId = petId,
-        deadline = GetTime() + requestTimeout,
-        callback = callback,
-    }
-    SendAddonMessage(B.prefix, "PET_MODEL|" .. requestId .. "|" .. petId, "WHISPER", playerName)
-    return requestId
+    return B.RequestCreaturePreview(11, petId, callback)
 end
 
 function B.SummonPet(collectionId, callback)
@@ -487,23 +421,6 @@ function B.ApplySet(collectionId, variantIndex, callback)
     return B.RequestSC2Action(14, collectionId, "APPLY", variantIndex, callback)
 end
 
-local function handleModelReady(requestIdText, mountIdText)
-    local requestId = tonumber(requestIdText)
-    local mountId = tonumber(mountIdText)
-    if not isPositiveInteger(requestId) or not isPositiveInteger(mountId) then
-        return
-    end
-
-    local pending = pendingModels[requestId]
-    if not pending or pending.mountId ~= mountId then
-        return
-    end
-    pendingModels[requestId] = nil
-    if type(pending.callback) == "function" then
-        pcall(pending.callback, true, mountId)
-    end
-end
-
 local function handleSummonResult(requestIdText, status, payload)
     local requestId = tonumber(requestIdText)
     if not isPositiveInteger(requestId) then
@@ -538,23 +455,6 @@ local function handleSummonResult(requestIdText, status, payload)
         if type(pending.callback) == "function" then
             pcall(pending.callback, false, payload)
         end
-    end
-end
-
-local function handlePetModelReady(requestIdText, petIdText)
-    local requestId = tonumber(requestIdText)
-    local petId = tonumber(petIdText)
-    if not isPositiveInteger(requestId) or not isPositiveInteger(petId) then
-        return
-    end
-
-    local pending = pendingPetModels[requestId]
-    if not pending or pending.petId ~= petId then
-        return
-    end
-    pendingPetModels[requestId] = nil
-    if type(pending.callback) == "function" then
-        pcall(pending.callback, true, petId)
     end
 end
 
@@ -679,24 +579,12 @@ function B.OnMessage(prefix, message, channel, sender)
         return
     end
 
-    local modelRequestId, modelMountId = string.match(message, "^MODEL_READY|(%d+)|(%d+)$")
-    if modelRequestId then
-        handleModelReady(modelRequestId, modelMountId)
-        return
-    end
-
     local summonRequestId, summonResult = string.match(message, "^SUMMON_RESULT|(%d+)|(.+)$")
     if summonRequestId then
         local status, payload = string.match(summonResult, "^([A-Z_]+)|([A-Z0-9_]+)$")
         if status then
             handleSummonResult(summonRequestId, status, payload)
         end
-        return
-    end
-
-    local petModelRequestId, petModelId = string.match(message, "^PET_MODEL_READY|(%d+)|(%d+)$")
-    if petModelRequestId then
-        handlePetModelReady(petModelRequestId, petModelId)
         return
     end
 

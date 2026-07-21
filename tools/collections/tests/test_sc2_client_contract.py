@@ -13,14 +13,17 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertLess(state, toc.index("Core\\Catalog.lua"))
         self.assertLess(state, toc.index("Core\\Bridge.lua"))
 
-    def test_sc1_and_sc2_have_separate_prefixes_and_request_tables(self):
+    def test_sc1_and_sc2_have_separate_prefixes_and_preview_uses_sc2(self):
         bridge = (ADDON / "Core/Bridge.lua").read_text(encoding="utf-8")
         self.assertIn('B.prefix = "SC1"', bridge)
         self.assertIn('B.sc2Prefix = "SC2"', bridge)
-        self.assertIn("pendingModels", bridge)
+        self.assertNotIn("pendingModels", bridge)
+        self.assertNotIn("pendingPetModels", bridge)
         self.assertIn("sc2PendingActions", bridge)
+        self.assertIn('B.RequestSC2Action(typeId, collectionId, "PREVIEW", nil, callback)', bridge)
         self.assertIn("B.ConnectSC2", bridge)
         self.assertIn("CS.HandleMessage", bridge)
+        self.assertIn("local requestTimeout = 5", bridge)
 
     def test_state_machine_has_atomic_snapshot_and_revision_guards(self):
         state = (ADDON / "Core/CollectionState.lua").read_text(encoding="utf-8")
