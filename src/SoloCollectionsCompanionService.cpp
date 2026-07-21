@@ -120,6 +120,10 @@ public:
         CompanionCollectionDefinition const* definition = GetCompanionCatalog().Find(collectionId);
         if (!definition)
             return "INVALID_REQUEST";
+        if (definition->Lifecycle == CatalogLifecycle::Tombstone)
+            return "INVALID_REQUEST";
+        if (!CatalogLifecycleAllowsAction(definition->Lifecycle))
+            return "UNSUPPORTED";
         if (!GetAccountCollectionCache().IsOwned(account, { CompanionCollectionTypeId, collectionId }))
             return "NOT_OWNED";
         if (!player->IsAlive())

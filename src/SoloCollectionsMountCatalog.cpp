@@ -17,7 +17,8 @@ MountCatalog::MountCatalog(std::vector<MountCollectionDefinition> collections)
     {
         MountCollectionDefinition const& collection = _collections[index];
         if (!collection.Id.IsValid() || collection.Key.empty() || collection.CanonicalSpellId == 0 ||
-            collection.CreatureIds.empty() || collection.UnlockSpellIds.empty() || collection.ActionVariants.empty())
+            collection.CreatureIds.empty() || collection.UnlockSpellIds.empty() || collection.ActionVariants.empty() ||
+            collection.PreviewCreatureEntry == 0)
             throw std::invalid_argument("invalid generated mount collection definition");
         if (!_byCollection.emplace(collection.Id, index).second)
             throw std::invalid_argument("duplicate generated mount collection ID");

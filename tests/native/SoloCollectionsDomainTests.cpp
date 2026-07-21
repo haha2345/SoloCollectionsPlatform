@@ -684,6 +684,10 @@ void TestGeneratedMountCatalog()
     Require(catalog.Collections().size() == 281, "generated mount catalog count changed without review");
     SC::MountCollectionDefinition const* acherus = catalog.FindByUnlockSpell(48778);
     Require(acherus && acherus->Id == SC::CollectionId(100000), "Acherus mount spell lookup failed");
+    Require(acherus->PreviewCreatureEntry == 28302 &&
+        acherus->Lifecycle == SC::CatalogLifecycle::Active &&
+        SC::CatalogLifecycleAllowsPreview(acherus->Lifecycle),
+        "mount preview identity or lifecycle was not generated");
     Require(catalog.Find(acherus->Id) == acherus, "mount collection reverse lookup failed");
     Require(!catalog.FindByUnlockSpell(32345), "reviewed test mount spell entered the production lookup");
     SC::MountCollectionDefinition const* gryphon = catalog.FindByUnlockSpell(32292);
@@ -698,6 +702,10 @@ void TestGeneratedCompanionCatalog()
     SC::CompanionCollectionDefinition const* worg = catalog.FindBySpell(15999);
     Require(worg && worg->Id == SC::CollectionId(100281) && worg->CreatureId == 10259,
         "Worg Pup companion lookup failed");
+    Require(worg->PreviewCreatureEntry == 10259 &&
+        worg->Lifecycle == SC::CatalogLifecycle::Active &&
+        SC::CatalogLifecycleAllowsPreview(worg->Lifecycle),
+        "companion preview identity or lifecycle was not generated");
     Require(catalog.Find(worg->Id) == worg, "companion collection reverse lookup failed");
     Require(!catalog.FindBySpell(48778), "mount spell entered the companion allowlist");
 }

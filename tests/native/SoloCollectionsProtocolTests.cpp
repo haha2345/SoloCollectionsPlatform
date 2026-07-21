@@ -32,8 +32,12 @@ void TestGoldenCodecVectors()
         "E|0123456789abcdef|17|179c036b",
         "D|0123456789abcdef|2|43|A|1001",
         "Q|0123456789abcdef|99|1|1001|SUMMON|-",
+        "Q|0123456789abcdef|101|10|100001|PREVIEW|-",
         "R|0123456789abcdef|99|LOADING|1|1001|43",
         "R|0123456789abcdef|100|DISMISSED|11|100281|43",
+        "R|0123456789abcdef|101|ACCEPTED|10|100001|43",
+        "R|0123456789abcdef|102|CATALOG_MISMATCH|10|100001|43",
+        "R|0123456789abcdef|103|ASSET_MISMATCH|11|100281|43",
         "S|0123456789abcdef|REVISION_GAP|0|43",
         "X|0123456789abcdef|99|REPLAYED_REQUEST",
     };
@@ -174,6 +178,64 @@ void TestAuthoritativeActionHandler()
         "successful companion toggle status was rejected by the protocol");
 }
 
+void TestPreviewVersionGatesAndUnownedDispatch()
+{
+    SC::AccountCollectionCache cache;
+    auto opened = cache.OpenSession(Account(9), Session(900), 0);
+    Require(cache.CompleteLoad(Account(9), opened.Generation, {}, SC::CollectionRevision(21)),
+        "preview cache fixture did not become ready");
+
+    SC::Sc2Server server = BuildServer(cache);
+    server.OpenSession(Account(9), Session(900));
+    (void)server.HandleInbound(Session(900),
+        "H|1|9999999999999900|0.2.0-dev|stale-metadata|wotlk-3.3.5a-local-1", 0);
+    (void)server.DrainOutbound(Session(900), 32);
+    std::string nonce = server.SessionNonce(Session(900));
+    bool called = false;
+    SC::Sc2Server::ActionHandler handler = [&called](SC::AccountId, SC::Sc2Message const& request)
+    {
+        called = true;
+        return request.ActionId == "PREVIEW" ? std::string("ACCEPTED") : std::string("NOT_OWNED");
+    };
+    (void)server.HandleInbound(Session(900),
+        "Q|" + nonce + "|1|10|100001|PREVIEW|-", 1, handler);
+    std::vector<std::string> result = server.DrainOutbound(Session(900), 32);
+    Require(!called && result.size() == 1 && result[0].find("|CATALOG_MISMATCH|") != std::string::npos,
+        "stale metadata reached an action handler");
+
+    server.CloseSession(Session(900));
+    server.OpenSession(Account(9), Session(900));
+    (void)server.HandleInbound(Session(900),
+        "H|1|9999999999999901|0.2.0-dev|2026.07.20.1|wrong-asset-pack", 10);
+    (void)server.DrainOutbound(Session(900), 32);
+    nonce = server.SessionNonce(Session(900));
+    called = false;
+    (void)server.HandleInbound(Session(900),
+        "Q|" + nonce + "|2|11|100281|PREVIEW|-", 11, handler);
+    result = server.DrainOutbound(Session(900), 32);
+    Require(!called && result.size() == 1 && result[0].find("|ASSET_MISMATCH|") != std::string::npos,
+        "preview asset mismatch reached an action handler");
+
+    (void)server.HandleInbound(Session(900),
+        "Q|" + nonce + "|3|11|100281|SUMMON|-", 12, handler);
+    result = server.DrainOutbound(Session(900), 32);
+    Require(called && result.size() == 1 && result[0].find("|NOT_OWNED|") != std::string::npos,
+        "asset mismatch incorrectly disabled owned-gated non-preview actions");
+
+    server.CloseSession(Session(900));
+    server.OpenSession(Account(9), Session(900));
+    (void)server.HandleInbound(Session(900),
+        "H|1|9999999999999902|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 20);
+    (void)server.DrainOutbound(Session(900), 32);
+    nonce = server.SessionNonce(Session(900));
+    called = false;
+    (void)server.HandleInbound(Session(900),
+        "Q|" + nonce + "|4|10|100001|PREVIEW|-", 21, handler);
+    result = server.DrainOutbound(Session(900), 32);
+    Require(called && result.size() == 1 && result[0].find("|ACCEPTED|") != std::string::npos,
+        "unowned preview was not dispatched through the shared SC2 action path");
+}
+
 void TestAccountScopedDeltaFanout()
 {
     SC::AccountCollectionCache cache;
@@ -287,6 +349,7 @@ int main()
         TestReadySnapshotIsQueuedAndBounded();
         TestReplayOldNonceAndRateLimit();
         TestAuthoritativeActionHandler();
+        TestPreviewVersionGatesAndUnownedDispatch();
         TestAccountScopedDeltaFanout();
         TestSyntheticPersistedProviderRevisionSync();
         TestExternalTitleSnapshotsAreSessionScoped();

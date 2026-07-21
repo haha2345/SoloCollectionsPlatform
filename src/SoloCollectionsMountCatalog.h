@@ -29,6 +29,8 @@ struct MountCollectionDefinition
     std::vector<std::uint32_t> CreatureIds;
     std::vector<std::uint32_t> UnlockSpellIds;
     std::vector<MountActionVariant> ActionVariants;
+    std::uint32_t PreviewCreatureEntry = 0;
+    CatalogLifecycle Lifecycle = CatalogLifecycle::Disabled;
 };
 
 class MountCatalog final

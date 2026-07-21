@@ -18,9 +18,15 @@
 #                     structured server logging remains enabled and failures are fail-open.
 #        Default:     "logs/solo-collections-shadow.jsonl"
 #
+#    SoloCollections.Preview.Enabled
+#        Description: Enables the read-only SC2 mount/companion Creature Query priming service.
+#                     Disabling it returns UNSUPPORTED and does not enable ALE/SC1.
+#        Default:     1
+#
 
 SoloCollections.Backend = Compare
 SoloCollections.ShadowReportPath = "logs/solo-collections-shadow.jsonl"
+SoloCollections.Preview.Enabled = 1
 
 #
 ###################################################################################################

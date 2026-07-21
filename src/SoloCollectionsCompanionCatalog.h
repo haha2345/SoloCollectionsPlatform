@@ -18,6 +18,8 @@ struct CompanionCollectionDefinition
     std::string Key;
     std::uint32_t SpellId = 0;
     std::uint32_t CreatureId = 0;
+    std::uint32_t PreviewCreatureEntry = 0;
+    CatalogLifecycle Lifecycle = CatalogLifecycle::Disabled;
 };
 
 class CompanionCatalog final

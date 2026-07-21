@@ -1,6 +1,7 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsBackend.h"
+#include "SoloCollectionsCreaturePreviewService.h"
 #include "SoloCollectionsProvider.h"
 #include "SoloCollectionsProtocolScript.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
@@ -152,11 +153,11 @@ public:
             store.PendingMigrationMarkers;
 
         handler->PSendSysMessage(
-            "SoloCollections backend={} writes={} shadow={} schema={} providers_ready={} providers_readonly={} "
+            "SoloCollections backend={} writes={} shadow={} preview={} schema={} providers_ready={} providers_readonly={} "
             "providers_disabled={} online_accounts={} cache_entries={} sessions={} states={}/{}/{} pending_writes={} "
             "pending_loads={} pending_mutations={} pending_audits={} pending_deltas={} evictions={}",
             BackendModeName(GetBackendMode()), store.WritesEnabled ? 1 : 0,
-            IsShadowComparisonEnabled() ? 1 : 0, SchemaStateName(store.SchemaState),
+            IsShadowComparisonEnabled() ? 1 : 0, IsCreaturePreviewEnabled() ? 1 : 0, SchemaStateName(store.SchemaState),
             enabled, readOnly, disabled, cache.SessionCount, cache.EntryCount,
             cache.SessionCount, cache.LoadingCount, cache.ReadyCount, cache.FailedCount,
             pendingWrites,

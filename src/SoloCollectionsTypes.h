@@ -76,6 +76,24 @@ enum class StableIdLifecycle : std::uint8_t
     Tombstone = 2,
 };
 
+enum class CatalogLifecycle : std::uint8_t
+{
+    Active = 1,
+    PreviewOnly = 2,
+    Disabled = 3,
+    Tombstone = 4,
+};
+
+[[nodiscard]] constexpr bool CatalogLifecycleAllowsPreview(CatalogLifecycle lifecycle) noexcept
+{
+    return lifecycle == CatalogLifecycle::Active || lifecycle == CatalogLifecycle::PreviewOnly;
+}
+
+[[nodiscard]] constexpr bool CatalogLifecycleAllowsAction(CatalogLifecycle lifecycle) noexcept
+{
+    return lifecycle == CatalogLifecycle::Active;
+}
+
 template <typename Id>
 struct StableIdReservation
 {

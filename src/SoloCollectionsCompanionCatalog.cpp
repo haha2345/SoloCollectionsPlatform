@@ -17,6 +17,7 @@ CompanionCatalog::CompanionCatalog(std::vector<CompanionCollectionDefinition> co
     {
         CompanionCollectionDefinition const& definition = _collections[index];
         if (!definition.Id.IsValid() || definition.Key.empty() || definition.SpellId == 0 || definition.CreatureId == 0 ||
+            definition.PreviewCreatureEntry == 0 ||
             !_byCollection.emplace(definition.Id, index).second || !_bySpell.emplace(definition.SpellId, index).second)
             throw std::runtime_error("invalid or duplicate SoloCollections companion catalog entry");
     }

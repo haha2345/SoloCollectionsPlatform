@@ -6,6 +6,7 @@
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
 #include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsCompanionService.h"
+#include "SoloCollectionsCreaturePreviewService.h"
 #include "SoloCollectionsMountCatalog.h"
 #include "SoloCollectionsMountService.h"
 #include "SoloCollectionsProtocolServer.h"
@@ -27,6 +28,7 @@
 #include <chrono>
 #include <charconv>
 #include <string_view>
+#include <utility>
 
 namespace SoloCollections
 {
@@ -174,21 +176,29 @@ bool Sc2ProtocolCanUsePrivateChat(
         [player](AccountId accountId, Sc2Message const& request)
         {
             auto actionStarted = std::chrono::steady_clock::now();
-            auto finish = [&](std::string_view actionKind, std::string status)
+            auto finish = [&](std::string_view actionKind, std::string status, std::uint32_t entry = 0)
             {
                 std::uint64_t elapsedMicroseconds = static_cast<std::uint64_t>(
                     std::chrono::duration_cast<std::chrono::microseconds>(
                         std::chrono::steady_clock::now() - actionStarted).count());
                 LOG_INFO("module.solocollections.performance",
-                    "event=action_timing account={} character={} type={} collection={} action={} status={} elapsed_us={}",
+                    "event=action_timing account={} character={} type={} collection={} action={} entry={} status={} elapsed_us={}",
                     accountId.Value(), player->GetGUID().GetCounter(), request.TypeId,
-                    request.CollectionId, actionKind, status, elapsedMicroseconds);
+                    request.CollectionId, actionKind, entry, status, elapsedMicroseconds);
                 return status;
             };
             if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId())
                 return finish("invalid", "INVALID_REQUEST");
             if (request.TypeId == MountCollectionTypeId.Value())
             {
+                if (request.ActionId == "PREVIEW")
+                {
+                    if (request.Target != "-")
+                        return finish("preview", "INVALID_REQUEST");
+                    CreaturePreviewResult result = GetCreaturePreviewService().Execute(
+                        player, MountCollectionTypeId, CollectionId(request.CollectionId));
+                    return finish("preview", std::move(result.Status), result.CreatureEntry);
+                }
                 if (request.ActionId != "SUMMON" || request.Target != "-")
                     return finish("mount", "INVALID_REQUEST");
                 return finish("mount", GetMountCollectionService().ExecuteSummon(
@@ -196,6 +206,14 @@ bool Sc2ProtocolCanUsePrivateChat(
             }
             if (request.TypeId == CompanionCollectionTypeId.Value())
             {
+                if (request.ActionId == "PREVIEW")
+                {
+                    if (request.Target != "-")
+                        return finish("preview", "INVALID_REQUEST");
+                    CreaturePreviewResult result = GetCreaturePreviewService().Execute(
+                        player, CompanionCollectionTypeId, CollectionId(request.CollectionId));
+                    return finish("preview", std::move(result.Status), result.CreatureEntry);
+                }
                 if (request.ActionId != "SUMMON" || request.Target != "-")
                     return finish("companion", "INVALID_REQUEST");
                 return finish("companion", GetCompanionCollectionService().ExecuteSummon(

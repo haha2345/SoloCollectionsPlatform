@@ -1,5 +1,6 @@
 import hashlib
 import json
+import os
 import unittest
 from pathlib import Path
 
@@ -14,7 +15,8 @@ SHADOW = (ROOT / "src/SoloCollectionsShadowService.cpp").read_text(encoding="utf
 COMPARISON = (ROOT / "src/SoloCollectionsShadowComparison.cpp").read_text(encoding="utf-8")
 CONFIG = (ROOT / "conf/transmog.conf.dist").read_text(encoding="utf-8")
 GENERATED = json.loads((ROOT / "data/generated/solo_collections_legacy_sc1_shadow.json").read_text(encoding="utf-8"))
-LUA = ROOT.parent / "SoloCollections" / "server" / "ale" / "solo_collections.lua"
+ADDON_ROOT = Path(os.environ.get("SOLO_COLLECTIONS_ADDON_ROOT", ROOT.parent / "SoloCollections"))
+LUA = ADDON_ROOT / "server" / "ale" / "solo_collections.lua"
 LUA_TEXT = LUA.read_text(encoding="utf-8")
 
 

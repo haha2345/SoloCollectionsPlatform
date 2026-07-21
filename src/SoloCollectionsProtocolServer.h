@@ -80,6 +80,8 @@ private:
         bool Active = false;
         bool AwaitingSnapshot = false;
         std::string ClientNonce;
+        std::string ClientMetadataVersion;
+        std::string ClientAssetPackVersion;
         std::string Nonce;
         std::uint32_t NextTransferId = 1;
         TokenBucket Bucket;

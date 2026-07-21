@@ -306,6 +306,8 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         session.Active = true;
         session.AwaitingSnapshot = false;
         session.ClientNonce = message.ClientNonce;
+        session.ClientMetadataVersion = message.MetadataVersion;
+        session.ClientAssetPackVersion = message.AssetPackVersion;
         session.Nonce = NewNonce();
         session.NextTransferId = 1;
         session.Bucket = TokenBucket { BucketCapacity, nowMs };
@@ -346,7 +348,11 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         result.TypeId = message.TypeId;
         result.CollectionId = message.CollectionId;
         result.Revision = snapshot ? snapshot->Revision.Value() : 0;
-        if (!snapshot || snapshot->State == AccountCacheLoadState::Loading)
+        if (session.ClientMetadataVersion != _metadataVersion)
+            result.Status = "CATALOG_MISMATCH";
+        else if (message.ActionId == "PREVIEW" && session.ClientAssetPackVersion != _assetPackVersion)
+            result.Status = "ASSET_MISMATCH";
+        else if (!snapshot || snapshot->State == AccountCacheLoadState::Loading)
             result.Status = "LOADING";
         else if (snapshot->State == AccountCacheLoadState::Failed)
             result.Status = "DB_UNAVAILABLE";

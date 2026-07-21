@@ -66,6 +66,8 @@ class Phase5ProtocolContractTests(unittest.TestCase):
             "REPLAYED_REQUEST",
             "RATE_LIMITED",
             "LOADING",
+            "BucketCapacity = 12.0",
+            "TokensPerSecond = 6.0",
         ):
             self.assertIn(token, combined)
 
