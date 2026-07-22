@@ -62,13 +62,19 @@ if ($WorldserverPath) {
     }
     $cache = Join-Path $build 'CMakeCache.txt'
     $pdb = Join-Path (Split-Path -Parent $worldserver) 'worldserver.pdb'
+    function Get-CMakeCacheValue([string]$Pattern) {
+        if (-not (Test-Path -LiteralPath $cache)) { return 'UNAVAILABLE' }
+        $match = Select-String -LiteralPath $cache -Pattern $Pattern | Select-Object -First 1
+        if ($null -eq $match -or $match.Matches.Count -eq 0 -or $match.Matches[0].Groups.Count -lt 2) { return 'UNAVAILABLE' }
+        return [string]$match.Matches[0].Groups[1].Value
+    }
     $metadata = [ordered]@{
         schemaVersion = 1; configuration = $Configuration; buildStartedAtUtc = $context.buildStartedAtUtc
         buildFinishedAtUtc = (Get-Date).ToUniversalTime().ToString('o'); values = $values
         cmakeCacheSha256 = if (Test-Path -LiteralPath $cache) { Get-RoundTwoSha256 $cache } else { 'UNAVAILABLE' }
-        generator = if (Test-Path -LiteralPath $cache) { ((Select-String -LiteralPath $cache -Pattern '^CMAKE_GENERATOR:INTERNAL=(.+)$').Matches.Groups[1].Value) } else { 'UNAVAILABLE' }
-        platform = if (Test-Path -LiteralPath $cache) { ((Select-String -LiteralPath $cache -Pattern '^CMAKE_GENERATOR_PLATFORM:INTERNAL=(.*)$').Matches.Groups[1].Value) } else { 'UNAVAILABLE' }
-        msvcVersion = if (Test-Path -LiteralPath $cache) { ((Select-String -LiteralPath $cache -Pattern '^CMAKE_CXX_COMPILER_VERSION:STRING=(.*)$').Matches.Groups[1].Value) } else { 'UNAVAILABLE' }
+        generator = Get-CMakeCacheValue '^CMAKE_GENERATOR:INTERNAL=(.+)$'
+        platform = Get-CMakeCacheValue '^CMAKE_GENERATOR_PLATFORM:INTERNAL=(.*)$'
+        msvcVersion = Get-CMakeCacheValue '^CMAKE_CXX_COMPILER_VERSION:STRING=(.*)$'
         worldserverSha256 = Get-RoundTwoSha256 $worldserver
         worldserverMachine = $pe.Machine
         worldserverLastWriteUtc = (Get-Item -LiteralPath $worldserver).LastWriteTimeUtc.ToString('o')
