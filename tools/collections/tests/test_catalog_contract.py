@@ -156,11 +156,12 @@ class CatalogContractTests(unittest.TestCase):
     def test_sets_have_multiple_item_ids(self):
         path = ROOT / "catalog/generated/set-catalog.json"
         data = json.loads(path.read_text(encoding="utf-8"))
-        self.assertEqual(8, len(data["sets"]))
+        self.assertEqual(465, len(data["sets"]))
         for definition in data["sets"]:
-            active = [variant for variant in definition["variants"] if variant["lifecycle"] == "active"]
+            active = [variant for variant in definition["variants"] if variant["lifecycle"] == "ACTIVE"]
             self.assertTrue(active)
-            self.assertGreaterEqual(sum(len(member["sourceItemIds"]) for member in active[0]["members"]), 4)
+            self.assertGreaterEqual(len({appearance for member in active[0]["members"]
+                                         for appearance in member["appearanceIds"]}), 2)
 
     def test_lua_catalog_exposes_the_phase_one_service_contract(self):
         source = (ADDON / "Core" / "Catalog.lua").read_text(encoding="utf-8")

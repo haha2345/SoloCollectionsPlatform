@@ -1,0 +1,952 @@
+{
+  "mappingHash": "bad5a8006191971cae97a177153de22b90cb141fd6b975663687276803a1c845",
+  "profile": "manual8",
+  "schemaVersion": 2,
+  "sets": [
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "mage"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300000,
+      "collectionKey": "set.arcanist_regalia",
+      "iconItemId": 16795,
+      "itemSetId": 201,
+      "name": {
+        "enUS": "奥术师",
+        "zhCN": "奥术师"
+      },
+      "ordinal": 18499,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207095
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16795
+              ]
+            },
+            {
+              "appearanceIds": [
+                206756
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16797
+              ]
+            },
+            {
+              "appearanceIds": [
+                206750
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16798
+              ]
+            },
+            {
+              "appearanceIds": [
+                206754
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16799
+              ]
+            },
+            {
+              "appearanceIds": [
+                206755
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16801
+              ]
+            },
+            {
+              "appearanceIds": [
+                206753
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16802
+              ]
+            },
+            {
+              "appearanceIds": [
+                206751
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16796
+              ]
+            },
+            {
+              "appearanceIds": [
+                206757
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16800
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "warlock"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300001,
+      "collectionKey": "set.felheart_raiment",
+      "iconItemId": 16808,
+      "itemSetId": 203,
+      "name": {
+        "enUS": "恶魔之心",
+        "zhCN": "恶魔之心"
+      },
+      "ordinal": 18500,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207273
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16808
+              ]
+            },
+            {
+              "appearanceIds": [
+                207266
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16807
+              ]
+            },
+            {
+              "appearanceIds": [
+                207265
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16809
+              ]
+            },
+            {
+              "appearanceIds": [
+                207262
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16804
+              ]
+            },
+            {
+              "appearanceIds": [
+                207263
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16805
+              ]
+            },
+            {
+              "appearanceIds": [
+                207261
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16806
+              ]
+            },
+            {
+              "appearanceIds": [
+                207264
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16810
+              ]
+            },
+            {
+              "appearanceIds": [
+                207267
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16803
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "rogue"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300002,
+      "collectionKey": "set.nightslayer_armor",
+      "iconItemId": 16821,
+      "itemSetId": 204,
+      "name": {
+        "enUS": "夜幕杀手",
+        "zhCN": "夜幕杀手"
+      },
+      "ordinal": 18501,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207094
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16821
+              ]
+            },
+            {
+              "appearanceIds": [
+                207088
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16823
+              ]
+            },
+            {
+              "appearanceIds": [
+                206958
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16820
+              ]
+            },
+            {
+              "appearanceIds": [
+                206959
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16825
+              ]
+            },
+            {
+              "appearanceIds": [
+                207087
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16826
+              ]
+            },
+            {
+              "appearanceIds": [
+                207053
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16827
+              ]
+            },
+            {
+              "appearanceIds": [
+                207054
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16822
+              ]
+            },
+            {
+              "appearanceIds": [
+                206960
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16824
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "druid"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300003,
+      "collectionKey": "set.cenarion_raiment",
+      "iconItemId": 16834,
+      "itemSetId": 205,
+      "name": {
+        "enUS": "塞纳里奥",
+        "zhCN": "塞纳里奥"
+      },
+      "ordinal": 18502,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207504
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16834
+              ]
+            },
+            {
+              "appearanceIds": [
+                207279
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16836
+              ]
+            },
+            {
+              "appearanceIds": [
+                207192
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16833
+              ]
+            },
+            {
+              "appearanceIds": [
+                207168
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16830
+              ]
+            },
+            {
+              "appearanceIds": [
+                207169
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16831
+              ]
+            },
+            {
+              "appearanceIds": [
+                207166
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16828
+              ]
+            },
+            {
+              "appearanceIds": [
+                207170
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16835
+              ]
+            },
+            {
+              "appearanceIds": [
+                207167
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16829
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "hunter"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300004,
+      "collectionKey": "set.giantstalker_armor",
+      "iconItemId": 16846,
+      "itemSetId": 206,
+      "name": {
+        "enUS": "巨人追猎者",
+        "zhCN": "巨人追猎者"
+      },
+      "ordinal": 18503,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207285
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16846
+              ]
+            },
+            {
+              "appearanceIds": [
+                207287
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16848
+              ]
+            },
+            {
+              "appearanceIds": [
+                207282
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16845
+              ]
+            },
+            {
+              "appearanceIds": [
+                207281
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16850
+              ]
+            },
+            {
+              "appearanceIds": [
+                207283
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16852
+              ]
+            },
+            {
+              "appearanceIds": [
+                207280
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16851
+              ]
+            },
+            {
+              "appearanceIds": [
+                207286
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16847
+              ]
+            },
+            {
+              "appearanceIds": [
+                207294
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16849
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "shaman"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300005,
+      "collectionKey": "set.earthfury",
+      "iconItemId": 16842,
+      "itemSetId": 207,
+      "name": {
+        "enUS": "大地之怒",
+        "zhCN": "大地之怒"
+      },
+      "ordinal": 18504,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207210
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16842
+              ]
+            },
+            {
+              "appearanceIds": [
+                207208
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16844
+              ]
+            },
+            {
+              "appearanceIds": [
+                207207
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16841
+              ]
+            },
+            {
+              "appearanceIds": [
+                207206
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16840
+              ]
+            },
+            {
+              "appearanceIds": [
+                207209
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16839
+              ]
+            },
+            {
+              "appearanceIds": [
+                207204
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16838
+              ]
+            },
+            {
+              "appearanceIds": [
+                207211
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16843
+              ]
+            },
+            {
+              "appearanceIds": [
+                207205
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16837
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "paladin"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300006,
+      "collectionKey": "set.lawbringer_armor",
+      "iconItemId": 16854,
+      "itemSetId": 208,
+      "name": {
+        "enUS": "秩序之源",
+        "zhCN": "秩序之源"
+      },
+      "ordinal": 18505,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                207090
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16854
+              ]
+            },
+            {
+              "appearanceIds": [
+                207093
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16856
+              ]
+            },
+            {
+              "appearanceIds": [
+                207089
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16853
+              ]
+            },
+            {
+              "appearanceIds": [
+                207092
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16857
+              ]
+            },
+            {
+              "appearanceIds": [
+                207091
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16860
+              ]
+            },
+            {
+              "appearanceIds": [
+                207059
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16858
+              ]
+            },
+            {
+              "appearanceIds": [
+                207058
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16855
+              ]
+            },
+            {
+              "appearanceIds": [
+                207060
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16859
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    },
+    {
+      "catalogLifecycle": "ACTIVE",
+      "classPolicy": {
+        "allowedClassKeys": [
+          "warrior"
+        ],
+        "mode": "ALLOW_LIST"
+      },
+      "collectionId": 300007,
+      "collectionKey": "set.battlegear_of_might",
+      "iconItemId": 16866,
+      "itemSetId": 209,
+      "name": {
+        "enUS": "力量",
+        "zhCN": "力量"
+      },
+      "ordinal": 18506,
+      "uiLifecycle": "public",
+      "variants": [
+        {
+          "isDefault": true,
+          "lifecycle": "ACTIVE",
+          "members": [
+            {
+              "appearanceIds": [
+                210102
+              ],
+              "memberKey": "head",
+              "required": true,
+              "slotKey": "HEAD",
+              "sourceItemIds": [
+                16866
+              ]
+            },
+            {
+              "appearanceIds": [
+                206903
+              ],
+              "memberKey": "shoulder",
+              "required": true,
+              "slotKey": "SHOULDER",
+              "sourceItemIds": [
+                16868
+              ]
+            },
+            {
+              "appearanceIds": [
+                206900
+              ],
+              "memberKey": "chest",
+              "required": true,
+              "slotKey": "CHEST",
+              "sourceItemIds": [
+                16865
+              ]
+            },
+            {
+              "appearanceIds": [
+                206899
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                16861
+              ]
+            },
+            {
+              "appearanceIds": [
+                206901
+              ],
+              "memberKey": "hands",
+              "required": true,
+              "slotKey": "HANDS",
+              "sourceItemIds": [
+                16863
+              ]
+            },
+            {
+              "appearanceIds": [
+                206898
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                16864
+              ]
+            },
+            {
+              "appearanceIds": [
+                206902
+              ],
+              "memberKey": "legs",
+              "required": true,
+              "slotKey": "LEGS",
+              "sourceItemIds": [
+                16867
+              ]
+            },
+            {
+              "appearanceIds": [
+                206904
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                16862
+              ]
+            }
+          ],
+          "omissions": [],
+          "variantKey": "default",
+          "variantOrdinal": 1
+        }
+      ]
+    }
+  ],
+  "sourceCommit": "13689d0"
+}

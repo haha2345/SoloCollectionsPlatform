@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "entries": [],
+  "note": "Explicit ItemSet merge, member priority, lifecycle, and presentation overrides only. Empty in the first one-DBC-row-per-collection import."
+}
