@@ -11,7 +11,7 @@ static std::vector<Sc2CategoryDefinition> LoadGeneratedSc2Categories()
         { CollectionTypeId(std::uint16_t { 1 }), "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", false },
         { CollectionTypeId(std::uint16_t { 10 }), "2e3de67b532f22f284e2f07a3a2859faa76290a3d53c95469ce3d38e88b92b91", false },
         { CollectionTypeId(std::uint16_t { 11 }), "24ca7cbe89f3534d5b8cc5d1012a1637280fa963c089ee83cbfbbc562941c4ea", false },
-        { CollectionTypeId(std::uint16_t { 12 }), "0da04e31e07bf83c1495ff48a81a72ef07d133fb8a0d0d23efab9e07f09805f7", false },
+        { CollectionTypeId(std::uint16_t { 12 }), "46bd85ff01542119f03cc752e9cd947bb697fd660110ca4b1c1132b3ffdbd54e", false },
         { CollectionTypeId(std::uint16_t { 13 }), "7f6840da4984c4f0529b15e5480ab76f98a60890c2d6cb98a59e46cc70d56b2f", false },
         { CollectionTypeId(std::uint16_t { 14 }), "27908f2bd4672e0ad60e425707fa4cecd2a187cfd932f30d44ac335118de2712", false },
         { CollectionTypeId(std::uint16_t { 15 }), "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", false },

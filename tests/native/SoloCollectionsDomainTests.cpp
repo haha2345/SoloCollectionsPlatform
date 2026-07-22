@@ -720,7 +720,7 @@ void TestGeneratedCompanionCatalog()
 void TestGeneratedToyCatalog()
 {
     SC::ToyCatalog const& catalog = SC::GetToyCatalog();
-    Require(catalog.Collections().size() == 4, "generated toy catalog count changed without review");
+    Require(catalog.Collections().size() == 9, "generated toy catalog count does not match reviewed first batch");
     SC::ToyCollectionDefinition const* orb = catalog.FindByItem(35275);
     Require(orb && orb->Id == SC::CollectionId(100305) && orb->ActionKind == SC::ToyActionKind::SpellSelf,
         "Orb of the Sin'dorei toy lookup failed");
@@ -731,6 +731,24 @@ void TestGeneratedToyCatalog()
         actionKinds.insert(toy.ActionKind);
     Require(actionKinds.size() == 4, "toy action registry no longer covers every reviewed handler kind");
     Require(!catalog.FindByItem(6948), "teleport item entered the toy allowlist");
+    Require(catalog.FindByItem(36863) && catalog.FindByItem(36863)->Id == SC::CollectionId(100486),
+        "reviewed dice toy was not assigned through the append-only registry");
+    SC::ToyCollectionDefinition invalid = *orb;
+    invalid.Id = SC::CollectionId(199999);
+    invalid.Key = "toy.invalid_handler";
+    invalid.ItemId = 199999;
+    invalid.ActionKind = SC::ToyActionKind::CustomHandler;
+    invalid.CustomHandler = "missing_handler";
+    bool rejected = false;
+    try
+    {
+        SC::ToyCatalog invalidCatalog({ invalid });
+    }
+    catch (std::runtime_error const&)
+    {
+        rejected = true;
+    }
+    Require(rejected, "unknown custom toy handler did not fail closed at catalog construction");
 }
 
 void TestReadOnlyShadowComparison()

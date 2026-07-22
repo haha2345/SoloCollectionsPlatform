@@ -112,11 +112,15 @@ public:
         ToyCollectionDefinition const* definition = GetToyCatalog().Find(collectionId);
         if (!definition)
             return "INVALID_REQUEST";
+        if (definition->Lifecycle != ToyCatalogLifecycle::Active)
+            return "UNSUPPORTED";
         if (!GetAccountCollectionCache().IsOwned(account, { ToyCollectionTypeId, collectionId }))
             return "NOT_OWNED";
-        bool targetExpected = definition->TargetPolicy == ToyTargetPolicy::CurrentTarget;
-        if (targetExpected != currentTargetRequested)
+        if ((definition->TargetPolicy == ToyTargetPolicy::None || definition->TargetPolicy == ToyTargetPolicy::Self) &&
+            currentTargetRequested)
             return "INVALID_REQUEST";
+        if (definition->TargetPolicy == ToyTargetPolicy::RequiredUnit && !currentTargetRequested)
+            return "TARGET_REQUIRED";
         if (!player->IsAlive())
             return "DEAD";
         if (!definition->AllowInCombat && player->IsInCombat())
@@ -126,7 +130,7 @@ public:
         if (player->IsInFlight())
             return "ON_TAXI";
 
-        Unit* target = targetExpected ? player->GetSelectedUnit() : player;
+        Unit* target = currentTargetRequested ? player->GetSelectedUnit() : player;
         if (!target)
             return "TARGET_REQUIRED";
         std::uint64_t now = MonotonicMilliseconds();
@@ -141,7 +145,7 @@ public:
                     return "COOLDOWN";
             }
         }
-        if (player->HasSpellCooldown(definition->SpellId))
+        if (definition->CooldownScope != ToyCooldownScope::None && player->HasSpellCooldown(definition->SpellId))
             return "COOLDOWN";
         SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(definition->SpellId);
         if (!spellInfo)

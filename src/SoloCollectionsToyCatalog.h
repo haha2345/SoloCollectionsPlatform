@@ -6,6 +6,7 @@
 #include <cstdint>
 #include <map>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace SoloCollections
@@ -22,15 +23,38 @@ enum class ToyActionKind : std::uint8_t
 
 enum class ToyTargetPolicy : std::uint8_t
 {
-    Self = 1,
-    CurrentTarget = 2,
+    None = 1,
+    Self = 2,
+    OptionalUnit = 3,
+    RequiredUnit = 4,
 };
 
 enum class ToyCooldownScope : std::uint8_t
 {
-    Character = 1,
-    Account = 2,
+    None = 1,
+    Character = 2,
+    Account = 3,
+    HandlerNative = 4,
 };
+
+enum class ToyReplayPolicy : std::uint8_t
+{
+    RejectDuplicate = 1,
+    Idempotent = 2,
+};
+
+enum class ToyCatalogLifecycle : std::uint8_t
+{
+    Active = 1,
+    PreviewOnly = 2,
+    Disabled = 3,
+    Tombstone = 4,
+};
+
+inline bool IsCompiledToyCustomHandler(std::string_view key)
+{
+    return key == "unusual_compass";
+}
 
 struct ToyCollectionDefinition
 {
@@ -45,7 +69,9 @@ struct ToyCollectionDefinition
     bool AllowInCombat = false;
     bool ConsumesMaterial = false;
     std::string CustomHandler;
+    ToyReplayPolicy ReplayPolicy = ToyReplayPolicy::RejectDuplicate;
     std::vector<std::string> RiskFlags;
+    ToyCatalogLifecycle Lifecycle = ToyCatalogLifecycle::Active;
 };
 
 class ToyCatalog final

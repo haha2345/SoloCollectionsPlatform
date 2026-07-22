@@ -16,10 +16,15 @@ ToyCatalog::ToyCatalog(std::vector<ToyCollectionDefinition> collections) : _coll
     {
         ToyCollectionDefinition const& definition = _collections[index];
         bool customValid = definition.ActionKind == ToyActionKind::CustomHandler ?
-            !definition.CustomHandler.empty() : definition.CustomHandler.empty();
+            IsCompiledToyCustomHandler(definition.CustomHandler) : definition.CustomHandler.empty();
         bool cooldownValid = definition.CooldownScope != ToyCooldownScope::Account || definition.AccountCooldownMs > 0;
+        bool targetValid = definition.ActionKind == ToyActionKind::SpellTarget ?
+            definition.TargetPolicy == ToyTargetPolicy::OptionalUnit || definition.TargetPolicy == ToyTargetPolicy::RequiredUnit :
+            definition.ActionKind != ToyActionKind::SpellSelf ||
+                definition.TargetPolicy == ToyTargetPolicy::None || definition.TargetPolicy == ToyTargetPolicy::Self;
         if (!definition.Id.IsValid() || definition.Key.empty() || definition.ItemId == 0 || definition.SpellId == 0 ||
-            !customValid || !cooldownValid || !_byCollection.emplace(definition.Id, index).second ||
+            !customValid || !cooldownValid || !targetValid || definition.ConsumesMaterial ||
+            !_byCollection.emplace(definition.Id, index).second ||
             !_byItem.emplace(definition.ItemId, index).second)
             throw std::runtime_error("invalid or duplicate SoloCollections toy catalog entry");
     }

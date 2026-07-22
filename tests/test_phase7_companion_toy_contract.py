@@ -49,14 +49,18 @@ class CompanionProviderContractTests(unittest.TestCase):
 class ToyProviderContractTests(unittest.TestCase):
     def test_every_toy_declares_handler_target_cooldown_and_replay_semantics(self):
         actions = json.loads((DATA / "solo_collections_toy_actions.json").read_text(encoding="utf-8"))
+        self.assertEqual(2, actions["schemaVersion"])
+        self.assertEqual(9, len(actions["entries"]))
         self.assertEqual(
             {"SPELL_SELF", "SPELL_TARGET", "ITEM_USE", "CUSTOM_HANDLER"},
             {row["actionKind"] for row in actions["entries"]},
         )
         for row in actions["entries"]:
-            self.assertIn(row["targetPolicy"], {"SELF", "CURRENT_TARGET"})
-            self.assertIn(row["cooldownScope"], {"CHARACTER", "ACCOUNT"})
-            self.assertEqual("SC2_REQUEST_ID", row["replayPolicy"])
+            self.assertIn(row["targetPolicy"], {"NONE", "SELF", "OPTIONAL_UNIT", "REQUIRED_UNIT"})
+            self.assertIn(row["cooldownScope"], {"NONE", "CHARACTER", "ACCOUNT", "HANDLER_NATIVE"})
+            self.assertIn(row["replayPolicy"], {"REJECT_DUPLICATE", "IDEMPOTENT"})
+            self.assertEqual("ITEM_ACQUIRED", row["unlockSource"])
+            self.assertEqual("ACTIVE", row["catalogLifecycle"])
             self.assertIsInstance(row["allowInCombat"], bool)
             self.assertIsInstance(row["consumesMaterial"], bool)
             self.assertIsInstance(row["riskFlags"], list)
@@ -65,6 +69,9 @@ class ToyProviderContractTests(unittest.TestCase):
         service = (SRC / "SoloCollectionsToyService.cpp").read_text(encoding="utf-8")
         protocol = (SRC / "SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
         self.assertIn('_customHandlers.emplace("unusual_compass"', service)
+        catalog = (SRC / "SoloCollectionsToyCatalog.h").read_text(encoding="utf-8")
+        self.assertIn('key == "unusual_compass"', catalog)
+        self.assertIn("IsCompiledToyCustomHandler", catalog)
         self.assertIn("GetToyCatalog().Find(collectionId)", service)
         self.assertIn("GetAccountCollectionCache().IsOwned", service)
         self.assertIn("player->HasSpellCooldown", service)
@@ -76,7 +83,7 @@ class ToyProviderContractTests(unittest.TestCase):
         actions = json.loads((DATA / "solo_collections_toy_actions.json").read_text(encoding="utf-8"))
         risks = {flag for row in actions["entries"] for flag in row["riskFlags"]}
         self.assertNotIn("TELEPORT", risks)
-        self.assertNotIn("GENERATES_ITEM", risks)
+        self.assertNotIn("ITEM_CREATE", risks)
         self.assertNotIn("ECONOMY", risks)
         service = (SRC / "SoloCollectionsToyService.cpp").read_text(encoding="utf-8")
         self.assertIn("player->CanUseItem(item)", service)
