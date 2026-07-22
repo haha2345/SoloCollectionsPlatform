@@ -231,12 +231,13 @@ local function deriveSetState(record)
     local bestRequired = 0
     local complete = false
     local selectedVariant
+    local requestedOrdinal = tonumber(record.selectedVariantOrdinal)
     for _, variant in ipairs(record.variants or {}) do
-        if variant.lifecycle == "active" then
+        if variant.lifecycle == "ACTIVE" then
             local owned = 0
             local required = 0
             for _, member in ipairs(variant.members or {}) do
-                if member.lifecycle == "active" and member.required then
+                if member.required then
                     required = required + 1
                     local memberOwned = false
                     for _, appearanceId in ipairs(member.appearanceIds or {}) do
@@ -250,7 +251,9 @@ local function deriveSetState(record)
                 end
             end
             local variantComplete = required > 0 and owned == required
-            if variantComplete or bestRequired == 0 or owned * bestRequired > bestOwned * required then
+            local requested = requestedOrdinal and tonumber(variant.variantOrdinal) == requestedOrdinal
+            if requested or (not selectedVariant and (variant.isDefault or bestRequired == 0)) or
+                (not requestedOrdinal and owned * bestRequired > bestOwned * required) then
                 bestOwned = owned
                 bestRequired = required
                 selectedVariant = variant
@@ -354,7 +357,19 @@ local function classMatches(record, classToken)
     if not classToken or classToken == "ALL" then
         return true
     end
-    if record.classToken then
+    if record.classPolicy then
+        if record.classPolicy.mode == "ANY" then
+            return true
+        end
+        if record.classPolicy.mode ~= "ALLOW_LIST" then
+            return false
+        end
+        local wanted = string.lower(tostring(classToken))
+        for _, allowed in ipairs(record.classPolicy.allowedClassKeys or {}) do
+            if allowed == wanted then return true end
+        end
+        return false
+    elseif record.classToken then
         return record.classToken == classToken
     end
     local classBit = SC.IdentityRegistry.GetLegacyClassBit(classToken)

@@ -121,6 +121,13 @@ class RoundTwoEvidencePackTests(unittest.TestCase):
         self.assertIn("repository/catalog/review/toys/review-policy.json", paths)
         self.assertIn("repository/catalog/generated/toy-candidates.csv", paths)
         self.assertIn("repository/catalog/generated/toy-exclusions.csv", paths)
+        self.assertIn("repository/catalog/review/sets/evidence.json", paths)
+        self.assertIn("repository/catalog/review/sets/review-policy.json", paths)
+        self.assertIn("repository/catalog/generated/itemset-candidates.csv", paths)
+        self.assertIn("repository/catalog/generated/itemset-exclusions.csv", paths)
+        self.assertIn("repository/catalog/generated/normalized-itemsets.json", paths)
+        self.assertIn("repository/catalog/generated/set-id-registry-view.json", paths)
+        self.assertIn("repository/catalog/fixtures/sets/manual8.normalized.json", paths)
         self.assertTrue(all(not Path(path).is_absolute() and ".." not in Path(path).parts for path in paths))
         weapon_manifest_text = (self.output / "weapon-resources" / "weapon-creature-build.json").read_text(
             encoding="utf-8-sig"

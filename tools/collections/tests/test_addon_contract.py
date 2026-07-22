@@ -1335,7 +1335,8 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("function B.ApplySet(collectionId, variantIndex, callback)", bridge)
         self.assertIn('B.RequestSC2Action(14, collectionId, "APPLY", variantIndex, callback)', bridge)
         self.assertIn('applySet:SetText("应用套装")', text)
-        self.assertIn("SC.Bridge.ApplySet(record.id, nil, showSetActionResult)", text)
+        self.assertIn("SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)", text)
+        self.assertIn("local piecePoolSize = maxActiveSetSlots()", text)
 
     def test_wardrobe_set_view_ignores_item_slot_filter(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")

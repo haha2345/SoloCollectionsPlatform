@@ -1197,6 +1197,8 @@ feat: expand safe toy action registry
 
 ### 任务 8.1：消除两份手工事实源
 
+- [x] 已完成（2026-07-22）。已建立 `itemset_import.py`、正式 normalized schema、review/evidence/override、generated 输出与全局 registry view；`sets.json` 退役为说明，`sets.csv` 改为生成投影，生产身份和成员只来自 normalized model。详情见 `docs/reports/2026-07-20-wotlk-itemset-catalog-review.md`。
+
 当前同时维护：
 
 ```text
@@ -1242,6 +1244,8 @@ docs/reports/2026-07-20-wotlk-itemset-catalog-review.md
 `catalog/ids.json` 是所有 collection ID 的唯一全局权威；不得再引入可独立编辑的 `set_id_registry.json`。`set-id-registry-view.json` 只是从全局 registry 生成的套装子集，`--check` 时反向证明现有 `300000..300007` 和所有新增 ID 没有跨类别冲突。
 
 ### 任务 8.2：建立 normalized ItemSet 模型
+
+- [x] 已完成（2026-07-22）。509 个 `itemset:<ItemSetId>` 审核单元逐项闭合为 accepted 465、excluded 34、deferred 10；exact counters、source evidence Hash、classPolicy、variant lifecycle、members/omissions 与 mapping/presentation Hash 均进入 schema 2 和 fail-closed 校验。
 
 输入证据：
 
@@ -1314,6 +1318,8 @@ docs/reports/2026-07-20-wotlk-itemset-catalog-review.md
 
 ### 任务 8.3：迁移职业资格契约
 
+- [x] 已完成（2026-07-22）。AddOn/C++ 已统一使用 `ANY/ALLOW_LIST/UNRESOLVED` classPolicy，覆盖单职业 326、双职业 11、三职业 3 与 ANY 125；type 14 snapshot/delta 由 provider 从 type 13 同 revision 派生，不创建第二 revision 或套装 unlock 行。
+
 将 `classToken` 改为上述 `classPolicy` 对象：
 
 - `mode=ANY, allowedClassKeys=[]`：不限职业；
@@ -1373,6 +1379,8 @@ variants sorted by variantOrdinal:
 
 ### 任务 8.4：定义可信 variant APPLY
 
+- [x] 已完成（2026-07-22）。SC2 v1 Q 布局保持不变，`-` 与稳定正整数 variantOrdinal 语义已在 AddOn/C++ 双端落地；服务端重做 class、owned alternative、目标槽、费用和全量 preflight，伪造/跨 collection/deferred ordinal fail closed，任一成员失败零部分提交。
+
 SC2 v1 Q 布局不变，type 14 的 `target` 明确定义为：
 
 - `"-"`：请求生成目录中唯一 `isDefault=true` 的 active variant；
@@ -1384,6 +1392,8 @@ UI 的“当前 variant”、进度分母、部件图标和 APPLY target 必须�
 
 ### 任务 8.5：稳定 ID 和首个新增 fixture
 
+- [x] 已完成（2026-07-22）。原 8 套 `300000..300007` 的 ID/key/ordinal/成员零漂移；牧师 T1 `ItemSetId=202` 作为 8 部件新增 fixture 通过，后续 ID 从 `300008` append-only 分配；Manual8 fixture 与 runbook flag 形式重建合同已落地。
+
 - 保留现有 `300000..300007`、collection key 和 ordinal。
 - 首先补入牧师 T1 `ItemSetId=202`“预言套装”，作为 importer 的第一个新增正确性 fixture。
 - 后续 ID 只从 registry 追加；显示排序与 collection ID 分离。
@@ -1391,6 +1401,8 @@ UI 的“当前 variant”、进度分母、部件图标和 APPLY target 必须�
 - AddOn 与 module 使用同一个 normalized model 和同一个 type 14 mapping hash。
 
 ### 任务 8.6：套装 UI 容量
+
+- [x] 已完成（2026-07-22）。详情区改为受上限约束的动态部件对象池和 8 列换行布局，不再以固定 8 个对象截断完整性；成员按稳定 slot 顺序显示，完整 465 目录筛选、搜索、1/59→2/59 翻页与 `/reload` 实机通过。
 
 现有详情区固定创建 8 个部件图标。实现二选一，但必须在启用完整目录前明确完成：
 
@@ -1986,8 +1998,8 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。（2026-07-22；接受运行 `20260722-063149-157`，见阶段 5 报告与逐行审阅 CSV。）
 - [x] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。（2026-07-22；201/201 候选已审核，冷/热 482/482 READY，动作/隔离/重启闭环与清理证据见阶段 6 报告。）
 - [x] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。（2026-07-22；accepted 9、deferred 27、excluded 0，自动化、真实客户端、重启/隔离及清理证据见阶段 7 报告。）
-- [ ] ItemSet 单一 normalized model 取代双手工事实源；牧师 T1 存在；单/多/不限职业正确；最终 active 数有完整审核依据。
-- [ ] type 14 仍只从 type 13 派生，不新增套装 unlock 写入；UI 与服务端按稳定 variantOrdinal 选择同一 variant，alternatives 确定且原子应用。
+- [x] ItemSet 单一 normalized model 取代双手工事实源；牧师 T1 存在；单/多/不限职业正确；最终 active 数有完整审核依据。（2026-07-22；509 项全审核、465 active、Manual8 零漂移与真实客户端证据见阶段 8 报告。）
+- [x] type 14 仍只从 type 13 派生，不新增套装 unlock 写入；UI 与服务端按稳定 variantOrdinal 选择同一 variant，alternatives 确定且原子应用。（2026-07-22；1/8→7/8→8/8→0/8 同 revision 派生链路、缺目标槽零部分结果与清理闭环见阶段 8 报告。）
 - [ ] 内部/测试/废弃外观不再直接进入普通玩家目录，canonical ID 和已有 owned 不丢失。
 - [ ] 所有生成器 `--check`、Python tests、Lua 5.1、SoloCam x86 native、module native 和真实 AzerothCore worldserver 构建通过。
 - [ ] 分辨率/UI Scale、冷/热缓存、快速切换、重载、重登、重启和账号隔离矩阵通过。

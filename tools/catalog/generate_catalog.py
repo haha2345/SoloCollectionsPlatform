@@ -688,6 +688,10 @@ def build_model(source_root: Path) -> dict[str, Any]:
         for entry in collections
     ]
     model["presentationHash"] = _hash(presentation_basis)
+    normalized_sets = _read_json(source_root.parent / "generated" / "normalized-itemsets.json")
+    _require(normalized_sets.get("schemaVersion") == 2 and len(normalized_sets.get("mappingHash", "")) == 64,
+             "normalized ItemSet mapping is missing or invalid")
+    model["setCatalogMappingHash"] = normalized_sets["mappingHash"]
     mapping_basis = _canonical_for_hash(model)
     model["mappingHash"] = _hash(mapping_basis)
     model["typeMappingHashes"] = {}
@@ -699,7 +703,9 @@ def build_model(source_root: Path) -> dict[str, Any]:
             basis = {"collections": basis, "actions": mapping_basis["companionActions"]}
         elif entry["typeKey"] == "toy":
             basis = {"collections": basis, "actions": mapping_basis["toyActions"]}
-        model["typeMappingHashes"][entry["typeKey"]] = _hash(basis)
+        model["typeMappingHashes"][entry["typeKey"]] = (
+            model["setCatalogMappingHash"] if entry["typeKey"] == "set" else _hash(basis)
+        )
     return model
 
 
@@ -1105,6 +1111,18 @@ def _validate_toy_catalog(repo_root: Path, evidence_root: Path) -> None:
         raise CatalogError(f"toy catalog rejected: {exc}") from exc
 
 
+def _validate_itemset_catalog(repo_root: Path, evidence_root: Path) -> None:
+    module_path = Path(__file__).with_name("itemset_import.py")
+    spec = importlib.util.spec_from_file_location("solo_itemset_import", module_path)
+    _require(spec is not None and spec.loader is not None, "cannot load ItemSet importer")
+    itemset_importer = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(itemset_importer)
+    try:
+        itemset_importer.verify_tracked(repo_root, evidence_root)
+    except (OSError, itemset_importer.ItemSetImportError) as exc:
+        raise CatalogError(f"ItemSet catalog rejected: {exc}") from exc
+
+
 def _validate_appearance_presentation_evidence(repo_root: Path, source_root: Path, evidence_root: Path) -> None:
     module_path = Path(__file__).with_name("appearance_presentations.py")
     spec = importlib.util.spec_from_file_location("solo_appearance_presentations", module_path)
@@ -1141,6 +1159,7 @@ def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_roo
     _validate_creature_presentation_evidence(source_root, evidence_root)
     _validate_companion_catalog(repo_root, evidence_root)
     _validate_toy_catalog(repo_root, evidence_root)
+    _validate_itemset_catalog(repo_root, evidence_root)
     _validate_appearance_presentation_evidence(repo_root, source_root, evidence_root)
     _validate_character_camera_profiles(repo_root)
     model = build_model(source_root)

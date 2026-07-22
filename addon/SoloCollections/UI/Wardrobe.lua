@@ -15,6 +15,8 @@ local SET_ROW_HEIGHT = 52
 local SET_ROW_SPACING = 3
 local SET_PIECE_SIZE = 40
 local SET_PIECE_SPACING = 5
+local SET_PIECE_COLUMNS = 8
+local SET_PIECE_POOL_LIMIT = 12
 local DEFAULT_ROTATION = 0.18
 -- SoloCam v4 reserves this numeric range for direct CreatureDisplayInfo IDs.
 -- Stock SetCreature interprets ordinary values as Creature entries; the
@@ -217,6 +219,36 @@ local function filterLabel(options, current)
         end
     end
     return options[1].label
+end
+
+local function setClassLabel(record)
+    local policy = record and record.classPolicy
+    if not policy then
+        return filterLabel(CLASS_FILTERS, record and record.classToken)
+    end
+    if policy.mode == "ANY" then return "全部职业" end
+    if policy.mode ~= "ALLOW_LIST" then return "职业未解析" end
+    local labels = {}
+    for _, classKey in ipairs(policy.allowedClassKeys or {}) do
+        labels[#labels + 1] = filterLabel(CLASS_FILTERS, string.upper(classKey))
+    end
+    return table.concat(labels, "/")
+end
+
+local function maxActiveSetSlots()
+    local maximum = 1
+    for _, record in ipairs(SoloCollections.Data.Sets or {}) do
+        for _, variant in ipairs(record.variants or {}) do
+            if variant.lifecycle == "ACTIVE" then
+                local count = 0
+                for _, member in ipairs(variant.members or {}) do
+                    if member.required then count = count + 1 end
+                end
+                maximum = math.max(maximum, count)
+            end
+        end
+    end
+    return math.min(SET_PIECE_POOL_LIMIT, maximum)
 end
 
 local function hasFilterValue(options, current)
@@ -461,13 +493,13 @@ local function createSetListRow(parent, width, onClick)
             return
         end
 
-        UI.SetIconTexture(icon, record.icon)
+        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)))
         UI.SetCollectedVisual(icon, record.collected, 0.52)
         name:SetText(record.name or "未知套装")
         name:SetTextColor(record.collected and 0.96 or 0.59, record.collected and 0.79 or 0.59, record.collected and 0.28 or 0.57)
         local owned = tonumber(record.collectedCount) or 0
         local required = tonumber(record.requiredCount) or #(record.itemIds or {})
-        detail:SetText(filterLabel(CLASS_FILTERS, record.classToken) .. "  ·  " .. owned .. "/" .. required .. " 外观")
+        detail:SetText(setClassLabel(record) .. "  ·  " .. owned .. "/" .. required .. " 外观")
         if record.collected then
             iconBorder:SetBorderColor(0.66, 0.52, 0.24, 0.96)
         else
@@ -1189,14 +1221,19 @@ function UI.CreateWardrobePage(parent)
 
     local pieces = CreateFrame("Frame", nil, preview)
     pieces:SetPoint("TOP", name, "BOTTOM", 0, -8)
-    pieces:SetWidth((8 * SET_PIECE_SIZE) + (7 * SET_PIECE_SPACING))
-    pieces:SetHeight(SET_PIECE_SIZE)
-    for index = 1, 8 do
+    local piecePoolSize = maxActiveSetSlots()
+    local poolColumns = math.min(SET_PIECE_COLUMNS, piecePoolSize)
+    local poolRows = math.ceil(piecePoolSize / SET_PIECE_COLUMNS)
+    pieces:SetWidth((poolColumns * SET_PIECE_SIZE) + (math.max(0, poolColumns - 1) * SET_PIECE_SPACING))
+    pieces:SetHeight((poolRows * SET_PIECE_SIZE) + (math.max(0, poolRows - 1) * SET_PIECE_SPACING))
+    for index = 1, piecePoolSize do
         local piece = CreateFrame("Button", nil, pieces)
         piece:SetWidth(SET_PIECE_SIZE)
         piece:SetHeight(SET_PIECE_SIZE)
         if index == 1 then
-            piece:SetPoint("LEFT", pieces, "LEFT", 0, 0)
+            piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
+        elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
+            piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_PIECE_SPACING)
         else
             piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
         end
@@ -1311,16 +1348,19 @@ function UI.CreateWardrobePage(parent)
             pcall(function() model:TryOn(itemString) end)
         end
         name:SetText(record.name or "未知套装")
-        detail:SetText("职业：" .. filterLabel(CLASS_FILTERS, record.classToken))
+        detail:SetText("职业：" .. setClassLabel(record))
         pieces:Show()
         local pieceState = deriveSetPieceState(record)
         local pieceCount = math.min(#orderedItems, #page.scPieceIcons)
-        local piecesWidth = (pieceCount * SET_PIECE_SIZE) + (math.max(0, pieceCount - 1) * SET_PIECE_SPACING)
+        local firstRow = math.min(SET_PIECE_COLUMNS, pieceCount)
+        local piecesWidth = (firstRow * SET_PIECE_SIZE) + (math.max(0, firstRow - 1) * SET_PIECE_SPACING)
         pieces:SetWidth(math.max(1, piecesWidth))
         for index, piece in ipairs(page.scPieceIcons) do
             piece:ClearAllPoints()
             if index == 1 then
-                piece:SetPoint("LEFT", pieces, "LEFT", 0, 0)
+                piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
+            elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
+                piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_PIECE_SPACING)
             else
                 piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
             end
@@ -1373,7 +1413,8 @@ function UI.CreateWardrobePage(parent)
         elseif not SC.Bridge or not SC.Bridge.ApplySet then
             showSetActionResult(false, "BRIDGE_UNAVAILABLE")
         else
-            SC.Bridge.ApplySet(record.id, nil, showSetActionResult)
+            local variant = record.selectedVariant
+            SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)
         end
     end)
 
