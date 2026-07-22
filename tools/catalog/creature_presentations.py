@@ -241,13 +241,20 @@ def build_presentations(root: Path) -> dict[str, Any]:
     mount_policy = read_json(evidence_path(root, files, "repository/catalog/review/mounts/review-policy.json"))
     companion_evidence = read_json(evidence_path(root, files, "repository/catalog/review/companions/evidence.json"))
     require(mount_policy.get("candidateHash") == mount_evidence.get("candidateHash"), "mount review policy hash changed")
-    require(companion_evidence.get("reviewMethod") == "EXACT_CREATURE_ENTRY_ONLY", "invalid companion review method")
+    companion_review_method = companion_evidence.get("reviewMethod")
+    require(companion_review_method in {"EXACT_CREATURE_ENTRY_ONLY", "SKILLLINE_778_EXACT_CREATURE_ENTRY"},
+            "invalid companion review method")
     spell_icons = _spell_icons(root, files)
 
     mount_by_id = {int(entry["collectionId"]): entry for entry in mount_actions["collections"]}
     companion_by_id = {int(entry["collectionId"]): entry for entry in companion_actions["entries"]}
     mount_candidate_by_spell = {int(entry["spellId"]): entry for entry in mount_evidence["candidates"]}
-    companion_evidence_by_id = {int(entry["collectionId"]): entry for entry in companion_evidence["entries"]}
+    companion_evidence_by_id = {
+        int(entry["collectionId"]): entry for entry in companion_evidence.get("entries", [])
+    }
+    companion_evidence_by_creature = {
+        int(entry["creatureEntry"]): entry for entry in companion_evidence.get("candidates", [])
+    }
     entries: list[dict[str, Any]] = []
     for collection in catalog["collections"]:
         type_key = collection["typeKey"]
@@ -267,12 +274,22 @@ def build_presentations(root: Path) -> dict[str, Any]:
             reason = "" if ready else "MISSING_CREATURE_OR_DISPLAY_EVIDENCE"
         else:
             action = companion_by_id.get(int(collection["collectionId"]))
-            evidence = companion_evidence_by_id.get(int(collection["collectionId"]))
-            require(action is not None and evidence is not None, f"companion presentation evidence missing: {collection['collectionKey']}")
-            icon_spell = int(evidence["iconSpellId"])
-            preview_entry = int(action["creatureId"])
-            ready = evidence["status"] == "READY" and int(evidence["previewCreatureEntry"]) == preview_entry
-            reason = evidence.get("reasonCode", "") if not ready else ""
+            require(action is not None, f"companion presentation action missing: {collection['collectionKey']}")
+            if companion_actions.get("schemaVersion") == 2:
+                icon_spell = int(action["canonicalSpellId"])
+                preview_entry = int(action["previewCreatureEntry"])
+                evidence = companion_evidence_by_creature.get(preview_entry)
+                ready = bool(evidence) and evidence["resourceStatus"] == "READY"
+                reason = evidence.get("resourceReasonCode", "") if evidence and not ready else (
+                    "MISSING_COMPANION_CANDIDATE" if not evidence else ""
+                )
+            else:
+                evidence = companion_evidence_by_id.get(int(collection["collectionId"]))
+                require(evidence is not None, f"companion presentation evidence missing: {collection['collectionKey']}")
+                icon_spell = int(evidence["iconSpellId"])
+                preview_entry = int(action["creatureId"])
+                ready = evidence["status"] == "READY" and int(evidence["previewCreatureEntry"]) == preview_entry
+                reason = evidence.get("reasonCode", "") if not ready else ""
         icon = spell_icons.get(icon_spell)
         if not icon or not icon[1]:
             ready = False

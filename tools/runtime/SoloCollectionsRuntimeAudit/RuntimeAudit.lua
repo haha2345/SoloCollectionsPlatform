@@ -200,8 +200,16 @@ local function startAudit()
     SoloCollectionsRuntimeAuditDB.completed = false
     SoloCollectionsRuntimeAuditDB.staleGenerationDiscarded = false
     SoloCollectionsRuntimeAuditDB.startedAt = time()
-    SoloCollectionsRuntimeAuditDB.expectedMounts = 281
-    SoloCollectionsRuntimeAuditDB.expectedCompanions = 24
+    SoloCollectionsRuntimeAuditDB.expectedMounts = 0
+    SoloCollectionsRuntimeAuditDB.expectedCompanions = 0
+    for _, record in ipairs(state.records) do
+        if record.typeId == 10 then
+            SoloCollectionsRuntimeAuditDB.expectedMounts = SoloCollectionsRuntimeAuditDB.expectedMounts + 1
+        elseif record.typeId == 11 then
+            SoloCollectionsRuntimeAuditDB.expectedCompanions = SoloCollectionsRuntimeAuditDB.expectedCompanions + 1
+        end
+    end
+    SoloCollectionsRuntimeAuditDB.mappingHash = SC.GeneratedCatalog and SC.GeneratedCatalog.mappingHash or ""
     panel:Show()
     syncDatabase()
     beginStaleGenerationProbe()

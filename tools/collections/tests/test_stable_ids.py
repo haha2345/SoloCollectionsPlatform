@@ -48,7 +48,16 @@ class StableIdTests(unittest.TestCase):
             handle.write(f"companion,1000,test_companion,{ordinal},active,Test Companion,测试宠物,unrestricted,3.3.5.12340,spell,123,COMPANION_SPELL,123,true,companion.test,TEST_COMPANION\n")
         actions = self.load("catalog/source/companion_actions.json")
         actions["entries"].append(
-            {"collectionId": 1000, "collectionKey": "test_companion", "ordinal": ordinal, "creatureId": 999999}
+            {
+                "collectionId": 1000,
+                "collectionKey": "test_companion",
+                "ordinal": ordinal,
+                "canonicalSpellId": 123,
+                "unlockSpellIds": [123],
+                "previewCreatureEntry": 999999,
+                "catalogLifecycle": "ACTIVE",
+                "uiLifecycle": "public",
+            }
         )
         self.save("catalog/source/companion_actions.json", actions)
 

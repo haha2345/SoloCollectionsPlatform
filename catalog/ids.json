@@ -111149,6 +111149,1068 @@
         "key": "set.battlegear_of_might",
         "lifecycle": "active",
         "ordinal": 18506
+      },
+      {
+        "id": 100309,
+        "key": "companion.mechanical_squirrel",
+        "lifecycle": "active",
+        "ordinal": 18507
+      },
+      {
+        "id": 100310,
+        "key": "companion.siamese_cat",
+        "lifecycle": "active",
+        "ordinal": 18508
+      },
+      {
+        "id": 100311,
+        "key": "companion.silver_tabby_cat",
+        "lifecycle": "active",
+        "ordinal": 18509
+      },
+      {
+        "id": 100312,
+        "key": "companion.orange_tabby_cat",
+        "lifecycle": "active",
+        "ordinal": 18510
+      },
+      {
+        "id": 100313,
+        "key": "companion.black_tabby_cat",
+        "lifecycle": "active",
+        "ordinal": 18511
+      },
+      {
+        "id": 100314,
+        "key": "companion.cornish_rex_cat",
+        "lifecycle": "active",
+        "ordinal": 18512
+      },
+      {
+        "id": 100315,
+        "key": "companion.bombay_cat",
+        "lifecycle": "active",
+        "ordinal": 18513
+      },
+      {
+        "id": 100316,
+        "key": "companion.white_kitten",
+        "lifecycle": "active",
+        "ordinal": 18514
+      },
+      {
+        "id": 100317,
+        "key": "companion.green_wing_macaw",
+        "lifecycle": "active",
+        "ordinal": 18515
+      },
+      {
+        "id": 100318,
+        "key": "companion.cockatoo",
+        "lifecycle": "active",
+        "ordinal": 18516
+      },
+      {
+        "id": 100319,
+        "key": "companion.senegal",
+        "lifecycle": "active",
+        "ordinal": 18517
+      },
+      {
+        "id": 100320,
+        "key": "companion.cockatiel",
+        "lifecycle": "active",
+        "ordinal": 18518
+      },
+      {
+        "id": 100321,
+        "key": "companion.prairie_chicken",
+        "lifecycle": "active",
+        "ordinal": 18519
+      },
+      {
+        "id": 100322,
+        "key": "companion.white_plymouth_rock",
+        "lifecycle": "active",
+        "ordinal": 18520
+      },
+      {
+        "id": 100323,
+        "key": "companion.ancona_chicken",
+        "lifecycle": "active",
+        "ordinal": 18521
+      },
+      {
+        "id": 100324,
+        "key": "companion.cockroach",
+        "lifecycle": "active",
+        "ordinal": 18522
+      },
+      {
+        "id": 100325,
+        "key": "companion.dark_whelpling",
+        "lifecycle": "active",
+        "ordinal": 18523
+      },
+      {
+        "id": 100326,
+        "key": "companion.crimson_whelpling",
+        "lifecycle": "active",
+        "ordinal": 18524
+      },
+      {
+        "id": 100327,
+        "key": "companion.bronze_whelpling",
+        "lifecycle": "active",
+        "ordinal": 18525
+      },
+      {
+        "id": 100328,
+        "key": "companion.azure_whelpling",
+        "lifecycle": "active",
+        "ordinal": 18526
+      },
+      {
+        "id": 100329,
+        "key": "companion.faeling",
+        "lifecycle": "active",
+        "ordinal": 18527
+      },
+      {
+        "id": 100330,
+        "key": "companion.tree_frog",
+        "lifecycle": "active",
+        "ordinal": 18528
+      },
+      {
+        "id": 100331,
+        "key": "companion.wood_frog",
+        "lifecycle": "active",
+        "ordinal": 18529
+      },
+      {
+        "id": 100332,
+        "key": "companion.dart_frog",
+        "lifecycle": "active",
+        "ordinal": 18530
+      },
+      {
+        "id": 100333,
+        "key": "companion.island_frog",
+        "lifecycle": "active",
+        "ordinal": 18531
+      },
+      {
+        "id": 100334,
+        "key": "companion.great_horned_owl",
+        "lifecycle": "active",
+        "ordinal": 18532
+      },
+      {
+        "id": 100335,
+        "key": "companion.snowy_owl",
+        "lifecycle": "active",
+        "ordinal": 18533
+      },
+      {
+        "id": 100336,
+        "key": "companion.hawk_owl",
+        "lifecycle": "active",
+        "ordinal": 18534
+      },
+      {
+        "id": 100337,
+        "key": "companion.eagle_owl",
+        "lifecycle": "active",
+        "ordinal": 18535
+      },
+      {
+        "id": 100338,
+        "key": "companion.cottontail_rabbit",
+        "lifecycle": "active",
+        "ordinal": 18536
+      },
+      {
+        "id": 100339,
+        "key": "companion.spotted_rabbit",
+        "lifecycle": "active",
+        "ordinal": 18537
+      },
+      {
+        "id": 100340,
+        "key": "companion.snowshoe_rabbit",
+        "lifecycle": "active",
+        "ordinal": 18538
+      },
+      {
+        "id": 100341,
+        "key": "companion.albino_snake",
+        "lifecycle": "active",
+        "ordinal": 18539
+      },
+      {
+        "id": 100342,
+        "key": "companion.brown_snake",
+        "lifecycle": "active",
+        "ordinal": 18540
+      },
+      {
+        "id": 100343,
+        "key": "companion.blue_racer",
+        "lifecycle": "active",
+        "ordinal": 18541
+      },
+      {
+        "id": 100344,
+        "key": "companion.black_kingsnake",
+        "lifecycle": "active",
+        "ordinal": 18542
+      },
+      {
+        "id": 100345,
+        "key": "companion.scarlet_snake",
+        "lifecycle": "active",
+        "ordinal": 18543
+      },
+      {
+        "id": 100346,
+        "key": "companion.crimson_snake",
+        "lifecycle": "active",
+        "ordinal": 18544
+      },
+      {
+        "id": 100347,
+        "key": "companion.ribbon_snake",
+        "lifecycle": "active",
+        "ordinal": 18545
+      },
+      {
+        "id": 100348,
+        "key": "companion.green_water_snake",
+        "lifecycle": "active",
+        "ordinal": 18546
+      },
+      {
+        "id": 100349,
+        "key": "companion.elven_wisp",
+        "lifecycle": "active",
+        "ordinal": 18547
+      },
+      {
+        "id": 100350,
+        "key": "companion.mechanical_chicken",
+        "lifecycle": "active",
+        "ordinal": 18548
+      },
+      {
+        "id": 100351,
+        "key": "companion.pet_bombling",
+        "lifecycle": "active",
+        "ordinal": 18549
+      },
+      {
+        "id": 100352,
+        "key": "companion.lil.creature_9657",
+        "lifecycle": "active",
+        "ordinal": 18550
+      },
+      {
+        "id": 100353,
+        "key": "companion.sprite_darter_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18551
+      },
+      {
+        "id": 100354,
+        "key": "companion.corrupted_kitten",
+        "lifecycle": "active",
+        "ordinal": 18552
+      },
+      {
+        "id": 100355,
+        "key": "companion.blood_parrot",
+        "lifecycle": "active",
+        "ordinal": 18553
+      },
+      {
+        "id": 100356,
+        "key": "companion.mini_diablo",
+        "lifecycle": "active",
+        "ordinal": 18554
+      },
+      {
+        "id": 100357,
+        "key": "companion.mechanical_yeti",
+        "lifecycle": "active",
+        "ordinal": 18555
+      },
+      {
+        "id": 100358,
+        "key": "companion.brown_prairie_dog",
+        "lifecycle": "active",
+        "ordinal": 18556
+      },
+      {
+        "id": 100359,
+        "key": "companion.loggerhead_snapjaw",
+        "lifecycle": "active",
+        "ordinal": 18557
+      },
+      {
+        "id": 100360,
+        "key": "companion.leatherback_snapjaw",
+        "lifecycle": "active",
+        "ordinal": 18558
+      },
+      {
+        "id": 100361,
+        "key": "companion.olive_snapjaw",
+        "lifecycle": "active",
+        "ordinal": 18559
+      },
+      {
+        "id": 100362,
+        "key": "companion.hawksbill_snapjaw",
+        "lifecycle": "active",
+        "ordinal": 18560
+      },
+      {
+        "id": 100363,
+        "key": "companion.albino_snapjaw",
+        "lifecycle": "active",
+        "ordinal": 18561
+      },
+      {
+        "id": 100364,
+        "key": "companion.tiny_green_dragon",
+        "lifecycle": "active",
+        "ordinal": 18562
+      },
+      {
+        "id": 100365,
+        "key": "companion.tiny_red_dragon",
+        "lifecycle": "active",
+        "ordinal": 18563
+      },
+      {
+        "id": 100366,
+        "key": "companion.jubling",
+        "lifecycle": "active",
+        "ordinal": 18564
+      },
+      {
+        "id": 100367,
+        "key": "companion.murky",
+        "lifecycle": "active",
+        "ordinal": 18565
+      },
+      {
+        "id": 100368,
+        "key": "companion.blue_baby_murloc",
+        "lifecycle": "active",
+        "ordinal": 18566
+      },
+      {
+        "id": 100369,
+        "key": "companion.purple_baby_murloc",
+        "lifecycle": "active",
+        "ordinal": 18567
+      },
+      {
+        "id": 100370,
+        "key": "companion.lurky",
+        "lifecycle": "active",
+        "ordinal": 18568
+      },
+      {
+        "id": 100371,
+        "key": "companion.pink_baby_murloc",
+        "lifecycle": "active",
+        "ordinal": 18569
+      },
+      {
+        "id": 100372,
+        "key": "companion.green_baby_murloc",
+        "lifecycle": "active",
+        "ordinal": 18570
+      },
+      {
+        "id": 100373,
+        "key": "companion.murki",
+        "lifecycle": "active",
+        "ordinal": 18571
+      },
+      {
+        "id": 100374,
+        "key": "companion.baby_shark",
+        "lifecycle": "active",
+        "ordinal": 18572
+      },
+      {
+        "id": 100375,
+        "key": "companion.father_winter",
+        "lifecycle": "active",
+        "ordinal": 18573
+      },
+      {
+        "id": 100376,
+        "key": "companion.tranquil_mechanical_yeti",
+        "lifecycle": "active",
+        "ordinal": 18574
+      },
+      {
+        "id": 100377,
+        "key": "companion.winter",
+        "lifecycle": "active",
+        "ordinal": 18575
+      },
+      {
+        "id": 100378,
+        "key": "companion.winter_reindeer",
+        "lifecycle": "active",
+        "ordinal": 18576
+      },
+      {
+        "id": 100379,
+        "key": "companion.tiny_snowman",
+        "lifecycle": "active",
+        "ordinal": 18577
+      },
+      {
+        "id": 100380,
+        "key": "companion.mechanical_greench",
+        "lifecycle": "active",
+        "ordinal": 18578
+      },
+      {
+        "id": 100381,
+        "key": "companion.vanquished_tentacle",
+        "lifecycle": "active",
+        "ordinal": 18579
+      },
+      {
+        "id": 100382,
+        "key": "companion.gurky",
+        "lifecycle": "active",
+        "ordinal": 18580
+      },
+      {
+        "id": 100383,
+        "key": "companion.peddlefeet",
+        "lifecycle": "active",
+        "ordinal": 18581
+      },
+      {
+        "id": 100384,
+        "key": "companion.terky",
+        "lifecycle": "active",
+        "ordinal": 18582
+      },
+      {
+        "id": 100385,
+        "key": "companion.poley",
+        "lifecycle": "active",
+        "ordinal": 18583
+      },
+      {
+        "id": 100386,
+        "key": "companion.whiskers_the_rat",
+        "lifecycle": "active",
+        "ordinal": 18584
+      },
+      {
+        "id": 100387,
+        "key": "companion.spirit_of_summer",
+        "lifecycle": "active",
+        "ordinal": 18585
+      },
+      {
+        "id": 100388,
+        "key": "companion.white_tiger_cub",
+        "lifecycle": "active",
+        "ordinal": 18586
+      },
+      {
+        "id": 100389,
+        "key": "companion.hippogryph_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18587
+      },
+      {
+        "id": 100390,
+        "key": "companion.netherwhelp",
+        "lifecycle": "active",
+        "ordinal": 18588
+      },
+      {
+        "id": 100391,
+        "key": "companion.magical_crawdad",
+        "lifecycle": "active",
+        "ordinal": 18589
+      },
+      {
+        "id": 100392,
+        "key": "companion.benevolent_mr_pinchy",
+        "lifecycle": "active",
+        "ordinal": 18590
+      },
+      {
+        "id": 100393,
+        "key": "companion.mana_wyrmling",
+        "lifecycle": "active",
+        "ordinal": 18591
+      },
+      {
+        "id": 100394,
+        "key": "companion.brown_rabbit",
+        "lifecycle": "active",
+        "ordinal": 18592
+      },
+      {
+        "id": 100395,
+        "key": "companion.yellow_moth",
+        "lifecycle": "active",
+        "ordinal": 18593
+      },
+      {
+        "id": 100396,
+        "key": "companion.red_moth",
+        "lifecycle": "active",
+        "ordinal": 18594
+      },
+      {
+        "id": 100397,
+        "key": "companion.blue_moth",
+        "lifecycle": "active",
+        "ordinal": 18595
+      },
+      {
+        "id": 100398,
+        "key": "companion.white_moth",
+        "lifecycle": "active",
+        "ordinal": 18596
+      },
+      {
+        "id": 100399,
+        "key": "companion.golden_dragonhawk_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18597
+      },
+      {
+        "id": 100400,
+        "key": "companion.blue_dragonhawk_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18598
+      },
+      {
+        "id": 100401,
+        "key": "companion.silver_dragonhawk_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18599
+      },
+      {
+        "id": 100402,
+        "key": "companion.red_dragonhawk_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18600
+      },
+      {
+        "id": 100403,
+        "key": "companion.miniwing",
+        "lifecycle": "active",
+        "ordinal": 18601
+      },
+      {
+        "id": 100404,
+        "key": "companion.wolpertinger",
+        "lifecycle": "active",
+        "ordinal": 18602
+      },
+      {
+        "id": 100405,
+        "key": "companion.lucky.creature_23114",
+        "lifecycle": "active",
+        "ordinal": 18603
+      },
+      {
+        "id": 100406,
+        "key": "companion.lucky.creature_23198",
+        "lifecycle": "active",
+        "ordinal": 18604
+      },
+      {
+        "id": 100407,
+        "key": "companion.willy",
+        "lifecycle": "active",
+        "ordinal": 18605
+      },
+      {
+        "id": 100408,
+        "key": "companion.egbert",
+        "lifecycle": "active",
+        "ordinal": 18606
+      },
+      {
+        "id": 100409,
+        "key": "companion.peanut",
+        "lifecycle": "active",
+        "ordinal": 18607
+      },
+      {
+        "id": 100410,
+        "key": "companion.toothy",
+        "lifecycle": "active",
+        "ordinal": 18608
+      },
+      {
+        "id": 100411,
+        "key": "companion.muckbreath",
+        "lifecycle": "active",
+        "ordinal": 18609
+      },
+      {
+        "id": 100412,
+        "key": "companion.mojo",
+        "lifecycle": "active",
+        "ordinal": 18610
+      },
+      {
+        "id": 100413,
+        "key": "companion.pint_sized_pink_pachyderm",
+        "lifecycle": "active",
+        "ordinal": 18611
+      },
+      {
+        "id": 100414,
+        "key": "companion.clockwork_rocket_bot.creature_24968",
+        "lifecycle": "active",
+        "ordinal": 18612
+      },
+      {
+        "id": 100415,
+        "key": "companion.rocket_chicken",
+        "lifecycle": "active",
+        "ordinal": 18613
+      },
+      {
+        "id": 100416,
+        "key": "companion.golden_pig",
+        "lifecycle": "active",
+        "ordinal": 18614
+      },
+      {
+        "id": 100417,
+        "key": "companion.silver_pig",
+        "lifecycle": "active",
+        "ordinal": 18615
+      },
+      {
+        "id": 100418,
+        "key": "companion.scorchling",
+        "lifecycle": "active",
+        "ordinal": 18616
+      },
+      {
+        "id": 100419,
+        "key": "companion.snarly",
+        "lifecycle": "active",
+        "ordinal": 18617
+      },
+      {
+        "id": 100420,
+        "key": "companion.chuck",
+        "lifecycle": "active",
+        "ordinal": 18618
+      },
+      {
+        "id": 100421,
+        "key": "companion.spirit_of_competition",
+        "lifecycle": "active",
+        "ordinal": 18619
+      },
+      {
+        "id": 100422,
+        "key": "companion.essence_of_competition",
+        "lifecycle": "active",
+        "ordinal": 18620
+      },
+      {
+        "id": 100423,
+        "key": "companion.ethereal_soul_trader",
+        "lifecycle": "active",
+        "ordinal": 18621
+      },
+      {
+        "id": 100424,
+        "key": "companion.nether_ray_fry",
+        "lifecycle": "active",
+        "ordinal": 18622
+      },
+      {
+        "id": 100425,
+        "key": "companion.mini_tyrael",
+        "lifecycle": "active",
+        "ordinal": 18623
+      },
+      {
+        "id": 100426,
+        "key": "companion.scourge_haunt",
+        "lifecycle": "active",
+        "ordinal": 18624
+      },
+      {
+        "id": 100427,
+        "key": "companion.westfall_chicken",
+        "lifecycle": "active",
+        "ordinal": 18625
+      },
+      {
+        "id": 100428,
+        "key": "companion.tickbird_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18626
+      },
+      {
+        "id": 100429,
+        "key": "companion.white_tickbird_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18627
+      },
+      {
+        "id": 100430,
+        "key": "companion.cobra_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18628
+      },
+      {
+        "id": 100431,
+        "key": "companion.proto_drake_whelp",
+        "lifecycle": "active",
+        "ordinal": 18629
+      },
+      {
+        "id": 100432,
+        "key": "companion.pengu",
+        "lifecycle": "active",
+        "ordinal": 18630
+      },
+      {
+        "id": 100433,
+        "key": "companion.kirin_tor_familiar",
+        "lifecycle": "active",
+        "ordinal": 18631
+      },
+      {
+        "id": 100434,
+        "key": "companion.plump_turkey",
+        "lifecycle": "active",
+        "ordinal": 18632
+      },
+      {
+        "id": 100435,
+        "key": "companion.baby_blizzard_bear",
+        "lifecycle": "active",
+        "ordinal": 18633
+      },
+      {
+        "id": 100436,
+        "key": "companion.little_fawn",
+        "lifecycle": "active",
+        "ordinal": 18634
+      },
+      {
+        "id": 100437,
+        "key": "companion.teldrassil_sproutling",
+        "lifecycle": "active",
+        "ordinal": 18635
+      },
+      {
+        "id": 100438,
+        "key": "companion.dun_morogh_cub",
+        "lifecycle": "active",
+        "ordinal": 18636
+      },
+      {
+        "id": 100439,
+        "key": "companion.tirisfal_batling",
+        "lifecycle": "active",
+        "ordinal": 18637
+      },
+      {
+        "id": 100440,
+        "key": "companion.durotar_scorpion",
+        "lifecycle": "active",
+        "ordinal": 18638
+      },
+      {
+        "id": 100441,
+        "key": "companion.alarming_clockbot",
+        "lifecycle": "active",
+        "ordinal": 18639
+      },
+      {
+        "id": 100442,
+        "key": "companion.elwynn_lamb",
+        "lifecycle": "active",
+        "ordinal": 18640
+      },
+      {
+        "id": 100443,
+        "key": "companion.ammen_vale_lashling",
+        "lifecycle": "active",
+        "ordinal": 18641
+      },
+      {
+        "id": 100444,
+        "key": "companion.mulgore_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18642
+      },
+      {
+        "id": 100445,
+        "key": "companion.strand_crawler",
+        "lifecycle": "active",
+        "ordinal": 18643
+      },
+      {
+        "id": 100446,
+        "key": "companion.enchanted_broom",
+        "lifecycle": "active",
+        "ordinal": 18644
+      },
+      {
+        "id": 100447,
+        "key": "companion.argent_squire",
+        "lifecycle": "active",
+        "ordinal": 18645
+      },
+      {
+        "id": 100448,
+        "key": "companion.argent_gruntling",
+        "lifecycle": "active",
+        "ordinal": 18646
+      },
+      {
+        "id": 100449,
+        "key": "companion.mechanopeep",
+        "lifecycle": "active",
+        "ordinal": 18647
+      },
+      {
+        "id": 100450,
+        "key": "companion.curious_wolvar_pup",
+        "lifecycle": "active",
+        "ordinal": 18648
+      },
+      {
+        "id": 100451,
+        "key": "companion.curious_oracle_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18649
+      },
+      {
+        "id": 100452,
+        "key": "companion.murkimus_the_gladiator.creature_33578",
+        "lifecycle": "active",
+        "ordinal": 18650
+      },
+      {
+        "id": 100453,
+        "key": "companion.sen",
+        "lifecycle": "active",
+        "ordinal": 18651
+      },
+      {
+        "id": 100454,
+        "key": "companion.xs_001_constructor_bot",
+        "lifecycle": "active",
+        "ordinal": 18652
+      },
+      {
+        "id": 100455,
+        "key": "companion.calico_cat",
+        "lifecycle": "active",
+        "ordinal": 18653
+      },
+      {
+        "id": 100456,
+        "key": "companion.warbot",
+        "lifecycle": "active",
+        "ordinal": 18654
+      },
+      {
+        "id": 100457,
+        "key": "companion.grunty",
+        "lifecycle": "active",
+        "ordinal": 18655
+      },
+      {
+        "id": 100458,
+        "key": "companion.shimmering_wyrmling",
+        "lifecycle": "active",
+        "ordinal": 18656
+      },
+      {
+        "id": 100459,
+        "key": "companion.macabre_marionette",
+        "lifecycle": "active",
+        "ordinal": 18657
+      },
+      {
+        "id": 100460,
+        "key": "companion.jade_tiger",
+        "lifecycle": "active",
+        "ordinal": 18658
+      },
+      {
+        "id": 100461,
+        "key": "companion.leaping_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18659
+      },
+      {
+        "id": 100462,
+        "key": "companion.razzashi_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18660
+      },
+      {
+        "id": 100463,
+        "key": "companion.deviate_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18661
+      },
+      {
+        "id": 100464,
+        "key": "companion.darting_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18662
+      },
+      {
+        "id": 100465,
+        "key": "companion.ravasaur_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18663
+      },
+      {
+        "id": 100466,
+        "key": "companion.razormaw_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18664
+      },
+      {
+        "id": 100467,
+        "key": "companion.obsidian_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18665
+      },
+      {
+        "id": 100468,
+        "key": "companion.gundrak_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18666
+      },
+      {
+        "id": 100469,
+        "key": "companion.onyx_panther",
+        "lifecycle": "active",
+        "ordinal": 18667
+      },
+      {
+        "id": 100470,
+        "key": "companion.tuskarr_kite",
+        "lifecycle": "active",
+        "ordinal": 18668
+      },
+      {
+        "id": 100471,
+        "key": "companion.spectral_tiger_cub",
+        "lifecycle": "active",
+        "ordinal": 18669
+      },
+      {
+        "id": 100472,
+        "key": "companion.core_hound_pup",
+        "lifecycle": "active",
+        "ordinal": 18670
+      },
+      {
+        "id": 100473,
+        "key": "companion.gryphon_hatchling",
+        "lifecycle": "active",
+        "ordinal": 18671
+      },
+      {
+        "id": 100474,
+        "key": "companion.wind_rider_cub",
+        "lifecycle": "active",
+        "ordinal": 18672
+      },
+      {
+        "id": 100475,
+        "key": "companion.zipao_tiger",
+        "lifecycle": "active",
+        "ordinal": 18673
+      },
+      {
+        "id": 100476,
+        "key": "companion.pandaren_monk",
+        "lifecycle": "active",
+        "ordinal": 18674
+      },
+      {
+        "id": 100477,
+        "key": "companion.lil.creature_36979",
+        "lifecycle": "active",
+        "ordinal": 18675
+      },
+      {
+        "id": 100478,
+        "key": "companion.perky_pug",
+        "lifecycle": "active",
+        "ordinal": 18676
+      },
+      {
+        "id": 100479,
+        "key": "companion.toxic_wasteling",
+        "lifecycle": "active",
+        "ordinal": 18677
+      },
+      {
+        "id": 100480,
+        "key": "companion.frigid_frostling",
+        "lifecycle": "active",
+        "ordinal": 18678
+      },
+      {
+        "id": 100481,
+        "key": "companion.clockwork_rocket_bot.creature_40295",
+        "lifecycle": "active",
+        "ordinal": 18679
+      },
+      {
+        "id": 100482,
+        "key": "companion.celestial_dragon",
+        "lifecycle": "active",
+        "ordinal": 18680
+      },
+      {
+        "id": 100483,
+        "key": "companion.lil.creature_40703",
+        "lifecycle": "active",
+        "ordinal": 18681
+      },
+      {
+        "id": 100484,
+        "key": "companion.murkimus_the_gladiator.creature_40721",
+        "lifecycle": "active",
+        "ordinal": 18682
+      },
+      {
+        "id": 100485,
+        "key": "companion.mini_thor",
+        "lifecycle": "active",
+        "ordinal": 18683
       }
     ],
     "races": [

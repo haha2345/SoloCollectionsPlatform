@@ -942,6 +942,8 @@ addon: select wardrobe camera by logical identity
 
 ### 任务 6.1：建立 companion 提取器
 
+- [x] 已完成（2026-07-22）。新增 `companion_catalog.py` 的 extract/generate/check 流水线，以命名 evidence pack 固定 DBC/World DB 输入；205 个 SkillLine 778 法术中得到 203 个正向 summon、201 个精确 Creature Entry 候选，201 条均有逐项 accepted 决定，candidate/review Hash 漂移 fail closed。详情见 `docs/reports/2026-07-22-wotlk-companion-catalog-review.md`。
+
 新增建议：
 
 ```text
@@ -980,6 +982,8 @@ tools/collections/tests/test_companion_catalog.py
 - 同一生物的重复召唤法术尚未明确 canonical/unlock 语义。
 
 ### 任务 6.2：升级 companion action schema
+
+- [x] 已完成（2026-07-22）。正式 action source 已升级为 schema 2；C++ `FindBySpell()` 索引全部 unlock variants，登录迁移检查全部 variants，召唤仅使用 reviewed canonical spell。两组重复法术 identity 已在 native 与真实客户端证明分别固定为 canonical 10712、25018。
 
 当前每条记录只有单一 spell。升级建议：
 
@@ -1020,6 +1024,8 @@ mod-solo-collections/src/SoloCollectionsCompanionService.cpp
 
 ### 任务 6.3：稳定 ID 与生成切换
 
+- [x] 已完成（2026-07-22）。原 24 条 `100281..100304` 与 key 逐项保留；177 个新增 ID 由全局 registry append-only 分配为 `100309..100485`，未占用 toy `100305..100308`；AddOn/module 同步切换到 mapping hash `5c104b479934bd17a1eb7cf26fa64a9eb284d5a6b22c605d0a57b04e3df22ffd`。
+
 - 保留 `100281..100304` 和现有 collection key。
 - `100305..100308` 已属于玩具，新增宠物必须由 `catalog/ids.json` 的全局未使用值分配，禁止手写“下一号”。
 - 新 ID append-only；排除或撤回条目保留 tombstone。
@@ -1040,6 +1046,8 @@ mod-solo-collections/src/SoloCollectionsCompanionService.cpp
 - 相同输入生成字节一致。
 
 ### 真实客户端验收
+
+- [x] 已完成（2026-07-22）。UI 实际滚动从 `1-12 / 201` 到 `201-201 / 201`；冷、热缓存各完成 281 mount + 201 companion 的 482/482 READY 扫描。重复 unlock、canonical summon、同宠物 toggle、不同宠物替换、跨地图、死亡/复活、登出/重登、同账号跨角色、不同账号隔离与 worldserver 重启恢复均通过；测试 grant 最终残留为 0。
 
 - 完整滚动超过 24 条，确认 UI 对象池不是总数上限；
 - 对本轮全部 accepted 条目执行受限速的冷/热缓存模型扫描；
@@ -1970,7 +1978,7 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] 坐骑、宠物、玩具状态边为细边，选中态独立；玩具三列左右 margin 对称。（2026-07-22；七档真实客户端矩阵全部 READY，见阶段 4 报告。）
 - [x] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。（2026-07-22；21/21 READY、正式衣橱与 stock fallback 证据见阶段 3 报告。）
 - [x] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。（2026-07-22；接受运行 `20260722-063149-157`，见阶段 5 报告与逐行审阅 CSV。）
-- [ ] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。
+- [x] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。（2026-07-22；201/201 候选已审核，冷/热 482/482 READY，动作/隔离/重启闭环与清理证据见阶段 6 报告。）
 - [ ] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。
 - [ ] ItemSet 单一 normalized model 取代双手工事实源；牧师 T1 存在；单/多/不限职业正确；最终 active 数有完整审核依据。
 - [ ] type 14 仍只从 type 13 派生，不新增套装 unlock 写入；UI 与服务端按稳定 variantOrdinal 选择同一 variant，alternatives 确定且原子应用。
