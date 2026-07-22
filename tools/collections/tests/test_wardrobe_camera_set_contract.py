@@ -13,6 +13,7 @@ WARDROBE = ADDON / "UI" / "Wardrobe.lua"
 PRESENTATIONS = ROOT / "tools" / "catalog" / "appearance_presentations.py"
 NEW_BUNDLE = ROOT / "tools" / "release" / "New-RoundTwoBundle.ps1"
 TEST_BUNDLE = ROOT / "tools" / "release" / "Test-RoundTwoBundle.ps1"
+RELEASE_COMMON = ROOT / "tools" / "release" / "RoundTwoRelease.Common.ps1"
 
 
 class WardrobeCameraSetContractTests(unittest.TestCase):
@@ -36,7 +37,7 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
     def test_production_media_paths_resolve_to_required_base_ui_assets(self):
         manifest = load_json(MEDIA_MANIFEST)
         required = manifest.get("requiredForBaseUI", {})
-        expected = {role: entry["path"].replace("/", "\\") for role, entry in required.items()}
+        expected = {role: entry["path"].replace("/", "\\\\") for role, entry in required.items()}
         source = read_text(TEMPLATES)
         for role, relative in expected.items():
             match = re.search(rf'^\s*{role}\s*=\s*MEDIA_ROOT\s*\.\.\s*"([^"]+)"', source, re.M)
@@ -47,10 +48,11 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
     def test_bundle_tools_validate_required_media_after_assembly(self):
         new_bundle_source = read_text(NEW_BUNDLE)
         test_bundle_source = read_text(TEST_BUNDLE)
-        self.assertIn("requiredForBaseUI", new_bundle_source)
-        self.assertIn("requiredForBaseUI", test_bundle_source)
-        self.assertIn("Media", new_bundle_source)
-        self.assertIn("Media", test_bundle_source)
+        common_source = read_text(RELEASE_COMMON)
+        self.assertIn("Assert-RoundTwoBaseMedia", new_bundle_source)
+        self.assertIn("Assert-RoundTwoBaseMedia", test_bundle_source)
+        self.assertIn("requiredForBaseUI", common_source)
+        self.assertIn("optionalExternalFiles", common_source)
 
     def test_set_scroll_uses_a_direct_offset_slider_mapping(self):
         source = read_text(WARDROBE)

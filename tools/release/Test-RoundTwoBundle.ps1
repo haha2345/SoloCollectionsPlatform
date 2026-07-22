@@ -23,6 +23,7 @@ foreach ($entry in $manifest.files) {
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Bundle file missing: $relative" }
     if ((Get-Item -LiteralPath $path).Length -ne [long]$entry.size -or (Get-RoundTwoSha256 $path) -ne [string]$entry.sha256) { throw "Bundle hash mismatch: $relative" }
 }
+Assert-RoundTwoBaseMedia -AddonRoot (Join-Path $bundle 'addon\SoloCollections')
 $worldserver = Join-Path $bundle 'server\worldserver.exe'
 $pe = Get-RoundTwoPeInfo $worldserver
 if (-not $pe.IsX64 -or $pe.Machine -ne [string]$manifest.worldserver.machine) { throw "Bundle worldserver PE mismatch" }

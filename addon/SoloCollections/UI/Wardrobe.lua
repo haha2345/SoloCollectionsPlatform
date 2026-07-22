@@ -136,9 +136,9 @@ local SLOT_FILTERS = {
     { key = "OFFHAND", label = "副手武器", atlas = "secondaryhand" },
 }
 
--- Coordinates come from the Retail UiTextureAtlasMember rows for atlas 610
--- (FileDataID 1116940). The full Blizzard texture is bundled byte-for-byte;
--- WotLK has no SetAtlas, so each button selects its original rectangle.
+-- The project-owned slot atlas keeps these fixed rectangles so the 3.3.5
+-- client can use SetTexCoord without a modern SetAtlas API.  It contains only
+-- the eleven base glyphs and selected ring emitted by the media generator.
 local SLOT_ATLAS_SIZE = 512
 local SLOT_ATLAS_REGIONS = {
     back = { 145, 180, 369, 406 },
