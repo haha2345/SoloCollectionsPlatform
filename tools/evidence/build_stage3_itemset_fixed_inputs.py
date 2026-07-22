@@ -77,7 +77,7 @@ def copy_tree(source: Path, target: Path) -> None:
             shutil.copy2(path, destination)
 
 
-def build(base_root: Path, repo_root: Path, output_root: Path) -> Path:
+def build(base_root: Path, repo_root: Path, output_root: Path, evidence_id: str) -> Path:
     base_root = base_root.resolve()
     repo_root = repo_root.resolve()
     output_root = output_root.resolve()
@@ -86,6 +86,9 @@ def build(base_root: Path, repo_root: Path, output_root: Path) -> Path:
     require((base_root / "evidence-manifest.json").is_file(), "base evidence manifest is missing")
     require(not output_root.exists(), f"output evidence root already exists: {output_root}")
     output_root.mkdir(parents=True)
+    base_manifest = json.loads((base_root / "evidence-manifest.json").read_text(encoding="utf-8"))
+    for required_key in ("evidenceId", "clientBuild", "clientLocale", "worldSnapshot", "weaponResourceManifest"):
+        require(required_key in base_manifest, f"base evidence manifest is missing {required_key}")
     copy_tree(base_root, output_root)
     for relative in REPLACED_REPOSITORY_FILES:
         source = repo_root / relative
@@ -96,8 +99,13 @@ def build(base_root: Path, repo_root: Path, output_root: Path) -> Path:
     records = portable_records(output_root)
     manifest = {
         "schemaVersion": 1,
-        "evidenceId": "round3-stage3-itemset-presentation-fixed-inputs",
-        "baseEvidenceId": json.loads((base_root / "evidence-manifest.json").read_text(encoding="utf-8"))["evidenceId"],
+        "evidenceId": evidence_id,
+        "baseEvidenceId": base_manifest["evidenceId"],
+        "createdUtc": base_manifest.get("createdUtc", ""),
+        "clientBuild": base_manifest["clientBuild"],
+        "clientLocale": base_manifest["clientLocale"],
+        "worldSnapshot": base_manifest["worldSnapshot"],
+        "weaponResourceManifest": base_manifest["weaponResourceManifest"],
         "sourceSanitization": {
             "credentialsIncluded": False,
             "databaseDumpIncluded": False,
@@ -119,9 +127,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--base-root", type=Path, required=True)
     parser.add_argument("--repo-root", type=Path, default=Path(__file__).resolve().parents[2])
     parser.add_argument("--output-root", type=Path, required=True)
+    parser.add_argument("--evidence-id", default="round3-stage3-itemset-presentation-fixed-inputs")
     args = parser.parse_args(argv)
     try:
-        path = build(args.base_root, args.repo_root, args.output_root)
+        path = build(args.base_root, args.repo_root, args.output_root, args.evidence_id)
         print(f"stage3_itemset_fixed_inputs={path}")
         return 0
     except (OSError, FixedInputError, KeyError, json.JSONDecodeError) as exc:

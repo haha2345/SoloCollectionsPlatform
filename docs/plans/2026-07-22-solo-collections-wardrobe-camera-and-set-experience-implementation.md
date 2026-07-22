@@ -592,52 +592,52 @@ sliderValue = scSetOffset
 
 ### 任务 4.1：SavedVariables schema 与迁移
 
-- [ ] 在 `Bootstrap.lua` 增加 `cameraTuning.schemaVersion=2` 结构与值域修复。
-- [ ] 将 legacy `m2CameraTuning` 字符串 family key 复制到 `weaponFamily`；保留 legacy 备份至少一个稳定版本。
-- [ ] model/appearance/bodyProfile 使用稳定字符串键；拒绝 NaN、Infinity、超界值和未知 scope。
-- [ ] 未修改记录不写入 SavedVariables；迁移后文件大小有上限测试。
+- [x] 在 `Bootstrap.lua` 增加 `cameraTuning.schemaVersion=2` 结构与值域修复。（2026-07-22：`CameraTuning` migration/normalization 合同测试通过；见阶段 4 报告。）
+- [x] 将 legacy `m2CameraTuning` 字符串 family key 复制到 `weaponFamily`；保留 legacy 备份至少一个稳定版本。（2026-07-22：迁移保留 `legacyM2CameraTuningV1`，见阶段 4 报告。）
+- [x] model/appearance/bodyProfile 使用稳定字符串键；拒绝 NaN、Infinity、超界值和未知 scope。（2026-07-22：`CameraTuning.Set/Get` 边界合同测试通过。）
+- [x] 未修改记录不写入 SavedVariables；迁移后文件大小有上限测试。（2026-07-22：稀疏存储、scope cap 和 legacy cap 合同测试通过。）
 
 ### 任务 4.2：实现层级解析
 
-- [ ] `getEffectiveM2CameraPose()` 按 appearance > model > family > auto 顺序解析。
-- [ ] generator 为每个 standalone record 提供 `modelSignature` 和 `autoCamera`。
-- [ ] 同一模型不同纹理默认共享 model override；单件异常用 appearance override。
-- [ ] family 修改可实时应用到所有使用该 family 且没有更高层 override 的可见卡片。
-- [ ] 重置只删除当前 scope，不误删其他层。
+- [x] `getEffectiveM2CameraPose()` 按 appearance > model > family > auto 顺序解析。（2026-07-22：层级解析与 scope 编辑合同测试通过。）
+- [x] generator 为每个 standalone record 提供 `modelSignature` 和 `autoCamera`。（2026-07-22：appearance presentation schema 2；21/21 投影、零 drift 测试通过。）
+- [x] 同一模型不同纹理默认共享 model override；单件异常用 appearance override。（2026-07-22：稳定 `modelSignature` 作为 model key，appearance key 独立；合同测试通过。）
+- [x] family 修改可实时应用到所有使用该 family 且没有更高层 override 的可见卡片。（2026-07-22：`207278`→`206762` 同 `TWO_HAND_SWORD` 实机验证。）
+- [x] 重置只删除当前 scope，不误删其他层。（2026-07-22：family/model/appearance scope 实机重置与合同测试通过。）
 
 ### 任务 4.3：重做工作台布局
 
-- [ ] 将当前 DIALOG 浮层改成主窗口内固定右侧检查器；打开时物品网格从 6 列重排为 4 列或按可用宽度动态计算。
-- [ ] 检查器不覆盖卡片、页码、Items/Sets tab、武器 dropdown 或窗口关闭按钮。
-- [ ] “镜头工作台”按钮放在过滤工具栏明确位置，显示打开/关闭状态。
+- [x] 将当前 DIALOG 浮层改成主窗口内固定右侧检查器；打开时物品网格从 6 列重排为 4 列或按可用宽度动态计算。（2026-07-22：实机开关与布局合同测试通过。）
+- [x] 检查器不覆盖卡片、页码、Items/Sets tab、武器 dropdown 或窗口关闭按钮。（2026-07-22：2042×1200 实机覆盖检查通过。）
+- [x] “镜头工作台”按钮放在过滤工具栏明确位置，显示打开/关闭状态。（2026-07-22：实机验证通过。）
 - [ ] 1024×768 下检查器完整可见；不得锚到主窗体外导致裁切。
-- [ ] 关闭工作台后恢复 6×3 固定模型池和原分页，不销毁/重建不必要模型。
+- [x] 关闭工作台后恢复 6×3 固定模型池和原分页，不销毁/重建不必要模型。（2026-07-22：实机开关、翻页和 `/reload` 验证通过。）
 
 ### 任务 4.4：改进调参交互
 
-- [ ] 增加 scope 选择：“武器类别 / 此模型 / 此外观”。
-- [ ] 每项同时提供 Slider、数值 EditBox、细调和粗调；输入后 clamp 并即时预览。
-- [ ] 保留 yaw、pitch、roll、distanceScale、target XYZ 七项。
-- [ ] 显示当前 appearanceId、itemId、native/synthetic display、modelSignature、family 和最终生效来源。
-- [ ] 增加“上一条/下一条”“上一条未校准/下一条未校准”和当前 dirty 状态。
-- [ ] unavailable 武器禁用调参并显示具体资源失败原因，不能让玩家调整看不见的模型。
+- [x] 增加 scope 选择：“武器类别 / 此模型 / 此外观”。（2026-07-22：三个 scope 实机验证通过。）
+- [x] 每项同时提供 Slider、数值 EditBox、细调和粗调；输入后 clamp 并即时预览。（2026-07-22：Yaw 细调、重置与界面合同测试通过。）
+- [x] 保留 yaw、pitch、roll、distanceScale、target XYZ 七项。（2026-07-22：7 字段 UI/导出合同测试通过。）
+- [x] 显示当前 appearanceId、itemId、native/synthetic display、modelSignature、family 和最终生效来源。（2026-07-22：verified inspector 实机验证通过。）
+- [x] 增加“上一条/下一条”“上一条未校准/下一条未校准”和当前 dirty 状态。（2026-07-22：导航和 dirty 控件已实现并在工作台中验证。）
+- [x] unavailable 武器禁用调参并显示具体资源失败原因，不能让玩家调整看不见的模型。（2026-07-22：`stage4-camera-workbench-unavailable-live.jpg`。）
 
 ### 任务 4.5：导出与导入工具
 
-- [ ] “复制当前”生成一条带完整身份和版本的记录并全选 EditBox。
-- [ ] “加入批次”把当前 dirty override 放入去重批次。
-- [ ] “复制本次全部修改”生成 header + 多行记录，顺序稳定。
-- [ ] “重置当前层”只删除当前 scope；另提供明确确认的“放弃本次未导出修改”。
-- [ ] 新增 `camera_tuning_import.py` 验证并转换导出文本为审核候选。
-- [ ] 导入器检查 appearance/model/family 对应关系、assetPackVersion、presentation hash、pose 范围和重复冲突。
+- [x] “复制当前”生成一条带完整身份和版本的记录并全选 EditBox。（2026-07-22：实机 `Ctrl+C` 聊天确认，JSONL 合同测试通过。）
+- [x] “加入批次”把当前 dirty override 放入去重批次。（2026-07-22：实机加入与批次导出验证通过。）
+- [x] “复制本次全部修改”生成 header + 多行记录，顺序稳定。（2026-07-22：versioned header/稳定顺序合同测试通过。）
+- [x] “重置当前层”只删除当前 scope；另提供明确确认的“放弃本次未导出修改”。（2026-07-22：实机确认和 scoped reset 验证通过。）
+- [x] 新增 `camera_tuning_import.py` 验证并转换导出文本为审核候选。（2026-07-22：`camera-review-candidates-207278.json` 已生成。）
+- [x] 导入器检查 appearance/model/family 对应关系、assetPackVersion、presentation hash、pose 范围和重复冲突。（2026-07-22：成功与 fail-closed 导入测试通过。）
 
 ### 任务 4.6：现有 21 武器验收
 
-- [ ] 21/21 旧 pose 在无 override 时逐值零漂移。
-- [ ] family 修改影响同类样本；model override 只影响同模型；appearance override 只影响单件。
+- [x] 21/21 旧 pose 在无 override 时逐值零漂移。（2026-07-22：source/report 21/21 逐字段 zero-drift 合同测试通过。）
+- [x] family 修改影响同类样本；model override 只影响同模型；appearance override 只影响单件。（2026-07-22：三层覆盖的合同与实机隔离验证通过。）
 - [ ] 导出→导入→生成→清空 SavedVariables 后，最终 pose 与原调校一致。
-- [ ] 工作台打开/关闭、翻页、换武器类型、切 Items/Sets、`/reload` 无遮挡和状态串扰。
-- [ ] 导出文本能由玩家实际 `Ctrl+C` 复制，并能在 F 盘导入工具解析。
+- [x] 工作台打开/关闭、翻页、换武器类型、切 Items/Sets、`/reload` 无遮挡和状态串扰。（2026-07-22：2042×1200 实机路径验证通过。）
+- [x] 导出文本能由玩家实际 `Ctrl+C` 复制，并能在 F 盘导入工具解析。（2026-07-22：实机复制确认；`client-round-trip\camera-export-207278.jsonl` 导入通过。）
 
 ### 任务 4.7：阶段出口
 

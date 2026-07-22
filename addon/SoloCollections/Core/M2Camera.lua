@@ -113,6 +113,54 @@ function M2Camera.FormatPose(pose)
     )
 end
 
+local function jsonQuote(value)
+    value = tostring(value or "")
+    value = value:gsub("\\", "\\\\")
+    value = value:gsub('"', '\\"')
+    value = value:gsub("[\r\n]", " ")
+    return '"' .. value .. '"'
+end
+
+-- Camera workbench exports are JSON Lines rather than Lua snippets.  That
+-- makes the copied text unambiguous, versioned and safe for the offline
+-- importer to validate before anyone edits canonical presentation data.
+function M2Camera.FormatTuningExportHeader(metadataVersion, assetPackVersion, appearancePresentationHash)
+    return string.format(
+        '{"kind":"SoloCollectionsCameraTuningExport","schemaVersion":2,"metadataVersion":%s,"assetPackVersion":%s,"appearancePresentationHash":%s}',
+        jsonQuote(metadataVersion),
+        jsonQuote(assetPackVersion),
+        jsonQuote(appearancePresentationHash)
+    )
+end
+
+function M2Camera.FormatTuningExportRecord(metadata, pose)
+    metadata = type(metadata) == "table" and metadata or {}
+    local normalized = M2Camera.NormalizePose(pose)
+    return string.format(
+        '{"scope":%s,"key":%s,"appearanceId":%d,"sourceItemId":%d,"nativeDisplayId":%d,"syntheticDisplayId":%d,"modelSignature":%s,"weaponFamily":%s,"weaponType":%s,"slot":%s,"metadataVersion":%s,"assetPackVersion":%s,"appearancePresentationHash":%s,"pose":{"yaw":%.4f,"pitch":%.4f,"roll":%.4f,"distanceScale":%.4f,"target":{"x":%.4f,"y":%.4f,"z":%.4f}}}',
+        jsonQuote(metadata.scope),
+        jsonQuote(metadata.key),
+        math.max(0, math.floor(tonumber(metadata.appearanceId) or 0)),
+        math.max(0, math.floor(tonumber(metadata.sourceItemId) or 0)),
+        math.max(0, math.floor(tonumber(metadata.nativeDisplayId) or 0)),
+        math.max(0, math.floor(tonumber(metadata.syntheticDisplayId) or 0)),
+        jsonQuote(metadata.modelSignature),
+        jsonQuote(metadata.weaponFamily),
+        jsonQuote(metadata.weaponType),
+        jsonQuote(metadata.slot),
+        jsonQuote(metadata.metadataVersion),
+        jsonQuote(metadata.assetPackVersion),
+        jsonQuote(metadata.appearancePresentationHash),
+        normalized.yaw,
+        normalized.pitch,
+        normalized.roll,
+        normalized.distanceScale,
+        normalized.target[1],
+        normalized.target[2],
+        normalized.target[3]
+    )
+end
+
 local function sendCameraRequest(model, request)
     return pcall(function() model:SetCamera(request) end)
 end
