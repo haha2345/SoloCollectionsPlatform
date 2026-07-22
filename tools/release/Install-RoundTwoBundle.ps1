@@ -27,13 +27,42 @@ function Add-Operation([string]$Source, [string]$Target, [string]$Kind) {
     $operations.Add([pscustomobject]@{ Source=$sourcePath; Target=$targetPath; Kind=$Kind })
 }
 
+function New-MergedModuleConfig([string]$Template, [string]$Target, [string]$Output) {
+    if (-not (Test-Path -LiteralPath $Target -PathType Leaf)) {
+        Copy-Item -LiteralPath $Template -Destination $Output
+        return
+    }
+    $current = Get-Content -LiteralPath $Target -Raw -Encoding UTF8
+    $known = @{}
+    foreach ($line in ($current -split "`r?`n")) {
+        if ($line -match '^\s*([A-Za-z][A-Za-z0-9_.]+)\s*=') { $known[$Matches[1].ToLowerInvariant()] = $true }
+    }
+    $missing = @()
+    foreach ($line in (Get-Content -LiteralPath $Template -Encoding UTF8)) {
+        if ($line -match '^\s*([A-Za-z][A-Za-z0-9_.]+)\s*=') {
+            $key = $Matches[1].ToLowerInvariant()
+            if (-not $known.ContainsKey($key)) { $missing += $line; $known[$key] = $true }
+        }
+    }
+    $merged = $current.TrimEnd("`r", "`n") + "`n"
+    if ($missing.Count -gt 0) {
+        $merged += "`n# Added by SoloCollections round-two manifest merge; existing values were preserved.`n"
+        $merged += ($missing -join "`n") + "`n"
+    }
+    [System.IO.File]::WriteAllText($Output, $merged, [System.Text.UTF8Encoding]::new($false))
+}
+
 $addonBundle = Join-Path $bundle 'addon\SoloCollections'
 foreach ($file in Get-ChildItem -LiteralPath $addonBundle -Recurse -File) {
     $relative = $file.FullName.Substring($addonBundle.Length + 1)
     Add-Operation $file.FullName (Join-Path ([string]$deployment.addonRoot) $relative) 'addon'
 }
 Add-Operation (Join-Path $bundle 'server\worldserver.exe') ([string]$deployment.worldserverExeTarget) 'worldserver'
-Add-Operation (Join-Path $bundle 'server\config\transmog.conf.dist') ([string]$deployment.runtimeModuleConfig) 'config'
+$stagedConfigDir = Join-Path $backupDir 'staged'
+New-Item -ItemType Directory -Force -Path $stagedConfigDir | Out-Null
+$stagedConfig = Join-Path $stagedConfigDir 'transmog.conf'
+New-MergedModuleConfig (Join-Path $bundle 'server\config\transmog.conf.dist') ([string]$deployment.runtimeModuleConfig) $stagedConfig
+Add-Operation $stagedConfig ([string]$deployment.runtimeModuleConfig) 'config'
 
 $dependencyTargets = @{}
 foreach ($entry in @($deployment.worldserverDependencyTargets)) { $dependencyTargets[[string]$entry.fileName.ToLowerInvariant()] = [string]$entry.target }

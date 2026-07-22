@@ -81,7 +81,7 @@ $dependencyRecords = @()
 $worldDir = Split-Path -Parent $worldserver
 foreach ($name in $pe.Imports) {
     $systemPath = Join-Path $env:WINDIR ('System32\' + $name)
-    if ($name -in $systemImports -or (Test-Path -LiteralPath $systemPath -PathType Leaf)) {
+    if ($name -in $systemImports -or $name -like 'api-ms-win-*' -or (Test-Path -LiteralPath $systemPath -PathType Leaf)) {
         $dependencyRecords += [ordered]@{ fileName=$name; classification='WINDOWS_SYSTEM'; sha256='' }
         continue
     }

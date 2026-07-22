@@ -44,6 +44,8 @@ class RoundTwoReleaseToolsTests(unittest.TestCase):
         install = read_text(ROOT / "tools/release/Install-RoundTwoBundle.ps1")
         restore = read_text(ROOT / "tools/release/Restore-RoundTwoBundle.ps1")
         self.assertIn("backup-manifest.json", install)
+        self.assertIn("New-MergedModuleConfig", install)
+        self.assertIn("existing values were preserved", install)
         self.assertIn("originalSha256", install)
         self.assertIn("installedSha256", restore)
         self.assertNotIn("-Recurse", restore)
