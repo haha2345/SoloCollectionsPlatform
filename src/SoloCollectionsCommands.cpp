@@ -32,6 +32,8 @@ namespace SoloCollections
 {
 namespace
 {
+#include "generated/SoloCollectionsBuildInfo.inc"
+
 constexpr std::uint32_t RBAC_SC_STATUS = 71050;
 constexpr std::uint32_t RBAC_SC_ACCOUNT = 71051;
 constexpr std::uint32_t RBAC_SC_WRITE = 71052;
@@ -133,6 +135,18 @@ public:
 
     static bool HandleStatus(ChatHandler* handler)
     {
+        handler->PSendSysMessage("build.addon_commit={}", SoloCollectionsBuildInfo::addonCommit);
+        handler->PSendSysMessage("build.module_commit={}", SoloCollectionsBuildInfo::moduleCommit);
+        handler->PSendSysMessage("build.core_commit={}", SoloCollectionsBuildInfo::coreCommit);
+        handler->PSendSysMessage("build.metadata_version={}", SoloCollectionsBuildInfo::metadataVersion);
+        handler->PSendSysMessage("build.asset_pack_version={}", SoloCollectionsBuildInfo::assetPackVersion);
+        handler->PSendSysMessage("build.mapping_hash={}", SoloCollectionsBuildInfo::mappingHash);
+        handler->PSendSysMessage("build.presentation_hash={}", SoloCollectionsBuildInfo::presentationHash);
+        handler->PSendSysMessage("build.type.mount={}", SoloCollectionsBuildInfo::mountMappingHash);
+        handler->PSendSysMessage("build.type.companion={}", SoloCollectionsBuildInfo::companionMappingHash);
+        handler->PSendSysMessage("build.type.toy={}", SoloCollectionsBuildInfo::toyMappingHash);
+        handler->PSendSysMessage("build.type.appearance={}", SoloCollectionsBuildInfo::appearanceMappingHash);
+        handler->PSendSysMessage("build.type.set={}", SoloCollectionsBuildInfo::setMappingHash);
         AccountStoreDiagnostics store = GetAccountCollectionStore().Diagnostics();
         AccountCacheDiagnostics cache = GetAccountCollectionCache().Diagnostics();
         CollectionProviderRegistry& providers = GetCollectionProviderRegistry();
@@ -189,7 +203,9 @@ public:
 
     static bool HandleBenchmark(ChatHandler* handler)
     {
-        constexpr std::size_t BenchmarkEntries = 17'000;
+        constexpr std::size_t BenchmarkEntries = 18'190;
+        constexpr std::size_t ShadowSetRows = 509;
+        constexpr std::size_t CompanionCandidateRows = 201;
         AppearanceCatalog const& catalog = GetAppearanceCatalog();
         std::vector<AppearanceCollectionDefinition const*> materialized;
         materialized.reserve(BenchmarkEntries);
@@ -217,14 +233,14 @@ public:
         std::int64_t filterUs = microseconds(filterStarted, lookupStarted);
         std::int64_t lookupUs = microseconds(lookupStarted, finished);
         handler->PSendSysMessage(
-            "SoloCollections benchmark scale={} catalog_entries={} materialized={} filtered={} found={} "
+            "SoloCollections benchmark scale={} shadow_sets={} companion_candidates={} catalog_entries={} materialized={} filtered={} found={} "
             "load_us={} filter_us={} lookup_us={}",
-            BenchmarkEntries, collections.size(), materialized.size(), filtered, found,
+            BenchmarkEntries, ShadowSetRows, CompanionCandidateRows, collections.size(), materialized.size(), filtered, found,
             loadUs, filterUs, lookupUs);
         LOG_INFO("module.solocollections.performance",
-            "event=appearance_catalog_benchmark scale={} catalog_entries={} materialized={} filtered={} found={} "
+            "event=appearance_catalog_benchmark scale={} shadow_sets={} companion_candidates={} catalog_entries={} materialized={} filtered={} found={} "
             "load_us={} filter_us={} lookup_us={}",
-            BenchmarkEntries, collections.size(), materialized.size(), filtered, found,
+            BenchmarkEntries, ShadowSetRows, CompanionCandidateRows, collections.size(), materialized.size(), filtered, found,
             loadUs, filterUs, lookupUs);
         return true;
     }

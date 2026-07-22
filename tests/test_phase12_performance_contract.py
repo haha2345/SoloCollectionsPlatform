@@ -29,6 +29,8 @@ class Phase12ServerPerformanceContractTests(unittest.TestCase):
     def test_duplicate_unlock_retry_and_17k_catalog_baseline_are_visible(self):
         self.assertIn("DuplicateGrantRequests", STORE_H)
         self.assertIn("TransactionRetryAttempts", STORE_H)
-        self.assertIn("constexpr std::size_t BenchmarkEntries = 17'000", COMMANDS)
+        self.assertIn("constexpr std::size_t BenchmarkEntries = 18'190", COMMANDS)
+        self.assertIn("constexpr std::size_t ShadowSetRows = 509", COMMANDS)
+        self.assertIn("constexpr std::size_t CompanionCandidateRows = 201", COMMANDS)
         self.assertIn('"benchmark", HandleBenchmark', COMMANDS)
         self.assertIn("module.solocollections.performance", COMMANDS)

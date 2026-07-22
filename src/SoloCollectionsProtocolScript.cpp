@@ -34,6 +34,7 @@ namespace SoloCollections
 {
 namespace
 {
+#include "generated/SoloCollectionsBuildInfo.inc"
 #include "generated/SoloCollectionsProtocolCatalog.inc"
 
 constexpr std::string_view BackendBuild = "phase5-dev";
@@ -310,5 +311,20 @@ Sc2ServerDiagnostics Sc2ProtocolDiagnostics()
 
 void AddSC_solo_collections_protocol()
 {
+    LOG_INFO("module.solocollections",
+        "event=build_info addon_commit={} module_commit={} core_commit={} metadata_version={} asset_pack_version={} "
+        "mapping_hash={} presentation_hash={} mount_hash={} companion_hash={} toy_hash={} appearance_hash={} set_hash={}",
+        SoloCollections::SoloCollectionsBuildInfo::addonCommit,
+        SoloCollections::SoloCollectionsBuildInfo::moduleCommit,
+        SoloCollections::SoloCollectionsBuildInfo::coreCommit,
+        SoloCollections::SoloCollectionsBuildInfo::metadataVersion,
+        SoloCollections::SoloCollectionsBuildInfo::assetPackVersion,
+        SoloCollections::SoloCollectionsBuildInfo::mappingHash,
+        SoloCollections::SoloCollectionsBuildInfo::presentationHash,
+        SoloCollections::SoloCollectionsBuildInfo::mountMappingHash,
+        SoloCollections::SoloCollectionsBuildInfo::companionMappingHash,
+        SoloCollections::SoloCollectionsBuildInfo::toyMappingHash,
+        SoloCollections::SoloCollectionsBuildInfo::appearanceMappingHash,
+        SoloCollections::SoloCollectionsBuildInfo::setMappingHash);
     SoloCollections::GetAccountCollectionStore().SetEventSink(&SoloCollections::GetSc2EventSink());
 }
