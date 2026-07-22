@@ -27,6 +27,7 @@ $output = Resolve-RoundTwoPath $OutputRoot -AllowMissing
 Assert-RoundTwoWithin -Path $worldserver -Root $build
 Assert-RoundTwoCleanTracked $addon
 Assert-RoundTwoCleanTracked $module
+Assert-RoundTwoBaseMedia -AddonRoot (Join-Path $addon 'addon\SoloCollections')
 $pe = Get-RoundTwoPeInfo $worldserver
 if (-not $pe.IsX64) { throw "worldserver.exe is not x64" }
 $metadataPath = Join-Path $build 'module-build-metadata.json'
@@ -49,13 +50,13 @@ $addonPrefix = 'addon/SoloCollections/'
 $tracked = @(& git -C $addon ls-files -- 'addon/SoloCollections')
 if ($LASTEXITCODE -ne 0 -or $tracked.Count -eq 0) { throw "Cannot enumerate release AddOn files" }
 foreach ($relative in $tracked) {
-    if ($relative -like 'addon/SoloCollections/Media/Retail/*') { continue }
     $source = Join-Path $addon ($relative -replace '/', '\')
     if (-not (Test-Path -LiteralPath $source -PathType Leaf)) { throw "Tracked AddOn file is missing: $relative" }
     $destination = Join-Path $output ('addon\SoloCollections\' + $relative.Substring($addonPrefix.Length).Replace('/', '\'))
     New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destination) | Out-Null
     Copy-Item -LiteralPath $source -Destination $destination
 }
+Assert-RoundTwoBaseMedia -AddonRoot (Join-Path $output 'addon\SoloCollections')
 Copy-Item -LiteralPath $worldserver -Destination (Join-Path $output 'server\worldserver.exe')
 $configSource = Join-Path $module 'conf\transmog.conf.dist'
 if (-not (Test-Path -LiteralPath $configSource -PathType Leaf)) { throw "Missing module config template" }

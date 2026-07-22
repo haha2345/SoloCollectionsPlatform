@@ -52,6 +52,91 @@ function Write-RoundTwoJson {
     [System.IO.File]::WriteAllText($Path, $text + "`n", [System.Text.UTF8Encoding]::new($false))
 }
 
+function Get-RoundTwoTgaInfo {
+    param([Parameter(Mandatory)][string]$Path)
+
+    $bytes = [System.IO.File]::ReadAllBytes($Path)
+    if ($bytes.Length -lt 18) { throw "TGA is shorter than its header: $Path" }
+    $width = [BitConverter]::ToUInt16($bytes, 12)
+    $height = [BitConverter]::ToUInt16($bytes, 14)
+    return [pscustomobject]@{
+        ImageType = [int]$bytes[2]
+        Width = [int]$width
+        Height = [int]$height
+        PixelDepth = [int]$bytes[16]
+        AlphaBits = [int]($bytes[17] -band 0x0F)
+        TopLeftOrigin = (($bytes[17] -band 0x20) -ne 0)
+    }
+}
+
+function Assert-RoundTwoBaseMedia {
+    param([Parameter(Mandatory)][string]$AddonRoot)
+
+    $addon = Resolve-RoundTwoPath -Path $AddonRoot
+    $mediaRoot = Resolve-RoundTwoPath -Path (Join-Path $addon 'Media')
+    $manifestPath = Join-Path $mediaRoot 'assets.json'
+    $manifest = Read-RoundTwoJson -Path $manifestPath
+    if ([int]$manifest.schemaVersion -lt 2) { throw "Base media manifest schema is unsupported" }
+    $required = $manifest.requiredForBaseUI
+    $files = $manifest.files
+    $optional = $manifest.optionalExternalFiles
+    if ($null -eq $required -or $null -eq $files -or $null -eq $optional) {
+        throw "Base media manifest must declare files, requiredForBaseUI and optionalExternalFiles"
+    }
+
+    $roles = @('launcher', 'mountPortrait', 'wardrobeSlotAtlas', 'roundHighlightAtlas')
+    $declaredRoles = @($required.PSObject.Properties.Name | Sort-Object)
+    if (@($declaredRoles).Count -ne $roles.Count -or @($roles | Where-Object { $_ -notin $declaredRoles }).Count -ne 0) {
+        throw "Base media roles differ from the four production defaults"
+    }
+
+    foreach ($role in $roles) {
+        $entry = $required.PSObject.Properties[$role].Value
+        $relative = [string]$entry.path
+        if ([string]::IsNullOrWhiteSpace($relative) -or $relative -match '(^|[\\/])\.\.([\\/]|$)' -or
+            [System.IO.Path]::IsPathRooted($relative) -or $relative -match '^(?i:Retail[\\/])') {
+            throw "Unsafe or external-only base media path for ${role}: $relative"
+        }
+        if ($optional.PSObject.Properties[$relative]) { throw "Base media role cannot be optional: $role" }
+        $expectedHash = ([string]$entry.sha256).ToUpperInvariant()
+        if ($expectedHash -notmatch '^[A-F0-9]{64}$') { throw "Invalid base media hash for $role" }
+        if ([string]$entry.fileType -ne 'TGA' -or [string]$entry.origin -ne 'top-left' -or [int]$entry.alphaBits -ne 8) {
+            throw "Base media format contract failed for $role"
+        }
+        $declaredFile = $files.PSObject.Properties[$relative]
+        if ($null -eq $declaredFile -or ([string]$declaredFile.Value).ToUpperInvariant() -ne $expectedHash) {
+            throw "Base media file hash declaration differs for $role"
+        }
+
+        $path = Join-Path $mediaRoot $relative.Replace('/', '\')
+        Assert-RoundTwoWithin -Path $path -Root $mediaRoot
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) { throw "Base media file is missing: $role" }
+        if ((Get-RoundTwoSha256 -Path $path).ToUpperInvariant() -ne $expectedHash) { throw "Base media hash mismatch: $role" }
+        $tga = Get-RoundTwoTgaInfo -Path $path
+        if ($tga.ImageType -ne 2 -or $tga.Width -ne [int]$entry.width -or $tga.Height -ne [int]$entry.height -or
+            $tga.PixelDepth -ne 32 -or $tga.AlphaBits -ne 8 -or -not $tga.TopLeftOrigin) {
+            throw "Base media TGA contract failed: $role"
+        }
+    }
+
+    $templatesPath = Join-Path $addon 'UI\Templates.lua'
+    $templates = Get-Content -LiteralPath $templatesPath -Raw -Encoding UTF8
+    if ($templates -match 'MEDIA_ROOT\s*\.\.\s*"Retail\\') { throw "Production template still references Retail media" }
+    foreach ($role in $roles) {
+        $expected = ([string]$required.PSObject.Properties[$role].Value.path).Replace('/', '\\')
+        $pattern = '(?m)^\s*' + [regex]::Escape($role) + '\s*=\s*MEDIA_ROOT\s*\.\.\s*"([^"]+)"'
+        $match = [regex]::Match($templates, $pattern)
+        if (-not $match.Success -or $match.Groups[1].Value -ne $expected) {
+            throw "Production template does not resolve required base media role: $role"
+        }
+    }
+    foreach ($lua in @(Get-ChildItem -LiteralPath $addon -Recurse -File -Filter '*.lua')) {
+        if ((Get-Content -LiteralPath $lua.FullName -Raw -Encoding UTF8) -match 'Media\\Retail\\') {
+            throw "Production Lua references Retail media: $($lua.FullName)"
+        }
+    }
+}
+
 function Get-RoundTwoPeInfo {
     param([Parameter(Mandatory)][string]$Path)
     $bytes = [System.IO.File]::ReadAllBytes($Path)

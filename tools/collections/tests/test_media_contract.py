@@ -1,64 +1,120 @@
 from __future__ import annotations
 
 import re
+import subprocess
+import sys
 import unittest
+from pathlib import Path
 
-from common import ADDON, load_json, sha256
+from common import ADDON, ROOT, load_json, read_text, sha256
+
+
+MEDIA = ADDON / "Media"
+MANIFEST = MEDIA / "assets.json"
+TEMPLATES = ADDON / "UI" / "Templates.lua"
+GENERATOR = ROOT / "tools" / "media" / "generate_base_ui_media.py"
+REQUIRED_ROLES = {"launcher", "mountPortrait", "wardrobeSlotAtlas", "roundHighlightAtlas"}
+
+
+def read_tga_info(path: Path) -> dict[str, int]:
+    data = path.read_bytes()
+    if len(data) < 18:
+        raise AssertionError(f"{path} is shorter than a TGA header")
+    return {
+        "image_type": data[2],
+        "width": int.from_bytes(data[12:14], "little"),
+        "height": int.from_bytes(data[14:16], "little"),
+        "depth": data[16],
+        "alpha_bits": data[17] & 0x0F,
+        "top_left": bool(data[17] & 0x20),
+    }
 
 
 class MediaContractTests(unittest.TestCase):
-    def test_media_manifest_files_exist_and_hash_match(self):
-        manifest_path = ADDON / "Media" / "assets.json"
-        self.assertTrue(manifest_path.is_file(), f"missing {manifest_path}")
-        manifest = load_json(manifest_path)
-        self.assertIn("source", manifest)
-        self.assertIn("files", manifest)
-        self.assertIn("externalFiles", manifest)
-        self.assertGreaterEqual(len(manifest["files"]), 9)
+    def test_base_ui_roles_are_tracked_tga_assets_with_fixed_hash_and_dimensions(self):
+        self.assertTrue(MANIFEST.is_file(), f"missing {MANIFEST}")
+        manifest = load_json(MANIFEST)
+        self.assertEqual(2, manifest.get("schemaVersion"))
+        files = manifest.get("files")
+        required = manifest.get("requiredForBaseUI")
+        optional = manifest.get("optionalExternalFiles")
+        self.assertIsInstance(files, dict)
+        self.assertIsInstance(required, dict)
+        self.assertIsInstance(optional, dict)
+        self.assertEqual(REQUIRED_ROLES, set(required))
+
+        for role, entry in required.items():
+            self.assertIsInstance(entry, dict, role)
+            relative = entry.get("path")
+            self.assertIsInstance(relative, str, role)
+            self.assertFalse(relative.startswith("Retail/"), role)
+            self.assertNotIn("..", Path(relative).parts, role)
+            self.assertNotIn(relative, optional, role)
+            self.assertIn(relative, files, role)
+            self.assertEqual(entry.get("sha256"), files[relative], role)
+            self.assertRegex(entry.get("sha256", ""), r"^[A-F0-9]{64}$", role)
+            self.assertEqual("TGA", entry.get("fileType"), role)
+            self.assertEqual("top-left", entry.get("origin"), role)
+            self.assertEqual(8, entry.get("alphaBits"), role)
+            self.assertTrue(entry.get("provenance"), role)
+            self.assertEqual("project-authored-redistributable", entry.get("license"), role)
+
+            path = MEDIA / relative
+            self.assertTrue(path.is_file(), role)
+            self.assertEqual(entry["sha256"], sha256(path), role)
+            info = read_tga_info(path)
+            self.assertEqual(2, info["image_type"], role)
+            self.assertEqual(entry["width"], info["width"], role)
+            self.assertEqual(entry["height"], info["height"], role)
+            self.assertEqual(32, info["depth"], role)
+            self.assertEqual(entry["alphaBits"], info["alpha_bits"], role)
+            self.assertTrue(info["top_left"], role)
+
+    def test_all_tracked_media_hashes_match_and_no_retail_artifact_is_declared(self):
+        manifest = load_json(MANIFEST)
         for relative, expected_hash in manifest["files"].items():
-            path = ADDON / "Media" / relative
-            self.assertTrue(path.is_file(), str(path))
-            self.assertIn(path.suffix.lower(), {".tga", ".blp"})
-            self.assertRegex(expected_hash, r"^[0-9A-F]{64}$")
+            path = MEDIA / relative
+            self.assertTrue(path.is_file(), relative)
+            self.assertEqual(".tga", path.suffix.lower(), relative)
             self.assertEqual(expected_hash, sha256(path), relative)
+            self.assertFalse(relative.startswith("Retail/"), relative)
+        self.assertEqual({}, manifest.get("optionalExternalFiles"))
+        self.assertFalse((MEDIA / "Retail").exists())
 
-        for relative, expected_hash in manifest["externalFiles"].items():
-            path = ADDON / "Media" / relative
-            self.assertRegex(expected_hash, r"^[0-9A-F]{64}$")
-            if path.is_file():
-                self.assertEqual(expected_hash, sha256(path), relative)
+    def test_base_ui_media_generator_is_byte_stable(self):
+        result = subprocess.run(
+            [sys.executable, str(GENERATOR), "--output-root", str(MEDIA), "--check"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(0, result.returncode, result.stdout + result.stderr)
 
-    def test_every_media_reference_uses_addon_relative_path(self):
-        self.assertTrue(ADDON.is_dir(), f"missing addon source: {ADDON}")
-        manifest = load_json(ADDON / "Media" / "assets.json")
-        declared_external = set(manifest.get("externalFiles", {}))
-        for path in ADDON.rglob("*.lua") if ADDON.exists() else []:
-            text = path.read_text(encoding="utf-8-sig")
-            for ref in re.findall(r'Interface\\AddOns\\SoloCollections\\Media\\[^"\']+', text):
-                relative = ref.split("SoloCollections\\Media\\", 1)[1].replace("\\", "/")
-                self.assertTrue(
-                    (ADDON / "Media" / relative).is_file() or relative in declared_external,
-                    f"{path}: {ref}",
-                )
+    def test_templates_map_every_default_role_to_required_project_media(self):
+        manifest = load_json(MANIFEST)
+        required = manifest["requiredForBaseUI"]
+        source = read_text(TEMPLATES)
+        self.assertNotIn('MEDIA_ROOT .. "Retail\\', source)
+        for role, entry in required.items():
+            match = re.search(
+                rf'^\s*{re.escape(role)}\s*=\s*MEDIA_ROOT\s*\.\.\s*"([^"]+)"',
+                source,
+                re.MULTILINE,
+            )
+            self.assertIsNotNone(match, role)
+            self.assertEqual(entry["path"].replace("/", "\\\\"), match.group(1), role)
 
-    def test_mount_portrait_compatibility_asset_has_real_circular_alpha(self):
-        path = ADDON / "Media" / "Retail" / "MountJournalPortraitRound.tga"
-        if not path.is_file():
-            self.skipTest("external Retail compatibility media is not installed")
-        data = path.read_bytes()
-        self.assertGreaterEqual(len(data), 18 + (64 * 64 * 4))
-        self.assertEqual(2, data[2], "mount portrait must be an uncompressed true-color TGA")
-        self.assertEqual(64, int.from_bytes(data[12:14], "little"))
-        self.assertEqual(64, int.from_bytes(data[14:16], "little"))
-        self.assertEqual(32, data[16])
-        self.assertEqual(8, data[17] & 0x0F, "mount portrait must preserve an 8-bit alpha channel")
-
-        def alpha_at(x: int, y: int) -> int:
-            return data[18 + (((y * 64) + x) * 4) + 3]
-
-        for corner in ((0, 0), (63, 0), (0, 63), (63, 63)):
-            self.assertEqual(0, alpha_at(*corner), f"corner {corner} must be transparent")
-        self.assertEqual(255, alpha_at(32, 32), "portrait center must remain opaque")
+    def test_every_literal_addon_media_reference_resolves_to_tracked_media_not_optional_only(self):
+        manifest = load_json(MANIFEST)
+        tracked = set(manifest["files"])
+        optional = set(manifest["optionalExternalFiles"])
+        self.assertFalse(tracked & optional)
+        for path in ADDON.rglob("*.lua"):
+            source = read_text(path)
+            self.assertNotIn("Media\\Retail\\", source, path)
+            for reference in re.findall(r'Interface\\AddOns\\SoloCollections\\Media\\([^"\']+)', source):
+                relative = reference.replace("\\", "/")
+                self.assertIn(relative, tracked, f"{path}: {reference}")
 
 
 if __name__ == "__main__":
