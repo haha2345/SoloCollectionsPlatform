@@ -25,6 +25,15 @@ class SetCatalogTests(unittest.TestCase):
         )
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
 
+    def test_addon_projection_carries_presentation_without_touching_module_mapping_model(self):
+        addon_model = json.loads((ROOT / "catalog/generated/set-catalog.json").read_text(encoding="utf-8"))
+        self.assertEqual(3, addon_model["schemaVersion"])
+        self.assertEqual(self.model["mappingHash"], addon_model["mappingHash"])
+        self.assertNotEqual(self.model["presentationHash"], addon_model["presentationHash"])
+        self.assertTrue(all("presentation" in row for row in addon_model["sets"]))
+        addon_sets = (ROOT / "addon/SoloCollections/Data/Sets.lua").read_text(encoding="utf-8")
+        self.assertIn("presentation =", addon_sets)
+
     def test_review_driven_catalog_and_priest_t1(self):
         self.assertEqual(465, len(self.model["sets"]))
         priest = next(row for row in self.model["sets"] if row["itemSetId"] == 202)

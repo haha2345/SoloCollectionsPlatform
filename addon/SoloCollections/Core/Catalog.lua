@@ -426,6 +426,36 @@ local function filterMatches(category, record, query, filters, includeCollection
     return metadataMatches(record, query)
 end
 
+-- Set identity and APPLY semantics deliberately remain in the generated
+-- ItemSet mapping.  These ranks are a presentation-only projection produced
+-- by tools/catalog/set_presentations.py, so localized names never influence
+-- the default wardrobe order.
+local SET_PRESENTATION_SORT_KEYS = {
+    "expansion", "acquisition", "tier", "difficulty", "medianItemLevel", "maxItemLevel",
+}
+
+local function setPresentationRank(record, key)
+    local presentation = record and record.presentation
+    local ranks = presentation and presentation.sortRank
+    return tonumber(ranks and ranks[key]) or 0
+end
+
+local function setPresentationLess(left, right)
+    for _, key in ipairs(SET_PRESENTATION_SORT_KEYS) do
+        local leftRank = setPresentationRank(left, key)
+        local rightRank = setPresentationRank(right, key)
+        if leftRank ~= rightRank then
+            return leftRank > rightRank
+        end
+    end
+    local leftItemSetId = tonumber(left and left.itemSetId) or 0
+    local rightItemSetId = tonumber(right and right.itemSetId) or 0
+    if leftItemSetId ~= rightItemSetId then
+        return leftItemSetId < rightItemSetId
+    end
+    return (tonumber(left and left.id) or 0) < (tonumber(right and right.id) or 0)
+end
+
 function Catalog.Get(category)
     local result = {}
     local source = getSource(category)
@@ -450,6 +480,9 @@ function Catalog.QueryAll(category, query, filters)
             record.favorite = getFavorite(category, record)
             table.insert(matches, record)
         end
+    end
+    if category == "SETS" then
+        table.sort(matches, setPresentationLess)
     end
     return matches
 end
