@@ -1,7 +1,9 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)][string]$SavedVariablesPath,
-    [Parameter(Mandatory = $true)][string]$RunRoot
+    [Parameter(Mandatory = $true)][string]$RunRoot,
+    [Parameter(Mandatory = $true)][ValidateRange(1, 10000)][int]$ExpectedCompanions,
+    [Parameter(Mandatory = $true)][ValidatePattern('^[0-9a-f]{64}$')][string]$ExpectedMappingHash
 )
 
 $ErrorActionPreference = 'Stop'
@@ -75,8 +77,12 @@ if ($rows.Count -ne ($total + 1)) {
 $records = @($csv | ConvertFrom-Csv)
 $mounts = @($records | Where-Object typeId -eq '10').Count
 $companions = @($records | Where-Object typeId -eq '11').Count
-if ($mounts -ne 281 -or $companions -ne 24 -or $ready -ne 305 -or $failed -ne 0) {
+$expectedTotal = 281 + $ExpectedCompanions
+if ($mounts -ne 281 -or $companions -ne $ExpectedCompanions -or $ready -ne $expectedTotal -or $failed -ne 0) {
     throw "RuntimeAudit acceptance failed: mounts=$mounts companions=$companions ready=$ready failed=$failed"
+}
+if ((Read-LuaScalar $text 'mappingHash') -ne $ExpectedMappingHash) {
+    throw 'RuntimeAudit mapping hash differs from the reviewed catalog.'
 }
 if (@($records | Where-Object { $_.previewStatus -ne 'ACCEPTED' -or $_.modelStatus -ne 'READY' }).Count -ne 0) {
     throw 'RuntimeAudit contains a non-ACCEPTED or non-READY record.'
@@ -97,6 +103,7 @@ $summary = [ordered]@{
     total = $total
     mounts = $mounts
     companions = $companions
+    mappingHash = $ExpectedMappingHash
     ready = $ready
     failed = $failed
     staleGenerationDiscarded = $true

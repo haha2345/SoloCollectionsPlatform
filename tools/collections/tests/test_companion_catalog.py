@@ -1,0 +1,136 @@
+from __future__ import annotations
+
+import csv
+import hashlib
+import importlib.util
+import json
+import os
+import unittest
+from pathlib import Path
+
+from common import ROOT
+
+
+TOOL = ROOT / "tools/catalog/companion_catalog.py"
+SPEC = importlib.util.spec_from_file_location("companion_catalog", TOOL)
+companion = importlib.util.module_from_spec(SPEC)
+assert SPEC and SPEC.loader
+SPEC.loader.exec_module(companion)
+
+EVIDENCE = ROOT / "catalog/review/companions/evidence.json"
+POLICY = ROOT / "catalog/review/companions/review-policy.json"
+ACTIONS = ROOT / "catalog/source/companion_actions.json"
+COLLECTIONS = ROOT / "catalog/source/collections/companions.csv"
+IDS = ROOT / "catalog/ids.json"
+PRESENTATIONS = ROOT / "catalog/source/creature_presentations.json"
+EVIDENCE_ROOT = Path(os.environ["SOLOCOLLECTIONS_EVIDENCE_ROOT"]) if os.environ.get("SOLOCOLLECTIONS_EVIDENCE_ROOT") else None
+
+
+def read_json(path: Path):
+    return json.loads(path.read_text(encoding="utf-8-sig"))
+
+
+class CompanionCatalogTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.evidence = read_json(EVIDENCE)
+        cls.policy = read_json(POLICY)
+        cls.actions = read_json(ACTIONS)
+        with COLLECTIONS.open(encoding="utf-8-sig", newline="") as handle:
+            cls.collections = list(csv.DictReader(handle))
+
+    def test_fixed_evidence_matches_the_205_to_203_to_201_pipeline(self):
+        self.assertEqual("SKILLLINE_778_EXACT_CREATURE_ENTRY", self.evidence["reviewMethod"])
+        self.assertEqual(
+            {
+                "skillLineSpells": 205,
+                "positiveSummonSpells": 203,
+                "rejectedSkillLineSpells": 2,
+                "candidates": 201,
+                "resourceReadyCandidates": 201,
+            },
+            self.evidence["counts"],
+        )
+        basis = {
+            "rejectedSkillLineSpells": self.evidence["rejectedSkillLineSpells"],
+            "candidates": self.evidence["candidates"],
+        }
+        self.assertEqual(companion.canonical_hash(basis), self.evidence["candidateHash"])
+        self.assertEqual(
+            {17468, 17469},
+            {row["spellId"] for row in self.evidence["rejectedSkillLineSpells"]},
+        )
+
+    def test_review_has_one_explicit_decision_for_every_candidate(self):
+        self.assertEqual(self.evidence["candidateHash"], self.policy["candidateHash"])
+        decisions = self.policy["decisions"]
+        self.assertEqual(201, len(decisions))
+        self.assertEqual(
+            {row["creatureEntry"] for row in self.evidence["candidates"]},
+            {row["creatureEntry"] for row in decisions},
+        )
+        self.assertEqual({"accepted"}, {row["decision"] for row in decisions})
+        self.assertTrue(all(row["reasonCode"] for row in decisions))
+
+    def test_schema_v2_preserves_old_ids_and_indexes_all_unlock_variants(self):
+        self.assertEqual(2, self.actions["schemaVersion"])
+        self.assertEqual(201, len(self.actions["entries"]))
+        by_id = {row["collectionId"]: row for row in self.actions["entries"]}
+        self.assertEqual(list(range(100281, 100305)), sorted(by_id)[:24])
+        unlocks = [spell for row in self.actions["entries"] for spell in row["unlockSpellIds"]]
+        self.assertEqual(203, len(unlocks))
+        self.assertEqual(len(unlocks), len(set(unlocks)))
+        for row in self.actions["entries"]:
+            self.assertIn(row["canonicalSpellId"], row["unlockSpellIds"])
+            self.assertGreater(row["previewCreatureEntry"], 0)
+            self.assertEqual("ACTIVE", row["catalogLifecycle"])
+            self.assertEqual("public", row["uiLifecycle"])
+        duplicates = [row for row in self.actions["entries"] if len(row["unlockSpellIds"]) > 1]
+        self.assertEqual(
+            [(7559, [10712, 35157], 10712), (15361, [24987, 25018], 25018)],
+            [(row["previewCreatureEntry"], row["unlockSpellIds"], row["canonicalSpellId"]) for row in duplicates],
+        )
+
+    def test_new_ids_are_registry_allocated_append_only_and_do_not_reuse_toys(self):
+        ids = read_json(IDS)["reservations"]["collections"]
+        reservations = {row["key"]: row for row in ids}
+        toy_ids = {row["id"] for row in ids if row["key"].startswith("toy.")}
+        collection_ids = {int(row["collectionId"]) for row in self.collections}
+        self.assertEqual(201, len(collection_ids))
+        self.assertTrue(collection_ids.isdisjoint(toy_ids))
+        new_ids = sorted(value for value in collection_ids if value > 100308)
+        self.assertEqual(list(range(100309, 100486)), new_ids)
+        for row in self.collections:
+            reservation = reservations[row["collectionKey"]]
+            self.assertEqual(int(row["collectionId"]), reservation["id"])
+            self.assertEqual(int(row["ordinal"]), reservation["ordinal"])
+
+    def test_every_active_companion_has_icon_template_display_and_presentation(self):
+        candidates = {row["creatureEntry"]: row for row in self.evidence["candidates"]}
+        presentations = {
+            row["collectionId"]: row for row in read_json(PRESENTATIONS)["entries"]
+            if row["typeKey"] == "companion"
+        }
+        self.assertEqual(201, len(presentations))
+        for action in self.actions["entries"]:
+            candidate = candidates[action["previewCreatureEntry"]]
+            self.assertEqual("READY", candidate["resourceStatus"])
+            self.assertTrue(candidate["creature"]["displayResourcesPresent"])
+            presentation = presentations[action["collectionId"]]
+            self.assertEqual("READY", presentation["presentationStatus"])
+            self.assertTrue(presentation["iconTexture"].lower().startswith("interface\\icons\\"))
+            self.assertEqual(action["previewCreatureEntry"], presentation["previewCreatureEntry"])
+
+    def test_checked_in_outputs_are_deterministic(self):
+        self.assertEqual(
+            {"accepted": 201, "excluded": 0, "deferred": 0},
+            companion.generate(ROOT, EVIDENCE, True),
+        )
+
+    @unittest.skipUnless(EVIDENCE_ROOT and EVIDENCE_ROOT.exists(), "named companion evidence pack is not configured")
+    def test_named_evidence_pack_pins_review_outputs_and_dbc_hashes(self):
+        self.assertRegex(companion.verify_review_pack(ROOT, EVIDENCE_ROOT), r"^[0-9a-f]{64}$")
+
+
+if __name__ == "__main__":
+    unittest.main()

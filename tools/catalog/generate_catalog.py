@@ -225,13 +225,13 @@ def _load_companion_actions(source_root: Path, collections: list[dict[str, Any]]
     sources = [entry for entry in collections if entry["typeKey"] == "companion"]
     _require(path.exists() or not sources, "companion_actions.json is required when companion collections exist")
     if not sources:
-        empty = {"schemaVersion": 1, "entries": []}
+        empty = {"schemaVersion": 2, "entries": []}
         return {**empty, "mappingHash": _hash(empty)}
     data = deepcopy(_read_json(path))
-    _require(data.get("schemaVersion") == 1, "unsupported companion action schema version")
+    _require(data.get("schemaVersion") == 2, "unsupported companion action schema version")
     entries = data.get("entries")
     _require(isinstance(entries, list), "companion action entries must be an array")
-    _unique(entries, ("collectionId", "collectionKey", "ordinal", "creatureId"), "companion actions")
+    _unique(entries, ("collectionId", "collectionKey", "ordinal", "previewCreatureEntry"), "companion actions")
     source_by_key = {entry["collectionKey"]: entry for entry in sources}
     _require(len(entries) == len(source_by_key), "companion action coverage must match companion catalog")
     normalized: list[dict[str, Any]] = []
@@ -243,16 +243,30 @@ def _load_companion_actions(source_root: Path, collections: list[dict[str, Any]]
         _require(int(entry["ordinal"]) == source["ordinal"], f"companion ordinal mismatch: {entry['collectionKey']}")
         _require(source["sourceKind"] == "spell" and source["actionKind"] == "COMPANION_SPELL",
                  f"companion source/action kind is not explicit: {entry['collectionKey']}")
-        spell_id = int(source["actionId"])
-        _require(spell_id > 0 and int(source["sourceId"]) == spell_id,
+        canonical_spell_id = int(entry.get("canonicalSpellId", 0))
+        unlock_spell_ids = [int(value) for value in entry.get("unlockSpellIds", [])]
+        preview_entry = int(entry.get("previewCreatureEntry", 0))
+        _require(canonical_spell_id > 0 and int(source["actionId"]) == canonical_spell_id
+                 and int(source["sourceId"]) == canonical_spell_id,
                  f"companion unlock/action spell differs: {entry['collectionKey']}")
-        _require(spell_id not in seen_spells, f"companion spell is mapped twice: {spell_id}")
-        seen_spells.add(spell_id)
+        _require(unlock_spell_ids and canonical_spell_id in unlock_spell_ids,
+                 f"companion canonical spell is not an unlock variant: {entry['collectionKey']}")
+        _require(len(set(unlock_spell_ids)) == len(unlock_spell_ids) and all(value > 0 for value in unlock_spell_ids),
+                 f"companion unlock variants are invalid: {entry['collectionKey']}")
+        _require(not (set(unlock_spell_ids) & seen_spells),
+                 f"companion unlock spell is mapped twice: {entry['collectionKey']}")
+        seen_spells.update(unlock_spell_ids)
+        _require(preview_entry > 0, f"companion preview creature is invalid: {entry['collectionKey']}")
+        _require(entry.get("catalogLifecycle") == source["catalogLifecycle"],
+                 f"companion catalog lifecycle drift: {entry['collectionKey']}")
+        _require(entry.get("uiLifecycle") == "public", f"companion UI lifecycle is not public: {entry['collectionKey']}")
         normalized.append({
             "collectionId": source["collectionId"], "collectionKey": source["collectionKey"],
-            "ordinal": source["ordinal"], "spellId": spell_id, "creatureId": int(entry["creatureId"]),
+            "ordinal": source["ordinal"], "canonicalSpellId": canonical_spell_id,
+            "unlockSpellIds": sorted(unlock_spell_ids), "previewCreatureEntry": preview_entry,
+            "catalogLifecycle": entry["catalogLifecycle"], "uiLifecycle": entry["uiLifecycle"],
         })
-    result = {"schemaVersion": 1, "entries": sorted(normalized, key=lambda row: row["ordinal"])}
+    result = {"schemaVersion": 2, "entries": sorted(normalized, key=lambda row: row["ordinal"])}
     result["mappingHash"] = _hash(result)
     return result
 
@@ -426,8 +440,8 @@ def _load_legacy_sc1_shadow(repo_root: Path, model: dict[str, Any]) -> dict[str,
                               and int(row[source_field]) in map(int, entry["creatureIds"])]
             elif type_key == "companion":
                 candidates = [entry for entry in companion_actions
-                              if int(entry["spellId"]) == int(row["spellId"])
-                              and int(entry[source_field]) == int(row[source_field])]
+                              if int(row["spellId"]) in map(int, entry["unlockSpellIds"])
+                              and int(entry["previewCreatureEntry"]) == int(row[source_field])]
             else:
                 candidates = [entry for entry in toy_actions
                               if int(entry["spellId"]) == int(row["spellId"])
@@ -849,7 +863,7 @@ def _companion_catalog_inc(model: dict[str, Any]) -> str:
         lines.append(
             "        {" + ", ".join([
                 f"CollectionId{{{entry['collectionId']}u}}", _cpp_string(entry["collectionKey"]),
-                str(int(entry["spellId"])) + "u", str(int(entry["creatureId"])) + "u",
+                str(int(entry["canonicalSpellId"])) + "u", _cpp_uints(entry["unlockSpellIds"]),
                 str(int(collection["previewCreatureEntry"])) + "u",
                 lifecycle_names[collection["catalogLifecycle"]],
             ]) + "},"
@@ -1025,7 +1039,27 @@ def _validate_creature_presentation_evidence(source_root: Path, evidence_root: P
     except (OSError, presentation_generator.PresentationError) as exc:
         raise CatalogError(f"creature presentation evidence rejected: {exc}") from exc
     actual = _read_json(source_root / "creature_presentations.json")
-    _require(actual == expected, "creature presentations do not match the supplied evidence root")
+    expected_mounts = [entry for entry in expected.get("entries", []) if entry.get("typeKey") == "mount"]
+    actual_mounts = [entry for entry in actual.get("entries", []) if entry.get("typeKey") == "mount"]
+    _require(actual.get("schemaVersion") == expected.get("schemaVersion") and actual_mounts == expected_mounts,
+             "mount creature presentations do not match the supplied evidence root")
+
+
+def _validate_companion_catalog(repo_root: Path, evidence_root: Path) -> None:
+    module_path = Path(__file__).with_name("companion_catalog.py")
+    spec = importlib.util.spec_from_file_location("solo_companion_catalog", module_path)
+    _require(spec is not None and spec.loader is not None, "cannot load companion catalog generator")
+    companion_generator = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(companion_generator)
+    try:
+        companion_generator.verify_review_pack(repo_root, evidence_root)
+        companion_generator.generate(
+            repo_root,
+            repo_root / "catalog/review/companions/evidence.json",
+            True,
+        )
+    except (OSError, companion_generator.CompanionCatalogError) as exc:
+        raise CatalogError(f"companion catalog rejected: {exc}") from exc
 
 
 def _validate_appearance_presentation_evidence(repo_root: Path, source_root: Path, evidence_root: Path) -> None:
@@ -1062,6 +1096,7 @@ def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_roo
     module_root = validate_module_root(repo_root, module_root)
     print(f"catalog module target: {module_root}")
     _validate_creature_presentation_evidence(source_root, evidence_root)
+    _validate_companion_catalog(repo_root, evidence_root)
     _validate_appearance_presentation_evidence(repo_root, source_root, evidence_root)
     _validate_character_camera_profiles(repo_root)
     model = build_model(source_root)

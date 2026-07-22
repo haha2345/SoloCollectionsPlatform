@@ -113,7 +113,11 @@ class CatalogGeneratorTests(unittest.TestCase):
             for entry in model["collections"]
             if entry["lifecycle"] == "active" and entry["typeKey"] in {"mount", "companion"}
         ]
-        self.assertEqual(305, len(creatures))
+        expected_creatures = (
+            len(model["mountActions"]["collections"])
+            + len(model["companionActions"]["entries"])
+        )
+        self.assertEqual(expected_creatures, len(creatures))
         for entry in creatures:
             self.assertEqual("READY", entry["presentationStatus"], entry["collectionKey"])
             self.assertGreater(entry["previewCreatureEntry"], 0, entry["collectionKey"])
