@@ -165,6 +165,30 @@ def class_policy(member_masks: list[int]) -> dict[str, Any]:
     ]}
 
 
+def numeric_summary(values: list[int]) -> dict[str, Any]:
+    """Return a deterministic min/max/median summary for reviewed ItemSet inputs.
+
+    The ItemSet DBC only references member item IDs.  Item level and quality
+    live in the world DB snapshot, so keeping the aggregate here gives the
+    later presentation sorter evidence without leaking it into set identity or
+    server-owned mapping fields.
+    """
+    ordered = sorted(int(value) for value in values if int(value) > 0)
+    if not ordered:
+        return {"count": 0, "min": None, "max": None, "median": None}
+    midpoint = len(ordered) // 2
+    if len(ordered) % 2:
+        median: int | float = ordered[midpoint]
+    else:
+        median = (ordered[midpoint - 1] + ordered[midpoint]) / 2
+    return {
+        "count": len(ordered),
+        "min": ordered[0],
+        "max": ordered[-1],
+        "median": median,
+    }
+
+
 def csv_bytes(rows: list[dict[str, Any]], fields: list[str]) -> bytes:
     stream = io.StringIO(newline="")
     writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
@@ -190,12 +214,13 @@ def extract(repo_root: Path, evidence_root: Path, out: Path, mysql: Path, config
             appearance_by_item[int(item_id)] = group
 
     db_items: dict[int, dict[str, Any]] = {}
-    query = ("SELECT entry,itemset,AllowableClass,InventoryType,COALESCE(name,''),displayid "
+    query = ("SELECT entry,itemset,AllowableClass,InventoryType,COALESCE(name,''),displayid,ItemLevel,Quality "
              "FROM item_template WHERE itemset<>0 ORDER BY entry")
     for values in mysql_rows(mysql, config, query):
         db_items[int(values[0])] = {
             "itemId": int(values[0]), "itemSetId": int(values[1]), "allowableClass": int(values[2]),
             "inventoryType": int(values[3]), "name": values[4], "displayId": int(values[5]),
+            "itemLevel": int(values[6]), "quality": int(values[7]),
         }
     snapshot_rows = [db_items[key] for key in sorted(db_items)]
     snapshot_hash = canonical_hash(snapshot_rows)
@@ -210,9 +235,18 @@ def extract(repo_root: Path, evidence_root: Path, out: Path, mysql: Path, config
         members_by_slot: dict[str, dict[str, Any]] = {}
         omissions: list[dict[str, Any]] = []
         missing: list[int] = []
+        missing_item_levels: list[int] = []
+        item_levels: list[int] = []
+        qualities: list[int] = []
         for item_id in dbc_items:
             appearance = appearance_by_item.get(item_id)
             db_item = db_items.get(item_id)
+            if db_item is None or int(db_item.get("itemLevel", 0)) <= 0:
+                missing_item_levels.append(item_id)
+            else:
+                item_levels.append(int(db_item["itemLevel"]))
+            if db_item is not None and int(db_item.get("quality", -1)) >= 0:
+                qualities.append(int(db_item["quality"]))
             if appearance is None:
                 omissions.append({"itemId": item_id, "reason": "NO_CANONICAL_APPEARANCE"})
                 if db_item and db_item.get("inventoryType") not in {0, 2, 11, 12, 16, 18, 28}:
@@ -255,6 +289,9 @@ def extract(repo_root: Path, evidence_root: Path, out: Path, mysql: Path, config
             "dbcItemIds": dbc_items, "members": members, "omissions": sorted(omissions, key=lambda value: value["itemId"]),
             "missingVisibleItemIds": sorted(missing), "classPolicy": policy,
             "visibleMemberCount": len(members), "distinctAppearanceCount": distinct_appearances,
+            "itemLevel": numeric_summary(item_levels),
+            "quality": numeric_summary(qualities),
+            "missingItemLevelIds": sorted(missing_item_levels),
         }
         candidates.append(candidate)
         decisions.append({"candidateKey": candidate["candidateKey"], "decision": decision, "reasonCode": reason})
@@ -274,7 +311,7 @@ def extract(repo_root: Path, evidence_root: Path, out: Path, mysql: Path, config
     }
     candidate_hash = canonical_hash(candidates)
     evidence = {
-        "schemaVersion": 2, "sourceBuild": SOURCE_BUILD, "evidenceId": manifest["evidenceId"],
+        "schemaVersion": 3, "sourceBuild": SOURCE_BUILD, "evidenceId": manifest["evidenceId"],
         "evidencePackHash": manifest["packHash"], "itemSetDbcSha256": sha256(files["dbc/ItemSet.dbc"]),
         "itemTemplateSnapshotSha256": snapshot_hash, "appearanceMappingHash": appearance_catalog["mappingHash"],
         "candidateHash": candidate_hash, "expectedCounters": counters, "candidates": candidates,
@@ -298,7 +335,8 @@ def extract(repo_root: Path, evidence_root: Path, out: Path, mysql: Path, config
 
 
 def _validate_review(evidence: dict[str, Any], review: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    require(evidence.get("schemaVersion") == 2 and review.get("schemaVersion") == 1, "unsupported ItemSet review schema")
+    require(evidence.get("schemaVersion") in {2, 3} and review.get("schemaVersion") == 1,
+            "unsupported ItemSet review schema")
     require(review.get("candidateHash") == evidence.get("candidateHash"), "ItemSet review candidate hash drift")
     candidates = {row["candidateKey"]: row for row in evidence.get("candidates", [])}
     decisions = {row["candidateKey"]: row for row in review.get("decisions", [])}
@@ -439,6 +477,15 @@ def verify_tracked(repo_root: Path, evidence_root: Path | None = None) -> dict[s
     decisions = _validate_review(evidence, review)
     require(sum(value["decision"] in {"accepted", "excluded", "deferred"} for value in decisions.values()) == 509,
             "ItemSet review coverage drift")
+    if evidence.get("schemaVersion") == 3:
+        for candidate in evidence["candidates"]:
+            item_level = candidate.get("itemLevel")
+            quality = candidate.get("quality")
+            require(isinstance(item_level, dict) and isinstance(quality, dict),
+                    f"ItemSet presentation evidence missing: {candidate.get('candidateKey')}")
+            if decisions[str(candidate["candidateKey"])]["decision"] == "accepted":
+                require(int(item_level.get("count", 0)) > 0,
+                        f"ItemSet has no item-level evidence: {candidate.get('candidateKey')}")
     priest = next((row for row in model["sets"] if row["itemSetId"] == 202), None)
     require(priest is not None and len(priest["variants"][0]["members"]) == 8, "Priest T1 fixture drift")
     for item_set_id, identity in OLD_SET_IDENTITIES.items():

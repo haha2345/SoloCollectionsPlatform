@@ -82,6 +82,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300008,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 57,
+                median = 57,
+                min = 57
+            },
+            itemSetId = 1,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 57,
+                medianItemLevel = 57,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -131,6 +162,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300009,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 41,
+            quality = {
+                count = 2,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -169,6 +231,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300010,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 61,
+                median = 60.5,
+                min = 60
+            },
+            itemSetId = 65,
+            quality = {
+                count = 2,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 60.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -247,6 +340,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300011,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 61,
+                median = 61,
+                min = 61
+            },
+            itemSetId = 81,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 61,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -333,6 +457,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300012,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 61,
+                median = 61,
+                min = 61
+            },
+            itemSetId = 121,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 61,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -417,6 +572,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300013,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 61,
+                median = 61,
+                min = 61
+            },
+            itemSetId = 122,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 61,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -503,6 +689,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300014,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 61,
+                median = 61,
+                min = 61
+            },
+            itemSetId = 123,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 61,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -588,6 +805,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300015,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 61,
+                median = 61,
+                min = 61
+            },
+            itemSetId = 124,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 61,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -648,6 +896,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300016,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 61,
+                median = 57,
+                min = 54
+            },
+            itemSetId = 141,
+            quality = {
+                count = 3,
+                max = 2,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 57,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -722,6 +1001,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300017,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 59,
+                median = 56.0,
+                min = 55
+            },
+            itemSetId = 142,
+            quality = {
+                count = 4,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 59,
+                medianItemLevel = 56.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -771,6 +1081,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300018,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 60,
+                median = 59.0,
+                min = 58
+            },
+            itemSetId = 143,
+            quality = {
+                count = 2,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 60,
+                medianItemLevel = 59.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -819,6 +1160,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300019,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 58,
+                median = 56.0,
+                min = 54
+            },
+            itemSetId = 144,
+            quality = {
+                count = 2,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 58,
+                medianItemLevel = 56.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -905,6 +1277,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300020,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 24,
+                median = 18,
+                min = 18
+            },
+            itemSetId = 161,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 24,
+                medianItemLevel = 18,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -989,6 +1392,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300021,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 23,
+                median = 23,
+                min = 19
+            },
+            itemSetId = 162,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 23,
+                medianItemLevel = 23,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1086,6 +1520,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300022,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 43,
+                median = 37.5,
+                min = 35
+            },
+            itemSetId = 163,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 2.5,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 43,
+                medianItemLevel = 37.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1208,6 +1673,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300023,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 181,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -1328,6 +1824,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300024,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 182,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1450,6 +1977,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300025,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 183,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -1570,6 +2128,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300026,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 184,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1692,6 +2281,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300027,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 185,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -1812,6 +2432,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300028,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 186,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1934,6 +2585,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300029,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 187,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -2055,6 +2737,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300030,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 188,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -2175,6 +2888,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300031,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 59.5,
+                min = 57
+            },
+            itemSetId = 189,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 59.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2299,6 +3043,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300000,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 201,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -2421,6 +3196,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300032,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 202,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2545,6 +3351,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300001,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 203,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -2667,6 +3504,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300002,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 204,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2791,6 +3659,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300003,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 205,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -2913,6 +3812,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300004,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 206,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3037,6 +3967,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300005,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 207,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -3159,6 +4120,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300006,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 208,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3283,6 +4275,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300007,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 209,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -3405,6 +4428,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300033,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 210,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3529,6 +4583,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300034,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 211,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -3651,6 +4736,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300035,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 212,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3775,6 +4891,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300036,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 213,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -3897,6 +5044,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300037,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 214,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4021,6 +5199,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300038,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 215,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -4143,6 +5352,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300039,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 216,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4267,6 +5507,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300040,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 217,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -4390,6 +5661,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300041,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 76,
+                median = 76.0,
+                min = 76
+            },
+            itemSetId = 218,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 76,
+                medianItemLevel = 76.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -4489,6 +5791,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300042,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 1,
+                max = 42,
+                median = 42,
+                min = 42
+            },
+            itemSetId = 221,
+            quality = {
+                count = 1,
+                max = 2,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 42,
+                medianItemLevel = 42,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -4537,6 +5870,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300043,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 66,
+                median = 66.0,
+                min = 66
+            },
+            itemSetId = 261,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 66.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4637,6 +6001,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300044,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 281,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -4736,6 +6131,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300045,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 282,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -4834,6 +6260,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300046,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 301,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4944,6 +6401,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300047,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 7,
+                max = 61,
+                median = 59,
+                min = 53
+            },
+            itemSetId = 321,
+            quality = {
+                count = 7,
+                max = 2,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 59,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -5042,6 +6530,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300048,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 341,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5142,6 +6661,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300049,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 342,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -5240,6 +6790,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300050,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 343,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5340,6 +6921,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300051,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 344,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -5438,6 +7050,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300052,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 345,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5538,6 +7181,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300053,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 346,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -5636,6 +7310,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300054,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 347,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5736,6 +7441,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300055,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 348,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -5834,6 +7570,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300056,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 361,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5934,6 +7701,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300057,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 362,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -6032,6 +7830,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300058,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 381,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6132,6 +7961,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300059,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 382,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -6230,6 +8090,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300060,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 383,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6330,6 +8221,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300061,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 384,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -6428,6 +8350,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300062,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 386,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6528,6 +8481,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300063,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 387,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -6626,6 +8610,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300064,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 388,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6726,6 +8741,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300065,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 389,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -6824,6 +8870,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300066,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 390,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6924,6 +9001,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300067,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 391,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7022,6 +9130,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300068,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 392,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7122,6 +9261,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300069,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 393,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7220,6 +9390,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300070,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 394,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7320,6 +9521,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300071,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 395,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7418,6 +9650,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300072,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 396,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7518,6 +9781,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300073,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 397,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7616,6 +9910,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300074,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 398,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7716,6 +10041,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300075,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 63,
+                median = 63.0,
+                min = 63
+            },
+            itemSetId = 401,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7815,6 +10171,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300076,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 402,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7875,6 +10262,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300077,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 65,
+                min = 65
+            },
+            itemSetId = 421,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7937,6 +10355,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300078,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 65,
+                min = 65
+            },
+            itemSetId = 441,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -7985,6 +10434,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300079,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 65,
+                median = 65.0,
+                min = 65
+            },
+            itemSetId = 442,
+            quality = {
+                count = 2,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8047,6 +10527,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300080,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 65,
+                min = 65
+            },
+            itemSetId = 443,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8108,6 +10619,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300081,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 65,
+                min = 65
+            },
+            itemSetId = 444,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8157,6 +10699,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300082,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 68,
+                median = 67.0,
+                min = 66
+            },
+            itemSetId = 461,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 68,
+                medianItemLevel = 67.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8205,6 +10778,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300083,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 65,
+                median = 65.0,
+                min = 65
+            },
+            itemSetId = 463,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8270,6 +10874,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300084,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 467,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8332,6 +10967,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300085,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 468,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8397,6 +11063,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300086,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 469,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8460,6 +11157,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300087,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 470,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8525,6 +11253,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300088,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 471,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8588,6 +11347,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300089,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 472,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8653,6 +11443,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300090,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 473,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8726,6 +11547,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300091,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 474,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8797,6 +11649,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300092,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 475,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8870,6 +11753,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300093,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 476,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -8941,6 +11855,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300094,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 68,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 477,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 68,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9014,6 +11959,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300095,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 478,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9085,6 +12061,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300096,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 479,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9158,6 +12165,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300097,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 68,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 480,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 68,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9229,6 +12267,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300098,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 481,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9302,6 +12371,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300099,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 65,
+                median = 65,
+                min = 61
+            },
+            itemSetId = 482,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 65,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9366,6 +12466,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300100,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 483,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9429,6 +12560,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300101,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 484,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9495,6 +12657,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300102,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 485,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9558,6 +12751,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300103,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 486,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9623,6 +12847,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300104,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 487,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9686,6 +12941,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300105,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 65,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 488,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 65,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9760,6 +13046,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300106,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 61,
+                median = 60.0,
+                min = 58
+            },
+            itemSetId = 489,
+            quality = {
+                count = 4,
+                max = 4,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 61,
+                medianItemLevel = 60.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9820,6 +13137,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300107,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 54,
+                median = 54,
+                min = 52
+            },
+            itemSetId = 490,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 54,
+                medianItemLevel = 54,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9882,6 +13230,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300108,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 60,
+                median = 59,
+                min = 57
+            },
+            itemSetId = 491,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 60,
+                medianItemLevel = 59,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -9942,6 +13321,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300109,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 60,
+                median = 60,
+                min = 60
+            },
+            itemSetId = 492,
+            quality = {
+                count = 3,
+                max = 2,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 60,
+                medianItemLevel = 60,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10030,6 +13440,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300110,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 493,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10086,6 +13527,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300111,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 494,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10141,6 +13613,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300112,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 495,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10229,6 +13732,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300113,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 496,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10316,6 +13850,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300114,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 497,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10371,6 +13936,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300115,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 498,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10459,6 +14055,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300116,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 499,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10514,6 +14141,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300117,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 500,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10602,6 +14260,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300118,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 501,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10657,6 +14346,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300119,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 502,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10745,6 +14465,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300120,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 503,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10800,6 +14551,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300121,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 504,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10888,6 +14670,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300122,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 505,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -10943,6 +14756,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300123,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 506,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -11031,6 +14875,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300124,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 507,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -11086,6 +14961,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300125,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 508,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -11174,6 +15080,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300126,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 88,
+                median = 81,
+                min = 78
+            },
+            itemSetId = 509,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 88,
+                medianItemLevel = 81,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -11229,6 +15166,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300127,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 70,
+                median = 67,
+                min = 65
+            },
+            itemSetId = 510,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 70,
+                medianItemLevel = 67,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -11351,6 +15319,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300128,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 511,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -11471,6 +15470,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300129,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 512,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -11593,6 +15623,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300130,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 513,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -11713,6 +15774,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300131,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 514,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -11835,6 +15927,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300132,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 515,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -11955,6 +16078,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300133,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 516,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -12077,6 +16231,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300134,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 517,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -12198,6 +16383,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300135,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 518,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -12318,6 +16534,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300136,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 66,
+                median = 62.5,
+                min = 60
+            },
+            itemSetId = 519,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 66,
+                medianItemLevel = 62.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -12443,6 +16690,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300137,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 63,
+                median = 61.0,
+                min = 61
+            },
+            itemSetId = 520,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 61.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -12570,6 +16848,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300138,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 521,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -12668,6 +16977,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300139,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 522,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -12795,6 +17135,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300140,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 523,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -12920,6 +17291,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300141,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 524,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13047,6 +17449,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300142,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 525,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -13172,6 +17605,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300143,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 526,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13299,6 +17763,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300144,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 527,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -13424,6 +17919,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300145,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 528,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13551,6 +18077,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300146,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 529,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -13677,6 +18234,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300147,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 9,
+                max = 92,
+                median = 88,
+                min = 86
+            },
+            itemSetId = 530,
+            quality = {
+                count = 9,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 92,
+                medianItemLevel = 88,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -13737,6 +18325,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300148,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 63,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 533,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13799,6 +18418,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300149,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 63,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 534,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -13860,6 +18510,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300150,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 63,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 535,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -13920,6 +18601,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300151,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 63,
+                median = 63,
+                min = 63
+            },
+            itemSetId = 536,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 63,
+                medianItemLevel = 63,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14020,6 +18732,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300152,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 537,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -14118,6 +18861,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300153,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 538,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14218,6 +18992,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300154,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 539,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -14316,6 +19121,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300155,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 540,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14416,6 +19252,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300156,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 541,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -14514,6 +19381,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300157,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 542,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14614,6 +19512,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300158,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 543,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -14712,6 +19641,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300159,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 544,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14812,6 +19772,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300160,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 545,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -14910,6 +19901,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300161,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 546,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15010,6 +20032,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300162,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 547,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15108,6 +20161,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300163,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 548,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15208,6 +20292,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300164,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 549,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15306,6 +20421,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300165,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 550,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15406,6 +20552,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300166,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 551,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15466,6 +20643,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300167,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 105,
+                median = 105,
+                min = 105
+            },
+            itemSetId = 552,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 105,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15528,6 +20736,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300168,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 105,
+                median = 105,
+                min = 105
+            },
+            itemSetId = 553,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 105,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15588,6 +20827,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300169,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 120,
+                median = 115,
+                min = 105
+            },
+            itemSetId = 554,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15688,6 +20958,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300170,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 7,
+                max = 114,
+                median = 102,
+                min = 93
+            },
+            itemSetId = 555,
+            quality = {
+                count = 7,
+                max = 2,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 114,
+                medianItemLevel = 102,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15751,6 +21052,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300171,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 114,
+                median = 111.5,
+                min = 106
+            },
+            itemSetId = 556,
+            quality = {
+                count = 4,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 114,
+                medianItemLevel = 111.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15811,6 +21143,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300172,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 100,
+                median = 100,
+                min = 100
+            },
+            itemSetId = 557,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 100,
+                medianItemLevel = 100,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15873,6 +21236,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300173,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 115,
+                median = 114,
+                min = 112
+            },
+            itemSetId = 558,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 114,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -15921,6 +21315,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300174,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 105,
+                median = 105.0,
+                min = 105
+            },
+            itemSetId = 559,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 105.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16007,6 +21432,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300175,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 102,
+                median = 96,
+                min = 90
+            },
+            itemSetId = 560,
+            quality = {
+                count = 5,
+                max = 2,
+                median = 2,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 102,
+                medianItemLevel = 96,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16080,6 +21536,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300176,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 99,
+                median = 94.5,
+                min = 90
+            },
+            itemSetId = 561,
+            quality = {
+                count = 4,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 99,
+                medianItemLevel = 94.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16140,6 +21627,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300177,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 106,
+                median = 103,
+                min = 103
+            },
+            itemSetId = 562,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 106,
+                medianItemLevel = 103,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16214,6 +21732,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300178,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 113.5,
+                min = 113
+            },
+            itemSetId = 563,
+            quality = {
+                count = 4,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 113.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16287,6 +21836,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300179,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 113.5,
+                min = 112
+            },
+            itemSetId = 564,
+            quality = {
+                count = 4,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 113.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16347,6 +21927,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300180,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 115,
+                median = 114,
+                min = 114
+            },
+            itemSetId = 565,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 114,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16420,6 +22031,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300181,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 115.0,
+                min = 115
+            },
+            itemSetId = 566,
+            quality = {
+                count = 4,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16508,6 +22150,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300182,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 567,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16595,6 +22268,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300183,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 568,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16656,6 +22360,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300184,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 115,
+                median = 114,
+                min = 114
+            },
+            itemSetId = 569,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 114,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16704,6 +22439,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300185,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 112,
+                median = 108.5,
+                min = 105
+            },
+            itemSetId = 570,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 3.5,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 112,
+                medianItemLevel = 108.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16754,6 +22520,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300186,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 105,
+                median = 105.0,
+                min = 105
+            },
+            itemSetId = 571,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 105.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16802,6 +22599,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300187,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 105,
+                median = 105.0,
+                min = 105
+            },
+            itemSetId = 572,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 105.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16864,6 +22692,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300188,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 112,
+                median = 112,
+                min = 106
+            },
+            itemSetId = 573,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 112,
+                medianItemLevel = 112,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -16924,6 +22783,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300189,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 114,
+                median = 113,
+                min = 113
+            },
+            itemSetId = 574,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 114,
+                medianItemLevel = 113,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16986,6 +22876,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300190,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 114,
+                median = 114,
+                min = 112
+            },
+            itemSetId = 575,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 114,
+                medianItemLevel = 114,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -17046,6 +22967,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300191,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 106,
+                median = 106,
+                min = 100
+            },
+            itemSetId = 576,
+            quality = {
+                count = 3,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 106,
+                medianItemLevel = 106,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17134,6 +23086,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300192,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 577,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -17220,6 +23203,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300193,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 578,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17308,6 +23322,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300194,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 579,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -17394,6 +23439,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300195,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 580,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17482,6 +23558,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300196,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 581,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -17568,6 +23675,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300197,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 582,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17656,6 +23794,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300198,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 583,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -17742,6 +23911,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300199,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 584,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17830,6 +24030,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300200,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 585,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -17916,6 +24147,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300201,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 586,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18004,6 +24266,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300202,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 587,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -18090,6 +24383,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300203,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 588,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18178,6 +24502,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300204,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 589,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -18264,6 +24619,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300205,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 590,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18352,6 +24738,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300206,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 591,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -18438,6 +24855,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300207,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 592,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18526,6 +24974,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300208,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 593,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -18612,6 +25091,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300209,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 594,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18700,6 +25210,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300210,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 595,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -18786,6 +25327,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300211,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 596,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18874,6 +25446,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300212,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 597,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -18960,6 +25563,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300213,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 598,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19048,6 +25682,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300214,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 599,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -19134,6 +25799,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300215,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 600,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19222,6 +25918,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300216,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 601,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -19308,6 +26035,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300217,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 602,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19396,6 +26154,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300218,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 603,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -19482,6 +26271,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300219,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 604,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19570,6 +26390,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300220,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 605,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -19656,6 +26507,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300221,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 606,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19744,6 +26626,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300222,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 607,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -19830,6 +26743,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300223,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 608,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19918,6 +26862,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300224,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 609,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20005,6 +26980,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300225,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 610,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20077,6 +27083,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300226,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 108,
+                median = 96.0,
+                min = 84
+            },
+            itemSetId = 611,
+            quality = {
+                count = 4,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 108,
+                medianItemLevel = 96.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20151,6 +27188,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300227,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 108,
+                median = 97.5,
+                min = 84
+            },
+            itemSetId = 612,
+            quality = {
+                count = 4,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 108,
+                medianItemLevel = 97.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20224,6 +27292,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300228,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 105,
+                median = 97.5,
+                min = 84
+            },
+            itemSetId = 613,
+            quality = {
+                count = 4,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 97.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20296,6 +27395,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300229,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 105,
+                median = 96.0,
+                min = 84
+            },
+            itemSetId = 614,
+            quality = {
+                count = 4,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 105,
+                medianItemLevel = 96.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20384,6 +27514,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300230,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 615,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20444,6 +27605,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300231,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 120,
+                median = 115,
+                min = 105
+            },
+            itemSetId = 616,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20506,6 +27698,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300232,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 120,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 617,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20567,6 +27790,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300233,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 120,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 618,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20627,6 +27881,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300234,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 120,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 619,
+            quality = {
+                count = 3,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20712,6 +27997,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300235,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 620,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20800,6 +28116,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300236,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 621,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20887,6 +28234,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300237,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 622,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -20971,6 +28349,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300238,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 623,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -21059,6 +28468,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300239,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 624,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -21145,6 +28585,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300240,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 625,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -21233,6 +28704,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300241,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 626,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -21319,6 +28821,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300242,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 627,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -21407,6 +28940,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300243,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 628,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -21494,6 +29058,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300244,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 629,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -21578,6 +29173,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300245,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 630,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -21666,6 +29292,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300246,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 631,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -21752,6 +29409,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300247,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 632,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -21840,6 +29528,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300248,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 633,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -21926,6 +29645,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300249,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 634,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22014,6 +29764,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300250,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 635,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22101,6 +29882,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300251,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 636,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22185,6 +29997,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300252,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 637,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22273,6 +30116,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300253,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 638,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22359,6 +30233,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300254,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 639,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22447,6 +30352,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300255,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 640,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22533,6 +30469,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300256,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 641,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22621,6 +30588,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300257,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 642,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22708,6 +30706,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300258,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 643,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22792,6 +30821,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300259,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 644,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22880,6 +30940,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300260,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 645,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -22967,6 +31058,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300261,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 646,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23051,6 +31173,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300262,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 647,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23139,6 +31292,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300263,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 648,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23226,6 +31410,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300264,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 649,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23310,6 +31525,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300265,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 650,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23398,6 +31644,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300266,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 651,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23485,6 +31762,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300267,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 652,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23569,6 +31877,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300268,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 653,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23657,6 +31996,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300269,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 654,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23743,6 +32113,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300270,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 655,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23831,6 +32232,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300271,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 656,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -23918,6 +32350,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300272,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 657,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -24002,6 +32465,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300273,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 658,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24088,6 +32582,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300274,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 659,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -24172,6 +32697,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300275,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 660,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24258,6 +32814,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300276,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 661,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -24342,6 +32929,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300277,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 662,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24430,6 +33048,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300278,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 663,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -24516,6 +33165,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300279,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 120,
+                median = 120,
+                min = 120
+            },
+            itemSetId = 664,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 120,
+                medianItemLevel = 120,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24604,6 +33284,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300280,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 665,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -24690,6 +33401,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300281,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 133,
+                median = 133,
+                min = 133
+            },
+            itemSetId = 666,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 133,
+                medianItemLevel = 133,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24814,6 +33556,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300282,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 668,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -24936,6 +33709,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300283,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 669,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25060,6 +33864,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300284,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 670,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -25182,6 +34017,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300285,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 671,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25306,6 +34172,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300286,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 672,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -25428,6 +34325,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300287,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 673,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25552,6 +34480,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300288,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 674,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -25674,6 +34633,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300289,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 675,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25798,6 +34788,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300290,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 676,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -25920,6 +34941,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300291,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 677,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26044,6 +35096,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300292,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 678,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -26166,6 +35249,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300293,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 679,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26290,6 +35404,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300294,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 680,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -26412,6 +35557,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300295,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 681,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26536,6 +35712,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300296,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 682,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -26658,6 +35865,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300297,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 683,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26782,6 +36020,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300298,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 154,
+                median = 146.0,
+                min = 146
+            },
+            itemSetId = 684,
+            quality = {
+                count = 8,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 154,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -26868,6 +36137,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300299,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 685,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26956,6 +36256,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300300,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 686,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -27042,6 +36373,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300301,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 687,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27130,6 +36492,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300302,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 688,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -27216,6 +36609,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300303,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 689,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27304,6 +36728,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300304,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 690,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -27390,6 +36845,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300305,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 691,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27478,6 +36964,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300306,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 692,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -27564,6 +37081,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300307,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 693,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27652,6 +37200,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300308,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 694,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -27739,6 +37318,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300309,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 695,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -27825,6 +37435,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300310,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 696,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27925,6 +37566,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300311,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 697,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28024,6 +37696,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300312,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 698,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28075,6 +37778,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300313,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 156,
+                median = 156.0,
+                min = 156
+            },
+            itemSetId = 699,
+            quality = {
+                count = 2,
+                max = 5,
+                median = 5.0,
+                min = 5
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 156,
+                medianItemLevel = 156.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28175,6 +37909,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300314,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 74,
+                median = 72.5,
+                min = 71
+            },
+            itemSetId = 717,
+            quality = {
+                count = 6,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 74,
+                medianItemLevel = 72.5,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28274,6 +38039,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300315,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 6,
+                max = 71,
+                median = 68.0,
+                min = 66
+            },
+            itemSetId = 718,
+            quality = {
+                count = 6,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 71,
+                medianItemLevel = 68.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28322,6 +38118,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300316,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 141,
+                median = 141.0,
+                min = 141
+            },
+            itemSetId = 719,
+            quality = {
+                count = 2,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 141,
+                medianItemLevel = 141.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28410,6 +38237,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300317,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 738,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28496,6 +38354,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300318,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 739,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28584,6 +38473,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300319,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 740,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28670,6 +38590,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300320,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 741,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28758,6 +38709,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300321,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 742,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -28844,6 +38826,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300322,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 743,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28932,6 +38945,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300323,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 744,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -29018,6 +39062,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300324,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 745,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29106,6 +39181,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300325,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 746,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -29192,6 +39298,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300326,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 747,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29280,6 +39417,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300327,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 748,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -29366,6 +39534,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300328,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 749,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29454,6 +39653,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300329,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 750,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -29541,6 +39771,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300330,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 751,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -29627,6 +39888,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300331,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 115,
+                median = 115,
+                min = 115
+            },
+            itemSetId = 752,
+            quality = {
+                count = 5,
+                max = 3,
+                median = 3,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29749,6 +40041,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300332,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 150,
+                median = 146.0,
+                min = 142
+            },
+            itemSetId = 754,
+            quality = {
+                count = 8,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 150,
+                medianItemLevel = 146.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -29869,6 +40192,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300333,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 150,
+                median = 140.0,
+                min = 134
+            },
+            itemSetId = 755,
+            quality = {
+                count = 8,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 150,
+                medianItemLevel = 140.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29991,6 +40345,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300334,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 150,
+                median = 142.0,
+                min = 138
+            },
+            itemSetId = 756,
+            quality = {
+                count = 8,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 150,
+                medianItemLevel = 142.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -30112,6 +40497,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300335,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 150,
+                median = 142.0,
+                min = 138
+            },
+            itemSetId = 757,
+            quality = {
+                count = 8,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 150,
+                medianItemLevel = 142.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -30199,6 +40615,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300336,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 159,
+                median = 159,
+                min = 159
+            },
+            itemSetId = 760,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 159,
+                medianItemLevel = 159,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -30263,6 +40710,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300337,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 1,
+                median = 1,
+                min = 1
+            },
+            itemSetId = 761,
+            quality = {
+                count = 5,
+                max = 2,
+                median = 1,
+                min = 1
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 1,
+                medianItemLevel = 1,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30334,6 +40812,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300338,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 1,
+                median = 1.0,
+                min = 1
+            },
+            itemSetId = 762,
+            quality = {
+                count = 8,
+                max = 1,
+                median = 1.0,
+                min = 1
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 1,
+                medianItemLevel = 1.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30456,6 +40965,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300339,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 142,
+                median = 138.0,
+                min = 134
+            },
+            itemSetId = 763,
+            quality = {
+                count = 8,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 142,
+                medianItemLevel = 138.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -30577,6 +41117,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300340,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 162,
+                median = 158.0,
+                min = 154
+            },
+            itemSetId = 764,
+            quality = {
+                count = 8,
+                max = 2,
+                median = 2.0,
+                min = 2
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 162,
+                medianItemLevel = 158.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -30663,6 +41234,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300341,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 136,
+                median = 136,
+                min = 136
+            },
+            itemSetId = 765,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 136,
+                medianItemLevel = 136,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30751,6 +41353,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300342,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 766,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -30837,6 +41470,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300343,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 767,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30925,6 +41589,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300344,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 768,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -31011,6 +41706,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300345,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 136,
+                median = 136,
+                min = 136
+            },
+            itemSetId = 769,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 136,
+                medianItemLevel = 136,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31099,6 +41825,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300346,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 770,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -31185,6 +41942,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300347,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 146,
+                median = 146,
+                min = 146
+            },
+            itemSetId = 771,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 146,
+                medianItemLevel = 146,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31273,6 +42061,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300348,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 772,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -31359,6 +42178,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300349,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 773,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31447,6 +42297,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300350,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 774,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -31533,6 +42414,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300351,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 136,
+                median = 136,
+                min = 136
+            },
+            itemSetId = 775,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 136,
+                medianItemLevel = 136,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31621,6 +42533,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300352,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 136,
+                median = 136,
+                min = 136
+            },
+            itemSetId = 776,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 136,
+                medianItemLevel = 136,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -31707,6 +42650,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300353,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 777,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31795,6 +42769,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300354,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 778,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -31881,6 +42886,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300355,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 779,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31969,6 +43005,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300356,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 5,
+                max = 123,
+                median = 123,
+                min = 123
+            },
+            itemSetId = 780,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 123,
+                medianItemLevel = 123,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -32041,6 +43108,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300357,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 115.0,
+                min = 115
+            },
+            itemSetId = 781,
+            quality = {
+                count = 4,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32115,6 +43213,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300358,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 115.0,
+                min = 115
+            },
+            itemSetId = 782,
+            quality = {
+                count = 4,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -32187,6 +43316,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300359,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 115.0,
+                min = 115
+            },
+            itemSetId = 783,
+            quality = {
+                count = 4,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32261,6 +43421,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300360,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 4,
+                max = 115,
+                median = 115.0,
+                min = 115
+            },
+            itemSetId = 784,
+            quality = {
+                count = 4,
+                max = 4,
+                median = 4.0,
+                min = 4
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 115,
+                medianItemLevel = 115.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -32321,6 +43512,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300361,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 3,
+                max = 1,
+                median = 1,
+                min = 1
+            },
+            itemSetId = 785,
+            quality = {
+                count = 3,
+                max = 1,
+                median = 1,
+                min = 1
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 1,
+                medianItemLevel = 1,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32409,6 +43631,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300362,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 787,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -32495,6 +43748,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300363,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 788,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32583,6 +43867,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300364,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 789,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -32669,6 +43984,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300365,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 790,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32757,6 +44103,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300366,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 791,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -32843,6 +44220,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300367,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 792,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32931,6 +44339,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300368,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 793,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -33017,6 +44456,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300369,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 794,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33105,6 +44575,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300370,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 795,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -33191,6 +44692,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300371,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 796,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33279,6 +44811,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300372,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 797,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -33365,6 +44928,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300373,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 798,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33453,6 +45047,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300374,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 799,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -33539,6 +45164,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300375,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 800,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33627,6 +45283,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300376,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 213,
+                median = 213,
+                min = 213
+            },
+            itemSetId = 801,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 213,
+                medianItemLevel = 213,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -33713,6 +45400,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300377,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 802,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33801,6 +45519,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300378,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 803,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -33887,6 +45636,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300379,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 804,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33975,6 +45755,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300380,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 200,
+                median = 200,
+                min = 200
+            },
+            itemSetId = 805,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T7",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+            ruleKey = "wrath-t7-naxx",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 200,
+                medianItemLevel = 200,
+                tier = 7
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -34023,6 +45834,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300381,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 2,
+                max = 25,
+                median = 24.0,
+                min = 23
+            },
+            itemSetId = 812,
+            quality = {
+                count = 2,
+                max = 1,
+                median = 1.0,
+                min = 1
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 25,
+                medianItemLevel = 24.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34145,6 +45987,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300382,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 813,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -34265,6 +46138,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300383,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 814,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34387,6 +46291,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300384,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 815,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -34507,6 +46442,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300385,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 816,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34629,6 +46595,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300386,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 817,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -34749,6 +46746,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300387,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 818,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34871,6 +46899,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "UNKNOWN",
+            collectionId = 300388,
+            difficulty = "UNKNOWN",
+            expansion = "UNKNOWN",
+            itemLevel = {
+                count = 8,
+                max = 187,
+                median = 187.0,
+                min = 187
+            },
+            itemSetId = 819,
+            quality = {
+                count = 8,
+                max = 3,
+                median = 3.0,
+                min = 3
+            },
+            raidTier = "NONE",
+            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
+            ruleKey = "unclassified",
+            sortRank = {
+                acquisition = 0,
+                difficulty = 0,
+                expansion = 0,
+                maxItemLevel = 187,
+                medianItemLevel = 187.0,
+                tier = 0
+            },
+            status = "UNKNOWN"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -34957,6 +47016,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300389,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 820,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35045,6 +47135,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300390,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 821,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -35131,6 +47252,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300391,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 822,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35219,6 +47371,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300392,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 823,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -35305,6 +47488,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300393,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 824,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35393,6 +47607,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300394,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 825,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -35479,6 +47724,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300395,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 826,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35567,6 +47843,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300396,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 827,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -35653,6 +47960,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300397,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 828,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35741,6 +48079,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300398,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 829,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -35827,6 +48196,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300399,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 830,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35915,6 +48315,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300400,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 831,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -36001,6 +48432,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300401,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 832,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36089,6 +48551,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300402,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 833,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -36175,6 +48668,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300403,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 834,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36263,6 +48787,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300404,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 835,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -36349,6 +48904,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300405,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 219,
+                median = 219,
+                min = 219
+            },
+            itemSetId = 836,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 219,
+                medianItemLevel = 219,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36437,6 +49023,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300406,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 837,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -36523,6 +49140,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300407,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 226,
+                median = 226,
+                min = 226
+            },
+            itemSetId = 838,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T8",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+            ruleKey = "wrath-t8-ulduar",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 226,
+                medianItemLevel = 226,
+                tier = 8
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36611,6 +49259,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300408,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 843,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -36697,6 +49376,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300409,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 844,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36785,6 +49495,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300410,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 845,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -36871,6 +49612,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300411,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 846,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36959,6 +49731,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300412,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 847,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -37045,6 +49848,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300413,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 848,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37133,6 +49967,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300414,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 849,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -37219,6 +50084,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300415,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 850,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37307,6 +50203,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300416,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 851,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -37393,6 +50320,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300417,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 852,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37481,6 +50439,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300418,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 853,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -37567,6 +50556,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300419,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 854,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37655,6 +50675,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300420,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 855,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -37741,6 +50792,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300421,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 856,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37829,6 +50911,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300422,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 857,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -37915,6 +51028,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300423,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 858,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38003,6 +51147,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300424,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 859,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -38089,6 +51264,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300425,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 860,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38177,6 +51383,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300426,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 861,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -38263,6 +51500,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300427,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 862,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38351,6 +51619,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300428,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 863,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -38437,6 +51736,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300429,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 864,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38525,6 +51855,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300430,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 865,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -38611,6 +51972,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300431,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 866,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38699,6 +52091,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300432,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 867,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -38785,6 +52208,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300433,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 868,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38873,6 +52327,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300434,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 869,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -38959,6 +52444,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300435,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 870,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39047,6 +52563,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300436,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 871,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -39133,6 +52680,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300437,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 872,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39221,6 +52799,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300438,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 873,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -39307,6 +52916,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300439,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 874,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39395,6 +53035,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300440,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 875,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -39481,6 +53152,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300441,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 876,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39569,6 +53271,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300442,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 877,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -39655,6 +53388,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300443,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 878,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39743,6 +53507,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300444,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 879,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -39829,6 +53624,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300445,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 232,
+                median = 232,
+                min = 232
+            },
+            itemSetId = 880,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T9",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC",
+            ruleKey = "wrath-t9-toc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 232,
+                medianItemLevel = 232,
+                tier = 9
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39917,6 +53743,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300446,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 883,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -40003,6 +53860,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300447,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 884,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40091,6 +53979,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300448,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 885,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -40177,6 +54096,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300449,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 886,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40265,6 +54215,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300450,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 887,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -40351,6 +54332,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300451,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 888,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40439,6 +54451,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300452,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 889,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -40525,6 +54568,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300453,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 890,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40613,6 +54687,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300454,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 891,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -40699,6 +54804,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300455,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 892,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40787,6 +54923,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300456,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 893,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -40873,6 +55040,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300457,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 894,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40961,6 +55159,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300458,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 895,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -41047,6 +55276,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300459,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 896,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41135,6 +55395,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300460,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 897,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -41221,6 +55512,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300461,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 898,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41309,6 +55631,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300462,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 899,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -41396,6 +55749,37 @@ SoloCollections.Data.Sets = {
                 variantOrdinal = 1
             }
         },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300463,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 900,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
+        },
         selectedVariantOrdinal = 1,
         favorite = false
     },
@@ -41482,6 +55866,37 @@ SoloCollections.Data.Sets = {
                 variantKey = "default",
                 variantOrdinal = 1
             }
+        },
+        presentation = {
+            acquisition = "PVE",
+            collectionId = 300464,
+            difficulty = "RAID",
+            expansion = "WRATH",
+            itemLevel = {
+                count = 5,
+                max = 251,
+                median = 251,
+                min = 251
+            },
+            itemSetId = 901,
+            quality = {
+                count = 5,
+                max = 4,
+                median = 4,
+                min = 4
+            },
+            raidTier = "T10",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC",
+            ruleKey = "wrath-t10-icc",
+            sortRank = {
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 3,
+                maxItemLevel = 251,
+                medianItemLevel = 251,
+                tier = 10
+            },
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false

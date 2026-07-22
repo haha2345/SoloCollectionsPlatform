@@ -23,12 +23,19 @@ class ItemSetImportTests(unittest.TestCase):
         cls.model = json.loads((ROOT / "catalog/generated/normalized-itemsets.json").read_text(encoding="utf-8"))
 
     def test_exact_509_review_denominator_and_counters(self):
+        self.assertEqual(3, self.evidence["schemaVersion"])
         counters = self.evidence["expectedCounters"]
         self.assertEqual(509, counters["rawRows"])
         self.assertEqual(509, counters["reviewUnits"])
         self.assertEqual(509, len(self.evidence["candidates"]))
         self.assertEqual(509, len(self.review["decisions"]))
         self.assertEqual({"accepted", "excluded", "deferred"}, {r["decision"] for r in self.review["decisions"]})
+
+    def test_item_level_and_quality_evidence_are_reviewed_without_entering_mapping_hash(self):
+        sample = next(row for row in self.evidence["candidates"] if row["itemSetId"] == 883)
+        self.assertEqual({"count": 5, "min": 251, "max": 251, "median": 251}, sample["itemLevel"])
+        self.assertEqual([], sample["missingItemLevelIds"])
+        self.assertNotIn("itemLevel", self.model["sets"][0])
 
     def test_manual8_identity_and_priest_t1_fixture(self):
         for item_set_id, identity in importer.OLD_SET_IDENTITIES.items():

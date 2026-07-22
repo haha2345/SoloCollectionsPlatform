@@ -40485,7 +40485,7 @@
   "sourceEvidence": {
     "appearanceMappingHash": "f418b28486adc98ba8b2d59fd98059a99ba31c9f44f4366189e151264a92f92b",
     "itemSetDbcSha256": "ca290f7d828e859c2816421b4631cc5caad224f18a2e1e7ae74005a01c0bf50f",
-    "itemTemplateSnapshotSha256": "f937071544f8877c13b577dddac715572f5ea269054188d753a1e25faa5f10ab",
-    "reviewPolicyHash": "71a608924110546630e6c007a7c2c6d311c453236b1e4d1730ab9b8a5bf45957"
+    "itemTemplateSnapshotSha256": "c3255781a188209d3cf632d9d1cef2d028279e51eeb8b7961797086b2c7cbe58",
+    "reviewPolicyHash": "19702dd30cd378cf0362963d2f3bf743de74dfbed35fa0346be92a1f4cfc35aa"
   }
 }
