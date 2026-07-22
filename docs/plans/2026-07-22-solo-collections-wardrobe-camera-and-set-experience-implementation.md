@@ -454,40 +454,40 @@ sliderValue = scSetOffset
 
 ### 任务 1.1：确定项目自有槽位图标方案
 
-- [ ] 为 HEAD、SHOULDER、BACK、CHEST、WRIST、HANDS、WAIST、LEGS、FEET、MAINHAND、OFFHAND 制作或选用 11 个可再发布图标。
-- [ ] 若使用新图集，固定尺寸、TexCoord、alpha、颜色空间和 SHA-256；若使用逐图标文件，固定每个角色路径和尺寸。
-- [ ] 确认选中环和 hover 高亮使用项目自有/stock 资源，不引用可选 Retail atlas。
-- [ ] 更新 `Media/assets.json` provenance，明确每个基础文件来源和许可状态。
+- [x] 为 HEAD、SHOULDER、BACK、CHEST、WRIST、HANDS、WAIST、LEGS、FEET、MAINHAND、OFFHAND 制作或选用 11 个可再发布图标。（2026-07-22：`bdbd597`，见阶段 1 报告。）
+- [x] 若使用新图集，固定尺寸、TexCoord、alpha、颜色空间和 SHA-256；若使用逐图标文件，固定每个角色路径和尺寸。（2026-07-22：`bdbd597`。）
+- [x] 确认选中环和 hover 高亮使用项目自有/stock 资源，不引用可选 Retail atlas。（2026-07-22：`bdbd597`。）
+- [x] 更新 `Media/assets.json` provenance，明确每个基础文件来源和许可状态。（2026-07-22：`bdbd597`。）
 
 ### 任务 1.2：修复生产媒体引用
 
-- [ ] `UI.Media.launcher` 改用已跟踪的 `Media\Icons\launcher.tga`。
-- [ ] `wardrobeSlotAtlas`/逐槽图标改用基础 bundle 内项目自有资源。
-- [ ] `roundHighlightAtlas` 改用基础 bundle 内项目自有或 stock 资源。
-- [ ] 审计 `mountPortrait` 和其他 `UI.Media` 字段，消除相同的隐式 external 依赖。
-- [ ] 保留可选外部媒体只作为明确 skin 覆盖，不影响默认可见性。
+- [x] `UI.Media.launcher` 改用已跟踪的 `Media\Icons\launcher.tga`。（2026-07-22：`bdbd597`。）
+- [x] `wardrobeSlotAtlas`/逐槽图标改用基础 bundle 内项目自有资源。（2026-07-22：`bdbd597`。）
+- [x] `roundHighlightAtlas` 改用基础 bundle 内项目自有或 stock 资源。（2026-07-22：`bdbd597`。）
+- [x] 审计 `mountPortrait` 和其他 `UI.Media` 字段，消除相同的隐式 external 依赖。（2026-07-22：`bdbd597`。）
+- [x] 保留可选外部媒体只作为明确 skin 覆盖，不影响默认可见性。（2026-07-22：`bdbd597`。）
 
 ### 任务 1.3：强化媒体与 release 测试
 
-- [ ] `test_media_contract.py` 区分 `requiredForBaseUI` 与 `optionalExternalFiles`。
-- [ ] 增加 production Lua 引用扫描：默认引用 external-only 路径时 fail。
-- [ ] `New-RoundTwoBundle.ps1` 生成 bundle 后重新扫描 AddOn 媒体引用和实际文件。
-- [ ] `Test-RoundTwoBundle.ps1` 对基础媒体逐文件验证 Hash、尺寸和文件类型。
-- [ ] 从干净 checkout 构建 AddOn，确认不依赖开发机本地 `Media\Retail`。
+- [x] `test_media_contract.py` 区分 `requiredForBaseUI` 与 `optionalExternalFiles`。（2026-07-22：`bdbd597`。）
+- [x] 增加 production Lua 引用扫描：默认引用 external-only 路径时 fail。（2026-07-22：`bdbd597`。）
+- [x] `New-RoundTwoBundle.ps1` 生成 bundle 后重新扫描 AddOn 媒体引用和实际文件。（2026-07-22：`bdbd597`。）
+- [x] `Test-RoundTwoBundle.ps1` 对基础媒体逐文件验证 Hash、尺寸和文件类型。（2026-07-22：`bdbd597`。）
+- [x] 从干净 checkout 构建 AddOn，确认不依赖开发机本地 `Media\Retail`。（2026-07-22：`bdbd597`。）
 
 ### 任务 1.4：真实客户端验收
 
-- [ ] 11 个槽位图标全部可见、可点击、tooltip 正确。
-- [ ] selected、hover、未选中状态互不覆盖，图标不模糊、不越界。
+- [x] 11 个槽位图标全部可见、可点击、tooltip 正确。（2026-07-22：`stage1-slots-fresh-client.jpg`、`stage1-slot-tooltip-verified.jpg`。）
+- [x] selected、hover、未选中状态互不覆盖，图标不模糊、不越界。（2026-07-22：`stage1-slot-selected-hover.jpg`。）
 - [ ] launcher 在 normal、hover、drag 后和 `/reload` 后均可见。
 - [ ] 1024×768 到 3440×1440 的既有 UI Scale 矩阵至少抽查窄屏、1080p、超宽三档。
 - [ ] 没有外部媒体包时验收通过；安装可选媒体覆盖时不得破坏基础 UI。
 
 ### 任务 1.5：阶段出口
 
-- [ ] 媒体红测试全部转绿。
-- [ ] clean bundle 中不存在缺失的基础媒体引用。
-- [ ] 真实客户端截图与运行记录存入 F 盘 evidence，并生成阶段报告。
+- [x] 媒体红测试全部转绿。（2026-07-22：`test_media_contract.py` 5/5。）
+- [x] clean bundle 中不存在缺失的基础媒体引用。（2026-07-22：`round3-media-clean-20260722T222620`。）
+- [x] 真实客户端截图与运行记录存入 F 盘 evidence，并生成阶段报告。（2026-07-22：`2026-07-22-wardrobe-base-media-contract.md`。）
 - [ ] 在本文勾选任务并记录提交；本阶段不修改 module/Core。
 
 ## 8. 阶段 2：修复套装滚动与干净试穿
