@@ -1,7 +1,7 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 3,
+    schemaVersion = 4,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
     mainTab = "MOUNTS",
@@ -17,10 +17,6 @@ local DEFAULTS = {
         weaponType = "AUTO",
     },
     favorites = {},
-    -- Per-category temporary M2 poses created by the in-game camera panel.
-    -- They survive /reload so a player can refine one weapon family over
-    -- several sessions, then export the final table into Data/Appearances.lua.
-    m2CameraTuning = {},
     debug = false,
     bridge = {
         status = "idle",
@@ -68,6 +64,14 @@ local VALID_SC2_STATUS = {
     loading = true, failed = true, mismatch = true,
 }
 local VALID_SC2_STATE = { Loading = true, Ready = true, Failed = true, Mismatch = true }
+local CAMERA_TUNING_SCHEMA_VERSION = 2
+local MAX_CAMERA_TUNING_SCOPE_ENTRIES = 512
+local MAX_LEGACY_CAMERA_TUNING_BACKUP_ENTRIES = 128
+
+local function isFiniteNumber(value)
+    return type(value) == "number" and value == value
+        and value ~= math.huge and value ~= -math.huge
+end
 
 local function repairScalar(target, key, expectedType, default)
     if type(target[key]) ~= expectedType then
@@ -90,25 +94,191 @@ local function normalizePosition(db, key, defaults)
     repairScalar(position, "y", "number", defaults.y)
 end
 
-local function isValidM2CameraTuningKey(key)
-    -- Camera defaults are now permanently keyed by weapon family (or by an
-    -- explicit per-model key such as WAR_GLAIVE_MAINHAND). Drop legacy numeric
-    -- per-appearance entries: otherwise an old experiment would override the
-    -- fixed pose supplied by Data/Appearances.lua after a reload.
+local function isValidWeaponFamilyKey(key)
     return type(key) == "string" and key:match("^[A-Z][A-Z0-9_]*$") ~= nil
 end
 
-local function normalizeM2CameraTuning(db)
-    repairScalar(db, "m2CameraTuning", "table", {})
-    for tuningKey, pose in pairs(db.m2CameraTuning) do
-        if not isValidM2CameraTuningKey(tuningKey) or type(pose) ~= "table" then
-            db.m2CameraTuning[tuningKey] = nil
-        elseif SC.M2Camera and SC.M2Camera.NormalizePose then
-            -- Rebuild the table to drop unknown/corrupt SavedVariables fields
-            -- and to keep all persisted values inside the DLL protocol range.
-            db.m2CameraTuning[tuningKey] = SC.M2Camera.NormalizePose(pose)
+local function isValidModelSignature(key)
+    return type(key) == "string" and key:match("^m2:[a-f0-9][a-f0-9]+$") ~= nil
+end
+
+local function isValidAppearanceKey(key)
+    return type(key) == "string" and key:match("^appearance:%d+$") ~= nil
+end
+
+local function isValidBodyProfileKey(key)
+    return type(key) == "string" and key:match("^[A-Za-z0-9_.:%-]+$") ~= nil
+end
+
+local function cameraScopeKeyIsValid(scope, key)
+    if scope == "weaponFamily" then return isValidWeaponFamilyKey(key) end
+    if scope == "model" then return isValidModelSignature(key) end
+    if scope == "appearance" then return isValidAppearanceKey(key) end
+    if scope == "bodyProfile" then return isValidBodyProfileKey(key) end
+    return false
+end
+
+local function normalizeCameraPose(pose)
+    if not SC.M2Camera or not SC.M2Camera.NormalizePose then return nil end
+    return SC.M2Camera.NormalizePose(pose)
+end
+
+local function normalizedCameraScope(entries, scope, maximum)
+    local keys = {}
+    if type(entries) == "table" then
+        for key, pose in pairs(entries) do
+            if cameraScopeKeyIsValid(scope, key) and type(pose) == "table" then
+                table.insert(keys, key)
+            end
         end
     end
+    table.sort(keys)
+    local normalized = {}
+    for index, key in ipairs(keys) do
+        if index > maximum then break end
+        local pose = normalizeCameraPose(entries[key])
+        if pose then normalized[key] = pose end
+    end
+    return normalized
+end
+
+local function tableHasEntries(entries)
+    return type(entries) == "table" and next(entries) ~= nil
+end
+
+local function poseEquals(left, right)
+    left = normalizeCameraPose(left)
+    right = normalizeCameraPose(right)
+    if not left or not right then return false end
+    local epsilon = 0.0001
+    local function same(a, b)
+        return isFiniteNumber(a) and isFiniteNumber(b) and math.abs(a - b) <= epsilon
+    end
+    return same(left.yaw, right.yaw)
+        and same(left.pitch, right.pitch)
+        and same(left.roll, right.roll)
+        and same(left.distanceScale, right.distanceScale)
+        and same(left.target[1], right.target[1])
+        and same(left.target[2], right.target[2])
+        and same(left.target[3], right.target[3])
+end
+
+local function normalizeCameraTuning(db)
+    local legacy = type(db.m2CameraTuning) == "table" and db.m2CameraTuning or nil
+    local tuning = type(db.cameraTuning) == "table" and db.cameraTuning or nil
+    local hasLegacy = tableHasEntries(legacy)
+    if not tuning and not hasLegacy then
+        db.m2CameraTuning = nil
+        return
+    end
+
+    tuning = tuning or {}
+    local legacyFamilies = normalizedCameraScope(
+        legacy,
+        "weaponFamily",
+        MAX_LEGACY_CAMERA_TUNING_BACKUP_ENTRIES
+    )
+    tuning.weaponFamily = normalizedCameraScope(
+        tuning.weaponFamily,
+        "weaponFamily",
+        MAX_CAMERA_TUNING_SCOPE_ENTRIES
+    )
+    if tableHasEntries(legacyFamilies) then
+        -- Preserve exactly one normalized v1 snapshot for recovery, while the
+        -- live values move to the explicit weaponFamily scope below.
+        if not tableHasEntries(tuning.legacyM2CameraTuningV1) then
+            tuning.legacyM2CameraTuningV1 = legacyFamilies
+        else
+            tuning.legacyM2CameraTuningV1 = normalizedCameraScope(
+                tuning.legacyM2CameraTuningV1,
+                "weaponFamily",
+                MAX_LEGACY_CAMERA_TUNING_BACKUP_ENTRIES
+            )
+        end
+        for familyKey, pose in pairs(legacyFamilies) do
+            if not tuning.weaponFamily[familyKey] then
+                tuning.weaponFamily[familyKey] = pose
+            end
+        end
+    elseif tableHasEntries(tuning.legacyM2CameraTuningV1) then
+        tuning.legacyM2CameraTuningV1 = normalizedCameraScope(
+            tuning.legacyM2CameraTuningV1,
+            "weaponFamily",
+            MAX_LEGACY_CAMERA_TUNING_BACKUP_ENTRIES
+        )
+    else
+        tuning.legacyM2CameraTuningV1 = nil
+    end
+
+    tuning.model = normalizedCameraScope(tuning.model, "model", MAX_CAMERA_TUNING_SCOPE_ENTRIES)
+    tuning.appearance = normalizedCameraScope(tuning.appearance, "appearance", MAX_CAMERA_TUNING_SCOPE_ENTRIES)
+    tuning.bodyProfile = normalizedCameraScope(tuning.bodyProfile, "bodyProfile", MAX_CAMERA_TUNING_SCOPE_ENTRIES)
+    tuning.schemaVersion = CAMERA_TUNING_SCHEMA_VERSION
+    db.m2CameraTuning = nil
+
+    if tableHasEntries(tuning.weaponFamily) or tableHasEntries(tuning.model)
+        or tableHasEntries(tuning.appearance) or tableHasEntries(tuning.bodyProfile)
+        or tableHasEntries(tuning.legacyM2CameraTuningV1) then
+        db.cameraTuning = tuning
+    else
+        -- Do not create SavedVariables for an untouched camera workbench.
+        db.cameraTuning = nil
+    end
+end
+
+local CameraTuning = SC.CameraTuning or {}
+SC.CameraTuning = CameraTuning
+CameraTuning.SCHEMA_VERSION = CAMERA_TUNING_SCHEMA_VERSION
+
+function CameraTuning.Get(scope, key)
+    if not cameraScopeKeyIsValid(scope, key) or not SC.db
+        or type(SC.db.cameraTuning) ~= "table" then
+        return nil
+    end
+    local entries = SC.db.cameraTuning[scope]
+    if type(entries) ~= "table" then return nil end
+    -- An absent override must remain absent. Normalizing nil would manufacture
+    -- a zero/default pose, which incorrectly outranks the generated autoCamera
+    -- baseline in the effective precedence resolver.
+    local stored = entries[key]
+    if type(stored) ~= "table" then return nil end
+    return normalizeCameraPose(stored)
+end
+
+function CameraTuning.PoseEquals(left, right)
+    return poseEquals(left, right)
+end
+
+function CameraTuning.Set(scope, key, pose, lowerScopePose)
+    if not cameraScopeKeyIsValid(scope, key) or not SC.db then return false end
+    local normalized = normalizeCameraPose(pose)
+    if not normalized then return false end
+    local tuning = SC.db.cameraTuning
+    if type(tuning) ~= "table" then
+        tuning = { schemaVersion = CAMERA_TUNING_SCHEMA_VERSION }
+        SC.db.cameraTuning = tuning
+    end
+    tuning.schemaVersion = CAMERA_TUNING_SCHEMA_VERSION
+    tuning[scope] = type(tuning[scope]) == "table" and tuning[scope] or {}
+    if lowerScopePose and poseEquals(normalized, lowerScopePose) then
+        tuning[scope][key] = nil
+    else
+        tuning[scope][key] = normalized
+    end
+    normalizeCameraTuning(SC.db)
+    return true
+end
+
+function CameraTuning.Reset(scope, key)
+    if not cameraScopeKeyIsValid(scope, key) or not SC.db
+        or type(SC.db.cameraTuning) ~= "table" then
+        return false
+    end
+    local entries = SC.db.cameraTuning[scope]
+    if type(entries) ~= "table" or entries[key] == nil then return false end
+    entries[key] = nil
+    normalizeCameraTuning(SC.db)
+    return true
 end
 
 local function normalizeDatabase(db)
@@ -133,7 +303,7 @@ local function normalizeDatabase(db)
     repairEnum(db.filters, "weaponType", VALID_WEAPON_TYPES, DEFAULTS.filters.weaponType)
 
     repairScalar(db, "favorites", "table", {})
-    normalizeM2CameraTuning(db)
+    normalizeCameraTuning(db)
     repairScalar(db, "debug", "boolean", DEFAULTS.debug)
 
     repairScalar(db, "bridge", "table", {})

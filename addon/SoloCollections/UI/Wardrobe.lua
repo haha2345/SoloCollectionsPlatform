@@ -6,6 +6,8 @@ local Identity = SC.IdentityRegistry
 local ITEM_ROWS = 3
 local ITEM_COLUMNS = 6
 local ITEM_PAGE_SIZE = ITEM_ROWS * ITEM_COLUMNS
+local WORKBENCH_ITEM_COLUMNS = 4
+local WORKBENCH_ITEM_PAGE_SIZE = ITEM_ROWS * WORKBENCH_ITEM_COLUMNS
 local ITEM_MODEL_WIDTH = 132
 local ITEM_MODEL_HEIGHT = 164
 local ITEM_MODEL_GAP_X = 10
@@ -348,10 +350,10 @@ local function isStandaloneItemRecord(record)
         and type(record.modelPath) == "string" and record.modelPath ~= ""
 end
 
--- A stable camera key lets one in-game adjustment apply to every sample of a
--- weapon family. A record may supply a more specific key when two M2 files in
--- the same visual class are mirrored (for example the two Azzinoth glaives).
-local function getM2CameraTuningKey(record)
+-- A stable weapon-family key lets one in-game adjustment apply to every
+-- matching sample. A record may supply a more specific family key when two
+-- visual classes are mirrored (for example the two Azzinoth glaives).
+local function getWeaponFamilyCameraKey(record)
     if record and type(record.cameraTuningKey) == "string" and record.cameraTuningKey ~= "" then
         return record.cameraTuningKey
     end
@@ -361,30 +363,101 @@ local function getM2CameraTuningKey(record)
     return record and record.id
 end
 
-local function getSavedM2CameraPose(record)
-    if not record or not SC.db or type(SC.db.m2CameraTuning) ~= "table" then
-        return nil
+local function getAppearanceCameraKey(record)
+    if record and tonumber(record.id) then
+        return "appearance:" .. tostring(math.floor(tonumber(record.id)))
     end
-    local tuningKey = getM2CameraTuningKey(record)
-    local saved = SC.db.m2CameraTuning[tuningKey]
-    if type(saved) ~= "table" or not SC.M2Camera or not SC.M2Camera.NormalizePose then
-        return nil
+    return nil
+end
+
+local function getModelCameraKey(record)
+    if record and type(record.modelSignature) == "string"
+        and record.modelSignature:match("^m2:[a-f0-9][a-f0-9]+$") then
+        return record.modelSignature
     end
-    return SC.M2Camera.NormalizePose(saved)
+    return nil
+end
+
+local function getCameraTuningScopePose(scope, key)
+    if not key or not SC.CameraTuning or not SC.CameraTuning.Get then return nil end
+    return SC.CameraTuning.Get(scope, key)
+end
+
+local function isCameraTuningScopeSkipped(skippedScopes, scope)
+    return skippedScopes == scope
+        or (type(skippedScopes) == "table" and skippedScopes[scope])
+end
+
+local function getAutoM2CameraPose(record)
+    local autoCamera = record and (record.autoCamera or record.m2Camera)
+    if autoCamera and SC.M2Camera and SC.M2Camera.NormalizePose then
+        return SC.M2Camera.NormalizePose(autoCamera), "auto"
+    end
+    return nil, "auto"
+end
+
+local function resolveM2CameraPose(record, skippedScopes)
+    if not record then return nil, "auto" end
+
+    local appearance = isCameraTuningScopeSkipped(skippedScopes, "appearance") and nil
+        or getCameraTuningScopePose("appearance", getAppearanceCameraKey(record))
+    if appearance then return appearance, "appearance" end
+
+    local model = isCameraTuningScopeSkipped(skippedScopes, "model") and nil
+        or getCameraTuningScopePose("model", getModelCameraKey(record))
+    if model then return model, "model" end
+
+    local weaponFamily = isCameraTuningScopeSkipped(skippedScopes, "weaponFamily") and nil
+        or getCameraTuningScopePose("weaponFamily", getWeaponFamilyCameraKey(record))
+    if weaponFamily then return weaponFamily, "weaponFamily" end
+
+    return getAutoM2CameraPose(record)
+end
+
+-- Editing a lower-priority scope must not inherit a higher-priority override.
+-- Otherwise changing the model value beneath an appearance override would
+-- silently save a duplicate appearance pose and could never be reasoned about
+-- or reset independently. Use the scope's own value first, then only scopes
+-- lower in the effective precedence chain.
+local function resolveM2CameraScopePose(record, scope)
+    if not record then return nil, "auto" end
+    local scopeKey = scope == "appearance" and getAppearanceCameraKey(record)
+        or scope == "model" and getModelCameraKey(record)
+        or getWeaponFamilyCameraKey(record)
+    local scopedPose = getCameraTuningScopePose(scope, scopeKey)
+    if scopedPose then return scopedPose, scope end
+    if scope == "appearance" then
+        return resolveM2CameraPose(record, { appearance = true })
+    elseif scope == "model" then
+        return resolveM2CameraPose(record, { appearance = true, model = true })
+    elseif scope == "weaponFamily" then
+        return getAutoM2CameraPose(record)
+    end
+    return resolveM2CameraPose(record)
 end
 
 local function getEffectiveM2CameraPose(model)
+    local appearance = nil
     if not model or not model.scRecord then
         return nil
     end
-    return model.scCameraPoseOverride
-        or getSavedM2CameraPose(model.scRecord)
-        or model.scRecord.m2Camera
+    local record = model.scRecord
+    appearance = getCameraTuningScopePose("appearance", getAppearanceCameraKey(record))
+    if appearance then return appearance, "appearance" end
+    local modelPose = getCameraTuningScopePose("model", getModelCameraKey(record))
+    if modelPose then return modelPose, "model" end
+    local weaponFamily = getCameraTuningScopePose("weaponFamily", getWeaponFamilyCameraKey(record))
+    if weaponFamily then return weaponFamily, "weaponFamily" end
+    local autoCamera = record.autoCamera or record.m2Camera
+    if autoCamera and SC.M2Camera and SC.M2Camera.NormalizePose then
+        return SC.M2Camera.NormalizePose(autoCamera), "auto"
+    end
+    return nil, "auto"
 end
 
 local function isM2CameraTunableRecord(record)
     return isStandaloneItemRecord(record)
-        and type(record.m2Camera) == "table"
+        and type(record.autoCamera or record.m2Camera) == "table"
         and SC.M2Camera
         and SC.M2Camera.NormalizePose
 end
@@ -998,6 +1071,7 @@ function UI.CreateWardrobePage(parent)
     page.scSetPreviewGeneration = 0
     page.scDefaultSetClassApplied = false
     page.scItemModels = {}
+    page.scItemPageSize = ITEM_PAGE_SIZE
     page.scSetRows = {}
     page.scPieceIcons = {}
     local setSetOffset
@@ -1517,10 +1591,13 @@ function UI.CreateWardrobePage(parent)
     local cameraTuningButton
     local cameraTuningPanel = CreateFrame("Frame", "SoloCollectionsM2CameraTuningPanel", page)
     cameraTuningPanel:SetWidth(286)
-    cameraTuningPanel:SetHeight(351)
-    cameraTuningPanel:SetPoint("TOPRIGHT", page, "TOPRIGHT", -5, -42)
-    cameraTuningPanel:SetFrameStrata("DIALOG")
-    cameraTuningPanel:SetFrameLevel(page:GetFrameLevel() + 20)
+    cameraTuningPanel:SetHeight(486)
+    cameraTuningPanel:SetPoint("TOPRIGHT", itemsPanel, "TOPRIGHT", -4, -4)
+    -- The item cards are children of itemsPanel and therefore may sit above a
+    -- sibling frame whose level is derived only from page.  Keep the workbench
+    -- in the normal frame strata, but place it explicitly above the cards so
+    -- it remains visible on the stock 3.3.5 client.
+    cameraTuningPanel:SetFrameLevel(itemsPanel:GetFrameLevel() + 12)
     cameraTuningPanel:SetBackdrop({
         bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background-Dark",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -1533,6 +1610,9 @@ function UI.CreateWardrobePage(parent)
     cameraTuningPanel:SetBackdropBorderColor(0.68, 0.49, 0.18, 1)
     cameraTuningPanel:Hide()
     cameraTuningPanel.scControls = {}
+    cameraTuningPanel.scScope = "weaponFamily"
+    cameraTuningPanel.scSessionBefore = {}
+    cameraTuningPanel.scBatch = {}
 
     local tuningTitle = cameraTuningPanel:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     tuningTitle:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -10)
@@ -1541,42 +1621,123 @@ function UI.CreateWardrobePage(parent)
 
     local tuningRecord = cameraTuningPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     tuningRecord:SetPoint("TOPLEFT", tuningTitle, "BOTTOMLEFT", 0, -4)
-    tuningRecord:SetPoint("RIGHT", cameraTuningPanel, "RIGHT", -26, 0)
+    tuningRecord:SetPoint("RIGHT", cameraTuningPanel, "RIGHT", -96, 0)
     tuningRecord:SetJustifyH("LEFT")
     tuningRecord:SetTextColor(0.80, 0.74, 0.63)
+
+    local tuningScopeDropdown = CreateFrame("Frame", "SoloCollectionsM2CameraScopeDropdown", cameraTuningPanel, "UIDropDownMenuTemplate")
+    tuningScopeDropdown:SetPoint("TOPRIGHT", cameraTuningPanel, "TOPRIGHT", -18, -17)
+    UIDropDownMenu_SetWidth(tuningScopeDropdown, 74)
+
+    local tuningMetadata = cameraTuningPanel:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    tuningMetadata:SetPoint("TOPLEFT", tuningRecord, "BOTTOMLEFT", 0, -3)
+    tuningMetadata:SetPoint("TOPRIGHT", cameraTuningPanel, "TOPRIGHT", -12, -47)
+    tuningMetadata:SetHeight(37)
+    tuningMetadata:SetJustifyH("LEFT")
+    tuningMetadata:SetJustifyV("TOP")
+    tuningMetadata:SetTextColor(0.63, 0.59, 0.51)
 
     local tuningClose = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelCloseButton")
     tuningClose:SetPoint("TOPRIGHT", cameraTuningPanel, "TOPRIGHT", 2, 2)
 
     local tuningHint = cameraTuningPanel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    tuningHint:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -253)
-    tuningHint:SetPoint("TOPRIGHT", cameraTuningPanel, "TOPRIGHT", -12, -253)
-    tuningHint:SetHeight(30)
+    tuningHint:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -294)
+    tuningHint:SetPoint("TOPRIGHT", cameraTuningPanel, "TOPRIGHT", -12, -294)
+    tuningHint:SetHeight(28)
     tuningHint:SetJustifyH("LEFT")
     tuningHint:SetJustifyV("TOP")
-    tuningHint:SetText("拖动滑条即时预览；数值会按武器类型保存，同类样本共用。导出后可固定到 Lua 记录。")
+    tuningHint:SetText("范围：武器类别 / 此模型 / 此外观。数值会立即预览；导出仅生成待审核候选。")
     tuningHint:SetTextColor(0.62, 0.58, 0.49)
 
-    local tuningExport = CreateFrame("EditBox", nil, cameraTuningPanel, "InputBoxTemplate")
-    tuningExport:SetPoint("BOTTOMLEFT", cameraTuningPanel, "BOTTOMLEFT", 12, 12)
-    tuningExport:SetPoint("BOTTOMRIGHT", cameraTuningPanel, "BOTTOMRIGHT", -12, 12)
-    tuningExport:SetHeight(20)
+    local tuningPrevious = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningPrevious:SetWidth(78)
+    tuningPrevious:SetHeight(22)
+    tuningPrevious:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -327)
+    tuningPrevious:SetText("上一条")
+
+    local tuningNext = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningNext:SetWidth(78)
+    tuningNext:SetHeight(22)
+    tuningNext:SetPoint("LEFT", tuningPrevious, "RIGHT", 6, 0)
+    tuningNext:SetText("下一条")
+
+    local tuningPreviousUncalibrated = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningPreviousUncalibrated:SetWidth(122)
+    tuningPreviousUncalibrated:SetHeight(22)
+    tuningPreviousUncalibrated:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -353)
+    tuningPreviousUncalibrated:SetText("上一条未校准")
+
+    local tuningNextUncalibrated = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningNextUncalibrated:SetWidth(122)
+    tuningNextUncalibrated:SetHeight(22)
+    tuningNextUncalibrated:SetPoint("LEFT", tuningPreviousUncalibrated, "RIGHT", 6, 0)
+    tuningNextUncalibrated:SetText("下一条未校准")
+
+    -- A 3.3.5 EditBox is not clipped by its own height. Keep the review JSONL
+    -- in a ScrollFrame so long records cannot paint over the sliders above it.
+    local tuningExportScroll = CreateFrame("ScrollFrame", nil, cameraTuningPanel)
+    tuningExportScroll:SetPoint("BOTTOMLEFT", cameraTuningPanel, "BOTTOMLEFT", 12, 12)
+    tuningExportScroll:SetPoint("BOTTOMRIGHT", cameraTuningPanel, "BOTTOMRIGHT", -12, 12)
+    tuningExportScroll:SetHeight(42)
+    tuningExportScroll:SetBackdrop({
+        bgFile = "Interface\\Buttons\\WHITE8X8",
+        edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+        tile = true,
+        tileSize = 8,
+        edgeSize = 8,
+        insets = { left = 2, right = 2, top = 2, bottom = 2 },
+    })
+    tuningExportScroll:SetBackdropColor(0.015, 0.012, 0.010, 0.88)
+    tuningExportScroll:SetBackdropBorderColor(0.40, 0.30, 0.16, 0.85)
+    tuningExportScroll:EnableMouseWheel(true)
+
+    local tuningExport = CreateFrame("EditBox", nil, tuningExportScroll, "InputBoxTemplate")
+    tuningExport:SetWidth(254)
+    tuningExport:SetHeight(512)
+    if tuningExport.SetMultiLine then tuningExport:SetMultiLine(true) end
     tuningExport:SetAutoFocus(false)
     tuningExport:SetFontObject("ChatFontNormal")
     tuningExport:SetTextColor(0.92, 0.84, 0.62)
+    tuningExportScroll:SetScrollChild(tuningExport)
+    tuningExportScroll:SetScript("OnMouseWheel", function(self, delta)
+        local maxScroll = math.max(0, tuningExport:GetHeight() - self:GetHeight())
+        local nextScroll = math.max(0, math.min(maxScroll, self:GetVerticalScroll() - delta * 20))
+        self:SetVerticalScroll(nextScroll)
+    end)
+    tuningExport:SetScript("OnTextChanged", function()
+        tuningExportScroll:SetVerticalScroll(0)
+    end)
     tuningExport:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
 
     local tuningReset = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
-    tuningReset:SetWidth(102)
+    tuningReset:SetWidth(84)
     tuningReset:SetHeight(22)
-    tuningReset:SetPoint("BOTTOMLEFT", cameraTuningPanel, "BOTTOMLEFT", 12, 39)
-    tuningReset:SetText("恢复记录")
+    tuningReset:SetPoint("BOTTOMLEFT", cameraTuningPanel, "BOTTOMLEFT", 12, 61)
+    tuningReset:SetText("恢复当前层")
 
     local tuningCopy = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
-    tuningCopy:SetWidth(102)
+    tuningCopy:SetWidth(78)
     tuningCopy:SetHeight(22)
-    tuningCopy:SetPoint("BOTTOMRIGHT", cameraTuningPanel, "BOTTOMRIGHT", -12, 39)
-    tuningCopy:SetText("导出 Lua")
+    tuningCopy:SetPoint("LEFT", tuningReset, "RIGHT", 4, 0)
+    tuningCopy:SetText("复制当前")
+
+    local tuningBatch = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningBatch:SetWidth(78)
+    tuningBatch:SetHeight(22)
+    tuningBatch:SetPoint("LEFT", tuningCopy, "RIGHT", 4, 0)
+    tuningBatch:SetText("加入批次")
+
+    local tuningCopyAll = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningCopyAll:SetWidth(84)
+    tuningCopyAll:SetHeight(22)
+    tuningCopyAll:SetPoint("BOTTOMLEFT", cameraTuningPanel, "BOTTOMLEFT", 12, 86)
+    tuningCopyAll:SetText("复制本次修改")
+
+    local tuningDiscard = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningDiscard:SetWidth(98)
+    tuningDiscard:SetHeight(22)
+    tuningDiscard:SetPoint("LEFT", tuningCopyAll, "RIGHT", 6, 0)
+    tuningDiscard:SetText("放弃未导出")
 
     local function updateTuningValueLabel(control, value)
         control.value:SetText(string.format("%.2f", value))
@@ -1585,38 +1746,97 @@ function UI.CreateWardrobePage(parent)
     local applyCameraTuning
     local updateCameraTuningExport
 
+    local function getCameraTuningScopeKey(record, scope)
+        if scope == "appearance" then return getAppearanceCameraKey(record) end
+        if scope == "model" then return getModelCameraKey(record) end
+        return getWeaponFamilyCameraKey(record)
+    end
+
+    local CAMERA_TUNING_SCOPES = {
+        { key = "weaponFamily", label = "武器类别" },
+        { key = "model", label = "此模型" },
+        { key = "appearance", label = "此外观" },
+    }
+
+    local function cameraTuningScopeLabel(scope)
+        for _, option in ipairs(CAMERA_TUNING_SCOPES) do
+            if option.key == scope then return option.label end
+        end
+        return "武器类别"
+    end
+
+    local function cameraTuningSourceLabel(source)
+        if source == "auto" then return "自动基线" end
+        return cameraTuningScopeLabel(source)
+    end
+
+    UIDropDownMenu_Initialize(tuningScopeDropdown, function()
+        for _, option in ipairs(CAMERA_TUNING_SCOPES) do
+            local scopeOption = option
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = scopeOption.label
+            info.value = scopeOption.key
+            info.checked = cameraTuningPanel.scScope == scopeOption.key
+            info.func = function()
+                local record = cameraTuningPanel.scRecord
+                if scopeOption.key == "model" and not getModelCameraKey(record) then
+                    if DEFAULT_CHAT_FRAME then
+                        DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：当前外观没有稳定模型签名，不能使用模型范围。")
+                    end
+                    return
+                end
+                cameraTuningPanel.scScope = scopeOption.key
+                UIDropDownMenu_SetSelectedValue(tuningScopeDropdown, scopeOption.key)
+                UIDropDownMenu_SetText(tuningScopeDropdown, scopeOption.label)
+                if record then page:SyncCameraTuningPanel(record) end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+
     local function createCameraTuningSlider(index, key, labelText, limits, targetIndex)
         local row = CreateFrame("Frame", nil, cameraTuningPanel)
-        row:SetWidth(260)
-        row:SetHeight(25)
-        row:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -49 - ((index - 1) * 29))
+        row:SetWidth(262)
+        row:SetHeight(24)
+        row:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -96 - ((index - 1) * 27))
 
         local label = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
         label:SetPoint("LEFT", row, "LEFT", 0, 2)
-        label:SetWidth(72)
+        label:SetWidth(48)
         label:SetJustifyH("LEFT")
         label:SetText(labelText)
         label:SetTextColor(0.88, 0.78, 0.58)
 
         local sliderName = "SoloCollectionsM2Camera" .. key .. "Slider"
-        local slider = CreateFrame("Slider", sliderName, row, "OptionsSliderTemplate")
+        -- Do not use OptionsSliderTemplate here.  Its settings-panel scripts can
+        -- assign a zero/default value when an ancestor frame becomes visible,
+        -- which races the workbench's autoCamera baseline.  This small local
+        -- slider owns only the visuals and has no hidden configuration state.
+        local slider = CreateFrame("Slider", sliderName, row)
         slider:SetPoint("LEFT", label, "RIGHT", 2, 0)
-        slider:SetWidth(136)
+        slider:SetWidth(76)
         slider:SetHeight(16)
         slider:SetOrientation("HORIZONTAL")
+        local sliderTrack = slider:CreateTexture(nil, "BACKGROUND")
+        sliderTrack:SetTexture("Interface\\Buttons\\WHITE8X8")
+        sliderTrack:SetHeight(3)
+        sliderTrack:SetPoint("LEFT", slider, "LEFT", 2, 0)
+        sliderTrack:SetPoint("RIGHT", slider, "RIGHT", -2, 0)
+        sliderTrack:SetVertexColor(0.36, 0.27, 0.15, 1)
+        local sliderThumb = slider:CreateTexture(nil, "OVERLAY")
+        sliderThumb:SetTexture("Interface\\Buttons\\UI-SliderBar-Button-Horizontal")
+        sliderThumb:SetWidth(12)
+        sliderThumb:SetHeight(16)
+        slider:SetThumbTexture(sliderThumb)
         slider:SetMinMaxValues(limits.minimum, limits.maximum)
         slider:SetValueStep(limits.step)
         if slider.SetObeyStepOnDrag then slider:SetObeyStepOnDrag(true) end
-        local sliderLow = _G[sliderName .. "Low"]
-        local sliderHigh = _G[sliderName .. "High"]
-        local sliderText = _G[sliderName .. "Text"]
-        if sliderLow then sliderLow:SetText("") end
-        if sliderHigh then sliderHigh:SetText("") end
-        if sliderText then sliderText:SetText("") end
 
-        local value = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        value:SetPoint("RIGHT", row, "RIGHT", 0, 2)
-        value:SetWidth(44)
+        local value = CreateFrame("EditBox", nil, row, "InputBoxTemplate")
+        value:SetPoint("LEFT", slider, "RIGHT", 3, 0)
+        value:SetWidth(39)
+        value:SetHeight(18)
+        value:SetAutoFocus(false)
         value:SetJustifyH("RIGHT")
         value:SetTextColor(1.00, 0.85, 0.34)
 
@@ -1625,8 +1845,42 @@ function UI.CreateWardrobePage(parent)
             targetIndex = targetIndex,
             slider = slider,
             value = value,
+            limits = limits,
+            buttons = {},
         }
         table.insert(cameraTuningPanel.scControls, control)
+
+        local function applyDelta(delta)
+            slider:SetValue(math.max(limits.minimum, math.min(limits.maximum, slider:GetValue() + delta)))
+        end
+
+        local function createStepButton(offset, text, delta)
+            local button = CreateFrame("Button", nil, row, "UIPanelButtonTemplate")
+            button:SetWidth(15)
+            button:SetHeight(18)
+            button:SetPoint("LEFT", value, "RIGHT", offset, 0)
+            button:SetText(text)
+            button:SetScript("OnClick", function() applyDelta(delta) end)
+            table.insert(control.buttons, button)
+        end
+        createStepButton(3, "-", -limits.step)
+        createStepButton(20, "--", -limits.step * 5)
+        createStepButton(37, "+", limits.step)
+        createStepButton(54, "++", limits.step * 5)
+
+        value:SetScript("OnEnterPressed", function(self)
+            local parsed = tonumber(self:GetText())
+            if parsed then
+                slider:SetValue(math.max(limits.minimum, math.min(limits.maximum, parsed)))
+            else
+                updateTuningValueLabel(control, slider:GetValue())
+            end
+            self:ClearFocus()
+        end)
+        value:SetScript("OnEscapePressed", function(self)
+            updateTuningValueLabel(control, slider:GetValue())
+            self:ClearFocus()
+        end)
         slider:SetScript("OnValueChanged", function(_, valueChanged)
             updateTuningValueLabel(control, valueChanged)
             if cameraTuningPanel.scSyncing or not cameraTuningPanel.scRecord
@@ -1641,9 +1895,21 @@ function UI.CreateWardrobePage(parent)
             end
             pose = SC.M2Camera.NormalizePose(pose)
             cameraTuningPanel.scPose = pose
-            SC.db.m2CameraTuning = SC.db.m2CameraTuning or {}
-            SC.db.m2CameraTuning[getM2CameraTuningKey(cameraTuningPanel.scRecord)] = pose
-            applyCameraTuning(cameraTuningPanel.scRecord, pose)
+            local scope = cameraTuningPanel.scScope or "weaponFamily"
+            local tuningKey = getCameraTuningScopeKey(cameraTuningPanel.scRecord, scope)
+            local lowerScopePose = select(1, resolveM2CameraScopePose(cameraTuningPanel.scRecord, scope))
+            if not tuningKey or not SC.CameraTuning or not SC.CameraTuning.Set then return end
+            local sessionKey = scope .. "\031" .. tuningKey
+            if cameraTuningPanel.scSessionBefore[sessionKey] == nil then
+                local previous = SC.CameraTuning.Get and SC.CameraTuning.Get(scope, tuningKey) or nil
+                cameraTuningPanel.scSessionBefore[sessionKey] = previous or false
+            end
+            SC.CameraTuning.Set(scope, tuningKey, pose, lowerScopePose)
+            cameraTuningPanel.scCurrentDirty = true
+            if cameraTuningPanel.scBatch[sessionKey] then
+                cameraTuningPanel.scBatch[sessionKey].pose = pose
+            end
+            applyCameraTuning(cameraTuningPanel.scRecord)
             updateCameraTuningExport()
         end)
         return control
@@ -1665,55 +1931,184 @@ function UI.CreateWardrobePage(parent)
     createCameraTuningSlider(7, "targetZ", "Target Z", cameraLimits.target, 3)
 
     local function getTuningPose(record)
-        return getSavedM2CameraPose(record)
-            or (SC.M2Camera and SC.M2Camera.NormalizePose and SC.M2Camera.NormalizePose(record and record.m2Camera))
+        return resolveM2CameraScopePose(record, cameraTuningPanel.scScope or "weaponFamily")
     end
 
-    applyCameraTuning = function(record, pose)
-        local tuningKey = getM2CameraTuningKey(record)
+    applyCameraTuning = function(record)
+        if not record then return end
         for _, itemModel in ipairs(page.scItemModels) do
-            if itemModel.scRecord and getM2CameraTuningKey(itemModel.scRecord) == tuningKey then
-                local objectModel = itemModel.scObjectModel
-                if objectModel then
-                    objectModel.scCameraPoseOverride = pose
-                    applyStandaloneItemView(objectModel)
-                    queueStandaloneItemTransform(objectModel)
-                end
+            local objectModel = itemModel.scObjectModel
+            if itemModel.scRecord and objectModel and isM2CameraTunableRecord(itemModel.scRecord) then
+                applyStandaloneItemView(objectModel)
+                queueStandaloneItemTransform(objectModel)
             end
         end
     end
 
+    local function navigateCameraTuning(step, onlyUncalibrated)
+        if not SC.db or not cameraTuningPanel.scRecord then return false end
+        local records = Catalog.QueryAll("APPEARANCES", SC.db.query, SC.db.filters)
+        if #records == 0 then return false end
+        local currentIndex = 1
+        for index, record in ipairs(records) do
+            if record.id == cameraTuningPanel.scRecord.id then
+                currentIndex = index
+                break
+            end
+        end
+        for offset = 1, #records do
+            local index = ((currentIndex - 1 + step * offset) % #records) + 1
+            local candidate = records[index]
+            local _, source = resolveM2CameraPose(candidate)
+            if isM2CameraTunableRecord(candidate)
+                and (not onlyUncalibrated or source == "auto") then
+                page.scItemSelectedId = candidate.id
+                local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
+                page.scItemPage = math.floor((index - 1) / itemPageSize) + 1
+                page:Refresh()
+                return true
+            end
+        end
+        if DEFAULT_CHAT_FRAME then
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：当前筛选中没有符合条件的镜头条目。")
+        end
+        return false
+    end
+
+    local function formatCameraTuningExportRecord(record, scope, tuningKey, pose)
+        if not record or not scope or not tuningKey or not SC.M2Camera
+            or not SC.M2Camera.FormatTuningExportRecord then
+            return nil
+        end
+        return SC.M2Camera.FormatTuningExportRecord({
+            scope = scope,
+            key = tuningKey,
+            appearanceId = record.id,
+            sourceItemId = record.itemId,
+            nativeDisplayId = record.nativeDisplayId,
+            syntheticDisplayId = record.syntheticDisplayId,
+            modelSignature = record.modelSignature,
+            weaponFamily = getWeaponFamilyCameraKey(record),
+            weaponType = record.weaponType,
+            slot = record.slot,
+            metadataVersion = (SC.GeneratedCatalog or {}).metadataVersion,
+            assetPackVersion = (SC.GeneratedCatalog or {}).assetPackVersion,
+            appearancePresentationHash = (SC.GeneratedCatalog or {}).appearancePresentationHash,
+        }, pose)
+    end
+
+    local function buildCameraTuningExport(records)
+        if not SC.M2Camera or not SC.M2Camera.FormatTuningExportHeader then return "" end
+        local generated = SC.GeneratedCatalog or {}
+        local lines = {
+            SC.M2Camera.FormatTuningExportHeader(
+                generated.metadataVersion or "",
+                generated.assetPackVersion or "",
+                generated.appearancePresentationHash or ""
+            ),
+        }
+        for _, entry in ipairs(records or {}) do
+            local line = formatCameraTuningExportRecord(entry.record, entry.scope, entry.key, entry.pose)
+            if line then table.insert(lines, line) end
+        end
+        return table.concat(lines, "\n")
+    end
+
     updateCameraTuningExport = function()
         if not cameraTuningPanel.scRecord or not cameraTuningPanel.scPose
-            or not SC.M2Camera or not SC.M2Camera.FormatPose then
+            or not SC.M2Camera or not SC.M2Camera.FormatTuningExportHeader
+            or not SC.M2Camera.FormatTuningExportRecord then
             tuningExport:SetText("")
             return
         end
-        local tuningKey = getM2CameraTuningKey(cameraTuningPanel.scRecord)
-        if cameraTuningPanel.scRecord.cameraTuningKey then
-            tuningExport:SetText(string.format('cameraTuningKey = "%s", %s', tuningKey, SC.M2Camera.FormatPose(cameraTuningPanel.scPose)))
-        elseif type(cameraTuningPanel.scRecord.weaponType) == "string" then
-            tuningExport:SetText(string.format('weaponType = "%s", %s', tuningKey, SC.M2Camera.FormatPose(cameraTuningPanel.scPose)))
-        else
-            tuningExport:SetText(SC.M2Camera.FormatPose(cameraTuningPanel.scPose))
+        local record = cameraTuningPanel.scRecord
+        local scope = cameraTuningPanel.scScope or "weaponFamily"
+        local tuningKey = getCameraTuningScopeKey(record, scope)
+        if not tuningKey then
+            tuningExport:SetText("")
+            return
         end
+        tuningExport:SetText(buildCameraTuningExport({ {
+            record = record,
+            scope = scope,
+            key = tuningKey,
+            pose = cameraTuningPanel.scPose,
+        } }))
+    end
+
+    local function setCameraTuningControlsEnabled(enabled)
+        local function setWidgetEnabled(widget, value)
+            if not widget then return end
+            -- WotLK Slider/EditBox widgets inherit EnableMouse but do not all
+            -- expose the Button-only Enable/Disable methods. Keep the panel
+            -- usable on the stock 3.3.5 UI while still visually disabling
+            -- widgets that do support the richer button API.
+            if value then
+                if widget.Enable then widget:Enable() end
+                if widget.EnableMouse then widget:EnableMouse(true) end
+            else
+                if widget.Disable then widget:Disable() end
+                if widget.EnableMouse then widget:EnableMouse(false) end
+            end
+        end
+        for _, control in ipairs(cameraTuningPanel.scControls) do
+            setWidgetEnabled(control.slider, enabled)
+            setWidgetEnabled(control.value, enabled)
+            for _, button in ipairs(control.buttons) do setWidgetEnabled(button, enabled) end
+        end
+        setWidgetEnabled(tuningPrevious, enabled)
+        setWidgetEnabled(tuningNext, enabled)
+        setWidgetEnabled(tuningPreviousUncalibrated, enabled)
+        setWidgetEnabled(tuningNextUncalibrated, enabled)
+        setWidgetEnabled(tuningReset, enabled)
+        setWidgetEnabled(tuningCopy, enabled)
+        setWidgetEnabled(tuningBatch, enabled)
+        setWidgetEnabled(tuningCopyAll, enabled)
+        setWidgetEnabled(tuningDiscard, enabled)
+        tuningScopeDropdown:EnableMouse(enabled)
     end
 
     function page:SyncCameraTuningPanel(record)
         if not cameraTuningPanel.scRequested then
             return
         end
+        if cameraTuningPanel.scScope == "model" and not getModelCameraKey(record) then
+            cameraTuningPanel.scScope = "weaponFamily"
+        end
         if not isM2CameraTunableRecord(record) then
-            cameraTuningPanel.scRecord = nil
-            cameraTuningPanel:Hide()
-            if cameraTuningButton then cameraTuningButton:SetText("调相机") end
+            cameraTuningPanel.scRecord = record
+            cameraTuningPanel.scPose = nil
+            setCameraTuningControlsEnabled(false)
+            tuningRecord:SetText(record and (record.name or ("外观 " .. tostring(record.id))) or "请选择一件武器")
+            local reason = record and (
+                record.presentationReasonCode
+                or (record.renderMode == "UNAVAILABLE" and "NO_VERIFIED_STANDALONE_PRESENTATION")
+                or record.presentationStatus
+            ) or "NO_SELECTION"
+            tuningMetadata:SetText("此条目没有可调的 verified standalone 模型。\n原因：" .. tostring(reason or "UNAVAILABLE"))
+            tuningHint:SetText("不可用武器只显示资源失败原因；不会把空模型或角色占位当作可调对象。")
+            tuningExport:SetText("")
+            cameraTuningPanel:Show()
+            if cameraTuningButton then cameraTuningButton:SetText("关闭工作台") end
             return
         end
-        local pose = getTuningPose(record)
+        local pose, editedSource = getTuningPose(record)
         if not pose then return end
+        local _, activeSource = resolveM2CameraPose(record)
         cameraTuningPanel.scRecord = record
         cameraTuningPanel.scPose = pose
+        cameraTuningPanel.scScope = cameraTuningPanel.scScope or "weaponFamily"
+        -- Enabling a stock 3.3.5 slider may emit its current (zero) value.
+        -- Enter sync mode before enabling controls, otherwise that framework
+        -- event can overwrite the resolved autoCamera pose.
         cameraTuningPanel.scSyncing = true
+        -- Show the parent before applying values.  FrameXML children receive
+        -- their default-value callbacks as their hidden parent is shown; doing
+        -- this first lets the explicit pose writes below win deterministically.
+        cameraTuningPanel:Show()
+        setCameraTuningControlsEnabled(true)
+        UIDropDownMenu_SetSelectedValue(tuningScopeDropdown, cameraTuningPanel.scScope)
+        UIDropDownMenu_SetText(tuningScopeDropdown, cameraTuningScopeLabel(cameraTuningPanel.scScope))
         for _, control in ipairs(cameraTuningPanel.scControls) do
             local value = control.targetIndex and pose.target[control.targetIndex] or pose[control.key]
             control.slider:SetValue(value)
@@ -1721,55 +2116,156 @@ function UI.CreateWardrobePage(parent)
         end
         cameraTuningPanel.scSyncing = nil
         tuningRecord:SetText("武器类型：" .. (record.weaponTypeLabel or "未分类") .. " · " .. (record.name or ("外观 " .. tostring(record.id))))
+        local modelSignature = tostring(record.modelSignature or "未提供")
+        local compactModelSignature = string.sub(modelSignature, 1, 16)
+        if #modelSignature > #compactModelSignature then compactModelSignature = compactModelSignature .. "..." end
+        tuningMetadata:SetText(string.format(
+            "外观 %s · Item %s · display %s/%s\nM2 %s · %s · %s",
+            tostring(record.id or "?"),
+            tostring(record.itemId or "?"),
+            tostring(record.nativeDisplayId or "?"),
+            tostring(record.syntheticDisplayId or "?"),
+            compactModelSignature,
+            tostring(getWeaponFamilyCameraKey(record) or "未分类"),
+            activeSource == "appearance" and "此外观" or activeSource == "model" and "此模型"
+                or activeSource == "weaponFamily" and "武器类别" or "自动基线"
+        ))
+        tuningHint:SetText(cameraTuningPanel.scCurrentDirty
+            and "当前会话有未导出修改；可加入批次、复制或明确放弃。"
+            or "编辑值来源：" .. cameraTuningSourceLabel(editedSource) .. "。数值会立即预览；导出仅生成待审核候选。")
         updateCameraTuningExport()
-        cameraTuningPanel:Show()
-        if cameraTuningButton then cameraTuningButton:SetText("收起相机") end
+        if cameraTuningButton then cameraTuningButton:SetText("关闭工作台") end
     end
 
     function page:ToggleCameraTuning()
         cameraTuningPanel.scRequested = not cameraTuningPanel.scRequested
+        self:UpdateCameraWorkbenchLayout()
         if not cameraTuningPanel.scRequested then
             cameraTuningPanel:Hide()
-            cameraTuningButton:SetText("调相机")
+            cameraTuningButton:SetText("镜头工作台")
+            self:Refresh()
             return
         end
-        local selected
-        for _, itemModel in ipairs(self.scItemModels) do
-            if itemModel.scRecord and itemModel.scRecord.id == self.scItemSelectedId then
-                selected = itemModel.scRecord
-                break
-            end
-        end
-        self:SyncCameraTuningPanel(selected)
+        self:Refresh()
     end
 
     tuningClose:SetScript("OnClick", function() page:ToggleCameraTuning() end)
-    tuningCopy:SetScript("OnClick", function()
-        updateCameraTuningExport()
+
+    local function selectCameraTuningExport(text, message)
+        tuningExport:SetText(text or "")
         tuningExport:SetFocus()
         tuningExport:HighlightText()
+        if DEFAULT_CHAT_FRAME and message then
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：" .. message)
+        end
+    end
+
+    tuningCopy:SetScript("OnClick", function()
+        updateCameraTuningExport()
+        selectCameraTuningExport(tuningExport:GetText(), "当前镜头 JSONL 记录已选中，可按 Ctrl+C 复制。")
+    end)
+
+    tuningBatch:SetScript("OnClick", function()
+        local record = cameraTuningPanel.scRecord
+        local scope = cameraTuningPanel.scScope or "weaponFamily"
+        local tuningKey = getCameraTuningScopeKey(record, scope)
+        if not record or not tuningKey or not SC.CameraTuning or not SC.CameraTuning.Get then return end
+        local pose = SC.CameraTuning.Get(scope, tuningKey)
+        if not pose then
+            if DEFAULT_CHAT_FRAME then
+                DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：当前范围没有差量 override，无需加入批次。")
+            end
+            return
+        end
+        local sessionKey = scope .. "\031" .. tuningKey
+        cameraTuningPanel.scBatch[sessionKey] = {
+            record = record,
+            scope = scope,
+            key = tuningKey,
+            pose = pose,
+        }
         if DEFAULT_CHAT_FRAME then
-            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：Lua 相机 pose 已选中，可按 Ctrl+C 复制。")
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：已加入镜头导出批次。")
+        end
+    end)
+
+    tuningCopyAll:SetScript("OnClick", function()
+        local batchKeys = {}
+        for batchKey in pairs(cameraTuningPanel.scBatch) do table.insert(batchKeys, batchKey) end
+        table.sort(batchKeys)
+        if #batchKeys == 0 then
+            if DEFAULT_CHAT_FRAME then
+                DEFAULT_CHAT_FRAME:AddMessage("SoloCollections：本次批次为空。先修改并点击“加入批次”。")
+            end
+            return
+        end
+        local records = {}
+        for _, batchKey in ipairs(batchKeys) do
+            local entry = cameraTuningPanel.scBatch[batchKey]
+            if entry then table.insert(records, entry) end
+        end
+        selectCameraTuningExport(buildCameraTuningExport(records), "本次批量镜头 JSONL 已选中，可按 Ctrl+C 复制。")
+    end)
+
+    local function discardUnexportedCameraTuning()
+        for sessionKey, previous in pairs(cameraTuningPanel.scSessionBefore) do
+            local scope, tuningKey = string.match(sessionKey, "^(.-)\031(.*)$")
+            if scope and tuningKey and SC.CameraTuning then
+                if previous == false then
+                    if SC.CameraTuning.Reset then SC.CameraTuning.Reset(scope, tuningKey) end
+                elseif SC.CameraTuning.Set then
+                    SC.CameraTuning.Set(scope, tuningKey, previous)
+                end
+            end
+        end
+        cameraTuningPanel.scSessionBefore = {}
+        cameraTuningPanel.scBatch = {}
+        cameraTuningPanel.scCurrentDirty = nil
+        applyCameraTuning(cameraTuningPanel.scRecord)
+        page:SyncCameraTuningPanel(cameraTuningPanel.scRecord)
+    end
+    cameraTuningPanel.scDiscardUnexported = discardUnexportedCameraTuning
+
+    tuningDiscard:SetScript("OnClick", function()
+        if not next(cameraTuningPanel.scSessionBefore) then return end
+        if StaticPopupDialogs then
+            if not StaticPopupDialogs.SOLOCOLLECTIONS_CAMERA_DISCARD_V2 then
+                StaticPopupDialogs.SOLOCOLLECTIONS_CAMERA_DISCARD_V2 = {
+                    text = "放弃本次尚未导出的镜头修改？此操作会恢复打开工作台前的覆盖值。",
+                    button1 = "放弃修改",
+                    button2 = CANCEL,
+                    OnAccept = function(_, data)
+                        if data and data.scDiscardUnexported then data.scDiscardUnexported() end
+                    end,
+                    timeout = 0,
+                    whileDead = true,
+                    hideOnEscape = true,
+                }
+            end
+            StaticPopup_Show("SOLOCOLLECTIONS_CAMERA_DISCARD_V2", nil, nil, cameraTuningPanel)
+        else
+            discardUnexportedCameraTuning()
         end
     end)
     tuningReset:SetScript("OnClick", function()
         local record = cameraTuningPanel.scRecord
-        if not record or not SC.db or type(SC.db.m2CameraTuning) ~= "table" then return end
-        local tuningKey = getM2CameraTuningKey(record)
-        SC.db.m2CameraTuning[tuningKey] = nil
-        if tuningKey ~= record.id then
-            -- A reset must not unexpectedly restore an old per-card value.
-            SC.db.m2CameraTuning[record.id] = nil
-        end
-        applyCameraTuning(record, getTuningPose(record))
+        if not record or not SC.CameraTuning or not SC.CameraTuning.Reset then return end
+        local scope = cameraTuningPanel.scScope or "weaponFamily"
+        local tuningKey = getCameraTuningScopeKey(record, scope)
+        if tuningKey then SC.CameraTuning.Reset(scope, tuningKey) end
+        applyCameraTuning(record)
         page:SyncCameraTuningPanel(record)
     end)
+    tuningPrevious:SetScript("OnClick", function() navigateCameraTuning(-1, false) end)
+    tuningNext:SetScript("OnClick", function() navigateCameraTuning(1, false) end)
+    tuningPreviousUncalibrated:SetScript("OnClick", function() navigateCameraTuning(-1, true) end)
+    tuningNextUncalibrated:SetScript("OnClick", function() navigateCameraTuning(1, true) end)
 
     cameraTuningButton = CreateFrame("Button", nil, filterBar, "UIPanelButtonTemplate")
-    cameraTuningButton:SetWidth(82)
+    cameraTuningButton:SetWidth(92)
     cameraTuningButton:SetHeight(22)
-    cameraTuningButton:SetPoint("RIGHT", filterBar, "RIGHT", -5, 0)
-    cameraTuningButton:SetText("调相机")
+    cameraTuningButton:SetPoint("RIGHT", weaponDropdown, "LEFT", -4, 0)
+    cameraTuningButton:SetText("镜头工作台")
     cameraTuningButton:SetScript("OnClick", function() page:ToggleCameraTuning() end)
 
     for index = 1, ITEM_PAGE_SIZE do
@@ -1788,6 +2284,7 @@ function UI.CreateWardrobePage(parent)
 
         local itemModel = CreateFrame("DressUpModel", nil, itemCard)
         itemModel:SetAllPoints(itemCard)
+        itemModel.scCard = itemCard
 
         -- A WotLK PlayerModel can resolve CreatureDisplayInfo replacement
         -- skins. Generic Model cannot bind an equipment OBJECT_SKIN and turns
@@ -1914,6 +2411,53 @@ function UI.CreateWardrobePage(parent)
         itemCard:Hide()
         itemModel:Hide()
         page.scItemModels[index] = itemModel
+    end
+
+    -- The workbench is an in-window inspector, not a dialog. It owns the
+    -- rightmost two card columns while open, then restores the original
+    -- six-by-three pool and its pagination when closed. Preserve the selected
+    -- appearance whenever it still belongs to the active query so toggling
+    -- the inspector never unexpectedly switches the artist's subject.
+    function page:UpdateCameraWorkbenchLayout()
+        local previousPageSize = self.scItemPageSize or ITEM_PAGE_SIZE
+        local workbenchOpen = cameraTuningPanel.scRequested and true or false
+        local nextPageSize = workbenchOpen and WORKBENCH_ITEM_PAGE_SIZE or ITEM_PAGE_SIZE
+        local nextColumns = workbenchOpen and WORKBENCH_ITEM_COLUMNS or ITEM_COLUMNS
+        if previousPageSize ~= nextPageSize then
+            local selectedIndex = nil
+            if self.scItemSelectedId and SC.db and Catalog.QueryAll then
+                local allRecords = Catalog.QueryAll("APPEARANCES", SC.db.query, SC.db.filters)
+                for index, record in ipairs(allRecords) do
+                    if record.id == self.scItemSelectedId then
+                        selectedIndex = index
+                        break
+                    end
+                end
+            end
+            if selectedIndex then
+                self.scItemPage = math.floor((selectedIndex - 1) / nextPageSize) + 1
+            else
+                local oldFirstIndex = ((self.scItemPage or 1) - 1) * previousPageSize
+                self.scItemPage = math.floor(oldFirstIndex / nextPageSize) + 1
+            end
+            self.scItemPageSize = nextPageSize
+        end
+        for index, itemModel in ipairs(self.scItemModels) do
+            local itemCard = itemModel.scCard
+            if itemCard then
+                local column = (index - 1) % nextColumns
+                local row = math.floor((index - 1) / nextColumns)
+                itemCard:ClearAllPoints()
+                itemCard:SetPoint(
+                    "TOPLEFT",
+                    itemsPanel,
+                    "TOPLEFT",
+                    4 + column * (ITEM_MODEL_WIDTH + ITEM_MODEL_GAP_X),
+                    -4 - row * (ITEM_MODEL_HEIGHT + ITEM_MODEL_GAP_Y)
+                )
+            end
+        end
+        return previousPageSize ~= nextPageSize
     end
 
     local function getMaxSetOffset()
@@ -2123,10 +2667,17 @@ function UI.CreateWardrobePage(parent)
         if STANDALONE_ITEM_SLOTS[SC.db.filters.slot] then
             cameraTuningButton:Show()
         else
+            if cameraTuningPanel.scRequested then
+                cameraTuningPanel.scRequested = nil
+                page:UpdateCameraWorkbenchLayout()
+            end
             cameraTuningPanel:Hide()
             cameraTuningButton:Hide()
         end
-        local records, currentPage, totalPages = Catalog.Query("APPEARANCES", SC.db.query, SC.db.filters, page.scItemPage, ITEM_PAGE_SIZE)
+        local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
+        local records, currentPage, totalPages = Catalog.Query(
+            "APPEARANCES", SC.db.query, SC.db.filters, page.scItemPage, itemPageSize
+        )
         page.scItemPage = currentPage
         page.scItemTotalPages = totalPages
         itemControls:SetPage(currentPage, totalPages)
@@ -2161,6 +2712,7 @@ function UI.CreateWardrobePage(parent)
         if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(collected, total) end
         if #records == 0 then
             UI.ShowEmptyState(itemEmpty, page, "没有符合条件的外观", "调整搜索、护甲类型、部位或武器类型后再试。")
+            if cameraTuningPanel.scRequested then page:SyncCameraTuningPanel(nil) end
         else
             UI.HideEmptyState(itemEmpty)
             selectItem(selected or records[1])
@@ -2171,6 +2723,10 @@ function UI.CreateWardrobePage(parent)
         itemsPanel:Hide()
         -- The tuner applies only to standalone weapon PlayerModels. Do not
         -- leave its overlay or toggle visible above a DressUpModel set view.
+        if cameraTuningPanel.scRequested then
+            cameraTuningPanel.scRequested = nil
+            page:UpdateCameraWorkbenchLayout()
+        end
         cameraTuningPanel:Hide()
         cameraTuningButton:Hide()
         -- A hidden DressUpModel can discard its temporary TryOn state while
@@ -2298,6 +2854,12 @@ function UI.CreateWardrobePage(parent)
     end)
     page:SetScript("OnHide", function(self)
         self:ClearSelection()
+        if cameraTuningPanel.scRequested then
+            cameraTuningPanel.scRequested = nil
+            self:UpdateCameraWorkbenchLayout()
+        end
+        cameraTuningPanel:Hide()
+        if cameraTuningButton then cameraTuningButton:SetText("镜头工作台") end
         self.scItemPage = 1
         setSetOffset(0, true)
         self.scSetRecordCount = 0

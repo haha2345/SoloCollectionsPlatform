@@ -7,6 +7,7 @@ import argparse
 import csv
 import hashlib
 import json
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
@@ -45,9 +46,9 @@ def _norm(value: str) -> str:
 def build_report(source_path: Path, appearance_sources_path: Path, evidence_root: Path) -> dict[str, Any]:
     source = _read_json(source_path)
     appearances = _read_json(appearance_sources_path)
-    _require(source.get("schemaVersion") == 1, "unsupported appearance presentation schema")
+    _require(source.get("schemaVersion") == 1, "unsupported appearance presentation source schema")
     entries = source.get("entries")
-    _require(isinstance(entries, list) and len(entries) == 21, "exactly 21 verified presentations are required")
+    _require(isinstance(entries, list) and entries, "appearance presentation source has no entries")
     _require(source.get("assetPackVersion") == "wotlk-3.3.5a-local-1", "unexpected asset pack version")
 
     weapon_root = evidence_root / "weapon-resources"
@@ -55,15 +56,19 @@ def build_report(source_path: Path, appearance_sources_path: Path, evidence_root
     verification_path = weapon_root / "weapon-model-verification.csv"
     _require(_sha256(manifest_path) == source.get("weaponManifestSha256"), "weapon manifest hash drift")
     _require(_sha256(verification_path) == source.get("verificationSha256"), "weapon verification hash drift")
-    manifest = _read_json(manifest_path)
-    _require(isinstance(manifest, list) and len(manifest) == 21, "weapon manifest must contain 21 entries")
+    # The evidence-backed manifest is the append-only presentation registry.
+    # It deliberately defines valid IDs instead of treating the original 21
+    # samples or their numeric range as a permanent schema constraint.
+    registry = _read_json(manifest_path)
+    _require(isinstance(registry, list) and registry, "weapon manifest has no entries")
 
     try:
         with verification_path.open("r", encoding="utf-8-sig", newline="") as handle:
             verification = list(csv.DictReader(handle))
     except OSError as exc:
         raise PresentationError(f"cannot read verification CSV: {exc}") from exc
-    _require(len(verification) >= 63, "weapon verification does not cover M2, skin and texture assets")
+    _require(len(verification) >= len(registry) * 3,
+             "weapon verification does not cover M2, skin and texture assets")
     verified_paths: dict[str, dict[str, str]] = {}
     for row in verification:
         _require(row.get("Match", "").lower() == "true", f"weapon asset mismatch: {row.get('Path')}")
@@ -78,8 +83,8 @@ def build_report(source_path: Path, appearance_sources_path: Path, evidence_root
     for group in groups:
         for item_id in group.get("sourceItemIds", []):
             by_item.setdefault(int(item_id), []).append(group)
-    manifest_by_item = {int(row["item_id"]): row for row in manifest}
-    _require(len(manifest_by_item) == 21, "weapon manifest item IDs are not unique")
+    registry_by_item = {int(row["item_id"]): row for row in registry}
+    _require(len(registry_by_item) == len(registry), "weapon manifest item IDs are not unique")
 
     seen_items: set[int] = set()
     seen_appearances: set[int] = set()
@@ -101,7 +106,7 @@ def build_report(source_path: Path, appearance_sources_path: Path, evidence_root
         _require(len(matches) == 1, f"item {item_id} maps to {len(matches)} canonical appearances")
         _require(int(matches[0].get("appearanceId", 0)) == appearance_id,
                  f"item {item_id} canonical appearance drift")
-        manifest_entry = manifest_by_item.get(item_id)
+        manifest_entry = registry_by_item.get(item_id)
         _require(manifest_entry is not None, f"item {item_id} is missing from weapon manifest")
         _require(int(manifest_entry.get("display_id", 0)) == display_id,
                  f"item {item_id} synthetic display drift")
@@ -126,22 +131,34 @@ def build_report(source_path: Path, appearance_sources_path: Path, evidence_root
                  f"item {item_id} model path does not match manifest")
         for expected in (expected_model, expected_skin, expected_texture):
             _require(expected in verified_paths, f"item {item_id} missing verified asset: {expected}")
+        asset_hashes = {
+            "m2": verified_paths[expected_model]["StageSHA256"].lower(),
+            "skin": verified_paths[expected_skin]["StageSHA256"].lower(),
+            "texture": verified_paths[expected_texture]["StageSHA256"].lower(),
+        }
         report_entries.append({
             **entry,
             "sourceAlias": f"item:{item_id}",
             "collectionKey": matches[0]["collectionKey"],
             "nativeDisplayId": int(matches[0]["displayId"]),
-            "assetHashes": {
-                "m2": verified_paths[expected_model]["StageSHA256"].lower(),
-                "skin": verified_paths[expected_skin]["StageSHA256"].lower(),
-                "texture": verified_paths[expected_texture]["StageSHA256"].lower(),
-            },
+            # The M2 bytes, rather than a localized item name or an output
+            # path, are the stable model-level identity used by the camera
+            # workbench. Multiple appearances can therefore share one model
+            # override while retaining their own appearance-level escape hatch.
+            "modelSignature": "m2:" + asset_hashes["m2"],
+            # Keep the existing checked-in pose as the generated baseline.
+            # SavedVariables can only override it; they never replace this
+            # authoritative presentation input.
+            "autoCamera": deepcopy(camera),
+            "assetHashes": asset_hashes,
         })
 
-    _require(seen_displays == set(range(40000, 40021)), "synthetic display IDs must be exactly 40000..40020")
-    _require(set(manifest_by_item) == seen_items, "source and weapon manifest item sets differ")
+    expected_displays = {int(row.get("display_id", 0)) for row in registry}
+    _require(0 not in expected_displays and seen_displays == expected_displays,
+             "source and weapon manifest display ID sets differ")
+    _require(set(registry_by_item) == seen_items, "source and weapon manifest item sets differ")
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "assetPackVersion": source["assetPackVersion"],
         "weaponManifestSha256": source["weaponManifestSha256"],
         "verificationSha256": source["verificationSha256"],

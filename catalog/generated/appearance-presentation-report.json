@@ -9,6 +9,17 @@
         "texture": "5394dd0550bdbf0481770384ab6c3f745c2acbdadfee042bfb9b31025a443ec5"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.72,
+        "pitch": -0.18,
+        "roll": 0.97,
+        "target": {
+          "x": -0.44,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 1.04
+      },
       "cameraTuningKey": "TWO_HAND_SWORD",
       "collectionKey": "appearance.d32000.s17.c2.sc8",
       "m2Camera": {
@@ -24,6 +35,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Sword_2H_Blackwing_A_02_19364.m2",
       "modelScale": 0.82,
+      "modelSignature": "m2:d450c49ad50bd3a7947956349f09bab3ca9d1251e9bf40a1da4146bc96640120",
       "nativeDisplayId": 32000,
       "presentationStatus": "verified",
       "sourceAlias": "item:19364",
@@ -40,6 +52,17 @@
         "texture": "ec67097b6d737d85c2c70cfb479145ad90fcdd0797ab1f59dd770b843483c612"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.72,
+        "pitch": -0.18,
+        "roll": 0.97,
+        "target": {
+          "x": -0.44,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 1.04
+      },
       "cameraTuningKey": "TWO_HAND_SWORD",
       "collectionKey": "appearance.d30606.s13.c2.sc7",
       "m2Camera": {
@@ -55,6 +78,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Sword_2H_Ashbringer02_19019.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:15f8de88c4e534012408a87b3855ff06b5ed3010b492580068d2fc25c9269ebb",
       "nativeDisplayId": 30606,
       "presentationStatus": "verified",
       "sourceAlias": "item:19019",
@@ -71,6 +95,17 @@
         "texture": "e3a174f299940b7a77353cbfb48df49ad2e55ac9e3c18e83d91fa9cd59d2ddfd"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.52,
+        "pitch": -0.63,
+        "roll": 1.24,
+        "target": {
+          "x": -0.18,
+          "y": -0.26,
+          "z": 0.0
+        },
+        "yaw": 0.76
+      },
       "cameraTuningKey": "WAR_GLAIVE_MAINHAND",
       "collectionKey": "appearance.d45479.s21.c2.sc7",
       "m2Camera": {
@@ -86,6 +121,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Glave_1H_DualBlade_D_02_32837.m2",
       "modelScale": 0.86,
+      "modelSignature": "m2:5fc29b071841561744602e404e0d754466cff13b064ea4b3a01d6a577b25989d",
       "nativeDisplayId": 45479,
       "presentationStatus": "verified",
       "sourceAlias": "item:32837",
@@ -102,6 +138,17 @@
         "texture": "e3a174f299940b7a77353cbfb48df49ad2e55ac9e3c18e83d91fa9cd59d2ddfd"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 1.34,
+        "pitch": -0.82,
+        "roll": 1.38,
+        "target": {
+          "x": 0.09,
+          "y": -0.09,
+          "z": 0.0
+        },
+        "yaw": -1.93
+      },
       "cameraTuningKey": "WAR_GLAIVE_OFFHAND",
       "collectionKey": "appearance.d45481.s22.c2.sc7",
       "m2Camera": {
@@ -117,6 +164,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Glave_1H_DualBlade_D_02left_32838.m2",
       "modelScale": 0.86,
+      "modelSignature": "m2:c09fc62fc2b1843047f962c8c6e1ea5778a0eb926618c951d0863950422929ff",
       "nativeDisplayId": 45481,
       "presentationStatus": "verified",
       "sourceAlias": "item:32838",
@@ -133,6 +181,17 @@
         "texture": "d0c2b50f6780182a8ade34837d3760ffcdb06e5d51318fe66ed45b6b8fec48cc"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.78,
+        "pitch": 0.2,
+        "roll": 0.25,
+        "target": {
+          "x": -0.1,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 0.42
+      },
       "cameraTuningKey": "SHIELD",
       "collectionKey": "appearance.d45653.s14.c4.sc6",
       "m2Camera": {
@@ -148,6 +207,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Shield_2H_OutlandRaid_D_06_32375.m2",
       "modelScale": 0.92,
+      "modelSignature": "m2:52ac9ae3a2855a637702a5525940a67ecac312b5a95442246d8fd6e0f968e80f",
       "nativeDisplayId": 45653,
       "presentationStatus": "verified",
       "sourceAlias": "item:32375",
@@ -164,6 +224,17 @@
         "texture": "2ce8c80d484cf25e5caf4b087662db8e9f263f1f0c572120e14945cf0621afc2"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.68,
+        "pitch": -0.69,
+        "roll": 1.45,
+        "target": {
+          "x": -0.18,
+          "y": -0.18,
+          "z": 0.0
+        },
+        "yaw": 0.9
+      },
       "cameraTuningKey": "ONE_HAND_AXE",
       "collectionKey": "appearance.d64480.s13.c2.sc0",
       "m2Camera": {
@@ -179,6 +250,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Axe_1H_IcecrownRaid_D_01_50737.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:5de5e59be152875014613f8ea5e01de8059857feab445387a6947524596ca958",
       "nativeDisplayId": 64480,
       "presentationStatus": "verified",
       "sourceAlias": "item:50737",
@@ -195,6 +267,17 @@
         "texture": "0163711c4ff244de38b313a7fca1a4400e5a39f9d016fb914d487b3e0c8c56ae"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.72,
+        "pitch": -0.32,
+        "roll": 0.96,
+        "target": {
+          "x": -0.35,
+          "y": -0.05,
+          "z": 0.0
+        },
+        "yaw": 1.0
+      },
       "cameraTuningKey": "TWO_HAND_AXE",
       "collectionKey": "appearance.d64879.s17.c2.sc1",
       "m2Camera": {
@@ -210,6 +293,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Axe_2H_IcecrownRaid_D_02_50709.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:aaa7aada31fc60e9b2625d3353003bdb9b1b3debd1dc4a2f74c25261efa333e5",
       "nativeDisplayId": 64879,
       "presentationStatus": "verified",
       "sourceAlias": "item:50709",
@@ -226,6 +310,17 @@
         "texture": "ac1ebc41cf1f4bd8ee1288e2f16452e06af69c2e154e0b4b7a19585be3e2b709"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.74,
+        "pitch": -0.55,
+        "roll": 1.0,
+        "target": {
+          "x": -0.15,
+          "y": -0.08,
+          "z": 0.0
+        },
+        "yaw": 0.9
+      },
       "cameraTuningKey": "BOW",
       "collectionKey": "appearance.d64356.s15.c2.sc2",
       "m2Camera": {
@@ -241,6 +336,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Bow_1H_IcecrownRaid_D_01_50638.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:0be4cec685446629e78303ca0b0156d6e67420786f375a6cfde508881f7c44bf",
       "nativeDisplayId": 64356,
       "presentationStatus": "verified",
       "sourceAlias": "item:50638",
@@ -257,6 +353,17 @@
         "texture": "983e49957d39b1a875d26d467d4f71b8e02ffa01975be97e10f23a5329e5ffbb"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.72,
+        "pitch": -0.48,
+        "roll": 1.06,
+        "target": {
+          "x": -0.18,
+          "y": -0.05,
+          "z": 0.0
+        },
+        "yaw": 0.92
+      },
       "cameraTuningKey": "GUN",
       "collectionKey": "appearance.d64366.s26.c2.sc3",
       "m2Camera": {
@@ -272,6 +379,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Firearm_2H_Rifle_IcecrownRaid_D_01_50444.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:cffe1fa2270dc76d76ac8b0515be008c08a6bd0fd273376f7f88545863984df3",
       "nativeDisplayId": 64366,
       "presentationStatus": "verified",
       "sourceAlias": "item:50444",
@@ -288,6 +396,17 @@
         "texture": "506474e01c433e76c2129288947bf63ce1a3b9cbbf7c79de6476b14538e43b87"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.68,
+        "pitch": 1.2,
+        "roll": 0.0,
+        "target": {
+          "x": -0.09,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 0.0
+      },
       "cameraTuningKey": "ONE_HAND_MACE",
       "collectionKey": "appearance.d64521.s21.c2.sc4",
       "m2Camera": {
@@ -303,6 +422,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Mace_1H_IcecrownRaid_D_04_50734.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:2fffd751d6209d9e449d95e200a58f5d9fd418186b30c9839ee3968bdfbcf033",
       "nativeDisplayId": 64521,
       "presentationStatus": "verified",
       "sourceAlias": "item:50734",
@@ -319,6 +439,17 @@
         "texture": "027b93ae345364e9d529c6bad8457c783615af4f23dc69eb562e1a2a49df3603"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.89,
+        "pitch": 0.84,
+        "roll": 0.0,
+        "target": {
+          "x": -0.18,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 0.0
+      },
       "cameraTuningKey": "TWO_HAND_MACE",
       "collectionKey": "appearance.d63834.s17.c2.sc5",
       "m2Camera": {
@@ -334,6 +465,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Mace_2H_IcecrownRaid_D_01_50603.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:b6c89cd320298cd5a42dc2fab67ae6100bc4e5fa2a2b4d83b5b59750b8b2ac0f",
       "nativeDisplayId": 63834,
       "presentationStatus": "verified",
       "sourceAlias": "item:50603",
@@ -350,6 +482,17 @@
         "texture": "d1aa6845e8fdaf55909d412ce32d98306c97577774baff553ea10bebf6e6c769"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.42,
+        "pitch": -0.7,
+        "roll": -1.42,
+        "target": {
+          "x": 0.25,
+          "y": 0.08,
+          "z": 0.0
+        },
+        "yaw": 1.2
+      },
       "cameraTuningKey": "POLEARM",
       "collectionKey": "appearance.d64554.s17.c2.sc6",
       "m2Camera": {
@@ -365,6 +508,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Polearm_2H_IcecrownRaid_D_01_50735.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:0acecfb03f9c3a6aa4c448d12689919d1d9a875e9cdeec511e3dfb1e3a02cf91",
       "nativeDisplayId": 64554,
       "presentationStatus": "verified",
       "sourceAlias": "item:50735",
@@ -381,6 +525,17 @@
         "texture": "87be99829d800c8f47cdab48c9bf85d7666bcad98319fb1a39acb9804c8b076c"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.7,
+        "pitch": -0.58,
+        "roll": 1.35,
+        "target": {
+          "x": -0.2,
+          "y": -0.05,
+          "z": 0.0
+        },
+        "yaw": 1.02
+      },
       "cameraTuningKey": "ONE_HAND_SWORD",
       "collectionKey": "appearance.d41428.s13.c2.sc7",
       "m2Camera": {
@@ -396,6 +551,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Sword_1H_Crystal_C_02_32466.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:193766b6e881e2f21931ea3df13509fbe3789196f40b3471c690cbde542d152e",
       "nativeDisplayId": 41428,
       "presentationStatus": "verified",
       "sourceAlias": "item:32466",
@@ -412,6 +568,17 @@
         "texture": "f6e440b4bd1ede4790d5df210fb6a9c64dfb4f29b6f9ce113581c20137cef508"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.72,
+        "pitch": -0.18,
+        "roll": 0.97,
+        "target": {
+          "x": -0.44,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 1.04
+      },
       "cameraTuningKey": "TWO_HAND_SWORD",
       "collectionKey": "appearance.d46609.s17.c2.sc8",
       "m2Camera": {
@@ -427,6 +594,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Sword_2H_Frostmourne_D_01_33350.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:a75cace96892913bde94ea462a0c2428dd8d9507332bbecb1cb13e0097463823",
       "nativeDisplayId": 46609,
       "presentationStatus": "verified",
       "sourceAlias": "item:33350",
@@ -443,6 +611,17 @@
         "texture": "81e78dfdfb64c635cdb6deb83c86b86d623ab4eba1db5fad57130522bc13525c"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.25,
+        "pitch": -0.71,
+        "roll": -1.45,
+        "target": {
+          "x": 0.35,
+          "y": 0.09,
+          "z": 0.0
+        },
+        "yaw": 1.24
+      },
       "cameraTuningKey": "STAFF",
       "collectionKey": "appearance.d64334.s17.c2.sc10",
       "m2Camera": {
@@ -458,6 +637,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Stave_2H_IcecrownRaid_D_02_50731.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:4d745b781d5891884c0b9e8321d2b85408e68bf77e2f623bb68ff7dc3b45293d",
       "nativeDisplayId": 64334,
       "presentationStatus": "verified",
       "sourceAlias": "item:50731",
@@ -474,6 +654,17 @@
         "texture": "0b6bab239b2e88c8fddbef14c6129f94f755bde6230a3f621479b953a68f75aa"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.64,
+        "pitch": -0.9,
+        "roll": -1.52,
+        "target": {
+          "x": 0.0,
+          "y": -0.26,
+          "z": 0.09
+        },
+        "yaw": 1.18
+      },
       "cameraTuningKey": "FIST_WEAPON",
       "collectionKey": "appearance.d64462.s21.c2.sc13",
       "m2Camera": {
@@ -489,6 +680,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Hand_1H_IcecrownRaid_D_02Right_50692.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:03b71583da935bc08965496d22f4876ab59a4ba9c46a25db18d4b367a606a640",
       "nativeDisplayId": 64462,
       "presentationStatus": "verified",
       "sourceAlias": "item:50692",
@@ -505,6 +697,17 @@
         "texture": "c1b2621ae06ceaf1bf0c4a257e7021bbab6a7404009791fea69d18fe2ed32516"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.77,
+        "pitch": -0.74,
+        "roll": 1.52,
+        "target": {
+          "x": -0.18,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 1.04
+      },
       "cameraTuningKey": "DAGGER",
       "collectionKey": "appearance.d64997.s13.c2.sc15",
       "m2Camera": {
@@ -520,6 +723,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Knife_1H_IcecrownRaid_D_03_50736.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:72c7a82116e7251f6891dcef80dde82649d2d36f060a6c80cbe0fa77c501b75e",
       "nativeDisplayId": 64997,
       "presentationStatus": "verified",
       "sourceAlias": "item:50736",
@@ -536,6 +740,17 @@
         "texture": "8e460d36545909305ecc773a56546223ccc22b385cada003b02b43c3a249a7c9"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.72,
+        "pitch": -0.7,
+        "roll": 1.45,
+        "target": {
+          "x": -0.12,
+          "y": -0.05,
+          "z": 0.0
+        },
+        "yaw": 1.0
+      },
       "cameraTuningKey": "THROWN",
       "collectionKey": "appearance.d64454.s25.c2.sc16",
       "m2Camera": {
@@ -551,6 +766,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Thrown_1H_Shuriken_A_02_50474.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:698939c225a116496397dd8a8943ab1cd2d50e6220135ea335c3ddbfa8942d16",
       "nativeDisplayId": 64454,
       "presentationStatus": "verified",
       "sourceAlias": "item:50474",
@@ -567,6 +783,17 @@
         "texture": "94f89b7935d79bf2078063a89fdf61fcb799664190810cfaac10bdf30bcf1328"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.77,
+        "pitch": 0.84,
+        "roll": 0.0,
+        "target": {
+          "x": -0.18,
+          "y": 0.0,
+          "z": 0.0
+        },
+        "yaw": 0.0
+      },
       "cameraTuningKey": "CROSSBOW",
       "collectionKey": "appearance.d64371.s26.c2.sc18",
       "m2Camera": {
@@ -582,6 +809,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Bow_2H_Crossbow_IcecrownRaid_D_01_50733.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:0e3f7a267d6fa0c553dc07769fae7d330aa87065ba403d2ff8797e8bd2f55bae",
       "nativeDisplayId": 64371,
       "presentationStatus": "verified",
       "sourceAlias": "item:50733",
@@ -598,6 +826,17 @@
         "texture": "ca0fb0c666ee42ac16f631ca015e527cb16bfd8bb41ff14c78e96d6748a3e114"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.56,
+        "pitch": -0.82,
+        "roll": -1.17,
+        "target": {
+          "x": 0.0,
+          "y": -0.18,
+          "z": 0.0
+        },
+        "yaw": 1.38
+      },
       "cameraTuningKey": "WAND",
       "collectionKey": "appearance.d64360.s26.c2.sc19",
       "m2Camera": {
@@ -613,6 +852,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Wand_1H_IcecrownRaid_D_02_50631.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:a11979a47eb40422efed7e4b9a123d58aacfdee62e573defb5c1e0903ad49a91",
       "nativeDisplayId": 64360,
       "presentationStatus": "verified",
       "sourceAlias": "item:50631",
@@ -629,6 +869,17 @@
         "texture": "b82b48685c6ba33f9fea5def34428785aa37766ce22220651af7bda3fb3eb4c7"
       },
       "assetPackVersion": "wotlk-3.3.5a-local-1",
+      "autoCamera": {
+        "distanceScale": 0.34,
+        "pitch": -0.7,
+        "roll": -1.45,
+        "target": {
+          "x": 0.3,
+          "y": 0.08,
+          "z": 0.0
+        },
+        "yaw": 1.22
+      },
       "cameraTuningKey": "FISHING_POLE",
       "collectionKey": "appearance.d20619.s17.c2.sc20",
       "m2Camera": {
@@ -644,6 +895,7 @@
       },
       "modelPath": "Item\\ObjectComponents\\SoloCollections\\SC_Misc_2H_FishingPole_A_01_43651.m2",
       "modelScale": 0.88,
+      "modelSignature": "m2:4ce767a3c7f811d992d4150199e7a72824437a14824614f90d4f2be2cc735365",
       "nativeDisplayId": 20619,
       "presentationStatus": "verified",
       "sourceAlias": "item:43651",
@@ -654,7 +906,7 @@
     }
   ],
   "presentationCount": 21,
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "verificationSha256": "0b431aeb35436c2adb6bd2a129624ddb748251093b6689e9861d74ac6012ab56",
   "weaponManifestSha256": "7c866d9384d80ee20fcf3c06d08b8445647a0e5899675cbee46b3cc3f815368c"
 }

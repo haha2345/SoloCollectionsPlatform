@@ -376,7 +376,7 @@ def _load_creature_presentations(source_root: Path, collections: list[dict[str, 
 def _load_appearance_presentations(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
     path = source_root.parent / "generated" / "appearance-presentation-report.json"
     data = deepcopy(_read_json(path))
-    _require(data.get("schemaVersion") == 1, "unsupported appearance presentation schema version")
+    _require(data.get("schemaVersion") == 2, "unsupported appearance presentation schema version")
     entries = data.get("entries")
     _require(isinstance(entries, list) and len(entries) == 21,
              "appearance presentation report must contain 21 verified entries")
@@ -395,6 +395,12 @@ def _load_appearance_presentations(source_root: Path, collections: list[dict[str
                  f"appearance presentation source alias drift: {appearance_id}")
         _require(entry.get("presentationStatus") == "verified",
                  f"appearance presentation is not verified: {appearance_id}")
+        _require(re.match(r"^m2:[a-f0-9]{64}$", str(entry.get("modelSignature", ""))) is not None,
+                 f"appearance presentation has invalid model signature: {appearance_id}")
+        auto_camera = entry.get("autoCamera")
+        _require(isinstance(auto_camera, dict) and all(key in auto_camera for key in (
+            "yaw", "pitch", "roll", "distanceScale", "target",
+        )), f"appearance presentation has incomplete automatic camera: {appearance_id}")
         _require(appearance_id not in actual, f"duplicate appearance presentation: {appearance_id}")
         actual[appearance_id] = entry
     return data
@@ -542,8 +548,8 @@ def _canonical_for_hash(model: dict[str, Any]) -> dict[str, Any]:
             "presentationEvidenceHash", "presentationEvidenceId", "presentationEvidencePackHash",
             "appearancePresentationHash", "appearancePresentationEvidence", "deprecatedAliases",
             "presentationHash",
-            "syntheticDisplayId", "modelPath", "modelScale", "weaponType", "weaponCategory",
-            "cameraTuningKey", "m2Camera", "presentationStatus", "renderMode",
+            "nativeDisplayId", "syntheticDisplayId", "modelPath", "modelScale", "weaponType", "weaponCategory",
+            "cameraTuningKey", "m2Camera", "modelSignature", "autoCamera", "presentationStatus", "renderMode",
             "uiLifecycle",
         }:
             return None
@@ -661,8 +667,9 @@ def build_model(source_root: Path) -> dict[str, Any]:
                      if alias.startswith("slot:")), "")
         presentation = appearance_by_id.get(int(entry["collectionId"]))
         if presentation is not None:
-            for key in ("syntheticDisplayId", "modelPath", "modelScale", "weaponType",
-                        "weaponCategory", "cameraTuningKey", "m2Camera", "presentationStatus"):
+            for key in ("nativeDisplayId", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
+                        "weaponCategory", "cameraTuningKey", "m2Camera", "modelSignature",
+                        "autoCamera", "presentationStatus"):
                 entry[key] = deepcopy(presentation[key])
             entry["renderMode"] = "STANDALONE"
         elif slot in weapon_slots:
@@ -702,8 +709,8 @@ def build_model(source_root: Path) -> dict[str, Any]:
                 "assetProfile", "previewCreatureEntry", "iconSpellId", "spellIconId", "iconTexture",
                 "presentationStatus", "presentationReasonCode",
                 "uiLifecycle",
-                "renderMode", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
-                "weaponCategory", "cameraTuningKey", "m2Camera",
+                "renderMode", "nativeDisplayId", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
+                "weaponCategory", "cameraTuningKey", "m2Camera", "modelSignature", "autoCamera",
             )
         }
         for entry in collections
@@ -1174,7 +1181,14 @@ def _validate_character_camera_profiles(repo_root: Path) -> None:
         raise CatalogError(f"character camera profiles rejected: {exc}") from exc
 
 
-def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_root: Path, check: bool) -> int:
+def generate(
+    repo_root: Path,
+    source_root: Path,
+    module_root: Path,
+    evidence_root: Path,
+    check: bool,
+    include_module: bool = True,
+) -> int:
     module_root = validate_module_root(repo_root, module_root)
     print(f"catalog module target: {module_root}")
     _validate_creature_presentation_evidence(source_root, evidence_root)
@@ -1185,6 +1199,13 @@ def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_roo
     _validate_character_camera_profiles(repo_root)
     model = build_model(source_root)
     outputs = render_outputs(model, repo_root, module_root)
+    if not include_module:
+        resolved_module_root = module_root.resolve()
+        outputs = {
+            path: content
+            for path, content in outputs.items()
+            if path.resolve() != resolved_module_root and resolved_module_root not in path.resolve().parents
+        }
     drift: list[Path] = []
     for path, content in outputs.items():
         current = path.read_text(encoding="utf-8") if path.exists() else None
@@ -1209,12 +1230,24 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--module-root", required=True, type=Path)
     parser.add_argument("--evidence-root", required=True, type=Path)
     parser.add_argument("--source-root", type=Path)
+    parser.add_argument(
+        "--addon-only",
+        action="store_true",
+        help="regenerate or check AddOn/catalog projections without writing module projections",
+    )
     parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
     repo_root = Path(__file__).resolve().parents[2]
     source_root = args.source_root.resolve() if args.source_root else repo_root / "catalog/source"
     try:
-        return generate(repo_root, source_root, args.module_root, args.evidence_root.resolve(), args.check)
+        return generate(
+            repo_root,
+            source_root,
+            args.module_root,
+            args.evidence_root.resolve(),
+            args.check,
+            include_module=not args.addon_only,
+        )
     except CatalogError as exc:
         print(f"catalog error: {exc}", file=sys.stderr)
         return 2
