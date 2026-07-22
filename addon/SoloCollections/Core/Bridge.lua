@@ -376,7 +376,16 @@ function B.UseToy(collectionId, callback)
     local target = nil
     for _, collection in ipairs((SC.GeneratedCatalog or {}).collections or {}) do
         if collection.typeKey == "toy" and collection.collectionId == collectionId then
-            if collection.requiresTarget then
+            local policy = collection.targetPolicy or (collection.requiresTarget and "REQUIRED_UNIT" or "SELF")
+            if policy == "REQUIRED_UNIT" then
+                if not UnitExists("target") then
+                    if type(callback) == "function" then
+                        pcall(callback, false, "TARGET_REQUIRED")
+                    end
+                    return nil
+                end
+                target = 1
+            elseif policy == "OPTIONAL_UNIT" and UnitExists("target") then
                 target = 1
             end
             break

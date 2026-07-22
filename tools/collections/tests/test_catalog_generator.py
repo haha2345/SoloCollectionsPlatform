@@ -92,7 +92,7 @@ class CatalogGeneratorTests(unittest.TestCase):
         by_type = {entry["typeKey"]: entry for entry in shadow["categories"]}
         self.assertEqual((24, 24), (by_type["mount"]["legacyEntryCount"], by_type["mount"]["mappedEntryCount"]))
         self.assertEqual((24, 24), (by_type["companion"]["legacyEntryCount"], by_type["companion"]["mappedEntryCount"]))
-        self.assertEqual((36, 4), (by_type["toy"]["legacyEntryCount"], by_type["toy"]["mappedEntryCount"]))
+        self.assertEqual((36, 9), (by_type["toy"]["legacyEntryCount"], by_type["toy"]["mappedEntryCount"]))
         source = (ROOT / "server/ale/solo_collections.lua").read_text(encoding="utf-8")
         source = source.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
         self.assertEqual(generator.hashlib.sha256(source).hexdigest(), shadow["sourceHash"])

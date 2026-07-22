@@ -90,6 +90,7 @@ local function getGeneratedToySource()
             table.insert(generatedToySource, {
                 id = collection.collectionId,
                 itemId = collection.displayItemId,
+                targetPolicy = collection.targetPolicy or (collection.requiresTarget and "REQUIRED_UNIT" or "SELF"),
                 requiresTarget = collection.requiresTarget and true or false,
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = "Interface\\Icons\\INV_Misc_Toy_10",

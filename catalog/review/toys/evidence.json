@@ -1,0 +1,1944 @@
+{
+  "candidateHash": "4b7ba78809fd3e7f4bdafd48f880138c4db5359cc429dc74da82b3c74982496d",
+  "candidates": [
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 29903,
+        "inventoryType": 0,
+        "itemId": 17712,
+        "itemSpellId": 21848,
+        "maxCount": 1,
+        "name_zhCN": "冬幕伪装包",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": -1,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 17712,
+      "legacyId": 1,
+      "legacySource_zhCN": "冬幕节",
+      "name_zhCN": "冬幕伪装包",
+      "spell": {
+        "effects": [
+          6,
+          6,
+          0
+        ],
+        "implicitTargetsA": [
+          56,
+          12,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          13636,
+          0,
+          0
+        ],
+        "name": "雪人",
+        "scriptNames": [
+          "spell_item_snowman"
+        ],
+        "spellId": 21848
+      },
+      "spellId": 21848
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 7,
+        "displayId": 31205,
+        "inventoryType": 0,
+        "itemId": 18660,
+        "itemSpellId": 23126,
+        "maxCount": 0,
+        "name_zhCN": "世界放大器",
+        "requiredSkill": 202,
+        "requiredSkillRank": 250,
+        "requiredSpell": 20219,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 900000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 3
+      },
+      "itemId": 18660,
+      "legacyId": 2,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "世界放大器",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          61,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "世界放大器",
+        "scriptNames": [],
+        "spellId": 23126
+      },
+      "spellId": 23126
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 40162,
+        "inventoryType": 0,
+        "itemId": 18986,
+        "itemSpellId": 23453,
+        "maxCount": 0,
+        "name_zhCN": "安全传送器：加基森",
+        "requiredSkill": 202,
+        "requiredSkillRank": 260,
+        "requiredSpell": 20219,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 14400000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 18986,
+      "legacyId": 3,
+      "legacySource_zhCN": "侏儒工程学",
+      "name_zhCN": "安全传送器：加基森",
+      "spell": {
+        "effects": [
+          3,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "侏儒传送器",
+        "scriptNames": [
+          "spell_gen_gnomish_transporter"
+        ],
+        "spellId": 23453
+      },
+      "spellId": 23453
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 18070,
+        "inventoryType": 0,
+        "itemId": 19026,
+        "itemSpellId": 11544,
+        "maxCount": 0,
+        "name_zhCN": "长蛇焰火",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": -1,
+        "spellCooldownMs": 1000,
+        "spellTrigger": 0,
+        "stackable": 10,
+        "subclass": 8
+      },
+      "itemId": 19026,
+      "legacyId": 4,
+      "legacySource_zhCN": "节日商人",
+      "name_zhCN": "长蛇焰火",
+      "spell": {
+        "effects": [
+          3,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "黄玫瑰焰火",
+        "scriptNames": [],
+        "spellId": 11544
+      },
+      "spellId": 11544
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 21469,
+        "inventoryType": 0,
+        "itemId": 21540,
+        "itemSpellId": 26265,
+        "maxCount": 1,
+        "name_zhCN": "艾露恩的灯笼",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 86400000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 21540,
+      "legacyId": 5,
+      "legacySource_zhCN": "月光林地",
+      "name_zhCN": "艾露恩的灯笼",
+      "spell": {
+        "effects": [
+          24,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "制造艾露恩之石",
+        "scriptNames": [],
+        "spellId": 26265
+      },
+      "spellId": 26265
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 34285,
+        "inventoryType": 0,
+        "itemId": 21589,
+        "itemSpellId": 26333,
+        "maxCount": 0,
+        "name_zhCN": "大型蓝色烟花",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 1136,
+        "spellCategoryCooldownMs": 1500,
+        "spellCharges": -1,
+        "spellCooldownMs": 1000,
+        "spellTrigger": 0,
+        "stackable": 20,
+        "subclass": 3
+      },
+      "itemId": 21589,
+      "legacyId": 6,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "大型蓝色烟花",
+      "spell": {
+        "effects": [
+          86,
+          28,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          1,
+          15885,
+          0
+        ],
+        "name": "大型蓝色烟花",
+        "scriptNames": [],
+        "spellId": 26333
+      },
+      "spellId": 26333
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 2,
+        "displayId": 34365,
+        "inventoryType": 0,
+        "itemId": 21713,
+        "itemSpellId": 26374,
+        "maxCount": 1,
+        "name_zhCN": "艾露恩的蜡烛",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": -88,
+        "spellCooldownMs": 3000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 14
+      },
+      "itemId": 21713,
+      "legacyId": 7,
+      "legacySource_zhCN": "月光林地",
+      "name_zhCN": "艾露恩的蜡烛",
+      "spell": {
+        "effects": [
+          3,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "艾露恩的蜡烛",
+        "scriptNames": [
+          "spell_gen_elune_candle"
+        ],
+        "spellId": 26374
+      },
+      "spellId": 26374
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 7,
+        "displayId": 9730,
+        "inventoryType": 0,
+        "itemId": 23767,
+        "itemSpellId": 30261,
+        "maxCount": 0,
+        "name_zhCN": "打架机器人",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 180000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 3
+      },
+      "itemId": 23767,
+      "legacyId": 8,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "打架机器人",
+      "spell": {
+        "effects": [
+          28,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          17299,
+          0,
+          0
+        ],
+        "name": "召唤打架机器人",
+        "scriptNames": [],
+        "spellId": 30261
+      },
+      "spellId": 30261
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 7,
+        "displayId": 40557,
+        "inventoryType": 0,
+        "itemId": 23821,
+        "itemSpellId": 30427,
+        "maxCount": 1,
+        "name_zhCN": "气阀微粒提取器",
+        "requiredSkill": 202,
+        "requiredSkillRank": 305,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 0,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 3
+      },
+      "itemId": 23821,
+      "legacyId": 9,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "气阀微粒提取器",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          23,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          3000,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "提炼气体",
+        "scriptNames": [],
+        "spellId": 30427
+      },
+      "spellId": 30427
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 41640,
+        "inventoryType": 0,
+        "itemId": 30542,
+        "itemSpellId": 36890,
+        "maxCount": 0,
+        "name_zhCN": "空间撕裂器 - 52区",
+        "requiredSkill": 202,
+        "requiredSkillRank": 350,
+        "requiredSpell": 20222,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 14400000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 30542,
+      "legacyId": 10,
+      "legacySource_zhCN": "地精工程学",
+      "name_zhCN": "空间撕裂器 - 52区",
+      "spell": {
+        "effects": [
+          5,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "52区传送器",
+        "scriptNames": [
+          "spell_item_dimensional_ripper_area52"
+        ],
+        "spellId": 36890
+      },
+      "spellId": 36890
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 45058,
+        "inventoryType": 0,
+        "itemId": 32542,
+        "itemSpellId": 40527,
+        "maxCount": 0,
+        "name_zhCN": "球中的小鬼",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 30000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 32542,
+      "legacyId": 11,
+      "legacySource_zhCN": "集换式卡牌",
+      "name_zhCN": "球中的小鬼",
+      "spell": {
+        "effects": [
+          76,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          185898,
+          0,
+          0
+        ],
+        "name": "瓶中的小鬼",
+        "scriptNames": [],
+        "spellId": 40527
+      },
+      "spellId": 40527
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 46524,
+        "inventoryType": 0,
+        "itemId": 33223,
+        "itemSpellId": 42766,
+        "maxCount": 0,
+        "name_zhCN": "钓鱼椅",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 300000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 33223,
+      "legacyId": 12,
+      "legacySource_zhCN": "集换式卡牌",
+      "name_zhCN": "钓鱼椅",
+      "spell": {
+        "effects": [
+          50,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          186475,
+          0,
+          0
+        ],
+        "name": "钓鱼椅",
+        "scriptNames": [],
+        "spellId": 42766
+      },
+      "spellId": 42766
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 47746,
+        "inventoryType": 0,
+        "itemId": 34480,
+        "itemSpellId": 45094,
+        "maxCount": 0,
+        "name_zhCN": "浪漫午餐篮",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 180000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 34480,
+      "legacyId": 13,
+      "legacySource_zhCN": "情人节",
+      "name_zhCN": "浪漫午餐篮",
+      "spell": {
+        "effects": [
+          76,
+          50,
+          64
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          185899,
+          187267,
+          0
+        ],
+        "name": "浪漫午餐",
+        "scriptNames": [],
+        "spellId": 45094
+      },
+      "spellId": 45094
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 8132,
+        "inventoryType": 0,
+        "itemId": 35275,
+        "itemSpellId": 46354,
+        "maxCount": 0,
+        "name_zhCN": "辛多雷宝珠",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 1800000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 35275,
+      "legacyId": 14,
+      "legacySource_zhCN": "魔导师平台",
+      "name_zhCN": "辛多雷宝珠",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          4,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "血精灵幻象",
+        "scriptNames": [],
+        "spellId": 46354
+      },
+      "spellId": 46354
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 52014,
+        "inventoryType": 0,
+        "itemId": 36863,
+        "itemSpellId": 47770,
+        "maxCount": 0,
+        "name_zhCN": "矮人的十面骰",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 10000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 36863,
+      "legacyId": 15,
+      "legacySource_zhCN": "世界掉落",
+      "name_zhCN": "矮人的十面骰子",
+      "spell": {
+        "effects": [
+          77,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "掷骰子",
+        "scriptNames": [
+          "spell_item_decahedral_dwarven_dice"
+        ],
+        "spellId": 47770
+      },
+      "spellId": 47770
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 7245,
+        "inventoryType": 12,
+        "itemId": 37254,
+        "itemSpellId": 48332,
+        "maxCount": 1,
+        "name_zhCN": "超级猴子球",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 102,
+        "spellCategoryCooldownMs": 300000,
+        "spellCharges": 0,
+        "spellCooldownMs": 3600000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 37254,
+      "legacyId": 16,
+      "legacySource_zhCN": "诺森德世界掉落",
+      "name_zhCN": "超级猴子球",
+      "spell": {
+        "effects": [
+          6,
+          6,
+          64
+        ],
+        "implicitTargetsA": [
+          4,
+          56,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          1108,
+          0
+        ],
+        "name": "狂野的猴子！",
+        "scriptNames": [],
+        "spellId": 48332
+      },
+      "spellId": 48332
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 50733,
+        "inventoryType": 0,
+        "itemId": 38301,
+        "itemSpellId": 50317,
+        "maxCount": 0,
+        "name_zhCN": "跳舞球",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 300000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 4
+      },
+      "itemId": 38301,
+      "legacyId": 17,
+      "legacySource_zhCN": "集换式卡牌",
+      "name_zhCN": "跳舞球",
+      "spell": {
+        "effects": [
+          28,
+          64,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          27989,
+          0,
+          0
+        ],
+        "name": "召唤跳舞球",
+        "scriptNames": [],
+        "spellId": 50317
+      },
+      "spellId": 50317
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 50565,
+        "inventoryType": 1,
+        "itemId": 38506,
+        "itemSpellId": 52172,
+        "maxCount": 0,
+        "name_zhCN": "卡洛斯的著名帽子",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": -1,
+        "spellTrigger": 1,
+        "stackable": 1,
+        "subclass": 1
+      },
+      "itemId": 38506,
+      "legacyId": 18,
+      "legacySource_zhCN": "旧希尔斯布莱德",
+      "name_zhCN": "卡洛斯的著名帽子",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          4,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "Coyote Spirit Despawn Aura",
+        "scriptNames": [],
+        "spellId": 52172
+      },
+      "spellId": 52172
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 36754,
+        "inventoryType": 0,
+        "itemId": 38578,
+        "itemSpellId": 51640,
+        "maxCount": 0,
+        "name_zhCN": "强者的旗帜",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 60000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 4
+      },
+      "itemId": 38578,
+      "legacyId": 19,
+      "legacySource_zhCN": "PvP 奖励",
+      "name_zhCN": "强者的旗帜",
+      "spell": {
+        "effects": [
+          3,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "嘲讽旗目标",
+        "scriptNames": [
+          "spell_the_flag_of_ownership"
+        ],
+        "spellId": 51640
+      },
+      "spellId": 51640
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 7,
+        "displayId": 31202,
+        "inventoryType": 0,
+        "itemId": 40768,
+        "itemSpellId": 54710,
+        "maxCount": 0,
+        "name_zhCN": "随身邮箱",
+        "requiredSkill": 202,
+        "requiredSkillRank": 425,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 7200000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 3
+      },
+      "itemId": 40768,
+      "legacyId": 20,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "随身邮箱",
+      "spell": {
+        "effects": [
+          50,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          191605,
+          0,
+          0
+        ],
+        "name": "随身邮箱",
+        "scriptNames": [],
+        "spellId": 54710
+      },
+      "spellId": 54710
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 18059,
+        "inventoryType": 0,
+        "itemId": 43499,
+        "itemSpellId": 58501,
+        "maxCount": 1,
+        "name_zhCN": "铁靴烈酒",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 3600000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 43499,
+      "legacyId": 21,
+      "legacySource_zhCN": "风暴峭壁",
+      "name_zhCN": "铁靴烈酒",
+      "spell": {
+        "effects": [
+          6,
+          6,
+          6
+        ],
+        "implicitTargetsA": [
+          56,
+          42,
+          4
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          29370,
+          0,
+          0
+        ],
+        "name": "铁靴烈酒",
+        "scriptNames": [],
+        "spellId": 58501
+      },
+      "spellId": 58501
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 1317,
+        "inventoryType": 0,
+        "itemId": 43824,
+        "itemSpellId": 59317,
+        "maxCount": 0,
+        "name_zhCN": "奥术魔法的学派 - 精通",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": -1,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 4
+      },
+      "itemId": 43824,
+      "legacyId": 22,
+      "legacySource_zhCN": "达拉然藏书",
+      "name_zhCN": "奥术魔法的学派 - 精通",
+      "spell": {
+        "effects": [
+          77,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "传送",
+        "scriptNames": [
+          "spell_gen_teleporting"
+        ],
+        "spellId": 59317
+      },
+      "spellId": 59317
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 55248,
+        "inventoryType": 0,
+        "itemId": 44430,
+        "itemSpellId": 60458,
+        "maxCount": 0,
+        "name_zhCN": "达拉然泰坦神铁徽记",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 10000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 44430,
+      "legacyId": 23,
+      "legacySource_zhCN": "钓鱼日常",
+      "name_zhCN": "达拉然泰坦神铁徽记",
+      "spell": {
+        "effects": [
+          32,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "看看你的手气！",
+        "scriptNames": [],
+        "spellId": 60458
+      },
+      "spellId": 60458
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 58017,
+        "inventoryType": 0,
+        "itemId": 44606,
+        "itemSpellId": 61031,
+        "maxCount": 1,
+        "name_zhCN": "玩具火车",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 1800000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 44606,
+      "legacyId": 24,
+      "legacySource_zhCN": "达拉然玩具店",
+      "name_zhCN": "玩具火车",
+      "spell": {
+        "effects": [
+          50,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          193963,
+          0,
+          0
+        ],
+        "name": "玩具火车",
+        "scriptNames": [],
+        "spellId": 61031
+      },
+      "spellId": 61031
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 58057,
+        "inventoryType": 0,
+        "itemId": 45063,
+        "itemSpellId": 62985,
+        "maxCount": 1,
+        "name_zhCN": "泡沫塑料剑架",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 1800000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 45063,
+      "legacyId": 25,
+      "legacySource_zhCN": "儿童周",
+      "name_zhCN": "泡沫塑料剑架",
+      "spell": {
+        "effects": [
+          76,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          194342,
+          0,
+          0
+        ],
+        "name": "泡沫塑料剑架",
+        "scriptNames": [],
+        "spellId": 62985
+      },
+      "spellId": 62985
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 60006,
+        "inventoryType": 0,
+        "itemId": 46780,
+        "itemSpellId": 65783,
+        "maxCount": 1,
+        "name_zhCN": "食人魔皮纳塔",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 1800000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 46780,
+      "legacyId": 26,
+      "legacySource_zhCN": "集换式卡牌",
+      "name_zhCN": "食人魔皮纳塔",
+      "spell": {
+        "effects": [
+          28,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          34632,
+          0,
+          0
+        ],
+        "name": "食人魔皮纳塔",
+        "scriptNames": [],
+        "spellId": 65783
+      },
+      "spellId": 65783
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 4,
+        "displayId": 60797,
+        "inventoryType": 0,
+        "itemId": 48933,
+        "itemSpellId": 67833,
+        "maxCount": 0,
+        "name_zhCN": "虫洞生成器：诺森德",
+        "requiredSkill": 202,
+        "requiredSkillRank": 415,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 14400000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 48933,
+      "legacyId": 27,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "虫洞生成器：诺森德",
+      "spell": {
+        "effects": [
+          28,
+          64,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          35646,
+          0,
+          0
+        ],
+        "name": "虫洞",
+        "scriptNames": [],
+        "spellId": 67833
+      },
+      "spellId": 67833
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 34282,
+        "inventoryType": 0,
+        "itemId": 49703,
+        "itemSpellId": 30161,
+        "maxCount": 0,
+        "name_zhCN": "永久紫色焰火",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 30000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 49703,
+      "legacyId": 28,
+      "legacySource_zhCN": "钓鱼大赛",
+      "name_zhCN": "永久紫色烟花",
+      "spell": {
+        "effects": [
+          76,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          181886,
+          0,
+          0
+        ],
+        "name": "紫色焰火",
+        "scriptNames": [],
+        "spellId": 30161
+      },
+      "spellId": 30161
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 64034,
+        "inventoryType": 0,
+        "itemId": 50471,
+        "itemSpellId": 71909,
+        "maxCount": 0,
+        "name_zhCN": "裂心者",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 60000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 50471,
+      "legacyId": 29,
+      "legacySource_zhCN": "情人节",
+      "name_zhCN": "裂心者",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          4,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "心碎",
+        "scriptNames": [],
+        "spellId": 71909
+      },
+      "spellId": 71909
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 67489,
+        "inventoryType": 0,
+        "itemId": 52201,
+        "itemSpellId": 73320,
+        "maxCount": 1,
+        "name_zhCN": "穆拉丁的礼物",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 1800000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 4
+      },
+      "itemId": 52201,
+      "legacyId": 30,
+      "legacySource_zhCN": "暗影哀伤任务",
+      "name_zhCN": "穆拉丁的礼物",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          56,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          39089,
+          0,
+          0
+        ],
+        "name": "霜脉幻象",
+        "scriptNames": [],
+        "spellId": 73320
+      },
+      "spellId": 73320
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 58579,
+        "inventoryType": 0,
+        "itemId": 54651,
+        "itemSpellId": 75531,
+        "maxCount": 0,
+        "name_zhCN": "诺莫瑞根的荣耀",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 14400000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 54651,
+      "legacyId": 31,
+      "legacySource_zhCN": "诺莫瑞根收复行动",
+      "name_zhCN": "诺莫瑞根的荣耀",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          56,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "诺莫瑞根的荣耀",
+        "scriptNames": [],
+        "spellId": 75531
+      },
+      "spellId": 75531
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 60005,
+        "inventoryType": 0,
+        "itemId": 46779,
+        "itemSpellId": 65745,
+        "maxCount": 0,
+        "name_zhCN": "塞纳留斯之路",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": -1,
+        "spellCooldownMs": 1000,
+        "spellTrigger": 0,
+        "stackable": 250,
+        "subclass": 0
+      },
+      "itemId": 46779,
+      "legacyId": 32,
+      "legacySource_zhCN": "集换式卡牌",
+      "name_zhCN": "塞纳留斯之路",
+      "spell": {
+        "effects": [
+          6,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          4,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "塞纳留斯之路",
+        "scriptNames": [],
+        "spellId": 65745
+      },
+      "spellId": 65745
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 7,
+        "displayId": 52739,
+        "inventoryType": 0,
+        "itemId": 40769,
+        "itemSpellId": 54711,
+        "maxCount": 0,
+        "name_zhCN": "废物贩卖机器人制造器",
+        "requiredSkill": 202,
+        "requiredSkillRank": 425,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": -1,
+        "spellCooldownMs": 900000,
+        "spellTrigger": 0,
+        "stackable": 20,
+        "subclass": 3
+      },
+      "itemId": 40769,
+      "legacyId": 33,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "废物贩卖机器人制造器",
+      "spell": {
+        "effects": [
+          28,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          29561,
+          0,
+          0
+        ],
+        "name": "废物贩卖机器人",
+        "scriptNames": [],
+        "spellId": 54711
+      },
+      "spellId": 54711
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 7,
+        "displayId": 61018,
+        "inventoryType": 0,
+        "itemId": 49040,
+        "itemSpellId": 67826,
+        "maxCount": 0,
+        "name_zhCN": "基维斯",
+        "requiredSkill": 202,
+        "requiredSkillRank": 450,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 3600000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 3
+      },
+      "itemId": 49040,
+      "legacyId": 34,
+      "legacySource_zhCN": "工程学",
+      "name_zhCN": "基维斯",
+      "spell": {
+        "effects": [
+          28,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          35642,
+          0,
+          0
+        ],
+        "name": "基维斯",
+        "scriptNames": [],
+        "spellId": 67826
+      },
+      "spellId": 67826
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 15,
+        "displayId": 58710,
+        "inventoryType": 0,
+        "itemId": 45984,
+        "itemSpellId": 64385,
+        "maxCount": 0,
+        "name_zhCN": "不寻常的指南针",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": 0,
+        "spellCharges": 0,
+        "spellCooldownMs": 10000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 45984,
+      "legacyId": 35,
+      "legacySource_zhCN": "达拉然钓鱼",
+      "name_zhCN": "不寻常的指南针",
+      "spell": {
+        "effects": [
+          3,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          0,
+          0,
+          0
+        ],
+        "name": "旋转",
+        "scriptNames": [
+          "spell_item_unusual_compass"
+        ],
+        "spellId": 64385
+      },
+      "spellId": 64385
+    },
+    {
+      "clientDisplayPresent": true,
+      "clientItemPresent": true,
+      "item": {
+        "class": 0,
+        "displayId": 50458,
+        "inventoryType": 0,
+        "itemId": 45057,
+        "itemSpellId": 62949,
+        "maxCount": 1,
+        "name_zhCN": "发条式火车破坏者",
+        "requiredSkill": 0,
+        "requiredSkillRank": 0,
+        "requiredSpell": 0,
+        "spellCategory": 0,
+        "spellCategoryCooldownMs": -1,
+        "spellCharges": 0,
+        "spellCooldownMs": 1800000,
+        "spellTrigger": 0,
+        "stackable": 1,
+        "subclass": 0
+      },
+      "itemId": 45057,
+      "legacyId": 36,
+      "legacySource_zhCN": "达拉然玩具店",
+      "name_zhCN": "发条式火车破坏者",
+      "spell": {
+        "effects": [
+          28,
+          0,
+          0
+        ],
+        "implicitTargetsA": [
+          0,
+          0,
+          0
+        ],
+        "implicitTargetsB": [
+          0,
+          0,
+          0
+        ],
+        "miscValues": [
+          33404,
+          0,
+          0
+        ],
+        "name": "发条式火车破坏者",
+        "scriptNames": [],
+        "spellId": 62949
+      },
+      "spellId": 62949
+    }
+  ],
+  "counts": {
+    "clientDisplaysPresent": 36,
+    "clientItemsPresent": 36,
+    "legacyPrototypes": 36
+  },
+  "reviewMethod": "LEGACY_36_ITEM_SPELL_EXACT_REVIEW",
+  "schemaVersion": 1,
+  "sourceBuild": "3.3.5.12340",
+  "sources": {
+    "Item.dbc": "d455bc30b59bc368b2a972a913864dd092d50695140b9513582100dc56ed777d",
+    "ItemDisplayInfo.dbc": "42d2c67fb12cb79e1e62fee2839f5f8f8239abe4ecfd45ed6fee1021642d19bc",
+    "Spell.dbc": "df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f",
+    "legacyPrototype": "d3430a85d251ffe436899ef07c5f60dc3bf920226f9ce42ddbfae4ea5c987d1b",
+    "worldDatabase": "runtime World DB (credentials omitted)"
+  }
+}
