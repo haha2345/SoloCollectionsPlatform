@@ -1072,6 +1072,8 @@ feat: support companion unlock spell variants
 
 ### 任务 7.1：建立玩具证据与审核器
 
+- [x] 已完成（2026-07-22）。新增 `toy_catalog.py` 的 extract/generate/check 流水线，以命名 evidence pack 固定 DBC/World DB 输入；旧 36 条原型全部得到逐项结论：accepted 9、deferred 27、excluded 0，candidate/review/pack Hash 漂移 fail closed。详情见 `docs/reports/2026-07-20-wotlk-toy-catalog-review.md`。
+
 新增建议：
 
 ```text
@@ -1126,6 +1128,8 @@ catalogLifecycle
 
 ### 任务 7.2：保持获取与使用边界
 
+- [x] 已完成（2026-07-22）。账号解锁仍只来自服务端 item acquisition/login scan；AddOn 只发送 logical collection 和目标存在位，C++ 解析完整 action schema、ITEM_USE 持有检查、账号/角色/native 冷却及编译 handler allowlist，未知 handler 在目录构造时 fail closed。
+
 主要文件：
 
 ```text
@@ -1148,6 +1152,8 @@ mod-solo-collections/src/SoloCollectionsProtocolScript.cpp
 - 玩具图标优先来自生成的 `displayItemId`/item icon；冷缓存时监听 `GET_ITEM_INFO_RECEIVED`，最终失败显示单条 fallback。
 
 ### 任务 7.3：分批启用
+
+- [x] 已完成（2026-07-22）。原 `100305..100308` 逐项无回归，新增 5 条安全动作 append-only 为 `100486..100490`；未拥有、目标、冷却、重放、重登、重启、跨角色、账号隔离和清理均通过，20 条 QA fixture 的 18/页、残页、搜索、右键、动作栏拖放与 `/reload` 完成实机验收。
 
 1. 保留现有 `100305..100308` 不变并通过完整回归。
 2. 对旧 36 条完成全覆盖审核报告。
@@ -1979,7 +1985,7 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] 原 21 个武器只显示武器；其余缺资源主副手不显示角色。（2026-07-22；21/21 READY、正式衣橱与 stock fallback 证据见阶段 3 报告。）
 - [x] human/female 相机逐值无回归；10 种族×2 性别×9 部位共 180 项全部通过首轮“可见、居中、无危险裁切/串 profile”标准并完成矩阵记录；`scaled` 可留待后续像素级 `verified`。（2026-07-22；接受运行 `20260722-063149-157`，见阶段 5 报告与逐行审阅 CSV。）
 - [x] 宠物候选逐项 accepted/excluded/deferred；现有 24 ID 不变，新增 ID append-only。（2026-07-22；201/201 候选已审核，冷/热 482/482 READY，动作/隔离/重启闭环与清理证据见阶段 6 报告。）
-- [ ] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。
+- [x] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。（2026-07-22；accepted 9、deferred 27、excluded 0，自动化、真实客户端、重启/隔离及清理证据见阶段 7 报告。）
 - [ ] ItemSet 单一 normalized model 取代双手工事实源；牧师 T1 存在；单/多/不限职业正确；最终 active 数有完整审核依据。
 - [ ] type 14 仍只从 type 13 派生，不新增套装 unlock 写入；UI 与服务端按稳定 variantOrdinal 选择同一 variant，alternatives 确定且原子应用。
 - [ ] 内部/测试/废弃外观不再直接进入普通玩家目录，canonical ID 和已有 owned 不丢失。

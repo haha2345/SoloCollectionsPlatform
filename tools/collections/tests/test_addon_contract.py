@@ -922,6 +922,8 @@ class AddonContractTests(unittest.TestCase):
             "CreateMacro(",
             "EditMacro(",
             "PickupMacro(",
+            "FALLBACK_MACRO_ICON = 1",
+            "local function createToyMacro(",
             "InCombatLockdown()",
             '"/sc toy "',
             "SC.Bridge.UseToy(record.id",

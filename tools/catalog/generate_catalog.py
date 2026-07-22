@@ -276,19 +276,21 @@ def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> d
     sources = [entry for entry in collections if entry["typeKey"] == "toy"]
     _require(path.exists() or not sources, "toy_actions.json is required when toy collections exist")
     if not sources:
-        empty = {"schemaVersion": 1, "entries": []}
+        empty = {"schemaVersion": 2, "entries": []}
         return {**empty, "mappingHash": _hash(empty)}
     data = deepcopy(_read_json(path))
-    _require(data.get("schemaVersion") == 1, "unsupported toy action schema version")
+    _require(data.get("schemaVersion") == 2, "unsupported toy action schema version")
     entries = data.get("entries")
     _require(isinstance(entries, list), "toy action entries must be an array")
     _unique(entries, ("collectionId", "collectionKey", "ordinal", "itemId"), "toy actions")
     source_by_key = {entry["collectionKey"]: entry for entry in sources}
     _require(len(entries) == len(source_by_key), "toy action coverage must match toy catalog")
     action_kinds = {"SPELL_SELF", "SPELL_TARGET", "ITEM_USE", "CUSTOM_HANDLER"}
-    target_policies = {"SELF", "CURRENT_TARGET"}
-    cooldown_scopes = {"CHARACTER", "ACCOUNT"}
-    risk_flags = {"TELEPORT", "GENERATES_ITEM", "ECONOMY", "PERSISTENT_OBJECT"}
+    target_policies = {"NONE", "SELF", "OPTIONAL_UNIT", "REQUIRED_UNIT"}
+    cooldown_scopes = {"NONE", "CHARACTER", "ACCOUNT", "HANDLER_NATIVE"}
+    replay_policies = {"REJECT_DUPLICATE", "IDEMPOTENT"}
+    lifecycles = {"ACTIVE", "PREVIEW_ONLY", "DISABLED", "TOMBSTONE"}
+    risk_flags = {"TELEPORT", "ECONOMY", "ITEM_CREATE", "WORLD_OBJECT", "MATERIAL", "SEASONAL", "AREA", "COMBAT"}
     for entry in entries:
         source = source_by_key.get(entry["collectionKey"])
         _require(source is not None, f"toy action references unknown collection: {entry['collectionKey']}")
@@ -299,7 +301,8 @@ def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> d
         _require(entry.get("actionKind") in action_kinds and source["actionKind"] == entry["actionKind"],
                  f"toy action kind mismatch: {entry['collectionKey']}")
         _require(int(source["actionId"]) == int(entry["spellId"]) and int(entry["spellId"]) > 0,
-                 f"toy action spell mismatch: {entry['collectionKey']}")
+                  f"toy action spell mismatch: {entry['collectionKey']}")
+        _require(entry.get("unlockSource") == "ITEM_ACQUIRED", f"toy unlock source is not item acquisition: {entry['collectionKey']}")
         _require(entry.get("targetPolicy") in target_policies, f"invalid toy target policy: {entry['collectionKey']}")
         _require(entry.get("cooldownScope") in cooldown_scopes, f"invalid toy cooldown scope: {entry['collectionKey']}")
         _require(isinstance(entry.get("accountCooldownMs"), int) and entry["accountCooldownMs"] >= 0,
@@ -310,16 +313,24 @@ def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> d
                  f"toy combat/material semantics must be explicit: {entry['collectionKey']}")
         _require(isinstance(entry.get("riskFlags"), list) and set(entry["riskFlags"]) <= risk_flags,
                  f"invalid toy risk flags: {entry['collectionKey']}")
-        _require(entry.get("replayPolicy") == "SC2_REQUEST_ID",
-                 f"toy action lacks request replay protection: {entry['collectionKey']}")
+        _require(entry.get("replayPolicy") in replay_policies,
+                  f"toy action lacks explicit replay semantics: {entry['collectionKey']}")
+        _require(entry.get("catalogLifecycle") in lifecycles,
+                  f"toy action lacks catalog lifecycle: {entry['collectionKey']}")
+        _require(entry["catalogLifecycle"] == "ACTIVE" and source["lifecycle"] == "active",
+                  f"non-active toy entered the public action catalog: {entry['collectionKey']}")
         if entry["actionKind"] == "CUSTOM_HANDLER":
             _require(bool(entry.get("customHandler")), f"custom toy handler missing: {entry['collectionKey']}")
         else:
             _require(not entry.get("customHandler"), f"non-custom toy declares handler: {entry['collectionKey']}")
         if entry["actionKind"] == "SPELL_TARGET":
-            _require(entry["targetPolicy"] == "CURRENT_TARGET", f"targeted toy lacks target policy: {entry['collectionKey']}")
+            _require(entry["targetPolicy"] in {"OPTIONAL_UNIT", "REQUIRED_UNIT"},
+                     f"targeted toy lacks unit target policy: {entry['collectionKey']}")
+        elif entry["actionKind"] == "SPELL_SELF":
+            _require(entry["targetPolicy"] in {"NONE", "SELF"},
+                     f"self toy declares a unit target policy: {entry['collectionKey']}")
     normalized = sorted(entries, key=lambda row: int(row["ordinal"]))
-    result = {"schemaVersion": 1, "entries": normalized}
+    result = {"schemaVersion": 2, "entries": normalized}
     result["mappingHash"] = _hash(result)
     return result
 
@@ -877,8 +888,21 @@ def _toy_catalog_inc(model: dict[str, Any]) -> str:
         "SPELL_SELF": "ToyActionKind::SpellSelf", "SPELL_TARGET": "ToyActionKind::SpellTarget",
         "ITEM_USE": "ToyActionKind::ItemUse", "CUSTOM_HANDLER": "ToyActionKind::CustomHandler",
     }
-    target_names = {"SELF": "ToyTargetPolicy::Self", "CURRENT_TARGET": "ToyTargetPolicy::CurrentTarget"}
-    cooldown_names = {"CHARACTER": "ToyCooldownScope::Character", "ACCOUNT": "ToyCooldownScope::Account"}
+    target_names = {
+        "NONE": "ToyTargetPolicy::None", "SELF": "ToyTargetPolicy::Self",
+        "OPTIONAL_UNIT": "ToyTargetPolicy::OptionalUnit", "REQUIRED_UNIT": "ToyTargetPolicy::RequiredUnit",
+    }
+    cooldown_names = {
+        "NONE": "ToyCooldownScope::None", "CHARACTER": "ToyCooldownScope::Character",
+        "ACCOUNT": "ToyCooldownScope::Account", "HANDLER_NATIVE": "ToyCooldownScope::HandlerNative",
+    }
+    replay_names = {
+        "REJECT_DUPLICATE": "ToyReplayPolicy::RejectDuplicate", "IDEMPOTENT": "ToyReplayPolicy::Idempotent",
+    }
+    lifecycle_names = {
+        "ACTIVE": "ToyCatalogLifecycle::Active", "PREVIEW_ONLY": "ToyCatalogLifecycle::PreviewOnly",
+        "DISABLED": "ToyCatalogLifecycle::Disabled", "TOMBSTONE": "ToyCatalogLifecycle::Tombstone",
+    }
     lines = [
         "// Generated by tools/catalog/generate_catalog.py. Do not edit.", "",
         "static std::vector<ToyCollectionDefinition> LoadGeneratedToyCollections()", "{", "    return {",
@@ -892,7 +916,8 @@ def _toy_catalog_inc(model: dict[str, Any]) -> str:
                 cooldown_names[entry["cooldownScope"]], str(int(entry["accountCooldownMs"])) + "u",
                 "true" if entry["allowInCombat"] else "false",
                 "true" if entry["consumesMaterial"] else "false",
-                _cpp_string(entry["customHandler"]), _cpp_strings(entry["riskFlags"]),
+                _cpp_string(entry["customHandler"]), replay_names[entry["replayPolicy"]],
+                _cpp_strings(entry["riskFlags"]), lifecycle_names[entry["catalogLifecycle"]],
             ]) + "},"
         )
     lines += ["    };", "}", ""]
@@ -968,7 +993,8 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         elif entry["typeKey"] == "toy":
             action = toy_actions_by_id[int(entry["collectionId"])]
             entry["displayItemId"] = int(action["itemId"])
-            entry["requiresTarget"] = action["targetPolicy"] == "CURRENT_TARGET"
+            entry["targetPolicy"] = action["targetPolicy"]
+            entry["requiresTarget"] = action["targetPolicy"] == "REQUIRED_UNIT"
         elif entry["typeKey"] == "appearance":
             entry["displayItemId"] = int(entry["sourceId"])
         if entry["typeKey"] in {"mount", "companion", "toy", "appearance", "set"}:
@@ -1062,6 +1088,23 @@ def _validate_companion_catalog(repo_root: Path, evidence_root: Path) -> None:
         raise CatalogError(f"companion catalog rejected: {exc}") from exc
 
 
+def _validate_toy_catalog(repo_root: Path, evidence_root: Path) -> None:
+    module_path = Path(__file__).with_name("toy_catalog.py")
+    spec = importlib.util.spec_from_file_location("solo_toy_catalog", module_path)
+    _require(spec is not None and spec.loader is not None, "cannot load toy catalog generator")
+    toy_generator = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(toy_generator)
+    try:
+        toy_generator.verify_review_pack(repo_root, evidence_root)
+        toy_generator.generate(
+            repo_root,
+            repo_root / "catalog/review/toys/evidence.json",
+            True,
+        )
+    except (OSError, toy_generator.ToyCatalogError) as exc:
+        raise CatalogError(f"toy catalog rejected: {exc}") from exc
+
+
 def _validate_appearance_presentation_evidence(repo_root: Path, source_root: Path, evidence_root: Path) -> None:
     module_path = Path(__file__).with_name("appearance_presentations.py")
     spec = importlib.util.spec_from_file_location("solo_appearance_presentations", module_path)
@@ -1097,6 +1140,7 @@ def generate(repo_root: Path, source_root: Path, module_root: Path, evidence_roo
     print(f"catalog module target: {module_root}")
     _validate_creature_presentation_evidence(source_root, evidence_root)
     _validate_companion_catalog(repo_root, evidence_root)
+    _validate_toy_catalog(repo_root, evidence_root)
     _validate_appearance_presentation_evidence(repo_root, source_root, evidence_root)
     _validate_character_camera_profiles(repo_root)
     model = build_model(source_root)

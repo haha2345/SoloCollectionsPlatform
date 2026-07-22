@@ -86,6 +86,9 @@ function Get-PortableWeaponSourcePath {
     param([AllowNull()][object] $Value)
 
     $normalized = ([string]$Value).Replace('\', '/')
+    if ($normalized.StartsWith('extract/', [System.StringComparison]::OrdinalIgnoreCase)) {
+        return $normalized
+    }
     $marker = '/extract/'
     $markerIndex = $normalized.IndexOf($marker, [System.StringComparison]::OrdinalIgnoreCase)
     if ($markerIndex -ge 0) {
@@ -166,6 +169,10 @@ $repositoryInputs = [ordered]@{
     'catalog/review/companions/review-policy.json' = 'review-policy'
     'catalog/generated/companion-candidates.csv' = 'generated-review-table'
     'catalog/generated/companion-exclusions.csv' = 'generated-review-table'
+    'catalog/review/toys/evidence.json' = 'parsed-world-and-dbc-evidence'
+    'catalog/review/toys/review-policy.json' = 'review-policy'
+    'catalog/generated/toy-candidates.csv' = 'generated-review-table'
+    'catalog/generated/toy-exclusions.csv' = 'generated-review-table'
     'catalog/generated/catalog-manifest.json' = 'generated-baseline'
     'catalog/generated/appearance-sources.json' = 'generated-baseline'
     'catalog/source/versions.json' = 'catalog-version'

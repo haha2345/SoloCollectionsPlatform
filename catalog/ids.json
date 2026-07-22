@@ -112211,6 +112211,36 @@
         "key": "companion.mini_thor",
         "lifecycle": "active",
         "ordinal": 18683
+      },
+      {
+        "id": 100486,
+        "key": "toy.decahedral_dwarven_dice",
+        "lifecycle": "active",
+        "ordinal": 18684
+      },
+      {
+        "id": 100487,
+        "key": "toy.super_simian_sphere",
+        "lifecycle": "active",
+        "ordinal": 18685
+      },
+      {
+        "id": 100488,
+        "key": "toy.iron_boot_flask",
+        "lifecycle": "active",
+        "ordinal": 18686
+      },
+      {
+        "id": 100489,
+        "key": "toy.titanium_seal_of_dalaran",
+        "lifecycle": "active",
+        "ordinal": 18687
+      },
+      {
+        "id": 100490,
+        "key": "toy.muradins_favor",
+        "lifecycle": "active",
+        "ordinal": 18688
       }
     ],
     "races": [
