@@ -24,10 +24,10 @@ class SetCatalogContractTests(unittest.TestCase):
         implementation = (SRC / "SoloCollectionsSetCatalog.cpp").read_text(encoding="utf-8")
         generated = (SRC / "generated/SoloCollectionsSetCatalog.inc").read_text(encoding="utf-8")
         self.assertIn("AppearanceAlternatives", header)
-        self.assertIn("member.Enabled && member.Required", implementation)
+        self.assertIn("if (!member.Required)", implementation)
         self.assertIn("SetAppearanceDependencyTypeId", implementation)
         self.assertIn("if (owned)", implementation)
-        self.assertEqual(8, generated.count("{ CollectionId{ 3000"))
+        self.assertEqual(465, generated.count("        { CollectionId{"))
 
     def test_no_parallel_set_collected_writer_exists(self):
         production = "\n".join(
@@ -44,8 +44,8 @@ class SetCatalogContractTests(unittest.TestCase):
         protocol = (SRC / "SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
         for token in (
             "SelectVariant(accountId, *definition, variantIndex)",
-            "runtimeClass.Identity->LogicalId != requiredClass.Identity->LogicalId",
-            "member.Enabled",
+            "ClassAllowed(player, *definition)",
+            "FindVariant(definition, variantOrdinal)",
             "member.Required",
             "GetItemByPos(INVENTORY_SLOT_BAG_0, *slot)",
             "ResolveOwnedSource(player, appearanceId, *slot)",
@@ -58,6 +58,15 @@ class SetCatalogContractTests(unittest.TestCase):
         self.assertLess(transmog.index("if (!committed)"), transmog.index("player->DestroyItemCount"))
         self.assertIn("request.TypeId == SetCollectionTypeId.Value()", protocol)
         self.assertIn('request.ActionId != "APPLY"', protocol)
+
+    def test_type14_snapshot_and_delta_use_provider_projection_at_same_revision(self):
+        protocol = (SRC / "SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
+        server = (SRC / "SoloCollectionsProtocolServer.cpp").read_text(encoding="utf-8")
+        self.assertIn("CollectionStorageMode::Derived", protocol)
+        self.assertIn("OnDerivedOwnedChanged", protocol)
+        self.assertIn("delta.Revision", protocol)
+        self.assertIn("std::set_difference", server)
+        self.assertIn("session.ExternalOwned[typeId] = owned", server)
 
     def test_set_slot_mapping_is_explicit_and_unknown_or_duplicate_slots_fail_closed(self):
         service = (SRC / "SoloCollectionsSetService.cpp").read_text(encoding="utf-8")

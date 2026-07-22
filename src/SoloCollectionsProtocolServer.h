@@ -51,6 +51,8 @@ public:
     void CloseSession(AccountSessionId sessionId);
     void SetExternalOwned(AccountSessionId sessionId, CollectionTypeId typeId,
         std::vector<CollectionId> owned);
+    void OnDerivedOwnedChanged(AccountId accountId, CollectionTypeId typeId,
+        std::vector<CollectionId> owned, CollectionRevision revision);
     [[nodiscard]] bool HandleInbound(
         AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs,
         ActionHandler const& actionHandler = {});

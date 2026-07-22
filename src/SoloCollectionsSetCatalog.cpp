@@ -19,15 +19,23 @@ SetCatalog::SetCatalog(std::vector<SetCollectionDefinition> collections) : _coll
     {
         SetCollectionDefinition const& definition = _collections[index];
         if (!definition.Id.IsValid() || definition.Key.empty() || definition.ItemSetId == 0 ||
-            definition.ClassToken.empty() || definition.Variants.empty() ||
+            definition.ClassPolicy == SetClassPolicyMode::Unresolved || definition.Variants.empty() ||
             !_byCollection.emplace(definition.Id, index).second)
             throw std::runtime_error("invalid or duplicate SoloCollections set catalog entry");
 
+        if ((definition.ClassPolicy == SetClassPolicyMode::AllowList) != !definition.AllowedClassKeys.empty())
+            throw std::runtime_error("invalid SoloCollections set class policy");
+
         std::unordered_set<std::string> variantKeys;
+        std::unordered_set<std::uint32_t> variantOrdinals;
+        std::uint32_t activeDefaults = 0;
         for (SetVariantDefinition const& variant : definition.Variants)
         {
-            if (variant.Key.empty() || !variantKeys.emplace(variant.Key).second)
+            if (variant.Key.empty() || variant.Ordinal == 0 || !variantKeys.emplace(variant.Key).second ||
+                !variantOrdinals.emplace(variant.Ordinal).second)
                 throw std::runtime_error("invalid or duplicate SoloCollections set variant");
+            if (variant.Lifecycle == SetVariantLifecycle::Active && variant.IsDefault)
+                ++activeDefaults;
             std::unordered_set<std::string> memberKeys;
             std::uint32_t required = 0;
             for (SetMemberDefinition const& member : variant.Members)
@@ -35,13 +43,32 @@ SetCatalog::SetCatalog(std::vector<SetCollectionDefinition> collections) : _coll
                 if (member.Key.empty() || member.SlotKey.empty() || member.AppearanceAlternatives.empty() ||
                     !memberKeys.emplace(member.Key).second)
                     throw std::runtime_error("invalid or duplicate SoloCollections set member");
-                if (member.Enabled && member.Required)
+                if (member.Required)
                     ++required;
             }
-            if (variant.Enabled && required == 0)
+            if (variant.Lifecycle == SetVariantLifecycle::Active && required == 0)
                 throw std::runtime_error("enabled SoloCollections set variant has no required members");
         }
+        if (activeDefaults != 1)
+            throw std::runtime_error("SoloCollections set needs exactly one active default variant");
     }
+}
+
+SetVariantDefinition const* SetCatalog::FindVariant(
+    SetCollectionDefinition const& definition, std::uint32_t variantOrdinal) const
+{
+    for (SetVariantDefinition const& variant : definition.Variants)
+        if (variant.Ordinal == variantOrdinal && variant.Lifecycle == SetVariantLifecycle::Active)
+            return &variant;
+    return nullptr;
+}
+
+SetVariantDefinition const* SetCatalog::DefaultVariant(SetCollectionDefinition const& definition) const
+{
+    for (SetVariantDefinition const& variant : definition.Variants)
+        if (variant.IsDefault && variant.Lifecycle == SetVariantLifecycle::Active)
+            return &variant;
+    return nullptr;
 }
 
 SetCollectionDefinition const* SetCatalog::Find(CollectionId collectionId) const
@@ -53,12 +80,12 @@ SetCollectionDefinition const* SetCatalog::Find(CollectionId collectionId) const
 SetVariantProgress SetCatalog::ProgressVariant(AccountId accountId, SetVariantDefinition const& variant)
 {
     SetVariantProgress progress;
-    if (!variant.Enabled)
+    if (variant.Lifecycle != SetVariantLifecycle::Active)
         return progress;
 
     for (SetMemberDefinition const& member : variant.Members)
     {
-        if (!member.Enabled || !member.Required)
+        if (!member.Required)
             continue;
         ++progress.Required;
         bool owned = false;

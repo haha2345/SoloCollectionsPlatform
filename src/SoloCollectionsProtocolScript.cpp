@@ -77,7 +77,8 @@ Sc2Server& GetSc2Server()
             category.Enabled = state && state->Mode != CollectionProviderMode::Disabled;
             CollectionProvider const* provider = providers.Find(category.TypeId);
             category.External = provider &&
-                provider->Descriptor().Storage == CollectionStorageMode::External;
+                (provider->Descriptor().Storage == CollectionStorageMode::External ||
+                 provider->Descriptor().Storage == CollectionStorageMode::Derived);
         }
         return Sc2Server(GetAccountCollectionCache(), std::string(GeneratedSc2MetadataVersion),
             std::string(GeneratedSc2AssetPackVersion), std::string(BackendBuild), std::move(categories));
@@ -91,6 +92,9 @@ public:
     void OnCollectionDeltaCommitted(AccountId accountId, CollectionDelta const& delta) override
     {
         GetSc2Server().OnCollectionDeltaCommitted(accountId, delta);
+        if (delta.Key.TypeId == SetAppearanceDependencyTypeId)
+            GetSc2Server().OnDerivedOwnedChanged(accountId, SetCollectionTypeId,
+                GetSetCatalog().CompletedByAccount(accountId), delta.Revision);
     }
 
     void OnCollectionMutationFailed(
@@ -145,6 +149,9 @@ void Sc2ProtocolOpenSession(Player* player)
     GetSc2Server().OpenSession(AccountId(player->GetSession()->GetAccountId()), SessionId(player));
     GetSc2Server().SetExternalOwned(
         SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
+    GetSc2Server().SetExternalOwned(
+        SessionId(player), SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
+            AccountId(player->GetSession()->GetAccountId())));
 }
 
 void Sc2ProtocolCloseSession(Player* player)
@@ -172,6 +179,9 @@ bool Sc2ProtocolCanUsePrivateChat(
     }
     GetSc2Server().SetExternalOwned(
         SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
+    GetSc2Server().SetExternalOwned(
+        SessionId(player), SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
+            AccountId(player->GetSession()->GetAccountId())));
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
         [player](AccountId accountId, Sc2Message const& request)
         {
@@ -268,6 +278,9 @@ void Sc2ProtocolPumpAndSend(Player* player)
     if (!IsCppBackendOwner() || !player || !player->GetSession())
         return;
     AccountSessionId sessionId = SessionId(player);
+    GetSc2Server().SetExternalOwned(
+        sessionId, SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
+            AccountId(player->GetSession()->GetAccountId())));
     GetSc2Server().PumpSession(sessionId, MonotonicMilliseconds());
     std::vector<std::string> bodies = GetSc2Server().DrainOutbound(sessionId, Sc2Limits::MaxPacketsPerTick);
     auto started = std::chrono::steady_clock::now();

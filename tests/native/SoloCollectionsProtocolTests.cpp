@@ -338,6 +338,37 @@ void TestExternalTitleSnapshotsAreSessionScoped()
     Require(sawOwnedPayload, "external title ownership was not sorted, deduplicated and snapshotted");
     Require(sawEmptyPayload, "external title ownership leaked between character sessions");
 }
+
+void TestDerivedSetDeltaUsesAppearanceRevisionAndStableDiff()
+{
+    SC::AccountCollectionCache cache;
+    auto opened = cache.OpenSession(Account(99), Session(990), 0);
+    Require(cache.CompleteLoad(Account(99), opened.Generation, {}, SC::CollectionRevision(12)),
+        "derived set cache fixture did not become ready");
+    SC::Sc2Server server(cache, "2026.07.22.2", "wotlk-3.3.5a-local-1", "phase8-set", {
+        { SC::CollectionTypeId(std::uint16_t { 14 }),
+          "2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf", true, true },
+    });
+    server.OpenSession(Account(99), Session(990));
+    server.SetExternalOwned(Session(990), SC::CollectionTypeId(14), {});
+    (void)server.HandleInbound(Session(990),
+        "H|1|9999999999999990|0.2.0-dev|2026.07.22.2|wotlk-3.3.5a-local-1", 0);
+    (void)server.DrainOutbound(Session(990), 32);
+
+    server.OnDerivedOwnedChanged(Account(99), SC::CollectionTypeId(14),
+        { SC::CollectionId(300008) }, SC::CollectionRevision(13));
+    std::vector<std::string> added = server.DrainOutbound(Session(990), 32);
+    Require(added.size() == 1 && added[0].find("|14|13|A|300008") != std::string::npos,
+        "derived set completion did not use the appearance mutation revision");
+    server.OnDerivedOwnedChanged(Account(99), SC::CollectionTypeId(14),
+        { SC::CollectionId(300008) }, SC::CollectionRevision(13));
+    Require(server.DrainOutbound(Session(990), 32).empty(),
+        "unchanged derived set projection emitted a duplicate delta");
+    server.OnDerivedOwnedChanged(Account(99), SC::CollectionTypeId(14), {}, SC::CollectionRevision(14));
+    std::vector<std::string> removed = server.DrainOutbound(Session(990), 32);
+    Require(removed.size() == 1 && removed[0].find("|14|14|R|300008") != std::string::npos,
+        "derived set removal was not diffed at the appearance revision");
+}
 }
 
 int main()
@@ -353,6 +384,7 @@ int main()
         TestAccountScopedDeltaFanout();
         TestSyntheticPersistedProviderRevisionSync();
         TestExternalTitleSnapshotsAreSessionScoped();
+        TestDerivedSetDeltaUsesAppearanceRevisionAndStableDiff();
         std::cout << "SoloCollections SC2 protocol tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

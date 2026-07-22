@@ -77,6 +77,44 @@ void Sc2Server::SetExternalOwned(AccountSessionId sessionId, CollectionTypeId ty
     session->second.ExternalOwned[typeId] = std::move(owned);
 }
 
+void Sc2Server::OnDerivedOwnedChanged(AccountId accountId, CollectionTypeId typeId,
+    std::vector<CollectionId> owned, CollectionRevision revision)
+{
+    std::scoped_lock lock(_mutex);
+    std::sort(owned.begin(), owned.end());
+    owned.erase(std::unique(owned.begin(), owned.end()), owned.end());
+    for (auto& [sessionId, session] : _sessions)
+    {
+        (void)sessionId;
+        if (!session.Active || session.Account != accountId)
+            continue;
+        std::vector<CollectionId> previous = session.ExternalOwned[typeId];
+        std::sort(previous.begin(), previous.end());
+        std::vector<CollectionId> added;
+        std::vector<CollectionId> removed;
+        std::set_difference(owned.begin(), owned.end(), previous.begin(), previous.end(),
+            std::back_inserter(added));
+        std::set_difference(previous.begin(), previous.end(), owned.begin(), owned.end(),
+            std::back_inserter(removed));
+        auto queueDelta = [&](CollectionId collectionId, std::string operation)
+        {
+            Sc2Message message;
+            message.Kind = Sc2MessageKind::Delta;
+            message.SessionNonce = session.Nonce;
+            message.TypeId = typeId.Value();
+            message.Revision = revision.Value();
+            message.Operation = std::move(operation);
+            message.CollectionId = collectionId.Value();
+            Queue(session, std::move(message));
+        };
+        for (CollectionId collectionId : added)
+            queueDelta(collectionId, "A");
+        for (CollectionId collectionId : removed)
+            queueDelta(collectionId, "R");
+        session.ExternalOwned[typeId] = owned;
+    }
+}
+
 bool Sc2Server::ConsumeToken(SessionState& session, std::uint64_t nowMs)
 {
     if (nowMs > session.Bucket.LastRefillMs)

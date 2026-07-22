@@ -10,6 +10,7 @@
 #include "Player.h"
 
 #include <map>
+#include <algorithm>
 #include <optional>
 #include <set>
 #include <string_view>
@@ -44,13 +45,13 @@ bool OwnsAppearance(AccountId accountId, CollectionId appearanceId)
 
 bool VariantComplete(AccountId accountId, SetVariantDefinition const& variant)
 {
-    if (!variant.Enabled)
+    if (variant.Lifecycle != SetVariantLifecycle::Active)
         return false;
     std::uint32_t required = 0;
     std::uint32_t owned = 0;
     for (SetMemberDefinition const& member : variant.Members)
     {
-        if (!member.Enabled || !member.Required)
+        if (!member.Required)
             continue;
         ++required;
         for (CollectionId appearanceId : member.AppearanceAlternatives)
@@ -64,19 +65,22 @@ bool VariantComplete(AccountId accountId, SetVariantDefinition const& variant)
 }
 
 SetVariantDefinition const* SelectVariant(AccountId accountId,
-    SetCollectionDefinition const& definition, std::uint32_t variantIndex)
+    SetCollectionDefinition const& definition, std::uint32_t variantOrdinal)
 {
-    if (variantIndex > 0)
-    {
-        if (variantIndex > definition.Variants.size())
-            return nullptr;
-        SetVariantDefinition const& selected = definition.Variants[variantIndex - 1];
-        return VariantComplete(accountId, selected) ? &selected : nullptr;
-    }
-    for (SetVariantDefinition const& variant : definition.Variants)
-        if (VariantComplete(accountId, variant))
-            return &variant;
-    return nullptr;
+    SetVariantDefinition const* selected = variantOrdinal > 0 ?
+        GetSetCatalog().FindVariant(definition, variantOrdinal) : GetSetCatalog().DefaultVariant(definition);
+    return selected && VariantComplete(accountId, *selected) ? selected : nullptr;
+}
+
+bool ClassAllowed(Player* player, SetCollectionDefinition const& definition)
+{
+    if (definition.ClassPolicy == SetClassPolicyMode::Any)
+        return true;
+    if (definition.ClassPolicy != SetClassPolicyMode::AllowList)
+        return false;
+    auto runtimeClass = GetIdentityRegistry().ResolveClass(player->getClass());
+    return runtimeClass.IsKnown() && std::find(definition.AllowedClassKeys.begin(),
+        definition.AllowedClassKeys.end(), runtimeClass.Identity->ClassKey) != definition.AllowedClassKeys.end();
 }
 }
 
@@ -90,11 +94,7 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
     if (!definition)
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
-    IdentityRegistry const& identities = GetIdentityRegistry();
-    auto runtimeClass = identities.ResolveClass(player->getClass());
-    auto requiredClass = identities.ResolveClass(definition->ClassToken);
-    if (!runtimeClass.IsKnown() || !requiredClass.IsKnown() ||
-        runtimeClass.Identity->LogicalId != requiredClass.Identity->LogicalId)
+    if (!ClassAllowed(player, *definition))
         return { LANG_TRANSMOG_INVALID_ITEMS };
 
     AccountId accountId(player->GetSession()->GetAccountId());
@@ -106,8 +106,6 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
     std::set<std::uint8_t> requestedSlots;
     for (SetMemberDefinition const& member : variant->Members)
     {
-        if (!member.Enabled)
-            continue;
         std::optional<std::uint8_t> slot = EquipmentSlot(member.SlotKey);
         if (!slot)
             return { LANG_TRANSMOG_INVALID_SLOT };
