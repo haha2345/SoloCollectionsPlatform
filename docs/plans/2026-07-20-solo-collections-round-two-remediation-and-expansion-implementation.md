@@ -329,6 +329,8 @@ F:\1_projects\wow_projects\SoloCollectionsPlatform\SoloCollections\_work\evidenc
 
 ### 任务 0.2：建立可重复的失败用例
 
+- [x] 已完成（2026-07-22）。阶段 1–9 均先以 fail-closed 合同覆盖默认图标、SC1 依赖、失败 callback、缺资源 BODY、玩具 margin、相机 sentinel、宠物/玩具/套装身份与动作、外观可见性和 release 安装恢复，再随对应修复转为长期回归；Addon 239 项、module 133 项与 native 2 项最终通过。
+
 每个修复任务先在工作分支中补一个会失败的合同测试，再与修复一起提交；不得把“当前错误行为”写成长期通过的测试。
 
 最低失败用例：
@@ -1455,6 +1457,8 @@ ui: scale set member presentation safely
 
 ### 任务 9.1：建立外观可见性证据
 
+- [x] 已完成（2026-07-22）。18,190 条 canonical appearance 全覆盖审核为 public 13,831、hidden_internal 1,375、deprecated 139、test 242、unobtainable 2,603、deferred 0；独立 `uiLifecycle` 不改变 canonical identity、owned 或服务端授权，Computer Use 实机确认客户端只投影 13,831 条 public 外观。详情见 `docs/reports/2026-07-20-appearance-visibility-review.md`。
+
 新增建议：
 
 ```text
@@ -1506,6 +1510,8 @@ tools/runtime/SoloCollectionsRuntimeAudit/
 - 默认不进入发行包，必须显式 QA 构建才加载。
 
 ### 任务 9.3：跨仓库版本与生成物核对
+
+- [x] 已完成（2026-07-22）。release/runbook 八个脚本、deployment profile schema、x64 PE/依赖/provenance 校验、逐文件 Hash、事务备份/恢复、配置合并、installed verifier、startup/status build-info 和仓库卫生门禁均落地；真实 D 盘安装覆盖 41 个既有文件并保留完整 backup manifest，锁定 MPQ 的首次尝试已自动回滚，未执行远程发布。
 
 本阶段必须实现以下 release/runbook 工具，而不是只在文档里写“配套部署”：
 
@@ -1617,6 +1623,8 @@ $bundle = Join-Path $repo "_work\releases\$bundleId"
 恢复脚本先校验 backup SHA-256，再成套恢复 module/AddOn/DLL/asset/config；恢复后要求 `.solocollections status`、一条 PREVIEW 和原 281/24/4/8 smoke matrix 通过。不得通过递归删除客户端或覆盖整个服务端根目录回滚。
 
 ### 任务 9.4：性能回归
+
+- [x] 已完成（2026-07-22）。Addon 与 C++ 均固定 18,190 appearance、201 companion candidate、509 ItemSet shadow 压力分母；真实客户端首开/过滤/分页保持固定对象池，展开加载 22.407 ms、峰值约 6.7 MiB、快照重组 8.623 ms，服务器只读索引 benchmark 为 load/filter/lookup 55/49/350 μs，无 DB 查询或逐次全目录扫描。详情见 `docs/reports/2026-07-22-round-two-performance-regression.md`。
 
 - 扩充后的宠物、玩具和套装继续使用固定 UI 对象池，不逐帧复制全目录。
 - catalog load、搜索、过滤、分页和集合进度增加基线计时。
@@ -2000,11 +2008,11 @@ tag 只在对应批次全部闸门通过后创建；本方案不授权 push。�
 - [x] 旧 36 玩具全部有审核结论；现有四条无回归；新增 handler 逐项验收。（2026-07-22；accepted 9、deferred 27、excluded 0，自动化、真实客户端、重启/隔离及清理证据见阶段 7 报告。）
 - [x] ItemSet 单一 normalized model 取代双手工事实源；牧师 T1 存在；单/多/不限职业正确；最终 active 数有完整审核依据。（2026-07-22；509 项全审核、465 active、Manual8 零漂移与真实客户端证据见阶段 8 报告。）
 - [x] type 14 仍只从 type 13 派生，不新增套装 unlock 写入；UI 与服务端按稳定 variantOrdinal 选择同一 variant，alternatives 确定且原子应用。（2026-07-22；1/8→7/8→8/8→0/8 同 revision 派生链路、缺目标槽零部分结果与清理闭环见阶段 8 报告。）
-- [ ] 内部/测试/废弃外观不再直接进入普通玩家目录，canonical ID 和已有 owned 不丢失。
-- [ ] 所有生成器 `--check`、Python tests、Lua 5.1、SoloCam x86 native、module native 和真实 AzerothCore worldserver 构建通过。
-- [ ] 分辨率/UI Scale、冷/热缓存、快速切换、重载、重登、重启和账号隔离矩阵通过。
-- [ ] AddOn、module、Core 三个 commit与实际部署的 x64 `worldserver.exe`、客户端 bundle、metadataVersion、assetPackVersion、mapping hash 与 SHA-256 可追溯。
-- [ ] 源代码仓库不包含凭据、数据库转储、DBC/M2/BLP/MPQ、DLL/EXE、WDB 或构建产物。
+- [x] 内部/测试/废弃外观不再直接进入普通玩家目录，canonical ID 和已有 owned 不丢失。（2026-07-22；18,190 条全覆盖，实机 `public=13831/nonpublic=4359`。）
+- [x] 所有生成器 `--check`、Python tests、Lua 5.1、SoloCam x86 native、module native 和真实 AzerothCore worldserver 构建通过。（2026-07-22；最终命令与结果见集成验收报告。）
+- [x] 分辨率/UI Scale、冷/热缓存、快速切换、重载、重登、重启和账号隔离矩阵通过。（2026-07-22；阶段 1–8 实机报告和阶段 9 性能补证共同闭合。）
+- [x] AddOn、module、Core 三个 commit与实际部署的 x64 `worldserver.exe`、客户端 bundle、metadataVersion、assetPackVersion、mapping hash 与 SHA-256 可追溯。（2026-07-22；release manifest、module build metadata 与 startup build-info 三方一致。）
+- [x] 源代码仓库不包含凭据、数据库转储、DBC/M2/BLP/MPQ、DLL/EXE、WDB 或构建产物。（2026-07-22；`Test-RepositoryHygiene.ps1` 对 AddOn/module/Core 通过；固定 Core commit 的 3 个既有 upstream MySQL CLI 和 1 个 gSOAP 误报文件以精确相对路径显式批准，外部证据与 bundle 仅在 Git 忽略的 F 盘 `_work`。）
 
 ## 20. 明确留到后续的工作
 
