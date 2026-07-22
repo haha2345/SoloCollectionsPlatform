@@ -78,6 +78,23 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertIn("setSetOffset((page.scSetOffset or 0) - VISIBLE_SET_ROWS)", source)
         self.assertIn("setSetOffset((page.scSetOffset or 0) + VISIBLE_SET_ROWS)", source)
 
+    def test_set_scroll_clamps_filter_resets_and_last_partial_page_in_one_transition(self):
+        source = read_text(WARDROBE)
+        setter = re.search(
+            r"setSetOffset\s*=\s*function\(value, suppressRefresh\)(.*?)(?=\n\s*local function scrollSetList)",
+            source,
+            re.S,
+        )
+        self.assertIsNotNone(setter)
+        block = setter.group(1)
+        self.assertIn("math.max(0, math.min", block)
+        self.assertIn("getMaxSetOffset()", block)
+        self.assertIn("math.floor(target / VISIBLE_SET_ROWS) + 1", block)
+        self.assertGreaterEqual(source.count("setSetOffset(0, true)"), 5)
+        self.assertNotIn("page.scSetOffset = math.max", source)
+        self.assertIn("setSetOffset(page.scSetOffset, true)", source)
+        self.assertIn("setScrollbar:SetValue(page.scSetOffset)", source)
+
     def test_set_preview_is_generation_aware_and_undresses_before_tryon(self):
         source = read_text(WARDROBE)
         self.assertIn("scSetPreviewGeneration", source)
@@ -100,6 +117,35 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertIn("record.selectedVariant", helper.group(1))
         self.assertIn("previewSourceItemId", helper.group(1))
         self.assertIn("getSelectedVariantPreviewItems(record)", source)
+
+    def test_set_preview_rejects_stale_work_and_cleans_pending_state(self):
+        source = read_text(WARDROBE)
+        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function previewSet)", source, re.S)
+        self.assertIsNotNone(queued)
+        block = queued.group(1)
+        self.assertIn("pending.renderTicks < 2", block)
+        self.assertIn('SC.db.wardrobeTab ~= "SETS"', block)
+        self.assertIn("page.scSetPreviewPending ~= pending", block)
+        self.assertIn("page.scSetPreviewGeneration ~= pending.generation", block)
+        self.assertIn("local function cancelSetPreview()", source)
+        self.assertIn("cancelSetPreview()", source[source.index("local function refreshItems()"):])
+        self.assertIn('page:RegisterEvent("UNIT_MODEL_CHANGED")', source)
+        self.assertIn('page:RegisterEvent("PLAYER_ENTERING_WORLD")', source)
+
+    def test_set_preview_selects_one_deterministic_source_per_member_slot(self):
+        source = read_text(WARDROBE)
+        helper = re.search(
+            r"local function getSelectedVariantPreviewItems\(record\)(.*?)(?=\n\s*local function)",
+            source,
+            re.S,
+        )
+        self.assertIsNotNone(helper)
+        block = helper.group(1)
+        self.assertIn("seenSlots", block)
+        self.assertIn("member.sourceItemIds", block)
+        self.assertIn("previewSourceItemId", block)
+        self.assertIn("SET_MEMBER_SLOT_ORDER", block)
+        self.assertIn("table.sort(result", block)
 
     def test_standalone_validation_is_registry_based_not_a_fixed_21_id_range(self):
         source = read_text(PRESENTATIONS)

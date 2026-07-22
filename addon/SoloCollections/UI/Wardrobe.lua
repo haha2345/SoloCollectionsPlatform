@@ -187,30 +187,22 @@ local STANDALONE_ITEM_SLOTS = {
     OFFHAND = true,
 }
 
-local STABLE_SLOT_ORDER = {
-    INVTYPE_HEAD = 1,
-    INVTYPE_SHOULDER = 2,
-    INVTYPE_CLOAK = 3,
-    INVTYPE_CHEST = 4,
-    INVTYPE_ROBE = 4,
-    INVTYPE_WRIST = 5,
-    INVTYPE_HAND = 6,
-    INVTYPE_WAIST = 7,
-    INVTYPE_LEGS = 8,
-    INVTYPE_FEET = 9,
-    INVTYPE_WEAPON = 10,
-    INVTYPE_2HWEAPON = 10,
-    INVTYPE_WEAPONMAINHAND = 10,
-    INVTYPE_WEAPONOFFHAND = 11,
-    INVTYPE_SHIELD = 11,
-    INVTYPE_HOLDABLE = 11,
-    INVTYPE_RANGED = 12,
-    INVTYPE_RANGEDRIGHT = 12,
+-- ItemSet evidence already expresses member slots. Keep preview ordering in
+-- that domain rather than asking GetItemInfo for a cache-dependent inventory
+-- type while DressUpModel is being rebuilt.
+local SET_MEMBER_SLOT_ORDER = {
+    HEAD = 1,
+    SHOULDER = 2,
+    BACK = 3,
+    CHEST = 4,
+    WRIST = 5,
+    HANDS = 6,
+    WAIST = 7,
+    LEGS = 8,
+    FEET = 9,
+    MAINHAND = 10,
+    OFFHAND = 11,
 }
-
--- All bundled tier-one records use this source order. It keeps TryOn ordering
--- deterministic even before the local item cache can report equip locations.
-local SET_INDEX_FALLBACK_ORDER = { 7, 5, 1, 9, 6, 8, 2, 4 }
 
 local function filterLabel(options, current)
     for _, option in ipairs(options) do
@@ -995,29 +987,6 @@ local function applyItemModelRecord(model, record)
     end
 end
 
-local function stableSetItems(record)
-    local ordered = {}
-    for index, itemId in ipairs(record.itemIds or {}) do
-        local equipLoc = select(9, GetItemInfo(itemId))
-        table.insert(ordered, {
-            itemId = itemId,
-            order = STABLE_SLOT_ORDER[equipLoc] or SET_INDEX_FALLBACK_ORDER[index] or (100 + index),
-            original = index,
-        })
-    end
-    table.sort(ordered, function(left, right)
-        if left.order == right.order then
-            return left.original < right.original
-        end
-        return left.order < right.order
-    end)
-    local result = {}
-    for _, entry in ipairs(ordered) do
-        table.insert(result, entry.itemId)
-    end
-    return result
-end
-
 function UI.CreateWardrobePage(parent)
     local page = CreateFrame("Frame", nil, parent)
     page:SetAllPoints(parent)
@@ -1026,10 +995,12 @@ function UI.CreateWardrobePage(parent)
     page.scSetPage = 1
     page.scSetOffset = 0
     page.scSetRecordCount = 0
+    page.scSetPreviewGeneration = 0
     page.scDefaultSetClassApplied = false
     page.scItemModels = {}
     page.scSetRows = {}
     page.scPieceIcons = {}
+    local setSetOffset
 
     local filterBar = CreateFrame("Frame", nil, page)
     filterBar:SetHeight(78)
@@ -1067,8 +1038,7 @@ function UI.CreateWardrobePage(parent)
         page.scItemSelectedId = nil
         page.scSetSelectedId = nil
         page.scItemPage = 1
-        page.scSetPage = 1
-        page.scSetOffset = 0
+        setSetOffset(0, true)
         page:Refresh()
     end
 
@@ -1334,6 +1304,113 @@ function UI.CreateWardrobePage(parent)
         piece.scCollected = collected and true or false
     end
 
+    -- Preview uses exactly one deterministic source item per selected-variant
+    -- member. This is intentionally separate from the server-side owned
+    -- alternative resolver used by APPLY: a local DressUpModel preview must
+    -- not imply which source item the server would eventually choose.
+    local function getSelectedVariantPreviewItems(record)
+        local result = {}
+        local seenSlots = {}
+        local variant = record and record.selectedVariant
+        for memberIndex, member in ipairs(variant and variant.members or {}) do
+            if member.required then
+                local previewSourceItemId = tonumber(member.previewSourceItemId)
+                if not previewSourceItemId or previewSourceItemId <= 0 then
+                    for _, sourceItemId in ipairs(member.sourceItemIds or {}) do
+                        sourceItemId = tonumber(sourceItemId)
+                        if sourceItemId and sourceItemId > 0 and
+                            (not previewSourceItemId or sourceItemId < previewSourceItemId) then
+                            previewSourceItemId = sourceItemId
+                        end
+                    end
+                end
+                local slotKey = tostring(member.slotKey or member.memberKey or "")
+                local uniqueSlot = slotKey ~= "" and slotKey or ("member:" .. memberIndex)
+                if previewSourceItemId and not seenSlots[uniqueSlot] then
+                    seenSlots[uniqueSlot] = true
+                    table.insert(result, {
+                        memberIndex = memberIndex,
+                        memberKey = tostring(member.memberKey or uniqueSlot),
+                        slotKey = slotKey,
+                        previewSourceItemId = previewSourceItemId,
+                        order = SET_MEMBER_SLOT_ORDER[slotKey] or (100 + memberIndex),
+                    })
+                end
+            end
+        end
+        table.sort(result, function(left, right)
+            if left.order == right.order then
+                if left.memberKey == right.memberKey then
+                    return left.previewSourceItemId < right.previewSourceItemId
+                end
+                return left.memberKey < right.memberKey
+            end
+            return left.order < right.order
+        end)
+        return result
+    end
+
+    local function cancelSetPreview()
+        page.scSetPreviewGeneration = (page.scSetPreviewGeneration or 0) + 1
+        page.scSetPreviewPending = nil
+        page.scAdvanceSetPreview = nil
+        model.scSetPreviewGeneration = page.scSetPreviewGeneration
+        model.scSetPreviewPending = nil
+    end
+
+    local function queueSetPreview(record)
+        local generation = (page.scSetPreviewGeneration or 0) + 1
+        local previewItems = getSelectedVariantPreviewItems(record)
+        local pending = {
+            generation = generation,
+            recordId = record and record.id,
+            items = previewItems,
+            renderTicks = 0,
+        }
+        page.scSetPreviewGeneration = generation
+        page.scSetPreviewPending = pending
+        model.scSetPreviewGeneration = generation
+        model.scSetPreviewPending = pending
+        preparePlayerModel()
+
+        page.scAdvanceSetPreview = function()
+            if page.scSetPreviewPending ~= pending or
+                page.scSetPreviewGeneration ~= pending.generation or
+                model.scSetPreviewGeneration ~= pending.generation then
+                return false
+            end
+            if not page:IsShown() or not SC.db or SC.db.wardrobeTab ~= "SETS" or
+                page.scSetSelectedId ~= pending.recordId then
+                return false
+            end
+
+            -- Wait two render ticks after ClearModel/SetUnit. DressUpModel may
+            -- otherwise reapply the player's current equipment after pieces
+            -- have been applied.
+            pending.renderTicks = pending.renderTicks + 1
+            if pending.renderTicks < 2 then
+                return true
+            end
+
+            pcall(function() model:Undress() end)
+            for _, previewItem in ipairs(pending.items) do
+                if page.scSetPreviewPending ~= pending or
+                    page.scSetPreviewGeneration ~= pending.generation then
+                    return false
+                end
+                local itemString = resolveTryOnItem(previewItem.previewSourceItemId)
+                pcall(function() model:TryOn(itemString) end)
+            end
+            if page.scSetPreviewPending == pending and
+                page.scSetPreviewGeneration == pending.generation then
+                page.scSetPreviewPending = nil
+                model.scSetPreviewPending = nil
+            end
+            return false
+        end
+        return previewItems
+    end
+
     local function previewSet(record)
         if not record then return end
         page.scSetSelectedRecord = record
@@ -1341,20 +1418,15 @@ function UI.CreateWardrobePage(parent)
         model:ClearAllPoints()
         model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, -84)
         model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
-        preparePlayerModel()
-        local orderedItems = stableSetItems(record)
-        for _, itemId in ipairs(orderedItems) do
-            local itemString = resolveTryOnItem(itemId)
-            pcall(function() model:TryOn(itemString) end)
-        end
+        local previewItems = queueSetPreview(record)
         name:SetText(record.name or "未知套装")
         detail:SetText("职业：" .. setClassLabel(record))
-        pieces:Show()
         local pieceState = deriveSetPieceState(record)
-        local pieceCount = math.min(#orderedItems, #page.scPieceIcons)
+        local pieceCount = math.min(#previewItems, #page.scPieceIcons)
         local firstRow = math.min(SET_PIECE_COLUMNS, pieceCount)
         local piecesWidth = (firstRow * SET_PIECE_SIZE) + (math.max(0, firstRow - 1) * SET_PIECE_SPACING)
         pieces:SetWidth(math.max(1, piecesWidth))
+        if pieceCount > 0 then pieces:Show() else pieces:Hide() end
         for index, piece in ipairs(page.scPieceIcons) do
             piece:ClearAllPoints()
             if index == 1 then
@@ -1365,7 +1437,8 @@ function UI.CreateWardrobePage(parent)
                 piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
             end
 
-            local itemId = orderedItems[index]
+            local previewItem = previewItems[index]
+            local itemId = previewItem and previewItem.previewSourceItemId
             piece.scItemId = itemId
             if itemId then
                 local collected = pieceState[itemId] and true or false
@@ -1376,7 +1449,7 @@ function UI.CreateWardrobePage(parent)
             end
         end
         local collectedPieces = tonumber(record.collectedCount) or 0
-        local requiredPieces = tonumber(record.requiredCount) or #(record.itemIds or {})
+        local requiredPieces = tonumber(record.requiredCount) or #previewItems
         setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. requiredPieces)
         setProgress:Show()
     end
@@ -1389,6 +1462,9 @@ function UI.CreateWardrobePage(parent)
     end)
     model:SetScript("OnMouseUp", function() clearDragState() end)
     model:SetScript("OnUpdate", function(self)
+        if page.scAdvanceSetPreview and not page.scAdvanceSetPreview() then
+            page.scAdvanceSetPreview = nil
+        end
         if self.scDragging and IsMouseButtonDown("LeftButton") then
             local cursorX = GetCursorPosition()
             local delta = cursorX - (self.scLastCursorX or cursorX)
@@ -1844,12 +1920,15 @@ function UI.CreateWardrobePage(parent)
         return math.max(0, (page.scSetRecordCount or 0) - VISIBLE_SET_ROWS)
     end
 
-    local function setSetOffset(value)
+    setSetOffset = function(value, suppressRefresh)
         local target = math.max(0, math.min(math.floor(tonumber(value) or 0), getMaxSetOffset()))
-        if target == (page.scSetOffset or 0) then return end
+        local changed = target ~= (page.scSetOffset or 0)
         page.scSetOffset = target
         page.scSetPage = math.floor(target / VISIBLE_SET_ROWS) + 1
-        page:Refresh()
+        if changed and not suppressRefresh then
+            page:Refresh()
+        end
+        return target
     end
 
     local function scrollSetList(delta)
@@ -1882,12 +1961,7 @@ function UI.CreateWardrobePage(parent)
 
     setScrollbar:SetScript("OnValueChanged", function(self, value)
         if page.scSyncingSetScrollbar then return end
-        local target = getMaxSetOffset() - math.floor((tonumber(value) or 0) + 0.5)
-        if target ~= (page.scSetOffset or 0) then
-            page.scSetOffset = math.max(0, math.min(target, getMaxSetOffset()))
-            page.scSetPage = math.floor(page.scSetOffset / VISIBLE_SET_ROWS) + 1
-            page:Refresh()
-        end
+        setSetOffset(value)
     end)
     setScrollbar:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
     setScrollbar:SetScript("OnEnter", function(self)
@@ -1939,6 +2013,7 @@ function UI.CreateWardrobePage(parent)
     setEmpty:Hide()
 
     function page:ClearSelection()
+        cancelSetPreview()
         self.scItemSelectedId = nil
         self.scSetSelectedId = nil
         self.scSetSelectedRecord = nil
@@ -1968,8 +2043,7 @@ function UI.CreateWardrobePage(parent)
             local playerClass = getPlayerClassToken()
             if hasFilterValue(CLASS_FILTERS, playerClass) then
                 filters.classToken = playerClass
-                self.scSetPage = 1
-                self.scSetOffset = 0
+                setSetOffset(0, true)
                 self.scSetSelectedId = nil
             end
         end
@@ -2022,22 +2096,19 @@ function UI.CreateWardrobePage(parent)
             { label = "已收集", checked = filters.collected, onClick = function()
                 filters.collected = not filters.collected
                 self.scItemPage = 1
-                self.scSetPage = 1
-                self.scSetOffset = 0
+                setSetOffset(0, true)
                 self:Refresh()
             end },
             { label = "未收集", checked = filters.uncollected, onClick = function()
                 filters.uncollected = not filters.uncollected
                 self.scItemPage = 1
-                self.scSetPage = 1
-                self.scSetOffset = 0
+                setSetOffset(0, true)
                 self:Refresh()
             end },
             { label = "仅显示偏好", checked = filters.favorites, onClick = function()
                 filters.favorites = not filters.favorites
                 self.scItemPage = 1
-                self.scSetPage = 1
-                self.scSetOffset = 0
+                setSetOffset(0, true)
                 self:Refresh()
             end },
         }
@@ -2045,6 +2116,7 @@ function UI.CreateWardrobePage(parent)
     end
 
     local function refreshItems()
+        cancelSetPreview()
         itemsPanel:Show()
         setsPanel:Hide()
         preview:Hide()
@@ -2121,7 +2193,7 @@ function UI.CreateWardrobePage(parent)
         local allRecords = Catalog.QueryAll("SETS", SC.db.query, setFilters)
         page.scSetRecordCount = #allRecords
         local maxOffset = math.max(0, #allRecords - VISIBLE_SET_ROWS)
-        page.scSetOffset = math.max(0, math.min(math.floor(page.scSetOffset or 0), maxOffset))
+        setSetOffset(page.scSetOffset, true)
 
         local records = {}
         local firstIndex = page.scSetOffset + 1
@@ -2138,9 +2210,7 @@ function UI.CreateWardrobePage(parent)
 
         page.scSyncingSetScrollbar = true
         setScrollbar:SetMinMaxValues(0, maxOffset)
-        -- A vertical Slider's maximum value sits at the top. Reverse the data
-        -- offset so zero records skipped corresponds to a top-positioned thumb.
-        setScrollbar:SetValue(maxOffset - page.scSetOffset)
+        setScrollbar:SetValue(page.scSetOffset)
         setScrollbar:SetAlpha(maxOffset > 0 and 1.00 or 0.28)
         page.scSyncingSetScrollbar = nil
 
@@ -2181,7 +2251,26 @@ function UI.CreateWardrobePage(parent)
     end
 
     page:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+    page:RegisterEvent("PLAYER_ENTERING_WORLD")
+    page:RegisterEvent("UNIT_MODEL_CHANGED")
     page:SetScript("OnEvent", function(self, event, ...)
+        if event == "PLAYER_ENTERING_WORLD" then
+            cancelSetPreview()
+            if self:IsShown() and SC.db and SC.db.wardrobeTab == "SETS" then
+                self:Refresh()
+            end
+            return
+        end
+        if event == "UNIT_MODEL_CHANGED" then
+            local unit = ...
+            if unit == "player" then
+                cancelSetPreview()
+                if self:IsShown() and SC.db and SC.db.wardrobeTab == "SETS" then
+                    self:Refresh()
+                end
+            end
+            return
+        end
         if not self:IsShown() then return end
         local itemId, success = ...
         if success == false or not itemId then return end
@@ -2210,8 +2299,7 @@ function UI.CreateWardrobePage(parent)
     page:SetScript("OnHide", function(self)
         self:ClearSelection()
         self.scItemPage = 1
-        self.scSetPage = 1
-        self.scSetOffset = 0
+        setSetOffset(0, true)
         self.scSetRecordCount = 0
         for _, itemModel in ipairs(self.scItemModels) do
             itemModel.scRecord = nil
