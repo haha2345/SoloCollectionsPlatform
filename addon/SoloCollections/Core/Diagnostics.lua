@@ -95,7 +95,8 @@ function Diagnostics.RunPerformanceBaseline()
         pageResults[key] = pageTiming(key)
     end
 
-    local synthetic = SC.Catalog.RunSyntheticAppearanceBenchmark(17000)
+    local synthetic = SC.Catalog.RunSyntheticAppearanceBenchmark(18190)
+    local expanded = SC.Catalog.RunExpandedCollectionBenchmark(18190, 201, 509)
     local snapshot = snapshotBenchmark()
     SC.UI.SetMainTab("TITLES")
     local pendingTasks, hiddenUpdates = hiddenModelDiagnostics(frame)
@@ -110,6 +111,10 @@ function Diagnostics.RunPerformanceBaseline()
         synthetic.count, synthetic.loadMs, synthetic.filterMs, synthetic.pageMs,
         synthetic.peakMemoryKb, poolSize))
     print(string.format(
+        "SC_PERF expanded appearances=%d companions=%d sets=%d load_ms=%.3f filter_ms=%.3f page_ms=%.3f pages=%d peak_kb=%.1f",
+        expanded.appearances, expanded.companions, expanded.sets, expanded.loadMs,
+        expanded.filterMs, expanded.pageMs, expanded.pages, expanded.peakMemoryKb))
+    print(string.format(
         "SC_PERF snapshot chunks=%d bytes=%d owned=%d reassembly_ms=%.3f peak_kb=%.1f",
         snapshot.chunks, snapshot.bytes, snapshot.owned, snapshot.elapsedMs, snapshot.peakMemoryKb))
     print(string.format(
@@ -120,6 +125,6 @@ function Diagnostics.RunPerformanceBaseline()
     SC.db.wardrobeTab = originalWardrobeTab
     SC.db.query = originalQuery
     SC.UI.SyncJournalFromDatabase()
-    return { pages = pageResults, catalog = synthetic, snapshot = snapshot,
+    return { pages = pageResults, catalog = synthetic, expanded = expanded, snapshot = snapshot,
         hiddenPendingTasks = pendingTasks, hiddenActiveUpdates = hiddenUpdates, modelPool = poolSize }
 end

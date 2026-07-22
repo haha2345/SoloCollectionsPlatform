@@ -111,7 +111,8 @@ local function getGeneratedAppearanceSource()
     generatedAppearanceSource = {}
     local generated = SC.GeneratedCatalog or {}
     for _, collection in ipairs(generated.collections or {}) do
-        if collection.typeKey == "appearance" and collection.lifecycle == "active" then
+        if collection.typeKey == "appearance" and collection.lifecycle == "active" and
+            collection.uiLifecycle == "public" then
             local names = collection.name or {}
             local itemIds = {}
             local slot = "HEAD"
@@ -530,6 +531,59 @@ function Catalog.RunSyntheticAppearanceBenchmark(count)
         filterMs = filteredAt - loadedAt,
         pageMs = pagedAt - filteredAt,
         peakMemoryKb = math.max(0, memoryPeak - memoryBefore),
+    }
+end
+
+function Catalog.RunExpandedCollectionBenchmark(appearanceCount, companionCount, setCount)
+    appearanceCount = math.max(1, math.min(50000, math.floor(tonumber(appearanceCount) or 18190)))
+    companionCount = math.max(1, math.min(1000, math.floor(tonumber(companionCount) or 201)))
+    setCount = math.max(1, math.min(2000, math.floor(tonumber(setCount) or 509)))
+    local clock = type(debugprofilestop) == "function" and debugprofilestop or function() return GetTime() * 1000 end
+    local memoryBefore = collectgarbage("count")
+    local started = clock()
+    local appearances, companions, sets = {}, {}, {}
+    local appearanceIndex, setMemberIndex = {}, {}
+    for index = 1, appearanceCount do
+        local row = { id = 200000 + index, name = "appearance " .. index, slot = index % 2 == 0 and "HEAD" or "CHEST" }
+        appearances[index], appearanceIndex[row.id] = row, row
+    end
+    for index = 1, companionCount do
+        companions[index] = { id = 110000 + index, name = "companion " .. index }
+    end
+    for index = 1, setCount do
+        local first = 200000 + ((index * 7) % appearanceCount) + 1
+        local row = { id = 300000 + index, name = "set " .. index, members = { first, first + 1, first + 2 } }
+        sets[index] = row
+        for _, appearanceId in ipairs(row.members) do
+            setMemberIndex[appearanceId] = setMemberIndex[appearanceId] or {}
+            table.insert(setMemberIndex[appearanceId], row.id)
+        end
+    end
+    local loadedAt = clock()
+    local matched = {}
+    for _, row in ipairs(appearances) do
+        if row.slot == "HEAD" and string.find(row.name, "appearance", 1, true) then matched[#matched + 1] = row end
+    end
+    for index = 1, #sets do
+        local row = sets[index]
+        for _, appearanceId in ipairs(row.members) do
+            if not appearanceIndex[appearanceId] then error("synthetic set index drift") end
+        end
+    end
+    local filteredAt = clock()
+    local pageSize, pages = 18, 0
+    for offset = 1, #matched, pageSize do
+        pages = pages + 1
+        local _ = matched[math.min(#matched, offset + pageSize - 1)]
+    end
+    local pagedAt = clock()
+    local peak = collectgarbage("count")
+    appearances, companions, sets, appearanceIndex, setMemberIndex, matched = nil, nil, nil, nil, nil, nil
+    collectgarbage("collect")
+    return {
+        appearances = appearanceCount, companions = companionCount, sets = setCount,
+        loadMs = loadedAt - started, filterMs = filteredAt - loadedAt,
+        pageMs = pagedAt - filteredAt, pages = pages, peakMemoryKb = math.max(0, peak - memoryBefore),
     }
 end
 
