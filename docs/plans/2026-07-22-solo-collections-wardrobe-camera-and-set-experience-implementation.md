@@ -2,7 +2,7 @@
 
 日期：2026-07-22
 
-状态：待实施（问题诊断与真实客户端复核已完成，代码尚未修改）
+状态：实施中（阶段 0 已完成；阶段 1--3 已有经验证的子项，未通过的客户端矩阵和后续阶段仍保留未勾选）
 
 上游基线：
 
@@ -488,7 +488,7 @@ sliderValue = scSetOffset
 - [x] 媒体红测试全部转绿。（2026-07-22：`test_media_contract.py` 5/5。）
 - [x] clean bundle 中不存在缺失的基础媒体引用。（2026-07-22：`round3-media-clean-20260722T222620`。）
 - [x] 真实客户端截图与运行记录存入 F 盘 evidence，并生成阶段报告。（2026-07-22：`2026-07-22-wardrobe-base-media-contract.md`。）
-- [ ] 在本文勾选任务并记录提交；本阶段不修改 module/Core。
+- [x] 在本文勾选任务并记录提交；本阶段不修改 module/Core。（2026-07-22：`bdbd597`；module/Core `git status --short` 为空。）
 
 ## 8. 阶段 2：修复套装滚动与干净试穿
 
@@ -496,40 +496,40 @@ sliderValue = scSetOffset
 
 ### 任务 2.1：统一滚动状态
 
-- [ ] 删除 `maxOffset - value` 双向反转，Slider value 与 `scSetOffset` 直接对应。
-- [ ] 滚轮、分页按钮、滑块拖动、过滤重置全部调用同一 `setSetOffset()`。
-- [ ] 修正过滤/搜索后 offset clamp、页码和选中记录同步。
+- [x] 删除 `maxOffset - value` 双向反转，Slider value 与 `scSetOffset` 直接对应。（2026-07-22：`8be7240`；直接映射合同测试通过。）
+- [x] 滚轮、分页按钮、滑块拖动、过滤重置全部调用同一 `setSetOffset()`。（2026-07-22：`8be7240`；输入统一状态转换合同测试通过。）
+- [x] 修正过滤/搜索后 offset clamp、页码和选中记录同步。（2026-07-22：`8be7240`；clamp/最后残页合同测试通过。）
 - [ ] 空列表、单页、刚好一页、多页、最后残页全部覆盖。
 
 ### 任务 2.2：实现套装预览 generation 状态机
 
-- [ ] `previewSet()` 每次选择增加 `scSetPreviewGeneration`。
-- [ ] `ClearModel`、`SetUnit` 后等待模型路径稳定至少两个 render tick，再调用 `Undress()`。
-- [ ] 从 `selectedVariant.members` 构造当前预览列表，按稳定槽位顺序 TryOn。
-- [ ] 旧 generation、旧 OnUpdateModel 和延迟 item cache callback 不得影响新选择。
-- [ ] 页面隐藏、切回物品 tab、角色/性别变化时清理 pending state。
-- [ ] 保留旋转、缩放和重置交互，但切换套装时恢复已定义的默认视图。
+- [x] `previewSet()` 每次选择增加 `scSetPreviewGeneration`。（2026-07-22：`8be7240`；generation 合同测试通过。）
+- [x] `ClearModel`、`SetUnit` 后等待模型路径稳定至少两个 render tick，再调用 `Undress()`。（2026-07-22：`8be7240`；两 tick 与 `Undress()` 先于 `TryOn()` 合同测试通过。）
+- [x] 从 `selectedVariant.members` 构造当前预览列表，按稳定槽位顺序 TryOn。（2026-07-22：`8be7240`；selected variant/稳定槽位合同测试通过。）
+- [x] 旧 generation、旧 OnUpdateModel 和延迟 item cache callback 不得影响新选择。（2026-07-22：`8be7240`；过期 pending/generation 拒绝逻辑已测试。）
+- [x] 页面隐藏、切回物品 tab、角色/性别变化时清理 pending state。（2026-07-22：`8be7240`；tab、`UNIT_MODEL_CHANGED`、`PLAYER_ENTERING_WORLD` 清理合同测试通过。）
+- [x] 保留旋转、缩放和重置交互，但切换套装时恢复已定义的默认视图。（2026-07-22：`8be7240`；现有交互未移除，选择路径复用默认视图。）
 
 ### 任务 2.3：明确预览成员选择
 
-- [ ] 为 member 生成或选择稳定 `previewSourceItemId`，不依赖 `GetItemInfo` 返回顺序。
-- [ ] 只穿当前 variant 中允许展示的 members；omissions 和其他 variant 不参与。
-- [ ] 处理两件同槽 alternative：只选一个确定 preview source，不能同槽连续 TryOn 多件造成结果依赖调用顺序。
-- [ ] 预览选择逻辑与 APPLY 的 owned alternative 逻辑分离；预览不伪装为服务端实际选择。
+- [x] 为 member 生成或选择稳定 `previewSourceItemId`，不依赖 `GetItemInfo` 返回顺序。（2026-07-22：`8be7240`；稳定 source 合同测试通过。）
+- [x] 只穿当前 variant 中允许展示的 members；omissions 和其他 variant 不参与。（2026-07-22：`8be7240`；selectedVariant-only 合同测试通过。）
+- [x] 处理两件同槽 alternative：只选一个确定 preview source，不能同槽连续 TryOn 多件造成结果依赖调用顺序。（2026-07-22：`8be7240`；slot 去重及稳定排序合同测试通过。）
+- [x] 预览选择逻辑与 APPLY 的 owned alternative 逻辑分离；预览不伪装为服务端实际选择。（2026-07-22：`8be7240`；仅由 UI preview source 消费 members，未触及 APPLY。）
 
 ### 任务 2.4：自动测试
 
-- [ ] offset/value 双向 round-trip。
-- [ ] 上/下滚轮方向、分页步长、拖动和 clamp。
+- [x] offset/value 双向 round-trip。（2026-07-22：`test_set_scroll_uses_a_direct_offset_slider_mapping` 通过。）
+- [x] 上/下滚轮方向、分页步长、拖动和 clamp。（2026-07-22：滚动输入与 clamp 合同测试通过；末页拖动及滚轮实机见阶段报告。）
 - [ ] selected variant 与 default variant 不同的 synthetic fixture。
-- [ ] 连续 A→B→A 套装选择时 generation 只保留最终 A。
-- [ ] 玩家装备包含套装未含肩、腰、武器时，最终调用序列先 Undress 再只 TryOn 套装成员。
-- [ ] Lua 5.1 语法和现有 set action 合同无回归。
+- [x] 连续 A→B→A 套装选择时 generation 只保留最终 A。（2026-07-22：过期 generation 拒绝合同测试通过；完整快速压力测试仍在 2.5 保留。）
+- [x] 玩家装备包含套装未含肩、腰、武器时，最终调用序列先 Undress 再只 TryOn 套装成员。（2026-07-22：`Undress` 在 `TryOn` 前的合同测试通过；完整实机装备矩阵仍在 2.5 保留。）
+- [x] Lua 5.1 语法和现有 set action 合同无回归。（2026-07-22：所有 AddOn Lua `luac51 -p` 通过。）
 
 ### 任务 2.5：真实客户端验收
 
-- [ ] 第 1 页滑块顶部，第 20/20 或最后一页滑块底部。
-- [ ] 向下滚动时列表与滑块同时向下，向上同理。
+- [x] 第 1 页滑块顶部，第 20/20 或最后一页滑块底部。（2026-07-22：`stage2-sets-all-initial.jpg`、`stage2-sets-last-page-drag.jpg`，最后页 `59/59`。）
+- [x] 向下滚动时列表与滑块同时向下，向上同理。（2026-07-22：`stage2-sets-wheel-scroll.jpg`，`59/59` 到 `58/59`。）
 - [ ] 拖动到中部时页码、记录和滑块一致；滚轮接管后无跳变。
 - [ ] 选择 2、3、5、8、9 件套，模型只穿套装包含部位。
 - [ ] 玩家预先装备肩、衬衣、战袍、腰带、武器后再预览，未包含槽位全部清空。
@@ -539,8 +539,8 @@ sliderValue = scSetOffset
 
 - [ ] 滚动和预览红测试全部转绿。
 - [ ] 465 个 active 套装完成自动快速切换扫描，零 generation 串装。
-- [ ] 真实客户端证据与阶段报告完成。
-- [ ] 本阶段只修改 AddOn/生成 presentation；module/Core 零变化。
+- [x] 真实客户端证据与阶段报告完成。（2026-07-22：`2026-07-22-set-scroll-and-clean-preview.md`。）
+- [x] 本阶段只修改 AddOn/生成 presentation；module/Core 零变化。（2026-07-22：module/Core `git status --short` 为空。）
 
 ## 9. 阶段 3：建立套装等级、难度与获取排序
 
@@ -548,42 +548,42 @@ sliderValue = scSetOffset
 
 ### 任务 3.1：扩展 ItemSet evidence
 
-- [ ] `itemset_import.py` 查询加入 `ItemLevel`、`Quality` 和排序所需稳定字段。
-- [ ] 更新 snapshot canonical hash；旧 evidence pack 不满足新 schema 时 fail closed。
-- [ ] 为每套聚合 min/max/median item level，并记录成员缺失或等级不一致。
-- [ ] 不把 item level 加入 canonical identity 或 owned mapping basis。
+- [x] `itemset_import.py` 查询加入 `ItemLevel`、`Quality` 和排序所需稳定字段。（2026-07-22：`b7abdea`；17 个目录测试通过。）
+- [x] 更新 snapshot canonical hash；旧 evidence pack 不满足新 schema 时 fail closed。（2026-07-22：schema 3 固定输入包与 `itemset_import.py check` 通过。）
+- [x] 为每套聚合 min/max/median item level，并记录成员缺失或等级不一致。（2026-07-22：schema 3 evidence 输出已审计。）
+- [x] 不把 item level 加入 canonical identity 或 owned mapping basis。（2026-07-22：mapping hash 保持 `2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf`。）
 
 ### 任务 3.2：建立 presentation 审核表
 
-- [ ] 新建套装 presentation override/review source，覆盖 509 个审核单元或明确继承规则。
-- [ ] 为 Classic/TBC/Wrath、PvE/PvP、主要团队层级和难度定义稳定 enum/rank。
-- [ ] ICC/T10、ToC/T9、Ulduar/T8、Naxx/T7 等通过 item/source 证据映射，不通过中文/英文名称猜测。
-- [ ] 无法确定层级或获取方式的条目标记 `UNKNOWN`，进入 exclusions/review report，不伪造精度。
-- [ ] 旧 8 套和新增 457 套身份、成员、classPolicy、variantOrdinal 零漂移。
+- [x] 新建套装 presentation override/review source，覆盖 509 个审核单元或明确继承规则。（2026-07-22：`set_presentations.json` / review CSV 共 509 行。）
+- [x] 为 Classic/TBC/Wrath、PvE/PvP、主要团队层级和难度定义稳定 enum/rank。（2026-07-22：presentation policy 与生成器 enum/rank 已落地；未审阅项明确为 `UNKNOWN`。）
+- [x] ICC/T10、ToC/T9、Ulduar/T8、Naxx/T7 等通过 item/source 证据映射，不通过中文/英文名称猜测。（2026-07-22：按 ItemSet ID 范围规则；T7--T10 item level 证据已固定。）
+- [x] 无法确定层级或获取方式的条目标记 `UNKNOWN`，进入 exclusions/review report，不伪造精度。（2026-07-22：`NO_REVIEWED_ITEMSET_PRESENTATION_RULE`。）
+- [x] 旧 8 套和新增 457 套身份、成员、classPolicy、variantOrdinal 零漂移。（2026-07-22：identity mapping hash 与目录测试通过。）
 
 ### 任务 3.3：生成与消费排序字段
 
-- [ ] 新增 `set_presentations.py` 或等价单一生成器，输出 JSON/CSV 审核报告和 presentation hash。
-- [ ] `set_catalog.py` 把排序字段投影到 AddOn `Data/Sets.lua`。
-- [ ] `Catalog.QueryAll("SETS")` 使用固定比较器；相同 rank 使用稳定 ItemSetID tie-breaker，显示语言不影响顺序。
-- [ ] 排序只改变 UI 顺序，不改变 C++ set collection 表或 APPLY 语义。
-- [ ] 搜索、职业过滤、收藏过滤后继续保持同一比较器。
+- [x] 新增 `set_presentations.py` 或等价单一生成器，输出 JSON/CSV 审核报告和 presentation hash。（2026-07-22：`62caf760…64d9584b`；生成器 check 通过。）
+- [x] `set_catalog.py` 把排序字段投影到 AddOn `Data/Sets.lua`。（2026-07-22：schema 3 `set-catalog.json` / `Data/Sets.lua` 已生成。）
+- [x] `Catalog.QueryAll("SETS")` 使用固定比较器；相同 rank 使用稳定 ItemSetID tie-breaker，显示语言不影响顺序。（2026-07-22：`b7abdea`；catalog 测试通过。）
+- [x] 排序只改变 UI 顺序，不改变 C++ set collection 表或 APPLY 语义。（2026-07-22：未传 `--include-module`，module/Core 零变化。）
+- [x] 搜索、职业过滤、收藏过滤后继续保持同一比较器。（2026-07-22：先过滤后调用 `setPresentationLess`；职业实机证据见 3.4。）
 
 ### 任务 3.4：测试与验收
 
-- [ ] 465 条 active set 都有完整 presentation 或明确 UNKNOWN；不得缺记录。
-- [ ] 生成器重复运行 byte-for-byte 稳定。
-- [ ] presentation 字段变化不改变 set mapping hash，必须改变 set presentation hash。
-- [ ] ICC/T10 fixture 排在 ToC/T9、Ulduar/T8、Naxx/T7 和低等级旧资料片套装之前。
+- [x] 465 条 active set 都有完整 presentation 或明确 UNKNOWN；不得缺记录。（2026-07-22：509 review CSV / 465 active 输出完整。）
+- [x] 生成器重复运行 byte-for-byte 稳定。（2026-07-22：`test_set_presentations.py` 通过。）
+- [x] presentation 字段变化不改变 set mapping hash，必须改变 set presentation hash。（2026-07-22：presentation/hash 分离测试通过。）
+- [x] ICC/T10 fixture 排在 ToC/T9、Ulduar/T8、Naxx/T7 和低等级旧资料片套装之前。（2026-07-22：排序 fixture 测试通过。）
 - [ ] 同层级英雄/高难度版本排在普通版本之前；item level/tie-breaker 稳定。
-- [ ] 真实客户端职业过滤下第一页出现当前职业的后期 Wrath 团本套装。
+- [x] 真实客户端职业过滤下第一页出现当前职业的后期 Wrath 团本套装。（2026-07-22：`stage3-paladin-t10-first-page.jpg`，PALADIN 175 套/22 页，首屏 T10 光誓。）
 - [ ] `/reload`、重登、不同职业角色顺序一致。
 
 ### 任务 3.5：阶段出口
 
-- [ ] 509 个 review units 的 presentation 决定闭合。
+- [x] 509 个 review units 的 presentation 决定闭合。（2026-07-22：review CSV 中每项均为审核规则结果或显式 `UNKNOWN`。）
 - [ ] 465 active 套装排序、搜索、过滤和页码实机通过。
-- [ ] mapping hash/owned/variantOrdinal 零变化证据完成。
+- [x] mapping hash/owned/variantOrdinal 零变化证据完成。（2026-07-22：mapping hash 固定且目录测试通过。）
 - [ ] 生成阶段报告并勾选本阶段所有任务。
 
 ## 10. 阶段 4：重构武器镜头工作台与批量导出
