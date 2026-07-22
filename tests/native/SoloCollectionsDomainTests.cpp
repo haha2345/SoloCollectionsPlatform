@@ -698,15 +698,22 @@ void TestGeneratedMountCatalog()
 void TestGeneratedCompanionCatalog()
 {
     SC::CompanionCatalog const& catalog = SC::GetCompanionCatalog();
-    Require(catalog.Collections().size() == 24, "generated companion catalog count changed without review");
+    Require(catalog.Collections().size() == 201, "generated companion catalog does not match reviewed candidates");
     SC::CompanionCollectionDefinition const* worg = catalog.FindBySpell(15999);
-    Require(worg && worg->Id == SC::CollectionId(100281) && worg->CreatureId == 10259,
+    Require(worg && worg->Id == SC::CollectionId(100281) && worg->CanonicalSpellId == 15999,
         "Worg Pup companion lookup failed");
     Require(worg->PreviewCreatureEntry == 10259 &&
         worg->Lifecycle == SC::CatalogLifecycle::Active &&
         SC::CatalogLifecycleAllowsPreview(worg->Lifecycle),
         "companion preview identity or lifecycle was not generated");
     Require(catalog.Find(worg->Id) == worg, "companion collection reverse lookup failed");
+    SC::CompanionCollectionDefinition const* spottedRabbit = catalog.FindBySpell(10712);
+    Require(spottedRabbit && catalog.FindBySpell(35157) == spottedRabbit &&
+        spottedRabbit->CanonicalSpellId == 10712 && spottedRabbit->PreviewCreatureEntry == 7559,
+        "companion unlock spell variants do not resolve to one canonical identity");
+    SC::CompanionCollectionDefinition const* murki = catalog.FindBySpell(24987);
+    Require(murki && catalog.FindBySpell(25018) == murki && murki->CanonicalSpellId == 25018,
+        "companion summon did not retain the reviewed canonical spell");
     Require(!catalog.FindBySpell(48778), "mount spell entered the companion allowlist");
 }
 

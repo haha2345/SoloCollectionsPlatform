@@ -13,9 +13,13 @@ DATA = ROOT / "data" / "generated"
 class CompanionProviderContractTests(unittest.TestCase):
     def test_generated_allowlist_contains_only_explicit_minipets(self):
         actions = json.loads((DATA / "solo_collections_companion_actions.json").read_text(encoding="utf-8"))
-        self.assertEqual(24, len(actions["entries"]))
-        self.assertEqual(24, len({row["spellId"] for row in actions["entries"]}))
-        self.assertTrue(all(row["creatureId"] > 0 for row in actions["entries"]))
+        self.assertEqual(2, actions["schemaVersion"])
+        self.assertEqual(201, len(actions["entries"]))
+        unlocks = [spell for row in actions["entries"] for spell in row["unlockSpellIds"]]
+        self.assertEqual(203, len(unlocks))
+        self.assertEqual(len(unlocks), len(set(unlocks)))
+        self.assertTrue(all(row["canonicalSpellId"] in row["unlockSpellIds"] for row in actions["entries"]))
+        self.assertTrue(all(row["previewCreatureEntry"] > 0 for row in actions["entries"]))
         generated = (SRC / "generated" / "SoloCollectionsCompanionCatalog.inc").read_text(encoding="utf-8")
         self.assertIn("LoadGeneratedCompanionCollections", generated)
 
@@ -26,6 +30,8 @@ class CompanionProviderContractTests(unittest.TestCase):
         self.assertIn("CheckMigrationMarker", service)
         self.assertIn("HasPendingMutation(account)", service)
         self.assertIn("CompanionCollectionTypeId", service)
+        self.assertIn("for (std::uint32_t spellId : definition.UnlockSpellIds)", service)
+        self.assertIn("definition->CanonicalSpellId", service)
         self.assertNotIn("CollectionMutationKind::Revoke", service)
 
     def test_toggle_and_replacement_never_touch_combat_pet_state(self):

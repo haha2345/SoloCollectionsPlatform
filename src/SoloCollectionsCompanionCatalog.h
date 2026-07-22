@@ -16,8 +16,8 @@ struct CompanionCollectionDefinition
 {
     CollectionId Id;
     std::string Key;
-    std::uint32_t SpellId = 0;
-    std::uint32_t CreatureId = 0;
+    std::uint32_t CanonicalSpellId = 0;
+    std::vector<std::uint32_t> UnlockSpellIds;
     std::uint32_t PreviewCreatureEntry = 0;
     CatalogLifecycle Lifecycle = CatalogLifecycle::Disabled;
 };

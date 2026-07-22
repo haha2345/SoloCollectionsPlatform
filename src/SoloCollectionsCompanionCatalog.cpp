@@ -16,10 +16,20 @@ CompanionCatalog::CompanionCatalog(std::vector<CompanionCollectionDefinition> co
     for (std::size_t index = 0; index < _collections.size(); ++index)
     {
         CompanionCollectionDefinition const& definition = _collections[index];
-        if (!definition.Id.IsValid() || definition.Key.empty() || definition.SpellId == 0 || definition.CreatureId == 0 ||
-            definition.PreviewCreatureEntry == 0 ||
-            !_byCollection.emplace(definition.Id, index).second || !_bySpell.emplace(definition.SpellId, index).second)
+        if (!definition.Id.IsValid() || definition.Key.empty() || definition.CanonicalSpellId == 0 ||
+            definition.UnlockSpellIds.empty() || definition.PreviewCreatureEntry == 0 ||
+            !_byCollection.emplace(definition.Id, index).second)
             throw std::runtime_error("invalid or duplicate SoloCollections companion catalog entry");
+
+        bool hasCanonical = false;
+        for (std::uint32_t spellId : definition.UnlockSpellIds)
+        {
+            if (spellId == 0 || !_bySpell.emplace(spellId, index).second)
+                throw std::runtime_error("invalid or duplicate SoloCollections companion unlock spell");
+            hasCanonical = hasCanonical || spellId == definition.CanonicalSpellId;
+        }
+        if (!hasCanonical)
+            throw std::runtime_error("SoloCollections companion canonical spell is not an unlock variant");
     }
 }
 

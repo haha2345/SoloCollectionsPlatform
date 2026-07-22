@@ -71,8 +71,9 @@ public:
         AccountState& state = _accounts[PlayerAccount(player)];
         state.LoginCharacterGuid = player->GetGUID().GetCounter();
         for (CompanionCollectionDefinition const& definition : GetCompanionCatalog().Collections())
-            if (player->HasSpell(definition.SpellId))
-                state.CandidateSpells.insert(definition.SpellId);
+            for (std::uint32_t spellId : definition.UnlockSpellIds)
+                if (player->HasSpell(spellId))
+                    state.CandidateSpells.insert(spellId);
     }
 
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId)
@@ -139,17 +140,17 @@ public:
         // retaining a stale service-side GUID across map changes or logout.
         if (Creature* current = player->GetCompanionPet())
         {
-            if (current->GetUInt32Value(UNIT_CREATED_BY_SPELL) == definition->SpellId)
+            if (current->GetUInt32Value(UNIT_CREATED_BY_SPELL) == definition->CanonicalSpellId)
             {
                 current->DespawnOrUnsummon();
                 LOG_INFO("module.solocollections.companion",
                     "event=companion_toggle result=dismissed account={} character={} collection={} spell={}",
-                    account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->SpellId);
+                    account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->CanonicalSpellId);
                 return "DISMISSED";
             }
         }
 
-        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(definition->SpellId);
+        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(definition->CanonicalSpellId);
         if (!spellInfo)
             return "CAST_FAILED";
         if (spellInfo->CheckLocation(player->GetMapId(), player->GetZoneId(), player->GetAreaId(), player, true) != SPELL_CAST_OK)
@@ -159,7 +160,7 @@ public:
             return "CAST_FAILED";
         LOG_INFO("module.solocollections.companion",
             "event=companion_summon result=accepted account={} character={} collection={} spell={}",
-            account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->SpellId);
+            account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->CanonicalSpellId);
         return "ACCEPTED";
     }
 
