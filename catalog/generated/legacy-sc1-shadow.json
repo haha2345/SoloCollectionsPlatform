@@ -1,8 +1,8 @@
 {
-  "canonicalMappingHash": "a2ac7463945f681ca4d4f9b4b7ab72c6e32674a1e2955a2589b03b757e1d8e27",
+  "canonicalMappingHash": "fd5bfff27abddd0781065652c19e49e98786dbb80d7a098adf3cfb27237b35e1",
   "categories": [
     {
-      "canonicalMappingHash": "2e3de67b532f22f284e2f07a3a2859faa76290a3d53c95469ce3d38e88b92b91",
+      "canonicalMappingHash": "dc0d615038233c7190f9719c1e3b9da275ac424aa3470a5a920ff0e77d85c49b",
       "legacyEntryCount": 24,
       "legacyMappingHash": "7b12977bbb4eead704f2d5dcb23d8bfec70be215c577f9aa95fc8ab803cbc917",
       "mappedEntryCount": 24,
@@ -10,7 +10,7 @@
       "typeKey": "mount"
     },
     {
-      "canonicalMappingHash": "24ca7cbe89f3534d5b8cc5d1012a1637280fa963c089ee83cbfbbc562941c4ea",
+      "canonicalMappingHash": "73d3e45693ff2a9178371026bd26081f98f5188a517460d95b12006a5134442a",
       "legacyEntryCount": 24,
       "legacyMappingHash": "f7a8f14cee3832b7b851d036910599613c85bbd78b7817e85dd4b6eaa2b8bffa",
       "mappedEntryCount": 24,
@@ -18,7 +18,7 @@
       "typeKey": "companion"
     },
     {
-      "canonicalMappingHash": "46bd85ff01542119f03cc752e9cd947bb697fd660110ca4b1c1132b3ffdbd54e",
+      "canonicalMappingHash": "ad88d6144cd19540a00fef744dfe1beef7534faa233862f1f9849b0f2dc3bdd0",
       "legacyEntryCount": 36,
       "legacyMappingHash": "bdf5eee5d1fb821175a97f1fc3686dc35fbc5a7b0e3b1faa58dd8c9893489e36",
       "mappedEntryCount": 9,
@@ -952,7 +952,7 @@
       "typeKey": "toy"
     }
   ],
-  "mappingHash": "0b0dba64625b3d5a17bac48e9af0fb965bf0beb25a939d0ff021eeb324cfff9a",
+  "mappingHash": "cf671bc047684800c44f16325b42b39274ab8788a995681c0f8ee8a33092d0bc",
   "schemaVersion": 1,
   "sourceHash": "d7ceac7ef484bd7e33ef5d3b710b70ca2cfbe7a452cf0d54eaeae79ebf492620"
 }

@@ -541,8 +541,10 @@ def _canonical_for_hash(model: dict[str, Any]) -> dict[str, Any]:
             "presentationStatus", "presentationReasonCode", "presentationHash",
             "presentationEvidenceHash", "presentationEvidenceId", "presentationEvidencePackHash",
             "appearancePresentationHash", "appearancePresentationEvidence", "deprecatedAliases",
+            "presentationHash",
             "syntheticDisplayId", "modelPath", "modelScale", "weaponType", "weaponCategory",
             "cameraTuningKey", "m2Camera", "presentationStatus", "renderMode",
+            "uiLifecycle",
         }:
             return None
         if isinstance(value, dict):
@@ -598,6 +600,24 @@ def build_model(source_root: Path) -> dict[str, Any]:
         lifecycle = entry["lifecycle"]
         entry["catalogLifecycle"] = {"active": "ACTIVE", "tombstone": "TOMBSTONE"}[lifecycle]
         entry["uiLifecycle"] = "public" if lifecycle == "active" else "deprecated"
+    visibility = _read_json(source_root.parent / "review" / "appearances" / "visibility-evidence.json")
+    _require(visibility.get("schemaVersion") == 1 and visibility.get("reviewUnitCount") ==
+             sum(1 for entry in collections if entry["typeKey"] == "appearance"),
+             "appearance visibility review is missing or incomplete")
+    visibility_by_id = {int(entry["appearanceId"]): entry for entry in visibility.get("decisions", [])}
+    _require(len(visibility_by_id) == visibility.get("reviewUnitCount"), "duplicate appearance visibility decision")
+    allowed_ui_lifecycles = {"public", "hidden_internal", "deprecated", "test", "unobtainable", "deferred"}
+    for entry in collections:
+        if entry["typeKey"] != "appearance":
+            continue
+        decision = visibility_by_id.get(int(entry["collectionId"]))
+        _require(decision is not None and decision.get("collectionKey") == entry["collectionKey"],
+                 f"appearance visibility identity drift: {entry['collectionKey']}")
+        _require(decision.get("uiLifecycle") in allowed_ui_lifecycles,
+                 f"invalid appearance UI lifecycle: {entry['collectionKey']}")
+        _require(decision.get("catalogLifecycle") == entry["catalogLifecycle"],
+                 f"appearance visibility changed catalog authorization: {entry['collectionKey']}")
+        entry["uiLifecycle"] = decision["uiLifecycle"]
     overrides_data = _read_json(source_root / "overrides" / "identity_overrides.json")
     overrides = deepcopy(overrides_data.get("entries", []))
     seen_override: set[tuple[Any, ...]] = set()
@@ -681,6 +701,7 @@ def build_model(source_root: Path) -> dict[str, Any]:
                 "typeKey", "collectionId", "collectionKey", "name", "lifecycle", "assetReady",
                 "assetProfile", "previewCreatureEntry", "iconSpellId", "spellIconId", "iconTexture",
                 "presentationStatus", "presentationReasonCode",
+                "uiLifecycle",
                 "renderMode", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
                 "weaponCategory", "cameraTuningKey", "m2Camera",
             )

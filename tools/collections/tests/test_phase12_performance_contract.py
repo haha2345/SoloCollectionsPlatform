@@ -14,7 +14,9 @@ class Phase12ClientPerformanceContractTests(unittest.TestCase):
     def test_real_client_baseline_covers_every_page_search_paging_and_17k_scale(self):
         self.assertIn("Diagnostics.RunPerformanceBaseline", DIAGNOSTICS)
         self.assertIn('"MOUNTS", "PETS", "TOYS", "WARDROBE", "TITLES"', DIAGNOSTICS)
-        self.assertIn("RunSyntheticAppearanceBenchmark(17000)", DIAGNOSTICS)
+        self.assertIn("RunSyntheticAppearanceBenchmark(18190)", DIAGNOSTICS)
+        self.assertIn("RunExpandedCollectionBenchmark(18190, 201, 509)", DIAGNOSTICS)
+        self.assertIn("SC_PERF expanded appearances=%d companions=%d sets=%d", DIAGNOSTICS)
         self.assertIn("filterMs", CATALOG)
         self.assertIn("pageMs", CATALOG)
 
