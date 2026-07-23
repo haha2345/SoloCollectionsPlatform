@@ -46,6 +46,13 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertNotIn("SoloCollectionsDB.owned", state)
         self.assertNotIn("SC.db.owned", state)
 
+    def test_client_accepts_the_versioned_asset_pack_token_limit(self):
+        state = (ADDON / "Core/CollectionState.lua").read_text(encoding="utf-8")
+        harness = ROOT / "tools/collections/tests/lua/sc2_collection_state_harness.lua"
+        self.assertIn("local MAX_TOKEN_BYTES = 64", state)
+        self.assertIn("#value <= MAX_TOKEN_BYTES", state)
+        self.assertIn("round-two-stage8-weapon-presentation-v2", harness.read_text(encoding="utf-8"))
+
     def test_catalog_overlays_authoritative_owned_state(self):
         catalog = (ADDON / "Core/Catalog.lua").read_text(encoding="utf-8")
         self.assertIn("CollectionState.ResolveOwned", catalog)

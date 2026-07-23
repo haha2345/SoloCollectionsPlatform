@@ -29,6 +29,10 @@ class SC2ProtocolTests(unittest.TestCase):
         self.assertLessEqual(self.schema["maxBodyBytes"], 240)
         self.assertLess(self.schema["maxBodyBytes"], self.schema["coreMessageLimitBytes"])
         self.assertEqual(160, self.schema["maxChunkPayloadBytes"])
+        self.assertEqual(
+            "ASCII_ALNUM_DOT_UNDERSCORE_TILDE_HYPHEN_1_TO_64",
+            self.schema["fields"]["token"],
+        )
 
     def test_all_golden_packets_round_trip(self):
         for vector in self.vectors["packets"]:
@@ -63,6 +67,33 @@ class SC2ProtocolTests(unittest.TestCase):
             with self.subTest(packet=packet[:32]):
                 with self.assertRaises(codec.ProtocolError):
                     codec.decode(packet)
+
+    def test_version_token_boundary_accepts_current_asset_pack_and_rejects_65_bytes(self):
+        token = "round-two-stage8-weapon-presentation-v2"
+        self.assertEqual(39, len(token))
+        packet = codec.encode(
+            {
+                "kind": "HELLO",
+                "protocolVersion": 1,
+                "clientNonce": "fedcba9876543210",
+                "clientBuild": "0.1.0",
+                "metadataVersion": "2026.07.23.2",
+                "assetPackVersion": token,
+            }
+        )
+        self.assertEqual(token, codec.decode(packet)["assetPackVersion"])
+        too_long = "a" * 65
+        with self.assertRaises(codec.ProtocolError):
+            codec.encode(
+                {
+                    "kind": "HELLO",
+                    "protocolVersion": 1,
+                    "clientNonce": "fedcba9876543210",
+                    "clientBuild": "0.1.0",
+                    "metadataVersion": "2026.07.23.2",
+                    "assetPackVersion": too_long,
+                }
+            )
 
 
 if __name__ == "__main__":
