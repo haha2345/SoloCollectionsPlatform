@@ -22,7 +22,7 @@ bool IsLowerHex(std::string_view value, std::size_t size)
 
 bool IsToken(std::string_view value)
 {
-    return !value.empty() && value.size() <= 32 && std::all_of(value.begin(), value.end(), [](char character)
+    return !value.empty() && value.size() <= Sc2Limits::MaxTokenBytes && std::all_of(value.begin(), value.end(), [](char character)
     {
         return (character >= 'A' && character <= 'Z') || (character >= 'a' && character <= 'z') ||
             (character >= '0' && character <= '9') || character == '.' || character == '_' ||

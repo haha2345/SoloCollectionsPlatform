@@ -14,6 +14,7 @@ inline constexpr std::uint16_t Sc2ProtocolVersion = 1;
 struct Sc2Limits
 {
     static constexpr std::size_t MaxBodyBytes = 240;
+    static constexpr std::size_t MaxTokenBytes = 64;
     static constexpr std::size_t MaxChunkPayloadBytes = 160;
     static constexpr std::size_t MaxSnapshotChunks = 256;
     static constexpr std::size_t MaxSnapshotBytes = 32768;

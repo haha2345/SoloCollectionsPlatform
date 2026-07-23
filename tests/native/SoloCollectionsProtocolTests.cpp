@@ -25,6 +25,7 @@ void TestGoldenCodecVectors()
 {
     std::vector<std::string> packets {
         "H|1|fedcba9876543210|0.2.0-dev|2026.07.19|local-1",
+        "H|1|fedcba9876543210|0.1.0|2026.07.23.2|round-two-stage8-weapon-presentation-v2",
         "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|phase5-dev|5",
         "M|0123456789abcdef|1|bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac",
         "B|0123456789abcdef|17|1|1|42|179c036b|14",
@@ -58,6 +59,10 @@ void TestGoldenCodecVectors()
         "Z|1",
     })
         Require(!SC::DecodeSc2Body(invalid).Success, "invalid packet was accepted: " + invalid);
+
+    std::string oversizedAssetVersion(65, 'a');
+    std::string oversizedHello = "H|1|fedcba9876543210|0.1.0|2026.07.23.2|" + oversizedAssetVersion;
+    Require(!SC::DecodeSc2Body(oversizedHello).Success, "oversized token was accepted");
 }
 
 SC::Sc2Server BuildServer(SC::AccountCollectionCache& cache)

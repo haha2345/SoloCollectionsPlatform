@@ -56,6 +56,7 @@ class Phase5ProtocolContractTests(unittest.TestCase):
         )
         for token in (
             "MaxBodyBytes = 240",
+            "MaxTokenBytes = 64",
             "MaxChunkPayloadBytes = 160",
             "MaxSnapshotChunks = 256",
             "MaxSnapshotBytes = 32768",
