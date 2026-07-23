@@ -6,6 +6,7 @@ import importlib.util
 import json
 import math
 import struct
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +19,13 @@ SPEC = importlib.util.spec_from_file_location("character_camera_profiles", TOOL)
 camera = importlib.util.module_from_spec(SPEC)
 assert SPEC and SPEC.loader
 SPEC.loader.exec_module(camera)
+
+SILHOUETTE_TOOL = ROOT / "tools/catalog/check_camera_silhouette_audit.py"
+sys.path.insert(0, str(SILHOUETTE_TOOL.parent))
+SILHOUETTE_SPEC = importlib.util.spec_from_file_location("check_camera_silhouette_audit", SILHOUETTE_TOOL)
+silhouette_audit = importlib.util.module_from_spec(SILHOUETTE_SPEC)
+assert SILHOUETTE_SPEC and SILHOUETTE_SPEC.loader
+SILHOUETTE_SPEC.loader.exec_module(silhouette_audit)
 
 CANONICAL = ROOT / "catalog/source/camera_profiles.json"
 OVERRIDES = ROOT / "catalog/source/overrides/camera_profiles.json"
@@ -74,10 +82,25 @@ class CharacterCameraProfileTests(unittest.TestCase):
             "sentinel", "verticalOffset", "distanceScale", "minimumDistance",
             "horizontalOffset", "yawOffset",
         )
+        approved = {
+            row["profileKey"]: row
+            for row in self.overrides.get("approvedBodyDeltas", [])
+        }
         for slot in camera.SLOTS:
+            expected = dict(reference[slot])
+            delta = approved.get(f"human:female:{slot}")
+            if delta:
+                expected["verticalOffset"] += delta["verticalOffsetDelta"]
+                expected["horizontalOffset"] += delta["horizontalOffsetDelta"]
+                expected["distanceScale"] *= delta["distanceScaleMultiplier"]
+                expected["minimumDistance"] += delta["minimumDistanceDelta"]
+                expected["yawOffset"] += delta["yawOffsetDelta"]
             for key in value_keys:
-                self.assertEqual(reference[slot][key], human_female[slot][key])
-            self.assertEqual("verified", human_female[slot]["status"])
+                if key == "sentinel":
+                    self.assertEqual(expected[key], human_female[slot][key])
+                else:
+                    self.assertAlmostEqual(expected[key], human_female[slot][key], places=7)
+            self.assertEqual("approved_delta" if delta else "verified", human_female[slot]["status"])
         new_values = sorted(set(sentinels) - {row["sentinel"] for row in reference.values()})
         self.assertEqual(list(range(0x6000, 0x6000 + 171)), new_values)
         self.assertTrue(all(value not in (0, 1) for value in sentinels))
@@ -169,11 +192,16 @@ class CharacterCameraProfileTests(unittest.TestCase):
         self.assertIn('CreateFrame("DressUpModel"', audit)
         self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + displayId", audit)
         self.assertIn("card.model:TryOn(itemString(previewItem))", audit)
-        self.assertIn("state.page > 20", audit)
-        self.assertIn("SoloCollectionsCameraAuditDB.rowCount == 180", audit)
-        self.assertIn("SoloCollectionsCameraAuditDB.pageCount == 20", audit)
+        self.assertIn("state.page > state.totalPages", audit)
+        self.assertIn("SoloCollectionsCameraAuditDB.rowCount == state.expectedRows", audit)
+        self.assertIn("SoloCollectionsCameraAuditDB.pageCount == state.totalPages", audit)
         self.assertIn("reapplyPageCameras()", audit)
         self.assertIn("state.elapsed >= 0.30", audit)
+        self.assertIn("local SILHOUETTE_SAMPLES", audit)
+        self.assertIn("state.mode == SILHOUETTE_MODE", audit)
+        self.assertIn("#SILHOUETTE_SAMPLES * 20", audit)
+        self.assertIn("state.expectedRows = state.totalPages * #profiles.slotOrder", audit)
+        self.assertIn("silhouette = current.sample.key", audit)
         self.assertNotIn("math.mod", audit)
 
     def test_runtime_review_has_one_passing_row_for_every_profile(self):
@@ -197,6 +225,56 @@ class CharacterCameraProfileTests(unittest.TestCase):
             self.assertEqual("PASS", row["targetCentered"])
             self.assertEqual("NONE", row["unexpectedClipping"])
             self.assertEqual("PASS", row["visualReview"])
+
+    def test_silhouette_audit_verifier_requires_three_complete_profile_passes(self):
+        scratch = ROOT / "_work/test-temp"
+        scratch.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(prefix="silhouette-audit-", dir=scratch) as value:
+            temp = Path(value)
+            saved = temp / "SoloCollectionsCameraAudit.lua"
+            screenshots = temp / "screenshots"
+            screenshots.mkdir()
+            for page in range(1, 61):
+                (screenshots / f"silhouette-{page:02d}.jpg").write_bytes(b"jpg")
+            (screenshots / "silhouette-reload.jpg").write_bytes(b"reload")
+
+            row_lines = []
+            for profile in self.profiles:
+                for sample in silhouette_audit.SILHOUETTES:
+                    row_lines.append(
+                        "{ "
+                        f'[\"raceKey\"] = \"{profile["raceKey"]}\", '
+                        f'[\"sex\"] = \"{profile["sex"]}\", '
+                        f'[\"slot\"] = \"{profile["slot"]}\", '
+                        f'[\"sentinel\"] = {profile["sentinel"]}, '
+                        '[\"previewItemId\"] = 1, '
+                        '[\"expectedModel\"] = \"Character\\\\Fixture.m2\", '
+                        '[\"actualModel\"] = \"Character\\\\Fixture.m2\", '
+                        '[\"modelReady\"] = true, '
+                        f'[\"silhouette\"] = \"{sample}\" '
+                        "},"
+                    )
+            page_lines = [f'{{ ["page"] = {page}, ["ready"] = true }},' for page in range(1, 61)]
+            saved.write_text(
+                "SoloCollectionsCameraAuditDB = {\n"
+                '  ["completed"] = true, ["ready"] = true, ["reloadObserved"] = true,\n'
+                '  ["mode"] = "silhouettes", ["rowCount"] = 540, ["pageCount"] = 60,\n'
+                f'  ["profileVersion"] = {self.canonical["profileVersion"]},\n'
+                f'  ["profileHash"] = "{self.canonical["profileHash"]}",\n'
+                '  ["rows"] = {\n' + "\n".join(row_lines) + "\n  },\n"
+                '  ["pages"] = {\n' + "\n".join(page_lines) + "\n  },\n"
+                "}\n",
+                encoding="utf-8",
+            )
+
+            result = silhouette_audit.check_silhouette_audit(saved, CANONICAL, screenshots)
+            self.assertEqual(540, result["rows"])
+            self.assertEqual({name: 180 for name in silhouette_audit.SILHOUETTES}, result["silhouetteRows"])
+
+            saved.write_text(saved.read_text(encoding="utf-8").replace('["mode"] = "silhouettes"', '["mode"] = "baseline"'),
+                             encoding="utf-8")
+            with self.assertRaises(silhouette_audit.CameraRuntimeMatrixError):
+                silhouette_audit.check_silhouette_audit(saved, CANONICAL, screenshots)
 
     def test_m2_and_dbc_hash_drift_fail_closed(self):
         scratch = ROOT / "_work/test-temp"

@@ -1,0 +1,9 @@
+## Interface: 30300
+## Title: SoloCollections Weapon Shadow Audit
+## Notes: Temporary stage-seven direct-display verifier.
+## Author: SoloCollections
+## Version: 1
+## SavedVariables: SoloCollectionsWeaponShadowAuditDB
+
+Data.lua
+WeaponShadowAudit.lua

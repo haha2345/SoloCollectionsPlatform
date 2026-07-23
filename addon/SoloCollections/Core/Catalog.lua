@@ -134,6 +134,7 @@ local function getGeneratedAppearanceSource()
             table.insert(generatedAppearanceSource, {
                 id = collection.collectionId,
                 itemId = tonumber(collection.displayItemId) or itemIds[1],
+                iconItemId = tonumber(collection.displayItemId) or itemIds[1],
                 itemIds = itemIds,
                 slot = slot,
                 armorType = armorType,
@@ -147,8 +148,18 @@ local function getGeneratedAppearanceSource()
                 cameraTuningKey = collection.cameraTuningKey,
                 m2Camera = collection.m2Camera,
                 modelSignature = collection.modelSignature,
+                -- Keep reviewed, generated model-scoped camera defaults in the
+                -- runtime projection.  Wardrobe resolves this below explicit
+                -- player appearance/model tuning and above weapon-family
+                -- fallbacks; dropping it here silently turns it into auto.
+                generatedModelCameraOverride = collection.generatedModelCameraOverride,
                 autoCamera = collection.autoCamera,
                 presentationStatus = collection.presentationStatus,
+                presentationReasonCode = collection.presentationReasonCode,
+                presentationCapability = collection.presentationCapability,
+                assetPackVersion = collection.assetPackVersion,
+                retiredSyntheticDisplayId = collection.retiredSyntheticDisplayId,
+                registryTombstoneReason = collection.registryTombstoneReason,
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = nil,
                 source = "账号收藏",

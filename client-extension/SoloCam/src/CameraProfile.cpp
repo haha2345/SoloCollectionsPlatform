@@ -47,6 +47,17 @@ bool BuildCharacterCamera(
     CameraVector& target
 )
 {
+    if (!std::isfinite(profile.verticalOffset)
+        || !std::isfinite(profile.distanceScale)
+        || !std::isfinite(profile.minimumDistance)
+        || !std::isfinite(profile.horizontalOffset)
+        || !std::isfinite(profile.yawOffset)
+        || profile.distanceScale <= 0.0f
+        || profile.minimumDistance <= 0.0f)
+    {
+        return false;
+    }
+
     const float viewX = nativePosition.x - nativeTarget.x;
     const float viewY = nativePosition.y - nativeTarget.y;
     const float viewZ = nativePosition.z - nativeTarget.z;
@@ -87,6 +98,61 @@ bool BuildCharacterCamera(
     position.y = target.y + rotatedViewY * inverseDistance * distance;
     position.z = target.z + viewZ * inverseDistance * distance;
     return true;
+}
+
+bool IsBodyCameraDeltaValid(const BodyCameraDelta& delta)
+{
+    return std::isfinite(delta.verticalOffsetDelta)
+        && std::isfinite(delta.horizontalOffsetDelta)
+        && std::isfinite(delta.distanceScaleMultiplier)
+        && std::isfinite(delta.minimumDistanceDelta)
+        && std::isfinite(delta.yawOffsetDelta)
+        && std::fabs(delta.verticalOffsetDelta) <= kBodyCameraOffsetDeltaLimit
+        && std::fabs(delta.horizontalOffsetDelta) <= kBodyCameraOffsetDeltaLimit
+        && delta.distanceScaleMultiplier >= kBodyCameraMinimumDistanceScaleMultiplier
+        && delta.distanceScaleMultiplier <= kBodyCameraMaximumDistanceScaleMultiplier
+        && std::fabs(delta.minimumDistanceDelta) <= kBodyCameraMinimumDistanceDeltaLimit
+        && std::fabs(delta.yawOffsetDelta) <= kPi;
+}
+
+bool BuildBodyCharacterCamera(
+    const CharacterCameraProfile& profile,
+    const BodyCameraDelta& delta,
+    const CameraVector& nativePosition,
+    const CameraVector& nativeTarget,
+    CameraVector& position,
+    CameraVector& target
+)
+{
+    if (!IsBodyCameraDeltaValid(delta))
+    {
+        return false;
+    }
+
+    CharacterCameraProfile adjusted = profile;
+    adjusted.verticalOffset += delta.verticalOffsetDelta;
+    adjusted.horizontalOffset += delta.horizontalOffsetDelta;
+    adjusted.distanceScale *= delta.distanceScaleMultiplier;
+    adjusted.minimumDistance += delta.minimumDistanceDelta;
+    adjusted.yawOffset += delta.yawOffsetDelta;
+    if (!std::isfinite(adjusted.verticalOffset)
+        || !std::isfinite(adjusted.horizontalOffset)
+        || !std::isfinite(adjusted.distanceScale)
+        || !std::isfinite(adjusted.minimumDistance)
+        || !std::isfinite(adjusted.yawOffset)
+        || adjusted.distanceScale <= 0.0f
+        || adjusted.minimumDistance <= 0.0f)
+    {
+        return false;
+    }
+
+    return BuildCharacterCamera(
+        adjusted,
+        nativePosition,
+        nativeTarget,
+        position,
+        target
+    );
 }
 
 bool BuildItemM2Camera(

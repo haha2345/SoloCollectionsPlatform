@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "policyVersion": "wotlk-itemset-presentation-2026-07-22",
+  "policyVersion": "wotlk-itemset-presentation-2026-07-23",
   "note": "Presentation-only review rules. Ranges are reviewed 3.3.5 ItemSet IDs, never localized set names. Unmatched rows remain explicitly UNKNOWN rather than receiving guessed raid metadata.",
   "rules": [
     {
@@ -28,6 +28,13 @@
       "acquisition": "PVE",
       "raidTier": "T8",
       "difficulty": "RAID",
+      "difficultyBands": [
+        {
+          "minimumMedianItemLevel": 226,
+          "difficulty": "HIGH",
+          "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL"
+        }
+      ],
       "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR"
     },
     {
@@ -37,6 +44,13 @@
       "acquisition": "PVE",
       "raidTier": "T7",
       "difficulty": "RAID",
+      "difficultyBands": [
+        {
+          "minimumMedianItemLevel": 213,
+          "difficulty": "HIGH",
+          "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX_HIGH_ITEM_LEVEL"
+        }
+      ],
       "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX"
     }
   ]

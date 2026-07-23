@@ -148,6 +148,33 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertNotEqual(before["mappingHash"], preview_changed["mappingHash"])
         self.assertNotEqual(before["typeMappingHashes"][changed_type], preview_changed["typeMappingHashes"][changed_type])
 
+    def test_weapon_presentation_pose_changes_do_not_change_server_mapping_hash(self):
+        before = generator.build_model(self.source)
+        report = self.read_json("catalog/generated/appearance-presentation-report.json")
+        ready = next(entry for entry in report["entries"] if entry["presentationStatus"] == "READY")
+        ready["autoCamera"]["yaw"] += 0.01
+        self.write_json("catalog/generated/appearance-presentation-report.json", report)
+        after = generator.build_model(self.source)
+        self.assertEqual(before["mappingHash"], after["mappingHash"])
+        self.assertNotEqual(before["presentationHash"], after["presentationHash"])
+
+    def test_mapping_contract_survives_client_asset_pack_upgrade(self):
+        before = generator.build_model(self.source)
+        upgraded = "round-two-stage8-test-upgrade"
+        versions = self.read_json("catalog/source/versions.json")
+        versions["assetPackVersion"] = upgraded
+        self.write_json("catalog/source/versions.json", versions)
+        report = self.read_json("catalog/generated/appearance-presentation-report.json")
+        report["assetPackVersion"] = upgraded
+        report["assetBundle"]["assetPackVersion"] = upgraded
+        for entry in report["entries"]:
+            entry["assetPackVersion"] = upgraded
+        self.write_json("catalog/generated/appearance-presentation-report.json", report)
+        after = generator.build_model(self.source)
+        self.assertEqual(upgraded, after["assetPackVersion"])
+        self.assertEqual(before["mappingHash"], after["mappingHash"])
+        self.assertNotEqual(before["presentationHash"], after["presentationHash"])
+
     def test_client_projection_contains_presentation_icon_but_no_action_spell(self):
         outputs = generator.render_outputs(generator.build_model(self.source), ROOT, MODULE_ROOT)
         rendered = outputs[ROOT / "addon/SoloCollections/Data/Generated/Catalog.lua"]

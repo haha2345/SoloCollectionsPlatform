@@ -376,15 +376,24 @@ def _load_creature_presentations(source_root: Path, collections: list[dict[str, 
 def _load_appearance_presentations(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
     path = source_root.parent / "generated" / "appearance-presentation-report.json"
     data = deepcopy(_read_json(path))
-    _require(data.get("schemaVersion") == 2, "unsupported appearance presentation schema version")
+    _require(data.get("schemaVersion") == 3, "unsupported appearance presentation schema version")
     entries = data.get("entries")
-    _require(isinstance(entries, list) and len(entries) == 21,
-             "appearance presentation report must contain 21 verified entries")
+    _require(isinstance(entries, list) and entries, "appearance presentation report has no entries")
+    _require(isinstance(data.get("assetPackVersion"), str) and data["assetPackVersion"],
+             "appearance presentation asset pack version is missing")
+    _require(isinstance(data.get("publicAppearanceCount"), int) and data["publicAppearanceCount"] > 0,
+             "appearance presentation public denominator is invalid")
+    terminal_counts = data.get("terminalCounts")
+    _require(isinstance(terminal_counts, dict) and all(isinstance(terminal_counts.get(key), int)
+             for key in ("READY", "UNAVAILABLE")), "appearance presentation terminal counts are invalid")
     expected = {
         int(entry["collectionId"]): entry
         for entry in collections if entry["typeKey"] == "appearance"
     }
     actual: dict[int, dict[str, Any]] = {}
+    ready = 0
+    unavailable = 0
+    retained = 0
     for entry in entries:
         appearance_id = int(entry.get("appearanceId", 0))
         source = expected.get(appearance_id)
@@ -392,17 +401,44 @@ def _load_appearance_presentations(source_root: Path, collections: list[dict[str
         _require(entry.get("collectionKey") == source["collectionKey"],
                  f"appearance presentation key drift: {appearance_id}")
         _require(entry.get("sourceAlias") in source.get("aliases", []),
-                 f"appearance presentation source alias drift: {appearance_id}")
-        _require(entry.get("presentationStatus") == "verified",
-                 f"appearance presentation is not verified: {appearance_id}")
-        _require(re.match(r"^m2:[a-f0-9]{64}$", str(entry.get("modelSignature", ""))) is not None,
-                 f"appearance presentation has invalid model signature: {appearance_id}")
-        auto_camera = entry.get("autoCamera")
-        _require(isinstance(auto_camera, dict) and all(key in auto_camera for key in (
-            "yaw", "pitch", "roll", "distanceScale", "target",
-        )), f"appearance presentation has incomplete automatic camera: {appearance_id}")
+                  f"appearance presentation source alias drift: {appearance_id}")
+        _require(entry.get("assetPackVersion") == data["assetPackVersion"],
+                 f"appearance presentation asset pack drift: {appearance_id}")
+        status = entry.get("presentationStatus")
+        if status in {"READY", "RETAINED_BASELINE"}:
+            _require(entry.get("renderMode") == "STANDALONE"
+                     and entry.get("presentationCapability") == "DIRECT_DISPLAY_V1",
+                     f"appearance presentation capability drift: {appearance_id}")
+            _require(re.match(r"^m2:[a-f0-9]{64}$", str(entry.get("modelSignature", ""))) is not None,
+                     f"appearance presentation has invalid model signature: {appearance_id}")
+            _require(0 < int(entry.get("syntheticDisplayId", 0)) <= 0x00FFFFFF,
+                     f"appearance presentation has unsafe synthetic display: {appearance_id}")
+            auto_camera = entry.get("autoCamera")
+            _require(isinstance(auto_camera, dict) and all(key in auto_camera for key in (
+                "yaw", "pitch", "roll", "distanceScale", "target",
+            )), f"appearance presentation has incomplete automatic camera: {appearance_id}")
+            if status == "READY":
+                ready += 1
+            else:
+                _require(entry.get("presentationAudience") == "NONPUBLIC_BASELINE",
+                         f"appearance presentation retained baseline audience drift: {appearance_id}")
+                retained += 1
+        elif status == "UNAVAILABLE":
+            _require(entry.get("renderMode") == "UNAVAILABLE"
+                     and entry.get("presentationCapability") == "UNAVAILABLE"
+                     and entry.get("presentationReasonCode"),
+                     f"appearance presentation unavailable verdict drift: {appearance_id}")
+            unavailable += 1
+        else:
+            raise CatalogError(f"appearance presentation has unsupported status: {appearance_id}")
         _require(appearance_id not in actual, f"duplicate appearance presentation: {appearance_id}")
         actual[appearance_id] = entry
+    _require(ready == int(terminal_counts["READY"]) and unavailable == int(terminal_counts["UNAVAILABLE"]),
+             "appearance presentation terminal counts drift")
+    _require(ready + unavailable == int(data["publicAppearanceCount"]),
+             "appearance presentation public denominator drift")
+    _require(retained == int(data.get("retainedNonPublicBaselineCount", 0)),
+             "appearance presentation retained baseline count drift")
     return data
 
 
@@ -540,23 +576,49 @@ def _derive_class(entry: dict[str, Any]) -> dict[str, Any]:
     return result
 
 
-def _canonical_for_hash(model: dict[str, Any]) -> dict[str, Any]:
-    def clean(value: Any, key: str = "") -> Any:
+def _canonical_for_hash(model: dict[str, Any], mapping_asset_pack_version: str | None = None) -> dict[str, Any]:
+    """Return the server-authoritative identity basis.
+
+    The root asset-pack field historically participated in the mapping hash.
+    Keep that one legacy identity value stable while omitting per-presentation
+    asset versions, resource hashes, poses and render verdicts.  This lets the
+    AddOn/DLL/MPQ contract evolve without changing owned collection identity.
+    """
+
+    def clean(value: Any, key: str = "", parent_path: tuple[str, ...] = ()) -> Any:
+        if key in {"assetPackVersion", "clientAssetVersion"}:
+            # The original mapping contract carried a catalog-wide asset
+            # version and each race's client asset version.  Preserve those
+            # two legacy identity fields at their mapping-contract value;
+            # per-appearance asset versions are a presentation projection and
+            # deliberately have no server mapping effect.
+            if not parent_path or parent_path == ("races",):
+                return mapping_asset_pack_version
+            return None
         if key in {
             "name", "icon", "metadataVersion", "iconSpellId", "spellIconId", "iconTexture",
             "presentationStatus", "presentationReasonCode", "presentationHash",
             "presentationEvidenceHash", "presentationEvidenceId", "presentationEvidencePackHash",
             "appearancePresentationHash", "appearancePresentationEvidence", "deprecatedAliases",
+            "appearancePresentationPublicCount",
             "presentationHash",
             "nativeDisplayId", "syntheticDisplayId", "modelPath", "modelScale", "weaponType", "weaponCategory",
             "cameraTuningKey", "m2Camera", "modelSignature", "autoCamera", "presentationStatus", "renderMode",
+            "presentationCapability", "assetHashes", "retiredSyntheticDisplayId", "registryTombstoneReason",
+            "presentationAudience", "baselineSourceSha256", "runtimeProjection", "assetBundle",
+            "generatedModelCameraOverride", "modelCameraOverrides",
             "uiLifecycle",
         }:
             return None
         if isinstance(value, dict):
-            return {child_key: cleaned for child_key in sorted(value) if (cleaned := clean(value[child_key], child_key)) is not None}
+            child_parent = parent_path + ((key,) if key else ())
+            return {
+                child_key: cleaned
+                for child_key in sorted(value)
+                if (cleaned := clean(value[child_key], child_key, child_parent)) is not None
+            }
         if isinstance(value, list):
-            return [clean(item) for item in value]
+            return [clean(item, parent_path=parent_path + ((key,) if key else ())) for item in value]
         return value
     return clean(model)
 
@@ -642,6 +704,8 @@ def build_model(source_root: Path) -> dict[str, Any]:
     toy_actions = _load_toy_actions(source_root, collections)
     creature_presentations = _load_creature_presentations(source_root, collections)
     appearance_presentations = _load_appearance_presentations(source_root, collections)
+    _require(appearance_presentations["assetPackVersion"] == versions["assetPackVersion"],
+             "appearance presentation asset pack version drift")
     presentation_by_identity = {
         (entry["typeKey"], int(entry["collectionId"])): entry
         for entry in creature_presentations["entries"]
@@ -668,10 +732,14 @@ def build_model(source_root: Path) -> dict[str, Any]:
         presentation = appearance_by_id.get(int(entry["collectionId"]))
         if presentation is not None:
             for key in ("nativeDisplayId", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
-                        "weaponCategory", "cameraTuningKey", "m2Camera", "modelSignature",
-                        "autoCamera", "presentationStatus"):
-                entry[key] = deepcopy(presentation[key])
-            entry["renderMode"] = "STANDALONE"
+                         "weaponCategory", "cameraTuningKey", "m2Camera", "modelSignature",
+                         "autoCamera", "presentationStatus", "presentationReasonCode",
+                         "generatedModelCameraOverride",
+                         "presentationCapability", "assetPackVersion", "retiredSyntheticDisplayId",
+                         "registryTombstoneReason", "presentationAudience"):
+                if key in presentation:
+                    entry[key] = deepcopy(presentation[key])
+            entry["renderMode"] = presentation["renderMode"]
         elif slot in weapon_slots:
             entry["renderMode"] = "UNAVAILABLE"
         else:
@@ -696,9 +764,12 @@ def build_model(source_root: Path) -> dict[str, Any]:
         "presentationEvidencePackHash": creature_presentations["evidencePackHash"],
         "appearancePresentationHash": _hash(appearance_presentations["entries"]),
         "appearancePresentationEvidence": {
-            "weaponManifestSha256": appearance_presentations["weaponManifestSha256"],
-            "verificationSha256": appearance_presentations["verificationSha256"],
+            "baselineSourceSha256": appearance_presentations["baselineSourceSha256"],
+            "runtimeProjection": appearance_presentations["runtimeProjection"],
+            "assetBundle": appearance_presentations["assetBundle"],
+            "modelCameraOverrides": appearance_presentations["modelCameraOverrides"],
         },
+        "appearancePresentationPublicCount": appearance_presentations["publicAppearanceCount"],
         "deprecatedAliases": {"displayCreatureId": "previewCreatureEntry"},
     }
     presentation_basis = [
@@ -711,6 +782,9 @@ def build_model(source_root: Path) -> dict[str, Any]:
                 "uiLifecycle",
                 "renderMode", "nativeDisplayId", "syntheticDisplayId", "modelPath", "modelScale", "weaponType",
                 "weaponCategory", "cameraTuningKey", "m2Camera", "modelSignature", "autoCamera",
+                "generatedModelCameraOverride",
+                "presentationCapability", "assetPackVersion", "retiredSyntheticDisplayId",
+                "registryTombstoneReason", "presentationAudience",
             )
         }
         for entry in collections
@@ -720,7 +794,7 @@ def build_model(source_root: Path) -> dict[str, Any]:
     _require(normalized_sets.get("schemaVersion") == 2 and len(normalized_sets.get("mappingHash", "")) == 64,
              "normalized ItemSet mapping is missing or invalid")
     model["setCatalogMappingHash"] = normalized_sets["mappingHash"]
-    mapping_basis = _canonical_for_hash(model)
+    mapping_basis = _canonical_for_hash(model, str(versions.get("mappingAssetPackVersion", versions["assetPackVersion"])))
     model["mappingHash"] = _hash(mapping_basis)
     model["typeMappingHashes"] = {}
     for entry in model["collectionTypes"]:
@@ -1047,6 +1121,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         "presentationEvidencePackHash": model["presentationEvidencePackHash"],
         "appearancePresentationHash": model["appearancePresentationHash"],
         "appearancePresentationEvidence": model["appearancePresentationEvidence"],
+        "appearancePresentationPublicCount": model["appearancePresentationPublicCount"],
         "deprecatedAliases": model["deprecatedAliases"],
     }) + "\n"
     identity_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedIdentityData = " + _lua({

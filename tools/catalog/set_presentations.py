@@ -25,7 +25,7 @@ class SetPresentationError(ValueError):
 EXPANSION_RANK = {"UNKNOWN": 0, "CLASSIC": 1, "TBC": 2, "WRATH": 3}
 ACQUISITION_RANK = {"UNKNOWN": 0, "PVP": 1, "PVE": 2}
 TIER_RANK = {"NONE": 0, "T7": 7, "T8": 8, "T9": 9, "T10": 10}
-DIFFICULTY_RANK = {"UNKNOWN": 0, "RAID": 1, "HEROIC": 2}
+DIFFICULTY_RANK = {"UNKNOWN": 0, "RAID": 1, "HIGH": 2, "HEROIC": 3}
 
 
 def require(condition: bool, message: str) -> None:
@@ -77,6 +77,20 @@ def validate_policy(policy: dict[str, Any]) -> list[dict[str, Any]]:
                                ("raidTier", TIER_RANK), ("difficulty", DIFFICULTY_RANK)):
             require(rule.get(field) in options, f"invalid {field} in {key}")
         require(bool(rule.get("reasonCode")), f"missing presentation reasonCode for {key}")
+        difficulty_bands = rule.get("difficultyBands", [])
+        require(isinstance(difficulty_bands, list), f"difficultyBands must be a list for {key}")
+        previous_minimum: int | float | None = None
+        for band in difficulty_bands:
+            require(isinstance(band, dict), f"invalid difficulty band in {key}")
+            minimum = band.get("minimumMedianItemLevel")
+            require(isinstance(minimum, (int, float)) and minimum > 0,
+                    f"invalid minimumMedianItemLevel in {key}")
+            require(previous_minimum is None or minimum > previous_minimum,
+                    f"difficulty bands must be ascending in {key}")
+            require(band.get("difficulty") in DIFFICULTY_RANK,
+                    f"invalid difficulty band value in {key}")
+            require(bool(band.get("reasonCode")), f"missing difficulty band reasonCode in {key}")
+            previous_minimum = minimum
         seen_keys.add(key)
     return rules
 
@@ -96,6 +110,24 @@ def summary_value(summary: Any, key: str) -> int | float:
     return value if isinstance(value, (int, float)) else 0
 
 
+def resolve_rule_difficulty(rule: dict[str, Any], item_level: dict[str, Any]) -> tuple[str, str]:
+    """Choose an evidence-backed difficulty band without inferring from names.
+
+    The base rule is used unless a reviewed median item-level threshold matches.
+    This is intentionally narrower than an encounter-mode guess: a source pack
+    that does not expose a difficulty distinction remains at its base rank.
+    """
+
+    difficulty = str(rule["difficulty"])
+    reason_code = str(rule["reasonCode"])
+    median = summary_value(item_level, "median")
+    for band in rule.get("difficultyBands", []):
+        if median >= band["minimumMedianItemLevel"]:
+            difficulty = str(band["difficulty"])
+            reason_code = str(band["reasonCode"])
+    return difficulty, reason_code
+
+
 def resolve_presentation(candidate: dict[str, Any], collection_id: int, rule: dict[str, Any] | None) -> dict[str, Any]:
     item_set_id = int(candidate["itemSetId"])
     if rule is None:
@@ -110,9 +142,8 @@ def resolve_presentation(candidate: dict[str, Any], collection_id: int, rule: di
         expansion = str(rule["expansion"])
         acquisition = str(rule["acquisition"])
         tier = str(rule["raidTier"])
-        difficulty = str(rule["difficulty"])
+        difficulty, reason_code = resolve_rule_difficulty(rule, candidate.get("itemLevel") or {})
         rule_key = str(rule["key"])
-        reason_code = str(rule["reasonCode"])
         status = "REVIEWED"
     item_level = candidate.get("itemLevel") or {}
     quality = candidate.get("quality") or {}

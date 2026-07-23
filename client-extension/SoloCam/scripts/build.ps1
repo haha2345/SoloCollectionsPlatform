@@ -40,6 +40,7 @@ $env:TMP = $TempRoot
 $CameraProfileTest = Join-Path $TestRoot 'CameraProfileTests.exe'
 $DisplayInfoBridgeTest = Join-Path $TestRoot 'DisplayInfoBridgeTests.exe'
 $ItemCameraBridgeTest = Join-Path $TestRoot 'ItemCameraBridgeTests.exe'
+$BodyCameraBridgeTest = Join-Path $TestRoot 'BodyCameraBridgeTests.exe'
 $LoadLibraryProbe = Join-Path $TestRoot 'LoadLibraryProbe.exe'
 $ProcessProbe = Join-Path $TestRoot 'ProcessProbe.exe'
 $SoloCamDll = Join-Path $ReleaseRoot 'SoloCam.dll'
@@ -93,6 +94,22 @@ if ($LASTEXITCODE -ne 0) {
     throw "Item-camera bridge tests failed with exit code $LASTEXITCODE"
 }
 
+$BodyCameraTestCommand = @(
+    "call `"$VcVars`" x86 >nul",
+    "cd /d `"$ObjectRoot`"",
+    "cl.exe /nologo /std:c++17 /EHsc /MT /W4 /WX `"$ProjectRoot\tests\BodyCameraBridgeTests.cpp`" `"$ProjectRoot\src\CameraProfile.cpp`" `"$ProjectRoot\src\BodyCameraBridge.cpp`" `"$ProjectRoot\src\ItemCameraBridge.cpp`" `"$ProjectRoot\src\DisplayInfoBridge.cpp`" /I`"$ProjectRoot\src`" /Fe:`"$BodyCameraBridgeTest`""
+) -join ' && '
+
+& cmd.exe /d /s /c $BodyCameraTestCommand
+if ($LASTEXITCODE -ne 0) {
+    throw "Body-camera bridge test build failed with exit code $LASTEXITCODE"
+}
+
+& $BodyCameraBridgeTest
+if ($LASTEXITCODE -ne 0) {
+    throw "Body-camera bridge tests failed with exit code $LASTEXITCODE"
+}
+
 $ProbeCommand = @(
     "call `"$VcVars`" x86 >nul",
     "cd /d `"$ObjectRoot`"",
@@ -118,7 +135,7 @@ if ($LASTEXITCODE -ne 0) {
 $DllCommand = @(
     "call `"$VcVars`" x86 >nul",
     "cd /d `"$ObjectRoot`"",
-    "cl.exe /nologo /std:c++17 /LD /O2 /EHsc /MT /W4 /WX /DWIN32 /D_WINDOWS `"$ProjectRoot\src\SoloCam.cpp`" `"$ProjectRoot\src\InlineHook.cpp`" `"$ProjectRoot\src\CameraProfile.cpp`" `"$ProjectRoot\src\DisplayInfoBridge.cpp`" `"$ProjectRoot\src\ItemCameraBridge.cpp`" /I`"$ProjectRoot\src`" /link /OUT:`"$SoloCamDll`" /PDB:`"$SoloCamPdb`""
+    "cl.exe /nologo /std:c++17 /LD /O2 /EHsc /MT /W4 /WX /DWIN32 /D_WINDOWS `"$ProjectRoot\src\SoloCam.cpp`" `"$ProjectRoot\src\InlineHook.cpp`" `"$ProjectRoot\src\CameraProfile.cpp`" `"$ProjectRoot\src\BodyCameraBridge.cpp`" `"$ProjectRoot\src\DisplayInfoBridge.cpp`" `"$ProjectRoot\src\ItemCameraBridge.cpp`" /I`"$ProjectRoot\src`" /link /OUT:`"$SoloCamDll`" /PDB:`"$SoloCamPdb`""
 ) -join ' && '
 
 & cmd.exe /d /s /c $DllCommand
