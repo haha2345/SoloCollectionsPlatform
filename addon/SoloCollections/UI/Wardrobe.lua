@@ -324,6 +324,21 @@ local function resolveTryOnItem(itemId)
     return itemLink or ("item:" .. itemId)
 end
 
+local function hasAssetPackVersionMismatch(record)
+    local generated = SC.GeneratedCatalog or {}
+    local state = SC.CollectionState or {}
+    if state.assetMismatch then
+        return true
+    end
+    local generatedAssetPackVersion = generated.assetPackVersion
+    return record
+        and type(record.assetPackVersion) == "string"
+        and record.assetPackVersion ~= ""
+        and type(generatedAssetPackVersion) == "string"
+        and generatedAssetPackVersion ~= ""
+        and record.assetPackVersion ~= generatedAssetPackVersion
+end
+
 local function isStandaloneItemRecord(record)
     local generated = SC.GeneratedCatalog or {}
     return record
@@ -339,7 +354,7 @@ local function isStandaloneItemRecord(record)
         and type(record.assetPackVersion) == "string"
         and record.assetPackVersion ~= ""
         and record.assetPackVersion == generated.assetPackVersion
-        and not (SC.CollectionState and SC.CollectionState.assetMismatch)
+        and not hasAssetPackVersionMismatch(record)
 end
 
 local function resolveItemIcon(record)
@@ -361,6 +376,9 @@ local UNAVAILABLE_ITEM_REASON_LABELS = {
 }
 
 local function unavailableItemReasonText(record, runtimeReason)
+    if hasAssetPackVersionMismatch(record) then
+        return "资源包版本不匹配"
+    end
     local reasonCode = runtimeReason or (record and record.presentationReasonCode) or ""
     local labels = {}
     for code in string.gmatch(reasonCode, "[^;]+") do
