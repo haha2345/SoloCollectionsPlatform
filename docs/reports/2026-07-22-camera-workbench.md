@@ -2,7 +2,7 @@
 
 日期：2026-07-22
 
-状态：核心工作流已实现并完成 21 条 verified 武器的关键路径验收；窄屏/超宽分辨率矩阵和 21 条逐一视觉回归仍未关闭。
+状态：已完成。阶段 4 的布局、21 条运行时相机回归、三层覆盖和导出→审核→临时生成→清空 SavedVariables round-trip 均已以真实客户端证据闭合；production `STANDALONE` 仍保持 21 条，未因本阶段扩大。
 
 ## 范围
 
@@ -57,9 +57,11 @@ python tools\catalog\appearance_presentations.py `
 - 使用等价的已捕获 JSONL 输入 `client-round-trip\camera-export-207278.jsonl` 运行导入器，成功生成 `camera-review-candidates-207278.json`；`--check` 通过。该候选是审核输出，未自动扩大或改写 production `STANDALONE`。
 - 打开/关闭工作台、翻页、切换 Items/Sets、切换武器记录和 `/reload` 后均未观察到遮挡或状态串扰。unavailable record 的禁用与原因展示见 `stage4-camera-workbench-unavailable-live.jpg`，verified inspector 见 `stage4-camera-workbench-verified-live.jpg`。
 
-## 尚未关闭的验收
+## 2026-07-23 补充闭合证据
 
-- 尚未在 1024×768、1080p、超宽三档完成正式布局抽查。
-- 尚未形成当前 21 条 verified 武器逐条视觉回归的完整人工证据矩阵。
+- 布局矩阵：真实客户端分别以 `1024×768`、`1920×1080` 和 `3440×1440` 配置打开工作台。证据位于 `runtime-audit/stage4-layout/layout-20260723-042000/`。在当前显示环境中，最后一档实际截图为 `2537×1062`（保持超宽宽高比）；报告保留该实际尺寸而不将其误称为原生 3440 像素。三档中检查器、卡片、分页和关闭按钮均完整可见，测试前的 `Config.wtf` 与 `SoloCollections.lua` 已按 SHA-256 恢复。
+- 21 条运行时回归：`runtime-audit/stage4-weapon-camera/weapon-camera-20260723-041440/verification.json` 记录 3 页、21/21 条模型路径与 canonical presentation 一致，且每条均已在真实客户端接受 M2 相机应用；审计范围包含公开衣橱刻意隐藏、但仍属于 reviewed baseline 的 Frostmourne 记录。临时审计 AddOn 已移出客户端目录。
+- 审核 round-trip：`tools/catalog/camera_tuning_round_trip.py` 只在传入的 F 盘临时目录投影审核候选，不改写 canonical source。207278 的已捕获 JSONL 候选将 yaw 从 baseline `1.04` 投影为 `1.05`；生成后模型仍为 `1.05`，source hash 未变。真实客户端加载临时 Catalog、清空 `cameraTuning` 后退出，`runtime-audit/stage4-round-trip/SoloCollections.round-trip-after.lua` 记录 `autoYaw=1.05` 和 `hasOverride=false`。临时 Catalog 与测试 SavedVariables 均已按 SHA-256 恢复。
+- 工作台截图：`runtime-audit/stage4-round-trip/round-trip-207278-workbench.jpg` 显示清空覆盖后的内嵌检查器处于可用状态；该截图同时保留了真实客户端的 “截图完成” 提示。
 
-因此阶段 4 保持“进行中”；实施计划只勾选已有实现与证据支撑的子项。
+因此阶段 4 已闭合；后续阶段只可在本阶段已固定的 21 条基线和严格审核投影之上扩展，不得把临时候选直接写入 production presentation。

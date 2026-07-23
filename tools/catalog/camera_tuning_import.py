@@ -19,6 +19,8 @@ from typing import Any
 
 SCHEMA_VERSION = 2
 EXPORT_KIND = "SoloCollectionsCameraTuningExport"
+SUPPORTED_REPORT_SCHEMA_VERSIONS = {2, 3}
+TUNABLE_PRESENTATION_STATUSES = {"verified", "READY", "RETAINED_BASELINE"}
 MODEL_SIGNATURE_RE = re.compile(r"^m2:[a-f0-9]{64}$")
 FAMILY_KEY_RE = re.compile(r"^[A-Z][A-Z0-9_]*$")
 APPEARANCE_KEY_RE = re.compile(r"^appearance:\d+$")
@@ -131,7 +133,10 @@ def validate_export(header: dict[str, Any], records: list[dict[str, Any]], repor
     _require(header.get("kind") == EXPORT_KIND, "unexpected camera tuning export kind")
     _require(header.get("schemaVersion") == SCHEMA_VERSION, "unsupported camera tuning export schema")
     metadata_version = _nonempty_string(header.get("metadataVersion"), "metadataVersion")
-    _require(report.get("schemaVersion") == 2, "unsupported appearance presentation report schema")
+    _require(
+        report.get("schemaVersion") in SUPPORTED_REPORT_SCHEMA_VERSIONS,
+        "unsupported appearance presentation report schema",
+    )
     entries = report.get("entries")
     _require(isinstance(entries, list) and entries, "appearance presentation report has no entries")
     expected_hash = _presentation_hash(entries)
@@ -146,7 +151,19 @@ def validate_export(header: dict[str, Any], records: list[dict[str, Any]], repor
         appearance_id = _integer(row.get("appearanceId"), "appearanceId")
         source = by_appearance.get(appearance_id)
         _require(source is not None, f"unknown appearance ID: {appearance_id}")
-        _require(source.get("presentationStatus") == "verified", f"appearance {appearance_id} is not verified")
+        _require(
+            source.get("presentationStatus") in TUNABLE_PRESENTATION_STATUSES,
+            f"appearance {appearance_id} is not a verified standalone presentation",
+        )
+        # Schema 3 renamed the success state from ``verified`` to ``READY``.
+        # Retain the old schema-2 input for existing review records, while
+        # requiring the richer direct-display contract when it is available.
+        if report.get("schemaVersion") >= 3:
+            _require(
+                source.get("renderMode") == "STANDALONE"
+                and source.get("presentationCapability") == "DIRECT_DISPLAY_V1",
+                f"appearance {appearance_id} is not directly tunable",
+            )
         source_item_id = _integer(row.get("sourceItemId"), "sourceItemId")
         native_display_id = _integer(row.get("nativeDisplayId"), "nativeDisplayId")
         synthetic_display_id = _integer(row.get("syntheticDisplayId"), "syntheticDisplayId")

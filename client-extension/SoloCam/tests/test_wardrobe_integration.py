@@ -54,7 +54,7 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertIn('local _, raceToken = UnitRace("player")', self.source)
         self.assertIn('UnitSex("player")', self.source)
         self.assertIn("SC.IdentityRegistry.ResolveCameraProfile()", self.source)
-        self.assertIn("cameraProfiles.GetSentinel(", self.source)
+        self.assertIn("cameraProfiles.GetProfile(", self.source)
         self.assertNotIn("CUSTOM_CAMERA_HUMAN_FEMALE", self.source)
         self.assertIn('CameraProfiles.mode = CameraProfiles.mode or "Generated"', self.camera_profiles)
 
@@ -87,15 +87,13 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertNotIn('key = "TABARD"', slot_filter.group(1))
         self.assertIn('local function armorTypeMatches(record, filters)', self.catalog)
 
-    def test_slot_buttons_use_retail_casc_atlas_assets(self):
-        slot_atlas = RETAIL_MEDIA / "TransmogNavSlots.blp"
-        highlight_atlas = RETAIL_MEDIA / "BagsRoundHighlight.blp"
-        if slot_atlas.is_file():
-            self.assertEqual(slot_atlas.read_bytes()[:4], b"BLP2")
-        if highlight_atlas.is_file():
-            self.assertEqual(highlight_atlas.read_bytes()[:4], b"BLP2")
-        self.assertIn('wardrobeSlotAtlas = MEDIA_ROOT .. "Retail\\\\TransmogNavSlots.blp"', self.templates)
-        self.assertIn('roundHighlightAtlas = MEDIA_ROOT .. "Retail\\\\BagsRoundHighlight.blp"', self.templates)
+    def test_slot_buttons_use_project_owned_atlas_assets(self):
+        slot_atlas = ADDON_ROOT / "Media" / "Icons" / "WardrobeSlots" / "slot-atlas.tga"
+        highlight_atlas = ADDON_ROOT / "Media" / "Icons" / "WardrobeSlots" / "round-highlight.tga"
+        self.assertTrue(slot_atlas.is_file())
+        self.assertTrue(highlight_atlas.is_file())
+        self.assertIn('wardrobeSlotAtlas = MEDIA_ROOT .. "Icons\\\\WardrobeSlots\\\\slot-atlas.tga"', self.templates)
+        self.assertIn('roundHighlightAtlas = MEDIA_ROOT .. "Icons\\\\WardrobeSlots\\\\round-highlight.tga"', self.templates)
         self.assertIn('local SLOT_ATLAS_SIZE = 512', self.source)
         self.assertIn('selected = { 381, 426, 65, 112 }', self.source)
         self.assertIn('button.scSelected = selected', self.source)
@@ -179,7 +177,7 @@ class WardrobeIntegrationTests(unittest.TestCase):
     def test_missing_standalone_bridge_fails_closed_after_model_ready_window(self):
         self.assertIn("local STANDALONE_MODEL_READY_FRAMES = 120", self.source)
         self.assertIn("string.lower(actualModel) == string.lower(expectedModel)", self.source)
-        self.assertIn("showStandaloneItemUnavailable(self)", self.source)
+        self.assertIn("showStandaloneItemUnavailable(\n                    self,", self.source)
         self.assertIn("itemObjectModel.scHostModel = itemModel", self.source)
         fallback = self.source.split("local function showStandaloneItemUnavailable", 1)[1].split(
             "local function queueStandaloneItemTransform", 1
@@ -263,7 +261,7 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertIn("if not record.m2Camera then", body)
         self.assertLess(body.index("if model.SetRotation then"), body.index("elseif model.SetFacing then"))
         self.assertIn("model:SetRotation(rotation)", body)
-        self.assertIn("local cameraPose = getEffectiveM2CameraPose(model)", self.source)
+        self.assertIn("local cameraPose, poseSource = getEffectiveM2CameraPose(model)", self.source)
         self.assertIn("SC.M2Camera.Apply(model, cameraPose)", self.source)
 
     def test_lua_m2_camera_api_encodes_and_activates_a_full_pose(self):
@@ -286,21 +284,22 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertIn("kMaximumTargetOffset", self.item_camera_bridge)
 
     def test_m2_camera_tuning_panel_persists_and_exports_per_camera_key_pose(self):
-        self.assertIn("m2CameraTuning = {}", self.bootstrap)
-        self.assertIn("normalizeM2CameraTuning(db)", self.bootstrap)
+        self.assertIn("cameraTuning = tuning", self.bootstrap)
+        self.assertIn("normalizeCameraTuning(SC.db)", self.bootstrap)
         self.assertIn("function M2Camera.NormalizePose(pose)", self.m2_camera)
         self.assertIn("function M2Camera.FormatPose(pose)", self.m2_camera)
         self.assertIn("SoloCollectionsM2CameraTuningPanel", self.source)
         self.assertEqual(self.source.count("createCameraTuningSlider("), 8)
         self.assertIn('"Roll 滚转"', self.source)
-        self.assertIn("local function getM2CameraTuningKey(record)", self.source)
-        self.assertIn("SC.db.m2CameraTuning[getM2CameraTuningKey(cameraTuningPanel.scRecord)] = pose", self.source)
-        self.assertIn('key:match("^[A-Z][A-Z0-9_]*$")', self.bootstrap)
-        self.assertIn('weaponType = "%s", %s', self.source)
-        self.assertIn('cameraTuningKey = "%s", %s', self.source)
+        self.assertIn("local function getCameraTuningScopeKey(record, scope)", self.source)
+        self.assertIn("SC.CameraTuning.Set(scope, tuningKey, pose, lowerScopePose)", self.source)
+        self.assertIn('cameraScopeKeyIsValid(scope, key)', self.bootstrap)
+        self.assertIn("weaponType = record.weaponType", self.source)
+        self.assertIn("weaponFamily = getWeaponFamilyCameraKey(record)", self.source)
         self.assertNotIn('saved = SC.db.m2CameraTuning[record.id]', self.source)
         self.assertIn("function page:SyncCameraTuningPanel(record)", self.source)
-        self.assertIn("SC.M2Camera.FormatPose(cameraTuningPanel.scPose)", self.source)
+        self.assertIn("SC.M2Camera.FormatTuningExportRecord", self.source)
+        self.assertIn("buildCameraTuningExport({ {", self.source)
         self.assertIn("tuningExport:HighlightText()", self.source)
 
     def test_handshake_has_a_stock_client_fallback(self):

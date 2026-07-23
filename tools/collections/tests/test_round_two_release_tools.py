@@ -51,6 +51,14 @@ class RoundTwoReleaseToolsTests(unittest.TestCase):
         self.assertNotIn("-Recurse", restore)
         self.assertNotIn("Stop-Process", install + restore)
 
+    def test_hygiene_allowlists_are_exact_and_do_not_disable_the_credential_scan(self):
+        hygiene = read_text(ROOT / "tools/release/Test-RepositoryHygiene.ps1")
+        self.assertIn("AllowedTrackedArtifact", hygiene)
+        self.assertIn("AllowedCredentialLikePath", hygiene)
+        self.assertIn("Allowed credential-like path must be an exact repository-relative path", hygiene)
+        self.assertIn("Credential-like assignment in tracked file", hygiene)
+        self.assertIn("credentialLikeAllowed.ContainsKey", hygiene)
+
 
 if __name__ == "__main__":
     unittest.main()

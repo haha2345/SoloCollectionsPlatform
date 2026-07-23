@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import math
+import re
 import shutil
 import struct
 import subprocess
@@ -35,6 +36,7 @@ ARCHIVE_PRIORITY = (
 M2_BOUNDS_OFFSET = 160
 NEW_SENTINEL_BASE = 0x6000
 RESERVED_ITEM_CAMERA_MIN = 0x51000000
+PROFILE_HASH_RE = re.compile(r"^[a-f0-9]{64}$")
 
 
 class CameraProfileError(RuntimeError):
@@ -44,6 +46,19 @@ class CameraProfileError(RuntimeError):
 def _require(condition: bool, message: str) -> None:
     if not condition:
         raise CameraProfileError(message)
+
+
+def _finite_number(value: Any, label: str) -> float:
+    """Coerce an explicit numeric override while keeping malformed JSON fail-closed."""
+    _require(isinstance(value, (int, float)) and not isinstance(value, bool), f"invalid {label}")
+    number = float(value)
+    _require(math.isfinite(number), f"non-finite {label}")
+    return number
+
+
+def _positive_integer(value: Any, label: str) -> int:
+    _require(isinstance(value, int) and not isinstance(value, bool) and value > 0, f"invalid {label}")
+    return int(value)
 
 
 def _read_json(path: Path) -> Any:
@@ -347,6 +362,51 @@ def build_canonical(repo_root: Path, evidence_root: Path) -> dict[str, Any]:
                 profiles.append(profile)
 
     _require(len(profiles) == 180 and len(sentinels) == 180, "camera matrix must contain 180 unique profiles")
+    approved_deltas = overrides.get("approvedBodyDeltas", [])
+    _require(isinstance(approved_deltas, list), "approved body deltas must be a list")
+    profiles_by_key = {
+        f"{row['raceKey']}:{str(row['sex']).lower()}:{row['slot']}": row
+        for row in profiles
+    }
+    seen_approved_keys: set[str] = set()
+    for delta in approved_deltas:
+        _require(isinstance(delta, dict), "approved body delta must be an object")
+        profile_key = delta.get("profileKey")
+        _require(isinstance(profile_key, str) and profile_key in profiles_by_key,
+                 "approved body delta has an unknown profile key")
+        _require(profile_key not in seen_approved_keys, "duplicate approved body delta profile key")
+        seen_approved_keys.add(profile_key)
+        profile = profiles_by_key[profile_key]
+        _require(_positive_integer(delta.get("sentinel"), "approved body delta sentinel") == int(profile["sentinel"]),
+                 "approved body delta sentinel mismatch")
+        _require(_positive_integer(delta.get("cameraProfileVersion"), "approved body delta profile version") == 1,
+                 "approved body delta profile version mismatch")
+        _require(isinstance(delta.get("cameraProfileHash"), str)
+                 and PROFILE_HASH_RE.fullmatch(delta["cameraProfileHash"]) is not None,
+                 "approved body delta base profile hash is invalid")
+        values = {
+            "verticalOffsetDelta": _finite_number(delta.get("verticalOffsetDelta", 0.0), "verticalOffsetDelta"),
+            "horizontalOffsetDelta": _finite_number(delta.get("horizontalOffsetDelta", 0.0), "horizontalOffsetDelta"),
+            "distanceScaleMultiplier": _finite_number(delta.get("distanceScaleMultiplier", 1.0), "distanceScaleMultiplier"),
+            "minimumDistanceDelta": _finite_number(delta.get("minimumDistanceDelta", 0.0), "minimumDistanceDelta"),
+            "yawOffsetDelta": _finite_number(delta.get("yawOffsetDelta", 0.0), "yawOffsetDelta"),
+        }
+        _require(abs(values["verticalOffsetDelta"]) <= 2.0
+                 and abs(values["horizontalOffsetDelta"]) <= 2.0
+                 and 0.5 <= values["distanceScaleMultiplier"] <= 2.0
+                 and abs(values["minimumDistanceDelta"]) <= 2.0
+                 and abs(values["yawOffsetDelta"]) <= math.pi,
+                 "approved body delta is outside the native protocol range")
+        profile["verticalOffset"] = round(profile["verticalOffset"] + values["verticalOffsetDelta"], 8)
+        profile["horizontalOffset"] = round(profile["horizontalOffset"] + values["horizontalOffsetDelta"], 8)
+        profile["distanceScale"] = round(profile["distanceScale"] * values["distanceScaleMultiplier"], 8)
+        profile["minimumDistance"] = round(profile["minimumDistance"] + values["minimumDistanceDelta"], 8)
+        profile["yawOffset"] = round(profile["yawOffset"] + values["yawOffsetDelta"], 8)
+        _require(0.05 <= profile["distanceScale"] <= 4.0
+                 and 0.05 <= profile["minimumDistance"] <= 8.0,
+                 "approved body delta makes an unsafe canonical profile")
+        profile["status"] = "approved_delta"
+
     reserved = {int(row["sentinel"]): row for row in reference.get("slots", [])}
     for profile in profiles:
         if profile["cameraProfile"] == "race.human" and profile["sex"] == "FEMALE":
@@ -395,6 +455,8 @@ def _render_lua(canonical: dict[str, Any]) -> str:
         f"CameraProfiles.schemaVersion = {canonical['schemaVersion']}",
         f"CameraProfiles.profileVersion = {canonical['profileVersion']}",
         f'CameraProfiles.profileHash = "{canonical["profileHash"]}"',
+        "CameraProfiles.bodyProtocolVersion = 1",
+        "CameraProfiles.requiredSoloCamVersion = 7",
         'CameraProfiles.mode = CameraProfiles.mode or "Generated"', "",
         "CameraProfiles.slotOrder = { " + ", ".join(f'"{slot}"' for slot in SLOTS) + " }", "",
         "CameraProfiles.runtimeRaceProfiles = {",
@@ -413,6 +475,12 @@ def _render_lua(canonical: dict[str, Any]) -> str:
     for model in canonical["models"]:
         model_paths.setdefault(model["cameraProfile"], {})[model["sex"]] = model["assetPath"]
         preview_ids.setdefault(model["cameraProfile"], {})[model["sex"]] = int(model["previewDisplayId"])
+    profile_metadata: dict[str, dict[str, dict[str, dict[str, Any]]]] = {}
+    for row in canonical["profiles"]:
+        profile_metadata.setdefault(row["cameraProfile"], {}).setdefault(row["sex"], {})[row["slot"]] = {
+            "profileKey": f"{row['raceKey']}:{str(row['sex']).lower()}:{row['slot']}",
+            "sentinel": int(row["sentinel"]),
+        }
     lines += [
         "}", "", "CameraProfiles.modelPaths = {",
     ]
@@ -429,27 +497,51 @@ def _render_lua(canonical: dict[str, Any]) -> str:
         values = preview_ids[family]
         lines.append(f'    ["{family}"] = {{ MALE = {values["MALE"]}, FEMALE = {values["FEMALE"]} }},')
     lines += [
+        "}", "", "CameraProfiles.profileMetadata = {",
+    ]
+    for family in sorted(profile_metadata):
+        lines.append(f'    ["{family}"] = {{')
+        for sex in SEXES:
+            lines.append(f"        {sex} = {{")
+            for slot in SLOTS:
+                metadata = profile_metadata[family][sex][slot]
+                lines.append(
+                    f'            {slot} = {{ profileKey = "{metadata["profileKey"]}", '
+                    f'sentinel = 0x{metadata["sentinel"]:04X} }},'
+                )
+            lines.append("        },")
+        lines.append("    },")
+    lines += [
         "}", "", "function CameraProfiles.SetMode(mode)",
         '    if mode ~= "LegacyHumanFemale" and mode ~= "Compare" and mode ~= "Generated" and mode ~= "Native" then',
         "        return false", "    end", "    CameraProfiles.mode = mode", "    return true", "end", "",
-        "function CameraProfiles.GetSentinel(raceToken, sex, slot, clientAssetProfile)",
+        "local function resolveGeneratedProfile(raceToken, sex, slot, clientAssetProfile)",
         '    if CameraProfiles.mode == "Native" then return nil end',
         "    local family = CameraProfiles.runtimeRaceProfiles[raceToken]", "    if not family then return nil end",
         "    if clientAssetProfile and clientAssetProfile ~= family then return nil end",
         '    local sexKey = sex == 2 and "MALE" or (sex == 3 and "FEMALE" or nil)',
         "    if not sexKey then return nil end",
-        "    local familyEntries = CameraProfiles.entries[family]", "    local sexEntries = familyEntries and familyEntries[sexKey]",
+        "    local familyEntries = CameraProfiles.profileMetadata[family]", "    local sexEntries = familyEntries and familyEntries[sexKey]",
         "    local generated = sexEntries and sexEntries[slot] or nil",
         '    if CameraProfiles.mode == "Compare" then',
         "        -- Ephemeral diagnostics only: do not persist a second mutable profile table.",
-        "        CameraProfiles.lastComparison = { family = family, sex = sexKey, slot = slot, generated = generated }",
+        "        CameraProfiles.lastComparison = { family = family, sex = sexKey, slot = slot, generated = generated and generated.sentinel or nil }",
         '        if family ~= "race.human" or sexKey ~= "FEMALE" then return nil end',
-        "        return generated",
+        "        return generated, family, sexKey",
         "    end",
         '    if CameraProfiles.mode == "LegacyHumanFemale" then',
         '        if family ~= "race.human" or sexKey ~= "FEMALE" then return nil end',
         "    end",
-        "    return generated", "end", "",
+        "    return generated, family, sexKey", "end", "",
+        "function CameraProfiles.GetProfile(raceToken, sex, slot, clientAssetProfile)",
+        "    local generated, family, sexKey = resolveGeneratedProfile(raceToken, sex, slot, clientAssetProfile)",
+        "    if not generated then return nil end",
+        "    return { profileKey = generated.profileKey, sentinel = generated.sentinel, cameraProfile = family, raceToken = raceToken, sex = sexKey, slot = slot, profileVersion = CameraProfiles.profileVersion, profileHash = CameraProfiles.profileHash }",
+        "end", "",
+        "function CameraProfiles.GetSentinel(raceToken, sex, slot, clientAssetProfile)",
+        "    local profile = CameraProfiles.GetProfile(raceToken, sex, slot, clientAssetProfile)",
+        "    return profile and profile.sentinel or nil",
+        "end", "",
     ]
     return "\n".join(lines)
 

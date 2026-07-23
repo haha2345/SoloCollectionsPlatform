@@ -11,6 +11,7 @@ WARDROBE = ADDON / "UI" / "Wardrobe.lua"
 PRESENTATION_REPORT = ROOT / "catalog" / "generated" / "appearance-presentation-report.json"
 PRESENTATION_SOURCE = ROOT / "catalog" / "source" / "appearance_presentations.json"
 IMPORTER = ROOT / "tools" / "catalog" / "camera_tuning_import.py"
+WEAPON_RUNTIME_AUDIT = ROOT / "tools" / "runtime" / "SoloCollectionsWeaponCameraAudit" / "CameraAudit.lua"
 
 
 class CameraWorkbenchContractTests(unittest.TestCase):
@@ -22,7 +23,7 @@ class CameraWorkbenchContractTests(unittest.TestCase):
         self.assertIn("legacyM2CameraTuningV1", source)
         self.assertIn("normalizedCameraScope(tuning.model, \"model\"", source)
         self.assertIn("normalizedCameraScope(tuning.appearance, \"appearance\"", source)
-        self.assertIn("normalizedCameraScope(tuning.bodyProfile, \"bodyProfile\"", source)
+        self.assertIn("normalizedBodyCameraScope(", source)
         self.assertIn("db.cameraTuning = nil", source)
         self.assertIn("local stored = entries[key]", source)
         self.assertIn('if type(stored) ~= "table" then return nil end', source)
@@ -41,9 +42,16 @@ class CameraWorkbenchContractTests(unittest.TestCase):
 
     def test_generated_standalone_records_provide_stable_identity_and_auto_baseline(self):
         report = load_json(PRESENTATION_REPORT)
-        self.assertEqual(2, report["schemaVersion"])
-        self.assertGreater(report["presentationCount"], 0)
-        for entry in report["entries"]:
+        self.assertEqual(3, report["schemaVersion"])
+        self.assertEqual(3691, report["presentationCount"])
+        self.assertEqual(3690, report["publicAppearanceCount"])
+        self.assertEqual(1, report["retainedNonPublicBaselineCount"])
+        direct_entries = [
+            entry for entry in report["entries"]
+            if entry["presentationStatus"] in {"READY", "RETAINED_BASELINE"}
+        ]
+        self.assertEqual(3542, len(direct_entries))
+        for entry in direct_entries:
             self.assertRegex(entry["modelSignature"], r"^m2:[a-f0-9]{64}$")
             self.assertEqual({"yaw", "pitch", "roll", "distanceScale", "target"}, set(entry["autoCamera"]))
             self.assertEqual({"x", "y", "z"}, set(entry["autoCamera"]["target"]))
@@ -51,12 +59,18 @@ class CameraWorkbenchContractTests(unittest.TestCase):
     def test_current_verified_weapon_baselines_are_zero_drift_from_source(self):
         source = load_json(PRESENTATION_SOURCE)["entries"]
         report = load_json(PRESENTATION_REPORT)["entries"]
-        self.assertEqual(21, len(source))
-        self.assertEqual(21, len(report))
+        self.assertEqual(3691, len(source))
+        self.assertEqual(3691, len(report))
         source_by_appearance = {entry["appearanceId"]: entry for entry in source}
         report_by_appearance = {entry["appearanceId"]: entry for entry in report}
         self.assertEqual(set(source_by_appearance), set(report_by_appearance))
-        for appearance_id, source_entry in source_by_appearance.items():
+        direct_source_entries = [
+            entry for entry in source_by_appearance.values()
+            if entry["presentationStatus"] in {"READY", "RETAINED_BASELINE"}
+        ]
+        self.assertEqual(3542, len(direct_source_entries))
+        for source_entry in direct_source_entries:
+            appearance_id = source_entry["appearanceId"]
             self.assertEqual(
                 source_entry["m2Camera"],
                 report_by_appearance[appearance_id]["autoCamera"],
@@ -79,7 +93,11 @@ class CameraWorkbenchContractTests(unittest.TestCase):
         self.assertIn('local slider = CreateFrame("Slider", sliderName, row)', source)
         self.assertIn('slider:SetThumbTexture(sliderThumb)', source)
         self.assertNotIn('"OptionsSliderTemplate"', source)
-        sync = source[source.index("cameraTuningPanel.scRecord = record"):source.index("cameraTuningPanel.scSyncing = nil")]
+        weapon_mode = source.rindex('cameraTuningPanel.scMode = "weapon"')
+        sync = source[
+            source.index("cameraTuningPanel.scRecord = record", weapon_mode):
+            source.index("cameraTuningPanel.scSyncing = nil", weapon_mode)
+        ]
         self.assertLess(sync.index("cameraTuningPanel.scSyncing = true"), sync.index("setCameraTuningControlsEnabled(true)"))
         self.assertLess(sync.index("cameraTuningPanel:Show()"), sync.index("control.slider:SetValue(value)"))
 
@@ -93,6 +111,17 @@ class CameraWorkbenchContractTests(unittest.TestCase):
         self.assertIn("duplicate or conflicting tuning target", importer)
         self.assertIn("record asset pack version mismatch", importer)
         self.assertIn("record appearance presentation hash mismatch", importer)
+
+    def test_runtime_weapon_audit_keeps_the_verified_21_as_an_explicit_matrix(self):
+        audit = read_text(WEAPON_RUNTIME_AUDIT)
+        self.assertIn("EXPECTED_VERIFIED_COUNT = 21", audit)
+        self.assertIn("SoloCollections.GeneratedCatalog", audit)
+        self.assertIn('collection.renderMode == "STANDALONE"', audit)
+        self.assertIn('collection.presentationStatus == "verified"', audit)
+        self.assertIn("SoloCollections.M2Camera.Apply", audit)
+        self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + tonumber(record.syntheticDisplayId)", audit)
+        self.assertIn("card.model:GetModel()", audit)
+        self.assertIn("21/21 READY - reload to persist", audit)
 
 
 if __name__ == "__main__":

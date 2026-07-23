@@ -14,9 +14,9 @@
   "mappingHash": "2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf",
   "presentationEvidence": {
     "itemSetEvidenceHash": "69979d166c6247e3b8b283af6f46993ced1cea13ba3c86b7e8778b539c8585c9",
-    "reviewPolicyHash": "c0802bcc5c51fb00ae650c97dabe7cfac8fd1f869ef3d6ff716c137feffb1981"
+    "reviewPolicyHash": "56bf6eeea5cd9f385ea3eef99e3aa5121120127c1163396eb317348c7dd89850"
   },
-  "presentationHash": "62caf760deb2edab3372c6e5f9e4418c4ec8c9346d3faf084b54f84a64d9584b",
+  "presentationHash": "44c7748c2c60e8b748cc415260637329492ac797d46d9780ed054eadd7897192",
   "schemaVersion": 3,
   "sets": [
     {
@@ -44415,7 +44415,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300376,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -44431,11 +44431,11 @@
           "min": 4
         },
         "raidTier": "T7",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t7-naxx",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 213,
           "medianItemLevel": 213,
@@ -46221,7 +46221,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300390,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -46237,11 +46237,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -46337,7 +46337,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300391,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -46353,11 +46353,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -46453,7 +46453,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300392,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -46469,11 +46469,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -46569,7 +46569,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300393,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -46585,11 +46585,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -46685,7 +46685,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300394,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -46701,11 +46701,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -46801,7 +46801,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300395,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -46817,11 +46817,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -47497,7 +47497,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300401,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -47513,11 +47513,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -47729,7 +47729,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300403,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -47745,11 +47745,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -47845,7 +47845,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300404,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -47861,11 +47861,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -48077,7 +48077,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300406,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -48093,11 +48093,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,
@@ -48193,7 +48193,7 @@
       "presentation": {
         "acquisition": "PVE",
         "collectionId": 300407,
-        "difficulty": "RAID",
+        "difficulty": "HIGH",
         "expansion": "WRATH",
         "itemLevel": {
           "count": 5,
@@ -48209,11 +48209,11 @@
           "min": 4
         },
         "raidTier": "T8",
-        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR",
+        "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
         "ruleKey": "wrath-t8-ulduar",
         "sortRank": {
           "acquisition": 2,
-          "difficulty": 1,
+          "difficulty": 2,
           "expansion": 3,
           "maxItemLevel": 226,
           "medianItemLevel": 226,

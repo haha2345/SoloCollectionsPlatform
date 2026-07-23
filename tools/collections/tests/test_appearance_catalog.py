@@ -51,6 +51,21 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
         self.assertIn('collection.typeKey == "appearance"', source)
         self.assertIn('string.match(alias, "^item:(%d+)$")', source)
 
+    def test_client_projection_preserves_generated_model_camera_defaults(self):
+        source = (ROOT / "addon" / "SoloCollections" / "Core" / "Catalog.lua").read_text(encoding="utf-8")
+        self.assertIn(
+            "generatedModelCameraOverride = collection.generatedModelCameraOverride",
+            source,
+        )
+        report = json.loads(
+            (ROOT / "catalog" / "source" / "appearance_presentations.json").read_text(encoding="utf-8")
+        )
+        target = next(row for row in report["entries"] if row["appearanceId"] == 217942)
+        override = target["generatedModelCameraOverride"]
+        self.assertEqual("model", override["scope"])
+        self.assertEqual(target["modelSignature"], override["modelSignature"])
+        self.assertEqual(0.6, override["pose"]["distanceScale"])
+
     def test_client_submits_only_canonical_id_and_equipment_slot_for_apply(self):
         bridge = (ROOT / "addon" / "SoloCollections" / "Core" / "Bridge.lua").read_text(encoding="utf-8")
         wardrobe = (ROOT / "addon" / "SoloCollections" / "UI" / "Wardrobe.lua").read_text(encoding="utf-8")
@@ -68,20 +83,25 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
         manifest = json.loads(
             (ROOT / "catalog/generated/catalog-manifest.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(21, report["presentationCount"])
-        self.assertEqual(set(range(40000, 40021)), {
-            row["syntheticDisplayId"] for row in report["entries"]
-        })
+        self.assertEqual(3690, report["publicAppearanceCount"])
+        self.assertEqual(3691, report["presentationCount"])
+        self.assertEqual({"READY": 3541, "UNAVAILABLE": 149}, report["terminalCounts"])
         canonical = {
             row["collectionId"]: row for row in manifest["collections"]
             if row["typeKey"] == "appearance"
         }
         for row in report["entries"]:
             projected = canonical[row["appearanceId"]]
-            self.assertEqual("STANDALONE", projected["renderMode"])
-            self.assertEqual(row["syntheticDisplayId"], projected["syntheticDisplayId"])
-            self.assertEqual(row["modelPath"], projected["modelPath"])
+            self.assertEqual(row["renderMode"], projected["renderMode"])
+            self.assertEqual(row["presentationStatus"], projected["presentationStatus"])
+            self.assertEqual(row["presentationCapability"], projected["presentationCapability"])
             self.assertIn(row["sourceAlias"], projected["aliases"])
+            if row["presentationStatus"] in {"READY", "RETAINED_BASELINE"}:
+                self.assertEqual(row["syntheticDisplayId"], projected["syntheticDisplayId"])
+                self.assertEqual(row["modelPath"], projected["modelPath"])
+            else:
+                self.assertEqual("UNAVAILABLE", projected["renderMode"])
+                self.assertTrue(projected["presentationReasonCode"])
 
     def test_weapon_render_modes_are_explicit_and_fail_closed(self):
         manifest = json.loads(
@@ -96,8 +116,18 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
                 self.assertIn(row["renderMode"], {"STANDALONE", "UNAVAILABLE"})
             else:
                 self.assertEqual("BODY", row["renderMode"])
-        self.assertEqual(21, modes["STANDALONE"])
-        self.assertGreater(modes["UNAVAILABLE"], 0)
+        public_weapon_rows = [
+            row for row in rows
+            if row["uiLifecycle"] == "public"
+            and any(alias in {"slot:MAINHAND", "slot:OFFHAND"} for alias in row["aliases"])
+        ]
+        self.assertEqual(3690, len(public_weapon_rows))
+        self.assertEqual(3541, sum(row["renderMode"] == "STANDALONE" for row in public_weapon_rows))
+        self.assertEqual(149, sum(row["renderMode"] == "UNAVAILABLE" for row in public_weapon_rows))
+        self.assertTrue(all(
+            row["presentationCapability"] == "DIRECT_DISPLAY_V1"
+            for row in public_weapon_rows if row["renderMode"] == "STANDALONE"
+        ))
 
     def test_renderer_uses_synthetic_display_only_at_adapter_boundary(self):
         wardrobe = (ROOT / "addon/SoloCollections/UI/Wardrobe.lua").read_text(encoding="utf-8")
@@ -105,7 +135,9 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
         self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + record.syntheticDisplayId", wardrobe)
         self.assertNotIn("creatureDisplayId", wardrobe)
         self.assertNotIn("creatureDisplayId", generated)
-        self.assertIn('unavailableText:SetText("独立模型资源尚未生成")', wardrobe)
+        self.assertIn("resolveItemIcon", wardrobe)
+        self.assertIn("unavailableItemReasonText", wardrobe)
+        self.assertIn("presentationCapability == \"DIRECT_DISPLAY_V1\"", wardrobe)
 
 
 if __name__ == "__main__":

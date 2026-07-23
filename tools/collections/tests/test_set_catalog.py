@@ -55,7 +55,8 @@ class SetCatalogTests(unittest.TestCase):
         sets = (ROOT / "addon/SoloCollections/Data/Sets.lua").read_text(encoding="utf-8")
         self.assertIn("IsOwnedByType(13, appearanceId)", catalog)
         self.assertIn("variant.variantOrdinal", wardrobe)
-        self.assertIn("maxActiveSetSlots", wardrobe)
+        self.assertIn("local SET_PIECE_POOL_LIMIT = 12", wardrobe)
+        self.assertIn("local piecePoolSize = SET_PIECE_POOL_LIMIT", wardrobe)
         self.assertNotIn("set_collected", catalog + wardrobe + sets)
 
     def test_sets_publish_apply_actions_using_logical_set_ids(self):

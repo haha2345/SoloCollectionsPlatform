@@ -107,7 +107,7 @@ local function isValidAppearanceKey(key)
 end
 
 local function isValidBodyProfileKey(key)
-    return type(key) == "string" and key:match("^[A-Za-z0-9_.:%-]+$") ~= nil
+    return type(key) == "string" and key:match("^[a-z_]+:[a-z]+:[A-Z_]+$") ~= nil
 end
 
 local function cameraScopeKeyIsValid(scope, key)
@@ -121,6 +121,16 @@ end
 local function normalizeCameraPose(pose)
     if not SC.M2Camera or not SC.M2Camera.NormalizePose then return nil end
     return SC.M2Camera.NormalizePose(pose)
+end
+
+local function normalizeBodyCameraDelta(delta)
+    if not SC.M2Camera or not SC.M2Camera.NormalizeBodyDelta then return nil end
+    return SC.M2Camera.NormalizeBodyDelta(delta)
+end
+
+local function bodyDeltaEquals(left, right)
+    if not SC.M2Camera or not SC.M2Camera.BodyDeltaEquals then return false end
+    return SC.M2Camera.BodyDeltaEquals(left, right)
 end
 
 local function normalizedCameraScope(entries, scope, maximum)
@@ -138,6 +148,25 @@ local function normalizedCameraScope(entries, scope, maximum)
         if index > maximum then break end
         local pose = normalizeCameraPose(entries[key])
         if pose then normalized[key] = pose end
+    end
+    return normalized
+end
+
+local function normalizedBodyCameraScope(entries, maximum)
+    local keys = {}
+    if type(entries) == "table" then
+        for key, delta in pairs(entries) do
+            if isValidBodyProfileKey(key) and type(delta) == "table" then
+                table.insert(keys, key)
+            end
+        end
+    end
+    table.sort(keys)
+    local normalized = {}
+    for index, key in ipairs(keys) do
+        if index > maximum then break end
+        local delta = normalizeBodyCameraDelta(entries[key])
+        if delta and not bodyDeltaEquals(delta, {}) then normalized[key] = delta end
     end
     return normalized
 end
@@ -212,7 +241,10 @@ local function normalizeCameraTuning(db)
 
     tuning.model = normalizedCameraScope(tuning.model, "model", MAX_CAMERA_TUNING_SCOPE_ENTRIES)
     tuning.appearance = normalizedCameraScope(tuning.appearance, "appearance", MAX_CAMERA_TUNING_SCOPE_ENTRIES)
-    tuning.bodyProfile = normalizedCameraScope(tuning.bodyProfile, "bodyProfile", MAX_CAMERA_TUNING_SCOPE_ENTRIES)
+    tuning.bodyProfile = normalizedBodyCameraScope(
+        tuning.bodyProfile,
+        MAX_CAMERA_TUNING_SCOPE_ENTRIES
+    )
     tuning.schemaVersion = CAMERA_TUNING_SCHEMA_VERSION
     db.m2CameraTuning = nil
 
@@ -229,9 +261,18 @@ end
 local CameraTuning = SC.CameraTuning or {}
 SC.CameraTuning = CameraTuning
 CameraTuning.SCHEMA_VERSION = CAMERA_TUNING_SCHEMA_VERSION
+-- Runtime-only revision used by the wardrobe pose cache.  SavedVariables
+-- remain the authoritative tuning store; this value simply invalidates the
+-- small visible-card cache after an edit or reset.
+CameraTuning.revision = tonumber(CameraTuning.revision) or 0
+
+local function isM2CameraScopeKeyValid(scope, key)
+    return (scope == "weaponFamily" or scope == "model" or scope == "appearance")
+        and cameraScopeKeyIsValid(scope, key)
+end
 
 function CameraTuning.Get(scope, key)
-    if not cameraScopeKeyIsValid(scope, key) or not SC.db
+    if not isM2CameraScopeKeyValid(scope, key) or not SC.db
         or type(SC.db.cameraTuning) ~= "table" then
         return nil
     end
@@ -250,7 +291,7 @@ function CameraTuning.PoseEquals(left, right)
 end
 
 function CameraTuning.Set(scope, key, pose, lowerScopePose)
-    if not cameraScopeKeyIsValid(scope, key) or not SC.db then return false end
+    if not isM2CameraScopeKeyValid(scope, key) or not SC.db then return false end
     local normalized = normalizeCameraPose(pose)
     if not normalized then return false end
     local tuning = SC.db.cameraTuning
@@ -266,17 +307,73 @@ function CameraTuning.Set(scope, key, pose, lowerScopePose)
         tuning[scope][key] = normalized
     end
     normalizeCameraTuning(SC.db)
+    CameraTuning.revision = CameraTuning.revision + 1
     return true
 end
 
 function CameraTuning.Reset(scope, key)
-    if not cameraScopeKeyIsValid(scope, key) or not SC.db
+    if not isM2CameraScopeKeyValid(scope, key) or not SC.db
         or type(SC.db.cameraTuning) ~= "table" then
         return false
     end
     local entries = SC.db.cameraTuning[scope]
     if type(entries) ~= "table" or entries[key] == nil then return false end
     entries[key] = nil
+    normalizeCameraTuning(SC.db)
+    CameraTuning.revision = CameraTuning.revision + 1
+    return true
+end
+
+-- Body deltas share the versioned cameraTuning SavedVariables root but use a
+-- distinct value contract.  Keeping this API separate prevents a seven-axis
+-- M2 pose from ever being interpreted as a five-axis character-profile delta.
+local BodyCameraTuning = SC.BodyCameraTuning or {}
+SC.BodyCameraTuning = BodyCameraTuning
+BodyCameraTuning.SCHEMA_VERSION = CAMERA_TUNING_SCHEMA_VERSION
+
+function BodyCameraTuning.Get(profileKey)
+    if not isValidBodyProfileKey(profileKey) or not SC.db
+        or type(SC.db.cameraTuning) ~= "table" then
+        return nil
+    end
+    local entries = SC.db.cameraTuning.bodyProfile
+    local stored = type(entries) == "table" and entries[profileKey] or nil
+    if type(stored) ~= "table" then return nil end
+    return normalizeBodyCameraDelta(stored)
+end
+
+function BodyCameraTuning.DeltaEquals(left, right)
+    return bodyDeltaEquals(left, right)
+end
+
+function BodyCameraTuning.Set(profileKey, delta)
+    if not isValidBodyProfileKey(profileKey) or not SC.db then return false end
+    local normalized = normalizeBodyCameraDelta(delta)
+    if not normalized then return false end
+    local tuning = SC.db.cameraTuning
+    if type(tuning) ~= "table" then
+        tuning = { schemaVersion = CAMERA_TUNING_SCHEMA_VERSION }
+        SC.db.cameraTuning = tuning
+    end
+    tuning.schemaVersion = CAMERA_TUNING_SCHEMA_VERSION
+    tuning.bodyProfile = type(tuning.bodyProfile) == "table" and tuning.bodyProfile or {}
+    if bodyDeltaEquals(normalized, {}) then
+        tuning.bodyProfile[profileKey] = nil
+    else
+        tuning.bodyProfile[profileKey] = normalized
+    end
+    normalizeCameraTuning(SC.db)
+    return true
+end
+
+function BodyCameraTuning.Reset(profileKey)
+    if not isValidBodyProfileKey(profileKey) or not SC.db
+        or type(SC.db.cameraTuning) ~= "table" then
+        return false
+    end
+    local entries = SC.db.cameraTuning.bodyProfile
+    if type(entries) ~= "table" or entries[profileKey] == nil then return false end
+    entries[profileKey] = nil
     normalizeCameraTuning(SC.db)
     return true
 end
@@ -304,6 +401,10 @@ local function normalizeDatabase(db)
 
     repairScalar(db, "favorites", "table", {})
     normalizeCameraTuning(db)
+    -- Capability attestation is deliberately process-local in M2Camera.lua.
+    -- Remove an experimental pre-v7 saved marker so a stock client always
+    -- opens the BODY workbench in its safe read-only state.
+    db.bodyCameraRuntimeCapability = nil
     repairScalar(db, "debug", "boolean", DEFAULTS.debug)
 
     repairScalar(db, "bridge", "table", {})

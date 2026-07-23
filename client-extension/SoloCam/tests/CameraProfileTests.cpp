@@ -36,7 +36,10 @@ int main()
     const ExpectedProfile expectedProfiles[] = {
         // Retail-style human-female framing: head, shoulder, back, chest,
         // wrist, hands, waist, legs and feet.
-        {0x5341, 0.55f, 0.32f, 0.55f, 0.00f, 0.00f},
+        // Approved body-calibration delta for human:female:HEAD is folded
+        // into the generated canonical profile; the remaining eight legacy
+        // reference entries remain bit-for-bit at their baseline values.
+        {0x5341, 0.60f, 0.3232f, 0.56f, 0.06f, 0.0084f},
         {0x5342, 0.40f, 0.16f, 0.52f, 0.10f, 0.00f},
         {0x5349, 0.25f, 0.27f, 0.65f, 0.00f, 3.14159265f},
         {0x5343, 0.25f, 0.27f, 0.58f, 0.00f, 0.00f},

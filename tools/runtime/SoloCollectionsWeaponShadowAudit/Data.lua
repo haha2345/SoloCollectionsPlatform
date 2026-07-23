@@ -1,0 +1,4 @@
+SoloCollectionsWeaponShadowAuditData = {
+    bundleId = "UNGENERATED",
+    records = {},
+}

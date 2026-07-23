@@ -54,6 +54,50 @@ class SetPresentationTests(unittest.TestCase):
         self.assertEqual("UNKNOWN", by_item_set[1]["status"])
         self.assertEqual("NO_REVIEWED_ITEMSET_PRESENTATION_RULE", by_item_set[1]["reasonCode"])
 
+    def test_reviewed_high_item_level_cohorts_rank_above_normal_with_stable_ties(self):
+        by_item_set = {row["itemSetId"]: row for row in self.generated["presentations"]}
+        self.assertEqual("HIGH", by_item_set[821]["difficulty"])
+        self.assertEqual("RAID", by_item_set[820]["difficulty"])
+        self.assertGreater(by_item_set[821]["sortRank"]["difficulty"],
+                           by_item_set[820]["sortRank"]["difficulty"])
+        self.assertEqual("REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL",
+                         by_item_set[821]["reasonCode"])
+        self.assertEqual("HIGH", by_item_set[801]["difficulty"])
+        self.assertEqual("RAID", by_item_set[787]["difficulty"])
+
+        sort_keys = ("expansion", "acquisition", "tier", "difficulty", "medianItemLevel", "maxItemLevel")
+        ordered = sorted(
+            (by_item_set[820], by_item_set[821], by_item_set[822]),
+            key=lambda row: tuple(-row["sortRank"][key] for key in sort_keys)
+            + (row["itemSetId"], row["collectionId"]),
+        )
+        self.assertEqual([821, 822, 820], [row["itemSetId"] for row in ordered])
+
+    def test_heroic_rank_is_reserved_above_high_and_normal_when_reviewed_evidence_exists(self):
+        candidate = {
+            "itemSetId": 9000,
+            "itemLevel": {"median": 251, "max": 251},
+            "quality": {},
+        }
+        shared = {
+            "key": "fixture",
+            "itemSetIdRange": [9000, 9000],
+            "expansion": "WRATH",
+            "acquisition": "PVE",
+            "raidTier": "T10",
+        }
+        normal = presentations.resolve_presentation(
+            candidate, 1, dict(shared, difficulty="RAID", reasonCode="FIXTURE_NORMAL")
+        )
+        high = presentations.resolve_presentation(
+            candidate, 2, dict(shared, difficulty="HIGH", reasonCode="FIXTURE_HIGH")
+        )
+        heroic = presentations.resolve_presentation(
+            candidate, 3, dict(shared, difficulty="HEROIC", reasonCode="FIXTURE_HEROIC")
+        )
+        self.assertLess(normal["sortRank"]["difficulty"], high["sortRank"]["difficulty"])
+        self.assertLess(high["sortRank"]["difficulty"], heroic["sortRank"]["difficulty"])
+
     def test_generated_outputs_are_byte_stable_and_presentation_hash_is_separate(self):
         output, review_rows = presentations.build(ROOT)
         for path, content in presentations.outputs(ROOT, output, review_rows).items():
@@ -68,6 +112,7 @@ class SetPresentationTests(unittest.TestCase):
         catalog = (ROOT / "addon/SoloCollections/Core/Catalog.lua").read_text(encoding="utf-8")
         self.assertIn("local function setPresentationLess", catalog)
         self.assertIn("table.sort(matches, setPresentationLess)", catalog)
+        self.assertIn('"tier", "difficulty", "medianItemLevel", "maxItemLevel"', catalog)
         self.assertIn("leftItemSetId < rightItemSetId", catalog)
         self.assertNotIn("record.name <", catalog)
 

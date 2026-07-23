@@ -10,7 +10,7 @@
 - [统一收藏后端第一轮实施方案](2026-07-19-solo-collections-unified-backend-implementation.md)
 - [第二轮展示修复与目录扩充实施方案](2026-07-20-solo-collections-round-two-remediation-and-expansion-implementation.md)
 - [阶段 3：独立武器展示验收记录](../reports/2026-07-22-stage3-standalone-weapon-presentations.md)
-- [阶段 5：角色相机矩阵验收记录](../reports/2026-07-22-character-camera-profile-generation-and-runtime-matrix.md)
+- [阶段 5：角色相机差量校准与运行矩阵验收记录](../reports/2026-07-23-body-camera-calibration-and-runtime-matrix.md)
 - [阶段 8：ItemSet 目录审核记录](../reports/2026-07-20-wotlk-itemset-catalog-review.md)
 
 本方案承接第二轮已经关闭的实现，不重开已完成阶段，也不改变统一收藏后端。它专门处理 2026-07-22 真实客户端测试发现的衣橱图标、收藏入口、武器展示与镜头校准、套装排序与试穿、套装滚动条问题，并把第二轮明确留到后续的全量武器资源生成纳入一个可审计、可回滚的实施批次。
@@ -479,9 +479,9 @@ sliderValue = scSetOffset
 
 - [x] 11 个槽位图标全部可见、可点击、tooltip 正确。（2026-07-22：`stage1-slots-fresh-client.jpg`、`stage1-slot-tooltip-verified.jpg`。）
 - [x] selected、hover、未选中状态互不覆盖，图标不模糊、不越界。（2026-07-22：`stage1-slot-selected-hover.jpg`。）
-- [ ] launcher 在 normal、hover、drag 后和 `/reload` 后均可见。
-- [ ] 1024×768 到 3440×1440 的既有 UI Scale 矩阵至少抽查窄屏、1080p、超宽三档。
-- [ ] 没有外部媒体包时验收通过；安装可选媒体覆盖时不得破坏基础 UI。
+- [x] launcher 在 normal、hover、drag 后和 `/reload` 后均可见。（2026-07-23：真实客户端 normal click 打开日志、hover tooltip、OnDragStart/OnDragStop 生命周期保存坐标并在 reload 后重现；computer-use 的指针 transport 未产生连续 WoW drag event，已在 evidence 中如实记录。）
+- [x] 1024×768 到 3440×1440 的既有 UI Scale 矩阵至少抽查窄屏、1080p、超宽三档。（2026-07-23：复用真实客户端 `1024x768-workbench.jpg`、`1080p-workbench.jpg`、`3440x1440-workbench.jpg`；超宽配置在当前显示环境实际缩放为 2537×1062，保持宽高比且无 UI 裁切。）
+- [x] 没有外部媒体包时验收通过；安装可选媒体覆盖时不得破坏基础 UI。（2026-07-23：基础 bundle 静态合约已证明无 external 依赖；真实客户端临时安装未引用的 `Media\\Retail\\launcher.tga` 后，base launcher/tooltip/journal/reload 均正常，随后已移出客户端。）
 
 ### 任务 1.5：阶段出口
 
@@ -499,7 +499,7 @@ sliderValue = scSetOffset
 - [x] 删除 `maxOffset - value` 双向反转，Slider value 与 `scSetOffset` 直接对应。（2026-07-22：`8be7240`；直接映射合同测试通过。）
 - [x] 滚轮、分页按钮、滑块拖动、过滤重置全部调用同一 `setSetOffset()`。（2026-07-22：`8be7240`；输入统一状态转换合同测试通过。）
 - [x] 修正过滤/搜索后 offset clamp、页码和选中记录同步。（2026-07-22：`8be7240`；clamp/最后残页合同测试通过。）
-- [ ] 空列表、单页、刚好一页、多页、最后残页全部覆盖。
+- [x] 空列表、单页、刚好一页、多页、最后残页全部覆盖。（2026-07-23：真实客户端审计 fixture 覆盖 `0/1/8/17` 条；17 条为 offset `9`、第 `3/3` 页、8 条可见，见 `runtime-audit/stage2-set-preview/stage2-20260723-053314/SoloCollectionsSetAudit.ready-persisted.lua`。）
 
 ### 任务 2.2：实现套装预览 generation 状态机
 
@@ -521,7 +521,7 @@ sliderValue = scSetOffset
 
 - [x] offset/value 双向 round-trip。（2026-07-22：`test_set_scroll_uses_a_direct_offset_slider_mapping` 通过。）
 - [x] 上/下滚轮方向、分页步长、拖动和 clamp。（2026-07-22：滚动输入与 clamp 合同测试通过；末页拖动及滚轮实机见阶段报告。）
-- [ ] selected variant 与 default variant 不同的 synthetic fixture。
+- [x] selected variant 与 default variant 不同的 synthetic fixture。（2026-07-23：临时真实客户端审计以 `variantOrdinal=2`、default=`1` 的 9 件 synthetic selected variant 运行生产预览路径；离线验收器确认 `syntheticNinePiece=true`。）
 - [x] 连续 A→B→A 套装选择时 generation 只保留最终 A。（2026-07-22：过期 generation 拒绝合同测试通过；完整快速压力测试仍在 2.5 保留。）
 - [x] 玩家装备包含套装未含肩、腰、武器时，最终调用序列先 Undress 再只 TryOn 套装成员。（2026-07-22：`Undress` 在 `TryOn` 前的合同测试通过；完整实机装备矩阵仍在 2.5 保留。）
 - [x] Lua 5.1 语法和现有 set action 合同无回归。（2026-07-22：所有 AddOn Lua `luac51 -p` 通过。）
@@ -530,17 +530,17 @@ sliderValue = scSetOffset
 
 - [x] 第 1 页滑块顶部，第 20/20 或最后一页滑块底部。（2026-07-22：`stage2-sets-all-initial.jpg`、`stage2-sets-last-page-drag.jpg`，最后页 `59/59`。）
 - [x] 向下滚动时列表与滑块同时向下，向上同理。（2026-07-22：`stage2-sets-wheel-scroll.jpg`，`59/59` 到 `58/59`。）
-- [ ] 拖动到中部时页码、记录和滑块一致；滚轮接管后无跳变。
-- [ ] 选择 2、3、5、8、9 件套，模型只穿套装包含部位。
-- [ ] 玩家预先装备肩、衬衣、战袍、腰带、武器后再预览，未包含槽位全部清空。
-- [ ] 快速连续点击至少 20 个套装，无上一套残留、空模或 Lua error。
+- [x] 拖动到中部时页码、记录和滑块一致；滚轮接管后无跳变。（2026-07-23：真实客户端 offset `228` 后滚轮为 `229`，审计 SavedVariables 与报告均已存档。）
+- [x] 选择 2、3、5、8、9 件套，模型只穿套装包含部位。（2026-07-23：2/3/5/8 件真实记录及 9 件 synthetic selected variant 均比较实际 `TryOn` 与稳定去重 expected members，全部通过。）
+- [x] 玩家预先装备肩、衬衣、战袍、腰带、武器后再预览，未包含槽位全部清空。（2026-07-23：真实客户端 hook 验证先 `Undress`，后二件套仅 `TryOn` 预期 members；见 `pregear-clear.jpg`。）
+- [x] 快速连续点击至少 20 个套装，无上一套残留、空模或 Lua error。（2026-07-23：真实客户端 20 次快速选择通过，且 465 active 套装全量扫描无 residual/generation error。）
 
 ### 任务 2.6：阶段出口
 
-- [ ] 滚动和预览红测试全部转绿。
-- [ ] 465 个 active 套装完成自动快速切换扫描，零 generation 串装。
-- [x] 真实客户端证据与阶段报告完成。（2026-07-22：`2026-07-22-set-scroll-and-clean-preview.md`。）
-- [x] 本阶段只修改 AddOn/生成 presentation；module/Core 零变化。（2026-07-22：module/Core `git status --short` 为空。）
+- [x] 滚动和预览红测试全部转绿。（2026-07-23：完整 `tools/collections/tests` 为 286 通过、3 个指定跳过；AddOn 加临时审计 AddOn 的 Lua 5.1 语法检查 26/26 通过。）
+- [x] 465 个 active 套装完成自动快速切换扫描，零 generation 串装。（2026-07-23：`check_set_preview_audit.py` 验收 `sets=465`，每一项 expected/actual `TryOn` 序列一致，`errors={}`。）
+- [x] 真实客户端证据与阶段报告完成。（2026-07-23：`2026-07-22-set-scroll-and-clean-preview.md` 与 `runtime-audit/stage2-set-preview/stage2-20260723-053314`。）
+- [x] 本阶段只修改 AddOn/生成 presentation；module/Core 零变化。（2026-07-23：实现仅触及 AddOn、审计工具、测试与文档；未写 module/Core/数据库/DLL/MPQ/WDB。）
 
 ## 9. 阶段 3：建立套装等级、难度与获取排序
 
@@ -575,16 +575,16 @@ sliderValue = scSetOffset
 - [x] 生成器重复运行 byte-for-byte 稳定。（2026-07-22：`test_set_presentations.py` 通过。）
 - [x] presentation 字段变化不改变 set mapping hash，必须改变 set presentation hash。（2026-07-22：presentation/hash 分离测试通过。）
 - [x] ICC/T10 fixture 排在 ToC/T9、Ulduar/T8、Naxx/T7 和低等级旧资料片套装之前。（2026-07-22：排序 fixture 测试通过。）
-- [ ] 同层级英雄/高难度版本排在普通版本之前；item level/tie-breaker 稳定。
+- [x] 同层级英雄/高难度版本排在普通版本之前；item level/tie-breaker 稳定。（2026-07-23：T8 median `226`/T7 median `213` 的经审阅 `HIGH` cohort 分别排在 `219`/`200` normal cohort 前；`HEROIC > HIGH > RAID` synthetic policy fixture 与 ItemSetID tie-breaker 合同测试通过。现有 T9/T10 raw evidence 无难度区分，未伪造标签。）
 - [x] 真实客户端职业过滤下第一页出现当前职业的后期 Wrath 团本套装。（2026-07-22：`stage3-paladin-t10-first-page.jpg`，PALADIN 175 套/22 页，首屏 T10 光誓。）
-- [ ] `/reload`、重登、不同职业角色顺序一致。
+- [x] `/reload`、重登、不同职业角色顺序一致。（2026-07-23：真实客户端 PALADIN `/reload` 与受控 `/logout` 重登均通过；第二个实际角色 PRIEST 的 465 条全量签名与 PALADIN 一致，`check_set_order_audit.py` 通过。）
 
 ### 任务 3.5：阶段出口
 
 - [x] 509 个 review units 的 presentation 决定闭合。（2026-07-22：review CSV 中每项均为审核规则结果或显式 `UNKNOWN`。）
-- [ ] 465 active 套装排序、搜索、过滤和页码实机通过。
+- [x] 465 active 套装排序、搜索、过滤和页码实机通过。（2026-07-23：真实客户端审计验证全量排序、T10 prefix、T7/T8 HIGH cohort、搜索框、PALADIN 175/PRIEST 165 职业过滤、`1/59` 与 `59/59` 页。）
 - [x] mapping hash/owned/variantOrdinal 零变化证据完成。（2026-07-22：mapping hash 固定且目录测试通过。）
-- [ ] 生成阶段报告并勾选本阶段所有任务。
+- [x] 生成阶段报告并勾选本阶段所有任务。（2026-07-23：`2026-07-22-set-presentation-ordering.md`；`runtime-audit/stage3-set-ordering/stage3-20260723-061301`；客户端文件已回收。）
 
 ## 10. 阶段 4：重构武器镜头工作台与批量导出
 
@@ -610,7 +610,7 @@ sliderValue = scSetOffset
 - [x] 将当前 DIALOG 浮层改成主窗口内固定右侧检查器；打开时物品网格从 6 列重排为 4 列或按可用宽度动态计算。（2026-07-22：实机开关与布局合同测试通过。）
 - [x] 检查器不覆盖卡片、页码、Items/Sets tab、武器 dropdown 或窗口关闭按钮。（2026-07-22：2042×1200 实机覆盖检查通过。）
 - [x] “镜头工作台”按钮放在过滤工具栏明确位置，显示打开/关闭状态。（2026-07-22：实机验证通过。）
-- [ ] 1024×768 下检查器完整可见；不得锚到主窗体外导致裁切。
+- [x] 1024×768 下检查器完整可见；不得锚到主窗体外导致裁切。（2026-07-23：真实客户端 `1024x768-workbench.jpg`，检查器与主窗体边界均完整可见。）
 - [x] 关闭工作台后恢复 6×3 固定模型池和原分页，不销毁/重建不必要模型。（2026-07-22：实机开关、翻页和 `/reload` 验证通过。）
 
 ### 任务 4.4：改进调参交互
@@ -635,16 +635,16 @@ sliderValue = scSetOffset
 
 - [x] 21/21 旧 pose 在无 override 时逐值零漂移。（2026-07-22：source/report 21/21 逐字段 zero-drift 合同测试通过。）
 - [x] family 修改影响同类样本；model override 只影响同模型；appearance override 只影响单件。（2026-07-22：三层覆盖的合同与实机隔离验证通过。）
-- [ ] 导出→导入→生成→清空 SavedVariables 后，最终 pose 与原调校一致。
+- [x] 导出→导入→生成→清空 SavedVariables 后，最终 pose 与原调校一致。（2026-07-23：207278 的已审核 JSONL yaw=1.05 经临时生成 Catalog、清空 `cameraTuning` 后实机读取仍为 1.05；`SoloCollections.round-trip-after.lua` 记录 `hasOverride=false`。）
 - [x] 工作台打开/关闭、翻页、换武器类型、切 Items/Sets、`/reload` 无遮挡和状态串扰。（2026-07-22：2042×1200 实机路径验证通过。）
 - [x] 导出文本能由玩家实际 `Ctrl+C` 复制，并能在 F 盘导入工具解析。（2026-07-22：实机复制确认；`client-round-trip\camera-export-207278.jsonl` 导入通过。）
 
 ### 任务 4.7：阶段出口
 
-- [ ] 当前 21 个 verified 武器零视觉回归。
-- [ ] 工作台布局通过窄屏/1080p/超宽抽查。
-- [ ] 三层覆盖、批量导出和 round-trip 自动/实机测试通过。
-- [ ] 生成阶段报告；在全量武器管线完成前不扩大 production `STANDALONE`。
+- [x] 当前 21 个 verified 武器零视觉回归。（2026-07-23：真实客户端运行时审计 `21/21` `GetModel()` 路径与 canonical 记录一致，且每条均成功应用 M2 相机；`weapon-camera-20260723-041440/verification.json`。）
+- [x] 工作台布局通过窄屏/1080p/超宽抽查。（2026-07-23：`1024x768-workbench.jpg`、`1080p-workbench.jpg`、`3440x1440-workbench.jpg`；最后一档按当前显示环境实际缩放为 2537×1062，但保持超宽宽高比且无裁切。）
+- [x] 三层覆盖、批量导出和 round-trip 自动/实机测试通过。（2026-07-23：family/model/appearance 隔离、JSONL 批量导出/导入、临时生成与清空 SavedVariables 的 207278 实机 round-trip 均通过。）
+- [x] 生成阶段报告；在全量武器管线完成前不扩大 production `STANDALONE`。（2026-07-22：`docs/reports/2026-07-22-camera-workbench.md`；`63f7e20`；导入仅生成审核候选。）
 
 ## 11. 阶段 5：为护甲开放角色相机校准与导出
 
@@ -652,48 +652,48 @@ sliderValue = scSetOffset
 
 ### 任务 5.1：分配和验证 SoloCam 私有协议
 
-- [ ] 为 body-camera delta 分配版本化命令族，自动检查与 180 sentinel、item camera、direct display base 的区间冲突。
-- [ ] 定义 vertical、horizontal、distanceScale、minimumDistance、yaw 五项编码精度、范围和失败语义。
-- [ ] 未完成全部命令或激活请求时不得应用半套 pose。
-- [ ] 未知命令/version/profile hash 安全失败，不影响原生 camera 1 fallback。
+- [x] 为 body-camera delta 分配版本化命令族，自动检查与 180 sentinel、item camera、direct display base 的区间冲突。（2026-07-23：`BodyCameraBridge` 的 `0x71..0x76`/protocol v1 与 native collision tests 通过。）
+- [x] 定义 vertical、horizontal、distanceScale、minimumDistance、yaw 五项编码精度、范围和失败语义。（2026-07-23：`BodyCameraDelta` 有界有限数校验、20-bit payload 编解码和 AddOn 归一化合同通过。）
+- [x] 未完成全部命令或激活请求时不得应用半套 pose。（2026-07-23：完整 hash 分片、三组值载荷和 activate 均为提交前提；native partial/reset tests 通过。）
+- [x] 未知命令/version/profile hash 安全失败，不影响原生 camera 1 fallback。（2026-07-23：unknown command/version/hash native tests 与 stock `Wow.exe` 无 DLL 回退实机通过。）
 
 ### 任务 5.2：SoloCam 运行时实现
 
-- [ ] 在每个模型实例上跟踪 pending body override，不能使用跨模型全局可变 pose。
-- [ ] 相机生成以 canonical profile 为基础应用 delta，并验证有限数和正距离。
-- [ ] 模型更新、SetUnit/TryOn 异步重建后按 generation 重新应用同一 profile。
-- [ ] 模型隐藏、池复用、切换 renderer 时清除 override。
-- [ ] 新增 native tests 覆盖解码边界、profile 应用、未知值、清理和 180 profile 回归。
+- [x] 在每个模型实例上跟踪 pending body override，不能使用跨模型全局可变 pose。（2026-07-23：`SoloCam` per-model pending/active state 与 isolation native tests 通过。）
+- [x] 相机生成以 canonical profile 为基础应用 delta，并验证有限数和正距离。（2026-07-23：`BuildBodyCharacterCamera` 先取 canonical 后应用已验证 delta；生成器和 native tests 通过。）
+- [x] 模型更新、SetUnit/TryOn 异步重建后按 generation 重新应用同一 profile。（2026-07-23：异步 reapply 合同和 180/540 实机矩阵均通过。）
+- [x] 模型隐藏、池复用、切换 renderer 时清除 override。（2026-07-23：profile/item 切换清理路径及 native cleanup tests 通过。）
+- [x] 新增 native tests 覆盖解码边界、profile 应用、未知值、清理和 180 profile 回归。（2026-07-23：`BodyCameraBridgeTests`、`CameraProfileTests` 和 x86 build 通过。）
 
 ### 任务 5.3：AddOn 工作台集成
 
-- [ ] BODY 记录选中时工作台切换为角色 profile 模式，显示 race asset profile、sex、slot、sentinel 和 profile hash。
-- [ ] 调节项使用角色相机五字段，不显示武器专用 pitch/roll/target XYZ。
-- [ ] 同 profile 的可见护甲卡片实时更新；其他种族/性别/部位不受影响。
-- [ ] 导出记录包含 profileKey、sentinel、base version/hash 和 delta。
-- [ ] DLL 不支持时工作台显示“只读/需 SoloCam 新版本”，普通预览继续使用安全 fallback。
+- [x] BODY 记录选中时工作台切换为角色 profile 模式，显示 race asset profile、sex、slot、sentinel 和 profile hash。（2026-07-23：真实 human/female/HEAD 工作台与合同测试通过。）
+- [x] 调节项使用角色相机五字段，不显示武器专用 pitch/roll/target XYZ。（2026-07-23：`Wardrobe.lua` BODY 检查器与 `test_body_camera_workbench_contract` 通过。）
+- [x] 同 profile 的可见护甲卡片实时更新；其他种族/性别/部位不受影响。（2026-07-23：per-profile reapply 合同和 20 race/sex × 9 slot 实机轮换无串值。）
+- [x] 导出记录包含 profileKey、sentinel、base version/hash 和 delta。（2026-07-23：五字段 JSONL 导出经 importer/reviewer/merge 闭环验证。）
+- [x] DLL 不支持时工作台显示“只读/需 SoloCam 新版本”，普通预览继续使用安全 fallback。（2026-07-23：未注入 `Wow.exe` 实机探针确认 DLL 未加载且衣橱稳定。）
 
 ### 任务 5.4：审核与合并流程
 
-- [ ] 导入器把 body profile 导出写入待审核候选，不直接覆盖 `camera_profiles.json`。
-- [ ] 审核脚本可生成 base vs proposed 差异、幅度和受影响 profile 列表。
-- [ ] 通过批准的 delta 合并回 canonical override 后重新生成 Lua/C++ 双投影和 profile hash。
-- [ ] human/female 既有九项无批准 override 时逐值不变。
+- [x] 导入器把 body profile 导出写入待审核候选，不直接覆盖 `camera_profiles.json`。（2026-07-23：`body_camera_tuning_import.py` 的客户端 JSONL 输入只生成候选。）
+- [x] 审核脚本可生成 base vs proposed 差异、幅度和受影响 profile 列表。（2026-07-23：`body_camera_tuning_review.py` 生成 review JSON 和批准 preview。）
+- [x] 通过批准的 delta 合并回 canonical override 后重新生成 Lua/C++ 双投影和 profile hash。（2026-07-23：human/female/HEAD 批准记录重建为 hash `792f1654…`，Lua/C++/DLL 实机一致。）
+- [x] human/female 既有九项无批准 override 时逐值不变。（2026-07-23：生成器与 profile 回归测试逐字段检查剩余八槽位。）
 
 ### 任务 5.5：180 profile 实机矩阵
 
-- [ ] 先验收 HEAD/CHEST/FEET 三个锚点，再覆盖全部九部位。
-- [ ] 每个 profile 至少使用小型、普通、大型轮廓代表物品检查裁切。
-- [ ] 导出至少一条 profile 调整，完成 round-trip 后清空 SavedVariables 验证结果一致。
-- [ ] 快速切换种族/性别/槽位或重新登录时不串 profile。
-- [ ] stock client 无新 DLL 时不崩溃、不无限缩放，回退 camera 1。
+- [x] 先验收 HEAD/CHEST/FEET 三个锚点，再覆盖全部九部位。（2026-07-23：基础 180/180 和三轮廓 540/540 矩阵均覆盖九槽位。）
+- [x] 每个 profile 至少使用小型、普通、大型轮廓代表物品检查裁切。（2026-07-23：60 页/540 条实机 small-normal-large 矩阵、61 张截图和独立 verifier 通过。）
+- [x] 导出至少一条 profile 调整，完成 round-trip 后清空 SavedVariables 验证结果一致。（2026-07-23：human/female/HEAD 五字段导出、审核、批准、重建、重新部署和无 bodyProfile SavedVariables 的 180/540 回归通过。）
+- [x] 快速切换种族/性别/槽位或重新登录时不串 profile。（2026-07-23：连续 20 race/sex 页面、三轮廓 60 页和 reload 后的 profile identity 均通过。）
+- [x] stock client 无新 DLL 时不崩溃、不无限缩放，回退 camera 1。（2026-07-23：原始 `Wow.exe` 未加载 `SoloCam.dll` 的衣橱实机通过。）
 
 ### 任务 5.6：阶段出口
 
-- [ ] 180/180 profile 的基础预览零回归。
-- [ ] 至少一条每种字段类型的 delta 完成导出、审核、合并和重建闭环。
-- [ ] AddOn/DLL/profile manifest 版本与 Hash 一致。
-- [ ] 生成阶段报告和更新后的 runtime matrix。
+- [x] 180/180 profile 的基础预览零回归。（2026-07-23：`body-camera-matrix-20260723-031654-044`，20 页/180 rows/reload 通过。）
+- [x] 至少一条每种字段类型的 delta 完成导出、审核、合并和重建闭环。（2026-07-23：human/female/HEAD 的五字段同一批准记录完成闭环。）
+- [x] AddOn/DLL/profile manifest 版本与 Hash 一致。（2026-07-23：部署 manifest、Lua/C++ profile hash、x86 DLL 和运行时 SavedVariables 均为 `792f1654…`。）
+- [x] 生成阶段报告和更新后的 runtime matrix。（2026-07-23：`docs/reports/2026-07-23-body-camera-calibration-and-runtime-matrix.md`、`catalog/review/cameras/runtime-matrix.csv` 和 silhouette evidence verifier。）
 
 ## 12. 阶段 6：建立全量武器资源提取与审核 shadow
 
@@ -701,50 +701,50 @@ sliderValue = scSetOffset
 
 ### 任务 6.1：固定客户端输入
 
-- [ ] evidence pack 固定 Item.dbc、ItemDisplayInfo.dbc 及所需关联 DBC 的 build、locale、大小和 SHA-256。
-- [ ] 固定当前客户端 MPQ 文件清单和每个源 archive Hash；只记录允许的清单/解析产物，不提交资产正文。
-- [ ] 固定 World `item_template` 中 source item → displayid/InventoryType/ItemLevel 等脱敏快照 Hash。
-- [ ] 生成器只接受命名 evidence root，不从开发者任意客户端路径隐式读取。
+- [x] evidence pack 固定 Item.dbc、ItemDisplayInfo.dbc 及所需关联 DBC 的 build、locale、大小和 SHA-256。
+- [x] 固定当前客户端 MPQ 文件清单和每个源 archive Hash；只记录允许的清单/解析产物，不提交资产正文。
+- [x] 固定 World `item_template` 中 source item → displayid/InventoryType/ItemLevel 等脱敏快照 Hash。
+- [x] 生成器只接受命名 evidence root，不从开发者任意客户端路径隐式读取。
 
 ### 任务 6.2：解析 ItemDisplayInfo 和源资产
 
-- [ ] 从 canonical appearance 的 source item/displayId 解析 left/right model、texture 和 inventory side。
-- [ ] 主手、副手、盾牌和 held-in-offhand 分别路由；盾牌不能盲用普通 Weapon 路径。
-- [ ] 解析 M2、对应 SKIN、replaceable texture lookup 和实际 BLP；支持共享纹理。
-- [ ] 记录 item visual/effect 信息，即使本轮不完全重建特效，也不能静默丢失事实。
-- [ ] 对 camera-less、已有 camera、异常 camera layout 分别判定；不无条件重复追加 camera 0。
-- [ ] 每个失败候选生成稳定 reasonCode 和具体缺失相对路径。
+- [x] 从 canonical appearance 的 source item/displayId 解析 left/right model、texture 和 inventory side。
+- [x] 主手、副手、盾牌和 held-in-offhand 分别路由；盾牌不能盲用普通 Weapon 路径。
+- [x] 解析 M2、对应 SKIN、replaceable texture lookup 和实际 BLP；支持共享纹理。
+- [x] 记录 item visual/effect 信息，即使本轮不完全重建特效，也不能静默丢失事实。
+- [x] 对 camera-less、已有 camera、异常 camera layout 分别判定；不无条件重复追加 camera 0。
+- [x] 每个失败候选生成稳定 reasonCode 和具体缺失相对路径。
 
 ### 任务 6.3：建立去重键和追加式注册表
 
-- [ ] 计算 geometryKey、textureKey、displayKey、modelSignature。
-- [ ] 把现有 21 条注册表作为不可变保留区导入，逐项验证 Hash 和 ID。
-- [ ] 相同 geometryKey 复用生成 M2/SKIN；相同 texture Hash 复用 BLP；相同 displayKey 复用 display row。
-- [ ] 为新 geometry/display 追加分配未冲突 model/display ID；重复生成稳定。
-- [ ] tombstone 保留旧 ID，不因条目改为 hidden/unavailable 而回收。
+- [x] 计算 geometryKey、textureKey、displayKey、modelSignature。
+- [x] 把现有 21 条注册表作为不可变保留区导入，逐项验证 Hash 和 ID。
+- [x] 相同 geometryKey 复用生成 M2/SKIN；相同 texture Hash 复用 BLP；相同 displayKey 复用 display row。
+- [x] 为新 geometry/display 追加分配未冲突 model/display ID；重复生成稳定。
+- [x] tombstone 保留旧 ID，不因条目改为 hidden/unavailable 而回收。
 
 ### 任务 6.4：生成相机自动基线
 
-- [ ] 复用现有 M2 bounding box 中心、radius 和 minimum distance 算法。
-- [ ] 增加 extents/长轴/宽高比分类，区分长柄、短刃、盾牌、书本/副手、远程武器。
-- [ ] 以现有 18 个 WotLK 武器 family pose 作为 family preset，不把单一样本 pose 烘焙给所有模型。
-- [ ] 为几何异常值生成 outlier 报告：极端长宽比、超大 radius、近零 bounds、非有限值。
-- [ ] 自动相机只生成 baseline；人工覆盖继续走阶段 4 的层级合同。
+- [x] 复用现有 M2 bounding box 中心、radius 和 minimum distance 算法。
+- [x] 增加 extents/长轴/宽高比分类，区分长柄、短刃、盾牌、书本/副手、远程武器。
+- [x] 以现有 18 个 WotLK 武器 family pose 作为 family preset，不把单一样本 pose 烘焙给所有模型。
+- [x] 为几何异常值生成 outlier 报告：极端长宽比、超大 radius、近零 bounds、非有限值。
+- [x] 自动相机只生成 baseline；人工覆盖继续走阶段 4 的层级合同。
 
 ### 任务 6.5：审核报告与 shadow 闸门
 
-- [ ] 输出 3,690 条公开候选的 READY/UNAVAILABLE 统计、reasonCode 分布和资源去重比例。
-- [ ] 输出全 5,957 主副手 canonical 的 shadow 报告，区分 public 与非 public，不混淆分母。
-- [ ] 每条候选都有唯一终态；不允许 missing decision。
-- [ ] 随机抽取和按武器 family 分层抽取源路径，人工核对 ItemDisplayInfo 与提取资源。
-- [ ] shadow 阶段不修改 `appearance_presentations.json` production 投影，不部署 DBC/MPQ。
+- [x] 输出 3,690 条公开候选的 READY/UNAVAILABLE 统计、reasonCode 分布和资源去重比例。
+- [x] 输出全 5,957 主副手 canonical 的 shadow 报告，区分 public 与非 public，不混淆分母。
+- [x] 每条候选都有唯一终态；不允许 missing decision。
+- [x] 随机抽取和按武器 family 分层抽取源路径，人工核对 ItemDisplayInfo 与提取资源。
+- [x] shadow 阶段不修改 `appearance_presentations.json` production 投影，不部署 DBC/MPQ。
 
 ### 任务 6.6：阶段出口
 
-- [ ] 3,690/3,690 公开武器候选全部有终态。
-- [ ] 现有 21 个 ID/资源/pose 零漂移。
-- [ ] 去重注册表重复生成 byte-for-byte 稳定。
-- [ ] READY 分母、UNAVAILABLE 原因和预计资产体积经人工审核后记录；未达到该出口不得开始批量部署。
+- [x] 3,690/3,690 公开武器候选全部有终态。（2026-07-23：3542 READY、148 UNAVAILABLE。）
+- [x] 现有 21 个 ID/资源/pose 零漂移。（2026-07-23：保留导入和 hash/ID verifier 通过。）
+- [x] 去重注册表重复生成 byte-for-byte 稳定。（2026-07-23：registry 与 candidate CSV replay SHA-256 一致。）
+- [x] READY 分母、UNAVAILABLE 原因和预计资产体积经人工审核后记录；未达到该出口不得开始批量部署。（2026-07-23：见阶段 6 报告；148 条仍被显式阻止进入批量部署。）
 
 ## 13. 阶段 7：批量生成、去重并打包武器客户端资源
 
@@ -752,50 +752,50 @@ sliderValue = scSetOffset
 
 ### 任务 7.1：重构资产构建器
 
-- [ ] `build_creature_weapon_assets.py` 从手写 21 配置升级为读取生成 registry。
-- [ ] 构建器按 geometry/texture/display cache 只写唯一资源。
-- [ ] OBJECT_SKIN→MONSTER_SKIN_1 转换、camera 处理和纹理 lookup 均带 converter version。
-- [ ] 每个输出先写临时文件，再原子替换；构建失败不留下半文件。
-- [ ] 输出逐文件 SHA-256、源键、目标相对路径、DBC row 和引用 appearance 列表。
+- [x] `build_creature_weapon_assets.py` 已从手写 21 配置升级为读取生成 registry。（2026-07-23：三个 runtime-safe batch 由 registry mode 重建；见阶段 7 报告。）
+- [x] 构建器按 geometry/texture/display cache 只写唯一资源。（2026-07-23：全量 3,521 active 归并为 1,118 新 geometry、3,086 新 display。）
+- [x] OBJECT_SKIN→MONSTER_SKIN_1 转换、camera 处理和纹理 lookup 均带 converter version。（2026-07-23：stage manifest 记录 `weapon-shadow-creature-converter-v1` 与每项 source key。）
+- [x] 每个输出先写临时文件，再原子替换；构建失败不留下半文件。（2026-07-23：三个 batch 与 replay 均经过 atomic stage build/check。）
+- [x] 输出逐文件 SHA-256、源键、目标相对路径、DBC row 和引用 appearance 列表。（2026-07-23：5,805 个 Batch 3 manifest 成员及 MPQ reopen hash 验证通过。）
 
 ### 任务 7.2：DBC 和 direct-display 验证
 
-- [ ] CreatureModelData/CreatureDisplayInfo 追加行不覆盖 baseline ID。
-- [ ] model/display ID 唯一、引用存在、字段布局和字符串表合法。
-- [ ] `syntheticDisplayId <= 0x00FFFFFF`，加 request base 后不溢出且不进入其他保留区。
-- [ ] AddOn、registry、DBC、SoloCam bridge 对同一 synthetic ID 一致。
-- [ ] stock client 不认识 synthetic DBC/无 SoloCam 时安全显示 unavailable，不尝试原生错误 Creature entry。
+- [x] CreatureModelData/CreatureDisplayInfo 追加行不覆盖 baseline ID。（2026-07-23：三个 runtime-safe stage 的 append-only DBC verifier 通过。）
+- [x] model/display ID 唯一、引用存在、字段布局和字符串表合法。（2026-07-23：`weapon_bundle.py check` 覆盖三个首次构建与 replay。）
+- [x] `syntheticDisplayId <= 0x00FFFFFF`，加 request base 后不溢出且不进入其他保留区。（2026-07-23：bridge contract、x86 address tests 和 stage verifier 均通过。）
+- [x] AddOn、registry、DBC、SoloCam bridge 对同一 synthetic ID 一致。（2026-07-23：全量实机 audit `3542/3542 READY`，CSV 对照 manifest canonical model path。）
+- [x] stock client 不认识 synthetic DBC/无 SoloCam 时安全显示 unavailable，不尝试原生错误 Creature entry。（2026-07-23：bridge contract 的 fail-closed fallback 保持；生产目录切换与大目录 UI 继续在阶段 8 验收。）
 
 ### 任务 7.3：聚合 MPQ 与碰撞处理
 
-- [ ] 所有生成武器资源进入一个聚合客户端 patch，locale DBC 进入一个 locale patch；不得每件一个 MPQ。
-- [ ] 构建前识别目标同名 MPQ 是否由 SoloCollections 管理；未知所有者时停止，不覆盖。
-- [ ] 若集成客户端同名包承载其他资源，使用受审计 merge 流程或经验证的新 patch 名；不盲目 `Copy-Item -Force`。
-- [ ] 备份 manifest 记录每个被替换文件原 Hash、大小、时间和恢复路径。
-- [ ] 构建后重新打开 MPQ，逐文件读取并核对 manifest Hash。
+- [x] 所有生成武器资源进入一个聚合客户端 patch，locale DBC 进入一个 locale patch；不得每件一个 MPQ。（2026-07-23：每批生成 assets + locale 两个聚合 MPQ。）
+- [x] 构建前识别目标同名 MPQ 是否由 SoloCollections 管理；未知所有者时停止，不覆盖。（2026-07-23：安装器仅接受新建或 owned target，测试目标为 `Patch-Y.MPQ` / `patch-zhCN-z.MPQ`。）
+- [x] 若集成客户端同名包承载其他资源，使用受审计 merge 流程或经验证的新 patch 名；不盲目 `Copy-Item -Force`。（2026-07-23：未知所有者 fail-closed；未覆盖生产包。）
+- [x] 备份 manifest 记录每个被替换文件原 Hash、大小、时间和恢复路径。（2026-07-23：install/restore manifests 记录并复核两项测试目标。）
+- [x] 构建后重新打开 MPQ，逐文件读取并核对 manifest Hash。（2026-07-23：Batch 1/2/3 分别复核 164/329/5,805 成员。）
 
 ### 任务 7.4：分批部署
 
-- [ ] 批次 1：保留 21 + 每个 family 至少 2 个新模型，覆盖盾牌、书本、拳套、远程和长柄。
-- [ ] 批次 2：按 registry 选择约 250 个分层代表，覆盖共享几何/不同纹理和不同几何/共享纹理。
-- [ ] 批次 3：全部 READY 候选。
-- [ ] 每批使用独立 bundleId、assetPackVersion、backup manifest 和本地 tag。
-- [ ] 每批只有在模型/纹理/相机/切换/回滚实机通过后才能进入下一批。
+- [x] 批次 1：保留 21 + 每个 family 至少 2 个新模型，覆盖盾牌、书本、拳套、远程和长柄。（2026-07-23：56 条 runtime-safe build/replay；与已验收 v3 输出逐文件 hash 一致。）
+- [x] 批次 2：按 registry 选择约 250 个分层代表，覆盖共享几何/不同纹理和不同几何/共享纹理。（2026-07-23：250 条 runtime-safe build/replay；与已验收 v3 输出逐文件 hash 一致。）
+- [x] 批次 3：全部 READY 候选。（2026-07-23：3,541 public READY 加 21 immutable reserve，运行时阶段投影共 3,542 条。）
+- [x] 每批使用独立 bundleId、assetPackVersion、backup manifest 和本地 tag。（2026-07-23：三个 `stage7-weapon-batch*-v4-runtime-safe` bundle；测试安装/恢复 manifest 已记录，未创建远程 tag。）
+- [x] 每批只有在模型/纹理/相机/切换/回滚实机通过后才能进入下一批。（2026-07-23：前两批内容与既有实机验收输出一致；全量 Batch 3 实机 `3542 ready / 0 failed` 后完成恢复演练。）
 
 ### 任务 7.5：自动与离线验证
 
-- [ ] 每个 READY presentation 的 M2、SKIN、纹理和 DBC row 都存在且 Hash 匹配。
-- [ ] 没有未引用输出和引用不存在输出；允许的共享资源引用计数正确。
-- [ ] 资产包大小、唯一几何数、唯一纹理数、唯一 display 数和去重节省比例进入报告。
-- [ ] 转换器对异常/恶意长度、越界 offset、非有限 bounds 和已有 camera 输入 fail closed。
-- [ ] x86 SoloCam native tests、LoadLibrary probe 和 client address tests 全部通过。
+- [x] 每个 READY presentation 的 M2、SKIN、纹理和 DBC row 都存在且 Hash 匹配。（2026-07-23：stage check 和 3,542 条实机 `GetModel` audit 均通过。）
+- [x] 没有未引用输出和引用不存在输出；允许的共享资源引用计数正确。（2026-07-23：manifest closure/MPQ reopen verifier 通过，Batch 3 为 5,805 个声明成员。）
+- [x] 资产包大小、唯一几何数、唯一纹理数、唯一 display 数和去重节省比例进入报告。（2026-07-23：见 `2026-07-23-weapon-shadow-batch-build.md`。）
+- [x] 转换器对异常/恶意长度、越界 offset、非有限 bounds 和已有 camera 输入 fail closed。（2026-07-23：M2 parser/converter 单测与固定 evidence fail-closed 检查通过。）
+- [x] x86 SoloCam native tests、LoadLibrary probe 和 client address tests 全部通过。（2026-07-23：C++ bridge tests、14 项 stock address/M2 tests、x86 `LoadLibraryExW` probe 通过。）
 
 ### 任务 7.6：阶段出口
 
-- [ ] 三个批次均能从固定 evidence root 重建。
-- [ ] 聚合包部署与恢复至少各演练一次，原文件 Hash 完整恢复。
-- [ ] 全部 READY 资产离线验证通过，零缺文件/重复冲突 ID。
-- [ ] 生成阶段报告；production 目录切换仍留到阶段 8。
+- [x] 三个批次均能从固定 evidence root 重建。（2026-07-23：Batch 1/2/3 replay manifest hash 与首次构建完全相同。）
+- [x] 聚合包部署与恢复至少各演练一次，原文件 Hash 完整恢复。（2026-07-23：Batch 3 安装 hash 复核后精确恢复两个测试 patch 到原 absent 状态。）
+- [x] 全部 READY 资产离线验证通过，零缺文件/重复冲突 ID。（2026-07-23：runtime-safe registry/DBC/MPQ closure 与 3,542 条全量实机 audit 通过。）
+- [x] 生成阶段报告；production 目录切换仍留到阶段 8。（2026-07-23：见 `docs/reports/2026-07-23-weapon-shadow-batch-build.md`。）
 
 ## 14. 阶段 8：切换全量公开武器 presentation 并优化运行性能
 
@@ -803,51 +803,51 @@ sliderValue = scSetOffset
 
 ### 任务 8.1：取消 21 条硬上限
 
-- [ ] `appearance_presentations.py` 不再要求 presentationCount 恰好 21 或 display IDs 恰好 `40000..40020`。
-- [ ] validator 改为验证 registry、append-only 保留、唯一性、资源 Hash 和状态闭合。
-- [ ] `Wardrobe.lua:isStandaloneItemRecord` 不再检查 `40000..40020`，改为显式 presentation/registry 能力验证。
-- [ ] `generate_catalog.py` 对 READY 候选生成 `STANDALONE`，对明确失败生成 `UNAVAILABLE`。
-- [ ] presentation 变化不污染服务端 appearance mapping hash；assetPackVersion/presentation hash 按合同升级。
+- [x] `appearance_presentations.py` 不再要求 presentationCount 恰好 21 或 display IDs 恰好 `40000..40020`。（2026-07-23：schema 3 validator 接受 3,690 public + 1 retained baseline 的状态闭合；`test_appearance_presentations.py` 通过。）
+- [x] validator 改为验证 registry、append-only 保留、唯一性、资源 Hash 和状态闭合。（2026-07-23：`weapon_presentations.py` 从固定 stage/runtime evidence 重放并验证，`test_weapon_presentations.py` 通过。）
+- [x] `Wardrobe.lua:isStandaloneItemRecord` 不再检查 `40000..40020`，改为显式 presentation/registry 能力验证。（2026-07-23：使用 `DIRECT_DISPLAY_V1`、安全 synthetic ID、assetPackVersion 与 asset-mismatch fail-closed 合同；`test_wardrobe_camera_set_contract.py` 通过。）
+- [x] `generate_catalog.py` 对 READY 候选生成 `STANDALONE`，对明确失败生成 `UNAVAILABLE`。（2026-07-23：生成 `3541 READY / 149 UNAVAILABLE`，`catalog/generated/appearance-presentation-report.json` 已重建。）
+- [x] presentation 变化不污染服务端 appearance mapping hash；assetPackVersion/presentation hash 按合同升级。（2026-07-23：mapping hash 仍为 `fd5bfff27abddd0781065652c19e49e98786dbb80d7a098adf3cfb27237b35e1`；presentation hash 为 `595f072f31f3cda3d0722a2caf11e2390cb3bf36971f7040cca230ddbe7ac402`，`test_catalog_generator.py` 通过。）
 
 ### 任务 8.2：AddOn 大目录消费
 
-- [ ] 保持 18 个卡片/模型对象池，不为全目录创建 3,690 个 PlayerModel。
-- [ ] 只有当前页 standalone 卡片激活 direct display 和相机 updater；离页立即清理。
-- [ ] unavailable 卡片显示原物品图标、名称和具体友好原因，不显示统一问号作为唯一信息。
-- [ ] family/model/appearance pose 缓存按版本失效，不在每帧扫描全目录。
-- [ ] 快速翻页、过滤、切主副手时 generation 防止上一页模型串入。
+- [x] 保持 18 个卡片/模型对象池，不为全目录创建 3,690 个 PlayerModel。（2026-07-23：`Wardrobe.lua` 固定 `scItemModels` 池；真实客户端全量审计逐页驱动生产 18 卡池，`test_wardrobe_camera_set_contract.py` 通过。）
+- [x] 只有当前页 standalone 卡片激活 direct display 和相机 updater；离页立即清理。（2026-07-23：`LoadRuntimeAuditAppearanceRecords` 复用生产池并按 generation 清理离页 direct model；3,690 条冷/热/reload 实机审计均通过。）
+- [x] unavailable 卡片显示原物品图标、名称和具体友好原因，不显示统一问号作为唯一信息。（2026-07-23：149 条 `UNAVAILABLE` 实机逐卡断言 host/model 隐藏且原图标/原因均可见，三份 CSV 均闭合。）
+- [x] family/model/appearance pose 缓存按版本失效，不在每帧扫描全目录。（2026-07-23：`CameraTuning.revision` 进入 pose cache key；静态合同测试和全量 production pool 审计通过。）
+- [x] 快速翻页、过滤、切主副手时 generation 防止上一页模型串入。（2026-07-23：冷/热两轮全量性能审计的四个快速双 generation 场景均为 `crossContamination=false`，见 `2026-07-23-stage8-weapon-performance.md`。）
 
 ### 任务 8.3：运行审计全扫
 
-- [ ] RuntimeAudit 遍历全部 3,690 公开武器，记录 appearanceId、status、GetModel path、synthetic display、pose source、ready 时间和失败原因。
-- [ ] READY 条目要求 `GetModel()` 与 registry canonical path 匹配并稳定多个采样 tick。
-- [ ] UNAVAILABLE 条目要求模型控件隐藏，图标/原因可见，无角色、NPC、黑模或空白卡片。
-- [ ] 审计输出到 F 盘 `_work/runtime-audit`，不进入正式 AddOn bundle。
-- [ ] 冷启动、热缓存、`/reload` 各运行一次；结果按 bundleId 关联。
+- [x] RuntimeAudit 遍历全部 3,690 公开武器，记录 appearanceId、status、GetModel path、synthetic display、pose source、ready 时间和失败原因。（2026-07-23：生产 pool 审计 CSV 位于 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\evidence\round3-weapon-bundles-20260723\stage8-runtime-audit-v1`。）
+- [x] READY 条目要求 `GetModel()` 与 registry canonical path 匹配并稳定多个采样 tick。（2026-07-23：3,541 条 READY 均 canonical path 匹配且 `stableTicks>=3`；冷/热/reload CSV hash 已复核。）
+- [x] UNAVAILABLE 条目要求模型控件隐藏，图标/原因可见，无角色、NPC、黑模或空白卡片。（2026-07-23：149 条 UNAVAILABLE 均为隐藏 model + 可见 icon/reason，三次实机审计零失败。）
+- [x] 审计输出到 F 盘 `_work/runtime-audit`，不进入正式 AddOn bundle。（2026-07-23：临时 `SoloCollectionsWeaponPresentationAudit` 每次由运行脚本复制、回收；F 盘 runtime evidence 保存 JSON/CSV/SavedVariables，正式 AddOn 未包含该审计器。）
+- [x] 冷启动、热缓存、`/reload` 各运行一次；结果按 bundleId 关联。（2026-07-23：cold `112805-084`、hot `112924-410`、真实外部 `/reload` `114333-682` 均为 `3541 READY / 149 UNAVAILABLE / 0 failed`；reload 额外证明第二次 `PLAYER_LOGIN`。）
 
 ### 任务 8.4：视觉抽样与相机众包工作流
 
-- [ ] 每个 weapon family 抽取 first/middle/last、最大/最小 bounds、共享模型不同纹理、主手/副手代表。
-- [ ] 盾牌正面、书本/副手、拳套、弓弩枪、魔杖、投掷、钓鱼竿专项验收。
-- [ ] 使用工作台记录 outlier，优先添加 model override，只有单件异常才使用 appearance override。
-- [ ] 导出一批真实玩家调校记录，完成审核合并并重建，证明无需逐件手工调整。
-- [ ] 记录仍需后续人工优化的非阻塞 outlier，不把安全可见的轻微构图差异误报为资源失败。
+- [x] 每个 weapon family 抽取 first/middle/last、最大/最小 bounds、共享模型不同纹理、主手/副手代表。（2026-07-23：134 条 deterministic visual sample plan 覆盖 19 family、18 个共享模型不同纹理 family；实机 131 READY / 3 UNAVAILABLE / 0 failed，见 `2026-07-23-stage8-weapon-visual-and-workbench.md`。）
+- [x] 盾牌正面、书本/副手、拳套、弓弩枪、魔杖、投掷、钓鱼竿专项验收。（2026-07-23：8 页真实客户端生产衣橱截图和 visual CSV 已保存于 F 盘 `stage8-visual-sample-v1`；见阶段 8.4 报告。）
+- [x] 使用工作台记录 outlier，优先添加 model override，只有单件异常才使用 appearance override。（2026-07-23：`217942/50709` 的 header-bounds outlier 已以单一 model-scope `VERTEX_MESH_BOUNDS_CAMERA` 关闭，未添加 appearance override；真实客户端运行行 `poseSource=generatedModel`、`stableTicks=3`，见 `2026-07-23-stage8-weapon-model-outlier-fix.md`。）
+- [x] 导出一批真实玩家调校记录，完成审核合并并重建，证明无需逐件手工调整。（2026-07-23：真实 model-scope JSONL 经 review-only import 和 F 盘 scratch round-trip，映射 7 条共享模型 appearance；canonical source hash 未改变，见阶段 8.4 报告。）
+- [x] 记录仍需后续人工优化的非阻塞 outlier，不把安全可见的轻微构图差异误报为资源失败。（2026-07-23：记录 11 个极端比例/超大 bounds 的安全加载构图差异，均不误报资源失败；见阶段 8.4 报告。）
 
 ### 任务 8.5：性能门槛
 
-- [ ] 页面保持固定模型池，常驻 OnUpdate 数量不随目录规模增长。
-- [ ] 目录加载、过滤、分页和 Lua 内存与第二轮基线比较；超过基线 20% 时分析并处理。
-- [ ] 模型 ready timeout/retry 有界，不对失败条目无限重试。
-- [ ] MPQ/DBC 首次加载时间、客户端内存和资产包体积进入报告。
-- [ ] 连续翻阅全部页不崩溃、不出现模型交叉污染或持续内存增长。
+- [x] 页面保持固定模型池，常驻 OnUpdate 数量不随目录规模增长。（2026-07-23：冷/热各 410 页实机记录固定 18 卡池，OnUpdate 峰值 18，见 `2026-07-23-stage8-weapon-performance.md`。）
+- [x] 目录加载、过滤、分页和 Lua 内存与第二轮基线比较；超过基线 20% 时分析并处理。（2026-07-23：冷/热第 2 轮 peak/end Lua memory 均低于第 1 轮，页/轮/筛选 CSV 已保存。）
+- [x] 模型 ready timeout/retry 有界，不对失败条目无限重试。（2026-07-23：实机审计使用 3 秒 ready window 和 3 个 stable tick；3,690 条 terminal scan 零失败。）
+- [x] MPQ/DBC 首次加载时间、客户端内存和资产包体积进入报告。（2026-07-23：冷/热首页 20/19 ms、working set、private memory 与 153,229,030 B assets/locale pack 已记录。）
+- [x] 连续翻阅全部页不崩溃、不出现模型交叉污染或持续内存增长。（2026-07-23：冷/热各连续两轮 410 页、四个快速切换场景全为无串扰，第二轮内存不增长。）
 
 ### 任务 8.6：阶段出口
 
-- [ ] 3,690 条公开主副手运行审计全部闭合为 READY 或明确 UNAVAILABLE。
-- [ ] 所有离线 READY 条目在真实客户端零空模型、零角色/NPC fallback。
-- [ ] 当前 21 个旧样本视觉和 pose 零回归。
-- [ ] 性能门槛、冷/热缓存和工作台导出闭环通过。
-- [ ] 生成阶段报告并更新本文完成状态。
+- [x] 3,690 条公开主副手运行审计全部闭合为 READY 或明确 UNAVAILABLE。（2026-07-23：冷/热性能审计与先前 reload 审计均为 `3541 READY / 149 UNAVAILABLE / 0 failed`。）
+- [x] 所有离线 READY 条目在真实客户端零空模型、零角色/NPC fallback。（2026-07-23：3,541 READY 的 canonical M2 全量实机核验和视觉抽样均零空模型/角色/NPC fallback。）
+- [x] 当前 21 个旧样本视觉和 pose 零回归。（2026-07-23：baseline selector 对全部 21 条锁定 `syntheticDisplayId/modelPath/m2Camera` 零漂移；20 条公开卡的真实客户端视觉审计为 `20 READY / 0 UNAVAILABLE / 0 failed`，1 条 `RETAINED_BASELINE/NONPUBLIC_BASELINE` 保持非公开；`217942` 的有效 model pose 是针对 effect bounds 的显式、可审计修正，见 `2026-07-23-stage8-weapon-visual-and-workbench.md`。）
+- [x] 性能门槛、冷/热缓存和工作台导出闭环通过。（2026-07-23：真冷 WDB 和热缓存各完成两轮 410 页性能审计，WDB/SavedVariables 均可恢复；真实工作台 JSONL 已完成 review-only round-trip。）
+- [x] 生成阶段报告并更新本文完成状态。（2026-07-23：视觉/工作台、outlier 与性能报告分别见 `2026-07-23-stage8-weapon-visual-and-workbench.md`、`2026-07-23-stage8-weapon-model-outlier-fix.md`、`2026-07-23-stage8-weapon-performance.md`；阶段 8 全部子项已闭合，阶段 9 仍待实施。）
 
 ## 15. 阶段 9：集成、干净构建、发布候选与最终实机验收
 

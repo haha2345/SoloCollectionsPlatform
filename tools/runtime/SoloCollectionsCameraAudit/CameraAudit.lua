@@ -3,6 +3,8 @@ local LOAD_DELAY = 1.5
 local CAMERA_SETTLE_DELAY = 0.75
 local PAGE_HOLD_DELAY = 1.5
 local DIRECT_DISPLAY_REQUEST_BASE = 0x6F000000
+local BASELINE_MODE = "baseline"
+local SILHOUETTE_MODE = "silhouettes"
 
 local RACES = {
     { key = "human", token = "Human", family = "race.human" },
@@ -19,6 +21,37 @@ local RACES = {
 local SEXES = {
     { key = "MALE", unitSex = 2 },
     { key = "FEMALE", unitSex = 3 },
+}
+
+-- These are deliberately explicit rather than derived from the current card
+-- ordering. A profile must survive three visibly different armor weights:
+-- cloth/light (small), leather/chain (normal), and plate (large). The audit
+-- records the exact item ID in SavedVariables for repeatable reviewer checks.
+local SILHOUETTE_SAMPLES = {
+    {
+        key = "SMALL",
+        items = {
+            HEAD = 16795, SHOULDER = 16797, BACK = 17102,
+            CHEST = 16809, WRIST = 16799, HANDS = 16801,
+            WAIST = 16802, LEGS = 16796, FEET = 16800,
+        },
+    },
+    {
+        key = "NORMAL",
+        items = {
+            HEAD = 16821, SHOULDER = 16823, BACK = 19085,
+            CHEST = 16820, WRIST = 16825, HANDS = 16826,
+            WAIST = 16827, LEGS = 16822, FEET = 16824,
+        },
+    },
+    {
+        key = "LARGE",
+        items = {
+            HEAD = 16854, SHOULDER = 16856, BACK = 19378,
+            CHEST = 16853, WRIST = 16857, HANDS = 16860,
+            WAIST = 16858, LEGS = 16922, FEET = 16859,
+        },
+    },
 }
 
 local driver = CreateFrame("Frame")
@@ -64,7 +97,16 @@ for index = 1, 9 do
     cards[index] = card
 end
 
-local state = { phase = "idle", page = 1, elapsed = 0, current = nil, previewItems = {} }
+local state = {
+    phase = "idle",
+    page = 1,
+    elapsed = 0,
+    current = nil,
+    previewItems = {},
+    mode = BASELINE_MODE,
+    totalPages = 20,
+    expectedRows = 180,
+}
 
 local function itemString(itemId)
     return string.format("item:%d:0:0:0:0:0:0:0", itemId)
@@ -81,29 +123,49 @@ local function loadPreviewItems()
 end
 
 local function combination(page)
-    local raceIndex = math.floor((page - 1) / 2) + 1
-    local sexIndex = ((page - 1) % 2) + 1
-    return RACES[raceIndex], SEXES[sexIndex]
+    local basePage = page
+    local sample = { key = "BASELINE", items = state.previewItems }
+    if state.mode == SILHOUETTE_MODE then
+        basePage = math.floor((page - 1) / #SILHOUETTE_SAMPLES) + 1
+        sample = SILHOUETTE_SAMPLES[((page - 1) % #SILHOUETTE_SAMPLES) + 1]
+    end
+    local raceIndex = math.floor((basePage - 1) / 2) + 1
+    local sexIndex = ((basePage - 1) % 2) + 1
+    return RACES[raceIndex], SEXES[sexIndex], sample
 end
 
 local function startPage(page)
     local profiles = SoloCollections and SoloCollections.CameraProfiles
-    local race, sex = combination(page)
+    local race, sex, sample = combination(page)
     local modelPath = profiles and profiles.modelPaths
         and profiles.modelPaths[race.family]
         and profiles.modelPaths[race.family][sex.key]
     local displayId = profiles and profiles.previewDisplayIds
         and profiles.previewDisplayIds[race.family]
         and profiles.previewDisplayIds[race.family][sex.key]
-    state.current = { race = race, sex = sex, modelPath = modelPath, displayId = displayId, startedAt = GetTime() }
-    title:SetText(string.format("Phase 5 camera matrix %02d/20 - %s %s", page, race.key, sex.key))
+    state.current = {
+        race = race,
+        sex = sex,
+        sample = sample,
+        modelPath = modelPath,
+        displayId = displayId,
+        startedAt = GetTime(),
+    }
+    title:SetText(string.format(
+        "Phase 5 camera matrix %02d/%02d - %s %s / %s",
+        page,
+        state.totalPages,
+        race.key,
+        sex.key,
+        sample.key
+    ))
     subtitle:SetText(string.format("profile %s / %s - green inset is the required safe frame", profiles and profiles.profileVersion or "?", profiles and profiles.profileHash or "?"))
     for index, slot in ipairs((profiles and profiles.slotOrder) or {}) do
         local card = cards[index]
         card.model:ClearModel()
         if displayId then card.model:SetCreature(DIRECT_DISPLAY_REQUEST_BASE + displayId) end
         if card.model.Undress then card.model:Undress() end
-        local previewItem = state.previewItems[slot]
+        local previewItem = sample.items[slot]
         if previewItem and card.model.TryOn then card.model:TryOn(itemString(previewItem)) end
         if card.model.SetSequence then card.model:SetSequence(0) end
         card.label:SetText(string.format("%s  item=%s  sentinel=pending", slot, previewItem or "NONE"))
@@ -123,7 +185,7 @@ local function reapplyPageCameras()
             current.race.family
         )
         local model = cards[index].model
-        local previewItem = state.previewItems[slot]
+        local previewItem = current.sample.items[slot]
         if sentinel and model.SetCamera then
             model:SetCamera(sentinel)
             model:SetCamera(1)
@@ -139,6 +201,13 @@ local function applyPageCameras()
     state.phase = "settle"
     state.elapsed = 0
     state.reapplied = false
+end
+
+local function screenshotName(current)
+    if state.mode == SILHOUETTE_MODE then
+        return string.format("silhouette-%s-camera-%02d", string.lower(current.sample.key), state.page)
+    end
+    return string.format("camera-%02d", state.page)
 end
 
 local function recordPage()
@@ -161,11 +230,12 @@ local function recordPage()
             slot = slot,
             sentinel = sentinel,
             previewDisplayId = current.displayId,
-            previewItemId = state.previewItems[slot],
+            previewItemId = current.sample.items[slot],
+            silhouette = current.sample.key,
             expectedModel = current.modelPath,
             actualModel = actualPath,
             modelReady = pathReady and true or false,
-            screenshot = string.format("camera-%02d", state.page),
+            screenshot = screenshotName(current),
             visualReview = "PENDING",
             status = (current.race.key == "human" and current.sex.key == "FEMALE") and "verified" or "scaled",
         })
@@ -174,8 +244,9 @@ local function recordPage()
         page = state.page,
         raceKey = current.race.key,
         sex = current.sex.key,
+        silhouette = current.sample.key,
         ready = pageReady,
-        screenshot = string.format("camera-%02d", state.page),
+        screenshot = screenshotName(current),
     })
     if not pageReady then SoloCollectionsCameraAuditDB.ready = false end
     Screenshot()
@@ -196,14 +267,20 @@ local function finishAudit()
     SoloCollectionsCameraAuditDB.rowCount = #SoloCollectionsCameraAuditDB.rows
     SoloCollectionsCameraAuditDB.pageCount = #SoloCollectionsCameraAuditDB.pages
     SoloCollectionsCameraAuditDB.ready = SoloCollectionsCameraAuditDB.ready
-        and SoloCollectionsCameraAuditDB.rowCount == 180
-        and SoloCollectionsCameraAuditDB.pageCount == 20
+        and SoloCollectionsCameraAuditDB.rowCount == state.expectedRows
+        and SoloCollectionsCameraAuditDB.pageCount == state.totalPages
         and SoloCollectionsCameraAuditDB.unknownFallback.syntheticRace
         and SoloCollectionsCameraAuditDB.unknownFallback.unknownSex
         and SoloCollectionsCameraAuditDB.unknownFallback.assetMismatch
-    title:SetText(SoloCollectionsCameraAuditDB.ready
-        and "Phase 5 camera matrix: 180/180 READY - reload to persist"
-        or "Phase 5 camera matrix: FAILED")
+    if SoloCollectionsCameraAuditDB.ready then
+        title:SetText(string.format(
+            "Phase 5 camera matrix: %d/%d READY - reload to persist",
+            state.expectedRows,
+            state.expectedRows
+        ))
+    else
+        title:SetText("Phase 5 camera matrix: FAILED")
+    end
     state.phase = "complete"
 end
 
@@ -216,19 +293,37 @@ local function beginAudit()
         SoloCollectionsCameraAuditDB.requested = false
         return
     end
+    state.mode = SoloCollectionsCameraAuditDB.mode == SILHOUETTE_MODE
+        and SILHOUETTE_MODE or BASELINE_MODE
+    state.totalPages = state.mode == SILHOUETTE_MODE and (#SILHOUETTE_SAMPLES * 20) or 20
+    state.expectedRows = state.totalPages * #profiles.slotOrder
     profiles.SetMode("Generated")
-    state.previewItems = loadPreviewItems()
-    for _, slot in ipairs(profiles.slotOrder) do
-        if not state.previewItems[slot] then
-            SoloCollectionsCameraAuditDB.error = "PREVIEW_ITEM_MISSING_" .. slot
-            SoloCollectionsCameraAuditDB.completed = true
-            SoloCollectionsCameraAuditDB.requested = false
-            return
+    if state.mode == SILHOUETTE_MODE then
+        for _, sample in ipairs(SILHOUETTE_SAMPLES) do
+            for _, slot in ipairs(profiles.slotOrder) do
+                if type(sample.items[slot]) ~= "number" or sample.items[slot] <= 0 then
+                    SoloCollectionsCameraAuditDB.error = "SILHOUETTE_ITEM_MISSING_" .. sample.key .. "_" .. slot
+                    SoloCollectionsCameraAuditDB.completed = true
+                    SoloCollectionsCameraAuditDB.requested = false
+                    return
+                end
+            end
+        end
+    else
+        state.previewItems = loadPreviewItems()
+        for _, slot in ipairs(profiles.slotOrder) do
+            if not state.previewItems[slot] then
+                SoloCollectionsCameraAuditDB.error = "PREVIEW_ITEM_MISSING_" .. slot
+                SoloCollectionsCameraAuditDB.completed = true
+                SoloCollectionsCameraAuditDB.requested = false
+                return
+            end
         end
     end
     SoloCollectionsCameraAuditDB.rows = {}
     SoloCollectionsCameraAuditDB.pages = {}
     SoloCollectionsCameraAuditDB.ready = true
+    SoloCollectionsCameraAuditDB.mode = state.mode
     SoloCollectionsCameraAuditDB.profileVersion = profiles.profileVersion
     SoloCollectionsCameraAuditDB.profileHash = profiles.profileHash
     SoloCollectionsCameraAuditDB.screenWidth = GetScreenWidth()
@@ -270,6 +365,6 @@ driver:SetScript("OnUpdate", function(_, delta)
         if state.elapsed >= CAMERA_SETTLE_DELAY then recordPage() end
     elseif state.phase == "hold" and state.elapsed >= PAGE_HOLD_DELAY then
         state.page = state.page + 1
-        if state.page > 20 then finishAudit() else startPage(state.page) end
+        if state.page > state.totalPages then finishAudit() else startPage(state.page) end
     end
 end)

@@ -996,7 +996,7 @@ class AddonContractTests(unittest.TestCase):
             "WAIST = {",
             "LEGS = {",
             "FEET = {",
-            "local function applyItemModelRecord(model, record)",
+            "local function applyItemModelRecord(model, record, pageGeneration)",
             "local function selectItemModelCamera(model)",
             "local function applyItemModelTransform(model)",
             "local function queueItemModelView(model, force)",
@@ -1170,8 +1170,8 @@ class AddonContractTests(unittest.TestCase):
             self.assertIn(token, text)
 
         apply_record = text[
-            text.index("local function applyItemModelRecord(model, record)") :
-            text.index("local function stableSetItems(record)")
+            text.index("local function applyItemModelRecord(model, record, pageGeneration)") :
+            text.index("function UI.CreateWardrobePage(parent)")
         ]
         self.assertIn("model.scPendingItemString = resolveTryOnItem(record.itemId)", apply_record)
         self.assertIn('model:SetUnit("player")', apply_record)
@@ -1206,7 +1206,7 @@ class AddonContractTests(unittest.TestCase):
         ]
         pending_region = text[
             text.index("local function finishPendingItemModel(model)") :
-            text.index("local function applyItemModelRecord(model, record)")
+            text.index("local function applyItemModelRecord(model, record, pageGeneration)")
         ]
 
         self.assertIn("model:SetCamera(model.scClientCameraSentinel)", camera_region)
@@ -1241,7 +1241,7 @@ class AddonContractTests(unittest.TestCase):
 
         update = text[
             text.index("local function updatePendingItemModel(self)") :
-            text.index("local function applyItemModelRecord(model, record)")
+            text.index("local function applyItemModelRecord(model, record, pageGeneration)")
         ]
         self.assertIn("local appearanceApplied = finishPendingItemModel(self)", update)
         self.assertIn("finishPendingItemModelView(self)", update)
@@ -1257,7 +1257,7 @@ class AddonContractTests(unittest.TestCase):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
         for token in (
             "for index, itemModel in ipairs(page.scItemModels) do",
-            "applyItemModelRecord(itemModel, record)",
+            "applyItemModelRecord(itemModel, record, pageGeneration)",
             "model:ClearModel()",
             "model:Hide()",
             "model:Show()",
@@ -1306,9 +1306,9 @@ class AddonContractTests(unittest.TestCase):
             "createSetListRow(",
             'Catalog.QueryAll("SETS"',
             'Catalog.GetProgress("SETS"',
-            "STABLE_SLOT_ORDER",
-            "ipairs(record.itemIds or {})",
-            "table.sort(ordered",
+            "SET_MEMBER_SLOT_ORDER",
+            "ipairs(variant and variant.members or {})",
+            "table.sort(result",
             "resolveTryOnItem(itemId)",
             "model:TryOn(itemString)",
             "scPieceIcons",
@@ -1329,14 +1329,16 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("local pieceState = deriveSetPieceState(record)", text)
         self.assertIn("SC.CollectionState.IsOwnedByType(13, appearanceId)", text)
         self.assertIn("local collectedPieces = tonumber(record.collectedCount) or 0", text)
-        self.assertIn("local requiredPieces = tonumber(record.requiredCount) or #(record.itemIds or {})", text)
-        self.assertNotIn('setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #(record.itemIds or {}))', text)
+        self.assertIn("local requiredPieces = tonumber(record.requiredCount) or #previewItems", text)
+        self.assertNotIn('setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #previewItems)', text)
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         self.assertIn("function B.ApplySet(collectionId, variantIndex, callback)", bridge)
         self.assertIn('B.RequestSC2Action(14, collectionId, "APPLY", variantIndex, callback)', bridge)
         self.assertIn('applySet:SetText("应用套装")', text)
         self.assertIn("SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)", text)
-        self.assertIn("local piecePoolSize = maxActiveSetSlots()", text)
+        self.assertIn("local SET_PIECE_POOL_LIMIT = 12", text)
+        self.assertIn("local piecePoolSize = SET_PIECE_POOL_LIMIT", text)
+        self.assertNotIn("maxActiveSetSlots", text)
 
     def test_wardrobe_set_view_ignores_item_slot_filter(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
@@ -1382,8 +1384,9 @@ class AddonContractTests(unittest.TestCase):
         self.assertNotIn("model:TryOn(record.itemId)", text)
         self.assertNotIn("model:TryOn(itemId)", text)
         event_handler = text[text.index('page:SetScript("OnEvent"'):text.index('page:SetScript("OnHide"')]
-        self.assertNotIn("self:Refresh()", event_handler)
-        self.assertNotIn("preparePlayerModel()", event_handler)
+        item_cache_handler = event_handler[event_handler.index("local itemId, success = ..."):]
+        self.assertNotIn("self:Refresh()", item_cache_handler)
+        self.assertNotIn("preparePlayerModel()", item_cache_handler)
 
     def test_addon_uses_lua_51_modulo_operator(self):
         text = all_lua_text()

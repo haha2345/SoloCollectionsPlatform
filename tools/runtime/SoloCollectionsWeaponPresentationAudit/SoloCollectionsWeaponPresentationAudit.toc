@@ -1,0 +1,8 @@
+## Interface: 30300
+## Title: SoloCollections Weapon Presentation Runtime Audit (QA only)
+## Notes: Temporary production Wardrobe card-pool verifier; never ship in the release bundle.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsWeaponPresentationAuditDB
+
+Data.lua
+WeaponPresentationAudit.lua

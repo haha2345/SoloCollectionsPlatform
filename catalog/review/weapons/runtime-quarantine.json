@@ -1,0 +1,35 @@
+{
+  "baseReview": {
+    "candidateCsvSha256": "aa01cd64a0d483e379b7336b8794f80f87c585d382d2a033128d00e16fd33b8b",
+    "registryHash": "838cf367532ca929729c31d75e9e73655755f6dbe2a8839ecf0de27992c19edc",
+    "summaryHash": "bb2d8d96bcedc602e609ffa517f1b1bb5d380c35f9417386368de246652be443"
+  },
+  "entries": [
+    {
+      "appearanceId": 217059,
+      "collectionKey": "appearance.d61655.s21.c2.sc4",
+      "evidenceFiles": [
+        {
+          "relativePath": "stage7-shadow-audit-isolate-r8-3319/client-crash/client-crash.txt",
+          "sha256": "bb32da5dd69a8c1f162bae9046f2baa5578065bc9bf71fa4d258783f9f2812e0",
+          "size": 110183
+        },
+        {
+          "relativePath": "stage7-shadow-audit-isolate-r8-3319/client-crash/client-crash.dmp",
+          "sha256": "68010521225bdddf405a5f720ed77f1887b8480512c26e24dacb4d55d63e02b6",
+          "size": 620827
+        }
+      ],
+      "modelId": 5048,
+      "modelSignature": "m2:18958ff23bebfdaad3e8ddf392967fd32ac85c89f6627c9ca946aee33fe3c9be",
+      "quarantineId": "client-132-appearance-217059-r8",
+      "reasonCode": "CLIENT_RUNTIME_CRASH_132",
+      "sourceItemId": 46017,
+      "syntheticDisplayId": 42884
+    }
+  ],
+  "evidenceRootId": "round3-weapon-bundles-20260723/client-runtime-audit",
+  "kind": "SoloCollectionsWeaponRuntimeQuarantine",
+  "quarantineHash": "51ed10427db34e36a85582929267fcab9b58d9e564d0255b990e73674173d772",
+  "schemaVersion": 1
+}

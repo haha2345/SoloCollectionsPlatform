@@ -147,13 +147,78 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertIn("SET_MEMBER_SLOT_ORDER", block)
         self.assertIn("table.sort(result", block)
 
+    def test_set_preview_preallocates_a_bounded_pool_for_nine_piece_variants(self):
+        source = read_text(WARDROBE)
+        self.assertIn("local SET_PIECE_POOL_LIMIT = 12", source)
+        self.assertIn("local piecePoolSize = SET_PIECE_POOL_LIMIT", source)
+        self.assertNotIn("local piecePoolSize = maxActiveSetSlots()", source)
+
     def test_standalone_validation_is_registry_based_not_a_fixed_21_id_range(self):
         source = read_text(PRESENTATIONS)
+        wardrobe = read_text(WARDROBE)
         self.assertNotIn("len(entries) == 21", source)
         self.assertNotIn("set(range(40000, 40021))", source)
         self.assertIn("registry", source.lower())
+        self.assertNotIn("record.syntheticDisplayId >= 40000", wardrobe)
+        self.assertNotIn("record.syntheticDisplayId <= 40020", wardrobe)
+        self.assertIn('record.presentationCapability == "DIRECT_DISPLAY_V1"', wardrobe)
+        self.assertIn("SC.CollectionState and SC.CollectionState.assetMismatch", wardrobe)
 
-    def test_weapon_camera_resolves_appearance_then_model_then_family_then_auto(self):
+    def test_weapon_grid_uses_a_fixed_pool_with_generation_safe_direct_models(self):
+        source = read_text(WARDROBE)
+        self.assertIn("local ITEM_PAGE_SIZE = ITEM_ROWS * ITEM_COLUMNS", source)
+        self.assertIn("for index = 1, ITEM_PAGE_SIZE do", source)
+        self.assertIn("page.scItemGeneration = (page.scItemGeneration or 0) + 1", source)
+        self.assertIn("model.scStandaloneGeneration", source)
+        self.assertIn("isStandaloneItemGenerationCurrent", source)
+        self.assertIn("applyStandaloneItemRecord(objectModel, nil, pageGeneration)", source)
+
+    def test_runtime_audit_drives_the_production_card_pool_without_a_second_renderer(self):
+        source = read_text(WARDROBE)
+        audit = read_text(ROOT / "tools" / "runtime" / "SoloCollectionsWeaponPresentationAudit" / "WeaponPresentationAudit.lua")
+        self.assertIn("function page:LoadRuntimeAuditAppearanceRecords(records)", source)
+        self.assertIn("AUDIT_RECORD_COUNT_EXCEEDS_CARD_POOL", source)
+        self.assertIn("applyItemModelRecord(itemModel, record, pageGeneration)", source)
+        self.assertIn("SC.Catalog.QueryAll(\"APPEARANCES\"", audit)
+        self.assertIn("LoadRuntimeAuditAppearanceRecords(records)", audit)
+        self.assertIn("#(state.page.scItemModels or {}) ~= 18", audit)
+        self.assertIn("STABLE_TICKS = 3", audit)
+        self.assertIn("UNAVAILABLE_CARD_INVALID", audit)
+        self.assertIn('state.phase = "preflight"', audit)
+        self.assertIn("if DATA.autoLogout then", audit)
+        self.assertIn('state.phase = "reloadWait"', audit)
+        self.assertIn("RELOAD_TIMEOUT_SECONDS = 120.0", audit)
+        self.assertIn("db.reloadLoginCount", audit)
+        self.assertIn('db.reloadBoundary = "PLAYER_LOGIN"', audit)
+        self.assertIn("RELOAD_NOT_OBSERVED_WITHIN_TIMEOUT", audit)
+        self.assertIn("VISUAL_SCREENSHOT_SETTLE_DELAY = 2.0", audit)
+        self.assertIn("LoadRuntimeAuditAppearanceRecords", audit)
+        self.assertIn("MAX_PERFORMANCE_ROUNDS = 3", audit)
+        self.assertIn("performancePageCsv", audit)
+        self.assertIn("performanceRoundCsv", audit)
+        self.assertIn("poolOnUpdateCounts", audit)
+        self.assertIn("beginNextPerformanceRound", audit)
+        self.assertIn("beginPerformanceFilterScenarios", audit)
+        self.assertIn("FILTER_RECORD_CROSS_CONTAMINATION", audit)
+        self.assertIn("FILTER_RAPID_GENERATION_NOT_OBSERVED", audit)
+        self.assertNotIn('CreateFrame("PlayerModel"', audit)
+
+    def test_unavailable_cards_keep_item_identity_and_a_reason(self):
+        source = read_text(WARDROBE)
+        self.assertIn("resolveItemIcon(record)", source)
+        self.assertIn("unavailableItemReasonText(record)", source)
+        self.assertIn("CLIENT_MODEL_READY_TIMEOUT", source)
+        self.assertIn("model.scUnavailableText", source)
+
+    def test_weapon_pose_cache_has_explicit_presentation_and_tuning_revisions(self):
+        source = read_text(WARDROBE)
+        bootstrap = read_text(ADDON / "Core" / "Bootstrap.lua")
+        self.assertIn("scEffectiveM2CameraPoseRevision", source)
+        self.assertIn("appearancePresentationHash", source)
+        self.assertIn("SC.CameraTuning or {}).revision", source)
+        self.assertIn("CameraTuning.revision = CameraTuning.revision + 1", bootstrap)
+
+    def test_weapon_camera_resolves_appearance_then_player_model_then_generated_model_then_family_then_auto(self):
         source = read_text(WARDROBE)
         helper = re.search(
             r"local function getEffectiveM2CameraPose\(model\)(.*?)(?=\n\s*local function)",
@@ -162,10 +227,17 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         )
         self.assertIsNotNone(helper)
         block = helper.group(1)
-        expected_order = ["appearance", "model", "weaponFamily", "autoCamera"]
+        expected_order = [
+            'getCameraTuningScopePose("appearance"',
+            'getCameraTuningScopePose("model"',
+            "getGeneratedModelM2CameraPose(record)",
+            'getCameraTuningScopePose("weaponFamily"',
+            "local autoCamera",
+        ]
         positions = [block.find(token) for token in expected_order]
         self.assertTrue(all(position >= 0 for position in positions), positions)
         self.assertEqual(positions, sorted(positions))
+        self.assertIn("已审核模型基线", source)
 
     def test_camera_workbench_is_an_in_window_inspector_not_a_dialog_overlay(self):
         source = read_text(WARDROBE)

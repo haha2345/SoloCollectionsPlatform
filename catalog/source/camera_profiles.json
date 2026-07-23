@@ -583,7 +583,7 @@
       "sourceArchive": "patch-3.MPQ"
     }
   ],
-  "profileHash": "5f7ec4dde75364cbd1e9886aed139a9855c4facc11766b44be40223e7c0013b1",
+  "profileHash": "792f1654ce058b3241eb9bbf9d3cc23ccd106b08071ef77a97868fa9f3bda5a4",
   "profileVersion": 1,
   "profiles": [
     {
@@ -724,17 +724,17 @@
     {
       "cameraProfile": "race.human",
       "clientAssetProfile": "race.human",
-      "distanceScale": 0.32,
-      "horizontalOffset": 0.0,
-      "minimumDistance": 0.55,
+      "distanceScale": 0.3232,
+      "horizontalOffset": 0.06,
+      "minimumDistance": 0.56,
       "raceKey": "human",
       "runtimeRaceId": 1,
       "sentinel": 21313,
       "sex": "FEMALE",
       "slot": "HEAD",
-      "status": "verified",
-      "verticalOffset": 0.55,
-      "yawOffset": 0.0
+      "status": "approved_delta",
+      "verticalOffset": 0.6,
+      "yawOffset": 0.0084
     },
     {
       "cameraProfile": "race.human",
@@ -3324,7 +3324,7 @@
         "stringBytes": 48043
       }
     },
-    "overridesSha256": "33ec522affec2e70e25ca79ceb7f46e2cea46664d32b3d1832c8df4737318951",
+    "overridesSha256": "023dba4d9ccfcdabd2d67c5cb12316c2627223c1fdc9206f2b5dfed96232fd31",
     "racesSha256": "6a96e81bf38d54faf8a2747c542ece3eaf12104f7d774baa31ad53aa6717d889"
   }
 }

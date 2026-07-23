@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import copy
 import importlib.util
 import json
 import unittest
@@ -64,6 +65,22 @@ class CameraTuningImportTests(unittest.TestCase):
         self.assertEqual(1, len(result["candidates"]))
         self.assertEqual("model", result["candidates"][0]["scope"])
         self.assertEqual(self.entry["modelSignature"], result["candidates"][0]["key"])
+
+    def test_schema_three_ready_entry_is_accepted_but_unavailable_fails_closed(self):
+        self.assertIn(self.report["schemaVersion"], camera_tuning_import.SUPPORTED_REPORT_SCHEMA_VERSIONS)
+        result = camera_tuning_import.validate_export(self.header, [self.record("model")], self.report)
+        self.assertEqual(1, len(result["candidates"]))
+
+        unavailable_report = copy.deepcopy(self.report)
+        unavailable_report["entries"][0]["presentationStatus"] = "UNAVAILABLE"
+        unavailable_header = dict(self.header)
+        unavailable_header["appearancePresentationHash"] = camera_tuning_import._presentation_hash(
+            unavailable_report["entries"]
+        )
+        unavailable_record = self.record("model")
+        unavailable_record["appearancePresentationHash"] = unavailable_header["appearancePresentationHash"]
+        with self.assertRaisesRegex(camera_tuning_import.CameraTuningImportError, "not a verified standalone"):
+            camera_tuning_import.validate_export(unavailable_header, [unavailable_record], unavailable_report)
 
     def test_identity_or_hash_drift_is_rejected(self):
         bad_header = dict(self.header)

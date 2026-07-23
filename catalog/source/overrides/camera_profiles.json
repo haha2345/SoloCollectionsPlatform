@@ -1,5 +1,18 @@
 {
   "schemaVersion": 1,
+  "approvedBodyDeltas": [
+    {
+      "cameraProfileHash": "5f7ec4dde75364cbd1e9886aed139a9855c4facc11766b44be40223e7c0013b1",
+      "cameraProfileVersion": 1,
+      "distanceScaleMultiplier": 1.01,
+      "horizontalOffsetDelta": 0.06,
+      "minimumDistanceDelta": 0.01,
+      "profileKey": "human:female:HEAD",
+      "sentinel": 21313,
+      "verticalOffsetDelta": 0.05,
+      "yawOffsetDelta": 0.0084
+    }
+  ],
   "reference": {
     "cameraProfile": "race.human",
     "sex": "FEMALE",
