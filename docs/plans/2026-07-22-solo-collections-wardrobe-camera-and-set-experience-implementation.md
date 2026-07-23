@@ -855,25 +855,25 @@ sliderValue = scSetOffset
 
 ### 任务 9.1：版本与 Hash 收口
 
-- [ ] 冻结 AddOn/module/Core commit；module/Core 若零变化也明确记录。
-- [ ] 冻结 metadataVersion、assetPackVersion、appearance/set presentation hash、camera profile hash、weapon registry hash。
-- [ ] release manifest 记录基础媒体、SoloCam DLL、MPQ、DBC、AddOn generated 数据和 worldserver provenance。
+- [x] 冻结 AddOn/module/Core commit；module/Core 若零变化也明确记录。（2026-07-23：AddOn `94031f8`、module `6955c1a`、Core `4cc67a3`；module 的生成 ItemSet source-evidence 漂移已重建并提交，Core 无新增改动。）
+- [x] 冻结 metadataVersion、assetPackVersion、appearance/set presentation hash、camera profile hash、weapon registry hash。（2026-07-23：`metadataVersion=2026.07.23.2`、`assetPackVersion=round-two-stage8-weapon-presentation-v2` 及全部 hash 见 `2026-07-23-stage9-clean-build-and-candidate.md`。）
+- [x] release manifest 记录基础媒体、SoloCam DLL、MPQ、DBC、AddOn generated 数据和 worldserver provenance。（2026-07-23：两个本地候选均通过 `Test-RoundTwoBundle.ps1`；71 个成员的 release manifest 经 evidence manifest 闭合 DBC/固定输入链路。）
 - [ ] AddOn/DLL/asset pack 任一版本不配套时，能力 fail closed 并显示明确提示。
 
 ### 任务 9.2：干净检出重建
 
-- [ ] 使用 F 盘 `TEMP/TMP` 和干净 worktree 运行全部生成器、测试和构建。
-- [ ] clean checkout 加固定 evidence pack 能重建媒体清单、套装排序、camera profiles、weapon registry 和客户端资产。
-- [ ] 比较开发工作树与干净构建输出；除允许的时间/容器元数据外内容 Hash 一致。
-- [ ] repository hygiene 确认无凭据、绝对本机路径、客户端资产、DLL/EXE/MPQ/DBC/WDB 或数据库转储进入 Git。
+- [x] 使用 F 盘 `TEMP/TMP` 和干净 worktree 运行全部生成器、测试和构建。（2026-07-23：`stage9-clean-r2-20260723` clean worktree 的生成器、Lua、x86 SoloCam、318 AddOn unittest、35 SoloCam unittest 与 x64 static worldserver build 全部通过。）
+- [x] clean checkout 加固定 evidence pack 能重建媒体清单、套装排序、camera profiles、weapon registry 和客户端资产。（2026-07-23：fixed evidence pack 通过 catalog/set 检查；冻结 Stage 8 重新打包并重开验证 5,805 个客户端资产，两个 MPQ SHA-256 与 v2 完全一致。）
+- [x] 比较开发工作树与干净构建输出；除允许的时间/容器元数据外内容 Hash 一致。（2026-07-23：8 个 AddOn/module 生成输出逐一 SHA-256 相同；详见阶段 9 报告。）
+- [x] repository hygiene 确认无凭据、绝对本机路径、客户端资产、DLL/EXE/MPQ/DBC/WDB 或数据库转储进入 Git。（2026-07-23：三仓 `-RequireClean` hygiene 通过；仅精确 allowlist 上游 MySQL 工具与 gSOAP 示例行，凭据扫描保持开启。）
 
 ### 任务 9.3：bundle 安装与回滚
 
-- [ ] `New-RoundTwoBundle.ps1` 或后继脚本生成新的本地候选，文件清单和 SHA-256 完整。
-- [ ] `Test-RoundTwoBundle.ps1` 验证 required media、DLL PE、资产 registry、MPQ/DBC 和三仓 commit。
-- [ ] `Install-RoundTwoBundle.ps1` 识别目标、备份、安装并执行 installed verifier。
-- [ ] 模拟一个锁定/Hash 不匹配失败，确认自动回滚且原文件完整。
-- [ ] `Restore-RoundTwoBundle.ps1` 完整恢复旧 AddOn/DLL/MPQ/DBC；重装新 bundle 后再次验证。
+- [x] `New-RoundTwoBundle.ps1` 或后继脚本生成新的本地候选，文件清单和 SHA-256 完整。（2026-07-23：候选 `round2-20260723T092019Z-94031f8-6955c1a-4cc67a3` 与 `round2-20260723T092934Z-94031f8-6955c1a-4cc67a3` 均生成 71 个 manifest 成员。）
+- [x] `Test-RoundTwoBundle.ps1` 验证 required media、DLL PE、资产 registry、MPQ/DBC 和三仓 commit。（2026-07-23：两个候选通过文件 SHA、基础媒体、x86 DLL、x64 PE、metadata/生成常量与 evidence 链路验证。）
+- [x] `Install-RoundTwoBundle.ps1` 识别目标、备份、安装并执行 installed verifier。（2026-07-23：F: 隔离 deployment profile 成功备份/安装 44 个操作，`-Installed` verifier 通过；没有触碰真实 client/server。）
+- [x] 模拟一个锁定/Hash 不匹配失败，确认自动回滚且原文件完整。（2026-07-23：锁定 locale MPQ 后安装失败，已写入目标自动回滚；原始六个目标 SHA-256 与不存在 AddOn 文件状态均恢复。）
+- [x] `Restore-RoundTwoBundle.ps1` 完整恢复旧 AddOn/DLL/MPQ/DBC；重装新 bundle 后再次验证。（2026-07-23：第一候选完整 restore；第二候选在恢复后重装、`-Installed` 验证并再次 restore，原始 hash 均通过。）
 
 ### 任务 9.4：最终真实客户端矩阵
 
@@ -888,7 +888,7 @@ sliderValue = scSetOffset
 ### 任务 9.5：最终阶段出口
 
 - [ ] 所有阶段报告、截图、录像、CSV/JSON 运行审计和 manifest 以 bundleId 关联。
-- [ ] 本文所有已完成子项逐项改为 `[x]` 并附日期/证据；未完成项保持 `[ ]`，不得用总体验收掩盖。
+- [x] 本文所有已完成子项逐项改为 `[x]` 并附日期/证据；未完成项保持 `[ ]`，不得用总体验收掩盖。（2026-07-23：阶段 9 的自动化子项已逐项收口；9.1 的真实客户端提示验证、9.4 和用户最终验收仍明确保留为未完成。）
 - [ ] 建立本地候选 tag 和完整回滚说明；不 push、不创建公开 release。
 - [ ] 用户完成最终客户端验收后，本方案状态改为“已完成”。
 
@@ -899,8 +899,9 @@ sliderValue = scSetOffset
 ```powershell
 $scRepo = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\round-two-addon'
 $scModule = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\round-two-module'
-$scEvidence = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\evidence\round3-wardrobe-camera-set'
-$scTemp = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\temp\round3'
+$scEvidence = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-clean-20260723\evidence-current-v2'
+$scWeaponStage = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\evidence\round3-weapon-bundles-20260723\stage8-production-v2'
+$scTemp = 'F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-clean-r2-20260723\env\tmp'
 New-Item -ItemType Directory -Force -Path $scTemp | Out-Null
 $env:TEMP = $scTemp
 $env:TMP = $scTemp
@@ -913,7 +914,7 @@ Set-Location -LiteralPath $scRepo
 python -m unittest discover -s tools\collections\tests -p 'test_*.py'
 python tools\catalog\generate_catalog.py --module-root $scModule --evidence-root $scEvidence --check
 python tools\catalog\itemset_import.py check --repo-root $scRepo --evidence-root $scEvidence
-python tools\catalog\set_catalog.py --module-root $scModule --evidence-root $scEvidence --check
+python tools\catalog\set_catalog.py --module-root $scModule --evidence-root $scEvidence --include-module --check
 $scLuac = 'F:\1_projects\wow_projects\_work\lua-5.1.5-validator\luac51.exe'
 Get-ChildItem -LiteralPath 'addon\SoloCollections' -Recurse -File -Filter '*.lua' | ForEach-Object {
     & $scLuac -p $_.FullName
@@ -924,9 +925,9 @@ Get-ChildItem -LiteralPath 'addon\SoloCollections' -Recurse -File -Filter '*.lua
 新增工具至少支持 `--check` 或等价 read-only mode，并纳入同一 unittest discovery：
 
 ```powershell
-python tools\catalog\weapon_presentations.py check --repo-root $scRepo --evidence-root $scEvidence
-python tools\catalog\set_presentations.py check --repo-root $scRepo --evidence-root $scEvidence
-python tools\catalog\camera_tuning_import.py check --repo-root $scRepo --input <export-file>
+python tools\catalog\weapon_bundle.py check --stage $scWeaponStage
+python tools\catalog\set_presentations.py check --repo-root $scRepo
+python tools\catalog\camera_tuning_import.py --input <export-file> --appearance-report catalog\generated\appearance-presentation-report.json --output <review-output> --check
 ```
 
 具体 CLI 在实现时可按现有工具风格调整，但最终方案和报告必须更新为真实可运行命令，不能保留伪命令。
