@@ -1,7 +1,7 @@
 # Stage 9 final candidate: token boundary and runtime matrix
 
 Date: 2026-07-23  
-Status: agent-executable Stage 9 work complete; final user acceptance is still required.  
+Status: complete; final user acceptance recorded on 2026-07-23.
 Scope: local candidate only. No remote push, public release, database change, or client asset distribution was performed.
 
 ## Candidate and provenance
@@ -67,6 +67,6 @@ Rollback is performed only with the paired release tool and that manifest:
 
 The restore tool verifies the currently installed candidate hashes before restoring exact backed-up targets; it does not delete broad client directories or WDB caches. Temporary validation AddOns are not part of the candidate bundle and are kept disabled while the final candidate is displayed for user review.
 
-## Remaining gate
+## Final acceptance
 
-All agent-executable Stage 9 checks are closed. The plan intentionally retains one unchecked item: the user must complete final hands-on acceptance before the plan status changes from “实施中” to “已完成”.
+All Stage 9 checks are closed. On 2026-07-23 the user inspected the restored normal candidate with independent weapon models visible and explicitly replied `验收通过`. The implementation plan is therefore promoted from “实施中” to “已完成”.

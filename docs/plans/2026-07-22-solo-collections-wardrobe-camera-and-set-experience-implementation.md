@@ -2,7 +2,7 @@
 
 日期：2026-07-22
 
-状态：实施中（阶段 0--9 的 agent-executable 子项均已完成；保留用户最终客户端验收，未提前改为“已完成”）
+状态：已完成（2026-07-23；阶段 0--9 全部实施、自动/实机门禁与用户最终客户端验收均已闭合）
 
 上游基线：
 
@@ -889,9 +889,9 @@ sliderValue = scSetOffset
 ### 任务 9.5：最终阶段出口
 
 - [x] 所有阶段报告、截图、录像、CSV/JSON 运行审计和 manifest 以 bundleId 关联。（2026-07-23：新增 `2026-07-23-stage9-final-token-boundary-and-runtime-matrix.md` 关联最终 bundleId、manifest、安装 backup、状态矩阵、错版本审计和稳定性审计；既有阶段 1--8 evidence 保持原 bundle/assetPack 关联。）
-- [x] 本文所有已完成子项逐项改为 `[x]` 并附日期/证据；未完成项保持 `[ ]`，不得用总体验收掩盖。（2026-07-23：阶段 9 的所有 agent-executable 子项已逐项收口；仅用户最终验收明确保留为未完成。）
-- [x] 建立本地候选 tag 和完整回滚说明；不 push、不创建公开 release。（2026-07-23：`round3-wardrobe-camera-set-stage9-candidate-20260723` 指向包含最终报告的本地候选记录；回滚使用最终 bundle 的 `backup\backup-manifest.json` 和 `Restore-RoundTwoBundle.ps1`，细节见阶段 9 最终报告。）
-- [ ] 用户完成最终客户端验收后，本方案状态改为“已完成”。
+- [x] 本文所有已完成子项逐项改为 `[x]` 并附日期/证据；未完成项保持 `[ ]`，不得用总体验收掩盖。（2026-07-23：阶段 0--9 的实施、自动化、实机和用户验收子项现已全部逐项收口。）
+- [x] 建立本地候选 tag 和完整回滚说明；不 push、不创建公开 release。（2026-07-23：候选 tag `round3-wardrobe-camera-set-stage9-candidate-20260723` 保留；最终完成提交另标记 `round3-wardrobe-camera-set-complete-20260723`。回滚使用最终 bundle 的 `backup\backup-manifest.json` 和 `Restore-RoundTwoBundle.ps1`，细节见阶段 9 最终报告。）
+- [x] 用户完成最终客户端验收后，本方案状态改为“已完成”。（2026-07-23：用户在当前 Codex 任务中明确回复“验收通过”；正常候选包的一手斧独立 3D 模型页保持可见，方案状态已更新为“已完成”。）
 
 ## 16. 自动测试与建议命令
 
@@ -1081,7 +1081,7 @@ staleGenerationObserved
 - [x] 冷/热缓存、`/reload`、重登、stock client fallback、分辨率/UI Scale 矩阵通过。（2026-07-23；Stage 8 cache、Stage 9 status/DLL fallback/layout 矩阵。）
 - [x] clean checkout + F 盘 fixed evidence pack 可重建全部生成物和本地 bundle。（2026-07-23；`stage9-clean-r2-20260723` 和最终 72-member candidate。）
 - [x] Git 不包含凭据、绝对本机路径、客户端资产、DLL/EXE/MPQ/DBC/WDB 或数据库转储。（2026-07-23；三仓 `-RequireClean` hygiene 通过。）
-- [x] 所有完成项已在本文逐项标记 `[x]` 并附日期、提交和证据。（2026-07-23；仅 9.5 的用户最终客户端验收保留 `[ ]`。）
+- [x] 所有完成项已在本文逐项标记 `[x]` 并附日期、提交和证据。（2026-07-23；9.5 的用户最终客户端验收已通过，全文无剩余实施勾选项。）
 
 ## 21. 明确留到后续的工作
 
