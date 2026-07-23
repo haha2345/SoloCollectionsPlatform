@@ -13,6 +13,7 @@ CS.pendingTransfers = {}
 CS.queuedDeltas = {}
 
 local MAX_BODY_BYTES = 240
+local MAX_TOKEN_BYTES = 64
 local MAX_CHUNK_BYTES = 160
 local MAX_SNAPSHOT_CHUNKS = 256
 local MAX_SNAPSHOT_BYTES = 32768
@@ -112,7 +113,7 @@ local function isLowerHex(value, size)
 end
 
 local function isToken(value)
-    return type(value) == "string" and #value >= 1 and #value <= 32 and
+    return type(value) == "string" and #value >= 1 and #value <= MAX_TOKEN_BYTES and
         string.match(value, "^[A-Za-z0-9._~%-]+$") ~= nil
 end
 

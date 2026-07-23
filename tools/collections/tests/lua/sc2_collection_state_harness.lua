@@ -4,7 +4,7 @@ assert(type(statePath) == "string" and statePath ~= "", "CollectionState.lua pat
 SoloCollections = {
     GeneratedCatalog = {
         metadataVersion = "2026.07.20.1",
-        assetPackVersion = "wotlk-3.3.5a-local-1",
+        assetPackVersion = "round-two-stage8-weapon-presentation-v2",
         collectionTypes = {
             { typeId = 1, typeKey = "synthetic" },
         },
@@ -27,7 +27,7 @@ end)
 CS.BeginConnect("fedcba9876543210")
 
 assert(CS.HandleMessage(
-    "A|1|" .. nonce .. "|42|00000001|2026.07.20.1|wotlk-3.3.5a-local-1|phase5-dev|1",
+    "A|1|" .. nonce .. "|42|00000001|2026.07.20.1|round-two-stage8-weapon-presentation-v2|phase5-dev|1",
     0
 ) == "HELLO_ACK")
 assert(CS.HandleMessage(

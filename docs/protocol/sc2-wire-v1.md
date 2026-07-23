@@ -18,7 +18,7 @@ and C++ codecs must reproduce those bytes exactly.
   invalidate old transfers, deltas, requests, and results.
 - Mapping hashes are full lowercase SHA-256 values. Snapshot checksums are
   lowercase eight-character Adler-32 values over the reassembled ASCII payload.
-- Version/build tokens contain 1–32 ASCII letters, digits, `.`, `_`, `~`, or `-`.
+- Version/build tokens contain 1–64 ASCII letters, digits, `.`, `_`, `~`, or `-`.
 - Collection snapshots encode sorted unique uint32 IDs in lowercase base36,
   separated by commas. `-` is the canonical empty set.
 - Free-form server text is never legal. Stable status/reason codes are localized

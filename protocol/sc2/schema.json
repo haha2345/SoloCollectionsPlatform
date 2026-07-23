@@ -19,7 +19,7 @@
     "flags": "LOWER_HEX8",
     "uint32": "CANONICAL_DECIMAL_0_TO_4294967295",
     "uint64": "CANONICAL_DECIMAL_0_TO_18446744073709551615",
-    "token": "ASCII_ALNUM_DOT_UNDERSCORE_TILDE_HYPHEN_1_TO_32"
+    "token": "ASCII_ALNUM_DOT_UNDERSCORE_TILDE_HYPHEN_1_TO_64"
   },
   "messages": {
     "H": ["protocolVersion", "clientNonce", "clientBuild", "metadataVersion", "assetPackVersion"],
