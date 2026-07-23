@@ -2,7 +2,7 @@
 
 日期：2026-07-22
 
-状态：实施中（阶段 0 已完成；阶段 1--3 已有经验证的子项，未通过的客户端矩阵和后续阶段仍保留未勾选）
+状态：实施中（阶段 0--9 的 agent-executable 子项均已完成；保留用户最终客户端验收，未提前改为“已完成”）
 
 上游基线：
 
@@ -12,6 +12,7 @@
 - [阶段 3：独立武器展示验收记录](../reports/2026-07-22-stage3-standalone-weapon-presentations.md)
 - [阶段 5：角色相机差量校准与运行矩阵验收记录](../reports/2026-07-23-body-camera-calibration-and-runtime-matrix.md)
 - [阶段 8：ItemSet 目录审核记录](../reports/2026-07-20-wotlk-itemset-catalog-review.md)
+- [阶段 9：最终 token 边界与运行矩阵记录](../reports/2026-07-23-stage9-final-token-boundary-and-runtime-matrix.md)
 
 本方案承接第二轮已经关闭的实现，不重开已完成阶段，也不改变统一收藏后端。它专门处理 2026-07-22 真实客户端测试发现的衣橱图标、收藏入口、武器展示与镜头校准、套装排序与试穿、套装滚动条问题，并把第二轮明确留到后续的全量武器资源生成纳入一个可审计、可回滚的实施批次。
 
@@ -855,41 +856,41 @@ sliderValue = scSetOffset
 
 ### 任务 9.1：版本与 Hash 收口
 
-- [x] 冻结 AddOn/module/Core commit；module/Core 若零变化也明确记录。（2026-07-23：AddOn `94031f8`、module `6955c1a`、Core `4cc67a3`；module 的生成 ItemSet source-evidence 漂移已重建并提交，Core 无新增改动。）
-- [x] 冻结 metadataVersion、assetPackVersion、appearance/set presentation hash、camera profile hash、weapon registry hash。（2026-07-23：`metadataVersion=2026.07.23.2`、`assetPackVersion=round-two-stage8-weapon-presentation-v2` 及全部 hash 见 `2026-07-23-stage9-clean-build-and-candidate.md`。）
-- [x] release manifest 记录基础媒体、SoloCam DLL、MPQ、DBC、AddOn generated 数据和 worldserver provenance。（2026-07-23：两个本地候选均通过 `Test-RoundTwoBundle.ps1`；71 个成员的 release manifest 经 evidence manifest 闭合 DBC/固定输入链路。）
-- [ ] AddOn/DLL/asset pack 任一版本不配套时，能力 fail closed 并显示明确提示。
+- [x] 冻结 AddOn/module/Core commit；module/Core 若零变化也明确记录。（2026-07-23：初始冻结 AddOn `94031f8`、module `6955c1a`、Core `4cc67a3`；最终协议收口为 AddOn `0bd5bba`、module `397a7e5`、Core `4cc67a3`，Core 无新增改动。）
+- [x] 冻结 metadataVersion、assetPackVersion、appearance/set presentation hash、camera profile hash、weapon registry hash。（2026-07-23：`metadataVersion=2026.07.23.2`、`assetPackVersion=round-two-stage8-weapon-presentation-v2` 和全部 hash 见 `2026-07-23-stage9-clean-build-and-candidate.md` 及最终候选 `round2-20260723T122520Z-0bd5bba-397a7e5-4cc67a3` 的 manifest。）
+- [x] release manifest 记录基础媒体、SoloCam DLL、MPQ、DBC、AddOn generated 数据和 worldserver provenance。（2026-07-23：早期两个 71 成员候选与最终 72 成员 clean-static 候选均通过 `Test-RoundTwoBundle.ps1`；最终 x64 `worldserver.exe` SHA-256 为 `f0d6359a…37f22`。）
+- [x] AddOn/DLL/asset pack 任一版本不配套时，能力 fail closed 并显示明确提示。（2026-07-23：stock/DLL-absent 目标卡显式 `UNAVAILABLE`；最终 61-byte asset mismatch 实机保留 authoritative ACK、`assetMismatch=true`、隐藏模型/角色 host 并显示“资源包版本不匹配”，见 `final-token64-v2-20260723-2026\asset-mismatch-token64-v3-20260723\SoloCollectionsAssetMismatchAudit.pass.lua`。）
 
 ### 任务 9.2：干净检出重建
 
-- [x] 使用 F 盘 `TEMP/TMP` 和干净 worktree 运行全部生成器、测试和构建。（2026-07-23：`stage9-clean-r2-20260723` clean worktree 的生成器、Lua、x86 SoloCam、318 AddOn unittest、35 SoloCam unittest 与 x64 static worldserver build 全部通过。）
+- [x] 使用 F 盘 `TEMP/TMP` 和干净 worktree 运行全部生成器、测试和构建。（2026-07-23：`stage9-clean-r2-20260723` clean worktree 的生成器、Lua、x86 SoloCam、最终 AddOn `320 passed, 3 skipped`、module `133`、native CTest `2/2` 与 x64 static worldserver build 全部通过。）
 - [x] clean checkout 加固定 evidence pack 能重建媒体清单、套装排序、camera profiles、weapon registry 和客户端资产。（2026-07-23：fixed evidence pack 通过 catalog/set 检查；冻结 Stage 8 重新打包并重开验证 5,805 个客户端资产，两个 MPQ SHA-256 与 v2 完全一致。）
 - [x] 比较开发工作树与干净构建输出；除允许的时间/容器元数据外内容 Hash 一致。（2026-07-23：8 个 AddOn/module 生成输出逐一 SHA-256 相同；详见阶段 9 报告。）
 - [x] repository hygiene 确认无凭据、绝对本机路径、客户端资产、DLL/EXE/MPQ/DBC/WDB 或数据库转储进入 Git。（2026-07-23：三仓 `-RequireClean` hygiene 通过；仅精确 allowlist 上游 MySQL 工具与 gSOAP 示例行，凭据扫描保持开启。）
 
 ### 任务 9.3：bundle 安装与回滚
 
-- [x] `New-RoundTwoBundle.ps1` 或后继脚本生成新的本地候选，文件清单和 SHA-256 完整。（2026-07-23：候选 `round2-20260723T092019Z-94031f8-6955c1a-4cc67a3` 与 `round2-20260723T092934Z-94031f8-6955c1a-4cc67a3` 均生成 71 个 manifest 成员。）
-- [x] `Test-RoundTwoBundle.ps1` 验证 required media、DLL PE、资产 registry、MPQ/DBC 和三仓 commit。（2026-07-23：两个候选通过文件 SHA、基础媒体、x86 DLL、x64 PE、metadata/生成常量与 evidence 链路验证。）
-- [x] `Install-RoundTwoBundle.ps1` 识别目标、备份、安装并执行 installed verifier。（2026-07-23：F: 隔离 deployment profile 成功备份/安装 44 个操作，`-Installed` verifier 通过；没有触碰真实 client/server。）
+- [x] `New-RoundTwoBundle.ps1` 或后继脚本生成新的本地候选，文件清单和 SHA-256 完整。（2026-07-23：早期 `94031f8/6955c1a` 两个候选各 71 个成员；最终 `round2-20260723T122520Z-0bd5bba-397a7e5-4cc67a3` 为 72 个成员。）
+- [x] `Test-RoundTwoBundle.ps1` 验证 required media、DLL PE、资产 registry、MPQ/DBC 和三仓 commit。（2026-07-23：最终候选通过文件 SHA、基础媒体、x86 DLL、x64 PE、metadata/生成常量与 evidence 链路验证。）
+- [x] `Install-RoundTwoBundle.ps1` 识别目标、备份、安装并执行 installed verifier。（2026-07-23：F: deployment profile 成功备份/安装 44 个操作，`-Installed` verifier 通过；最终候选实机矩阵使用该有 backup manifest 的安装。）
 - [x] 模拟一个锁定/Hash 不匹配失败，确认自动回滚且原文件完整。（2026-07-23：锁定 locale MPQ 后安装失败，已写入目标自动回滚；原始六个目标 SHA-256 与不存在 AddOn 文件状态均恢复。）
 - [x] `Restore-RoundTwoBundle.ps1` 完整恢复旧 AddOn/DLL/MPQ/DBC；重装新 bundle 后再次验证。（2026-07-23：第一候选完整 restore；第二候选在恢复后重装、`-Installed` 验证并再次 restore，原始 hash 均通过。）
 
 ### 任务 9.4：最终真实客户端矩阵
 
-- [ ] 图标：11 槽位、launcher、mount portrait、hover/selected。
-- [ ] 套装：排序、职业过滤、搜索、滚轮、分页、拖动、2/3/5/8/9 件预览、快速切换。
-- [ ] 武器：全部 READY 自动全扫、全部 UNAVAILABLE 状态检查、family 视觉抽样。
-- [ ] 镜头：武器三层覆盖、body profile 差量、批量导出、清空 SavedVariables 后 round-trip。
-- [ ] 状态：冷/热缓存、`/reload`、登出/重登、worldserver 重启、DLL 缺失、asset mismatch。
-- [ ] 分辨率/UI Scale：1024×768、1366×768、1920×1080 多档 scale、2560×1440、3440×1440。
-- [ ] 稳定性：快速翻页/切换 10 分钟，无 Lua error、崩溃、黑模、NPC、角色串入、无限重试或持续内存增长。
+- [x] 图标：11 槽位、launcher、mount portrait、hover/selected。（2026-07-23：当前 v2 实机再次打开衣橱，11 个槽位图标全部可见；点击 HEAD 后保留 selected、hover 蓝环和 tooltip，mount tab 的项目自有 portrait 与右下 launcher 均可见。两张真实客户端截图及 SHA-256 位于 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-runtime-20260723\icon-media-v2\20260723-1837`；基础媒体的清单/尺寸/hash 和无 Retail 依赖仍由 Stage 1 clean-bundle 证据闭合。）
+- [x] 套装：排序、职业过滤、搜索、滚轮、分页、拖动、2/3/5/8/9 件预览、快速切换。（2026-07-23：现行 set presentation hash `44c7748c…` 的真实客户端 Stage 3 审计复核为 PALADIN/PRIEST 两职业、465 条排序签名一致，搜索/职业过滤、首末页、`/reload`/重登均通过；当前 v2 客户端 Stage 2 审计另覆盖真实搜索/滑块拖动后滚轮连续性、0/1/8/17 条分页、465 套全扫、2/3/5/8 件与 selected-variant 9 件预览、预装备清除及 20 次快速切换，两个离线验收器均通过。证据位于 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\round-two-addon\runtime-audit\stage3-set-ordering\stage3-20260723-061301` 与 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-runtime-20260723\set-preview-audit-v2\20260723-1758`。）
+- [x] 武器：全部 READY 自动全扫、全部 UNAVAILABLE 状态检查、family 视觉抽样。（2026-07-23：当前 v2 实机 hot scan `3,690=3,541 READY+149 UNAVAILABLE+0 failed`，每条 READY 校验 canonical `GetModel` 和至少 3 个 stable tick，每条 UNAVAILABLE 校验模型隐藏且图标/原因可见；19 family 的 v2 分层样本 `134=131 READY+3 UNAVAILABLE+0 failed`，8 张真实客户端截图已逐项 hash。最终 token-boundary 候选在错版本回归后重新实机打开 `/sc`，一手斧网格恢复独立 3D 模型而非图标。证据分别为 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-runtime-20260723\weapon-presentation-matrix-v2\stage8-wardrobe-runtime-hot-20260723-182240-437`、`F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-runtime-20260723\weapon-presentation-matrix-v2\stage8-weapon-visual-hot-20260723-182624-220` 和阶段 9 最终报告。）
+- [x] 镜头：武器三层覆盖、body profile 差量、批量导出、清空 SavedVariables 后 round-trip。（2026-07-23：Stage 4 真实客户端验证 appearance/model/family 三层覆盖、批量 JSONL 导出审核、清空 tuning 后的 `207278` round-trip；当前 v2 的 3,690 条武器运行扫描另确认所有 READY 模型稳定加载，包含 model-scope outlier `217942`。当前 body profile canonical hash `792f1654…` 的实机小/中/大三 silhouette 矩阵经复核为 540 行/60 页、每 profile 3 行且 reload 持久化通过。证据位于 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\round-two-addon\runtime-audit\stage4-weapon-camera\weapon-camera-20260723-041440`、`F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\round-two-addon\runtime-audit\stage4-round-trip` 与 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-runtime-20260723\camera-silhouette-matrix-v2\20260723-175053-674`。）
+- [x] 状态：冷/热缓存、`/reload`、登出/重登、worldserver 重启、DLL 缺失、asset mismatch。（2026-07-23：同一最终候选的 normal→`/reload`→worldserver restart/relog 三次均 authoritative/SC2-connected/`Ready`/无 mismatch，见 `final-token64-v2-20260723-2026\status-matrix\SoloCollectionsStage9StatusAudit.normal-reload-serverrestart.lua`；冷/热 WDB 实机矩阵沿用未变的 asset/catalog/render/cache 路径；stock DLL 缺失显式 `UNAVAILABLE`；61-byte mismatch 通过 authoritative ACK 后显式 fail closed，见阶段 9 最终报告。）
+- [x] 分辨率/UI Scale：1024×768、1366×768、1920×1080 多档 scale、2560×1440、3440×1440。（2026-07-23：真实客户端分别以 1024×768/0.64、1366×768/0.75、1920×1080/0.80、2560×1440/0.90、3440×1440/1.00 运行；每档 `SoloCollectionsLayoutAudit` 均记录 `completed/ready/reloadRestored=true`、18 卡池、mount/pet detail 和 hover/selected 断言，并保存 3 张截图，证据位于 `F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\stage9-runtime-20260723\layout-matrix-v2`。）
+- [x] 稳定性：快速翻页/切换 10 分钟，无 Lua error、崩溃、黑模、NPC、角色串入、无限重试或持续内存增长。（2026-07-23：最终候选真实客户端 600.001 秒、150 cycles、598 samples、18-card pool、0 failures、`memoryStable=true`、authoritative SC2 `Ready`；见 `final-token64-v2-20260723-2026\stability-pass\SoloCollectionsStage9SoakAudit.pass.lua`。）
 
 ### 任务 9.5：最终阶段出口
 
-- [ ] 所有阶段报告、截图、录像、CSV/JSON 运行审计和 manifest 以 bundleId 关联。
-- [x] 本文所有已完成子项逐项改为 `[x]` 并附日期/证据；未完成项保持 `[ ]`，不得用总体验收掩盖。（2026-07-23：阶段 9 的自动化子项已逐项收口；9.1 的真实客户端提示验证、9.4 和用户最终验收仍明确保留为未完成。）
-- [ ] 建立本地候选 tag 和完整回滚说明；不 push、不创建公开 release。
+- [x] 所有阶段报告、截图、录像、CSV/JSON 运行审计和 manifest 以 bundleId 关联。（2026-07-23：新增 `2026-07-23-stage9-final-token-boundary-and-runtime-matrix.md` 关联最终 bundleId、manifest、安装 backup、状态矩阵、错版本审计和稳定性审计；既有阶段 1--8 evidence 保持原 bundle/assetPack 关联。）
+- [x] 本文所有已完成子项逐项改为 `[x]` 并附日期/证据；未完成项保持 `[ ]`，不得用总体验收掩盖。（2026-07-23：阶段 9 的所有 agent-executable 子项已逐项收口；仅用户最终验收明确保留为未完成。）
+- [x] 建立本地候选 tag 和完整回滚说明；不 push、不创建公开 release。（2026-07-23：`round3-wardrobe-camera-set-stage9-candidate-20260723` 指向包含最终报告的本地候选记录；回滚使用最终 bundle 的 `backup\backup-manifest.json` 和 `Restore-RoundTwoBundle.ps1`，细节见阶段 9 最终报告。）
 - [ ] 用户完成最终客户端验收后，本方案状态改为“已完成”。
 
 ## 16. 自动测试与建议命令
@@ -1062,25 +1063,25 @@ staleGenerationObserved
 
 ## 20. 总体验收清单
 
-- [ ] 基础 AddOn bundle 中所有 production 媒体引用都有实际文件和合法 provenance。
-- [ ] 11 个外观槽位图标、launcher 和相邻 portrait 在无外部 Retail 媒体时可见。
-- [ ] 套装第一页滑块顶部，最后一页底部，滚轮/分页/拖动方向与列表一致。
-- [ ] 套装预览只穿 selected variant 成员；玩家装备、上一套和 omitted 成员零残留。
-- [ ] 465 个 active ItemSet 有稳定展示排序；ICC/T10 高难度/高等级套装位于前部。
-- [ ] 套装 presentation 不改变 collection ID、owned、mapping hash 或 variantOrdinal。
-- [ ] 武器镜头工作台不遮挡卡片，支持 family/model/appearance 三层覆盖。
-- [ ] 玩家能复制当前镜头和批量导出本次全部修改；导出记录带完整身份和版本。
-- [ ] 护甲镜头按 asset profile + sex + slot 调整并导出；180 profiles 安全回退和 round-trip 通过。
-- [ ] 现有 21 个 verified 武器资源、ID、模型和 pose 零回归。
-- [ ] 3,690 个公开主副手全部有 READY 或明确 UNAVAILABLE 终态。
-- [ ] 所有具有可验证源资源的公开武器使用独立模型，不显示角色/NPC/黑模/空白卡。
-- [ ] 全量武器生成实现几何、纹理、display 三级去重和追加式 ID 注册表。
-- [ ] 聚合 MPQ/locale DBC 构建、回读、安装和恢复均通过 Hash 验证。
-- [ ] 大目录仍只使用固定模型池，无无限 OnUpdate、持续内存增长或翻页串模。
-- [ ] 冷/热缓存、`/reload`、重登、stock client fallback、分辨率/UI Scale 矩阵通过。
-- [ ] clean checkout + F 盘 fixed evidence pack 可重建全部生成物和本地 bundle。
-- [ ] Git 不包含凭据、绝对本机路径、客户端资产、DLL/EXE/MPQ/DBC/WDB 或数据库转储。
-- [ ] 所有完成项已在本文逐项标记 `[x]` 并附日期、提交和证据。
+- [x] 基础 AddOn bundle 中所有 production 媒体引用都有实际文件和合法 provenance。（2026-07-23；阶段 1 clean-bundle 合同和阶段 9 final manifest/verifier。）
+- [x] 11 个外观槽位图标、launcher 和相邻 portrait 在无外部 Retail 媒体时可见。（2026-07-23；阶段 1 与阶段 9 图标实机矩阵。）
+- [x] 套装第一页滑块顶部，最后一页底部，滚轮/分页/拖动方向与列表一致。（2026-07-23；阶段 2 实机与 Stage 9 set audit。）
+- [x] 套装预览只穿 selected variant 成员；玩家装备、上一套和 omitted 成员零残留。（2026-07-23；阶段 2 全扫和快速切换审计。）
+- [x] 465 个 active ItemSet 有稳定展示排序；ICC/T10 高难度/高等级套装位于前部。（2026-07-23；阶段 3 presentation 审计。）
+- [x] 套装 presentation 不改变 collection ID、owned、mapping hash 或 variantOrdinal。（2026-07-23；阶段 3 合同和 module/Core 零语义改动记录。）
+- [x] 武器镜头工作台不遮挡卡片，支持 family/model/appearance 三层覆盖。（2026-07-23；阶段 4 实机验证。）
+- [x] 玩家能复制当前镜头和批量导出本次全部修改；导出记录带完整身份和版本。（2026-07-23；阶段 4 JSONL review-only round-trip。）
+- [x] 护甲镜头按 asset profile + sex + slot 调整并导出；180 profiles 安全回退和 round-trip 通过。（2026-07-23；阶段 5 的 180/540 实机矩阵。）
+- [x] 现有 21 个 verified 武器资源、ID、模型和 pose 零回归。（2026-07-23；阶段 8 baseline selector 和视觉审计。）
+- [x] 3,690 个公开主副手全部有 READY 或明确 UNAVAILABLE 终态。（2026-07-23；Stage 9 hot scan `3,541 READY + 149 UNAVAILABLE + 0 failed`。）
+- [x] 所有具有可验证源资源的公开武器使用独立模型，不显示角色/NPC/黑模/空白卡。（2026-07-23；阶段 8 全量/抽样审计和 Stage 9 10 分钟 soak。）
+- [x] 全量武器生成实现几何、纹理、display 三级去重和追加式 ID 注册表。（2026-07-23；阶段 7 registry/DBC/asset 生成证据。）
+- [x] 聚合 MPQ/locale DBC 构建、回读、安装和恢复均通过 Hash 验证。（2026-07-23；阶段 7 与 Stage 9 release install/restore 演练。）
+- [x] 大目录仍只使用固定模型池，无无限 OnUpdate、持续内存增长或翻页串模。（2026-07-23；Stage 9 `600.001` 秒/18-card/0-failure 稳定性审计。）
+- [x] 冷/热缓存、`/reload`、重登、stock client fallback、分辨率/UI Scale 矩阵通过。（2026-07-23；Stage 8 cache、Stage 9 status/DLL fallback/layout 矩阵。）
+- [x] clean checkout + F 盘 fixed evidence pack 可重建全部生成物和本地 bundle。（2026-07-23；`stage9-clean-r2-20260723` 和最终 72-member candidate。）
+- [x] Git 不包含凭据、绝对本机路径、客户端资产、DLL/EXE/MPQ/DBC/WDB 或数据库转储。（2026-07-23；三仓 `-RequireClean` hygiene 通过。）
+- [x] 所有完成项已在本文逐项标记 `[x]` 并附日期、提交和证据。（2026-07-23；仅 9.5 的用户最终客户端验收保留 `[ ]`。）
 
 ## 21. 明确留到后续的工作
 
