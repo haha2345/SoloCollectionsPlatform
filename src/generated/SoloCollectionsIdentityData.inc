@@ -19,15 +19,15 @@ static std::vector<ClassIdentityDefinition> LoadGeneratedClassIdentities()
 static std::vector<RaceIdentityDefinition> LoadGeneratedRaceIdentities()
 {
     return {
-        {LogicalRaceId{1}, "human", 1, {"Human", "HUMAN"}, {}, "ALLIANCE", "race.human", "race.human", "race.human", "race.human", "wotlk-3.3.5a-local-1", "race.human"},
-        {LogicalRaceId{2}, "orc", 2, {"Orc", "ORC"}, {}, "HORDE", "race.orc", "race.orc", "race.orc", "race.orc", "wotlk-3.3.5a-local-1", "race.orc"},
-        {LogicalRaceId{3}, "dwarf", 3, {"Dwarf", "DWARF"}, {}, "ALLIANCE", "race.dwarf", "race.dwarf", "race.dwarf", "race.dwarf", "wotlk-3.3.5a-local-1", "race.dwarf"},
-        {LogicalRaceId{4}, "night_elf", 4, {"NightElf", "NIGHTELF"}, {}, "ALLIANCE", "race.night_elf", "race.night_elf", "race.night_elf", "race.night_elf", "wotlk-3.3.5a-local-1", "race.night_elf"},
-        {LogicalRaceId{5}, "undead", 5, {"Scourge", "Undead", "UNDEAD"}, {}, "HORDE", "race.undead", "race.undead", "race.undead", "race.undead", "wotlk-3.3.5a-local-1", "race.undead"},
-        {LogicalRaceId{6}, "tauren", 6, {"Tauren", "TAUREN"}, {}, "HORDE", "race.tauren", "race.tauren", "race.tauren", "race.tauren", "wotlk-3.3.5a-local-1", "race.tauren"},
-        {LogicalRaceId{7}, "gnome", 7, {"Gnome", "GNOME"}, {}, "ALLIANCE", "race.gnome", "race.gnome", "race.gnome", "race.gnome", "wotlk-3.3.5a-local-1", "race.gnome"},
-        {LogicalRaceId{8}, "troll", 8, {"Troll", "TROLL"}, {}, "HORDE", "race.troll", "race.troll", "race.troll", "race.troll", "wotlk-3.3.5a-local-1", "race.troll"},
-        {LogicalRaceId{9}, "blood_elf", 10, {"BloodElf", "BLOODELF"}, {}, "HORDE", "race.blood_elf", "race.blood_elf", "race.blood_elf", "race.blood_elf", "wotlk-3.3.5a-local-1", "race.blood_elf"},
-        {LogicalRaceId{10}, "draenei", 11, {"Draenei", "DRAENEI"}, {}, "ALLIANCE", "race.draenei", "race.draenei", "race.draenei", "race.draenei", "wotlk-3.3.5a-local-1", "race.draenei"},
+        {LogicalRaceId{1}, "human", 1, {"Human", "HUMAN"}, {}, "ALLIANCE", "race.human", "race.human", "race.human", "race.human", "round-two-stage8-weapon-presentation-v2", "race.human"},
+        {LogicalRaceId{2}, "orc", 2, {"Orc", "ORC"}, {}, "HORDE", "race.orc", "race.orc", "race.orc", "race.orc", "round-two-stage8-weapon-presentation-v2", "race.orc"},
+        {LogicalRaceId{3}, "dwarf", 3, {"Dwarf", "DWARF"}, {}, "ALLIANCE", "race.dwarf", "race.dwarf", "race.dwarf", "race.dwarf", "round-two-stage8-weapon-presentation-v2", "race.dwarf"},
+        {LogicalRaceId{4}, "night_elf", 4, {"NightElf", "NIGHTELF"}, {}, "ALLIANCE", "race.night_elf", "race.night_elf", "race.night_elf", "race.night_elf", "round-two-stage8-weapon-presentation-v2", "race.night_elf"},
+        {LogicalRaceId{5}, "undead", 5, {"Scourge", "Undead", "UNDEAD"}, {}, "HORDE", "race.undead", "race.undead", "race.undead", "race.undead", "round-two-stage8-weapon-presentation-v2", "race.undead"},
+        {LogicalRaceId{6}, "tauren", 6, {"Tauren", "TAUREN"}, {}, "HORDE", "race.tauren", "race.tauren", "race.tauren", "race.tauren", "round-two-stage8-weapon-presentation-v2", "race.tauren"},
+        {LogicalRaceId{7}, "gnome", 7, {"Gnome", "GNOME"}, {}, "ALLIANCE", "race.gnome", "race.gnome", "race.gnome", "race.gnome", "round-two-stage8-weapon-presentation-v2", "race.gnome"},
+        {LogicalRaceId{8}, "troll", 8, {"Troll", "TROLL"}, {}, "HORDE", "race.troll", "race.troll", "race.troll", "race.troll", "round-two-stage8-weapon-presentation-v2", "race.troll"},
+        {LogicalRaceId{9}, "blood_elf", 10, {"BloodElf", "BLOODELF"}, {}, "HORDE", "race.blood_elf", "race.blood_elf", "race.blood_elf", "race.blood_elf", "round-two-stage8-weapon-presentation-v2", "race.blood_elf"},
+        {LogicalRaceId{10}, "draenei", 11, {"Draenei", "DRAENEI"}, {}, "ALLIANCE", "race.draenei", "race.draenei", "race.draenei", "race.draenei", "round-two-stage8-weapon-presentation-v2", "race.draenei"},
     };
 }
