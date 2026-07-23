@@ -162,7 +162,9 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertNotIn("record.syntheticDisplayId >= 40000", wardrobe)
         self.assertNotIn("record.syntheticDisplayId <= 40020", wardrobe)
         self.assertIn('record.presentationCapability == "DIRECT_DISPLAY_V1"', wardrobe)
-        self.assertIn("SC.CollectionState and SC.CollectionState.assetMismatch", wardrobe)
+        self.assertIn("hasAssetPackVersionMismatch", wardrobe)
+        self.assertIn("record.assetPackVersion ~= generatedAssetPackVersion", wardrobe)
+        self.assertIn("资源包版本不匹配", wardrobe)
 
     def test_weapon_grid_uses_a_fixed_pool_with_generation_safe_direct_models(self):
         source = read_text(WARDROBE)
