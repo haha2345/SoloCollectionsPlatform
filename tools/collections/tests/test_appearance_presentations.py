@@ -49,7 +49,9 @@ class AppearancePresentationTests(unittest.TestCase):
         source = json.loads(
             (ROOT / "catalog/source/appearance_presentations.json").read_text(encoding="utf-8")
         )
-        with tempfile.TemporaryDirectory(dir=ROOT / "_work") as temporary:
+        work_root = ROOT / "_work"
+        work_root.mkdir(parents=True, exist_ok=True)
+        with tempfile.TemporaryDirectory(dir=work_root) as temporary:
             temp = Path(temporary) / "source.json"
             source["entries"][0]["appearanceId"] += 1
             temp.write_text(json.dumps(source), encoding="utf-8")
