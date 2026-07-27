@@ -8,11 +8,11 @@
         "kind": "HELLO",
         "protocolVersion": 1,
         "clientNonce": "fedcba9876543210",
-        "clientBuild": "0.2.0-dev",
+        "clientBuild": "0.2.0",
         "metadataVersion": "2026.07.19",
         "assetPackVersion": "local-1"
       },
-      "wire": "H|1|fedcba9876543210|0.2.0-dev|2026.07.19|local-1"
+      "wire": "H|1|fedcba9876543210|0.2.0|2026.07.19|local-1"
     },
     {
       "name": "hello_ack",
@@ -24,10 +24,10 @@
         "enabledCategoryFlags": "0000001f",
         "metadataVersion": "2026.07.19",
         "assetPackVersion": "local-1",
-        "backendBuild": "0.2.0-dev",
+        "backendBuild": "0.2.0",
         "categoryCount": 5
       },
-      "wire": "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|0.2.0-dev|5"
+      "wire": "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|0.2.0|5"
     },
     {
       "name": "hello_with_stage8_asset_pack",
@@ -51,10 +51,10 @@
         "enabledCategoryFlags": "00007e01",
         "metadataVersion": "2026.07.23.2",
         "assetPackVersion": "round-two-stage8-weapon-presentation-v2",
-        "backendBuild": "0.2.0-dev",
+        "backendBuild": "0.2.0",
         "categoryCount": 7
       },
-      "wire": "A|1|0123456789abcdef|162|00007e01|2026.07.23.2|round-two-stage8-weapon-presentation-v2|0.2.0-dev|7"
+      "wire": "A|1|0123456789abcdef|162|00007e01|2026.07.23.2|round-two-stage8-weapon-presentation-v2|0.2.0|7"
     },
     {
       "name": "category_map",

@@ -8,8 +8,9 @@
 - MySQL、Core 数据文件和其他依赖按 AzerothCore 官方文档配置；
 - 可选 SoloCam 只支持 README 中列出的精确 EXE hash。
 
-当前 `main` 源码不能和旧 `v0.1.0` 的 ALE 演示包混装。先确定要使用的 AddOn
-commit、module commit、metadata 和资源包版本。
+`v0.2.0` 不能和旧 `v0.1.0` 的 ALE 演示包混装。优先使用
+[发布包使用说明](RELEASE_USAGE.zh-CN.md)中的成套资产，并核对 AddOn commit、
+module commit、metadata 和资源包版本。
 
 ## 2. 准备和备份
 

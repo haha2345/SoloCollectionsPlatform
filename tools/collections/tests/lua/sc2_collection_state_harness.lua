@@ -27,7 +27,7 @@ end)
 CS.BeginConnect("fedcba9876543210")
 
 assert(CS.HandleMessage(
-    "A|1|" .. nonce .. "|42|00000001|2026.07.20.1|round-two-stage8-weapon-presentation-v2|0.2.0-dev|1",
+    "A|1|" .. nonce .. "|42|00000001|2026.07.20.1|round-two-stage8-weapon-presentation-v2|0.2.0|1",
     0
 ) == "HELLO_ACK")
 assert(CS.HandleMessage(
