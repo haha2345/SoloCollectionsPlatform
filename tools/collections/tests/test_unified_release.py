@@ -64,6 +64,22 @@ class UnifiedReleaseTests(unittest.TestCase):
         self.assertIn('"releaseScope": "project-authored-files-only"', source)
         self.assertIn('"externalClientMediaBundled": False', source)
 
+    def test_public_bundle_contains_bilingual_usage_and_asset_checksums(self):
+        source = SCRIPT.read_text(encoding="utf-8")
+        for token in (
+            '"docs/RELEASE_USAGE.zh-CN.md"',
+            '"docs/RELEASE_USAGE.en.md"',
+            '"docs/INSTALLATION.zh-CN.md"',
+            '"docs/INSTALLATION.en.md"',
+            '"docs/BUILDING.zh-CN.md"',
+            '"docs/BUILDING.en.md"',
+            '"docs/BUILD_MPQ.zh-CN.md"',
+            '"client-extension/SoloCam/README.md"',
+            "unified-source.zip",
+            "RELEASE_SHA256SUMS.txt",
+        ):
+            self.assertIn(token, source)
+
 
 if __name__ == "__main__":
     unittest.main()

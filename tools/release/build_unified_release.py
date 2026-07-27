@@ -92,6 +92,23 @@ def write_zip(target: Path, entries: dict[str, bytes]) -> None:
             archive.writestr(info, entries[name])
 
 
+def write_bundle_zip(
+    target: Path,
+    root_name: str,
+    source_root: Path,
+    relative_paths: Iterable[Path],
+) -> None:
+    with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        for relative in sorted(relative_paths, key=lambda path: path.as_posix()):
+            archive_relative = PurePosixPath(root_name) / PurePosixPath(relative.as_posix())
+            if archive_relative.is_absolute() or ".." in archive_relative.parts:
+                raise ReleaseError(f"unsafe bundle path: {archive_relative}")
+            info = zipfile.ZipInfo(archive_relative.as_posix(), date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.external_attr = 0o100644 << 16
+            archive.writestr(info, (source_root / relative).read_bytes())
+
+
 def addon_entries(repo: Path, commit: str) -> dict[str, bytes]:
     prefix = "addon/SoloCollections/"
     media_prefix = prefix + "Media/"
@@ -217,6 +234,21 @@ def write_text(target: Path, value: str) -> None:
     target.write_text(value, encoding="utf-8", newline="\n")
 
 
+def bundle_usage_document(payload: bytes) -> bytes:
+    document = payload.decode("utf-8")
+    replacements = {
+        "(RELEASE_USAGE.zh-CN.md)": "(README.zh-CN.md)",
+        "(RELEASE_USAGE.en.md)": "(README.en.md)",
+        "(INSTALLATION.zh-CN.md)": "(docs/INSTALLATION.zh-CN.md)",
+        "(INSTALLATION.en.md)": "(docs/INSTALLATION.en.md)",
+        "(CAMERA_CONTRIBUTIONS.md)": "(docs/CAMERA_CONTRIBUTIONS.md)",
+        "(../client-extension/SoloCam/README.md)": "(client-extension/SoloCam/README.md)",
+    }
+    for source, target in replacements.items():
+        document = document.replace(source, target)
+    return document.encode("utf-8")
+
+
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -261,17 +293,49 @@ def build(args: argparse.Namespace) -> Path:
     manifest_path = output / "release-manifest.json"
     write_text(manifest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
     release_files = {
-        "INSTALLATION.zh-CN.md": commit_file(
-            addon_repo, addon_commit, "docs/UNIFIED_BACKEND_INSTALLATION.zh-CN.md"
+        "README.zh-CN.md": bundle_usage_document(commit_file(
+            addon_repo, addon_commit, "docs/RELEASE_USAGE.zh-CN.md"
+        )),
+        "README.en.md": bundle_usage_document(commit_file(
+            addon_repo, addon_commit, "docs/RELEASE_USAGE.en.md"
+        )),
+        "docs/RELEASE_USAGE.zh-CN.md": commit_file(
+            addon_repo, addon_commit, "docs/RELEASE_USAGE.zh-CN.md"
         ),
-        "LICENSES/SoloCollections-GPL-3.0-or-later.txt": commit_file(
+        "docs/RELEASE_USAGE.en.md": commit_file(
+            addon_repo, addon_commit, "docs/RELEASE_USAGE.en.md"
+        ),
+        "docs/INSTALLATION.zh-CN.md": commit_file(
+            addon_repo, addon_commit, "docs/INSTALLATION.zh-CN.md"
+        ),
+        "docs/INSTALLATION.en.md": commit_file(
+            addon_repo, addon_commit, "docs/INSTALLATION.en.md"
+        ),
+        "docs/BUILDING.zh-CN.md": commit_file(
+            addon_repo, addon_commit, "docs/BUILDING.zh-CN.md"
+        ),
+        "docs/BUILDING.en.md": commit_file(
+            addon_repo, addon_commit, "docs/BUILDING.en.md"
+        ),
+        "docs/CAMERA_CONTRIBUTIONS.md": commit_file(
+            addon_repo, addon_commit, "docs/CAMERA_CONTRIBUTIONS.md"
+        ),
+        "docs/BUILD_MPQ.zh-CN.md": commit_file(
+            addon_repo, addon_commit, "docs/BUILD_MPQ.zh-CN.md"
+        ),
+        "client-extension/SoloCam/README.md": commit_file(
+            addon_repo, addon_commit, "client-extension/SoloCam/README.md"
+        ),
+        "LICENSES/SoloCollections/LICENSE": commit_file(
             addon_repo, addon_commit, "LICENSE"
         ),
-        "LICENSES/SoloCollections-THIRD_PARTY_NOTICES.md": commit_file(
+        "LICENSES/SoloCollections/THIRD_PARTY_NOTICES.md": commit_file(
             addon_repo, addon_commit, "THIRD_PARTY_NOTICES.md"
         ),
-        "LICENSES/mod-solo-collections-AGPL-3.0.txt": commit_file(module_repo, module_commit, "LICENSE"),
-        "LICENSES/mod-solo-collections-THIRD_PARTY_NOTICES.md": commit_file(
+        "LICENSES/mod-solo-collections/LICENSE": commit_file(
+            module_repo, module_commit, "LICENSE"
+        ),
+        "LICENSES/mod-solo-collections/THIRD_PARTY_NOTICES.md": commit_file(
             module_repo, module_commit, "THIRD_PARTY_NOTICES.md"
         ),
     }
@@ -284,6 +348,26 @@ def build(args: argparse.Namespace) -> Path:
     checksummed = sorted(path for path in output.rglob("*") if path.is_file())
     checksum_lines = [f"{sha256(path)}  {path.relative_to(output).as_posix()}" for path in checksummed]
     write_text(output / "SHA256SUMS.txt", "\n".join(checksum_lines) + "\n")
+
+    bundle_path = output / f"SoloCollections-{args.version}-unified-source.zip"
+    bundle_inputs = sorted(
+        path.relative_to(output)
+        for path in output.rglob("*")
+        if path.is_file() and path != bundle_path
+    )
+    write_bundle_zip(
+        bundle_path,
+        f"SoloCollections-{args.version}",
+        output,
+        bundle_inputs,
+    )
+
+    public_assets = [bundle_path, addon_zip, module_zip, manifest_path]
+    public_checksum_lines = [
+        f"{sha256(path)}  {path.name}"
+        for path in sorted(public_assets, key=lambda path: path.name)
+    ]
+    write_text(output / "RELEASE_SHA256SUMS.txt", "\n".join(public_checksum_lines) + "\n")
     return output
 
 

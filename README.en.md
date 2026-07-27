@@ -1,6 +1,6 @@
 # SoloCollections client for WoW 3.3.5a
 
-[中文](README.md) · [Server module](https://github.com/haha2345/mod-solo-collections) · [Installation](docs/INSTALLATION.en.md) · [Build and development](docs/BUILDING.en.md) · [Contributing](CONTRIBUTING.md)
+[中文](README.md) · [Download v0.2.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.2.0) · [Server module](https://github.com/haha2345/mod-solo-collections) · [Installation](docs/INSTALLATION.en.md) · [Contributing](CONTRIBUTING.md)
 
 SoloCollections adds a Retail-inspired collection journal to World of Warcraft
 3.3.5a build 12340. It presents mounts, non-battle pets, toys, equipment
@@ -16,9 +16,9 @@ C++/SC2 backend. The ALE/SC1 file retained here is only a legacy migration and
 protocol reference; it must not answer production actions beside the C++
 backend.
 
-> The current `main` branch is the next source line and does not match the old
-> `v0.1.0` package. Treat the AddOn, server module, catalog metadata, and
-> optional client resources as one versioned set.
+> The current source release is `v0.2.0`. Use the AddOn, server module, and
+> `release-manifest.json` from that matched tag. The old `v0.1.0` package is
+> an incompatible ALE/SC1 development preview.
 
 ![Set collection and dressing-room preview](docs/images/wardrobe-sets.png)
 
@@ -95,12 +95,17 @@ available.
 
 ## Quick setup
 
-### 1. Clone both repositories
+### 1. Get the matched version
 
 ```powershell
-git clone https://github.com/haha2345/SoloCollections.git
-git clone https://github.com/haha2345/mod-solo-collections.git
+git clone --branch v0.2.0 https://github.com/haha2345/SoloCollections.git
+git clone --branch v0.2.0 https://github.com/haha2345/mod-solo-collections.git
 ```
+
+Most installers can instead download
+[`SoloCollections-v0.2.0-unified-source.zip`](https://github.com/haha2345/SoloCollections/releases/tag/v0.2.0)
+and follow its `README.en.md`. See the
+[release usage guide](docs/RELEASE_USAGE.en.md).
 
 ### 2. Install and build the server module
 
@@ -191,6 +196,7 @@ variables, output locations, and catalog-generation boundaries.
 
 ## Documentation
 
+- [Using the v0.2.0 release](docs/RELEASE_USAGE.en.md)
 - [Installation and rollback](docs/INSTALLATION.en.md)
 - [Build and development environment](docs/BUILDING.en.md)
 - [Development workflow and repository map](docs/DEVELOPMENT.md)

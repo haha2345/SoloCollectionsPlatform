@@ -2,7 +2,7 @@
 ## Title: Solo Collections
 ## Notes: Server-authoritative collection journal for WoW 3.3.5a.
 ## Author: SoloCollections contributors
-## Version: 0.2.0-dev
+## Version: 0.2.0
 ## SavedVariables: SoloCollectionsDB
 
 SoloCollections.lua
