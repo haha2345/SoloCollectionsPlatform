@@ -6,7 +6,7 @@ param(
     [Parameter(Mandatory = $true)][string]$StageRoot,
     [Parameter(Mandatory = $true)][string]$EvidenceRoot,
     [string]$ExecutableName = 'Wow-SoloCam-PoC.exe',
-    [string]$LoginScript = 'F:\1_projects\wow_projects\tools\dev\Start-WowLogin.ps1'
+    [Parameter(Mandatory = $true)][string]$LoginScript
 )
 
 $ErrorActionPreference = 'Stop'

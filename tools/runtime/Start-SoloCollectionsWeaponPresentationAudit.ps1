@@ -12,7 +12,7 @@ param(
     [ValidatePattern('^[A-Za-z]{4}$')][string]$WdbLocale = 'zhCN',
     [string]$ColdWdbBackupRoot,
     [string]$ExecutableName = 'Wow-SoloCam-PoC.exe',
-    [string]$LoginScript = 'F:\1_projects\wow_projects\tools\dev\Start-WowLogin.ps1'
+    [Parameter(Mandatory = $true)][string]$LoginScript
 )
 
 $ErrorActionPreference = 'Stop'

@@ -1,59 +1,32 @@
-# 源码开发、测试与编译环境
+# SoloCollections 编译与开发环境
 
-## 1. 推荐系统
+## 1. 组件与工具链
 
-- Windows 10/11 x64；
-- PowerShell 5.1 或 PowerShell 7；
-- Git 2.40+；
-- Python 3.10；
-- Visual Studio 2022 Build Tools；
-- 工作目录放在空间充足的非系统盘。
+| 组件 | 环境 | 是否编译 |
+| --- | --- | --- |
+| AddOn | WoW 3.3.5 Lua 5.1/FrameXML | 否 |
+| 目录/协议工具 | Python 3.10 | 运行生成器和检查 |
+| SoloCam | Windows 10/11、VS 2022、MSVC v143 x86、Windows SDK | 是 |
+| C++ 后端 | AzerothCore 官方依赖，x64 Core build | 随 Core 编译 |
+| 客户端资源 | PowerShell、Python、x64 StormLib、用户自己的纯净客户端 | 只在本机构建 |
+
+AzerothCore 当前 Windows 官方要求包括 CMake 3.27+、Visual Studio 2022
+Desktop C++、Boost 1.78+、MySQL 8.0+ 和 OpenSSL 3.x。版本可能变化，以
+[官方 requirements](https://www.azerothcore.org/wiki/windows-requirements)
+为准。
 
 ## 2. 获取源码
 
 ```powershell
-git clone https://github.com/haha2345/SoloCollections.git SoloCollections
+git clone https://github.com/haha2345/SoloCollections.git
+git clone https://github.com/haha2345/mod-solo-collections.git
 Set-Location .\SoloCollections
 git switch -c feature/my-change
 ```
 
-不要在 `Interface/AddOns` 中长期开发。仓库是源码源头，客户端和服务器只是
-部署目标。
+建议两个仓库放在同一父目录，但不要放到游戏安装或 worldserver 运行目录。
 
-## 3. AddOn
-
-AddOn 使用 WoW 3.3.5 的 Lua 5.1/FrameXML API，不需要编译。不能直接使用
-Retail 的 `C_MountJournal`、`SetAtlas`、`ModelScene` 等现代 API。
-
-运行契约测试：
-
-```powershell
-$temp = Join-Path $PWD '_work\test-temp\collections'
-New-Item -ItemType Directory -Force -Path $temp | Out-Null
-$env:TEMP = $temp
-$env:TMP = $temp
-$env:PYTHONDONTWRITEBYTECODE = '1'
-python -m unittest discover -s tools\collections\tests -p 'test_*.py' -v
-```
-
-部署到测试客户端前先使用 `-WhatIf`：
-
-```powershell
-& .\tools\collections\deploy_phase1.ps1 `
-  -AddonTarget 'D:\path\to\WoW\Interface\AddOns\SoloCollections' `
-  -ServerLuaTarget 'D:\path\to\server\lua_scripts\solo_collections.lua' `
-  -WhatIf
-```
-
-确认输出后移除 `-WhatIf`。
-
-## 4. ALE Lua
-
-`server/ale/solo_collections.lua` 无需单独编译，但运行环境必须安装 ALE/mod-ale。
-修改 API 调用前，应对照目标 ALE 版本的接口和其他本地脚本。测试不能代替实际
-世界服日志与游戏内验收。
-
-## 5. Python 依赖
+## 3. Python 环境
 
 ```powershell
 python -m venv .venv
@@ -62,57 +35,131 @@ python -m pip install --upgrade pip
 python -m pip install -r .\client-extension\SoloCam\requirements-dev.txt
 ```
 
-运行 SoloCam 测试：
+把临时目录放在仓库忽略的 `_work`：
 
 ```powershell
-$env:SOLOCOLLECTIONS_WOW_EXE = 'D:\path\to\supported\Wow.exe'
-python -m unittest discover -s client-extension\SoloCam\tests -p 'test_*.py' -v
+$tempRoot = Join-Path $PWD '_work\python-temp'
+New-Item -ItemType Directory -Force -Path $tempRoot | Out-Null
+$env:TEMP = $tempRoot
+$env:TMP = $tempRoot
+$env:PYTHONDONTWRITEBYTECODE = '1'
 ```
 
-没有设置真实 EXE 时，依赖客户端二进制的测试会跳过，其余测试仍运行。
+## 4. AddOn
 
-## 6. 编译 SoloCam.dll
-
-安装 Visual Studio 2022 Build Tools，并勾选：
-
-- Desktop development with C++；
-- MSVC v143 C++ x64/x86 build tools；
-- Windows 10 或 Windows 11 SDK。
-
-构建脚本先读取 `SOLOCOLLECTIONS_VCVARS`，然后检查现有 D 盘工具链，最后通过
-Visual Studio Installer 的 `vswhere` 自动查找：
+AddOn 不需要编译。开发副本位于 `addon/SoloCollections`。可以运行：
 
 ```powershell
-$env:SOLOCOLLECTIONS_VCVARS = 'D:\path\to\VC\Auxiliary\Build\vcvarsall.bat'
+python -m unittest discover -s .\tools\collections\tests -p "test_*.py" -v
+```
+
+如果系统安装了 Lua 5.1/`luac`，还可以对 `addon/SoloCollections` 下的 Lua
+逐个执行 `luac -p`。不要用 Lua 5.4 的行为替代 3.3.5 客户端验证。
+
+复制到测试客户端前确认目标路径，并保留原 AddOn 备份。真实客户端中的
+SavedVariables 和截图属于测试输出，不提交到 Git。
+
+## 5. 目录生成
+
+最终 AddOn 目录文件由 canonical source 和 review data 生成。生成器入口：
+
+```powershell
+python .\tools\catalog\generate_catalog.py --help
+```
+
+典型 check：
+
+```powershell
+python .\tools\catalog\generate_catalog.py `
+  --module-root ..\mod-solo-collections `
+  --evidence-root <合法外部evidence目录> `
+  --check
+```
+
+`evidence-root` 可能包含从用户自己的 DBC、数据库或客户端模型提取的结构证据，
+不得提交。仓库只保留 canonical CSV/JSON、审核决定、hash 和生成投影。
+
+目录变更应同时更新：
+
+- `catalog/source`；
+- 对应 `catalog/review`；
+- `catalog/generated`；
+- `addon/SoloCollections/Data/Generated`；
+- module 的 `data/generated` 与 `src/generated`。
+
+不要手工改生成 Lua 作为唯一修改。
+
+## 6. 编译 SoloCam
+
+安装 Visual Studio 2022 Desktop development with C++，包含 MSVC v143 的
+x86/x64 工具和 Windows SDK。构建脚本会使用 `SOLOCOLLECTIONS_VCVARS` 或
+Visual Studio Installer：
+
+```powershell
+$env:SOLOCOLLECTIONS_VCVARS = '<VS>\VC\Auxiliary\Build\vcvarsall.bat'
 & .\client-extension\SoloCam\scripts\build.ps1
 ```
 
-产物：
+产物位于被忽略的：
 
 ```text
 client-extension/SoloCam/build/Release/SoloCam.dll
-client-extension/SoloCam/build/Tests/*.exe
+client-extension/SoloCam/build/Tests/
 ```
 
-脚本编译并执行 CameraProfile、DisplayInfoBridge、ItemCameraBridge 三组 x86
-原生测试。不要把 `build` 目录提交到 Git。
-
-## 7. 构建 MPQ
-
-需要 x64 StormLib 和纯净客户端，见[MPQ 自建指南](BUILD_MPQ.zh-CN.md)。MPQ
-构建不修改源档案；只有显式添加 `-Deploy` 才会备份并复制到客户端。
-
-## 8. 生成本地 Release
-
-本地 Release 包含二进制和客户端补丁，因此整个 `release` 目录被 Git 忽略。
+Portable Python 检查：
 
 ```powershell
-& .\packaging\assemble-local-release.ps1 `
-  -Version '0.1.0' `
-  -ClientDirectory 'D:\path\to\WoW' `
-  -Locale zhCN `
-  -LocalePatchNumber 6
+python -m unittest discover -s .\client-extension\SoloCam\tests -p "test_*.py" -v
 ```
 
-生成后检查 `release/v0.1.0/SHA256SUMS.txt` 和压缩包内部路径，再手工上传允许
-分发的文件。
+依赖真实 EXE 的检查只读取用户显式设置的文件：
+
+```powershell
+$env:SOLOCOLLECTIONS_WOW_EXE = '<WoW>\Wow.exe'
+```
+
+没有变量时应跳过二进制依赖项，不能自动下载或伪造 EXE。
+
+## 7. 编译服务端模块
+
+模块的完整步骤位于
+[`mod-solo-collections` README](https://github.com/haha2345/mod-solo-collections#readme)。
+把模块放到 `<AzerothCore>/modules/mod-solo-collections`，重新配置
+`MODULES=static`，再编译 `authserver` 和 `worldserver`。
+
+独立模块可以使用 fallback build metadata 编译。制作成套候选时，先生成精确
+AddOn/module/Core 信息：
+
+```powershell
+& .\tools\release\New-SoloCollectionsBuildInfo.ps1 `
+  -AddonRoot $PWD `
+  -ModuleRoot ..\mod-solo-collections `
+  -CoreRoot <AzerothCore源码> `
+  -CoreBuildRoot <AzerothCore构建目录> `
+  -Configuration RelWithDebInfo
+```
+
+生成的 `src/generated/SoloCollectionsBuildInfo.inc` 是本地构建输入，被模块
+`.gitignore` 排除。
+
+## 8. 统一源码包
+
+所有仓库应先有明确 commit。输出目录必须在仓库外或忽略目录：
+
+```powershell
+python .\tools\release\build_unified_release.py `
+  --version <version> `
+  --addon-repo $PWD `
+  --module-repo ..\mod-solo-collections `
+  --core-repo <AzerothCore源码> `
+  --output-dir (Join-Path $PWD '_work\release-candidate')
+```
+
+生成器只允许项目源码、清单和许可证；EXE、DLL、MPQ、PDB、数据库、凭据和
+客户端提取素材会被拒绝。公开 GitHub Release 仍需要单独的许可证和来源审核。
+
+## 9. 客户端资源
+
+独立武器资源构建见 [BUILD_MPQ.zh-CN.md](BUILD_MPQ.zh-CN.md)。先生成到临时
+目录并回读 hash；只有明确要求时才部署。任何同名客户端文件都要先识别和备份。

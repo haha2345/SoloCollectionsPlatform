@@ -214,8 +214,8 @@ def main(argv: list[str] | None = None) -> int:
     repo = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("extract", "check"))
-    parser.add_argument("--mysql", type=Path, default=Path(r"D:\AzerothCore_NPCBots_Clean\mysql\mysql-8.4.10-winx64\bin\mysql.exe"))
-    parser.add_argument("--config", type=Path, default=Path(r"D:\AzerothCore_NPCBots_Clean\configs\worldserver.conf"))
+    parser.add_argument("--mysql", type=Path, required=True, help="Path to the MySQL client executable")
+    parser.add_argument("--config", type=Path, required=True, help="Path to a local AzerothCore worldserver.conf")
     args = parser.parse_args(argv)
     try:
         evidence, decisions = build(repo, args.mysql, args.config)

@@ -145,7 +145,7 @@ class ItemM2TexturePatchTests(unittest.TestCase):
 
     def test_real_weapon_samples_have_no_object_skin_after_patch(self):
         sample_root = Path(
-            r"F:\1_projects\wow_projects\_work\solo_collections_weapon_models\extract"
+            r"F:\fixtures\solo_collections_weapon_models\extract"
         )
         samples = {
             "Sword_2H_Blackwing_A_02.m2": r"ITEM\OBJECTCOMPONENTS\WEAPON\SWORD_2H_BLACKWING_A_02.BLP",

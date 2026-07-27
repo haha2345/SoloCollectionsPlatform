@@ -5,7 +5,7 @@ param(
     [Parameter(Mandatory = $true)][string]$Account,
     [Parameter(Mandatory = $true)][Security.SecureString]$Password,
     [string]$ExecutableName = 'Wow-SoloCam-PoC.exe',
-    [string]$LoginScript = 'F:\1_projects\wow_projects\tools\dev\Start-WowLogin.ps1'
+    [Parameter(Mandatory = $true)][string]$LoginScript
 )
 
 $ErrorActionPreference = 'Stop'
