@@ -161,7 +161,7 @@ class RoundTwoEvidencePackTests(unittest.TestCase):
         invalid = Path("C:/round-two-evidence-test-must-not-exist")
         c_drive = self.run_pack(invalid)
         self.assertNotEqual(0, c_drive.returncode)
-        self.assertIn("must stay on f:", (c_drive.stderr + c_drive.stdout).lower())
+        self.assertIn("must stay off the windows system drive", (c_drive.stderr + c_drive.stdout).lower())
         self.assertFalse(invalid.exists())
 
     def test_script_never_copies_client_executables_or_archives(self):

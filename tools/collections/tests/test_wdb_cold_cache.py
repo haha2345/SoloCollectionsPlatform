@@ -108,7 +108,7 @@ class WdbColdCacheTests(unittest.TestCase):
         self.assertIn("manifest mismatch", (restore.stderr + restore.stdout).lower())
         self.assertFalse(self.wdb.exists())
 
-    def test_backup_rejects_non_f_drive_output_before_creating_it(self):
+    def test_backup_rejects_system_drive_output_before_creating_it(self):
         invalid = Path("C:/solo-collections-wdb-test-must-not-exist")
         result = subprocess.run(
             [
@@ -132,7 +132,7 @@ class WdbColdCacheTests(unittest.TestCase):
             check=False,
         )
         self.assertNotEqual(0, result.returncode)
-        self.assertIn("must stay on f:", (result.stderr + result.stdout).lower())
+        self.assertIn("must stay off the windows system drive", (result.stderr + result.stdout).lower())
         self.assertFalse(invalid.exists())
 
     def test_scripts_never_recursively_delete_cache_or_quarantine(self):
