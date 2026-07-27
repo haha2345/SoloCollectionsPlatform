@@ -34,10 +34,10 @@ namespace SoloCollections
 {
 namespace
 {
-#include "generated/SoloCollectionsBuildInfo.inc"
+#include "SoloCollectionsBuildInfo.inc"
 #include "generated/SoloCollectionsProtocolCatalog.inc"
 
-constexpr std::string_view BackendBuild = "phase5-dev";
+constexpr std::string_view BackendBuild = "0.2.0-dev";
 constexpr std::string_view WirePrefix = "SC2\t";
 
 std::uint64_t MonotonicMilliseconds()
@@ -101,8 +101,9 @@ public:
     void OnCollectionMutationFailed(
         AccountId /*accountId*/, CollectionKey const& /*key*/, CollectionReasonCode /*reason*/) override
     {
-        // Real action requests are intentionally disabled in phase 5, so there is
-        // no pending SC2 request to correlate with a store-side failure yet.
+        // Action requests return their immediate server result. No SC2
+        // correlation token is retained for a later asynchronous store failure;
+        // diagnostics and an explicit resync remain the recovery path.
     }
 
     bool OnAccountResyncRequested(AccountId accountId) override

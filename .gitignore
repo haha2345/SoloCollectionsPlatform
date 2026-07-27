@@ -4,6 +4,14 @@
 __pycache__/
 *.py[cod]
 
+# Local build and IDE output
+/build/
+/build-*/
+/out/
+/.venv/
+/.vs/
+CMakeUserPresets.json
+
 #
 #Generic
 #

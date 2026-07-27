@@ -17,13 +17,12 @@ auditable.
 - `upstream/master` tracks the official `mod-transmog` repository.
 - `main` is the long-lived branch for this project's own development.
 - Task work is prepared on feature branches and merged into `main` only after
-  its verification gate passes.
-- No project `origin` is configured or pushed until the repository owner
-  explicitly creates and approves that remote.
+  review.
+- `origin/main` tracks this project's public repository.
 
 ## Modification scope
 
-The fork will first harden the inherited transmogrification implementation and
-then refactor it into the C++ backend for SoloCollections. Project changes are
-tracked in Git after the base commit above; the original upstream repository at
-`F:\1_projects\wow_projects\mod-transmog` remains an unmodified reference.
+The fork hardened the inherited transmogrification implementation and extended
+it into the authoritative C++ backend for SoloCollections. Project changes are
+tracked in Git after the base commit above; upstream history remains the
+auditable reference.

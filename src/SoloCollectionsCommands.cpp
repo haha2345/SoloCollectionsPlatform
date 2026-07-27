@@ -32,7 +32,7 @@ namespace SoloCollections
 {
 namespace
 {
-#include "generated/SoloCollectionsBuildInfo.inc"
+#include "SoloCollectionsBuildInfo.inc"
 
 constexpr std::uint32_t RBAC_SC_STATUS = 71050;
 constexpr std::uint32_t RBAC_SC_ACCOUNT = 71051;

@@ -26,4 +26,5 @@ stable numeric identifiers. Their meaning is defined by code/catalog manifests,
 not by SQL enum ordering. No arbitrary client text is stored in schema v1.
 
 The legacy `custom_unlocked_appearances` table is intentionally untouched. Its
-dry-run and canonical migration are owned by phase 8.
+contents are read only by explicit migration/reconciliation tools; the module
+must never silently reinterpret or delete that legacy table during startup.

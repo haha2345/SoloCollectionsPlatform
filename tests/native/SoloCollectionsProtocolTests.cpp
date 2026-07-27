@@ -26,7 +26,7 @@ void TestGoldenCodecVectors()
     std::vector<std::string> packets {
         "H|1|fedcba9876543210|0.2.0-dev|2026.07.19|local-1",
         "H|1|fedcba9876543210|0.1.0|2026.07.23.2|round-two-stage8-weapon-presentation-v2",
-        "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|phase5-dev|5",
+        "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|0.2.0-dev|5",
         "M|0123456789abcdef|1|bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac",
         "B|0123456789abcdef|17|1|1|42|179c036b|14",
         "C|0123456789abcdef|17|1|1,2,z,10,1z,2s",
@@ -67,7 +67,7 @@ void TestGoldenCodecVectors()
 
 SC::Sc2Server BuildServer(SC::AccountCollectionCache& cache)
 {
-    return SC::Sc2Server(cache, "2026.07.20.1", "wotlk-3.3.5a-local-1", "phase5-dev", {
+    return SC::Sc2Server(cache, "2026.07.20.1", "wotlk-3.3.5a-local-1", "0.2.0-dev", {
         { SC::CollectionTypeId(std::uint16_t { 1 }), "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", true },
     });
 }
