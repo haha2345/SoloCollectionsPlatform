@@ -151,8 +151,8 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
             model:SetPosition(0, 0, 0)
         end
         model:SetRotation(DEFAULT_ROTATION)
-        local loaded = record.creatureId and pcall(function()
-            model:SetCreature(record.creatureId)
+        local loaded = record.previewCreatureEntry and pcall(function()
+            model:SetCreature(record.previewCreatureEntry)
             if model.SetCamera then
                 model:SetCamera(0)
             end

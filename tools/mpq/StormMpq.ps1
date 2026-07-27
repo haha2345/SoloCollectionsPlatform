@@ -7,6 +7,7 @@ param(
     [string]$Archive,
 
     [string]$SourceRoot,
+    [string]$IncludeListFile,
     [string]$ArchiveFile,
     [string]$OutputPath,
     [string]$ArchivePrefix = '',
@@ -108,11 +109,37 @@ switch ($Command) {
         $handle = [IntPtr]::Zero
         Assert-StormResult ([StormMpq.Native]::SFileOpenArchive($archiveFull, 0, 0, [ref]$handle)) "open $archiveFull"
         try {
-            $files = Get-ChildItem -LiteralPath $sourceFull -Recurse -File
+            if ($IncludeListFile) {
+                $includeFull = [IO.Path]::GetFullPath($IncludeListFile)
+                if (-not (Test-Path -LiteralPath $includeFull -PathType Leaf)) {
+                    throw "IncludeListFile not found: $includeFull"
+                }
+                $sourcePrefix = $sourceFull.TrimEnd([IO.Path]::DirectorySeparatorChar) + [IO.Path]::DirectorySeparatorChar
+                $seen = @{}
+                $files = foreach ($line in Get-Content -LiteralPath $includeFull -Encoding UTF8) {
+                    if ([string]::IsNullOrWhiteSpace($line)) { continue }
+                    $relative = Normalize-MpqPath $line
+                    if ($seen.ContainsKey($relative.ToLowerInvariant())) { continue }
+                    $candidate = [IO.Path]::GetFullPath((Join-Path $sourceFull $relative))
+                    if (-not $candidate.StartsWith($sourcePrefix, [StringComparison]::OrdinalIgnoreCase)) {
+                        throw "IncludeListFile path escapes SourceRoot: $relative"
+                    }
+                    if (-not (Test-Path -LiteralPath $candidate -PathType Leaf)) {
+                        throw "IncludeListFile source file is missing: $relative"
+                    }
+                    $seen[$relative.ToLowerInvariant()] = $true
+                    [pscustomobject]@{ FullName=$candidate; Relative=$relative }
+                }
+            }
+            else {
+                $files = foreach ($file in Get-ChildItem -LiteralPath $sourceFull -Recurse -File) {
+                    [pscustomobject]@{ FullName=$file.FullName; Relative=(Get-RelativePathCompat $sourceFull $file.FullName) }
+                }
+            }
             $replaceExisting = [BitConverter]::ToUInt32([BitConverter]::GetBytes([int]0x80000000), 0)
             $mpqPaths = New-Object System.Collections.Generic.List[string]
             foreach ($file in $files) {
-                $relative = Get-RelativePathCompat $sourceFull $file.FullName
+                $relative = $file.Relative
                 if ([string]::IsNullOrEmpty($ArchivePrefix)) {
                     $mpqPath = Normalize-MpqPath $relative
                 } else {

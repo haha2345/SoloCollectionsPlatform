@@ -9,6 +9,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Check out matching server module
+        uses: actions/checkout@v4
+        with:
+          repository: haha2345/mod-solo-collections
+          path: _ci-deps/mod-solo-collections
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
@@ -17,10 +22,38 @@ jobs:
       - name: Install test dependencies
         shell: pwsh
         run: python -m pip install -r client-extension/SoloCam/requirements-dev.txt
+      - name: Prepare isolated F-drive workspace
+        shell: pwsh
+        run: |
+          $ciRoot = Join-Path $env:RUNNER_TEMP 'solocollections-ci'
+          if (Test-Path -LiteralPath $ciRoot) {
+            [System.IO.Directory]::Delete($ciRoot, $true)
+          }
+          $addonRoot = Join-Path $ciRoot 'SoloCollections'
+          [System.IO.Directory]::CreateDirectory($addonRoot) | Out-Null
+          Get-ChildItem -LiteralPath $env:GITHUB_WORKSPACE -Force |
+            Where-Object { $_.Name -notin @('.git', '_ci-deps', '_work') } |
+            ForEach-Object {
+              Copy-Item -LiteralPath $_.FullName -Destination $addonRoot -Recurse -Force
+            }
+          Copy-Item `
+            -LiteralPath (Join-Path $env:GITHUB_WORKSPACE '_ci-deps\mod-solo-collections') `
+            -Destination (Join-Path $ciRoot 'mod-solo-collections') `
+            -Recurse -Force
+          if (Get-PSDrive -Name F -ErrorAction SilentlyContinue) {
+            throw 'GitHub runner already has an F: drive; refusing to replace it.'
+          }
+          & subst.exe F: $ciRoot
+          if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath 'F:\SoloCollections')) {
+            throw 'Failed to create isolated F: workspace.'
+          }
+          'SOLO_COLLECTIONS_CI_ROOT=F:\SoloCollections' | Out-File `
+            -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
       - name: Run AddOn and bridge contracts
         shell: pwsh
         run: |
-          $temp = Join-Path $env:GITHUB_WORKSPACE '_work\ci-temp'
+          Set-Location $env:SOLO_COLLECTIONS_CI_ROOT
+          $temp = Join-Path $env:SOLO_COLLECTIONS_CI_ROOT '_work\ci-temp'
           New-Item -ItemType Directory -Force -Path $temp | Out-Null
           $env:TEMP = $temp
           $env:TMP = $temp
@@ -29,11 +62,19 @@ jobs:
       - name: Run SoloCam portable tests
         shell: pwsh
         run: |
-          $temp = Join-Path $env:GITHUB_WORKSPACE '_work\ci-temp'
+          Set-Location $env:SOLO_COLLECTIONS_CI_ROOT
+          $temp = Join-Path $env:SOLO_COLLECTIONS_CI_ROOT '_work\ci-temp'
           $env:TEMP = $temp
           $env:TMP = $temp
           $env:PYTHONDONTWRITEBYTECODE = '1'
           python -m unittest discover -s client-extension\SoloCam\tests -p 'test_*.py' -v
+      - name: Remove isolated drive mapping
+        if: always()
+        shell: pwsh
+        run: |
+          if (Get-PSDrive -Name F -ErrorAction SilentlyContinue) {
+            & subst.exe F: /D
+          }
 
   native-solocam:
     runs-on: windows-latest

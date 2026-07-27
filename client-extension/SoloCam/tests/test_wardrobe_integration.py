@@ -16,6 +16,7 @@ CLIENT_ROOT = Path(__file__).resolve().parents[1]
 CLIENT_SOURCE = CLIENT_ROOT / "src" / "SoloCam.cpp"
 CLIENT_ADDRESSES = CLIENT_ROOT / "src" / "ClientAddresses.hpp"
 ITEM_CAMERA_BRIDGE = CLIENT_ROOT / "src" / "ItemCameraBridge.cpp"
+CAMERA_PROFILES = ADDON_ROOT / "Data" / "Generated" / "CameraProfiles.lua"
 
 
 class WardrobeIntegrationTests(unittest.TestCase):
@@ -30,8 +31,9 @@ class WardrobeIntegrationTests(unittest.TestCase):
         cls.client_source = CLIENT_SOURCE.read_text(encoding="utf-8")
         cls.client_addresses = CLIENT_ADDRESSES.read_text(encoding="utf-8")
         cls.item_camera_bridge = ITEM_CAMERA_BRIDGE.read_text(encoding="utf-8")
+        cls.camera_profiles = CAMERA_PROFILES.read_text(encoding="utf-8")
 
-    def test_human_female_slot_scope_is_explicit(self):
+    def test_generated_character_camera_matrix_is_selected_by_identity(self):
         expected = {
             "HEAD": "0x5341",
             "SHOULDER": "0x5342",
@@ -45,13 +47,16 @@ class WardrobeIntegrationTests(unittest.TestCase):
         }
         for slot, sentinel in expected.items():
             self.assertRegex(
-                self.source,
+                self.camera_profiles,
                 rf"{slot}\s*=\s*{sentinel}",
                 f"missing custom camera handshake for {slot}",
             )
-        self.assertRegex(self.source, r'UnitSex\("player"\)\s*==\s*3')
-        self.assertRegex(self.source, r'raceToken\s*==\s*"Human"')
-        self.assertIn("CUSTOM_CAMERA_HUMAN_FEMALE[model.scRecord.slot]", self.source)
+        self.assertIn('local _, raceToken = UnitRace("player")', self.source)
+        self.assertIn('UnitSex("player")', self.source)
+        self.assertIn("SC.IdentityRegistry.ResolveCameraProfile()", self.source)
+        self.assertIn("cameraProfiles.GetProfile(", self.source)
+        self.assertNotIn("CUSTOM_CAMERA_HUMAN_FEMALE", self.source)
+        self.assertIn('CameraProfiles.mode = CameraProfiles.mode or "Generated"', self.camera_profiles)
 
     def test_all_retail_body_slots_are_available_as_filters(self):
         for slot in (
@@ -82,15 +87,13 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertNotIn('key = "TABARD"', slot_filter.group(1))
         self.assertIn('local function armorTypeMatches(record, filters)', self.catalog)
 
-    def test_slot_buttons_use_retail_casc_atlas_assets(self):
-        slot_atlas = RETAIL_MEDIA / "TransmogNavSlots.blp"
-        highlight_atlas = RETAIL_MEDIA / "BagsRoundHighlight.blp"
-        if slot_atlas.is_file():
-            self.assertEqual(slot_atlas.read_bytes()[:4], b"BLP2")
-        if highlight_atlas.is_file():
-            self.assertEqual(highlight_atlas.read_bytes()[:4], b"BLP2")
-        self.assertIn('wardrobeSlotAtlas = MEDIA_ROOT .. "Retail\\\\TransmogNavSlots.blp"', self.templates)
-        self.assertIn('roundHighlightAtlas = MEDIA_ROOT .. "Retail\\\\BagsRoundHighlight.blp"', self.templates)
+    def test_slot_buttons_use_project_owned_atlas_assets(self):
+        slot_atlas = ADDON_ROOT / "Media" / "Icons" / "WardrobeSlots" / "slot-atlas.tga"
+        highlight_atlas = ADDON_ROOT / "Media" / "Icons" / "WardrobeSlots" / "round-highlight.tga"
+        self.assertTrue(slot_atlas.is_file())
+        self.assertTrue(highlight_atlas.is_file())
+        self.assertIn('wardrobeSlotAtlas = MEDIA_ROOT .. "Icons\\\\WardrobeSlots\\\\slot-atlas.tga"', self.templates)
+        self.assertIn('roundHighlightAtlas = MEDIA_ROOT .. "Icons\\\\WardrobeSlots\\\\round-highlight.tga"', self.templates)
         self.assertIn('local SLOT_ATLAS_SIZE = 512', self.source)
         self.assertIn('selected = { 381, 426, 65, 112 }', self.source)
         self.assertIn('button.scSelected = selected', self.source)
@@ -113,7 +116,8 @@ class WardrobeIntegrationTests(unittest.TestCase):
         actual = set(re.findall(r'key\s*=\s*"([A-Z0-9_]+)"', filter_source))
         self.assertEqual(actual, expected)
         self.assertNotIn("WAR_GLAIVE", actual)
-        self.assertIn("local CLASS_WEAPON_TYPES = {", self.source)
+        self.assertIn("Identity.GetWeaponTypes(slot)", self.source)
+        self.assertNotIn("local CLASS_WEAPON_TYPES = {", self.source)
         self.assertIn("ensureWeaponTypeForSlot(SC.db.filters, value)", self.source)
         self.assertIn('weaponCategory = "ONE_HAND_SWORD"', self.appearances)
         self.assertIn("local function weaponTypeMatches(record, filters)", self.catalog)
@@ -124,9 +128,10 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertRegex(self.source, r'BACK\s*=\s*\{[^}]*rotation\s*=\s*3\.14')
 
     def test_item_cards_use_thin_retail_style_borders(self):
-        self.assertIn("local function createThinCardBorder", self.source)
-        self.assertIn("createThinCardBorder(itemHitFrame, 1)", self.source)
-        self.assertIn("createThinCardBorder(itemHitFrame, 2)", self.source)
+        self.assertIn("function UI.CreateThinCardBorder", self.templates)
+        self.assertNotIn("local function createThinCardBorder", self.source)
+        self.assertIn("UI.CreateThinCardBorder(itemHitFrame, 1)", self.source)
+        self.assertIn("UI.CreateThinCardBorder(itemHitFrame, 2)", self.source)
         self.assertIn("itemModel.scBorder:SetCollected(record.collected)", self.source)
         self.assertNotRegex(
             self.source,
@@ -146,17 +151,41 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertRegex(self.bootstrap, r'\bOFFHAND\s*=\s*true')
         self.assertIn('CreateFrame("PlayerModel", nil, itemCard)', self.source)
         self.assertIn("isStandaloneItemRecord", self.source)
-        self.assertIn("record.creatureDisplayId", self.source)
+        self.assertIn("record.syntheticDisplayId", self.source)
+        self.assertIn('record.renderMode == "STANDALONE"', self.source)
         self.assertIn("DIRECT_DISPLAY_REQUEST_BASE", self.source)
         self.assertRegex(
             self.source,
-            r"model:SetCreature\(DIRECT_DISPLAY_REQUEST_BASE\s*\+\s*record\.creatureDisplayId\)",
+            r"model:SetCreature\(DIRECT_DISPLAY_REQUEST_BASE\s*\+\s*record\.syntheticDisplayId\)",
         )
         self.assertIn("HookPlayerModelSetCreature", self.client_source)
         self.assertIn("TryDecodeDisplayInfoRequest", self.client_source)
         self.assertIn("PlayerModelSetCreatureRecord", self.client_source)
         self.assertIn("PlayerModelSetCreature", self.client_addresses)
         self.assertNotIn("ReplaceIconTexture(record.replacementTexture)", self.source)
+
+    def test_unverified_weapon_never_falls_back_to_player_body(self):
+        self.assertIn('renderKind = STANDALONE_ITEM_SLOTS[record.slot] and "UNAVAILABLE" or "BODY"', self.source)
+        self.assertIn('if renderKind == "UNAVAILABLE" then', self.source)
+        self.assertIn('unavailableText:SetText("独立模型资源尚未生成")', self.source)
+        unavailable = self.source.split('if renderKind == "UNAVAILABLE" then', 1)[1].split(
+            'if renderKind == "STANDALONE" then', 1
+        )[0]
+        self.assertNotIn('model:SetUnit("player")', unavailable)
+        self.assertNotIn("model:TryOn", unavailable)
+
+    def test_missing_standalone_bridge_fails_closed_after_model_ready_window(self):
+        self.assertIn("local STANDALONE_MODEL_READY_FRAMES = 120", self.source)
+        self.assertIn("string.lower(actualModel) == string.lower(expectedModel)", self.source)
+        self.assertIn("showStandaloneItemUnavailable(\n                    self,", self.source)
+        self.assertIn("itemObjectModel.scHostModel = itemModel", self.source)
+        fallback = self.source.split("local function showStandaloneItemUnavailable", 1)[1].split(
+            "local function queueStandaloneItemTransform", 1
+        )[0]
+        self.assertIn('host.scRenderKind = "UNAVAILABLE"', fallback)
+        self.assertIn("host:Hide()", fallback)
+        self.assertIn("host.scUnavailable:Show()", fallback)
+        self.assertNotIn('host:SetUnit("player")', fallback)
 
     def test_standalone_weapon_models_receive_explicit_lighting(self):
         self.assertIn("local function applyStandaloneItemLighting", self.source)
@@ -232,7 +261,7 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertIn("if not record.m2Camera then", body)
         self.assertLess(body.index("if model.SetRotation then"), body.index("elseif model.SetFacing then"))
         self.assertIn("model:SetRotation(rotation)", body)
-        self.assertIn("local cameraPose = getEffectiveM2CameraPose(model)", self.source)
+        self.assertIn("local cameraPose, poseSource = getEffectiveM2CameraPose(model)", self.source)
         self.assertIn("SC.M2Camera.Apply(model, cameraPose)", self.source)
 
     def test_lua_m2_camera_api_encodes_and_activates_a_full_pose(self):
@@ -255,21 +284,22 @@ class WardrobeIntegrationTests(unittest.TestCase):
         self.assertIn("kMaximumTargetOffset", self.item_camera_bridge)
 
     def test_m2_camera_tuning_panel_persists_and_exports_per_camera_key_pose(self):
-        self.assertIn("m2CameraTuning = {}", self.bootstrap)
-        self.assertIn("normalizeM2CameraTuning(db)", self.bootstrap)
+        self.assertIn("cameraTuning = tuning", self.bootstrap)
+        self.assertIn("normalizeCameraTuning(SC.db)", self.bootstrap)
         self.assertIn("function M2Camera.NormalizePose(pose)", self.m2_camera)
         self.assertIn("function M2Camera.FormatPose(pose)", self.m2_camera)
         self.assertIn("SoloCollectionsM2CameraTuningPanel", self.source)
         self.assertEqual(self.source.count("createCameraTuningSlider("), 8)
         self.assertIn('"Roll 滚转"', self.source)
-        self.assertIn("local function getM2CameraTuningKey(record)", self.source)
-        self.assertIn("SC.db.m2CameraTuning[getM2CameraTuningKey(cameraTuningPanel.scRecord)] = pose", self.source)
-        self.assertIn('key:match("^[A-Z][A-Z0-9_]*$")', self.bootstrap)
-        self.assertIn('weaponType = "%s", %s', self.source)
-        self.assertIn('cameraTuningKey = "%s", %s', self.source)
+        self.assertIn("local function getCameraTuningScopeKey(record, scope)", self.source)
+        self.assertIn("SC.CameraTuning.Set(scope, tuningKey, pose, lowerScopePose)", self.source)
+        self.assertIn('cameraScopeKeyIsValid(scope, key)', self.bootstrap)
+        self.assertIn("weaponType = record.weaponType", self.source)
+        self.assertIn("weaponFamily = getWeaponFamilyCameraKey(record)", self.source)
         self.assertNotIn('saved = SC.db.m2CameraTuning[record.id]', self.source)
         self.assertIn("function page:SyncCameraTuningPanel(record)", self.source)
-        self.assertIn("SC.M2Camera.FormatPose(cameraTuningPanel.scPose)", self.source)
+        self.assertIn("SC.M2Camera.FormatTuningExportRecord", self.source)
+        self.assertIn("buildCameraTuningExport({ {", self.source)
         self.assertIn("tuningExport:HighlightText()", self.source)
 
     def test_handshake_has_a_stock_client_fallback(self):

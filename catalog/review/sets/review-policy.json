@@ -1,0 +1,2551 @@
+{
+  "candidateHash": "69979d166c6247e3b8b283af6f46993ced1cea13ba3c86b7e8778b539c8585c9",
+  "decisions": [
+    {
+      "candidateKey": "itemset:1",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:41",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:65",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:81",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:121",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:122",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:123",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:124",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:141",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:142",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:143",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:144",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:161",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:162",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:163",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:181",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:182",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:183",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:184",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:185",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:186",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:187",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:188",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:189",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:201",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:202",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:203",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:204",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:205",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:206",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:207",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:208",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:209",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:210",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:211",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:212",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:213",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:214",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:215",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:216",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:217",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:218",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:221",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:241",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:261",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:281",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:282",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:301",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:321",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:341",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:342",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:343",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:344",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:345",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:346",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:347",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:348",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:361",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:362",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:381",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:382",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:383",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:384",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:386",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:387",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:388",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:389",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:390",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:391",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:392",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:393",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:394",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:395",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:396",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:397",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:398",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:401",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:402",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:421",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:441",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:442",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:443",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:444",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:461",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:462",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:463",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:464",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:465",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:466",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:467",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:468",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:469",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:470",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:471",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:472",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:473",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:474",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:475",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:476",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:477",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:478",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:479",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:480",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:481",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:482",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:483",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:484",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:485",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:486",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:487",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:488",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:489",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:490",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:491",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:492",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:493",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:494",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:495",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:496",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:497",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:498",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:499",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:500",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:501",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:502",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:503",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:504",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:505",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:506",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:507",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:508",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:509",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:510",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:511",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:512",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:513",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:514",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:515",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:516",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:517",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:518",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:519",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:520",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:521",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:522",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:523",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:524",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:525",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:526",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:527",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:528",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:529",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:530",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:533",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:534",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:535",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:536",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:537",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:538",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:539",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:540",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:541",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:542",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:543",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:544",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:545",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:546",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:547",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:548",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:549",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:550",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:551",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:552",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:553",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:554",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:555",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:556",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:557",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:558",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:559",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:560",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:561",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:562",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:563",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:564",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:565",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:566",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:567",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:568",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:569",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:570",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:571",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:572",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:573",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:574",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:575",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:576",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:577",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:578",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:579",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:580",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:581",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:582",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:583",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:584",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:585",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:586",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:587",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:588",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:589",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:590",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:591",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:592",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:593",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:594",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:595",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:596",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:597",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:598",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:599",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:600",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:601",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:602",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:603",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:604",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:605",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:606",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:607",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:608",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:609",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:610",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:611",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:612",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:613",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:614",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:615",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:616",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:617",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:618",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:619",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:620",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:621",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:622",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:623",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:624",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:625",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:626",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:627",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:628",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:629",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:630",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:631",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:632",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:633",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:634",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:635",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:636",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:637",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:638",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:639",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:640",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:641",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:642",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:643",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:644",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:645",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:646",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:647",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:648",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:649",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:650",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:651",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:652",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:653",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:654",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:655",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:656",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:657",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:658",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:659",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:660",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:661",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:662",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:663",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:664",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:665",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:666",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:667",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:668",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:669",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:670",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:671",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:672",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:673",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:674",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:675",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:676",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:677",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:678",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:679",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:680",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:681",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:682",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:683",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:684",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:685",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:686",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:687",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:688",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:689",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:690",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:691",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:692",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:693",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:694",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:695",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:696",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:697",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:698",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:699",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:700",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:701",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:702",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:703",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:704",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:705",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:706",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:707",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:708",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:709",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:710",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:711",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:712",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:713",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:714",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:715",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:716",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:717",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:718",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:719",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:720",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:721",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:722",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:723",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:724",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:725",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:726",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:727",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:728",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:729",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:730",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:731",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:732",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:733",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:734",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:735",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:736",
+      "decision": "excluded",
+      "reasonCode": "EMPTY_ITEMSET_ROW"
+    },
+    {
+      "candidateKey": "itemset:737",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:738",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:739",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:740",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:741",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:742",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:743",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:744",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:745",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:746",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:747",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:748",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:749",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:750",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:751",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:752",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:754",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:755",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:756",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:757",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:759",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:760",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:761",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:762",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:763",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:764",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:765",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:766",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:767",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:768",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:769",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:770",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:771",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:772",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:773",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:774",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:775",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:776",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:777",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:778",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:779",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:780",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:781",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:782",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:783",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:784",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:785",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:787",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:788",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:789",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:790",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:791",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:792",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:793",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:794",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:795",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:796",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:797",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:798",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:799",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:800",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:801",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:802",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:803",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:804",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:805",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:812",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:813",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:814",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:815",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:816",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:817",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:818",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:819",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:820",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:821",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:822",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:823",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:824",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:825",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:826",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:827",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:828",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:829",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:830",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:831",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:832",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:833",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:834",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:835",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:836",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:837",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:838",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:843",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:844",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:845",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:846",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:847",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:848",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:849",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:850",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:851",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:852",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:853",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:854",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:855",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:856",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:857",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:858",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:859",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:860",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:861",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:862",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:863",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:864",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:865",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:866",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:867",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:868",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:869",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:870",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:871",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:872",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:873",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:874",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:875",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:876",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:877",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:878",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:879",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:880",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:881",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:882",
+      "decision": "deferred",
+      "reasonCode": "FEWER_THAN_TWO_VISIBLE_CANONICAL_APPEARANCES"
+    },
+    {
+      "candidateKey": "itemset:883",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:884",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:885",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:886",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:887",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:888",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:889",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:890",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:891",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:892",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:893",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:894",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:895",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:896",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:897",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:898",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:899",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:900",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    },
+    {
+      "candidateKey": "itemset:901",
+      "decision": "accepted",
+      "reasonCode": "COMPLETE_VISIBLE_MAPPING_AND_RESOLVED_CLASS_POLICY"
+    }
+  ],
+  "schemaVersion": 1
+}

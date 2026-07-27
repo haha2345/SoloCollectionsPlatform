@@ -1,0 +1,102 @@
+spellId,name_enUS,reasonCode,reason
+3363,Nether Drake,UNUSED_LEGACY_NO_ACQUISITION_SOURCE,"Legacy Nether Drake action has no item, quest, or trainer acquisition source."
+8396,Summon Ivory Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10787,Black Nightsaber,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10788,Leopard,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10790,Tiger,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10792,Spotted Panther,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10800,Summon Brown Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10801,Summon Gray Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10802,Summon Pink Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10803,Summon Purple Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+10804,Summon Turquoise Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+15780,Green Mechanostrider,SUPERSEDED_LEGACY_VARIANT,Obsolete Green Mechanostrider variant is superseded by the player-learnable action.
+15781,Steel Mechanostrider,SUPERSEDED_LEGACY_VARIANT,Obsolete Steel Mechanostrider variant is superseded by the player-learnable action.
+24576,Chromatic Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+25675,Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+25858,Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+25859,Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+25863,Black Qiraji Battle Tank,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+26332,Summon Mouth Tentacle,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+26655,Black Qiraji Battle Tank,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+28828,Nether Drake,UNUSED_LEGACY_NO_ACQUISITION_SOURCE,Duplicate legacy Nether Drake action has no acquisition source.
+30829,Summon Kessel's Elekk,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+30837,Summon Kessel's Elekk,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+31700,Black Qiraji Battle Tank,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+31973,Kessel's Elekk,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+32345,Peep the Phoenix Mount,TEST_SPELL,Peep the Phoenix is a test action; Ashes of Al'ar is the production mount source.
+32420,Old Crappy McWeakSauce,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+33630,Blue Mechanostrider,SUPERSEDED_LEGACY_VARIANT,Obsolete Blue Mechanostrider variant is superseded by the player-learnable action.
+33631,Video Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+34068,Summon Dodostrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+39450,Tallstrider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+39910,Riding Clefthoof,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+39949,Mount (Test Anim),NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+40212,Dragonmaw Nether Drake,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42363,Dan's Steam Tank Form,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42387,Dan's Steam Tank Form (Self),NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42667,Flying Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42668,Swift Flying Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42680,Magic Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42683,Swift Magic Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42692,Rickety Magic Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+42929,[DNT] Test Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+43810,Frost Wyrm,NPC_OR_TEST_MOUNT,Frost Wyrm is an NPC or test mount action with no player acquisition source.
+43880,Ramstein's Swift Work Ram,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+43883,Rental Racing Ram,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+44655,Flying Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+44824,Flying Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+44825,Flying Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+44827,Flying Reindeer,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+45177,Copy of Riding Turtle,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+46980,Northrend Nerubian Mount (Test),NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+47977,Magic Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+48023,Headless Horseman's Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+48024,Headless Horseman's Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+49908,Pink Elekk,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+50281,Black Warp Stalker,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+51617,Headless Horseman's Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+51621,Headless Horseman's Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+51960,Frost Wyrm Mount,NPC_OR_TEST_MOUNT,Frost Wyrm Mount is an NPC or test action with no player acquisition source.
+54726,Winged Steed of the Ebon Blade,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+54727,Winged Steed of the Ebon Blade,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+55164,Swift Spectral Gryphon,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+55293,Amani War Bear,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+58819,Swift Brown Steed,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+58997,Big Blizzard Bear,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+58999,Big Blizzard Bear,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+60120,Summon Loaner Wind Rider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+61289,Borrowed Broom,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+61444,Swift Shadoweave Carpet,UNUSED_PROFESSION_TEST_VARIANT,Swift Shadoweave Carpet is an unused profession test variant with no acquisition source.
+61983,Dan's Test Mount,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+64656,Blue Skeletal Warhorse,UNUSED_TEST_VARIANT,Blue Skeletal Warhorse is an unused test variant with no acquisition source.
+64681,Loaned Gryphon,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+64761,Loaned Wind Rider,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+64992,Big Blizzard Bear [PH],NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+64993,Big Blizzard Bear [PH],NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+66122,Magic Rooster,INTERNAL_VARIANT_NOT_LEARNED,Internal Magic Rooster variant is not the player-learned item action.
+66123,Magic Rooster,INTERNAL_VARIANT_NOT_LEARNED,Internal Magic Rooster variant is not the player-learned item action.
+66124,Magic Rooster,INTERNAL_VARIANT_NOT_LEARNED,Internal Magic Rooster variant is not the player-learned item action.
+66907,Argent Warhorse,SUPERSEDED_UNUSED_VARIANT,Unused Argent Warhorse action is superseded by the actual faction reward spells.
+68768,Little White Stallion,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+68769,Little Ivory Raptor,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+71343,Big Love Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+71344,Big Love Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+71345,Big Love Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+71346,Big Love Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+71347,Big Love Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+72281,Invincible,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+72282,Invincible,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+72283,Invincible,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+72284,Invincible,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+74854,Blazing Hippogryph,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+74855,Blazing Hippogryph,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75387,Tiny Mooncloth Carpet,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75617,Celestial Steed,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75618,Celestial Steed,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75619,Celestial Steed,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75620,Celestial Steed,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75957,X-53 Touring Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+75972,X-53 Touring Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+76153,Celestial Steed,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.
+76154,X-53 Touring Rocket,NOT_PLAYER_MOUNT_SKILL_LINE,Spell is not listed in the client player-mount skill line.

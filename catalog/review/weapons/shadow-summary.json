@@ -1,0 +1,63 @@
+{
+  "assetIndexHash": "43c18a943a5b1bc5d8a0205e39c9045b634c4034db1169af9a9928b6bc061a65",
+  "assetPlanHash": "efe3f0a1f5a5d0c405ef89ce510b8a7263e2b38b0da5b0c740588fbda9f87b54",
+  "cameraBaseline": {
+    "cameraLayoutCounts": {
+      "CAMERALESS": 5740
+    },
+    "outlierCount": 820,
+    "outlierLimits": {
+      "extremeAspectRatio": 16.0,
+      "medianRadius": 0.70335,
+      "nearZeroExtent": 0.001,
+      "oversizedRadius": 10.0
+    },
+    "presetCount": 19
+  },
+  "candidateBasisHash": "224e3afa534d999e240f688b2e968d6562de5c5dbb3d105648ee0b2c15797536",
+  "candidateCsvSha256": "aa01cd64a0d483e379b7336b8794f80f87c585d382d2a033128d00e16fd33b8b",
+  "dedup": {
+    "newlyAllocatedAppearances": 3522,
+    "readyPublicAppearances": 3542,
+    "reservedAppearances": 21,
+    "reusedDisplayAppearances": 435,
+    "reusedGeometryAppearances": 2403,
+    "uniqueNewDisplays": 3087,
+    "uniqueNewGeometry": 1119
+  },
+  "denominators": {
+    "allWeaponCandidates": 5957,
+    "public": 3690
+  },
+  "inputHash": "be8a520c2b59aba96cf3f2c8bf75c362bddd2bf05a4580a411d9557cd55041a6",
+  "outliersCsvSha256": "9b0362c7bb148712a2842ab869dc536e4b4d24ab3264a76409cb059c3ded2d01",
+  "productionBoundary": {
+    "appearancePresentationsModified": false,
+    "assetBodiesCommittedToRepository": false,
+    "dbcOrMpqDeployed": false
+  },
+  "rawSourceAssetReasonCodeCounts": {
+    "INVALID_OR_MISSING_DISPLAY_TEXTURE": 2,
+    "MISSING_TEXTURE_ASSET": 2,
+    "UNRESOLVED_M2_TEXTURE_REFERENCE": 147
+  },
+  "reasonCodeCounts": {
+    "INVALID_OR_MISSING_DISPLAY_TEXTURE": 2,
+    "MISSING_TEXTURE_ASSET": 2,
+    "UNRESOLVED_M2_TEXTURE_REFERENCE": 146
+  },
+  "registryHash": "838cf367532ca929729c31d75e9e73655755f6dbe2a8839ecf0de27992c19edc",
+  "reservedImportHash": "a5ae9cc1fa943f3fb4930983f748ad204f98739f32258423e8cc0e974315b737",
+  "samplesCsvSha256": "64313f4e7330c72a3ea7ecb9e885c7d6623a48998f6dcedece5ce646669be9fb",
+  "schemaVersion": 1,
+  "sourceAssetEstimate": {
+    "bytes": 128664773,
+    "uniqueReferencedAssets": 4693
+  },
+  "summaryHash": "bb2d8d96bcedc602e609ffa517f1b1bb5d380c35f9417386368de246652be443",
+  "terminalCounts": {
+    "nonpublic": 2267,
+    "publicReady": 3542,
+    "publicUnavailable": 148
+  }
+}

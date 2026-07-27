@@ -4,11 +4,14 @@ local Catalog = SC.Catalog
 
 local VISIBLE_TILES = 18
 local GRID_COLUMNS = 3
-local TILE_WIDTH = 282
+local GRID_PADDING_X = 16
+local GRID_PADDING_TOP = 12
+local GRID_COLUMN_GAP = 6
 local TILE_HEIGHT = 72
 local COLLECTED_NAME_COLOR = { 1.00, 0.82, 0.18 }
 local UNCOLLECTED_NAME_COLOR = { 0.46, 0.43, 0.39 }
 local MACRO_PREFIX = "SCT"
+local FALLBACK_MACRO_ICON = 1
 
 local TOY_ERROR_MESSAGES = {
     BRIDGE_UNAVAILABLE = "玩具服务尚未连接，请稍后再试。",
@@ -110,6 +113,28 @@ local function findToyMacro(body)
     return nil
 end
 
+local function createToyMacro(name, icon, body, perCharacter)
+    local created, result = pcall(function()
+        return CreateMacro(name, icon, body, perCharacter)
+    end)
+    local macroIndex = created and tonumber(result) or nil
+    if macroIndex and macroIndex > 0 then
+        return macroIndex
+    end
+
+    -- Some 3.3.5 clients only accept a numeric macro-icon index even though
+    -- GetItemIcon returns a texture path. Keep the item icon where supported,
+    -- and fall back to the first built-in macro icon where it is not.
+    created, result = pcall(function()
+        return CreateMacro(name, FALLBACK_MACRO_ICON, body, perCharacter)
+    end)
+    macroIndex = created and tonumber(result) or nil
+    if macroIndex and macroIndex > 0 then
+        return macroIndex
+    end
+    return nil
+end
+
 local function createOrUpdateToyMacro(record)
     if not record or not record.collected then
         showNotice("尚未解锁这个玩具，不能拖到动作栏。")
@@ -129,23 +154,18 @@ local function createOrUpdateToyMacro(record)
     local name = MACRO_PREFIX .. string.format("%03d", record.id)
     local macroIndex = findToyMacro(body)
     if macroIndex then
-        pcall(function()
+        local edited = pcall(function()
             EditMacro(macroIndex, name, icon, body)
         end)
-    else
-        local created, result = pcall(function()
-            return CreateMacro(name, icon, body, 1)
-        end)
-        if created then
-            macroIndex = tonumber(result)
-        end
-        if not macroIndex or macroIndex <= 0 then
-            created, result = pcall(function()
-                return CreateMacro(name, icon, body, nil)
+        if not edited then
+            pcall(function()
+                EditMacro(macroIndex, name, FALLBACK_MACRO_ICON, body)
             end)
-            if created then
-                macroIndex = tonumber(result)
-            end
+        end
+    else
+        macroIndex = createToyMacro(name, icon, body, 1)
+        if not macroIndex or macroIndex <= 0 then
+            macroIndex = createToyMacro(name, icon, body, nil)
         end
     end
 
@@ -235,7 +255,7 @@ function UI.CreateToysPage(parent)
     end, "MENU")
 
     for index = 1, VISIBLE_TILES do
-        local tile = UI.CreateIconTile(grid, TILE_WIDTH, TILE_HEIGHT, selectRecord)
+        local tile = UI.CreateIconTile(grid, 1, TILE_HEIGHT, selectRecord)
         tile.scIcon:ClearAllPoints()
         tile.scIcon:SetWidth(52)
         tile.scIcon:SetHeight(52)
@@ -247,9 +267,6 @@ function UI.CreateToysPage(parent)
         tile.scName:SetJustifyH("LEFT")
         tile.scName:SetJustifyV("MIDDLE")
 
-        local column = (index - 1) % GRID_COLUMNS
-        local row = math.floor((index - 1) / GRID_COLUMNS)
-        tile:SetPoint("TOPLEFT", grid, "TOPLEFT", column * TILE_WIDTH, -(row * TILE_HEIGHT))
         tile:RegisterForClicks("LeftButtonUp", "RightButtonUp")
         tile:RegisterForDrag("LeftButton")
         tile:SetScript("OnClick", function(self, button)
@@ -282,6 +299,38 @@ function UI.CreateToysPage(parent)
         end)
         page.scTiles[index] = tile
     end
+
+    local function layoutTiles()
+        local gridWidth = math.floor((grid:GetWidth() or 0) + 0.5)
+        if gridWidth <= (2 * GRID_PADDING_X) then
+            return
+        end
+        local tileWidth = math.floor(
+            (gridWidth - (2 * GRID_PADDING_X) - ((GRID_COLUMNS - 1) * GRID_COLUMN_GAP))
+                / GRID_COLUMNS
+        )
+        local blockWidth = (GRID_COLUMNS * tileWidth) + ((GRID_COLUMNS - 1) * GRID_COLUMN_GAP)
+        local leftMargin = math.floor((gridWidth - blockWidth) / 2)
+        for index, tile in ipairs(page.scTiles) do
+            local column = (index - 1) % GRID_COLUMNS
+            local row = math.floor((index - 1) / GRID_COLUMNS)
+            tile:ClearAllPoints()
+            tile:SetWidth(tileWidth)
+            tile:SetPoint(
+                "TOPLEFT",
+                grid,
+                "TOPLEFT",
+                leftMargin + (column * (tileWidth + GRID_COLUMN_GAP)),
+                -(GRID_PADDING_TOP + (row * TILE_HEIGHT))
+            )
+        end
+        page.scTileWidth = tileWidth
+        page.scGridLeftMargin = leftMargin
+        page.scGridRightMargin = gridWidth - leftMargin - blockWidth
+    end
+
+    grid:SetScript("OnSizeChanged", layoutTiles)
+    layoutTiles()
 
     local controls = UI.CreatePageControls(page, function()
         page.scPage = math.max(1, page.scPage - 1)
@@ -386,6 +435,7 @@ function UI.CreateToysPage(parent)
     end)
 
     page.scGrid = grid
+    page.scLayoutTiles = layoutTiles
     page.scGridBackground = gridBackground
     page.scControls = controls
     page.scInteractionHint = interactionHint

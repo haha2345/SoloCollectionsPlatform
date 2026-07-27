@@ -11,6 +11,7 @@ local MAX_MODEL_SCALE = 2.5
 local MODEL_RETRY_DELAYS = { 0.1, 0.25, 0.5 }
 local MODEL_STABILITY_DELAY = 0.35
 local MODEL_MAX_STABILITY_RESTARTS = 8
+local MODEL_MAX_WINDOW = 2
 local nextFrameDriver = CreateFrame("Frame")
 local nextFrameQueue = {}
 
@@ -119,10 +120,7 @@ function UI.CreateMountsPage(parent)
     local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
     infoIcon:SetAllPoints(infoButton)
     UI.SetFallbackTexture(infoIcon)
-    local infoBorder = infoButton:CreateTexture(nil, "OVERLAY")
-    infoBorder:SetTexture(UI.Media.uncollectedFrame)
-    infoBorder:SetPoint("TOPLEFT", infoButton, "TOPLEFT", -3, 3)
-    infoBorder:SetPoint("BOTTOMRIGHT", infoButton, "BOTTOMRIGHT", 3, -3)
+    local infoBorder, infoSelectedBorder = UI.CreateCollectionCardBorders(infoButton)
 
     local name = createDetailLabel(detail, "GameFontNormalLarge", { 1, 0.82, 0.18 })
     name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
@@ -329,10 +327,12 @@ function UI.CreateMountsPage(parent)
         clearModelInteraction()
         model:ClearModel()
         unavailable:Hide()
+        rotateHint:Show()
         resetModelState()
 
         local retryIndex = 0
         local stabilityRestarts = 0
+        local modelDeadline = GetTime() + MODEL_MAX_WINDOW
         local candidatePath
         local candidateFrames = 0
         local verifyModel
@@ -346,6 +346,10 @@ function UI.CreateMountsPage(parent)
         end
 
         local function retryLoad()
+            if GetTime() >= modelDeadline then
+                failModel()
+                return
+            end
             retryIndex = retryIndex + 1
             if retryIndex <= #MODEL_RETRY_DELAYS then
                 local delay = MODEL_RETRY_DELAYS[retryIndex]
@@ -356,6 +360,10 @@ function UI.CreateMountsPage(parent)
         end
 
         local function restartStability(modelPath)
+            if GetTime() >= modelDeadline then
+                failModel()
+                return false
+            end
             stabilityRestarts = stabilityRestarts + 1
             if stabilityRestarts > MODEL_MAX_STABILITY_RESTARTS then
                 failModel()
@@ -405,6 +413,10 @@ function UI.CreateMountsPage(parent)
             if page.scModelGeneration ~= generation then
                 return
             end
+            if GetTime() >= modelDeadline then
+                failModel()
+                return
+            end
             local modelPath = getModelPath(model)
             if not modelPath then
                 candidatePath = nil
@@ -440,13 +452,17 @@ function UI.CreateMountsPage(parent)
             if page.scModelGeneration ~= generation then
                 return
             end
+            if GetTime() >= modelDeadline then
+                failModel()
+                return
+            end
             candidatePath = nil
             candidateFrames = 0
-            local loaded = record.creatureId and pcall(function()
+            local loaded = record.previewCreatureEntry and pcall(function()
                 -- GetModel() may retain its old path after ClearModel() on
                 -- 3.3.5, so emptiness cannot be used as a load barrier.
                 model:ClearModel()
-                model:SetCreature(record.creatureId)
+                model:SetCreature(record.previewCreatureEntry)
             end)
             if not loaded then
                 failModel()
@@ -466,20 +482,30 @@ function UI.CreateMountsPage(parent)
         model:ClearModel()
         unavailable:Hide()
 
-        if SC.Bridge and type(SC.Bridge.RequestModel) == "function" then
-            SC.Bridge.RequestModel(record.id, function()
-                if page.scModelGeneration ~= generation then
-                    return
-                end
-                deferNextFrame(function()
-                    applyModel(record, generation)
-                end)
-            end)
-        else
+        if not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
+            unavailable:SetText("模型预览暂不可用")
+            unavailable:Show()
+            rotateHint:Hide()
+            return
+        end
+        SC.Bridge.RequestCreaturePreview(10, record.id, function(ok, reason)
+            if page.scModelGeneration ~= generation then
+                return
+            end
+            if not ok then
+                clearModelInteraction()
+                resetModelState()
+                model:ClearModel()
+                model.scUnavailableReason = reason
+                unavailable:SetText("模型预览暂不可用")
+                unavailable:Show()
+                rotateHint:Hide()
+                return
+            end
             deferNextFrame(function()
                 applyModel(record, generation)
             end)
-        end
+        end)
     end
 
     local function selectRecord(record)
@@ -491,7 +517,8 @@ function UI.CreateMountsPage(parent)
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
         UI.SetCollectedVisual(infoIcon, record.collected)
-        infoBorder:SetTexture(record.collected and UI.Media.collectedFrame or UI.Media.uncollectedFrame)
+        infoBorder:SetCollected(record.collected)
+        infoSelectedBorder:Show()
         name:SetText(record.name or "未知坐骑")
         source:SetText("来源：" .. (record.source or "未知"))
         description:SetText(record.description or "暂无说明。")
@@ -569,6 +596,8 @@ function UI.CreateMountsPage(parent)
         favorite:SetText("设为偏好")
         favorite:Disable()
         UI.SetFallbackTexture(infoIcon)
+        infoBorder:SetCollected(false)
+        infoSelectedBorder:Hide()
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
@@ -720,6 +749,8 @@ function UI.CreateMountsPage(parent)
     page.scUnavailable = unavailable
     page.scInfoButton = infoButton
     page.scInfoIcon = infoIcon
+    page.scInfoBorder = infoBorder
+    page.scInfoSelectedBorder = infoSelectedBorder
     page.scName = name
     page.scSource = source
     page.scDescription = description

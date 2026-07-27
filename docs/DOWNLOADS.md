@@ -1,47 +1,43 @@
-# 下载、网盘和版本对应
+# Downloads and version matching / 下载与版本匹配
 
-## 下载入口
+## Current source line / 当前源码线
 
-> **GitHub Release：[SoloCollections v0.1.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.1.0)**  
-> **网盘主链接：[百度网盘下载](https://pan.baidu.com/s/1XyCl8PaimIVPPSTNUDaIOg?pwd=j8sk)**  
-> **提取码：`j8sk`**  
-> **对应项目版本：`v0.1.0`**  
-> **网盘包版本：未单独标注，以网盘内文件名和说明为准**
+The current `main` branch is newer than the historical `v0.1.0` package and
+uses the separate C++ server module:
 
-## GitHub 与网盘分别提供什么
+- AddOn: <https://github.com/haha2345/SoloCollections>
+- Module: <https://github.com/haha2345/mod-solo-collections>
 
-| 渠道 | 内容 | 不应包含 |
-| --- | --- | --- |
-| GitHub 源码 | Lua/C++/Python/PowerShell、测试、文档、自制占位素材 | EXE、MPQ、客户端提取素材、编译产物 |
-| GitHub Release | 不含 `Media/Retail` 的插件 ZIP、ALE Lua、项目自行编译的 DLL、补丁器、经权利审计后允许发布的两个 MPQ、安装说明和校验清单 | 游戏原版 EXE；权利不明确的素材或 MPQ 不应上传 |
-| 网盘 | 正式服风格完整素材包、客户端覆盖包；维护者自行决定是否提供客户端文件 | 密码、账号数据、未说明版本的混合客户端 |
-| 本地 `release` | 插件、Lua、DLL、补丁器、两个 MPQ 和双语说明的完整发布候选 | 该目录整体被 Git 忽略，不能误当源码提交 |
+当前 `main` 比历史 `v0.1.0` 安装包更新，生产后端是独立 C++ 模块。源码用户
+必须使用匹配的 AddOn/module commits 和 catalog metadata。
 
-## 下载后的安全检查
+## Historical release / 历史发布
 
-1. 先确认压缩包声明兼容的 Git 标签和网盘包版本。
-2. 使用 Release 内 `SHA256SUMS.txt` 核对文件。
-3. 对 EXE、DLL 和压缩包进行本地安全扫描。
-4. 备份客户端 `Wow.exe`、`Interface/AddOns/SoloCollections` 以及所有同名 MPQ。
-5. 不要把不同作者的整合包相互覆盖；先在纯净客户端验证。
+The old prerelease remains available for archival and migration reference:
 
-## 网盘包推荐结构
+<https://github.com/haha2345/SoloCollections/releases/tag/v0.1.0>
 
-```text
-SoloCollections-Media-<pack-version>/
-├─ media-pack.json
-├─ SHA256SUMS.txt
-├─ Interface/AddOns/SoloCollections/Media/...
-├─ Data/...                         # 可选客户端素材补丁
-└─ README.zh-CN.md
-```
+`v0.1.0` is an ALE/SC1 development preview. Do not install its server bridge or
+client package beside the current C++/SC2 source and assume they are compatible.
 
-如果网盘中提供客户端 EXE，应单独放置并写明：来源、支持的 build、SHA-256、
-是否已经修补，以及下载者必须自行确认拥有合法使用权。不要让一个来历不明的
-EXE 静默覆盖用户原文件。
+`v0.1.0` 是 ALE/SC1 开发预览。不能把它的服务端桥或客户端包与当前 C++/SC2
+源码混装后宣称兼容。
 
-## 覆盖方法
+## Client resources / 客户端资源
 
-将网盘包中从 `Interface` 或 `Data` 开始的目录复制到 WoW 客户端根目录，选择
-合并目录并仅覆盖 SoloCollections 明确列出的路径。覆盖前后都保存 SHA-256
-清单；卸载时按清单删除，不要删除用户其他模组文件。
+The source repositories intentionally do not distribute game executables,
+patched executables, MPQ/DBC/DB2/M2/SKIN/BLP/WDB files, extracted client media,
+or database dumps. Users build optional SoloCam and client-resource components
+locally from material they are entitled to use.
+
+两个源码仓库不发布游戏 EXE、补丁 EXE、MPQ/DBC/DB2/M2/SKIN/BLP/WDB、
+客户端提取素材或数据库。可选 SoloCam 和客户端资源由用户在本地从有权使用的
+材料构建。
+
+Before using any future release, verify:
+
+1. AddOn, module, and AzerothCore commits;
+2. SC2 protocol and metadata version;
+3. asset pack token and per-category mapping hashes;
+4. SQL schema/migration version;
+5. file SHA-256 and license/provenance notes.

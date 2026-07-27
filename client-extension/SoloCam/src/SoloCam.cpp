@@ -1,4 +1,5 @@
 #include "CameraProfile.hpp"
+#include "BodyCameraBridge.hpp"
 #include "ClientAddresses.hpp"
 #include "DisplayInfoBridge.hpp"
 #include "ItemCameraBridge.hpp"
@@ -43,11 +44,14 @@ constexpr std::size_t kMaximumTrackedModels = 64;
 struct TrackedModel
 {
     void* model = nullptr;
-    const HumanFemaleCameraProfile* profile = nullptr;
+    const CharacterCameraProfile* profile = nullptr;
     bool waitingForFallback = false;
     ItemCameraPose pendingItemPose{};
     ItemCameraPose activeItemPose{};
     bool itemCameraActive = false;
+    PendingBodyCamera pendingBodyCamera{};
+    BodyCameraDelta activeBodyDelta{};
+    bool bodyCameraActive = false;
 };
 
 TrackedModel g_trackedModels[kMaximumTrackedModels]{};
@@ -121,7 +125,7 @@ SyntheticCreatureRecord* AcquireDirectDisplayRecord(
     return result;
 }
 
-void ActivateHumanFemaleProfile(void* model, const HumanFemaleCameraProfile* profile)
+void ActivateCharacterProfile(void* model, const CharacterCameraProfile* profile)
 {
     EnterCriticalSection(&g_trackingLock);
     if (auto* tracked = FindTrackedModel(model, true))
@@ -129,6 +133,8 @@ void ActivateHumanFemaleProfile(void* model, const HumanFemaleCameraProfile* pro
         tracked->profile = profile;
         tracked->waitingForFallback = true;
         tracked->itemCameraActive = false;
+        tracked->bodyCameraActive = false;
+        ResetBodyCameraPending(tracked->pendingBodyCamera);
     }
     LeaveCriticalSection(&g_trackingLock);
 }
@@ -145,11 +151,60 @@ bool ApplyItemCameraRequest(
     {
         tracked->profile = nullptr;
         tracked->waitingForFallback = false;
+        tracked->bodyCameraActive = false;
+        ResetBodyCameraPending(tracked->pendingBodyCamera);
         accepted = ApplyItemCameraCommand(tracked->pendingItemPose, command, payload);
         if (accepted && command == ItemCameraCommand::Activate)
         {
             tracked->activeItemPose = tracked->pendingItemPose;
             tracked->itemCameraActive = true;
+        }
+    }
+    LeaveCriticalSection(&g_trackingLock);
+    return accepted;
+}
+
+bool ApplyBodyCameraRequest(
+    void* model,
+    BodyCameraCommand command,
+    std::uint32_t payload
+)
+{
+    bool accepted = false;
+    EnterCriticalSection(&g_trackingLock);
+    if (auto* tracked = FindTrackedModel(model, true))
+    {
+        // A body request can only follow a generated profile sentinel.  This
+        // makes a synthetic item request or an unknown stock camera index
+        // unable to opt into profile-level rendering accidentally.
+        if (tracked->profile
+            && ApplyBodyCameraCommand(tracked->pendingBodyCamera, command, payload))
+        {
+            if (command == BodyCameraCommand::Begin)
+            {
+                tracked->bodyCameraActive = false;
+                accepted = true;
+            }
+            else if (command == BodyCameraCommand::Activate)
+            {
+                if (IsBodyCameraPendingComplete(
+                        tracked->pendingBodyCamera,
+                        GetCharacterCameraProfileHash()))
+                {
+                    tracked->activeBodyDelta = tracked->pendingBodyCamera.delta;
+                    tracked->bodyCameraActive = true;
+                    // Lua sends a same-tick camera 1 fallback after activate.
+                    // Preserve the already validated body delta while consuming
+                    // that fallback so stock clients remain safe and no model
+                    // leaks its pose into a later pooled render.
+                    tracked->waitingForFallback = true;
+                    accepted = true;
+                }
+            }
+            else
+            {
+                accepted = true;
+            }
         }
     }
     LeaveCriticalSection(&g_trackingLock);
@@ -186,7 +241,9 @@ void DeactivateCustomCamera(void* model)
 
 struct CameraOverride
 {
-    const HumanFemaleCameraProfile* humanFemaleProfile = nullptr;
+    const CharacterCameraProfile* characterProfile = nullptr;
+    BodyCameraDelta bodyDelta{};
+    bool bodyCameraActive = false;
     ItemCameraPose itemPose{};
     bool itemCameraActive = false;
 };
@@ -197,9 +254,16 @@ bool GetCameraOverride(void* model, CameraOverride& override)
     EnterCriticalSection(&g_trackingLock);
     if (auto* tracked = FindTrackedModel(model, false))
     {
-        if (tracked->profile && !tracked->waitingForFallback)
+        if (tracked->profile && tracked->bodyCameraActive)
         {
-            override.humanFemaleProfile = tracked->profile;
+            override.characterProfile = tracked->profile;
+            override.bodyDelta = tracked->activeBodyDelta;
+            override.bodyCameraActive = true;
+            hasOverride = true;
+        }
+        else if (tracked->profile && !tracked->waitingForFallback)
+        {
+            override.characterProfile = tracked->profile;
             hasOverride = true;
         }
         else if (tracked->itemCameraActive)
@@ -215,6 +279,35 @@ bool GetCameraOverride(void* model, CameraOverride& override)
 
 void __fastcall HookSetCameraByIndex(void* simpleModel, void*, std::uint32_t index)
 {
+    if (IsBodyCameraRequest(index))
+    {
+        BodyCameraCommand command{};
+        std::uint32_t payload = 0;
+        if (!TryDecodeBodyCameraRequest(index, command, payload)
+            || !ApplyBodyCameraRequest(simpleModel, command, payload))
+        {
+            // Body deltas are all-or-nothing.  A missing chunk, unknown
+            // version, mismatched full profile hash, or stale model state must
+            // return to the native dressing-room camera rather than applying
+            // a partial profile correction.
+            DeactivateCustomCamera(simpleModel);
+            g_originalSetCameraByIndex(
+                simpleModel,
+                Client12340::NativeDressingRoomCamera
+            );
+            return;
+        }
+
+        if (command == BodyCameraCommand::Activate)
+        {
+            g_originalSetCameraByIndex(
+                simpleModel,
+                Client12340::NativeDressingRoomCamera
+            );
+        }
+        return;
+    }
+
     if (IsItemCameraRequest(index))
     {
         ItemCameraCommand command{};
@@ -239,9 +332,9 @@ void __fastcall HookSetCameraByIndex(void* simpleModel, void*, std::uint32_t ind
         return;
     }
 
-    if (const auto* profile = FindHumanFemaleCameraProfile(index))
+    if (const auto* profile = FindCharacterCameraProfile(index))
     {
-        ActivateHumanFemaleProfile(simpleModel, profile);
+        ActivateCharacterProfile(simpleModel, profile);
         g_originalSetCameraByIndex(simpleModel, Client12340::NativeDressingRoomCamera);
         return;
     }
@@ -291,13 +384,21 @@ void __cdecl HookRenderSimpleModel(void* simpleModel)
 
     CameraVector position{};
     CameraVector target{};
-    const bool cameraBuilt = override.humanFemaleProfile
-        ? BuildHumanFemaleCamera(
-            *override.humanFemaleProfile,
-            nativePosition,
-            nativeTarget,
-            position,
-            target)
+    const bool cameraBuilt = override.characterProfile
+        ? (override.bodyCameraActive
+            ? BuildBodyCharacterCamera(
+                *override.characterProfile,
+                override.bodyDelta,
+                nativePosition,
+                nativeTarget,
+                position,
+                target)
+            : BuildCharacterCamera(
+                *override.characterProfile,
+                nativePosition,
+                nativeTarget,
+                position,
+                target))
         : BuildItemM2Camera(
             override.itemPose,
             nativePosition,
@@ -469,7 +570,7 @@ DWORD WINAPI InstallHooks(void*)
     );
 
     OutputDebugStringA(
-        "SoloCam: multi-axis M2 camera and direct display-info bridge enabled.\n"
+        "SoloCam: body-profile, multi-axis M2 camera and direct display-info bridge enabled.\n"
     );
     return 0;
 }
@@ -477,7 +578,7 @@ DWORD WINAPI InstallHooks(void*)
 
 extern "C" __declspec(dllexport) std::uint32_t SoloCamPocVersion()
 {
-    return 6;
+    return 7;
 }
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)

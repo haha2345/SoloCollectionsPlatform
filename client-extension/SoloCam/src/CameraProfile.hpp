@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <cstdint>
 
 struct CameraVector
@@ -9,7 +10,7 @@ struct CameraVector
     float z;
 };
 
-struct HumanFemaleCameraProfile
+struct CharacterCameraProfile
 {
     std::uint32_t sentinel;
     float verticalOffset;
@@ -44,18 +45,52 @@ struct ItemCameraPose
     CameraVector targetOffset{};
 };
 
-const HumanFemaleCameraProfile* FindHumanFemaleCameraProfile(std::uint32_t sentinel);
+// A profile-level delta for a dressing-room body camera.  This deliberately
+// describes a small correction relative to a generated canonical profile,
+// rather than duplicating a per-item or per-race camera table in Lua.
+struct BodyCameraDelta
+{
+    float verticalOffsetDelta = 0.0f;
+    float horizontalOffsetDelta = 0.0f;
+    float distanceScaleMultiplier = 1.0f;
+    float minimumDistanceDelta = 0.0f;
+    float yawOffsetDelta = 0.0f;
+};
+
+constexpr float kBodyCameraOffsetDeltaLimit = 2.0f;
+constexpr float kBodyCameraMinimumDistanceDeltaLimit = 2.0f;
+constexpr float kBodyCameraMinimumDistanceScaleMultiplier = 0.50f;
+constexpr float kBodyCameraMaximumDistanceScaleMultiplier = 2.00f;
+
+const CharacterCameraProfile* FindCharacterCameraProfile(std::uint32_t sentinel);
+std::size_t GetCharacterCameraProfileCount();
+std::uint32_t GetCharacterCameraProfileVersion();
+const char* GetCharacterCameraProfileHash();
 
 // The native dressing-room camera supplies orientation. A slot profile moves
 // the target vertically/horizontally, changes the distance and can orbit the
 // view around the model, while remaining independent of UI frame position.
-bool BuildHumanFemaleCamera(
-    const HumanFemaleCameraProfile& profile,
+bool BuildCharacterCamera(
+    const CharacterCameraProfile& profile,
     const CameraVector& nativePosition,
     const CameraVector& nativeTarget,
     CameraVector& position,
     CameraVector& target
 );
+
+// Apply a validated profile delta to the canonical profile before deriving
+// the native camera vectors.  Invalid values never get clamped into a
+// different pose: callers receive false and retain the stock camera.
+bool BuildBodyCharacterCamera(
+    const CharacterCameraProfile& profile,
+    const BodyCameraDelta& delta,
+    const CameraVector& nativePosition,
+    const CameraVector& nativeTarget,
+    CameraVector& position,
+    CameraVector& target
+);
+
+bool IsBodyCameraDeltaValid(const BodyCameraDelta& delta);
 
 // Apply an item-camera pose relative to M2 camera 0.  The native M2 camera
 // remains the per-model baseline, which preserves each weapon's bounds and

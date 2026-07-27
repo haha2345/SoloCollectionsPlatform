@@ -1,16 +1,22 @@
 ## Interface: 30300
 ## Title: Solo Collections
-## Notes: Retail-style collection journal prototype for WoW 3.3.5a.
+## Notes: Server-authoritative collection journal for WoW 3.3.5a.
 ## Author: SoloCollections contributors
-## Version: 0.1.0
+## Version: 0.2.0-dev
 ## SavedVariables: SoloCollectionsDB
 
 SoloCollections.lua
+Data\Generated\Catalog.lua
+Data\Generated\IdentityRegistry.lua
+Data\Generated\PolicyRegistry.lua
+Data\Generated\CameraProfiles.lua
 Data\Mounts.lua
 Data\Pets.lua
 Data\Toys.lua
 Data\Appearances.lua
 Data\Sets.lua
+Core\IdentityRegistry.lua
+Core\CollectionState.lua
 Core\Catalog.lua
 Core\Bridge.lua
 Core\M2Camera.lua
@@ -22,4 +28,5 @@ UI\Pets.lua
 UI\Toys.lua
 UI\Wardrobe.lua
 UI\CollectionsFrame.lua
+Core\Diagnostics.lua
 Core\Bootstrap.lua

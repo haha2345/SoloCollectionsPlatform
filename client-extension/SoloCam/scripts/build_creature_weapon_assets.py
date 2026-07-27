@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import struct
+import sys
 from pathlib import Path
 
 from patch_item_m2_textures import (
@@ -189,12 +190,52 @@ def build(args: argparse.Namespace) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", type=Path, required=True)
+    parser.add_argument("--config", type=Path)
     parser.add_argument("--stage", type=Path, required=True)
-    parser.add_argument("--creature-model-data", type=Path, required=True)
-    parser.add_argument("--creature-display-info", type=Path, required=True)
+    parser.add_argument("--creature-model-data", type=Path)
+    parser.add_argument("--creature-display-info", type=Path)
+    # Registry mode is the append-only stage-seven successor to the manual
+    # 21-item config.  Keep the original mode intact for its regression
+    # fixture, but route the full shadow through the same DBC/M2 primitives.
+    parser.add_argument("--registry", type=Path)
+    parser.add_argument("--candidates", type=Path)
+    parser.add_argument("--shadow-evidence-root", type=Path)
+    parser.add_argument("--fixed-input-root", type=Path)
+    parser.add_argument("--model-camera-overrides", type=Path)
+    parser.add_argument("--batch", choices=("1", "2", "3"))
+    parser.add_argument("--bundle-id")
+    parser.add_argument("--asset-pack-version")
     args = parser.parse_args()
-    print(json.dumps(build(args), ensure_ascii=False, indent=2))
+    if args.registry is not None:
+        required = (
+            "candidates",
+            "shadow_evidence_root",
+            "fixed_input_root",
+            "batch",
+            "bundle_id",
+            "asset_pack_version",
+        )
+        missing = [name for name in required if getattr(args, name) is None]
+        if missing:
+            parser.error("registry mode requires: " + ", ".join("--" + name.replace("_", "-") for name in missing))
+        if args.config or args.creature_model_data or args.creature_display_info:
+            parser.error("registry mode cannot be combined with legacy --config/DBC inputs")
+        catalog_root = Path(__file__).resolve().parents[3] / "tools" / "catalog"
+        if str(catalog_root) not in sys.path:
+            sys.path.insert(0, str(catalog_root))
+        from weapon_bundle import build_registry_assets
+
+        result = build_registry_assets(args)
+    else:
+        missing = [
+            name
+            for name in ("config", "creature_model_data", "creature_display_info")
+            if getattr(args, name) is None
+        ]
+        if missing:
+            parser.error("legacy mode requires: " + ", ".join("--" + name.replace("_", "-") for name in missing))
+        result = build(args)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 

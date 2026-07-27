@@ -222,116 +222,60 @@ class BridgeContractTests(unittest.TestCase):
             self.assertIn(token, bridge)
         self.assertNotIn('SC.db.bridge.features = B.connected and "DEMO" or ""', bridge)
 
-    def test_client_exposes_correlated_model_and_summon_requests(self):
+    def test_client_exposes_correlated_sc2_preview_and_summon_requests(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
+            "function B.RequestCreaturePreview(typeId, collectionId, callback)",
             "function B.RequestModel(mountId, callback)",
-            "function B.SummonMount(mountId, callback)",
+            "function B.SummonMount(collectionId, callback)",
             "requestSerial",
-            "pendingModels",
-            "pendingSummons",
-            '"MODEL|"',
-            "MODEL_READY|",
-            '"SUMMON|"',
-            "SUMMON_RESULT|",
-            "pendingModels[requestId]",
-            "pendingSummons[requestId]",
+            "sc2PendingActions",
+            '"PREVIEW"',
+            '"SUMMON"',
+            "B.RequestSC2Action(typeId, collectionId, \"PREVIEW\", nil, callback)",
+            "B.RequestSC2Action(10, collectionId",
         ):
             self.assertIn(token, bridge)
-        self.assertRegex(
-            bridge,
-            r'string\.match\(message,\s*"\^MODEL_READY\|\(%d\+\)\|\(%d\+\)\$"\)',
-        )
-        self.assertRegex(
-            bridge,
-            r'string\.match\(message,\s*"\^SUMMON_RESULT\|\(%d\+\)\|[^"\n]+\$"\)',
-        )
-        self.assertRegex(bridge, r"pending\.mountId\s*~=\s*mountId")
-        on_message = function_region(bridge, "B.OnMessage")
-        model_ready = function_region(bridge, "handleModelReady")
-        summon_result = function_region(bridge, "handleSummonResult")
-        for handler, pending_table in (
-            (model_ready, "pendingModels"),
-            (summon_result, "pendingSummons"),
-        ):
-            self.assertIn(f"local pending = {pending_table}[requestId]", handler)
-            self.assertIn("pending.mountId ~= mountId", handler)
-            self.assertIn(f"{pending_table}[requestId] = nil", handler)
-            self.assertRegex(
-                handler,
-                r"(?:pending\.callback\(|pcall\(\s*pending\.callback\s*,)",
-            )
-        self.assertIn("handleModelReady(", on_message)
-        self.assertIn("handleSummonResult(", on_message)
-        async_positions = [
-            on_message.find("handleModelReady("),
-            on_message.find("handleSummonResult("),
-        ]
-        self.assertTrue(all(position >= 0 for position in async_positions))
-        for authentication_guard in (
-            "B.prefix ~= prefix",
-            'channel ~= "WHISPER"',
-            'sender ~= UnitName("player")',
-        ):
-            guard_position = on_message.find(authentication_guard)
-            self.assertGreaterEqual(guard_position, 0)
-            self.assertLess(
-                guard_position,
-                min(async_positions),
-                f"{authentication_guard} must run before asynchronous dispatch",
-            )
-        waiting_guard = on_message.find("if not B.waiting")
-        self.assertTrue(
-            waiting_guard < 0 or waiting_guard > max(async_positions),
-            "a top-level waiting guard must not swallow asynchronous bridge responses",
-        )
+        self.assertNotIn("pendingModels", bridge)
+        self.assertNotIn("MODEL_READY|", bridge)
+        preview = function_region(bridge, "B.RequestCreaturePreview")
+        self.assertIn("typeId ~= 10 and typeId ~= 11", preview)
+        self.assertIn("isPositiveInteger(collectionId)", preview)
+        self.assertIn('B.RequestSC2Action(typeId, collectionId, "PREVIEW", nil, callback)', preview)
 
-    def test_client_exposes_independent_pet_model_and_summon_requests(self):
+    def test_client_keeps_pet_model_preview_separate_from_authoritative_summon(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
-            "pendingPetModels",
-            "pendingPetSummons",
             "function B.RequestPetModel(petId, callback)",
-            "function B.SummonPet(petId, callback)",
-            '"PET_MODEL|"',
-            '"PET_SUMMON|"',
-            'string.match(message, "^PET_MODEL_READY|(%d+)|(%d+)$")',
-            'string.match(message, "^PET_SUMMON_RESULT|(%d+)|(.+)$")',
+            "function B.SummonPet(collectionId, callback)",
+            "B.RequestCreaturePreview(11, petId, callback)",
         ):
             self.assertIn(token, bridge)
-        for function_name, pending_table in (
-            ("B.RequestPetModel", "pendingPetModels"),
-            ("B.SummonPet", "pendingPetSummons"),
-        ):
-            request = function_region(bridge, function_name)
-            self.assertIn("isPositiveInteger(petId)", request)
-            self.assertIn(f"{pending_table}[requestId] = {{", request)
-            self.assertIn("petId = petId", request)
+        self.assertNotIn("pendingPetModels", bridge)
+        self.assertNotIn("PET_MODEL_READY|", bridge)
+        preview = function_region(bridge, "B.RequestPetModel")
+        self.assertIn("B.RequestCreaturePreview(11, petId, callback)", preview)
+        summon = function_region(bridge, "B.SummonPet")
+        self.assertIn("isPositiveInteger(collectionId)", summon)
+        self.assertIn("if not B.sc2Connected then", summon)
+        self.assertIn('B.RequestSC2Action(11, collectionId, "SUMMON", nil, callback)', summon)
 
     def test_client_exposes_correlated_toy_use_requests(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         for token in (
-            "pendingToyUses",
-            "function B.UseToy(toyId, callback)",
-            '"TOY_USE|"',
-            'string.match(message, "^TOY_USE_RESULT|(%d+)|(.+)$")',
-            "handleToyUseResult(",
+            "function B.UseToy(collectionId, callback)",
+            'collection.typeKey == "toy"',
+            "collection.requiresTarget",
         ):
             self.assertIn(token, bridge)
         request = function_region(bridge, "B.UseToy")
         for token in (
-            "isPositiveInteger(toyId)",
-            'if not B.connected then',
+            "isPositiveInteger(collectionId)",
+            'if not B.sc2Connected then',
             '"BRIDGE_UNAVAILABLE"',
-            "pendingToyUses[requestId] = {",
-            "toyId = toyId",
-            "deadline = GetTime() + requestTimeout",
+            'B.RequestSC2Action(12, collectionId, "USE", target, callback)',
         ):
             self.assertIn(token, request)
-        handler = function_region(bridge, "handleToyUseResult")
-        self.assertIn("local pending = pendingToyUses[requestId]", handler)
-        self.assertIn("pending.toyId ~= toyId", handler)
-        self.assertIn("pendingToyUses[requestId] = nil", handler)
 
     def test_client_request_timeouts_clear_all_pending_tables(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
@@ -341,11 +285,10 @@ class BridgeContractTests(unittest.TestCase):
         self.assertLessEqual(float(timeout.group(1)), 10)
         expiry = function_region(bridge, "expirePendingRequests")
         for pending_table in (
-            "pendingModels",
             "pendingSummons",
-            "pendingPetModels",
             "pendingPetSummons",
             "pendingToyUses",
+            "sc2PendingActions",
         ):
             self.assertIn(f"pairs({pending_table})", expiry)
             self.assertIn(f"{pending_table}[requestId] = nil", expiry)
@@ -376,25 +319,32 @@ class BridgeContractTests(unittest.TestCase):
         ):
             self.assertIn(token, validator)
 
-        for function_name, pending_table, verb in (
-            ("B.RequestModel", "pendingModels", "MODEL"),
-            ("B.SummonMount", "pendingSummons", "SUMMON"),
+        request = function_region(bridge, "B.RequestSC2Action")
+        for token in (
+            "isPositiveInteger(typeId)",
+            "isPositiveInteger(collectionId)",
+            'if not B.sc2Connected',
+            '"BRIDGE_UNAVAILABLE"',
+            "requestSerial = requestSerial + 1",
+            "sc2PendingActions[requestId] = {",
+            "deadline = GetTime() + requestTimeout",
+            "callback = callback",
+            '"Q", CS.sessionNonce',
+            '"WHISPER"',
+            'UnitName("player")',
         ):
-            request = function_region(bridge, function_name)
-            for token in (
-                "isPositiveInteger(mountId)",
-                'if not B.connected then',
-                '"BRIDGE_UNAVAILABLE"',
-                "requestSerial = requestSerial + 1",
-                f"{pending_table}[requestId] = {{",
-                "mountId = mountId",
-                "deadline = GetTime() + requestTimeout",
-                "callback = callback",
-                f'"{verb}|"',
-                '"WHISPER"',
-                'UnitName("player")',
-            ):
-                self.assertIn(token, request)
+            self.assertIn(token, request)
+
+        summon = function_region(bridge, "B.SummonMount")
+        for token in (
+            "isPositiveInteger(collectionId)",
+            'if not B.sc2Connected then',
+            '"BRIDGE_UNAVAILABLE"',
+            'B.RequestSC2Action(10, collectionId, "SUMMON", nil, callback)',
+        ):
+            self.assertIn(token, summon)
+        self.assertNotIn('"SUMMON|"', summon)
+        self.assertNotIn("mountId", summon)
 
         self.assertEqual(
             1,
@@ -431,6 +381,33 @@ class BridgeContractTests(unittest.TestCase):
             "server error reasons must be a single safe protocol token",
         )
 
+    def test_cpp_creature_preview_uses_only_sc2_and_has_no_sc1_pending_path(self):
+        bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        preview = function_region(bridge, "B.RequestCreaturePreview")
+        self.assertIn('B.RequestSC2Action(typeId, collectionId, "PREVIEW", nil, callback)', preview)
+        for wrapper, type_id in (("B.RequestModel", 10), ("B.RequestPetModel", 11)):
+            region = function_region(bridge, wrapper)
+            self.assertIn(f"B.RequestCreaturePreview({type_id}", region)
+            self.assertNotIn("B.connected", region)
+            self.assertNotIn("SendAddonMessage", region)
+            self.assertNotIn("B.prefix", region)
+        for retired in ("pendingModels", "pendingPetModels", "MODEL_READY", "PET_MODEL_READY"):
+            self.assertNotIn(retired, bridge)
+
+    def test_failed_creature_preview_callback_cannot_reach_set_creature(self):
+        for name in ("Mounts.lua", "Pets.lua"):
+            page = read_text(ADDON / "UI" / name)
+            start = page.index("    local function requestModel(record)")
+            end = page.index("    local function selectRecord(record)", start)
+            request = page[start:end]
+            self.assertIn("function(ok, reason)", request)
+            self.assertIn("if not ok then", request)
+            self.assertIn('unavailable:SetText("模型预览暂不可用")', request)
+            self.assertNotIn("model:SetCreature", request)
+            self.assertLess(request.index("if not ok then"), request.index("applyModel(record, generation)"))
+            failed = request[request.index("if not ok then") : request.index("applyModel(record, generation)")]
+            self.assertIn("return", failed)
+
     def test_server_bridge_has_no_database_or_inventory_mutations(self):
         self.assertTrue(SERVER_LUA.is_file(), f"missing {SERVER_LUA}")
         text = read_text(SERVER_LUA)
@@ -447,6 +424,26 @@ class BridgeContractTests(unittest.TestCase):
             "if prefix ~= PREFIX then",
         ):
             self.assertIn(guard, text)
+        for observable in (
+            'PrintInfo("[SoloCollections] " .. tostring(message))',
+            'event=sc1_bridge_load enabled=',
+            'event=sc1_handshake result=received enabled=',
+            'event=sc1_handshake result=accepted',
+        ):
+            self.assertIn(observable, text)
+        for ownership_guard in (
+            'GetConfigValue("SoloCollections.Backend")',
+            'return "compare"',
+            'BACKEND ~= "cpp"',
+            'if ENABLED then\n    RegisterServerEvent(30, onAddonMessage)',
+            'RegisterServerEvent(30, onRetiredAddonMessage)',
+            'event=sc1_bridge_register result=retired backend=',
+            'UPGRADE_RESPONSE = "UPGRADE_REQUIRED|2"',
+        ):
+            self.assertIn(ownership_guard, text)
+        client_bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        self.assertIn('B.upgradeResponse = "UPGRADE_REQUIRED|2"', client_bridge)
+        self.assertIn('B.Finish(false, "upgrade_required")', client_bridge)
         for forbidden in (
             "WorldDBQuery",
             "CharDBQuery",

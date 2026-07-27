@@ -1,0 +1,23 @@
+{
+  "allowedUiLifecycles": [
+    "deferred",
+    "deprecated",
+    "hidden_internal",
+    "public",
+    "test",
+    "unobtainable"
+  ],
+  "decisionOrder": [
+    "manual_override",
+    "catalog_tombstone",
+    "incomplete_evidence",
+    "test_signal",
+    "internal_signal",
+    "deprecated_signal",
+    "known_acquisition",
+    "unobtainable"
+  ],
+  "nameRiskIsDecisionOnlyAfterReview": true,
+  "schemaVersion": 1,
+  "uiLifecycleDoesNotChangeCatalogAuthorization": true
+}
