@@ -1,142 +1,132 @@
-# SoloCollections 完整安装指南
+# SoloCollections 安装与回滚
 
-## 1. 适用范围
+## 1. 适用环境
 
-- World of Warcraft 3.3.5a build 12340；
-- 推荐纯净、未整合其他客户端 DBC/M2 修改的客户端；
-- AddOn 可独立运行演示界面；
-- ALE Lua 提供服务端握手和演示动作；
-- SoloCam 与两个 MPQ 用于完整的局部镜头和武器独立模型。
+- World of Warcraft 3.3.5a build 12340，x86；
+- AzerothCore WotLK；
+- `SoloCollections` AddOn 与 `mod-solo-collections` C++ 模块；
+- MySQL、Core 数据文件和其他依赖按 AzerothCore 官方文档配置；
+- 可选 SoloCam 只支持 README 中列出的精确 EXE hash。
 
-## 2. Release 文件说明
+当前 `main` 源码不能和旧 `v0.1.0` 的 ALE 演示包混装。先确定要使用的 AddOn
+commit、module commit、metadata 和资源包版本。
+
+## 2. 准备和备份
+
+1. 停止 `worldserver` 和 WoW 客户端。
+2. 备份 characters/auth/world 数据库。
+3. 记录 AzerothCore、模块和 AddOn commit。
+4. 备份现有的模块配置和 `Interface/AddOns/SoloCollections`。
+5. 如要安装客户端扩展，先记录同名 EXE/DLL/MPQ 的路径和 SHA-256。
+
+不要直接覆盖来源不明的同名 MPQ 或客户端文件。
+
+## 3. 安装核心模块
+
+把模块放入：
 
 ```text
-release/v0.1.0/
-├─ addon/SoloCollections-v0.1.0.zip
-├─ server/solo_collections.lua
-├─ client-extension/SoloCam.dll
-├─ client-extension/poc_patch.py
-├─ client-extension/requirements-dev.txt
-├─ client-patches/Data/Patch-W.MPQ
-├─ client-patches/Data/zhCN/patch-zhCN-6.MPQ
-├─ README.zh-CN.md
-├─ README.en.md
-└─ SHA256SUMS.txt
+<AzerothCore source>/modules/mod-solo-collections/
 ```
 
-## 3. 安装 AddOn
+重新运行 CMake，确保 `MODULES=static`，然后编译并安装 `authserver` 和
+`worldserver`。详细环境和命令见
+[模块仓库 README](https://github.com/haha2345/mod-solo-collections#readme)。
 
-1. 关闭游戏。
-2. 解压 `SoloCollections-v0.1.0.zip`。
-3. 确认最终结构为：
+模块的 `include.sh` 会向 AzerothCore 注册 SQL snapshot/update 目录。新数据库
+使用 `data/sql/db-characters/solo_collections_schema_v1.sql`；已有数据库使用
+append-only update `data/sql/updates/char/2026_07_20_00_solo_collections_schema_v1.sql`。
+不要对同一数据库同时手工导入 snapshot 和 update。
+
+## 4. 配置唯一后端
+
+将编译安装后的 `transmog.conf.dist` 复制成运行时 `transmog.conf`，至少确认：
+
+```ini
+SoloCollections.Backend = Cpp
+SoloCollections.Preview.Enabled = 1
+```
+
+`Compare` 只用于受控迁移对照；`Lua` 是旧后端。生产环境选择 `Cpp` 后，不要再
+让 ALE/SC1 脚本响应收藏动作。
+
+其他 `Transmogrification.*` 选项按服务器规则调整。不要把包含私有运行设置的
+实际 `.conf` 提交到 Git。
+
+## 5. 安装 AddOn
+
+复制：
+
+```text
+<SoloCollections repo>/addon/SoloCollections/
+    -> <WoW>/Interface/AddOns/SoloCollections/
+```
+
+确认没有多套一层目录，最终文件是：
 
 ```text
 <WoW>/Interface/AddOns/SoloCollections/SoloCollections.toc
 ```
 
-4. 登录角色，在插件列表中启用 `Solo Collections`。
-5. 如果只安装 AddOn，收藏页仍能显示静态演示数据；依赖服务端的召唤/使用动作
-   会保持演示或不可用状态。
+启动客户端，在角色选择页启用 `Solo Collections`。
 
-## 4. 安装 ALE 服务端脚本
+## 6. 第一次启动检查
 
-前提：服务器已经安装与当前 AzerothCore 兼容的 ALE/mod-ale。
-
-1. 将 `server/solo_collections.lua` 复制到服务器的 ALE 脚本目录，例如：
+启动 `worldserver`，检查：
 
 ```text
-<AzerothCore runtime>/lua_scripts/solo_collections.lua
+event=startup_versions
+event=schema_check result=ready
 ```
 
-2. 保留旧文件备份。
-3. 重启 `worldserver`；仅在你的 ALE 版本明确支持安全热重载时才使用热重载。
-4. 查看世界服日志，确认脚本加载且没有 Lua 语法/API 错误。
-5. 登录游戏打开收藏窗口，确认客户端收到 `SC1` 握手结果。
-
-当前脚本不是完整持久化收藏数据库，只提供协议、白名单、限流、模型缓存和
-演示动作桥。
-
-## 5. 安装两个 MPQ
-
-### zhCN 简体中文客户端
-
-关闭游戏后复制：
+管理员登录后执行：
 
 ```text
-release/v0.1.0/client-patches/Data/Patch-W.MPQ
-    -> <WoW>/Data/Patch-W.MPQ
-
-release/v0.1.0/client-patches/Data/zhCN/patch-zhCN-6.MPQ
-    -> <WoW>/Data/zhCN/patch-zhCN-6.MPQ
+.solocollections status
 ```
 
-如果目标已存在，先备份，不能直接假设它属于 SoloCollections。
+重点确认：
 
-### enUS、zhTW、deDE 等客户端
+- backend 为 `Cpp`；
+- schema 为 ready；
+- provider 没有失败；
+- `pending_writes` 会回到合理值；
+- AddOn SC2 握手完成；
+- metadata/asset mismatch 没有被忽略。
 
-`Patch-W.MPQ` 的模型资源可以用于纯净的同版本客户端，但
-`patch-zhCN-6.MPQ` 只允许用于 zhCN。其他语言必须从自己的纯净客户端 DBC
-生成：
+## 7. 可选 SoloCam
 
-```text
-Data/enUS/patch-enUS-6.MPQ
-Data/zhTW/patch-zhTW-6.MPQ
-Data/deDE/patch-deDE-6.MPQ
-```
-
-具体命令见[跨语言 MPQ 自建指南](BUILD_MPQ.zh-CN.md)。
-
-## 6. 安装 SoloCam
-
-SoloCam 仅支持原始 EXE SHA-256：
+SoloCam 只接受原始 `Wow.exe` SHA-256：
 
 ```text
 AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8
 ```
 
-1. 将 `SoloCam.dll` 和 `poc_patch.py` 放到客户端根目录。
-2. 用 PowerShell 检查自己的 `Wow.exe`：
+先阅读 [SoloCam README](../client-extension/SoloCam/README.md)。部署脚本创建
+`Wow-SoloCam-PoC.exe` 副本和 `SoloCam.dll`，不覆盖原文件。哈希不同、字节
+签名不同或客户端并非 build 12340 时必须停止。
 
-```powershell
-Get-FileHash -LiteralPath '.\Wow.exe' -Algorithm SHA256
-```
+武器独立模型还需要用户从自己合法取得的客户端构建资源。仓库不提供游戏
+M2/SKIN/BLP/DBC/MPQ。流程见 [BUILD_MPQ.zh-CN.md](BUILD_MPQ.zh-CN.md)。
 
-3. 哈希完全一致后执行：
+## 8. 客户端验收
 
-```powershell
-python .\poc_patch.py .\Wow.exe .\Wow-SoloCam-PoC.exe
-```
+1. 打开全部五个页面。
+2. 重新登录和 `/reload` 后确认收藏状态一致。
+3. 检查坐骑/宠物动作、玩具结果、外观收藏和套装进度。
+4. 在不同装备部位切换物品页，确认模型不会串到相邻卡片。
+5. 关闭 SoloCam 验证原生 fallback 或明确 `UNAVAILABLE`。
+6. 修改 asset token 做隔离环境检查时，必须看到 fail closed。
 
-4. 使用 `Wow-SoloCam-PoC.exe` 启动；原 `Wow.exe` 保留为回退入口。
-5. 哈希不同必须停止，不能强行修改脚本地址。
+镜头质量应按 [CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md) 记录实际
+种族、性别、部位、分辨率、UI Scale 和截图。
 
-`poc_patch.py` 本身只使用 Python 标准库；`requirements-dev.txt` 主要供地址分析
-和测试使用。
+## 9. 回滚
 
-## 7. 安装网盘素材
-
-1. 从[下载说明](DOWNLOADS.md)中的维护者链接取得与 `v0.1.0` 对应的素材包。
-2. 核对 SHA-256 和包内 `media-pack.json`。
-3. 将包内 `Interface`、`Data` 等目录复制到 WoW 根目录。
-4. 只覆盖清单列出的 SoloCollections 路径。
-5. 若包中含客户端 EXE，先备份并核对哈希；项目不保证用户有权再分发游戏文件。
-
-## 8. 推荐安装顺序
-
-```text
-纯净客户端备份
--> AddOn
--> 与语言匹配的两个 MPQ
--> 网盘完整素材
--> SoloCam DLL/PoC EXE
--> ALE Lua
--> 登录验收
-```
-
-## 9. 卸载与回滚
-
-- 删除 `Interface/AddOns/SoloCollections`；
-- 删除 `SoloCam.dll` 和 `Wow-SoloCam-PoC.exe`，不要删除原 `Wow.exe`；
-- 恢复安装前备份的 `Patch-W.MPQ` 和语言补丁；若原来没有同名文件，再删除；
-- 删除/恢复服务器 `solo_collections.lua` 后重启世界服；
-- 网盘素材按其 SHA-256 清单逐项回滚。
+1. 停止客户端和世界服。
+2. 恢复上一个 `worldserver`、模块配置和对应 AddOn。
+3. 恢复客户端同名文件的精确备份，或删除本次新增且安装前不存在的文件。
+4. 数据库 schema v1 是 append-only；不要在没有独立数据库备份和迁移方案时
+   直接删除收藏表。
+5. 启动旧版本前确认它理解当前 schema/revision；不确定时先在数据库副本验证。
+6. 核对恢复后的文件 hash、后端模式和 `.solocollections status`。

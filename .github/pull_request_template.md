@@ -2,36 +2,45 @@
 
 Describe one focused problem and the user-visible result.
 
-## Components / 涉及组件
+## Scope / 修改范围
 
-- [ ] AddOn
-- [ ] ALE Lua
-- [ ] SoloCam
-- [ ] MPQ tooling
-- [ ] Documentation/media placeholders
+- [ ] AddOn UI or Lua runtime
+- [ ] Catalog source, review data, or generator
+- [ ] SC2 protocol (link the matching module PR)
+- [ ] SoloCam or camera parameters
+- [ ] MPQ/resource tooling
+- [ ] Documentation or screenshots
 
 ## Environment / 环境
 
-- WoW build:
-- `Wow.exe` SHA-256:
-- Client locale:
-- AzerothCore revision:
-- ALE/mod-ale revision:
+- WoW build and locale:
+- Original or HD/custom client:
+- `Wow.exe` SHA-256 (SoloCam changes only):
+- AzerothCore revision (server changes only):
+- Matching `mod-solo-collections` commit/PR:
 
-## Validation / 验证
+## Evidence / 证据
 
-- [ ] `tools/collections/tests` pass
-- [ ] `client-extension/SoloCam/tests` pass
-- [ ] Native x86 tests pass when C++ changed
-- [ ] Clean-client MPQ round-trip verification passes when MPQ tooling changed
-- [ ] In-game steps and result are documented below
+List only checks that were actually run. Keep source/static, build, server
+runtime, client runtime, and visual acceptance as separate results.
 
-## Screenshots / 截图
+- Source/static:
+- Build:
+- Server runtime:
+- Client runtime:
+- Visual acceptance:
 
-Attach before/after images with personal data removed.
+For camera changes, attach before/after screenshots and the exported profile
+identity/parameters. A successful build or DLL load is not visual acceptance.
 
-## Provenance / 来源
+## Agent assistance / Agent 辅助
 
-- [ ] No game executable, MPQ, extracted client media, secret, or build output is included
-- [ ] Every third-party code or asset source and license is listed
-- [ ] I have the right to submit this contribution under the project's eventual license
+- [ ] No coding Agent was used
+- [ ] An Agent was used; its scope and human-reviewed changes are described below
+
+## Repository boundary / 仓库边界
+
+- [ ] No game executable, DLL, MPQ, WDB, extracted client media, credential, or local runtime output is included
+- [ ] Generated files match their canonical source/review inputs
+- [ ] Third-party sources and licenses are documented
+- [ ] I have the right to submit this contribution under GPL-3.0-or-later

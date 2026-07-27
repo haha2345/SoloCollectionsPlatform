@@ -3,7 +3,7 @@ SoloCollections = SoloCollections or {}
 local SC = SoloCollections
 
 SC.NAME = "SoloCollections"
-SC.VERSION = "0.1.0"
+SC.VERSION = "0.2.0-dev"
 SC.PROTOCOL = "SC1"
 SC.PROTOCOL_VERSION = 1
 SC.TABS = {

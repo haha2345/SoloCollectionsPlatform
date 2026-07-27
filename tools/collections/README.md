@@ -1,27 +1,27 @@
-# SoloCollections Phase 1 tooling
+# AddOn, catalog, and protocol checks
 
-This directory contains contract tests, catalog verification, safe deployment, and source/live hash verification for the standalone WoW 3.3.5a `SoloCollections` AddOn.
+This directory contains the maintained contract checks for the current
+SoloCollections AddOn, generated catalog, SC2 wire format, and camera data.
+Early phase deployment scripts and the unsafe player-M2 camera experiment are
+intentionally not part of the public source line.
 
-Run all contracts with:
+Run the portable checks from the repository root:
 
 ```powershell
-python -m unittest discover -s tools\collections\tests -p "test_*.py" -v
+$env:PYTHONDONTWRITEBYTECODE = '1'
+python -m unittest discover -s .\tools\collections\tests -p "test_*.py" -v
 ```
 
-Current architecture documentation lives under `docs/architecture`; preserved
-historical plans live under `docs/history` and may contain obsolete paths.
+The checks do not replace an AzerothCore build, a live server session, or
+visual acceptance in the 3.3.5a client. See:
 
-## WotLK M2 camera research tool
+- [`docs/BUILDING.en.md`](../../docs/BUILDING.en.md)
+- [`docs/BUILDING.zh-CN.md`](../../docs/BUILDING.zh-CN.md)
+- [`docs/CAMERA_CONTRIBUTIONS.md`](../../docs/CAMERA_CONTRIBUTIONS.md)
 
-`m2_camera_patch.py` appends a camera to a version-264 `MD20` model without
-relocating existing M2 data. It is an offline format-research tool, not a
-supported player-model deployment tool.
+## 中文
 
-**Do not deploy a third camera to a playable character M2.** Runtime testing on
-the 3.3.5 client produced deterministic `ERROR #132` access violations while
-loading HumanFemale.m2, even though independent parsers accepted the appended
-array. Player-model inputs are therefore blocked unless the explicitly unsafe
-offline-research flag is supplied.
+本目录只保留当前 AddOn、生成目录、SC2 协议和镜头数据的可移植检查。早期部署
+脚本以及已确认不适合生产的玩家 M2 追加 camera 实验不再随公共源码保留。
 
-The patcher accepts only the known two-camera WotLK layout with lookup
-`[0, 1]`; already-patched or structurally different models fail closed.
+这些检查不能代替 AzerothCore 编译、真实服务端运行或 3.3.5a 客户端视觉验收。

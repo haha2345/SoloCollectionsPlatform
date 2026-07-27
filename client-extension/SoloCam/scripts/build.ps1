@@ -13,13 +13,6 @@ $ObjectRoot = Join-Path $BuildRoot 'obj'
 $TempRoot = Join-Path $BuildRoot 'temp'
 
 if ([string]::IsNullOrWhiteSpace($VcVars)) {
-    $KnownVcVars = 'D:\vs\buildtools\VC\Auxiliary\Build\vcvarsall.bat'
-    if (Test-Path -LiteralPath $KnownVcVars -PathType Leaf) {
-        $VcVars = $KnownVcVars
-    }
-}
-
-if ([string]::IsNullOrWhiteSpace($VcVars)) {
     $VsWhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'
     if (Test-Path -LiteralPath $VsWhere -PathType Leaf) {
         $InstallRoot = & $VsWhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath

@@ -24,10 +24,10 @@
         "enabledCategoryFlags": "0000001f",
         "metadataVersion": "2026.07.19",
         "assetPackVersion": "local-1",
-        "backendBuild": "phase5-dev",
+        "backendBuild": "0.2.0-dev",
         "categoryCount": 5
       },
-      "wire": "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|phase5-dev|5"
+      "wire": "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|0.2.0-dev|5"
     },
     {
       "name": "hello_with_stage8_asset_pack",
@@ -51,10 +51,10 @@
         "enabledCategoryFlags": "00007e01",
         "metadataVersion": "2026.07.23.2",
         "assetPackVersion": "round-two-stage8-weapon-presentation-v2",
-        "backendBuild": "phase5-dev",
+        "backendBuild": "0.2.0-dev",
         "categoryCount": 7
       },
-      "wire": "A|1|0123456789abcdef|162|00007e01|2026.07.23.2|round-two-stage8-weapon-presentation-v2|phase5-dev|7"
+      "wire": "A|1|0123456789abcdef|162|00007e01|2026.07.23.2|round-two-stage8-weapon-presentation-v2|0.2.0-dev|7"
     },
     {
       "name": "category_map",

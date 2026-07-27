@@ -1,8 +1,8 @@
 ## Interface: 30300
 ## Title: Solo Collections
-## Notes: Retail-style collection journal prototype for WoW 3.3.5a.
+## Notes: Server-authoritative collection journal for WoW 3.3.5a.
 ## Author: SoloCollections contributors
-## Version: 0.1.0
+## Version: 0.2.0-dev
 ## SavedVariables: SoloCollectionsDB
 
 SoloCollections.lua
