@@ -83,7 +83,7 @@ def _manifest_files(manifest: dict[str, Any]) -> dict[str, dict[str, Any]]:
 def verify_evidence_root(root: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
     root = root.resolve()
     if os.name == "nt":
-        require(root.drive.upper() == "F:", "evidence root must stay on F:")
+        require(root.drive.upper() != "C:", "evidence root must stay off the Windows system drive")
     manifest_path = root / "evidence-manifest.json"
     manifest = read_json(manifest_path)
     require(manifest.get("schemaVersion") == 1, "unsupported evidence manifest schema")

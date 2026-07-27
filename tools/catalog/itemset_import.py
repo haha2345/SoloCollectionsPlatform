@@ -81,7 +81,7 @@ def sha256(path: Path) -> str:
 def verify_evidence_root(root: Path) -> tuple[dict[str, Any], dict[str, Path]]:
     root = root.resolve()
     if os.name == "nt":
-        require(root.drive.upper() == "F:", "ItemSet evidence root must stay on F:")
+        require(root.drive.upper() != "C:", "ItemSet evidence root must stay off the Windows system drive")
     manifest = read_json(root / "evidence-manifest.json")
     require(manifest.get("schemaVersion") == 1, "unsupported evidence manifest schema")
     files: dict[str, Path] = {}
@@ -542,7 +542,8 @@ def main(argv: list[str] | None = None) -> int:
             fixture = repo_root / "catalog/fixtures/sets/manual8.normalized.json"
             require(fixture.is_file(), "Manual8 fixture is missing")
             output = args.output.resolve()
-            if os.name == "nt": require(output.drive.upper() == "F:", "Manual8 output must stay on F:")
+            if os.name == "nt":
+                require(output.drive.upper() != "C:", "Manual8 output must stay off the Windows system drive")
             output.parent.mkdir(parents=True, exist_ok=True)
             output.write_bytes(fixture.read_bytes())
             print(f"Manual8 profile rebuilt: {output}")

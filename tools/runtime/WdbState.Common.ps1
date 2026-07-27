@@ -34,13 +34,13 @@ function Assert-PathUnderRoot {
     }
 }
 
-function Assert-FDrivePath {
+function Assert-NonSystemDrivePath {
     param([Parameter(Mandatory = $true)][string] $Path)
 
     $fullPath = Get-NormalizedFullPath $Path
     $root = [System.IO.Path]::GetPathRoot($fullPath)
-    if (-not $root.Equals('F:\', [System.StringComparison]::OrdinalIgnoreCase)) {
-        throw "Backup and evidence output must stay on F: drive: $fullPath"
+    if ($root.Equals('C:\', [System.StringComparison]::OrdinalIgnoreCase)) {
+        throw "Backup and evidence output must stay off the Windows system drive: $fullPath"
     }
 }
 
