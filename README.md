@@ -2,6 +2,7 @@
 
 [English](README.en.md) ·
 [客户端 AddOn](https://github.com/haha2345/SoloCollections) ·
+[匹配发布 v0.2.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.2.0) ·
 [配置说明](docs/CONFIGURATION.md) ·
 [开发说明](docs/DEVELOPMENT.md) ·
 [参与贡献](CONTRIBUTING.md)
@@ -35,6 +36,9 @@ SC2 同步、服务端授权与动作，并保留经过适配的 `mod-transmog` 
 asset pack、mapping hash、presentation hash 和 SC2 版本。不能混用不同版本的
 生成目录。
 
+当前匹配源码标签为 `v0.2.0`。下载者应同时使用客户端仓库的 `v0.2.0` AddOn
+与本仓库的 `v0.2.0` 模块标签。
+
 ## 编译环境
 
 Windows 构建请以
@@ -60,7 +64,7 @@ WoW 3.3.5a build 12340；AddOn 与可选 SoloCam 的安装/编译见
 
 ```powershell
 git clone https://github.com/azerothcore/azerothcore-wotlk.git
-git clone https://github.com/haha2345/mod-solo-collections.git `
+git clone --branch v0.2.0 https://github.com/haha2345/mod-solo-collections.git `
   .\azerothcore-wotlk\modules\mod-solo-collections
 ```
 
