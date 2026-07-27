@@ -36,7 +36,10 @@ int main()
     const ExpectedProfile expectedProfiles[] = {
         // Retail-style human-female framing: head, shoulder, back, chest,
         // wrist, hands, waist, legs and feet.
-        {0x5341, 0.55f, 0.32f, 0.55f, 0.00f, 0.00f},
+        // Approved body-calibration delta for human:female:HEAD is folded
+        // into the generated canonical profile; the remaining eight legacy
+        // reference entries remain bit-for-bit at their baseline values.
+        {0x5341, 0.60f, 0.3232f, 0.56f, 0.06f, 0.0084f},
         {0x5342, 0.40f, 0.16f, 0.52f, 0.10f, 0.00f},
         {0x5349, 0.25f, 0.27f, 0.65f, 0.00f, 3.14159265f},
         {0x5343, 0.25f, 0.27f, 0.58f, 0.00f, 0.00f},
@@ -52,8 +55,8 @@ int main()
 
     for (const auto& expected : expectedProfiles)
     {
-        const HumanFemaleCameraProfile* profile =
-            FindHumanFemaleCameraProfile(expected.sentinel);
+        const CharacterCameraProfile* profile =
+            FindCharacterCameraProfile(expected.sentinel);
         Require(profile != nullptr, "every supported sentinel must resolve");
         Require(NearlyEqual(profile->verticalOffset, expected.verticalOffset), "vertical offset");
         Require(NearlyEqual(profile->distanceScale, expected.distanceScale), "distance scale");
@@ -64,7 +67,7 @@ int main()
         CameraVector position{};
         CameraVector target{};
         Require(
-            BuildHumanFemaleCamera(*profile, nativePosition, nativeTarget, position, target),
+            BuildCharacterCamera(*profile, nativePosition, nativeTarget, position, target),
             "a valid native camera must produce a slot camera"
         );
         Require(NearlyEqual(target.x, 0.0f), "target x");
@@ -85,8 +88,8 @@ int main()
     CameraVector shoulderPosition{};
     CameraVector shoulderTarget{};
     Require(
-        BuildHumanFemaleCamera(
-            *FindHumanFemaleCameraProfile(0x5342),
+        BuildCharacterCamera(
+            *FindCharacterCameraProfile(0x5342),
             nativePosition,
             nativeTarget,
             shoulderPosition,
@@ -103,8 +106,8 @@ int main()
     CameraVector backPosition{};
     CameraVector backTarget{};
     Require(
-        BuildHumanFemaleCamera(
-            *FindHumanFemaleCameraProfile(0x5349),
+        BuildCharacterCamera(
+            *FindCharacterCameraProfile(0x5349),
             nativePosition,
             nativeTarget,
             backPosition,
@@ -114,7 +117,7 @@ int main()
     Require(backPosition.x < backTarget.x, "back camera must view the cloak from behind the model");
 
     Require(
-        FindHumanFemaleCameraProfile(0x5340) == nullptr,
+        FindCharacterCameraProfile(0x5340) == nullptr,
         "unknown sentinels must not opt into a custom camera"
     );
 
@@ -122,8 +125,8 @@ int main()
     CameraVector position{};
     CameraVector target{};
     Require(
-        !BuildHumanFemaleCamera(
-            *FindHumanFemaleCameraProfile(0x5343),
+        !BuildCharacterCamera(
+            *FindCharacterCameraProfile(0x5343),
             degenerate,
             degenerate,
             position,
@@ -169,6 +172,12 @@ int main()
         "an invalid item distance scale must be rejected"
     );
 
-    std::cout << "Human female multi-slot camera profile tests passed.\n";
+    Require(GetCharacterCameraProfileCount() == 180, "generated matrix must contain 180 profiles");
+    Require(GetCharacterCameraProfileVersion() == 1, "generated profile version");
+    Require(GetCharacterCameraProfileHash() != nullptr, "generated profile hash");
+    Require(FindCharacterCameraProfile(0x6000) != nullptr, "human male profile must resolve");
+    Require(FindCharacterCameraProfile(0x60AA) != nullptr, "draenei female profile must resolve");
+
+    std::cout << "Generated character camera profile tests passed.\n";
     return 0;
 }

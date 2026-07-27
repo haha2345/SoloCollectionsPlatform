@@ -13,10 +13,20 @@ local function isEnabled(value)
     return true
 end
 
-local ENABLED = isEnabled(GetConfigValue("SoloCollections.Enabled"))
+local function getBackendMode()
+    local value = GetConfigValue("SoloCollections.Backend")
+    if value == nil or value == "" then
+        return "compare"
+    end
+    return string.lower(tostring(value))
+end
+
+local BACKEND = getBackendMode()
+local ENABLED = isEnabled(GetConfigValue("SoloCollections.Enabled")) and BACKEND ~= "cpp"
 local PREFIX = "SC1"
 local REQUEST = "HELLO|1"
 local RESPONSE = "HELLO_ACK|1|DEMO"
+local UPGRADE_RESPONSE = "UPGRADE_REQUIRED|2"
 local CHAT_MSG_WHISPER = 7
 local SUMMON_ACCEPTED = "ACCEPTED"
 local TOTAL_LIMIT_PER_SECOND = 20
@@ -25,6 +35,14 @@ local SUMMON_LIMIT_PER_SECOND = 2
 local PET_MODEL_LIMIT_PER_SECOND = 8
 local PET_SUMMON_LIMIT_PER_SECOND = 2
 local TOY_USE_LIMIT_PER_SECOND = 4
+
+local function logInfo(message)
+    if type(PrintInfo) == "function" then
+        PrintInfo("[SoloCollections] " .. tostring(message))
+    end
+end
+
+logInfo("event=sc1_bridge_load enabled=" .. tostring(ENABLED) .. " backend=" .. BACKEND)
 
 local MOUNTS = {
     [1] = { creatureId = 24379, spellId = 43688, collected = true },
@@ -433,6 +451,9 @@ local function handleToyUse(sender, requestIdText, toyIdText)
 end
 
 local function onAddonMessage(event, sender, messageType, prefix, message, target)
+    if prefix == PREFIX and message == REQUEST then
+        logInfo("event=sc1_handshake result=received enabled=" .. tostring(ENABLED))
+    end
     if not ENABLED then
         return true
     end
@@ -451,6 +472,7 @@ local function onAddonMessage(event, sender, messageType, prefix, message, targe
 
     if message == REQUEST then
         sender:SendAddonMessage(PREFIX, RESPONSE, CHAT_MSG_WHISPER, sender)
+        logInfo("event=sc1_handshake result=accepted")
         return true
     end
 
@@ -488,4 +510,18 @@ local function onAddonMessage(event, sender, messageType, prefix, message, targe
     return true
 end
 
-RegisterServerEvent(30, onAddonMessage)
+local function onRetiredAddonMessage(event, sender, messageType, prefix, message, target)
+    if prefix ~= PREFIX or message ~= REQUEST or not sender then
+        return true
+    end
+    sender:SendAddonMessage(PREFIX, UPGRADE_RESPONSE, CHAT_MSG_WHISPER, sender)
+    logInfo("event=sc1_retired result=upgrade_required target=SC2")
+    return true
+end
+
+if ENABLED then
+    RegisterServerEvent(30, onAddonMessage)
+else
+    RegisterServerEvent(30, onRetiredAddonMessage)
+    logInfo("event=sc1_bridge_register result=retired backend=" .. BACKEND .. " target=SC2")
+end

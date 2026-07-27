@@ -12,19 +12,6 @@ local CATEGORY_KEYS = {
     SETS = "Sets",
 }
 
-local CLASS_BITS = {
-    WARRIOR = 1,
-    PALADIN = 2,
-    HUNTER = 4,
-    ROGUE = 8,
-    PRIEST = 16,
-    DEATHKNIGHT = 32,
-    SHAMAN = 64,
-    MAGE = 128,
-    WARLOCK = 256,
-    DRUID = 1024,
-}
-
 local DEFAULT_FILTERS = {
     collected = true,
     uncollected = true,
@@ -36,6 +23,154 @@ local DEFAULT_FILTERS = {
 }
 
 local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
+local generatedMountSource = nil
+local generatedCompanionSource = nil
+local generatedToySource = nil
+local generatedAppearanceSource = nil
+
+local function getGeneratedMountSource()
+    if generatedMountSource then
+        return generatedMountSource
+    end
+    generatedMountSource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "mount" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            table.insert(generatedMountSource, {
+                id = collection.collectionId,
+                previewCreatureEntry = collection.previewCreatureEntry or collection.displayCreatureId,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = collection.iconTexture,
+                presentationStatus = collection.presentationStatus,
+                source = "账号收藏",
+                description = "由 SoloCollections 服务端权威目录提供。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedMountSource
+end
+
+local function getGeneratedCompanionSource()
+    if generatedCompanionSource then
+        return generatedCompanionSource
+    end
+    generatedCompanionSource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "companion" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            table.insert(generatedCompanionSource, {
+                id = collection.collectionId,
+                previewCreatureEntry = collection.previewCreatureEntry or collection.displayCreatureId,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = collection.iconTexture,
+                presentationStatus = collection.presentationStatus,
+                source = "账号收藏",
+                description = "由 SoloCollections 服务端权威目录提供。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedCompanionSource
+end
+
+local function getGeneratedToySource()
+    if generatedToySource then
+        return generatedToySource
+    end
+    generatedToySource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "toy" and collection.lifecycle == "active" then
+            local names = collection.name or {}
+            table.insert(generatedToySource, {
+                id = collection.collectionId,
+                itemId = collection.displayItemId,
+                targetPolicy = collection.targetPolicy or (collection.requiresTarget and "REQUIRED_UNIT" or "SELF"),
+                requiresTarget = collection.requiresTarget and true or false,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = "Interface\\Icons\\INV_Misc_Toy_10",
+                source = "账号收藏",
+                description = "由 SoloCollections 服务端权威动作目录提供。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedToySource
+end
+
+local function getGeneratedAppearanceSource()
+    if generatedAppearanceSource then
+        return generatedAppearanceSource
+    end
+    generatedAppearanceSource = {}
+    local generated = SC.GeneratedCatalog or {}
+    for _, collection in ipairs(generated.collections or {}) do
+        if collection.typeKey == "appearance" and collection.lifecycle == "active" and
+            collection.uiLifecycle == "public" then
+            local names = collection.name or {}
+            local itemIds = {}
+            local slot = "HEAD"
+            local armorType
+            local weaponType
+            for _, alias in ipairs(collection.aliases or {}) do
+                local itemId = string.match(alias, "^item:(%d+)$")
+                if itemId then
+                    table.insert(itemIds, tonumber(itemId))
+                else
+                    slot = string.match(alias, "^slot:(.+)$") or slot
+                    armorType = string.match(alias, "^armor:(.+)$") or armorType
+                    weaponType = string.match(alias, "^weapon:(.+)$") or weaponType
+                end
+            end
+            if #itemIds == 0 and tonumber(collection.displayItemId) then
+                itemIds[1] = tonumber(collection.displayItemId)
+            end
+            table.insert(generatedAppearanceSource, {
+                id = collection.collectionId,
+                itemId = tonumber(collection.displayItemId) or itemIds[1],
+                iconItemId = tonumber(collection.displayItemId) or itemIds[1],
+                itemIds = itemIds,
+                slot = slot,
+                armorType = armorType,
+                weaponType = collection.weaponType or weaponType,
+                weaponCategory = collection.weaponCategory,
+                renderMode = collection.renderMode,
+                nativeDisplayId = collection.nativeDisplayId,
+                syntheticDisplayId = collection.syntheticDisplayId,
+                modelPath = collection.modelPath,
+                modelScale = collection.modelScale,
+                cameraTuningKey = collection.cameraTuningKey,
+                m2Camera = collection.m2Camera,
+                modelSignature = collection.modelSignature,
+                -- Keep reviewed, generated model-scoped camera defaults in the
+                -- runtime projection.  Wardrobe resolves this below explicit
+                -- player appearance/model tuning and above weapon-family
+                -- fallbacks; dropping it here silently turns it into auto.
+                generatedModelCameraOverride = collection.generatedModelCameraOverride,
+                autoCamera = collection.autoCamera,
+                presentationStatus = collection.presentationStatus,
+                presentationReasonCode = collection.presentationReasonCode,
+                presentationCapability = collection.presentationCapability,
+                assetPackVersion = collection.assetPackVersion,
+                retiredSyntheticDisplayId = collection.retiredSyntheticDisplayId,
+                registryTombstoneReason = collection.registryTombstoneReason,
+                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
+                icon = nil,
+                source = "账号收藏",
+                description = "canonical 外观；来源物品可追溯。",
+                collected = false,
+                favorite = false,
+            })
+        end
+    end
+    return generatedAppearanceSource
+end
 
 local function resolvedWeaponType(record)
     local weaponType = record.weaponCategory or record.weaponType
@@ -87,7 +222,92 @@ local function copyRecord(source)
     return copy
 end
 
+local function overlayCollectionState(category, record, fallback)
+    local collectionState = SC.CollectionState
+    if collectionState and collectionState.ResolveOwned then
+        local collected, ownershipKnown, state = SC.CollectionState.ResolveOwned(category, record.id, fallback)
+        record.collected = collected
+        record.ownershipKnown = ownershipKnown
+        record.collectionState = state
+    else
+        record.collected = fallback and true or false
+        record.ownershipKnown = false
+        record.collectionState = "Demo"
+    end
+    return record
+end
+
+local function deriveSetState(record)
+    local collectionState = SC.CollectionState
+    local categoryState = collectionState and collectionState.GetCategoryState and
+        collectionState.GetCategoryState("APPEARANCES") or "Demo"
+    local ownershipKnown = categoryState == "Ready"
+    local bestOwned = 0
+    local bestRequired = 0
+    local complete = false
+    local selectedVariant
+    local requestedOrdinal = tonumber(record.selectedVariantOrdinal)
+    for _, variant in ipairs(record.variants or {}) do
+        if variant.lifecycle == "ACTIVE" then
+            local owned = 0
+            local required = 0
+            for _, member in ipairs(variant.members or {}) do
+                if member.required then
+                    required = required + 1
+                    local memberOwned = false
+                    for _, appearanceId in ipairs(member.appearanceIds or {}) do
+                        if collectionState and collectionState.IsOwnedByType and
+                            collectionState.IsOwnedByType(13, appearanceId) then
+                            memberOwned = true
+                            break
+                        end
+                    end
+                    if memberOwned then owned = owned + 1 end
+                end
+            end
+            local variantComplete = required > 0 and owned == required
+            local requested = requestedOrdinal and tonumber(variant.variantOrdinal) == requestedOrdinal
+            if requested or (not selectedVariant and (variant.isDefault or bestRequired == 0)) or
+                (not requestedOrdinal and owned * bestRequired > bestOwned * required) then
+                bestOwned = owned
+                bestRequired = required
+                selectedVariant = variant
+            end
+            if variantComplete then
+                complete = true
+                break
+            end
+        end
+    end
+    record.collectedCount = bestOwned
+    record.requiredCount = bestRequired
+    record.collected = complete
+    record.ownershipKnown = ownershipKnown
+    record.collectionState = ownershipKnown and "Derived" or categoryState
+    record.selectedVariant = selectedVariant
+    return record
+end
+
+local function resolveRecordState(category, record, fallback)
+    if category == "SETS" then
+        return deriveSetState(record)
+    end
+    return overlayCollectionState(category, record, fallback)
+end
+
 local function getSource(category)
+    if category == "MOUNTS" and SC.GeneratedCatalog then
+        return getGeneratedMountSource()
+    end
+    if category == "PETS" and SC.GeneratedCatalog then
+        return getGeneratedCompanionSource()
+    end
+    if category == "TOYS" and SC.GeneratedCatalog then
+        return getGeneratedToySource()
+    end
+    if category == "APPEARANCES" and SC.GeneratedCatalog then
+        return getGeneratedAppearanceSource()
+    end
     local key = CATEGORY_KEYS[category]
     if not key or not SC.Data then
         return nil
@@ -152,10 +372,22 @@ local function classMatches(record, classToken)
     if not classToken or classToken == "ALL" then
         return true
     end
-    if record.classToken then
+    if record.classPolicy then
+        if record.classPolicy.mode == "ANY" then
+            return true
+        end
+        if record.classPolicy.mode ~= "ALLOW_LIST" then
+            return false
+        end
+        local wanted = string.lower(tostring(classToken))
+        for _, allowed in ipairs(record.classPolicy.allowedClassKeys or {}) do
+            if allowed == wanted then return true end
+        end
+        return false
+    elseif record.classToken then
         return record.classToken == classToken
     end
-    local classBit = CLASS_BITS[classToken]
+    local classBit = SC.IdentityRegistry.GetLegacyClassBit(classToken)
     local classMask = tonumber(record.classMask)
     if not classBit or not classMask then
         return false
@@ -208,6 +440,36 @@ local function filterMatches(category, record, query, filters, includeCollection
     return metadataMatches(record, query)
 end
 
+-- Set identity and APPLY semantics deliberately remain in the generated
+-- ItemSet mapping.  These ranks are a presentation-only projection produced
+-- by tools/catalog/set_presentations.py, so localized names never influence
+-- the default wardrobe order.
+local SET_PRESENTATION_SORT_KEYS = {
+    "expansion", "acquisition", "tier", "difficulty", "medianItemLevel", "maxItemLevel",
+}
+
+local function setPresentationRank(record, key)
+    local presentation = record and record.presentation
+    local ranks = presentation and presentation.sortRank
+    return tonumber(ranks and ranks[key]) or 0
+end
+
+local function setPresentationLess(left, right)
+    for _, key in ipairs(SET_PRESENTATION_SORT_KEYS) do
+        local leftRank = setPresentationRank(left, key)
+        local rightRank = setPresentationRank(right, key)
+        if leftRank ~= rightRank then
+            return leftRank > rightRank
+        end
+    end
+    local leftItemSetId = tonumber(left and left.itemSetId) or 0
+    local rightItemSetId = tonumber(right and right.itemSetId) or 0
+    if leftItemSetId ~= rightItemSetId then
+        return leftItemSetId < rightItemSetId
+    end
+    return (tonumber(left and left.id) or 0) < (tonumber(right and right.id) or 0)
+end
+
 function Catalog.Get(category)
     local result = {}
     local source = getSource(category)
@@ -215,8 +477,8 @@ function Catalog.Get(category)
         return result
     end
     for index, sourceRecord in ipairs(source) do
-        local record = copyRecord(sourceRecord)
-        record.favorite = getFavorite(category, sourceRecord)
+        local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        record.favorite = getFavorite(category, record)
         result[index] = record
     end
     return result
@@ -227,11 +489,14 @@ function Catalog.QueryAll(category, query, filters)
     local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
     for _, sourceRecord in ipairs(source) do
-        if filterMatches(category, sourceRecord, query, activeFilters, true) then
-            local record = copyRecord(sourceRecord)
-            record.favorite = getFavorite(category, sourceRecord)
+        local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
+        if filterMatches(category, record, query, activeFilters, true) then
+            record.favorite = getFavorite(category, record)
             table.insert(matches, record)
         end
+    end
+    if category == "SETS" then
+        table.sort(matches, setPresentationLess)
     end
     return matches
 end
@@ -251,12 +516,131 @@ function Catalog.Query(category, query, filters, page, pageSize)
     return pageRecords, page, totalPages, total
 end
 
+function Catalog.RunSyntheticAppearanceBenchmark(count)
+    count = math.max(1, math.min(50000, math.floor(tonumber(count) or 17000)))
+    local timer = type(debugprofilestop) == "function" and debugprofilestop or function() return GetTime() * 1000 end
+    local memoryBefore = collectgarbage("count")
+    local started = timer()
+    local source = {}
+    local slots = { "HEAD", "SHOULDER", "CHEST", "MAINHAND", "OFFHAND" }
+    for index = 1, count do
+        source[index] = {
+            id = index,
+            itemId = 100000 + index,
+            itemIds = { 100000 + index },
+            slot = slots[((index - 1) % #slots) + 1],
+            armorType = "ALL",
+            weaponType = "ALL",
+            name = "synthetic appearance " .. index,
+            source = "performance baseline",
+            collected = index % 3 == 0,
+            favorite = false,
+        }
+    end
+    local loadedAt = timer()
+    local filters = resolvedFilters({
+        collected = true,
+        uncollected = true,
+        favorites = false,
+        classToken = "ALL",
+        armorType = "ALL",
+        slot = "ALL",
+        weaponType = "ALL",
+    })
+    local matches = {}
+    for _, sourceRecord in ipairs(source) do
+        local record = copyRecord(sourceRecord)
+        if filterMatches("APPEARANCES", record, "synthetic appearance", filters, true) then
+            matches[#matches + 1] = record
+        end
+    end
+    local filteredAt = timer()
+    local firstPage = {}
+    local lastPage = {}
+    local pageSize = 18
+    for index = 1, math.min(pageSize, #matches) do
+        firstPage[#firstPage + 1] = matches[index]
+    end
+    local firstLastIndex = math.max(1, #matches - pageSize + 1)
+    for index = firstLastIndex, #matches do
+        lastPage[#lastPage + 1] = matches[index]
+    end
+    local pagedAt = timer()
+    local memoryPeak = collectgarbage("count")
+    source = nil
+    matches = nil
+    firstPage = nil
+    lastPage = nil
+    collectgarbage("collect")
+    return {
+        count = count,
+        loadMs = loadedAt - started,
+        filterMs = filteredAt - loadedAt,
+        pageMs = pagedAt - filteredAt,
+        peakMemoryKb = math.max(0, memoryPeak - memoryBefore),
+    }
+end
+
+function Catalog.RunExpandedCollectionBenchmark(appearanceCount, companionCount, setCount)
+    appearanceCount = math.max(1, math.min(50000, math.floor(tonumber(appearanceCount) or 18190)))
+    companionCount = math.max(1, math.min(1000, math.floor(tonumber(companionCount) or 201)))
+    setCount = math.max(1, math.min(2000, math.floor(tonumber(setCount) or 509)))
+    local clock = type(debugprofilestop) == "function" and debugprofilestop or function() return GetTime() * 1000 end
+    local memoryBefore = collectgarbage("count")
+    local started = clock()
+    local appearances, companions, sets = {}, {}, {}
+    local appearanceIndex, setMemberIndex = {}, {}
+    for index = 1, appearanceCount do
+        local row = { id = 200000 + index, name = "appearance " .. index, slot = index % 2 == 0 and "HEAD" or "CHEST" }
+        appearances[index], appearanceIndex[row.id] = row, row
+    end
+    for index = 1, companionCount do
+        companions[index] = { id = 110000 + index, name = "companion " .. index }
+    end
+    for index = 1, setCount do
+        local first = 200000 + ((index * 7) % appearanceCount) + 1
+        local row = { id = 300000 + index, name = "set " .. index, members = { first, first + 1, first + 2 } }
+        sets[index] = row
+        for _, appearanceId in ipairs(row.members) do
+            setMemberIndex[appearanceId] = setMemberIndex[appearanceId] or {}
+            table.insert(setMemberIndex[appearanceId], row.id)
+        end
+    end
+    local loadedAt = clock()
+    local matched = {}
+    for _, row in ipairs(appearances) do
+        if row.slot == "HEAD" and string.find(row.name, "appearance", 1, true) then matched[#matched + 1] = row end
+    end
+    for index = 1, #sets do
+        local row = sets[index]
+        for _, appearanceId in ipairs(row.members) do
+            if not appearanceIndex[appearanceId] then error("synthetic set index drift") end
+        end
+    end
+    local filteredAt = clock()
+    local pageSize, pages = 18, 0
+    for offset = 1, #matched, pageSize do
+        pages = pages + 1
+        local _ = matched[math.min(#matched, offset + pageSize - 1)]
+    end
+    local pagedAt = clock()
+    local peak = collectgarbage("count")
+    appearances, companions, sets, appearanceIndex, setMemberIndex, matched = nil, nil, nil, nil, nil, nil
+    collectgarbage("collect")
+    return {
+        appearances = appearanceCount, companions = companionCount, sets = setCount,
+        loadMs = loadedAt - started, filterMs = filteredAt - loadedAt,
+        pageMs = pagedAt - filteredAt, pages = pages, peakMemoryKb = math.max(0, peak - memoryBefore),
+    }
+end
+
 function Catalog.GetProgress(category, filters)
     local collected = 0
     local total = 0
     local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
-    for _, record in ipairs(source) do
+    for _, sourceRecord in ipairs(source) do
+        local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
         if filterMatches(category, record, "", activeFilters, false) then
             total = total + 1
             if record.collected then
@@ -269,8 +653,9 @@ end
 
 function Catalog.ToggleDemoFavorite(category, id)
     local source = getSource(category) or {}
-    for _, record in ipairs(source) do
-        if record.id == id then
+    for _, sourceRecord in ipairs(source) do
+        if sourceRecord.id == id then
+            local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
             if isCollectibleCompanion(category) and not record.collected then
                 ensureFavoriteStore(category)[id] = false
                 return false

@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: SoloCollections Weapon Audit (QA only)
+## Notes: Explicit QA-only standalone weapon renderer audit
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsWeaponAuditDB
+WeaponAudit.lua

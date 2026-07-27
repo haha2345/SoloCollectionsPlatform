@@ -1,15 +1,19 @@
 # Asset and overlay policy
 
-## Decision
+## Base UI decision
 
-Asset paths are part of the compatibility contract and will not be removed.
-The AddOn can therefore use the same Lua paths with either the public
-placeholder set or an optional full media overlay.
+The base AddOn is self-contained. Every production media role must resolve to
+a tracked, redistributable file under `addon/SoloCollections/Media`; it must
+not resolve only after a maintainer installs a local overlay. The authoritative
+role-to-file, provenance, format, dimensions and SHA-256 contract is
+`addon/SoloCollections/Media/assets.json`.
 
-Project-authored placeholder media remains eligible for source control. Known
-client-extracted files under `addon/SoloCollections/Media/Retail` are now
-explicitly ignored by Git and retained only in the local working tree, local
-release candidate, and the maintainer's separate media workflow.
+The default collection launcher, mount portrait, wardrobe slot atlas, selected
+ring and hover ring are project-authored TGA assets. The deterministic source
+for the generated slot and portrait assets is
+`tools/media/generate_base_ui_media.py`. It reads no client-extracted artwork.
+`Media/Retail` is not a supported base-UI path and is not part of the repository
+or a clean release bundle.
 
 ## Public repository gate
 
@@ -18,19 +22,21 @@ Before the first public GitHub push:
 1. Classify every media file as project-authored, permissively licensed,
    third-party redistributable, or client-extracted/non-redistributable.
 2. Keep project-authored or properly licensed files with attribution.
-3. Replace non-redistributable files with project-authored placeholders at the
-   exact same relative path, dimensions, container type, and alpha behavior.
-4. Update `addon/SoloCollections/Media/assets.json` with provenance and SHA-256.
-5. Build the AddOn zip from a clean Git checkout and inspect its file list.
+3. Replace non-redistributable defaults with project-authored or properly
+   licensed assets before they are referenced by production Lua.
+4. Update `addon/SoloCollections/Media/assets.json` with provenance, licence,
+   SHA-256, container, dimensions and alpha/origin metadata.
+5. Run the media contract test and release verifier from a clean Git checkout.
+   They verify both the declared roles and the files copied to the bundle.
 
-Known client-derived files are recorded as external files in
-`addon/SoloCollections/Media/assets.json`. A clean Git clone may not contain
-them. The full media pack restores the exact paths; project-owned placeholder
-paths remain in Git.
+`requiredForBaseUI` and `optionalExternalFiles` are deliberately separate: an
+optional declaration can never satisfy a default production reference.
 
 ## Optional netdisk media overlay
 
-The external pack should mirror paths beginning at the game client root, for
+An external pack is permitted only for an explicitly selected skin or
+non-essential enhancement. It must use a distinct, documented skin namespace;
+it must not replace the files that the base role contract requires. For
 example:
 
 ```text
@@ -39,14 +45,14 @@ Data/<dedicated SoloCollections patch archive, if required>
 Data/<locale>/<dedicated SoloCollections locale patch archive, if required>
 ```
 
-Users extract the pack into the client root and choose overwrite. The pack must
-contain:
+Users opt in to the pack and choose its skin through AddOn configuration. The
+pack must contain:
 
 - `media-pack.json` with project version, pack version, locale, and target paths;
 - `SHA256SUMS.txt` covering every file;
 - installation, backup, and removal instructions;
 - a clear statement that the pack is separately licensed and which UI features
-  need it.
+  it enhances.
 
 `Patch-W.MPQ` and numeric locale patch names may collide with another mod.
 Always detect, identify, and back up same-name files; integrated clients require
@@ -56,7 +62,7 @@ build, hash, legal-use warning, and patch state must be explicit.
 
 ## Compatibility rule
 
-Overlay files must preserve the paths expected by the AddOn. Missing external
-media must not prevent Lua from loading; affected artwork may fall back or be
-blank until the matching media pack is installed. Missing MPQs must degrade to
-AddOn-only previews rather than modifying unrelated client archives.
+Missing optional media must not change the base UI or leave a default control
+blank. Missing MPQs must degrade to AddOn-only previews rather than modifying
+unrelated client archives. A release is rejected when any default production
+media reference lacks a tracked, hash-verified base file.

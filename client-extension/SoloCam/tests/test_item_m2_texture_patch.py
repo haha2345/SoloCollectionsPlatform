@@ -15,10 +15,16 @@ from patch_item_m2_textures import (  # noqa: E402
     BOUNDING_BOX_OFFSET,
     CAMERA_DESCRIPTOR_OFFSET,
     CAMERA_LOOKUP_DESCRIPTOR_OFFSET,
+    CAMERA_POSITION_OFFSET,
+    CAMERA_TARGET_OFFSET,
     OBJECT_SKIN_TEXTURE_TYPE,
+    VERTEX_DESCRIPTOR_OFFSET,
+    VERTEX_RECORD_SIZE,
     append_static_item_camera,
     inspect_textures,
     patch_object_skin_bytes,
+    replace_existing_item_camera_from_vertex_bounds,
+    vertex_mesh_bounds,
 )
 
 
@@ -42,6 +48,26 @@ def build_camera_test_m2() -> bytes:
     struct.pack_into("<I", data, 4, 264)
     # Center = (2, 4, 3); radius = 2, so camera distance = 5.3.
     struct.pack_into("<7f", data, BOUNDING_BOX_OFFSET, 0, 1, 0, 4, 7, 6, 2)
+    return bytes(data)
+
+
+def build_existing_camera_vertex_test_m2() -> bytes:
+    data = bytearray(0x400)
+    data[0:4] = b"MD20"
+    struct.pack_into("<I", data, 4, 264)
+    struct.pack_into("<2I", data, 0x50, 0, 0)
+    vertex_offset = 0x200
+    points = ((0, 0, 0), (2, 0, 0), (0, 2, 0))
+    struct.pack_into("<2I", data, VERTEX_DESCRIPTOR_OFFSET, len(points), vertex_offset)
+    for index, point in enumerate(points):
+        struct.pack_into("<3f", data, vertex_offset + index * VERTEX_RECORD_SIZE, *point)
+    camera_offset = 0x300
+    lookup_offset = 0x380
+    struct.pack_into("<2I", data, CAMERA_DESCRIPTOR_OFFSET, 1, camera_offset)
+    struct.pack_into("<2I", data, CAMERA_LOOKUP_DESCRIPTOR_OFFSET, 1, lookup_offset)
+    struct.pack_into("<h", data, lookup_offset, 0)
+    struct.pack_into("<3f", data, camera_offset + CAMERA_POSITION_OFFSET, 30, 40, 50)
+    struct.pack_into("<3f", data, camera_offset + CAMERA_TARGET_OFFSET, 10, 20, 30)
     return bytes(data)
 
 
@@ -94,9 +120,32 @@ class ItemM2TexturePatchTests(unittest.TestCase):
         self.assertAlmostEqual(position[2], 3 + 5.3 * 0.6666667, places=5)
         self.assertEqual(target, (2.0, 4.0, 3.0))
 
+    def test_existing_camera_can_be_retargeted_from_mesh_vertices_only(self):
+        source = build_existing_camera_vertex_test_m2()
+        bounds = vertex_mesh_bounds(source)
+        output, report = replace_existing_item_camera_from_vertex_bounds(source)
+        camera_offset = struct.unpack_from("<2I", output, CAMERA_DESCRIPTOR_OFFSET)[1]
+
+        self.assertEqual(3, bounds["vertexCount"])
+        self.assertEqual((0.0, 0.0, 0.0), bounds["minimum"])
+        self.assertEqual((2.0, 2.0, 0.0), bounds["maximum"])
+        self.assertEqual((1.0, 1.0, 0.0), bounds["center"])
+        self.assertGreater(bounds["radius"], 1.4)
+        self.assertEqual(bounds["center"], report["newTarget"])
+        self.assertEqual(source[:camera_offset + CAMERA_POSITION_OFFSET], output[:camera_offset + CAMERA_POSITION_OFFSET])
+        self.assertEqual(
+            source[camera_offset + CAMERA_POSITION_OFFSET + 12:camera_offset + CAMERA_TARGET_OFFSET],
+            output[camera_offset + CAMERA_POSITION_OFFSET + 12:camera_offset + CAMERA_TARGET_OFFSET],
+        )
+        self.assertEqual(source[camera_offset + CAMERA_TARGET_OFFSET + 12:], output[camera_offset + CAMERA_TARGET_OFFSET + 12:])
+        self.assertNotEqual(
+            struct.unpack_from("<3f", source, camera_offset + CAMERA_POSITION_OFFSET),
+            struct.unpack_from("<3f", output, camera_offset + CAMERA_POSITION_OFFSET),
+        )
+
     def test_real_weapon_samples_have_no_object_skin_after_patch(self):
         sample_root = Path(
-            r"F:\1_projects\wow_projects\_work\solo_collections_weapon_models\extract"
+            r"F:\fixtures\solo_collections_weapon_models\extract"
         )
         samples = {
             "Sword_2H_Blackwing_A_02.m2": r"ITEM\OBJECTCOMPONENTS\WEAPON\SWORD_2H_BLACKWING_A_02.BLP",

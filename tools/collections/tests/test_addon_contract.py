@@ -3,16 +3,22 @@ from __future__ import annotations
 import unittest
 import re
 
-from common import ADDON, all_lua_text, read_text
+from common import ADDON, ROOT, all_lua_text, read_text
 
 
 EXPECTED_LOAD_ORDER = [
     "SoloCollections.lua",
+    "Data\\Generated\\Catalog.lua",
+    "Data\\Generated\\IdentityRegistry.lua",
+    "Data\\Generated\\PolicyRegistry.lua",
+    "Data\\Generated\\CameraProfiles.lua",
     "Data\\Mounts.lua",
     "Data\\Pets.lua",
     "Data\\Toys.lua",
     "Data\\Appearances.lua",
     "Data\\Sets.lua",
+    "Core\\IdentityRegistry.lua",
+    "Core\\CollectionState.lua",
     "Core\\Catalog.lua",
     "Core\\Bridge.lua",
     "Core\\M2Camera.lua",
@@ -24,6 +30,7 @@ EXPECTED_LOAD_ORDER = [
     "UI\\Toys.lua",
     "UI\\Wardrobe.lua",
     "UI\\CollectionsFrame.lua",
+    "Core\\Diagnostics.lua",
     "Core\\Bootstrap.lua",
 ]
 
@@ -79,9 +86,9 @@ class AddonContractTests(unittest.TestCase):
         for api in FORBIDDEN_APIS:
             self.assertNotIn(api, text)
 
-    def test_four_main_tabs_and_two_wardrobe_views_are_declared(self):
+    def test_five_main_tabs_and_two_wardrobe_views_are_declared(self):
         text = all_lua_text()
-        for token in ('"MOUNTS"', '"PETS"', '"TOYS"', '"WARDROBE"'):
+        for token in ('"MOUNTS"', '"PETS"', '"TOYS"', '"WARDROBE"', '"TITLES"'):
             self.assertIn(token, text)
         self.assertIn('"ITEMS"', text)
         self.assertIn('"SETS"', text)
@@ -97,6 +104,11 @@ class AddonContractTests(unittest.TestCase):
             "CastSpell(",
         ):
             self.assertNotIn(forbidden, text)
+
+    def test_generated_catalog_branch_has_no_global_mount_or_pet_icon(self):
+        catalog = read_text(ADDON / "Core" / "Catalog.lua")
+        self.assertNotIn("Ability_Mount_RidingHorse", catalog)
+        self.assertNotIn("INV_Box_PetCarrier_01", catalog)
 
     def test_launcher_is_bottom_right_draggable_and_persistent(self):
         path = ADDON / "UI" / "Launcher.lua"
@@ -329,7 +341,7 @@ class AddonContractTests(unittest.TestCase):
             "local VALID_POINTS =",
             "local VALID_MAIN_TABS =",
             "local VALID_WARDROBE_TABS =",
-            "local VALID_CLASS_TOKENS =",
+            "local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()",
             "local VALID_SLOTS =",
             "local VALID_BRIDGE_STATUS =",
             "local function repairScalar(",
@@ -410,7 +422,7 @@ class AddonContractTests(unittest.TestCase):
             'Catalog.QueryAll("PETS"',
             'Catalog.GetProgress("PETS"',
             'Catalog.ToggleDemoFavorite("PETS", record.id)',
-            "SC.Bridge.RequestPetModel(record.id,",
+            "SC.Bridge.RequestCreaturePreview(11, record.id,",
             "SC.Bridge.SummonPet(record.id,",
             "function page:Refresh()",
             "function page:ClearSelection()",
@@ -440,7 +452,7 @@ class AddonContractTests(unittest.TestCase):
             'SetScript("OnMouseUp"',
             "favorite:Disable()",
             "if not record.collected then",
-            "model:SetCreature(record.creatureId)",
+            "model:SetCreature(record.previewCreatureEntry)",
         ):
             self.assertIn(token, pets)
         self.assertNotIn("model:SetCamera(", pets)
@@ -539,13 +551,13 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("table.insert(nextFrameQueue, callback)", defer_region)
         self.assertIn("table.insert(page.scModelTasks", schedule_region)
 
-    def test_four_main_tabs_are_anchored_outside_the_journal(self):
+    def test_five_main_tabs_are_anchored_outside_the_journal(self):
         journal = read_text(ADDON / "UI" / "CollectionsFrame.lua")
         tab_keys = re.findall(
-            r'\{\s*key\s*=\s*"(MOUNTS|PETS|TOYS|WARDROBE)"',
+            r'\{\s*key\s*=\s*"(MOUNTS|PETS|TOYS|WARDROBE|TITLES)"',
             journal,
         )
-        self.assertEqual(["MOUNTS", "PETS", "TOYS", "WARDROBE"], tab_keys)
+        self.assertEqual(["MOUNTS", "PETS", "TOYS", "WARDROBE", "TITLES"], tab_keys)
         self.assertIn("JOURNAL_HEIGHT = 793", journal)
         self.assertRegex(
             journal,
@@ -566,7 +578,7 @@ class AddonContractTests(unittest.TestCase):
             "ClearModel()",
             "SetCreature(",
             "self:GetModel()",
-            "SC.Bridge.RequestModel(",
+            "SC.Bridge.RequestCreaturePreview(10,",
             "scModelGeneration",
             'SetScript("OnMouseDown"',
             'SetScript("OnMouseUp"',
@@ -634,7 +646,7 @@ class AddonContractTests(unittest.TestCase):
             apply_model.index("setCreatureAndVerify()", apply_model.index("setCreatureAndVerify = function"))
         ]
         self.assertIn("model:ClearModel()", set_creature)
-        self.assertIn("model:SetCreature(record.creatureId)", set_creature)
+        self.assertIn("model:SetCreature(record.previewCreatureEntry)", set_creature)
         self.assertIn("scheduleModel(0, generation, verifyModel)", set_creature)
         fail_model = apply_model[
             apply_model.index("local function failModel") : apply_model.index("local function retryLoad")
@@ -674,7 +686,7 @@ class AddonContractTests(unittest.TestCase):
             "infoButton:SetWidth(38)",
             "infoButton:SetHeight(38)",
             'infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")',
-            "SC.Bridge.RequestModel(record.id,",
+            "SC.Bridge.RequestCreaturePreview(10, record.id,",
             "deferNextFrame(",
             "GetModel()",
         ):
@@ -683,6 +695,8 @@ class AddonContractTests(unittest.TestCase):
             mounts,
             r"MODEL_RETRY_DELAYS\s*=\s*\{\s*0\.1\s*,\s*0\.25\s*,\s*0\.5\s*\}",
         )
+        self.assertRegex(mounts, r"MODEL_MAX_WINDOW\s*=\s*2")
+        self.assertIn('unavailable:SetText("模型预览暂不可用")', mount_page)
         self.assertRegex(
             mount_page,
             r"retryIndex\s*=\s*retryIndex\s*\+\s*1",
@@ -774,8 +788,99 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("local VISIBLE_TILES = 18", toys)
         self.assertIn("tile.scIcon:ClearAllPoints()", toys)
         self.assertIn("tile.scName:SetJustifyH(\"LEFT\")", toys)
-        self.assertIn("local TILE_WIDTH = 282", toys)
+        self.assertIn("local GRID_PADDING_X = 16", toys)
+        self.assertIn("local GRID_PADDING_TOP = 12", toys)
+        self.assertIn("local GRID_COLUMN_GAP = 6", toys)
         self.assertIn("local TILE_HEIGHT = 72", toys)
+        self.assertNotIn("local TILE_WIDTH =", toys)
+        self.assertIn("local function layoutTiles()", toys)
+        self.assertIn('grid:SetScript("OnSizeChanged", layoutTiles)', toys)
+        self.assertIn("local leftMargin = math.floor((gridWidth - blockWidth) / 2)", toys)
+        self.assertIn("column * (tileWidth + GRID_COLUMN_GAP)", toys)
+        self.assertIn("GRID_PADDING_TOP + (row * TILE_HEIGHT)", toys)
+
+        for grid_width in (848, 1014, 1354, 1908, 2548, 3428):
+            tile_width = (grid_width - (2 * 16) - (2 * 6)) // 3
+            block_width = (3 * tile_width) + (2 * 6)
+            left_margin = (grid_width - block_width) // 2
+            right_margin = grid_width - left_margin - block_width
+            self.assertLessEqual(abs(left_margin - right_margin), 1)
+        self.assertEqual((848 - (2 * 16) - (2 * 6)) // 3, 268)
+
+    def test_active_collection_templates_use_independent_thin_state_borders(self):
+        templates = read_text(ADDON / "UI" / "Templates.lua")
+        wardrobe = read_text(ADDON / "UI" / "Wardrobe.lua")
+        mounts = read_text(ADDON / "UI" / "Mounts.lua")
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        toys = read_text(ADDON / "UI" / "Toys.lua")
+
+        for token in (
+            "function UI.CreateThinCardBorder(parent, thickness)",
+            "function UI.CreateCollectionCardBorders(parent)",
+            "local collection = UI.CreateThinCardBorder(parent, 1)",
+            "local selected = UI.CreateThinCardBorder(parent, 2)",
+            "collection:SetCollected(false)",
+            "selected:SetBorderColor(1.00, 0.78, 0.14, 1)",
+            "self:SetBorderColor(0.58, 0.43, 0.16, 1)",
+            "self:SetBorderColor(0.38, 0.39, 0.40, 1)",
+        ):
+            self.assertIn(token, templates)
+
+        self.assertNotIn("local function createThinCardBorder", wardrobe)
+        self.assertGreaterEqual(wardrobe.count("UI.CreateThinCardBorder("), 5)
+        for active_source in (mounts, pets, toys):
+            self.assertNotIn("UI.Media.collectedFrame", active_source)
+            self.assertNotIn("UI.Media.uncollectedFrame", active_source)
+
+        selected_match = re.search(
+            r"function tile:SetSelected\(value\)(.*?)\n    end",
+            templates,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(selected_match)
+        set_selected = selected_match.group(1)
+        self.assertIn("selectedBorder:Show()", set_selected)
+        self.assertIn("selectedBorder:Hide()", set_selected)
+        self.assertNotIn("SetCollected", set_selected)
+        self.assertNotIn("hover:Show()", set_selected)
+
+    def test_phase_four_runtime_audit_covers_layout_state_and_reload_contracts(self):
+        audit = read_text(ROOT / "tools" / "runtime" / "SoloCollectionsLayoutAudit" / "LayoutAudit.lua")
+        toc = read_text(ROOT / "tools" / "runtime" / "SoloCollectionsLayoutAudit" / "SoloCollectionsLayoutAudit.toc")
+        for token in (
+            "## SavedVariables: SoloCollectionsLayoutAuditDB",
+            "## Dependencies: SoloCollections",
+        ):
+            self.assertIn(token, toc)
+        for token in (
+            "GetScreenWidth()",
+            "GetScreenHeight()",
+            'GetCVar("uiScale")',
+            "UIParent:GetEffectiveScale()",
+            "toyPage.scLayoutTiles()",
+            "math.abs(leftMargin - rightMargin) <= 1.01",
+            "visibleCounts.one == 1",
+            "visibleCounts.two == 2",
+            "visibleCounts.four == 4",
+            "visibleCounts.full == 18",
+            "firstCollectionAfterSelection",
+            "hoverVisible",
+            "reloadRestored",
+            "Screenshot()",
+        ):
+            self.assertIn(token, audit)
+        runner = read_text(ROOT / "tools" / "runtime" / "Start-SoloCollectionsLayoutAudit.ps1")
+        for token in (
+            "[Security.SecureString]$Password",
+            "Assert-AbsoluteNonCPath",
+            "Set-ConfigValue $lines 'gxResolution' $Resolution",
+            "Set-ConfigValue $lines 'uiScale'",
+            "Invoke-Reload $processName $commandScript",
+            "SoloCollectionsLayoutAudit.lua",
+            "EnsureDesktopAtLeast",
+            "RestoreDesktop()",
+        ):
+            self.assertIn(token, runner)
 
     def test_toy_box_enriches_tooltips_and_refreshes_item_cache_safely(self):
         toys_path = ADDON / "UI" / "Toys.lua"
@@ -817,6 +922,8 @@ class AddonContractTests(unittest.TestCase):
             "CreateMacro(",
             "EditMacro(",
             "PickupMacro(",
+            "FALLBACK_MACRO_ICON = 1",
+            "local function createToyMacro(",
             "InCombatLockdown()",
             '"/sc toy "',
             "SC.Bridge.UseToy(record.id",
@@ -889,14 +996,15 @@ class AddonContractTests(unittest.TestCase):
             "WAIST = {",
             "LEGS = {",
             "FEET = {",
-            "local function applyItemModelRecord(model, record)",
+            "local function applyItemModelRecord(model, record, pageGeneration)",
             "local function selectItemModelCamera(model)",
             "local function applyItemModelTransform(model)",
             "local function queueItemModelView(model, force)",
             "local function finishPendingItemModelView(model)",
             'model:SetUnit("player")',
             "model:Undress()",
-            "model:SetCamera(profile.camera)",
+            "model:SetCamera(model.scClientCameraSentinel)",
+            "model:SetCamera(1)",
             "model:GetModelScale()",
             "model:GetPosition()",
             "model:SetModelScale(nativeScale * (profile.scaleMultiplier or 1.00))",
@@ -1062,8 +1170,8 @@ class AddonContractTests(unittest.TestCase):
             self.assertIn(token, text)
 
         apply_record = text[
-            text.index("local function applyItemModelRecord(model, record)") :
-            text.index("local function stableSetItems(record)")
+            text.index("local function applyItemModelRecord(model, record, pageGeneration)") :
+            text.index("function UI.CreateWardrobePage(parent)")
         ]
         self.assertIn("model.scPendingItemString = resolveTryOnItem(record.itemId)", apply_record)
         self.assertIn('model:SetUnit("player")', apply_record)
@@ -1098,10 +1206,11 @@ class AddonContractTests(unittest.TestCase):
         ]
         pending_region = text[
             text.index("local function finishPendingItemModel(model)") :
-            text.index("local function applyItemModelRecord(model, record)")
+            text.index("local function applyItemModelRecord(model, record, pageGeneration)")
         ]
 
-        self.assertIn("model:SetCamera(profile.camera)", camera_region)
+        self.assertIn("model:SetCamera(model.scClientCameraSentinel)", camera_region)
+        self.assertGreaterEqual(camera_region.count("model:SetCamera(1)"), 2)
         self.assertNotIn("SetPosition", camera_region)
         self.assertNotIn("SetRotation", camera_region)
         self.assertNotIn("SetModelScale", camera_region)
@@ -1132,7 +1241,7 @@ class AddonContractTests(unittest.TestCase):
 
         update = text[
             text.index("local function updatePendingItemModel(self)") :
-            text.index("local function applyItemModelRecord(model, record)")
+            text.index("local function applyItemModelRecord(model, record, pageGeneration)")
         ]
         self.assertIn("local appearanceApplied = finishPendingItemModel(self)", update)
         self.assertIn("finishPendingItemModelView(self)", update)
@@ -1148,7 +1257,7 @@ class AddonContractTests(unittest.TestCase):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
         for token in (
             "for index, itemModel in ipairs(page.scItemModels) do",
-            "applyItemModelRecord(itemModel, record)",
+            "applyItemModelRecord(itemModel, record, pageGeneration)",
             "model:ClearModel()",
             "model:Hide()",
             "model:Show()",
@@ -1197,9 +1306,9 @@ class AddonContractTests(unittest.TestCase):
             "createSetListRow(",
             'Catalog.QueryAll("SETS"',
             'Catalog.GetProgress("SETS"',
-            "STABLE_SLOT_ORDER",
-            "ipairs(record.itemIds or {})",
-            "table.sort(ordered",
+            "SET_MEMBER_SLOT_ORDER",
+            "ipairs(variant and variant.members or {})",
+            "table.sort(result",
             "resolveTryOnItem(itemId)",
             "model:TryOn(itemString)",
             "scPieceIcons",
@@ -1217,6 +1326,19 @@ class AddonContractTests(unittest.TestCase):
             self.assertNotIn(forbidden, text)
         self.assertIn("setsPanel:SetWidth(350)", text)
         self.assertIn('pieces:SetPoint("TOP", name, "BOTTOM"', text)
+        self.assertIn("local pieceState = deriveSetPieceState(record)", text)
+        self.assertIn("SC.CollectionState.IsOwnedByType(13, appearanceId)", text)
+        self.assertIn("local collectedPieces = tonumber(record.collectedCount) or 0", text)
+        self.assertIn("local requiredPieces = tonumber(record.requiredCount) or #previewItems", text)
+        self.assertNotIn('setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #previewItems)', text)
+        bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        self.assertIn("function B.ApplySet(collectionId, variantIndex, callback)", bridge)
+        self.assertIn('B.RequestSC2Action(14, collectionId, "APPLY", variantIndex, callback)', bridge)
+        self.assertIn('applySet:SetText("应用套装")', text)
+        self.assertIn("SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)", text)
+        self.assertIn("local SET_PIECE_POOL_LIMIT = 12", text)
+        self.assertIn("local piecePoolSize = SET_PIECE_POOL_LIMIT", text)
+        self.assertNotIn("maxActiveSetSlots", text)
 
     def test_wardrobe_set_view_ignores_item_slot_filter(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
@@ -1262,8 +1384,9 @@ class AddonContractTests(unittest.TestCase):
         self.assertNotIn("model:TryOn(record.itemId)", text)
         self.assertNotIn("model:TryOn(itemId)", text)
         event_handler = text[text.index('page:SetScript("OnEvent"'):text.index('page:SetScript("OnHide"')]
-        self.assertNotIn("self:Refresh()", event_handler)
-        self.assertNotIn("preparePlayerModel()", event_handler)
+        item_cache_handler = event_handler[event_handler.index("local itemId, success = ..."):]
+        self.assertNotIn("self:Refresh()", item_cache_handler)
+        self.assertNotIn("preparePlayerModel()", item_cache_handler)
 
     def test_addon_uses_lua_51_modulo_operator(self):
         text = all_lua_text()

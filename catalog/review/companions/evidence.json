@@ -1,0 +1,5964 @@
+{
+  "candidateHash": "a6eed7c0c62af9c34b509b6e663c8423b4bf093240c5f6a7c7943f77d49c61af",
+  "candidates": [
+    {
+      "creature": {
+        "displayIds": [
+          7937
+        ],
+        "displayResourcesPresent": true,
+        "entry": 2671,
+        "name_zhCN": "机械松鼠",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 2671,
+      "identityKey": "creature:2671",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_01",
+          "itemSources": [
+            {
+              "itemId": 4401,
+              "name_zhCN": "机械松鼠笼"
+            }
+          ],
+          "name_zhCN": "机械松鼠",
+          "questSources": [],
+          "spellIconId": 3042,
+          "spellId": 4055
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5585
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7380,
+        "name_zhCN": "黑尾白猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7380,
+      "identityKey": "creature:7380",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 8490,
+              "name_zhCN": "猫笼（黑尾白猫）"
+            }
+          ],
+          "name_zhCN": "黑尾白猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 10677
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5555
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7381,
+        "name_zhCN": "黑斑白猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7381,
+      "identityKey": "creature:7381",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 8488,
+              "name_zhCN": "猫笼（黑斑白猫）"
+            }
+          ],
+          "name_zhCN": "黑斑白猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 10678
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5554
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7382,
+        "name_zhCN": "虎皮猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7382,
+      "identityKey": "creature:7382",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 8487,
+              "name_zhCN": "猫笼（虎皮猫）"
+            }
+          ],
+          "name_zhCN": "虎皮猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 10676
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5448
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7383,
+        "name_zhCN": "黑纹灰猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7383,
+      "identityKey": "creature:7383",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Achievement_Halloween_Cat_01",
+          "itemSources": [
+            {
+              "itemId": 8491,
+              "name_zhCN": "猫笼（黑纹灰猫）"
+            }
+          ],
+          "name_zhCN": "黑纹灰猫",
+          "questSources": [],
+          "spellIconId": 3511,
+          "spellId": 10675
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5586
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7384,
+        "name_zhCN": "黄猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7384,
+      "identityKey": "creature:7384",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 8486,
+              "name_zhCN": "猫笼（黄猫）"
+            }
+          ],
+          "name_zhCN": "黄猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 10674
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5556
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7385,
+        "name_zhCN": "灰猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7385,
+      "identityKey": "creature:7385",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 8485,
+              "name_zhCN": "猫笼（灰猫）"
+            }
+          ],
+          "name_zhCN": "灰猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 10673
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          9989
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7386,
+        "name_zhCN": "白猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7386,
+      "identityKey": "creature:7386",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 8489,
+              "name_zhCN": "猫笼（白猫）"
+            }
+          ],
+          "name_zhCN": "白猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 10679
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5207
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7387,
+        "name_zhCN": "绿翼鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7387,
+      "identityKey": "creature:7387",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Feather_12",
+          "itemSources": [
+            {
+              "itemId": 8492,
+              "name_zhCN": "鹦鹉笼（绿翼鹦鹉）"
+            }
+          ],
+          "name_zhCN": "绿翼鹦鹉",
+          "questSources": [],
+          "spellIconId": 2304,
+          "spellId": 10683
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6189
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7388,
+        "name_zhCN": "美冠鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7388,
+      "identityKey": "creature:7388",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Feather_03",
+          "itemSources": [],
+          "name_zhCN": "召唤美冠鹦鹉",
+          "questSources": [],
+          "spellIconId": 1726,
+          "spellId": 10681
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6190
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7389,
+        "name_zhCN": "金翼鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7389,
+      "identityKey": "creature:7389",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Feather_11",
+          "itemSources": [
+            {
+              "itemId": 8495,
+              "name_zhCN": "鹦鹉笼（金翼鹦鹉）"
+            }
+          ],
+          "name_zhCN": "金翼鹦鹉",
+          "questSources": [],
+          "spellIconId": 3079,
+          "spellId": 10684
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6191
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7390,
+        "name_zhCN": "红尾鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7390,
+      "identityKey": "creature:7390",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Feather_08",
+          "itemSources": [
+            {
+              "itemId": 8496,
+              "name_zhCN": "鹦鹉笼（红尾鹦鹉）"
+            }
+          ],
+          "name_zhCN": "红尾鹦鹉",
+          "questSources": [],
+          "spellIconId": 3279,
+          "spellId": 10680
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6192
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7391,
+        "name_zhCN": "花羽鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7391,
+      "identityKey": "creature:7391",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Feather_08",
+          "itemSources": [
+            {
+              "itemId": 8494,
+              "name_zhCN": "鹦鹉笼（花羽鹦鹉）"
+            }
+          ],
+          "name_zhCN": "花羽鹦鹉",
+          "questSources": [],
+          "spellIconId": 3279,
+          "spellId": 10682
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          304
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7392,
+        "name_zhCN": "农场小鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7392,
+      "identityKey": "creature:7392",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
+          "itemSources": [],
+          "name_zhCN": "召唤农场小鸡",
+          "questSources": [],
+          "spellIconId": 318,
+          "spellId": 10686
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          304
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7393,
+        "name_zhCN": "白色小鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7393,
+      "identityKey": "creature:7393",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
+          "itemSources": [],
+          "name_zhCN": "召唤白色小鸡",
+          "questSources": [],
+          "spellIconId": 318,
+          "spellId": 10687
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          5369
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7394,
+        "name_zhCN": "灰色小鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7394,
+      "identityKey": "creature:7394",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
+          "itemSources": [
+            {
+              "itemId": 11023,
+              "name_zhCN": "灰色小鸡"
+            }
+          ],
+          "name_zhCN": "灰色小鸡",
+          "questSources": [],
+          "spellIconId": 318,
+          "spellId": 10685
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2177
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7395,
+        "name_zhCN": "蟑螂",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7395,
+      "identityKey": "creature:7395",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_cockroach",
+          "itemSources": [
+            {
+              "itemId": 10393,
+              "name_zhCN": "蟑螂"
+            }
+          ],
+          "name_zhCN": "蟑螂",
+          "questSources": [],
+          "spellIconId": 3905,
+          "spellId": 10688
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6288
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7543,
+        "name_zhCN": "黑龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7543,
+      "identityKey": "creature:7543",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Black",
+          "itemSources": [
+            {
+              "itemId": 10822,
+              "name_zhCN": "黑龙宝宝"
+            }
+          ],
+          "name_zhCN": "黑龙宝宝",
+          "questSources": [],
+          "spellIconId": 1699,
+          "spellId": 10695
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6290
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7544,
+        "name_zhCN": "红龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7544,
+      "identityKey": "creature:7544",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Red",
+          "itemSources": [
+            {
+              "itemId": 8499,
+              "name_zhCN": "红龙宝宝"
+            }
+          ],
+          "name_zhCN": "红龙宝宝",
+          "questSources": [],
+          "spellIconId": 2598,
+          "spellId": 10697
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6291
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7545,
+        "name_zhCN": "绿龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7545,
+      "identityKey": "creature:7545",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Green",
+          "itemSources": [
+            {
+              "itemId": 8498,
+              "name_zhCN": "绿龙宝宝"
+            }
+          ],
+          "name_zhCN": "绿龙宝宝",
+          "questSources": [],
+          "spellIconId": 1702,
+          "spellId": 10698
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6292
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7546,
+        "name_zhCN": "青铜龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7546,
+      "identityKey": "creature:7546",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Bronze",
+          "itemSources": [],
+          "name_zhCN": "召唤青铜龙宝宝",
+          "questSources": [],
+          "spellIconId": 1701,
+          "spellId": 10699
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6293
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7547,
+        "name_zhCN": "蓝龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7547,
+      "identityKey": "creature:7547",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Blue",
+          "itemSources": [
+            {
+              "itemId": 34535,
+              "name_zhCN": "蓝龙宝宝"
+            }
+          ],
+          "name_zhCN": "蓝龙宝宝",
+          "questSources": [],
+          "spellIconId": 1700,
+          "spellId": 10696
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6294
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7548,
+        "name_zhCN": "精灵龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7548,
+      "identityKey": "creature:7548",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_09",
+          "itemSources": [],
+          "name_zhCN": "召唤精灵龙宝宝",
+          "questSources": [],
+          "spellIconId": 3202,
+          "spellId": 10700
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6295
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7549,
+        "name_zhCN": "树蛙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7549,
+      "identityKey": "creature:7549",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [
+            {
+              "itemId": 11026,
+              "name_zhCN": "树蛙盒"
+            }
+          ],
+          "name_zhCN": "树蛙",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 10704
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          901
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7550,
+        "name_zhCN": "林蛙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7550,
+      "identityKey": "creature:7550",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [
+            {
+              "itemId": 11027,
+              "name_zhCN": "林蛙盒"
+            }
+          ],
+          "name_zhCN": "林蛙",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 10703
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6296
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7551,
+        "name_zhCN": "蓝蛙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7551,
+      "identityKey": "creature:7551",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [],
+          "name_zhCN": "召唤蓝蛙",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 10701
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6297
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7552,
+        "name_zhCN": "岛蛙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7552,
+      "identityKey": "creature:7552",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [],
+          "name_zhCN": "召唤岛蛙",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 10702
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          4615
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7553,
+        "name_zhCN": "棕色猫头鹰",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7553,
+      "identityKey": "creature:7553",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_EyeOfTheOwl",
+          "itemSources": [
+            {
+              "itemId": 8500,
+              "name_zhCN": "棕色猫头鹰"
+            }
+          ],
+          "name_zhCN": "棕色猫头鹰",
+          "questSources": [],
+          "spellIconId": 49,
+          "spellId": 10707
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6298
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7554,
+        "name_zhCN": "白色猫头鹰",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7554,
+      "identityKey": "creature:7554",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_EyeOfTheOwl",
+          "itemSources": [],
+          "name_zhCN": "召唤白色猫头鹰",
+          "questSources": [],
+          "spellIconId": 49,
+          "spellId": 10708
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6299
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7555,
+        "name_zhCN": "黑色猫头鹰",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7555,
+      "identityKey": "creature:7555",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_EyeOfTheOwl",
+          "itemSources": [
+            {
+              "itemId": 8501,
+              "name_zhCN": "黑色猫头鹰"
+            }
+          ],
+          "name_zhCN": "黑色猫头鹰",
+          "questSources": [],
+          "spellIconId": 49,
+          "spellId": 10706
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6300
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7556,
+        "name_zhCN": "黄色猫头鹰",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7556,
+      "identityKey": "creature:7556",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_EyeOfTheOwl",
+          "itemSources": [],
+          "name_zhCN": "召唤黄色猫头鹰",
+          "questSources": [],
+          "spellIconId": 49,
+          "spellId": 10705
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          4626
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7558,
+        "name_zhCN": "黄毛兔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7558,
+      "identityKey": "creature:7558",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_02",
+          "itemSources": [],
+          "name_zhCN": "召唤黄毛兔",
+          "questSources": [],
+          "spellIconId": 2704,
+          "spellId": 10710
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6302
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7559,
+        "name_zhCN": "斑点兔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7559,
+      "identityKey": "creature:7559",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_05",
+          "itemSources": [],
+          "name_zhCN": "召唤斑点兔",
+          "questSources": [],
+          "spellIconId": 3068,
+          "spellId": 10712
+        },
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_06",
+          "itemSources": [],
+          "name_zhCN": "召唤斑点兔",
+          "questSources": [],
+          "spellIconId": 3280,
+          "spellId": 35157
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          328
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7560,
+        "name_zhCN": "雪兔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7560,
+      "identityKey": "creature:7560",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_02",
+          "itemSources": [
+            {
+              "itemId": 8497,
+              "name_zhCN": "兔笼（黄纹兔）"
+            }
+          ],
+          "name_zhCN": "黄纹兔",
+          "questSources": [],
+          "spellIconId": 2704,
+          "spellId": 10711
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2955
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7561,
+        "name_zhCN": "白鳞蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7561,
+      "identityKey": "creature:7561",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [
+            {
+              "itemId": 44822,
+              "name_zhCN": "白鳞蛇"
+            }
+          ],
+          "name_zhCN": "召唤白鳞蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10713
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2957
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7562,
+        "name_zhCN": "棕色蟒蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7562,
+      "identityKey": "creature:7562",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [
+            {
+              "itemId": 10361,
+              "name_zhCN": "棕色蟒蛇"
+            }
+          ],
+          "name_zhCN": "棕色蟒蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10716
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2956
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7563,
+        "name_zhCN": "蓝鳞蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7563,
+      "identityKey": "creature:7563",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [],
+          "name_zhCN": "召唤蓝鳞蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10715
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          1206
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7565,
+        "name_zhCN": "黑色王蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7565,
+      "identityKey": "creature:7565",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [
+            {
+              "itemId": 10360,
+              "name_zhCN": "黑色王蛇"
+            }
+          ],
+          "name_zhCN": "黑色王蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10714
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2954
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7566,
+        "name_zhCN": "血纹蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7566,
+      "identityKey": "creature:7566",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [],
+          "name_zhCN": "召唤血纹蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10720
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6303
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7567,
+        "name_zhCN": "赤练蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7567,
+      "identityKey": "creature:7567",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [
+            {
+              "itemId": 10392,
+              "name_zhCN": "赤练蛇"
+            }
+          ],
+          "name_zhCN": "赤练蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10717
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2954
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7568,
+        "name_zhCN": "赤环蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7568,
+      "identityKey": "creature:7568",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [],
+          "name_zhCN": "召唤赤环蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10719
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          1986
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7569,
+        "name_zhCN": "绿色水蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7569,
+      "identityKey": "creature:7569",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
+          "itemSources": [],
+          "name_zhCN": "召唤绿色水蛇",
+          "questSources": [],
+          "spellIconId": 72,
+          "spellId": 10718
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          1824
+        ],
+        "displayResourcesPresent": true,
+        "entry": 7570,
+        "name_zhCN": "小精灵",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 7570,
+      "identityKey": "creature:7570",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_WispSplode",
+          "itemSources": [],
+          "name_zhCN": "召唤小精灵",
+          "questSources": [],
+          "spellIconId": 122,
+          "spellId": 10721
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          7920
+        ],
+        "displayResourcesPresent": true,
+        "entry": 8376,
+        "name_zhCN": "机械小鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 8376,
+      "identityKey": "creature:8376",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
+          "itemSources": [
+            {
+              "itemId": 10398,
+              "name_zhCN": "机械小鸡"
+            }
+          ],
+          "name_zhCN": "机械小鸡",
+          "questSources": [],
+          "spellIconId": 318,
+          "spellId": 12243
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          8909
+        ],
+        "displayResourcesPresent": true,
+        "entry": 9656,
+        "name_zhCN": "步行炸弹",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 9656,
+      "identityKey": "creature:9656",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Bomb_04",
+          "itemSources": [
+            {
+              "itemId": 11825,
+              "name_zhCN": "炸弹宠物"
+            }
+          ],
+          "name_zhCN": "炸弹宝宝",
+          "questSources": [],
+          "spellIconId": 1696,
+          "spellId": 15048
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          8910
+        ],
+        "displayResourcesPresent": true,
+        "entry": 9657,
+        "name_zhCN": "发条机器人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 9657,
+      "identityKey": "creature:9657",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_lilsmoky",
+          "itemSources": [
+            {
+              "itemId": 11826,
+              "name_zhCN": "发条娃娃"
+            }
+          ],
+          "name_zhCN": "发条机器人",
+          "questSources": [],
+          "spellIconId": 3906,
+          "spellId": 15049
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6294
+        ],
+        "displayResourcesPresent": true,
+        "entry": 9662,
+        "name_zhCN": "精龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 9662,
+      "identityKey": "creature:9662",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_02",
+          "itemSources": [
+            {
+              "itemId": 11474,
+              "name_zhCN": "精龙的蛋"
+            }
+          ],
+          "name_zhCN": "精龙宝宝",
+          "questSources": [],
+          "spellIconId": 1514,
+          "spellId": 15067
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          9209
+        ],
+        "displayResourcesPresent": true,
+        "entry": 9936,
+        "name_zhCN": "腐化猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 9936,
+      "identityKey": "creature:9936",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 11903,
+              "name_zhCN": "猫笼（腐化猫）"
+            }
+          ],
+          "name_zhCN": "腐化猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 15648
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          9563,
+          9572
+        ],
+        "displayResourcesPresent": true,
+        "entry": 10259,
+        "name_zhCN": "座狼幼崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 10259,
+      "identityKey": "creature:10259",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 12264,
+              "name_zhCN": "座狼笼"
+            }
+          ],
+          "name_zhCN": "座狼幼崽",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 15999
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          9997
+        ],
+        "displayResourcesPresent": true,
+        "entry": 10598,
+        "name_zhCN": "烟网小蜘蛛",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 10598,
+      "identityKey": "creature:10598",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_Birdcage_01",
+          "itemSources": [
+            {
+              "itemId": 12529,
+              "name_zhCN": "烟网蜘蛛笼"
+            }
+          ],
+          "name_zhCN": "烟网蜘蛛",
+          "questSources": [],
+          "spellIconId": 3052,
+          "spellId": 16450
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          9554
+        ],
+        "displayResourcesPresent": true,
+        "entry": 11236,
+        "name_zhCN": "红鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 11236,
+      "identityKey": "creature:11236",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Helmet_66",
+          "itemSources": [
+            {
+              "itemId": 12185,
+              "name_zhCN": "血帆舰长之帽"
+            }
+          ],
+          "name_zhCN": "召唤红鹦鹉",
+          "questSources": [],
+          "spellIconId": 2421,
+          "spellId": 17567
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          10990
+        ],
+        "displayResourcesPresent": true,
+        "entry": 11325,
+        "name_zhCN": "熊猫宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 11325,
+      "identityKey": "creature:11325",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Belt_05",
+          "itemSources": [
+            {
+              "itemId": 13583,
+              "name_zhCN": "熊猫项圈"
+            }
+          ],
+          "name_zhCN": "熊猫宝宝",
+          "questSources": [],
+          "spellIconId": 2531,
+          "spellId": 17707
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          10992
+        ],
+        "displayResourcesPresent": true,
+        "entry": 11326,
+        "name_zhCN": "迷你破坏神",
+        "subname_zhCN": "恐惧之王"
+      },
+      "creatureEntry": 11326,
+      "identityKey": "creature:11326",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_DiabloStone",
+          "itemSources": [
+            {
+              "itemId": 13584,
+              "name_zhCN": "破坏神之石"
+            }
+          ],
+          "name_zhCN": "迷你破坏神",
+          "questSources": [],
+          "spellIconId": 2795,
+          "spellId": 17708
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          10993
+        ],
+        "displayResourcesPresent": true,
+        "entry": 11327,
+        "name_zhCN": "跳跳虫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 11327,
+      "identityKey": "creature:11327",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shadow_SummonFelHunter",
+          "itemSources": [
+            {
+              "itemId": 13582,
+              "name_zhCN": "跳虫绳索"
+            }
+          ],
+          "name_zhCN": "跳跳虫",
+          "questSources": [],
+          "spellIconId": 214,
+          "spellId": 17709
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          10269
+        ],
+        "displayResourcesPresent": true,
+        "entry": 12257,
+        "name_zhCN": "机械雪人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 12257,
+      "identityKey": "creature:12257",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Gorilla",
+          "itemSources": [
+            {
+              "itemId": 15778,
+              "name_zhCN": "机械雪人"
+            }
+          ],
+          "name_zhCN": "召唤机械雪人",
+          "questSources": [],
+          "spellIconId": 1582,
+          "spellId": 19363
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          901
+        ],
+        "displayResourcesPresent": true,
+        "entry": 12419,
+        "name_zhCN": "逼真的蟾蜍",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 12419,
+      "identityKey": "creature:12419",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [
+            {
+              "itemId": 15996,
+              "name_zhCN": "仿真机械蛙"
+            }
+          ],
+          "name_zhCN": "逼真的蟾蜍",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 19772
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          1072
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14421,
+        "name_zhCN": "棕色土拨鼠",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14421,
+      "identityKey": "creature:14421",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_BeastCall",
+          "itemSources": [
+            {
+              "itemId": 10394,
+              "name_zhCN": "土拨鼠哨"
+            }
+          ],
+          "name_zhCN": "土拨鼠",
+          "questSources": [],
+          "spellIconId": 455,
+          "spellId": 10709
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14657
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14629,
+        "name_zhCN": "圆头钳嘴龟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14629,
+      "identityKey": "creature:14629",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Turtle",
+          "itemSources": [
+            {
+              "itemId": 18964,
+              "name_zhCN": "海龟蛋（圆头钳嘴龟）"
+            }
+          ],
+          "name_zhCN": "圆头钳嘴龟",
+          "questSources": [],
+          "spellIconId": 1588,
+          "spellId": 23429
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14658
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14630,
+        "name_zhCN": "硬皮钳嘴龟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14630,
+      "identityKey": "creature:14630",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Turtle",
+          "itemSources": [],
+          "name_zhCN": "硬皮钳嘴龟",
+          "questSources": [],
+          "spellIconId": 1588,
+          "spellId": 23431
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14659
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14631,
+        "name_zhCN": "绿色钳嘴龟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14631,
+      "identityKey": "creature:14631",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Turtle",
+          "itemSources": [],
+          "name_zhCN": "绿色钳嘴龟",
+          "questSources": [],
+          "spellIconId": 1588,
+          "spellId": 23430
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14660
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14632,
+        "name_zhCN": "鹰喙钳嘴龟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14632,
+      "identityKey": "creature:14632",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Turtle",
+          "itemSources": [],
+          "name_zhCN": "鹰喙钳嘴龟",
+          "questSources": [],
+          "spellIconId": 1588,
+          "spellId": 23432
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14661
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14633,
+        "name_zhCN": "白色钳嘴龟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14633,
+      "identityKey": "creature:14633",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Turtle",
+          "itemSources": [],
+          "name_zhCN": "白色钳嘴龟",
+          "questSources": [],
+          "spellIconId": 1588,
+          "spellId": 23428
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14778
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14755,
+        "name_zhCN": "绿色小神龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14755,
+      "identityKey": "creature:14755",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Orb_01",
+          "itemSources": [
+            {
+              "itemId": 19055,
+              "name_zhCN": "绿色龙珠"
+            }
+          ],
+          "name_zhCN": "绿色小神龙",
+          "questSources": [],
+          "spellIconId": 1973,
+          "spellId": 23531
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14779
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14756,
+        "name_zhCN": "红色小神龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14756,
+      "identityKey": "creature:14756",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Orb_05",
+          "itemSources": [
+            {
+              "itemId": 19054,
+              "name_zhCN": "红色龙珠"
+            }
+          ],
+          "name_zhCN": "红色小神龙",
+          "questSources": [],
+          "spellIconId": 2706,
+          "spellId": 23530
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14938
+        ],
+        "displayResourcesPresent": true,
+        "entry": 14878,
+        "name_zhCN": "加布林",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 14878,
+      "identityKey": "creature:14878",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [
+            {
+              "itemId": 19450,
+              "name_zhCN": "加布林的小窝"
+            }
+          ],
+          "name_zhCN": "加布林",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 23811
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15369
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15186,
+        "name_zhCN": "奔波尔霸",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15186,
+      "identityKey": "creature:15186",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_03",
+          "itemSources": [
+            {
+              "itemId": 20371,
+              "name_zhCN": "蓝色鱼人卵"
+            }
+          ],
+          "name_zhCN": "小鱼人",
+          "questSources": [],
+          "spellIconId": 2316,
+          "spellId": 24696
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15393
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15356,
+        "name_zhCN": "蓝色小鱼人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15356,
+      "identityKey": "creature:15356",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_MonsterHead_02",
+          "itemSources": [],
+          "name_zhCN": "召唤小鱼人（蓝色）",
+          "questSources": [],
+          "spellIconId": 1752,
+          "spellId": 24985
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15397
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15357,
+        "name_zhCN": "紫色小鱼人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15357,
+      "identityKey": "creature:15357",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_MonsterHead_02",
+          "itemSources": [],
+          "name_zhCN": "召唤小鱼人（紫色）",
+          "questSources": [],
+          "spellIconId": 1752,
+          "spellId": 24990
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15398
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15358,
+        "name_zhCN": "乐奇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15358,
+      "identityKey": "creature:15358",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_03",
+          "itemSources": [
+            {
+              "itemId": 30360,
+              "name_zhCN": "乐奇的蛋"
+            }
+          ],
+          "name_zhCN": "小鱼人",
+          "questSources": [],
+          "spellIconId": 2316,
+          "spellId": 24988
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15396
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15359,
+        "name_zhCN": "粉色小鱼人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15359,
+      "identityKey": "creature:15359",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_MonsterHead_02",
+          "itemSources": [],
+          "name_zhCN": "召唤小鱼人（粉色）",
+          "questSources": [],
+          "spellIconId": 1752,
+          "spellId": 24989
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15394
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15360,
+        "name_zhCN": "绿色小鱼人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15360,
+      "identityKey": "creature:15360",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_MonsterHead_02",
+          "itemSources": [],
+          "name_zhCN": "召唤小鱼人（绿色）",
+          "questSources": [],
+          "spellIconId": 1752,
+          "spellId": 24986
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15395
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15361,
+        "name_zhCN": "霸波尔奔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15361,
+      "identityKey": "creature:15361",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_MonsterHead_02",
+          "itemSources": [],
+          "name_zhCN": "召唤小鱼人（橙色）",
+          "questSources": [],
+          "spellIconId": 1752,
+          "spellId": 24987
+        },
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_03",
+          "itemSources": [
+            {
+              "itemId": 20651,
+              "name_zhCN": "橙色鱼人卵"
+            }
+          ],
+          "name_zhCN": "小鱼人",
+          "questSources": [],
+          "spellIconId": 2316,
+          "spellId": 25018
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15436
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15429,
+        "name_zhCN": "恶心的软泥怪",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15429,
+      "identityKey": "creature:15429",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Creature_Poison_05",
+          "itemSources": [
+            {
+              "itemId": 20769,
+              "name_zhCN": "恶心的软泥怪"
+            }
+          ],
+          "name_zhCN": "恶心的软泥怪",
+          "questSources": [],
+          "spellIconId": 1734,
+          "spellId": 25162
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15595
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15661,
+        "name_zhCN": "鲨鱼宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15661,
+      "identityKey": "creature:15661",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_babyshark",
+          "itemSources": [
+            {
+              "itemId": 21168,
+              "name_zhCN": "鲨鱼宝宝"
+            }
+          ],
+          "name_zhCN": "鲨鱼宝宝",
+          "questSources": [],
+          "spellIconId": 3909,
+          "spellId": 25849
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15660
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15698,
+        "name_zhCN": "冬天爷爷的助手",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15698,
+      "identityKey": "creature:15698",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Holiday_Christmas_Present_03",
+          "itemSources": [
+            {
+              "itemId": 21301,
+              "name_zhCN": "绿色助手盒"
+            }
+          ],
+          "name_zhCN": "冬天爷爷的小助手",
+          "questSources": [],
+          "spellIconId": 2734,
+          "spellId": 26533
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          10269
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15699,
+        "name_zhCN": "安静的机械雪人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15699,
+      "identityKey": "creature:15699",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Gorilla",
+          "itemSources": [
+            {
+              "itemId": 21277,
+              "name_zhCN": "安静的机械雪人"
+            }
+          ],
+          "name_zhCN": "安静的机械雪人",
+          "questSources": [],
+          "spellIconId": 1582,
+          "spellId": 26010
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15663
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15705,
+        "name_zhCN": "冬天爷爷的小助手",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15705,
+      "identityKey": "creature:15705",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Holiday_Christmas_Present_01",
+          "itemSources": [
+            {
+              "itemId": 21305,
+              "name_zhCN": "红色助手盒"
+            }
+          ],
+          "name_zhCN": "冬天爷爷的小助手",
+          "questSources": [],
+          "spellIconId": 1859,
+          "spellId": 26541
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15904
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15706,
+        "name_zhCN": "冬季驯鹿",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15706,
+      "identityKey": "creature:15706",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Bell_01",
+          "itemSources": [
+            {
+              "itemId": 21308,
+              "name_zhCN": "圣诞铃铛"
+            }
+          ],
+          "name_zhCN": "冬季驯鹿",
+          "questSources": [],
+          "spellIconId": 2264,
+          "spellId": 26529
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15671
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15710,
+        "name_zhCN": "雪孩子",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15710,
+      "identityKey": "creature:15710",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Bag_17",
+          "itemSources": [
+            {
+              "itemId": 21309,
+              "name_zhCN": "雪孩子工具包"
+            }
+          ],
+          "name_zhCN": "雪孩子",
+          "questSources": [],
+          "spellIconId": 3073,
+          "spellId": 26045
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15684
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15721,
+        "name_zhCN": "机械格林奇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15721,
+      "identityKey": "creature:15721",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Gorilla",
+          "itemSources": [
+            {
+              "itemId": 21325,
+              "name_zhCN": "机械格林奇"
+            }
+          ],
+          "name_zhCN": "召唤机械格林奇",
+          "questSources": [],
+          "spellIconId": 1582,
+          "spellId": 26067
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15881
+        ],
+        "displayResourcesPresent": true,
+        "entry": 15901,
+        "name_zhCN": "被砍下来的触须",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 15901,
+      "identityKey": "creature:15901",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_AhnQirajTrinket_05",
+          "itemSources": [
+            {
+              "itemId": 21579,
+              "name_zhCN": "克苏恩的触须"
+            }
+          ],
+          "name_zhCN": "Tentacle Call",
+          "questSources": [],
+          "spellIconId": 1819,
+          "spellId": 26391
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15984
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16069,
+        "name_zhCN": "咕唧",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16069,
+      "identityKey": "creature:16069",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_pinkmurlocegg",
+          "itemSources": [
+            {
+              "itemId": 22114,
+              "name_zhCN": "粉色鱼人卵"
+            }
+          ],
+          "name_zhCN": "咕唧",
+          "questSources": [],
+          "spellIconId": 3912,
+          "spellId": 27241
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15992
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16085,
+        "name_zhCN": "小匹德菲特",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16085,
+      "identityKey": "creature:16085",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Ammo_Arrow_02",
+          "itemSources": [
+            {
+              "itemId": 22235,
+              "name_zhCN": "真银箭头"
+            }
+          ],
+          "name_zhCN": "匹德菲特",
+          "questSources": [],
+          "spellIconId": 288,
+          "spellId": 27570
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15398
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16445,
+        "name_zhCN": "塔吉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16445,
+      "identityKey": "creature:16445",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_03",
+          "itemSources": [
+            {
+              "itemId": 22780,
+              "name_zhCN": "白色鱼人卵"
+            }
+          ],
+          "name_zhCN": "塔吉",
+          "questSources": [],
+          "spellIconId": 2316,
+          "spellId": 28487
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16189
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16456,
+        "name_zhCN": "波利",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16456,
+      "identityKey": "creature:16456",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Belt_09",
+          "itemSources": [
+            {
+              "itemId": 22781,
+              "name_zhCN": "北极熊项圈"
+            }
+          ],
+          "name_zhCN": "波利",
+          "questSources": [],
+          "spellIconId": 3071,
+          "spellId": 28505
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16259
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16547,
+        "name_zhCN": "飞毛腿",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16547,
+      "identityKey": "creature:16547",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_03",
+          "itemSources": [
+            {
+              "itemId": 23002,
+              "name_zhCN": "乌龟盒"
+            }
+          ],
+          "name_zhCN": "飞毛腿",
+          "questSources": [],
+          "spellIconId": 2339,
+          "spellId": 28738
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16257
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16548,
+        "name_zhCN": "哼哼先生",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16548,
+      "identityKey": "creature:16548",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Belt_25",
+          "itemSources": [
+            {
+              "itemId": 23007,
+              "name_zhCN": "小猪项圈"
+            }
+          ],
+          "name_zhCN": "哼哼先生",
+          "questSources": [],
+          "spellIconId": 3070,
+          "spellId": 28739
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          2176
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16549,
+        "name_zhCN": "小老鼠吱吱",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16549,
+      "identityKey": "creature:16549",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_ratcage",
+          "itemSources": [
+            {
+              "itemId": 23015,
+              "name_zhCN": "老鼠笼"
+            }
+          ],
+          "name_zhCN": "小老鼠吱吱",
+          "questSources": [],
+          "spellIconId": 3907,
+          "spellId": 28740
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16587
+        ],
+        "displayResourcesPresent": true,
+        "entry": 16701,
+        "name_zhCN": "仲夏之魂",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 16701,
+      "identityKey": "creature:16701",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Potion_33",
+          "itemSources": [
+            {
+              "itemId": 23083,
+              "name_zhCN": "被捕获的火焰"
+            }
+          ],
+          "name_zhCN": "仲夏之魂",
+          "questSources": [],
+          "spellIconId": 1302,
+          "spellId": 28871
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16942
+        ],
+        "displayResourcesPresent": true,
+        "entry": 17254,
+        "name_zhCN": "白色虎崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 17254,
+      "identityKey": "creature:17254",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Tiger_01",
+          "itemSources": [
+            {
+              "itemId": 23712,
+              "name_zhCN": "白色虎崽"
+            }
+          ],
+          "name_zhCN": "白色虎崽",
+          "questSources": [],
+          "spellIconId": 293,
+          "spellId": 30152
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16943
+        ],
+        "displayResourcesPresent": true,
+        "entry": 17255,
+        "name_zhCN": "角鹰兽宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 17255,
+      "identityKey": "creature:17255",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_02",
+          "itemSources": [
+            {
+              "itemId": 23713,
+              "name_zhCN": "角鹰兽宝宝"
+            }
+          ],
+          "name_zhCN": "角鹰兽宝宝",
+          "questSources": [],
+          "spellIconId": 1514,
+          "spellId": 30156
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          17723
+        ],
+        "displayResourcesPresent": true,
+        "entry": 18381,
+        "name_zhCN": "虚空龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 18381,
+      "identityKey": "creature:18381",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Netherwhelp",
+          "itemSources": [
+            {
+              "itemId": 25535,
+              "name_zhCN": "虚空龙宝宝项圈"
+            }
+          ],
+          "name_zhCN": "虚空龙宝宝",
+          "questSources": [],
+          "spellIconId": 2449,
+          "spellId": 32298
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          18269
+        ],
+        "displayResourcesPresent": true,
+        "entry": 18839,
+        "name_zhCN": "魔法龙虾",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 18839,
+      "identityKey": "creature:18839",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Fish_14",
+          "itemSources": [
+            {
+              "itemId": 27445,
+              "name_zhCN": "魔法龙虾盒"
+            }
+          ],
+          "name_zhCN": "魔法龙虾",
+          "questSources": [],
+          "spellIconId": 2105,
+          "spellId": 33050
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          17105
+        ],
+        "displayResourcesPresent": true,
+        "entry": 18845,
+        "name_zhCN": "善良的钳子先生",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 18845,
+      "identityKey": "creature:18845",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Fish_14",
+          "itemSources": [],
+          "name_zhCN": "召唤强大的钳子先生",
+          "questSources": [],
+          "spellIconId": 2105,
+          "spellId": 33057
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          19600
+        ],
+        "displayResourcesPresent": true,
+        "entry": 20408,
+        "name_zhCN": "法力龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 20408,
+      "identityKey": "creature:20408",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_AbolishMagic",
+          "itemSources": [
+            {
+              "itemId": 29363,
+              "name_zhCN": "法力龙宝宝"
+            }
+          ],
+          "name_zhCN": "法力龙宝宝",
+          "questSources": [],
+          "spellIconId": 263,
+          "spellId": 35156
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          4626
+        ],
+        "displayResourcesPresent": true,
+        "entry": 20472,
+        "name_zhCN": "棕兔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 20472,
+      "identityKey": "creature:20472",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Crate_02",
+          "itemSources": [
+            {
+              "itemId": 29364,
+              "name_zhCN": "棕兔笼"
+            }
+          ],
+          "name_zhCN": "棕兔",
+          "questSources": [],
+          "spellIconId": 2704,
+          "spellId": 35239
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          19985
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21008,
+        "name_zhCN": "黄色飞蛾",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21008,
+      "identityKey": "creature:21008",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
+          "itemSources": [
+            {
+              "itemId": 29903,
+              "name_zhCN": "黄色蛾卵"
+            }
+          ],
+          "name_zhCN": "黄色飞蛾",
+          "questSources": [],
+          "spellIconId": 3278,
+          "spellId": 35910
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          19986
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21009,
+        "name_zhCN": "红色飞蛾",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21009,
+      "identityKey": "creature:21009",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
+          "itemSources": [
+            {
+              "itemId": 29902,
+              "name_zhCN": "红色蛾卵"
+            }
+          ],
+          "name_zhCN": "红色飞蛾",
+          "questSources": [],
+          "spellIconId": 3278,
+          "spellId": 35909
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          19987
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21010,
+        "name_zhCN": "蓝色飞蛾",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21010,
+      "identityKey": "creature:21010",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
+          "itemSources": [
+            {
+              "itemId": 29901,
+              "name_zhCN": "蓝色蛾卵"
+            }
+          ],
+          "name_zhCN": "蓝色飞蛾",
+          "questSources": [],
+          "spellIconId": 3278,
+          "spellId": 35907
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          19999
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21018,
+        "name_zhCN": "白色飞蛾",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21018,
+      "identityKey": "creature:21018",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
+          "itemSources": [
+            {
+              "itemId": 29904,
+              "name_zhCN": "白色蛾卵"
+            }
+          ],
+          "name_zhCN": "白色飞蛾",
+          "questSources": [],
+          "spellIconId": 3278,
+          "spellId": 35911
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          20026
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21055,
+        "name_zhCN": "金色龙鹰幼崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21055,
+      "identityKey": "creature:21055",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
+          "itemSources": [
+            {
+              "itemId": 29953,
+              "name_zhCN": "金色龙鹰卵"
+            }
+          ],
+          "name_zhCN": "金色龙鹰幼崽",
+          "questSources": [],
+          "spellIconId": 2328,
+          "spellId": 36027
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          20029
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21056,
+        "name_zhCN": "蓝色龙鹰幼崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21056,
+      "identityKey": "creature:21056",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
+          "itemSources": [
+            {
+              "itemId": 29958,
+              "name_zhCN": "蓝色龙鹰卵"
+            }
+          ],
+          "name_zhCN": "蓝色龙鹰幼崽",
+          "questSources": [],
+          "spellIconId": 2328,
+          "spellId": 36031
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          20037
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21063,
+        "name_zhCN": "银色龙鹰幼崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21063,
+      "identityKey": "creature:21063",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
+          "itemSources": [
+            {
+              "itemId": 29957,
+              "name_zhCN": "银色龙鹰卵"
+            }
+          ],
+          "name_zhCN": "银色龙鹰幼崽",
+          "questSources": [],
+          "spellIconId": 2328,
+          "spellId": 36029
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          20027
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21064,
+        "name_zhCN": "红色龙鹰幼崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21064,
+      "identityKey": "creature:21064",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
+          "itemSources": [
+            {
+              "itemId": 29956,
+              "name_zhCN": "红色龙鹰卵"
+            }
+          ],
+          "name_zhCN": "红色龙鹰幼崽",
+          "questSources": [],
+          "spellIconId": 2328,
+          "spellId": 36028
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          20042
+        ],
+        "displayResourcesPresent": true,
+        "entry": 21076,
+        "name_zhCN": "萤火虫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 21076,
+      "identityKey": "creature:21076",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Wasp",
+          "itemSources": [
+            {
+              "itemId": 29960,
+              "name_zhCN": "被捕获的萤火虫"
+            }
+          ],
+          "name_zhCN": "萤火虫",
+          "questSources": [],
+          "spellIconId": 3277,
+          "spellId": 36034
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          20996
+        ],
+        "displayResourcesPresent": true,
+        "entry": 22445,
+        "name_zhCN": "迷你鹦鹉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 22445,
+      "identityKey": "creature:22445",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_Birdcage_01",
+          "itemSources": [
+            {
+              "itemId": 31760,
+              "name_zhCN": "迷你鹦鹉"
+            }
+          ],
+          "name_zhCN": "迷你鹦鹉",
+          "questSources": [],
+          "spellIconId": 3052,
+          "spellId": 39181
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22349
+        ],
+        "displayResourcesPresent": true,
+        "entry": 22943,
+        "name_zhCN": "鹿角小飞兔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 22943,
+      "identityKey": "creature:22943",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Drink_13",
+          "itemSources": [
+            {
+              "itemId": 32233,
+              "name_zhCN": "鹿角小飞兔的酒杯"
+            }
+          ],
+          "name_zhCN": "鹿角小飞兔",
+          "questSources": [],
+          "spellIconId": 1312,
+          "spellId": 39709
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21304
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23114,
+        "name_zhCN": "金猪",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23114,
+      "identityKey": "creature:23114",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_ElvenCoins",
+          "itemSources": [
+            {
+              "itemId": 32465,
+              "name_zhCN": "幸运金币"
+            }
+          ],
+          "name_zhCN": "金猪",
+          "questSources": [],
+          "spellIconId": 2717,
+          "spellId": 40319
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21328
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23198,
+        "name_zhCN": "金猪",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23198,
+      "identityKey": "creature:23198",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_ElvenCoins",
+          "itemSources": [
+            {
+              "itemId": 32498,
+              "name_zhCN": "幸运硬币"
+            }
+          ],
+          "name_zhCN": "金猪",
+          "questSources": [],
+          "spellIconId": 2717,
+          "spellId": 40405
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21381
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23231,
+        "name_zhCN": "威利",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23231,
+      "identityKey": "creature:23231",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_sleepywilly",
+          "itemSources": [
+            {
+              "itemId": 32617,
+              "name_zhCN": "贪睡的威利"
+            }
+          ],
+          "name_zhCN": "威利",
+          "questSources": [],
+          "spellIconId": 3908,
+          "spellId": 40613
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21362
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23234,
+        "name_zhCN": "蕉蕉",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23234,
+      "identityKey": "creature:23234",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Food_24",
+          "itemSources": [
+            {
+              "itemId": 32588,
+              "name_zhCN": "猴子护符"
+            }
+          ],
+          "name_zhCN": "蕉蕉",
+          "questSources": [],
+          "spellIconId": 231,
+          "spellId": 40549
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21382
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23258,
+        "name_zhCN": "蛋蛋",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23258,
+      "identityKey": "creature:23258",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_egbert",
+          "itemSources": [
+            {
+              "itemId": 32616,
+              "name_zhCN": "蛋蛋的蛋"
+            }
+          ],
+          "name_zhCN": "蛋蛋",
+          "questSources": [],
+          "spellIconId": 3910,
+          "spellId": 40614
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21393
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23266,
+        "name_zhCN": "小新",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23266,
+      "identityKey": "creature:23266",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Belt_16",
+          "itemSources": [
+            {
+              "itemId": 32622,
+              "name_zhCN": "小象项圈"
+            }
+          ],
+          "name_zhCN": "小新",
+          "questSources": [],
+          "spellIconId": 3152,
+          "spellId": 40634
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16633
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23274,
+        "name_zhCN": "臭臭",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23274,
+      "identityKey": "creature:23274",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 40653,
+              "name_zhCN": "臭乎乎的宠物笼"
+            }
+          ],
+          "name_zhCN": "臭臭",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 40990
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21900
+        ],
+        "displayResourcesPresent": true,
+        "entry": 23909,
+        "name_zhCN": "邪恶的南瓜娃娃",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 23909,
+      "identityKey": "creature:23909",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Food_59",
+          "itemSources": [
+            {
+              "itemId": 33154,
+              "name_zhCN": "邪恶的南瓜娃娃"
+            }
+          ],
+          "name_zhCN": "南瓜娃娃",
+          "questSources": [],
+          "spellIconId": 1747,
+          "spellId": 42609
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22388
+        ],
+        "displayResourcesPresent": true,
+        "entry": 24388,
+        "name_zhCN": "牙牙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 24388,
+      "identityKey": "creature:24388",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Drink_19",
+          "itemSources": [
+            {
+              "itemId": 33816,
+              "name_zhCN": "牙牙的小桶"
+            }
+          ],
+          "name_zhCN": "牙牙",
+          "questSources": [],
+          "spellIconId": 2532,
+          "spellId": 43697
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22389
+        ],
+        "displayResourcesPresent": true,
+        "entry": 24389,
+        "name_zhCN": "毒皮",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 24389,
+      "identityKey": "creature:24389",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Drink_19",
+          "itemSources": [
+            {
+              "itemId": 33818,
+              "name_zhCN": "毒皮的小桶"
+            }
+          ],
+          "name_zhCN": "毒皮",
+          "questSources": [],
+          "spellIconId": 2532,
+          "spellId": 43698
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22459
+        ],
+        "displayResourcesPresent": true,
+        "entry": 24480,
+        "name_zhCN": "魔汁",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 24480,
+      "identityKey": "creature:24480",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
+          "itemSources": [
+            {
+              "itemId": 33993,
+              "name_zhCN": "魔汁"
+            }
+          ],
+          "name_zhCN": "魔汁",
+          "questSources": [],
+          "spellIconId": 3058,
+          "spellId": 43918
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22629
+        ],
+        "displayResourcesPresent": true,
+        "entry": 24753,
+        "name_zhCN": "粉色小雷象",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 24753,
+      "identityKey": "creature:24753",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_RidingElekk_Purple",
+          "itemSources": [
+            {
+              "itemId": 46707,
+              "name_zhCN": "小丸子"
+            }
+          ],
+          "name_zhCN": "小丸子",
+          "questSources": [],
+          "spellIconId": 2403,
+          "spellId": 44369
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22776
+        ],
+        "displayResourcesPresent": true,
+        "entry": 24968,
+        "name_zhCN": "发条战士",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 24968,
+      "identityKey": "creature:24968",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Gizmo_06",
+          "itemSources": [
+            {
+              "itemId": 34425,
+              "name_zhCN": "发条战士"
+            }
+          ],
+          "name_zhCN": "发条战士",
+          "questSources": [],
+          "spellIconId": 2552,
+          "spellId": 54187
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22855
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25062,
+        "name_zhCN": "迷你孢子蝠",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 25062,
+      "identityKey": "creature:25062",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Sporebat",
+          "itemSources": [
+            {
+              "itemId": 34478,
+              "name_zhCN": "微型孢子蝠"
+            }
+          ],
+          "name_zhCN": "小孢子蝠",
+          "questSources": [],
+          "spellIconId": 2374,
+          "spellId": 45082
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22903
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25109,
+        "name_zhCN": "火箭鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 25109,
+      "identityKey": "creature:25109",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_EngGizmos_RocketChicken",
+          "itemSources": [
+            {
+              "itemId": 34492,
+              "name_zhCN": "火箭鸡"
+            }
+          ],
+          "name_zhCN": "火箭鸡",
+          "questSources": [],
+          "spellIconId": 2755,
+          "spellId": 45125
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22966,
+          22990,
+          22991,
+          22992
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25110,
+        "name_zhCN": "风筝龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 25110,
+      "identityKey": "creature:25110",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_DragonKite_02",
+          "itemSources": [
+            {
+              "itemId": 34493,
+              "name_zhCN": "风筝龙"
+            }
+          ],
+          "name_zhCN": "风筝",
+          "questSources": [],
+          "spellIconId": 3069,
+          "spellId": 45127
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21304
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25146,
+        "name_zhCN": "金猪",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 25146,
+      "identityKey": "creature:25146",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Coin_01",
+          "itemSources": [
+            {
+              "itemId": 34518,
+              "name_zhCN": "金猪硬币"
+            }
+          ],
+          "name_zhCN": "金猪",
+          "questSources": [],
+          "spellIconId": 2801,
+          "spellId": 45174
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22938
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25147,
+        "name_zhCN": "银猪",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 25147,
+      "identityKey": "creature:25147",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Coin_03",
+          "itemSources": [
+            {
+              "itemId": 34519,
+              "name_zhCN": "银猪硬币"
+            }
+          ],
+          "name_zhCN": "银猪",
+          "questSources": [],
+          "spellIconId": 2994,
+          "spellId": 45175
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          8409
+        ],
+        "displayResourcesPresent": true,
+        "entry": 25706,
+        "name_zhCN": "灼烧元素",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 25706,
+      "identityKey": "creature:25706",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Pet_ScorchedStone",
+          "itemSources": [
+            {
+              "itemId": 34955,
+              "name_zhCN": "灼烧石"
+            }
+          ],
+          "name_zhCN": "灼烧元素",
+          "questSources": [],
+          "spellIconId": 3874,
+          "spellId": 45890
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          23507
+        ],
+        "displayResourcesPresent": true,
+        "entry": 26050,
+        "name_zhCN": "尼尼",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 26050,
+      "identityKey": "creature:26050",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Drink_19",
+          "itemSources": [
+            {
+              "itemId": 35349,
+              "name_zhCN": "尼尼的小桶"
+            }
+          ],
+          "name_zhCN": "尼尼",
+          "questSources": [],
+          "spellIconId": 2532,
+          "spellId": 46425
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          23506
+        ],
+        "displayResourcesPresent": true,
+        "entry": 26056,
+        "name_zhCN": "莫莫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 26056,
+      "identityKey": "creature:26056",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Drink_19",
+          "itemSources": [
+            {
+              "itemId": 35350,
+              "name_zhCN": "莫莫的小桶"
+            }
+          ],
+          "name_zhCN": "莫莫",
+          "questSources": [],
+          "spellIconId": 2532,
+          "spellId": 46426
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          23574
+        ],
+        "displayResourcesPresent": true,
+        "entry": 26119,
+        "name_zhCN": "凤凰宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 26119,
+      "identityKey": "creature:26119",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_PheonixPet_01",
+          "itemSources": [
+            {
+              "itemId": 35504,
+              "name_zhCN": "凤凰宝宝"
+            }
+          ],
+          "name_zhCN": "凤凰宝宝",
+          "questSources": [],
+          "spellIconId": 2787,
+          "spellId": 46599
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          24393
+        ],
+        "displayResourcesPresent": true,
+        "entry": 27217,
+        "name_zhCN": "竞争之魂",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 27217,
+      "identityKey": "creature:27217",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Jewelry_Amulet_03",
+          "itemSources": [
+            {
+              "itemId": 37297,
+              "name_zhCN": "金色勋章"
+            }
+          ],
+          "name_zhCN": "竞争之魂",
+          "questSources": [],
+          "spellIconId": 2643,
+          "spellId": 48406
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          24620
+        ],
+        "displayResourcesPresent": true,
+        "entry": 27346,
+        "name_zhCN": "竞争之精华",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 27346,
+      "identityKey": "creature:27346",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Jewelry_Talisman_10",
+          "itemSources": [
+            {
+              "itemId": 37298,
+              "name_zhCN": "竞争者的纪念品"
+            }
+          ],
+          "name_zhCN": "竞争之精华",
+          "questSources": [],
+          "spellIconId": 3096,
+          "spellId": 48408
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          25002
+        ],
+        "displayResourcesPresent": true,
+        "entry": 27914,
+        "name_zhCN": "灵魂商人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 27914,
+      "identityKey": "creature:27914",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_GroundingTotem",
+          "itemSources": [
+            {
+              "itemId": 38050,
+              "name_zhCN": "灵魂商人的信标"
+            }
+          ],
+          "name_zhCN": "灵魂商人",
+          "questSources": [],
+          "spellIconId": 1677,
+          "spellId": 49964
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          25457
+        ],
+        "displayResourcesPresent": true,
+        "entry": 28470,
+        "name_zhCN": "小虚空鳐",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 28470,
+      "identityKey": "creature:28470",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_NetherRay",
+          "itemSources": [
+            {
+              "itemId": 38628,
+              "name_zhCN": "小虚空鳐"
+            }
+          ],
+          "name_zhCN": "小虚空鳐",
+          "questSources": [],
+          "spellIconId": 2422,
+          "spellId": 51716
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          4185
+        ],
+        "displayResourcesPresent": true,
+        "entry": 28513,
+        "name_zhCN": "吸血蝙蝠宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 28513,
+      "identityKey": "creature:28513",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Bat",
+          "itemSources": [
+            {
+              "itemId": 38658,
+              "name_zhCN": "吸血蝙蝠宝宝"
+            }
+          ],
+          "name_zhCN": "吸血蝙蝠宝宝",
+          "questSources": [],
+          "spellIconId": 1577,
+          "spellId": 51851
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28456
+        ],
+        "displayResourcesPresent": true,
+        "entry": 28883,
+        "name_zhCN": "霜霜",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 28883,
+      "identityKey": "creature:28883",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_PET_FROSTWYRM",
+          "itemSources": [
+            {
+              "itemId": 39286,
+              "name_zhCN": "霜霜的项圈"
+            }
+          ],
+          "name_zhCN": "霜霜",
+          "questSources": [],
+          "spellIconId": 3752,
+          "spellId": 52615
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          25900
+        ],
+        "displayResourcesPresent": true,
+        "entry": 29089,
+        "name_zhCN": "迷你泰瑞尔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 29089,
+      "identityKey": "creature:29089",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Sword_07",
+          "itemSources": [
+            {
+              "itemId": 39656,
+              "name_zhCN": "泰瑞尔的剑柄"
+            }
+          ],
+          "name_zhCN": "迷你泰瑞尔",
+          "questSources": [],
+          "spellIconId": 2657,
+          "spellId": 53082
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28089
+        ],
+        "displayResourcesPresent": true,
+        "entry": 29147,
+        "name_zhCN": "魅影精灵",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 29147,
+      "identityKey": "creature:29147",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Bone_HumanSkull_01",
+          "itemSources": [
+            {
+              "itemId": 39973,
+              "name_zhCN": "魅影精灵"
+            }
+          ],
+          "name_zhCN": "魅影精灵",
+          "questSources": [],
+          "spellIconId": 1611,
+          "spellId": 53316
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          26064
+        ],
+        "displayResourcesPresent": true,
+        "entry": 29238,
+        "name_zhCN": "天灾幽灵",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 29238,
+      "identityKey": "creature:29238",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Shadow_AuraOfDarkness",
+          "itemSources": [
+            {
+              "itemId": 40110,
+              "name_zhCN": "闹鬼的纪念品"
+            }
+          ],
+          "name_zhCN": "Haunted",
+          "questSources": [],
+          "spellIconId": 91,
+          "spellId": 53768
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          26452
+        ],
+        "displayResourcesPresent": true,
+        "entry": 29726,
+        "name_zhCN": "小叽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 29726,
+      "identityKey": "creature:29726",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\inv_misc_penguinpet",
+          "itemSources": [
+            {
+              "itemId": 41133,
+              "name_zhCN": "企鹅小叽"
+            }
+          ],
+          "name_zhCN": "小叽",
+          "questSources": [],
+          "spellIconId": 4074,
+          "spellId": 55068
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          304
+        ],
+        "displayResourcesPresent": true,
+        "entry": 30379,
+        "name_zhCN": "西部荒野小鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 30379,
+      "identityKey": "creature:30379",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
+          "itemSources": [
+            {
+              "itemId": 11110,
+              "name_zhCN": "鸡蛋"
+            }
+          ],
+          "name_zhCN": "农场小鸡",
+          "questSources": [],
+          "spellIconId": 318,
+          "spellId": 13548
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          27627
+        ],
+        "displayResourcesPresent": true,
+        "entry": 31575,
+        "name_zhCN": "巨型下水道老鼠",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 31575,
+      "identityKey": "creature:31575",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_MonsterTail_03",
+          "itemSources": [
+            {
+              "itemId": 43698,
+              "name_zhCN": "巨型下水道老鼠"
+            }
+          ],
+          "name_zhCN": "巨型下水道老鼠",
+          "questSources": [],
+          "spellIconId": 1781,
+          "spellId": 59250
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28214
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32589,
+        "name_zhCN": "小食虱鸟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32589,
+      "identityKey": "creature:32589",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Owl",
+          "itemSources": [
+            {
+              "itemId": 39896,
+              "name_zhCN": "小食虱鸟"
+            }
+          ],
+          "name_zhCN": "小食虱鸟",
+          "questSources": [],
+          "spellIconId": 1583,
+          "spellId": 61348
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28215
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32590,
+        "name_zhCN": "白色小食虱鸟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32590,
+      "identityKey": "creature:32590",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Owl",
+          "itemSources": [
+            {
+              "itemId": 39899,
+              "name_zhCN": "白色小食虱鸟"
+            }
+          ],
+          "name_zhCN": "白色小食虱鸟",
+          "questSources": [],
+          "spellIconId": 1583,
+          "spellId": 61349
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28084
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32591,
+        "name_zhCN": "小眼镜蛇",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32591,
+      "identityKey": "creature:32591",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_CobraStrikes",
+          "itemSources": [
+            {
+              "itemId": 39898,
+              "name_zhCN": "小眼镜蛇"
+            }
+          ],
+          "name_zhCN": "小眼镜蛇",
+          "questSources": [],
+          "spellIconId": 2936,
+          "spellId": 61351
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28217
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32592,
+        "name_zhCN": "始祖龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32592,
+      "identityKey": "creature:32592",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_Drake_Proto",
+          "itemSources": [
+            {
+              "itemId": 44721,
+              "name_zhCN": "始祖龙宝宝"
+            }
+          ],
+          "name_zhCN": "始祖龙宝宝",
+          "questSources": [],
+          "spellIconId": 3442,
+          "spellId": 61350
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28216
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32595,
+        "name_zhCN": "小潘",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32595,
+      "identityKey": "creature:32595",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_nurturedpenguinegg",
+          "itemSources": [
+            {
+              "itemId": 43517,
+              "name_zhCN": "企鹅小潘"
+            },
+            {
+              "itemId": 44723,
+              "name_zhCN": "驯养的企鹅卵"
+            }
+          ],
+          "name_zhCN": "小潘",
+          "questSources": [],
+          "spellIconId": 3911,
+          "spellId": 61357
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14273
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32643,
+        "name_zhCN": "肯瑞托魔仆",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32643,
+      "identityKey": "creature:32643",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Creature_Disease_05",
+          "itemSources": [
+            {
+              "itemId": 44738,
+              "name_zhCN": "肯瑞托魔仆"
+            }
+          ],
+          "name_zhCN": "肯瑞托魔仆",
+          "questSources": [],
+          "spellIconId": 1910,
+          "spellId": 61472
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          6302
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32791,
+        "name_zhCN": "春兔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32791,
+      "identityKey": "creature:32791",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Food_54",
+          "itemSources": [
+            {
+              "itemId": 44794,
+              "name_zhCN": "春季兔脚"
+            }
+          ],
+          "name_zhCN": "春兔",
+          "questSources": [],
+          "spellIconId": 2035,
+          "spellId": 61725
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          21774
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32818,
+        "name_zhCN": "肥胖的火鸡",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32818,
+      "identityKey": "creature:32818",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_thanksgiving_turkey",
+          "itemSources": [
+            {
+              "itemId": 44810,
+              "name_zhCN": "火鸡笼"
+            }
+          ],
+          "name_zhCN": "肥胖的火鸡",
+          "questSources": [],
+          "spellIconId": 3936,
+          "spellId": 61773
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16189
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32841,
+        "name_zhCN": "暴雪熊宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32841,
+      "identityKey": "creature:32841",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_pet_babyblizzardbear",
+          "itemSources": [
+            {
+              "itemId": 44819,
+              "name_zhCN": "暴雪熊宝宝"
+            }
+          ],
+          "name_zhCN": "暴雪熊宝宝",
+          "questSources": [],
+          "spellIconId": 3896,
+          "spellId": 61855
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28397
+        ],
+        "displayResourcesPresent": true,
+        "entry": 32939,
+        "name_zhCN": "小鹿",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 32939,
+      "identityKey": "creature:32939",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Gem_FlameSpessarite_03",
+          "itemSources": [
+            {
+              "itemId": 44841,
+              "name_zhCN": "小鹿的盐块"
+            }
+          ],
+          "name_zhCN": "小鹿",
+          "questSources": [],
+          "spellIconId": 3715,
+          "spellId": 61991
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28482
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33188,
+        "name_zhCN": "泰达希尔树苗",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33188,
+      "identityKey": "creature:33188",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Herb_03",
+          "itemSources": [
+            {
+              "itemId": 44965,
+              "name_zhCN": "泰达希尔树苗"
+            }
+          ],
+          "name_zhCN": "泰达希尔树苗",
+          "questSources": [],
+          "spellIconId": 1217,
+          "spellId": 62491
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28489
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33194,
+        "name_zhCN": "丹莫罗熊宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33194,
+      "identityKey": "creature:33194",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_PolarBear_Black",
+          "itemSources": [
+            {
+              "itemId": 44970,
+              "name_zhCN": "丹莫罗熊宝宝"
+            }
+          ],
+          "name_zhCN": "丹莫罗熊宝宝",
+          "questSources": [],
+          "spellIconId": 3498,
+          "spellId": 62508
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          4732
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33197,
+        "name_zhCN": "提瑞斯法蝙蝠宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33197,
+      "identityKey": "creature:33197",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Bat",
+          "itemSources": [
+            {
+              "itemId": 44971,
+              "name_zhCN": "提瑞斯法蝙蝠宝宝"
+            }
+          ],
+          "name_zhCN": "提瑞斯法蝙蝠宝宝",
+          "questSources": [],
+          "spellIconId": 1577,
+          "spellId": 62510
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          15470
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33198,
+        "name_zhCN": "杜隆塔尔蝎子",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33198,
+      "identityKey": "creature:33198",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Scorpid",
+          "itemSources": [
+            {
+              "itemId": 44973,
+              "name_zhCN": "杜隆塔尔蝎子"
+            }
+          ],
+          "name_zhCN": "杜隆塔尔蝎子",
+          "questSources": [],
+          "spellIconId": 1585,
+          "spellId": 62513
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          14473
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33199,
+        "name_zhCN": "报警发条机器人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33199,
+      "identityKey": "creature:33199",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_EngGizmos_13",
+          "itemSources": [
+            {
+              "itemId": 44972,
+              "name_zhCN": "报警发条机器人"
+            }
+          ],
+          "name_zhCN": "报警发条机器人",
+          "questSources": [],
+          "spellIconId": 3056,
+          "spellId": 62514
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16205
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33200,
+        "name_zhCN": "艾尔文小羊羔",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33200,
+      "identityKey": "creature:33200",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Nature_Polymorph",
+          "itemSources": [
+            {
+              "itemId": 44974,
+              "name_zhCN": "艾尔文小羊羔"
+            }
+          ],
+          "name_zhCN": "艾尔文小羊羔",
+          "questSources": [],
+          "spellIconId": 82,
+          "spellId": 62516
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28493
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33205,
+        "name_zhCN": "埃门谷花苗",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33205,
+      "identityKey": "creature:33205",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Flower_04",
+          "itemSources": [
+            {
+              "itemId": 44984,
+              "name_zhCN": "埃门谷花苗"
+            }
+          ],
+          "name_zhCN": "埃门谷花苗",
+          "questSources": [],
+          "spellIconId": 2585,
+          "spellId": 62562
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28502
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33219,
+        "name_zhCN": "莫高雷小陆行鸟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33219,
+      "identityKey": "creature:33219",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_TallStrider",
+          "itemSources": [
+            {
+              "itemId": 44980,
+              "name_zhCN": "莫高雷小陆行鸟"
+            }
+          ],
+          "name_zhCN": "莫高雷小陆行鸟",
+          "questSources": [],
+          "spellIconId": 1587,
+          "spellId": 62542
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28507
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33226,
+        "name_zhCN": "沙滩蟹",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33226,
+      "identityKey": "creature:33226",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Crab",
+          "itemSources": [
+            {
+              "itemId": 44983,
+              "name_zhCN": "沙滩蟹"
+            }
+          ],
+          "name_zhCN": "沙滩蟹",
+          "questSources": [],
+          "spellIconId": 1580,
+          "spellId": 62561
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          16910
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33227,
+        "name_zhCN": "魔法扫帚",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33227,
+      "identityKey": "creature:33227",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Staff_10",
+          "itemSources": [
+            {
+              "itemId": 44982,
+              "name_zhCN": "魔法扫帚"
+            }
+          ],
+          "name_zhCN": "魔法扫帚",
+          "questSources": [],
+          "spellIconId": 1502,
+          "spellId": 62564
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28946
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33238,
+        "name_zhCN": "银色侍从",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33238,
+      "identityKey": "creature:33238",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Achievement_Reputation_ArgentChampion",
+          "itemSources": [
+            {
+              "itemId": 44998,
+              "name_zhCN": "银色侍从"
+            }
+          ],
+          "name_zhCN": "银色侍从",
+          "questSources": [],
+          "spellIconId": 3744,
+          "spellId": 62609
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28948
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33239,
+        "name_zhCN": "银色小步兵",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33239,
+      "identityKey": "creature:33239",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Achievement_Reputation_ArgentChampion",
+          "itemSources": [
+            {
+              "itemId": 45022,
+              "name_zhCN": "银色小步兵"
+            }
+          ],
+          "name_zhCN": "银色小步兵",
+          "questSources": [],
+          "spellIconId": 3744,
+          "spellId": 62746
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28539
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33274,
+        "name_zhCN": "机械鸟",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33274,
+      "identityKey": "creature:33274",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_MechaStrider",
+          "itemSources": [
+            {
+              "itemId": 45002,
+              "name_zhCN": "机械鸟"
+            }
+          ],
+          "name_zhCN": "机械鸟",
+          "questSources": [],
+          "spellIconId": 1240,
+          "spellId": 62674
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          25384
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33529,
+        "name_zhCN": "好奇的小狼獾人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33529,
+      "identityKey": "creature:33529",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\achievement_reputation_wolvar",
+          "itemSources": [
+            {
+              "itemId": 46544,
+              "name_zhCN": "好奇的小狼獾人"
+            }
+          ],
+          "name_zhCN": "好奇的小狼獾人",
+          "questSources": [],
+          "spellIconId": 3775,
+          "spellId": 65382
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          25173
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33530,
+        "name_zhCN": "好奇的小神谕者",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33530,
+      "identityKey": "creature:33530",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\achievement_reputation_murlocoracle",
+          "itemSources": [
+            {
+              "itemId": 46545,
+              "name_zhCN": "好奇的小神谕者"
+            }
+          ],
+          "name_zhCN": "好奇的小神谕者",
+          "questSources": [],
+          "spellIconId": 3931,
+          "spellId": 65381
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28734
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33578,
+        "name_zhCN": "角斗士莫叽姆斯",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33578,
+      "identityKey": "creature:33578",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Spear_05",
+          "itemSources": [
+            {
+              "itemId": 45180,
+              "name_zhCN": "莫叽姆斯的小矛"
+            },
+            {
+              "itemId": 46892,
+              "name_zhCN": "莫叽姆斯的小矛"
+            }
+          ],
+          "name_zhCN": "角斗士莫叽姆斯",
+          "questSources": [],
+          "spellIconId": 370,
+          "spellId": 63318
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29189
+        ],
+        "displayResourcesPresent": true,
+        "entry": 33810,
+        "name_zhCN": "森金神像",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 33810,
+      "identityKey": "creature:33810",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Coin_15",
+          "itemSources": [
+            {
+              "itemId": 45606,
+              "name_zhCN": "森金神像"
+            }
+          ],
+          "name_zhCN": "森金神像",
+          "questSources": [],
+          "spellIconId": 2804,
+          "spellId": 63712
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29060
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34031,
+        "name_zhCN": "XS-001建筑机器人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34031,
+      "identityKey": "creature:34031",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\achievement_boss_xt002deconstructor_01",
+          "itemSources": [
+            {
+              "itemId": 45942,
+              "name_zhCN": "XS-001建筑机器人"
+            }
+          ],
+          "name_zhCN": "XS-001建筑机器人",
+          "questSources": [],
+          "spellIconId": 3811,
+          "spellId": 64351
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          11709
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34364,
+        "name_zhCN": "玳瑁猫",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34364,
+      "identityKey": "creature:34364",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
+          "itemSources": [
+            {
+              "itemId": 46398,
+              "name_zhCN": "玳瑁猫"
+            }
+          ],
+          "name_zhCN": "玳瑁猫",
+          "questSources": [],
+          "spellIconId": 1522,
+          "spellId": 65358
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29279
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34587,
+        "name_zhCN": "战斗机器人",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34587,
+      "identityKey": "creature:34587",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Key_05",
+          "itemSources": [
+            {
+              "itemId": 46767,
+              "name_zhCN": "战斗机器人的点火钥匙"
+            }
+          ],
+          "name_zhCN": "战斗机器人",
+          "questSources": [],
+          "spellIconId": 1098,
+          "spellId": 65682
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29348
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34694,
+        "name_zhCN": "玛润",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34694,
+      "identityKey": "creature:34694",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Egg_03",
+          "itemSources": [
+            {
+              "itemId": 46802,
+              "name_zhCN": "沉重的鱼人卵"
+            }
+          ],
+          "name_zhCN": "玛润",
+          "questSources": [],
+          "spellIconId": 2316,
+          "spellId": 66030
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29372
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34724,
+        "name_zhCN": "幽光雏龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34724,
+      "identityKey": "creature:34724",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Elemental_Primal_Mana",
+          "itemSources": [
+            {
+              "itemId": 46820,
+              "name_zhCN": "幽光雏龙"
+            },
+            {
+              "itemId": 46821,
+              "name_zhCN": "幽光雏龙"
+            }
+          ],
+          "name_zhCN": "幽光雏龙",
+          "questSources": [],
+          "spellIconId": 2383,
+          "spellId": 66096
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29404
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34770,
+        "name_zhCN": "死亡木偶",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34770,
+      "identityKey": "creature:34770",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\inv_misc_bone_humanskull_02",
+          "itemSources": [
+            {
+              "itemId": 46831,
+              "name_zhCN": "死亡木偶"
+            }
+          ],
+          "name_zhCN": "死亡木偶",
+          "questSources": [],
+          "spellIconId": 3932,
+          "spellId": 66175
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29605
+        ],
+        "displayResourcesPresent": true,
+        "entry": 34930,
+        "name_zhCN": "碧玉虎",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 34930,
+      "identityKey": "creature:34930",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Gem_Stone_01",
+          "itemSources": [],
+          "name_zhCN": "碧玉虎",
+          "questSources": [],
+          "spellIconId": 283,
+          "spellId": 66520
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29802
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35387,
+        "name_zhCN": "小塔克",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35387,
+      "identityKey": "creature:35387",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48118,
+              "name_zhCN": "小塔克"
+            }
+          ],
+          "name_zhCN": "小塔克",
+          "questSources": [],
+          "spellIconId": 1180,
+          "spellId": 67416
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29806
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35394,
+        "name_zhCN": "拉扎什幼龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35394,
+      "identityKey": "creature:35394",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48126,
+              "name_zhCN": "拉扎什幼龙"
+            }
+          ],
+          "name_zhCN": "拉扎什幼龙",
+          "questSources": [],
+          "spellIconId": 1584,
+          "spellId": 67420
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29807
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35395,
+        "name_zhCN": "变异幼龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35395,
+      "identityKey": "creature:35395",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48114,
+              "name_zhCN": "变异幼龙"
+            }
+          ],
+          "name_zhCN": "变异幼龙",
+          "questSources": [],
+          "spellIconId": 1584,
+          "spellId": 67414
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29805
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35396,
+        "name_zhCN": "小达尔特",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35396,
+      "identityKey": "creature:35396",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48112,
+              "name_zhCN": "小达尔特"
+            }
+          ],
+          "name_zhCN": "小达尔特",
+          "questSources": [],
+          "spellIconId": 1584,
+          "spellId": 67413
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29810
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35397,
+        "name_zhCN": "暴掠幼龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35397,
+      "identityKey": "creature:35397",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48122,
+              "name_zhCN": "暴掠幼龙"
+            }
+          ],
+          "name_zhCN": "暴掠幼龙",
+          "questSources": [],
+          "spellIconId": 1180,
+          "spellId": 67418
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29808
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35398,
+        "name_zhCN": "刺喉幼龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35398,
+      "identityKey": "creature:35398",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48124,
+              "name_zhCN": "刺喉幼龙"
+            }
+          ],
+          "name_zhCN": "刺喉幼龙",
+          "questSources": [],
+          "spellIconId": 1584,
+          "spellId": 67419
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29809
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35399,
+        "name_zhCN": "黑曜石幼龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35399,
+      "identityKey": "creature:35399",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48120,
+              "name_zhCN": "黑曜石幼龙"
+            }
+          ],
+          "name_zhCN": "黑曜石幼龙",
+          "questSources": [],
+          "spellIconId": 1180,
+          "spellId": 67417
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29803
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35400,
+        "name_zhCN": "古达克幼龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35400,
+      "identityKey": "creature:35400",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
+          "itemSources": [
+            {
+              "itemId": 48116,
+              "name_zhCN": "古达克幼龙"
+            }
+          ],
+          "name_zhCN": "古达克幼龙",
+          "questSources": [],
+          "spellIconId": 1180,
+          "spellId": 67415
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          29819
+        ],
+        "displayResourcesPresent": true,
+        "entry": 35468,
+        "name_zhCN": "墨玉猎豹",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 35468,
+      "identityKey": "creature:35468",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_QirajiCrystal_05",
+          "itemSources": [
+            {
+              "itemId": 48527,
+              "name_zhCN": "墨玉猎豹"
+            }
+          ],
+          "name_zhCN": "墨玉猎豹",
+          "questSources": [],
+          "spellIconId": 1809,
+          "spellId": 67527
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30157
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36482,
+        "name_zhCN": "海象人风筝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36482,
+      "identityKey": "creature:36482",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_01",
+          "itemSources": [
+            {
+              "itemId": 49287,
+              "name_zhCN": "海象人风筝"
+            }
+          ],
+          "name_zhCN": "海象人风筝",
+          "questSources": [],
+          "spellIconId": 4040,
+          "spellId": 68767
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30409
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36511,
+        "name_zhCN": "幽灵虎幼崽",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36511,
+      "identityKey": "creature:36511",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\ability_mount_spectraltiger",
+          "itemSources": [
+            {
+              "itemId": 49343,
+              "name_zhCN": "幽灵虎幼崽"
+            }
+          ],
+          "name_zhCN": "幽灵虎幼崽",
+          "questSources": [],
+          "spellIconId": 3891,
+          "spellId": 68810
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30356
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36607,
+        "name_zhCN": "奥妮克希亚龙宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36607,
+      "identityKey": "creature:36607",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Black",
+          "itemSources": [
+            {
+              "itemId": 49362,
+              "name_zhCN": "奥妮克希亚龙宝宝"
+            }
+          ],
+          "name_zhCN": "奥妮克希亚龙宝宝",
+          "questSources": [],
+          "spellIconId": 1699,
+          "spellId": 69002
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30462
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36871,
+        "name_zhCN": "熔火恶犬宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36871,
+      "identityKey": "creature:36871",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\ability_hunter_pet_corehound",
+          "itemSources": [
+            {
+              "itemId": 49646,
+              "name_zhCN": "熔火恶犬宝宝"
+            }
+          ],
+          "name_zhCN": "熔火恶犬宝宝",
+          "questSources": [],
+          "spellIconId": 4062,
+          "spellId": 69452
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30412
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36908,
+        "name_zhCN": "狮鹫宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36908,
+      "identityKey": "creature:36908",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_02",
+          "itemSources": [
+            {
+              "itemId": 49662,
+              "name_zhCN": "狮鹫宝宝"
+            }
+          ],
+          "name_zhCN": "狮鹫宝宝",
+          "questSources": [],
+          "spellIconId": 4071,
+          "spellId": 69535
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30413
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36909,
+        "name_zhCN": "驭风者宝宝",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36909,
+      "identityKey": "creature:36909",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_04",
+          "itemSources": [
+            {
+              "itemId": 49663,
+              "name_zhCN": "驭风者宝宝"
+            }
+          ],
+          "name_zhCN": "驭风者宝宝",
+          "questSources": [],
+          "spellIconId": 4073,
+          "spellId": 69536
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30402
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36910,
+        "name_zhCN": "紫袍玉虎",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36910,
+      "identityKey": "creature:36910",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\inv_jewelcrafting_gem_06",
+          "itemSources": [],
+          "name_zhCN": "紫袍玉虎",
+          "questSources": [],
+          "spellIconId": 4066,
+          "spellId": 69539
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30414
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36911,
+        "name_zhCN": "熊猫人僧侣",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36911,
+      "identityKey": "creature:36911",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_03",
+          "itemSources": [
+            {
+              "itemId": 49665,
+              "name_zhCN": "熊猫人僧侣"
+            }
+          ],
+          "name_zhCN": "熊猫人僧侣",
+          "questSources": [],
+          "spellIconId": 4072,
+          "spellId": 69541
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          30507
+        ],
+        "displayResourcesPresent": true,
+        "entry": 36979,
+        "name_zhCN": "小克",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 36979,
+      "identityKey": "creature:36979",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\achievement_boss_kelthuzad_01",
+          "itemSources": [
+            {
+              "itemId": 49693,
+              "name_zhCN": "小克的护符匣"
+            }
+          ],
+          "name_zhCN": "小克",
+          "questSources": [],
+          "spellIconId": 4075,
+          "spellId": 69677
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          31174
+        ],
+        "displayResourcesPresent": true,
+        "entry": 37865,
+        "name_zhCN": "溜溜",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 37865,
+      "identityKey": "creature:37865",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Bone_01",
+          "itemSources": [
+            {
+              "itemId": 49912,
+              "name_zhCN": "溜溜"
+            }
+          ],
+          "name_zhCN": "溜溜",
+          "questSources": [],
+          "spellIconId": 2686,
+          "spellId": 70613
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          31073
+        ],
+        "displayResourcesPresent": true,
+        "entry": 38374,
+        "name_zhCN": "毒毒",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 38374,
+      "identityKey": "creature:38374",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Misc_Slime_01",
+          "itemSources": [
+            {
+              "itemId": 50446,
+              "name_zhCN": "毒毒"
+            }
+          ],
+          "name_zhCN": "毒毒",
+          "questSources": [],
+          "spellIconId": 1541,
+          "spellId": 71840
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          31722
+        ],
+        "displayResourcesPresent": true,
+        "entry": 40198,
+        "name_zhCN": "雪孩子",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 40198,
+      "identityKey": "creature:40198",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\Spell_Frost_FrozenCore",
+          "itemSources": [
+            {
+              "itemId": 53641,
+              "name_zhCN": "冰片"
+            }
+          ],
+          "name_zhCN": "雪孩子",
+          "questSources": [],
+          "spellIconId": 2132,
+          "spellId": 74932
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          22778
+        ],
+        "displayResourcesPresent": true,
+        "entry": 40295,
+        "name_zhCN": "发条战士",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 40295,
+      "identityKey": "creature:40295",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Gizmo_06",
+          "itemSources": [
+            {
+              "itemId": 54436,
+              "name_zhCN": "蓝色发条战士"
+            }
+          ],
+          "name_zhCN": "蓝色发条战士",
+          "questSources": [],
+          "spellIconId": 2552,
+          "spellId": 75134
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          31956
+        ],
+        "displayResourcesPresent": true,
+        "entry": 40624,
+        "name_zhCN": "星界灵龙",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 40624,
+      "identityKey": "creature:40624",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Jewelry_Talisman_10",
+          "itemSources": [
+            {
+              "itemId": 54810,
+              "name_zhCN": "星界灵龙"
+            }
+          ],
+          "name_zhCN": "星界灵龙",
+          "questSources": [],
+          "spellIconId": 3096,
+          "spellId": 75613
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          32031
+        ],
+        "displayResourcesPresent": true,
+        "entry": 40703,
+        "name_zhCN": "小拆",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 40703,
+      "identityKey": "creature:40703",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\achievement_boss_xt002deconstructor_01",
+          "itemSources": [
+            {
+              "itemId": 54847,
+              "name_zhCN": "小拆"
+            }
+          ],
+          "name_zhCN": "小拆",
+          "questSources": [],
+          "spellIconId": 3811,
+          "spellId": 75906
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          28734
+        ],
+        "displayResourcesPresent": true,
+        "entry": 40721,
+        "name_zhCN": "角斗士莫叽姆斯",
+        "subname_zhCN": ""
+      },
+      "creatureEntry": 40721,
+      "identityKey": "creature:40721",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "Interface\\Icons\\INV_Spear_05",
+          "itemSources": [
+            {
+              "itemId": 54857,
+              "name_zhCN": "莫叽姆斯的小矛"
+            }
+          ],
+          "name_zhCN": "角斗士莫叽姆斯",
+          "questSources": [],
+          "spellIconId": 370,
+          "spellId": 75936
+        }
+      ]
+    },
+    {
+      "creature": {
+        "displayIds": [
+          32670
+        ],
+        "displayResourcesPresent": true,
+        "entry": 42078,
+        "name_zhCN": "迷你雷神",
+        "subname_zhCN": "无坚不摧"
+      },
+      "creatureEntry": 42078,
+      "identityKey": "creature:42078",
+      "resourceReasonCode": "",
+      "resourceStatus": "READY",
+      "spells": [
+        {
+          "iconTexture": "INTERFACE\\ICONS\\t_roboticon",
+          "itemSources": [
+            {
+              "itemId": 56806,
+              "name_zhCN": "迷你雷神"
+            }
+          ],
+          "name_zhCN": "迷你雷神",
+          "questSources": [],
+          "spellIconId": 4375,
+          "spellId": 78381
+        }
+      ]
+    }
+  ],
+  "counts": {
+    "candidates": 201,
+    "positiveSummonSpells": 203,
+    "rejectedSkillLineSpells": 2,
+    "resourceReadyCandidates": 201,
+    "skillLineSpells": 205
+  },
+  "rejectedSkillLineSpells": [
+    {
+      "decision": "excluded",
+      "name_zhCN": "宠物鱼",
+      "reasonCode": "NO_POSITIVE_CREATURE_SUMMON",
+      "spellId": 17468
+    },
+    {
+      "decision": "excluded",
+      "name_zhCN": "宠物石",
+      "reasonCode": "NO_POSITIVE_CREATURE_SUMMON",
+      "spellId": 17469
+    }
+  ],
+  "reviewMethod": "SKILLLINE_778_EXACT_CREATURE_ENTRY",
+  "schemaVersion": 1,
+  "sourceBuild": "3.3.5.12340",
+  "sourceEvidenceId": "round2-20260722-stage1-presentations",
+  "sources": {
+    "CreatureDisplayInfo.dbc": "1f1a4f5d9d8ed1af1a0be65e8171ed962f2c3e12e213de748e2850515bd3f68b",
+    "SkillLineAbility.dbc": "4154b833d6a26b9b9ce53851d56cb594f0813c0936a72ec89f933cc69abe42c3",
+    "Spell.dbc": "df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f",
+    "SpellIcon.dbc": "2b12326641dba1554878b3f53c993e1211e50b3839ccdbeca378a23e7b3248db",
+    "worldDatabase": "runtime World DB (credentials omitted)"
+  }
+}
