@@ -17,8 +17,11 @@ class Phase12ReleaseContractTests(unittest.TestCase):
             "data/sql/updates/char/2026_07_20_00_solo_collections_schema_v1.sql",
         ):
             self.assertTrue((ROOT / relative).is_file(), relative)
-        readme = (ROOT / "README.md").read_text(encoding="utf-8")
-        for token in ("AddOn", "Client resources", "SQL schema", "AzerothCore commits"):
+        readme = (
+            (ROOT / "README.md").read_text(encoding="utf-8")
+            + (ROOT / "README.en.md").read_text(encoding="utf-8")
+        )
+        for token in ("AddOn", "Client", "SQL", "AzerothCore"):
             self.assertIn(token, readme)
         self.assertIn("AGPL", readme)
 

@@ -17,7 +17,7 @@ CONFIG = (ROOT / "conf/transmog.conf.dist").read_text(encoding="utf-8")
 GENERATED = json.loads((ROOT / "data/generated/solo_collections_legacy_sc1_shadow.json").read_text(encoding="utf-8"))
 ADDON_ROOT = Path(os.environ.get("SOLO_COLLECTIONS_ADDON_ROOT", ROOT.parent / "SoloCollections"))
 LUA = ADDON_ROOT / "server" / "ale" / "solo_collections.lua"
-LUA_TEXT = LUA.read_text(encoding="utf-8")
+LUA_TEXT = LUA.read_text(encoding="utf-8") if LUA.is_file() else ""
 
 
 class Phase11ShadowContractTests(unittest.TestCase):
@@ -38,6 +38,7 @@ class Phase11ShadowContractTests(unittest.TestCase):
         self.assertIn("if (!IsCppBackendOwner())\n            return;", CORE)
         self.assertIn("writes=0 actions=0 success_deltas=0", SHADOW)
 
+    @unittest.skipUnless(LUA.is_file(), "matching SoloCollections AddOn checkout was not provided")
     def test_backend_modes_have_exactly_one_production_owner(self):
         self.assertIn('GetConfigValue("SoloCollections.Backend")', LUA_TEXT)
         self.assertIn('BACKEND ~= "cpp"', LUA_TEXT)
@@ -67,6 +68,7 @@ class Phase11ShadowContractTests(unittest.TestCase):
         for forbidden in ("CharacterDatabase", "BeginMutation", "CastSpell", "SendDirectMessage"):
             self.assertNotIn(forbidden, SHADOW)
 
+    @unittest.skipUnless(LUA.is_file(), "matching SoloCollections AddOn checkout was not provided")
     def test_generated_mapping_is_bound_to_the_same_legacy_lua_source(self):
         source = LUA.read_text(encoding="utf-8").replace("\r\n", "\n").replace("\r", "\n")
         self.assertEqual(hashlib.sha256(source.encode("utf-8")).hexdigest(), GENERATED["sourceHash"])
