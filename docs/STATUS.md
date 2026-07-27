@@ -10,8 +10,8 @@ Snapshot date / 快照日期：2026-07-27
 - AddOn 负责 UI、客户端缓存和协议收发，不负责决定收藏所有权。
 - `server/ale/solo_collections.lua` 是旧 SC1 兼容/迁移参考；生产模式为
   `SoloCollections.Backend = Cpp` 时它不会成为第二个写入者。
-- 当前状态是已在维护者参考环境中本地验收的开发源码，不等于已经发布的稳定
-  二进制/资源包。
+- `v0.2.0` 是已发布的 C++/SC2 成套源码版本；它不声称提供稳定的游戏
+  二进制或客户端提取资源包。
 
 ### 当前生成目录
 
@@ -47,7 +47,8 @@ Snapshot date / 快照日期：2026-07-27
 - 极端比例、特效 bounds 异常或共享模型不同纹理的武器仍可能需要 profile；
 - SoloCam 只支持一个精确的 x86 build-12340 EXE hash；
 - 英文 UI 和更多 locale 仍可继续完善；
-- 当前源码线尚未发布与旧 `v0.1.0` 等价的新成套安装包。
+- `v0.2.0` 只发布可审核源码、清单与说明，不重新分发旧 `v0.1.0` 中的
+  MPQ、DLL 或客户端补丁。
 
 镜头工作请从 [CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md) 开始。
 
@@ -60,8 +61,9 @@ Snapshot date / 快照日期：2026-07-27
   authorization.
 - `server/ale/solo_collections.lua` remains a legacy SC1 migration/reference
   path and must not become a second writer when the backend is `Cpp`.
-- This is locally accepted development source, not a declaration that a new
-  stable binary/client-resource package has been released.
+- `v0.2.0` is the published matched C++/SC2 source release. It is not a claim
+  that stable game binaries or extracted client-resource packages are
+  distributed.
 
 The generated catalog contains 19,146 canonical records: 281 mounts, 201
 companions, 9 reviewed toys, 18,190 appearances, and 465 sets. Metadata is
@@ -78,5 +80,6 @@ model, different resource pack, or changed catalog.
 
 Known contribution areas are body and weapon framing across more models,
 extreme weapon bounds, English/locale coverage, and a future matched source
-release. Start camera work with
+update. `v0.2.0` intentionally does not redistribute the MPQs, DLL, or client
+patches from `v0.1.0`. Start camera work with
 [CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md).

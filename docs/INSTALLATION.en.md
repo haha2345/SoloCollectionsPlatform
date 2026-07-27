@@ -8,9 +8,9 @@
 - AzerothCore's normal MySQL and client-data requirements;
 - the optional SoloCam extension only on its exact supported executable hash.
 
-Do not combine the current `main` source with the old `v0.1.0` ALE demo
-package. Record the AddOn commit, module commit, metadata, and asset version as
-one matched set.
+Do not combine `v0.2.0` with the old `v0.1.0` ALE demo package. Start with the
+matched assets in the [release usage guide](RELEASE_USAGE.en.md), and record
+the AddOn commit, module commit, metadata, and asset version as one set.
 
 ## Install the module
 
