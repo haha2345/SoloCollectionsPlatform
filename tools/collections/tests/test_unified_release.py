@@ -75,6 +75,9 @@ class UnifiedReleaseTests(unittest.TestCase):
             '"docs/BUILDING.en.md"',
             '"docs/BUILD_MPQ.zh-CN.md"',
             '"client-extension/SoloCam/README.md"',
+            "SoloCollections-v{args.version}-addon.zip",
+            "mod-solo-collections-v{args.version}-source.zip",
+            "SoloCollections-v{args.version}-unified-source.zip",
             "unified-source.zip",
             "RELEASE_SHA256SUMS.txt",
         ):
