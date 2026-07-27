@@ -7,7 +7,8 @@
 | `Data/Patch-W.MPQ` | 收藏专用武器 M2、SKIN 和 BLP | 通常无关，但必须来自兼容的纯净 3.3.5a 数据 |
 | `Data/<locale>/patch-<locale>-N.MPQ` | 扩展后的 `CreatureModelData.dbc` 与 `CreatureDisplayInfo.dbc` | 有关，必须从自己的语言客户端生成 |
 
-Release 中的 `patch-zhCN-6.MPQ` 不能给 enUS、zhTW、deDE、frFR 等客户端使用。
+旧 `v0.1.0` Release 中的 `patch-zhCN-6.MPQ` 不能给 enUS、zhTW、deDE、frFR
+等客户端使用；`v0.2.0` 源码发布不包含任何 MPQ。
 
 ## 2. 前提
 
@@ -27,13 +28,13 @@ Release 中的 `patch-zhCN-6.MPQ` 不能给 enUS、zhTW、deDE、frFR 等客户�
 将 x64 `StormLib.dll` 放到非系统盘工具目录，例如：
 
 ```text
-D:\Tools\StormLib\StormLib.dll
+<工具目录>\StormLib\StormLib.dll
 ```
 
 然后设置：
 
 ```powershell
-$env:SOLOCOLLECTIONS_STORM_DLL = 'D:\Tools\StormLib\StormLib.dll'
+$env:SOLOCOLLECTIONS_STORM_DLL = '<工具目录>\StormLib\StormLib.dll'
 ```
 
 仓库已经包含 `tools/mpq/StormMpq.ps1`，无需再设置包装脚本路径；如需替换，
@@ -45,7 +46,7 @@ $env:SOLOCOLLECTIONS_STORM_DLL = 'D:\Tools\StormLib\StormLib.dll'
 
 ```powershell
 & .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory 'D:\Games\WoW-3.3.5a-enUS' `
+  -ClientDirectory '<WoW-enUS>' `
   -Locale enUS `
   -LocalePatchNumber 6
 ```
@@ -68,15 +69,15 @@ $env:SOLOCOLLECTIONS_STORM_DLL = 'D:\Tools\StormLib\StormLib.dll'
 ```powershell
 # 简体中文
 & .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory 'D:\Games\WoW-zhCN' -Locale zhCN -LocalePatchNumber 6
+  -ClientDirectory '<WoW-zhCN>' -Locale zhCN -LocalePatchNumber 6
 
 # 繁体中文
 & .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory 'D:\Games\WoW-zhTW' -Locale zhTW -LocalePatchNumber 6
+  -ClientDirectory '<WoW-zhTW>' -Locale zhTW -LocalePatchNumber 6
 
 # 德文
 & .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory 'D:\Games\WoW-deDE' -Locale deDE -LocalePatchNumber 6
+  -ClientDirectory '<WoW-deDE>' -Locale deDE -LocalePatchNumber 6
 ```
 
 结果中的第二个文件会分别命名为 `patch-zhCN-6.MPQ`、
@@ -96,9 +97,9 @@ DBFilesClient\CreatureDisplayInfo.dbc
 
 ```powershell
 & .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory 'D:\Games\WoW-enUS' `
+  -ClientDirectory '<WoW-enUS>' `
   -Locale enUS `
-  -LocaleDbcArchive 'D:\Games\WoW-enUS\Data\enUS\locale-enUS.MPQ' `
+  -LocaleDbcArchive '<WoW-enUS>\Data\enUS\locale-enUS.MPQ' `
   -LocalePatchNumber 6
 ```
 
@@ -132,7 +133,7 @@ _work/weapon-models/build_<timestamp>/weapon-model-verification.csv
 
 ```powershell
 & .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory 'D:\Games\WoW-enUS' `
+  -ClientDirectory '<WoW-enUS>' `
   -Locale enUS `
   -LocalePatchNumber 6 `
   -Deploy

@@ -1,6 +1,6 @@
 # SoloCollections：WoW 3.3.5a 收藏系统客户端
 
-[English](README.en.md) · [服务端核心模块](https://github.com/haha2345/mod-solo-collections) · [安装](docs/INSTALLATION.zh-CN.md) · [编译与开发](docs/BUILDING.zh-CN.md) · [参与贡献](CONTRIBUTING.md)
+[English](README.en.md) · [下载 v0.2.0](https://github.com/haha2345/SoloCollections/releases/tag/v0.2.0) · [服务端核心模块](https://github.com/haha2345/mod-solo-collections) · [安装](docs/INSTALLATION.zh-CN.md) · [参与贡献](CONTRIBUTING.md)
 
 SoloCollections 为 World of Warcraft 3.3.5a build 12340 提供接近正式服收藏手册的
 客户端界面，集中展示坐骑、非战斗小宠物、玩具、装备外观和套装。这个仓库保存
@@ -12,8 +12,8 @@ AddOn、可复现的目录源数据、SC2 协议、目录生成工具，以及�
 统一负责。生产环境必须使用 C++/SC2 后端；本仓库中的 ALE/SC1 文件只保留作
 旧版迁移与协议参考，不能和 C++ 后端同时响应生产动作。
 
-> 当前 `main` 是下一版源码线，不等同于旧的 `v0.1.0` 下载包。请成套使用
-> AddOn、核心模块、目录 metadata 和客户端资源，不能把不同提交随意混装。
+> 当前正式源码版本为 `v0.2.0`。请成套使用该标签的 AddOn、核心模块与
+> `release-manifest.json`；旧 `v0.1.0` 是不兼容的 ALE/SC1 开发预览。
 
 ![套装收藏与试衣间预览](docs/images/wardrobe-sets.png)
 
@@ -81,12 +81,17 @@ Retail 的 `C_MountJournal`、`SetAtlas` 或 `ModelScene`。
 
 ## 最快配置方法
 
-### 1. 获取两个仓库
+### 1. 获取匹配版本
 
 ```powershell
-git clone https://github.com/haha2345/SoloCollections.git
-git clone https://github.com/haha2345/mod-solo-collections.git
+git clone --branch v0.2.0 https://github.com/haha2345/SoloCollections.git
+git clone --branch v0.2.0 https://github.com/haha2345/mod-solo-collections.git
 ```
+
+普通安装者可以直接下载
+[`SoloCollections-v0.2.0-unified-source.zip`](https://github.com/haha2345/SoloCollections/releases/tag/v0.2.0)，
+按包内 `README.zh-CN.md` 操作。详见
+[发布包使用说明](docs/RELEASE_USAGE.zh-CN.md)。
 
 ### 2. 安装并编译服务端模块
 
@@ -169,6 +174,7 @@ AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8
 
 ## 文档导航
 
+- [v0.2.0 发布包怎么使用](docs/RELEASE_USAGE.zh-CN.md)
 - [完整安装与回滚](docs/INSTALLATION.zh-CN.md)
 - [开发、编译和生成](docs/BUILDING.zh-CN.md)
 - [开发流程与仓库结构](docs/DEVELOPMENT.md)

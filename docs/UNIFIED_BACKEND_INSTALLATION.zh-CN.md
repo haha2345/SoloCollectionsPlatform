@@ -1,5 +1,9 @@
 # SoloCollections 成套源码包安装边界
 
+面向 `v0.2.0` 下载者的逐步操作见
+[发布包使用说明](RELEASE_USAGE.zh-CN.md)；英文说明见
+[RELEASE_USAGE.en.md](RELEASE_USAGE.en.md)。
+
 统一源码包严格分开 AddOn、C++ module、SQL 和客户端资源。C++ module 是收藏、
 权限、revision、同步和动作的唯一生产后端；旧 ALE Lua 只能用于历史迁移或
 只读对照，不能成为第二个写入者。
