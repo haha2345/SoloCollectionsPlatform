@@ -15,7 +15,7 @@ Set-StrictMode -Version Latest
 
 $clientRootFull = Get-NormalizedFullPath $ClientRoot
 $backupRootFull = Get-NormalizedFullPath $BackupRoot
-Assert-FDrivePath $backupRootFull
+Assert-NonSystemDrivePath $backupRootFull
 if (-not (Test-Path -LiteralPath $clientRootFull -PathType Container)) {
     throw "Client root does not exist: $clientRootFull"
 }

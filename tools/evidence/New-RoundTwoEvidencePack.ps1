@@ -20,7 +20,7 @@ $evidenceRootFull = Get-NormalizedFullPath $EvidenceRoot
 $clientRootFull = Get-NormalizedFullPath $ClientRoot
 $weaponRootFull = Get-NormalizedFullPath $WeaponBuildRoot
 $addonRootFull = Get-NormalizedFullPath $AddonRoot
-Assert-FDrivePath $evidenceRootFull
+Assert-NonSystemDrivePath $evidenceRootFull
 
 foreach ($requiredRoot in @($clientRootFull, $weaponRootFull, $addonRootFull)) {
     if (-not (Test-Path -LiteralPath $requiredRoot -PathType Container)) {

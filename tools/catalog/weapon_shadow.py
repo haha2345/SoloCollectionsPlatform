@@ -97,10 +97,10 @@ def write_text(path: Path, value: str) -> None:
     os.replace(temp, path)
 
 
-def ensure_f(path: Path, label: str) -> Path:
+def ensure_non_system_drive(path: Path, label: str) -> Path:
     value = path.resolve()
     if os.name == "nt":
-        require(value.drive.upper() == "F:", f"{label} must be on F:, got {value}")
+        require(value.drive.upper() != "C:", f"{label} must stay off the Windows system drive: {value}")
     return value
 
 
@@ -136,7 +136,7 @@ def verify_hash_object(value: dict[str, Any], field: str) -> dict[str, Any]:
 
 
 def verify_fixed_pack(root: Path) -> tuple[dict[str, Any], dict[str, Path]]:
-    root = ensure_f(root, "fixed evidence root")
+    root = ensure_non_system_drive(root, "fixed evidence root")
     manifest = read_json(root / "evidence-manifest.json")
     require(manifest.get("schemaVersion") == 1, "unsupported fixed evidence schema")
     members: dict[str, Path] = {}
@@ -368,7 +368,7 @@ def capture(
     visibility_path: Path, appearance_sources_path: Path, presentation_source_path: Path,
     item_template_sql: Path,
 ) -> dict[str, Any]:
-    evidence_root = ensure_f(evidence_root, "weapon shadow evidence root")
+    evidence_root = ensure_non_system_drive(evidence_root, "weapon shadow evidence root")
     fixed_manifest, fixed_members = verify_fixed_pack(fixed_root)
     require(mpqcli.is_file() and client_data_root.is_dir(), "client data root or mpqcli missing")
     require(not (evidence_root / "input-manifest.json").exists(), "evidence root already initialized")
@@ -443,7 +443,7 @@ def capture(
 
 
 def load_inputs(root: Path, verify_archives: bool) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
-    root = ensure_f(root, "weapon shadow evidence root")
+    root = ensure_non_system_drive(root, "weapon shadow evidence root")
     manifest = verify_hash_object(read_json(root / "input-manifest.json"), "inputHash")
     require(manifest.get("sourceBuild") == SOURCE_BUILD, "input source build drift")
     for row in manifest.get("dbc", []):
@@ -763,7 +763,7 @@ def inspect_asset(root: Path, ref: dict[str, Any]) -> dict[str, Any]:
 
 
 def hydrate(root: Path, mpqcli: Path, stormlib: Path) -> dict[str, Any]:
-    root = ensure_f(root, "weapon shadow evidence root")
+    root = ensure_non_system_drive(root, "weapon shadow evidence root")
     require(mpqcli.is_file() and stormlib.is_file(), "mpqcli or StormLib missing")
     manifest, basis, _reserved = load_inputs(root, verify_archives=True)
     require(sha(mpqcli) == manifest["mpqCliSha256"], "mpqcli hash drift")
@@ -1266,7 +1266,7 @@ def render(root: Path, previous_path: Path | None) -> dict[str, str]:
 
 
 def audit(root: Path, output: Path, previous_path: Path | None, check: bool) -> dict[str, str]:
-    root = ensure_f(root, "weapon shadow evidence root")
+    root = ensure_non_system_drive(root, "weapon shadow evidence root")
     result = render(root, previous_path)
     if check:
         for filename, text in result.items():
@@ -1466,8 +1466,8 @@ def render_runtime_projection(
     reason, while the source review remains unchanged for forensic replay.
     """
 
-    review_root = ensure_f(review_root, "runtime base review root")
-    evidence_root = ensure_f(evidence_root, "runtime evidence root")
+    review_root = ensure_non_system_drive(review_root, "runtime base review root")
+    evidence_root = ensure_non_system_drive(evidence_root, "runtime evidence root")
     summary_path = review_root / "shadow-summary.json"
     registry_path = review_root / "shadow-registry.json"
     candidates_path = review_root / "shadow-candidates.csv"
@@ -1564,7 +1564,7 @@ def runtime_projection(
     output: Path,
     check: bool,
 ) -> dict[str, Any]:
-    output = ensure_f(output, "runtime projection output")
+    output = ensure_non_system_drive(output, "runtime projection output")
     result = render_runtime_projection(review_root, quarantine_path, evidence_root)
     if check:
         for filename, text in result.items():
