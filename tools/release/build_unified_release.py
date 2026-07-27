@@ -285,8 +285,8 @@ def build(args: argparse.Namespace) -> Path:
     )
 
     output.mkdir(parents=True)
-    addon_zip = output / f"SoloCollections-{args.version}-addon.zip"
-    module_zip = output / f"mod-solo-collections-{args.version}-source.zip"
+    addon_zip = output / f"SoloCollections-v{args.version}-addon.zip"
+    module_zip = output / f"mod-solo-collections-v{args.version}-source.zip"
     write_zip(addon_zip, addon_entries(addon_repo, addon_commit))
     write_zip(module_zip, module_entries(module_repo, module_commit))
 
@@ -349,7 +349,7 @@ def build(args: argparse.Namespace) -> Path:
     checksum_lines = [f"{sha256(path)}  {path.relative_to(output).as_posix()}" for path in checksummed]
     write_text(output / "SHA256SUMS.txt", "\n".join(checksum_lines) + "\n")
 
-    bundle_path = output / f"SoloCollections-{args.version}-unified-source.zip"
+    bundle_path = output / f"SoloCollections-v{args.version}-unified-source.zip"
     bundle_inputs = sorted(
         path.relative_to(output)
         for path in output.rglob("*")
@@ -357,7 +357,7 @@ def build(args: argparse.Namespace) -> Path:
     )
     write_bundle_zip(
         bundle_path,
-        f"SoloCollections-{args.version}",
+        f"SoloCollections-v{args.version}",
         output,
         bundle_inputs,
     )
