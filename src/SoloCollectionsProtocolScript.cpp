@@ -37,7 +37,7 @@ namespace
 #include "SoloCollectionsBuildInfo.inc"
 #include "generated/SoloCollectionsProtocolCatalog.inc"
 
-constexpr std::string_view BackendBuild = "0.2.0-dev";
+constexpr std::string_view BackendBuild = "0.2.0";
 constexpr std::string_view WirePrefix = "SC2\t";
 
 std::uint64_t MonotonicMilliseconds()

@@ -24,9 +24,9 @@ SC::AccountSessionId Session(std::uint64_t value) { return SC::AccountSessionId(
 void TestGoldenCodecVectors()
 {
     std::vector<std::string> packets {
-        "H|1|fedcba9876543210|0.2.0-dev|2026.07.19|local-1",
+        "H|1|fedcba9876543210|0.2.0|2026.07.19|local-1",
         "H|1|fedcba9876543210|0.1.0|2026.07.23.2|round-two-stage8-weapon-presentation-v2",
-        "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|0.2.0-dev|5",
+        "A|1|0123456789abcdef|42|0000001f|2026.07.19|local-1|0.2.0|5",
         "M|0123456789abcdef|1|bb891f9c9fdf5a4f795488cc49a3a1ed73bfe4e985116be5e6b3aa07b9af53ac",
         "B|0123456789abcdef|17|1|1|42|179c036b|14",
         "C|0123456789abcdef|17|1|1,2,z,10,1z,2s",
@@ -67,7 +67,7 @@ void TestGoldenCodecVectors()
 
 SC::Sc2Server BuildServer(SC::AccountCollectionCache& cache)
 {
-    return SC::Sc2Server(cache, "2026.07.20.1", "wotlk-3.3.5a-local-1", "0.2.0-dev", {
+    return SC::Sc2Server(cache, "2026.07.20.1", "wotlk-3.3.5a-local-1", "0.2.0", {
         { SC::CollectionTypeId(std::uint16_t { 1 }), "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", true },
     });
 }
@@ -79,7 +79,7 @@ void TestLoadingIsNotAnEmptySnapshot()
     Require(opened.Accepted, "cache fixture did not open");
     SC::Sc2Server server = BuildServer(cache);
     server.OpenSession(Account(1), Session(100));
-    Require(server.HandleInbound(Session(100), "H|1|fedcba9876543210|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0),
+    Require(server.HandleInbound(Session(100), "H|1|fedcba9876543210|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0),
         "HELLO was not consumed");
     std::vector<std::string> outbound = server.DrainOutbound(Session(100), 32);
     Require(outbound.size() == 3, "loading handshake should emit ACK, mapping and LOADING");
@@ -100,7 +100,7 @@ void TestReadySnapshotIsQueuedAndBounded()
         SC::CollectionRevision(std::uint64_t { 9 })), "cache fixture did not become ready");
     SC::Sc2Server server = BuildServer(cache);
     server.OpenSession(Account(2), Session(200));
-    (void)server.HandleInbound(Session(200), "H|1|1111111111111111|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 10);
+    (void)server.HandleInbound(Session(200), "H|1|1111111111111111|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 10);
     std::vector<std::string> firstTick = server.DrainOutbound(Session(200), SC::Sc2Limits::MaxPacketsPerTick);
     Require(firstTick.size() == SC::Sc2Limits::MaxPacketsPerTick, "first tick did not honor packet budget");
     std::vector<std::string> rest = server.DrainOutbound(Session(200), 32);
@@ -121,7 +121,7 @@ void TestReplayOldNonceAndRateLimit()
         "cache fixture did not become ready");
     SC::Sc2Server server = BuildServer(cache);
     server.OpenSession(Account(3), Session(300));
-    (void)server.HandleInbound(Session(300), "H|1|2222222222222222|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    (void)server.HandleInbound(Session(300), "H|1|2222222222222222|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
     (void)server.DrainOutbound(Session(300), 32);
     std::string nonce = server.SessionNonce(Session(300));
     Require(nonce.size() == 16, "session nonce was not established");
@@ -154,7 +154,7 @@ void TestAuthoritativeActionHandler()
         "action cache fixture did not become ready");
     SC::Sc2Server server = BuildServer(cache);
     server.OpenSession(Account(4), Session(400));
-    (void)server.HandleInbound(Session(400), "H|1|3333333333333333|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    (void)server.HandleInbound(Session(400), "H|1|3333333333333333|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
     (void)server.DrainOutbound(Session(400), 32);
     std::string nonce = server.SessionNonce(Session(400));
     bool called = false;
@@ -193,7 +193,7 @@ void TestPreviewVersionGatesAndUnownedDispatch()
     SC::Sc2Server server = BuildServer(cache);
     server.OpenSession(Account(9), Session(900));
     (void)server.HandleInbound(Session(900),
-        "H|1|9999999999999900|0.2.0-dev|stale-metadata|wotlk-3.3.5a-local-1", 0);
+        "H|1|9999999999999900|0.2.0|stale-metadata|wotlk-3.3.5a-local-1", 0);
     (void)server.DrainOutbound(Session(900), 32);
     std::string nonce = server.SessionNonce(Session(900));
     bool called = false;
@@ -211,7 +211,7 @@ void TestPreviewVersionGatesAndUnownedDispatch()
     server.CloseSession(Session(900));
     server.OpenSession(Account(9), Session(900));
     (void)server.HandleInbound(Session(900),
-        "H|1|9999999999999901|0.2.0-dev|2026.07.20.1|wrong-asset-pack", 10);
+        "H|1|9999999999999901|0.2.0|2026.07.20.1|wrong-asset-pack", 10);
     (void)server.DrainOutbound(Session(900), 32);
     nonce = server.SessionNonce(Session(900));
     called = false;
@@ -230,7 +230,7 @@ void TestPreviewVersionGatesAndUnownedDispatch()
     server.CloseSession(Session(900));
     server.OpenSession(Account(9), Session(900));
     (void)server.HandleInbound(Session(900),
-        "H|1|9999999999999902|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 20);
+        "H|1|9999999999999902|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 20);
     (void)server.DrainOutbound(Session(900), 32);
     nonce = server.SessionNonce(Session(900));
     called = false;
@@ -257,11 +257,11 @@ void TestAccountScopedDeltaFanout()
     server.OpenSession(Account(5), Session(501));
     server.OpenSession(Account(6), Session(600));
     (void)server.HandleInbound(Session(500),
-        "H|1|5555555555555500|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+        "H|1|5555555555555500|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
     (void)server.HandleInbound(Session(501),
-        "H|1|5555555555555501|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+        "H|1|5555555555555501|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
     (void)server.HandleInbound(Session(600),
-        "H|1|6666666666666600|0.2.0-dev|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+        "H|1|6666666666666600|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
     (void)server.DrainOutbound(Session(500), 32);
     (void)server.DrainOutbound(Session(501), 32);
     (void)server.DrainOutbound(Session(600), 32);
@@ -296,7 +296,7 @@ void TestSyntheticPersistedProviderRevisionSync()
     });
     server.OpenSession(Account(77), Session(770));
     (void)server.HandleInbound(Session(770),
-        "H|1|7777777777777777|0.2.0-dev|2026.07.20.2|wotlk-3.3.5a-local-1", 0);
+        "H|1|7777777777777777|0.2.0|2026.07.20.2|wotlk-3.3.5a-local-1", 0);
     (void)server.DrainOutbound(Session(770), 32);
 
     SC::CollectionDelta unlock {
@@ -329,9 +329,9 @@ void TestExternalTitleSnapshotsAreSessionScoped()
         SC::CollectionId(5), SC::CollectionId(1), SC::CollectionId(5)
     });
     (void)server.HandleInbound(Session(880),
-        "H|1|8888888888888880|0.2.0-dev|2026.07.20.3|wotlk-3.3.5a-local-1", 0);
+        "H|1|8888888888888880|0.2.0|2026.07.20.3|wotlk-3.3.5a-local-1", 0);
     (void)server.HandleInbound(Session(881),
-        "H|1|8888888888888881|0.2.0-dev|2026.07.20.3|wotlk-3.3.5a-local-1", 0);
+        "H|1|8888888888888881|0.2.0|2026.07.20.3|wotlk-3.3.5a-local-1", 0);
     std::vector<std::string> owned = server.DrainOutbound(Session(880), 32);
     std::vector<std::string> empty = server.DrainOutbound(Session(881), 32);
     bool sawOwnedPayload = false;
@@ -357,7 +357,7 @@ void TestDerivedSetDeltaUsesAppearanceRevisionAndStableDiff()
     server.OpenSession(Account(99), Session(990));
     server.SetExternalOwned(Session(990), SC::CollectionTypeId(14), {});
     (void)server.HandleInbound(Session(990),
-        "H|1|9999999999999990|0.2.0-dev|2026.07.22.2|wotlk-3.3.5a-local-1", 0);
+        "H|1|9999999999999990|0.2.0|2026.07.22.2|wotlk-3.3.5a-local-1", 0);
     (void)server.DrainOutbound(Session(990), 32);
 
     server.OnDerivedOwnedChanged(Account(99), SC::CollectionTypeId(14),

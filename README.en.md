@@ -2,6 +2,7 @@
 
 [中文](README.md) ·
 [Client AddOn](https://github.com/haha2345/SoloCollections) ·
+[Matched v0.2.0 release](https://github.com/haha2345/SoloCollections/releases/tag/v0.2.0) ·
 [Configuration](docs/CONFIGURATION.md) ·
 [Development](docs/DEVELOPMENT.md) ·
 [Contributing](CONTRIBUTING.md)
@@ -37,6 +38,9 @@ A matched deployment records the AddOn, module, and AzerothCore commits plus
 the metadata, asset-pack, mapping, presentation, and SC2 versions. Do not mix
 generated catalogs from different source sets.
 
+The current matched source tag is `v0.2.0`. Use the AddOn from the client
+repository's `v0.2.0` tag with this repository's `v0.2.0` module tag.
+
 ## Build environment
 
 Follow the current
@@ -63,7 +67,7 @@ AddOn and optional SoloCam requirements.
 
 ```powershell
 git clone https://github.com/azerothcore/azerothcore-wotlk.git
-git clone https://github.com/haha2345/mod-solo-collections.git `
+git clone --branch v0.2.0 https://github.com/haha2345/mod-solo-collections.git `
   .\azerothcore-wotlk\modules\mod-solo-collections
 ```
 
