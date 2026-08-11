@@ -10,6 +10,7 @@ local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
 
 local PORTRAITS = {
     MOUNTS = {
+        relative = "Interface\\Icons\\MountJournalPortraitCircular.tga",
         fallback = function() return UI.Media and UI.Media.mountPortrait end,
         texCoord = { 0, 1, 0, 1 },
         precut = true,

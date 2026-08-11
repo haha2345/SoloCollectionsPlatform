@@ -121,19 +121,29 @@ function UI.CreateMountsPage(parent)
     local randomSummon = CreateFrame("Button", nil, detail)
     randomSummon:SetWidth(33)
     randomSummon:SetHeight(33)
-    randomSummon:SetPoint("TOPRIGHT", detail, "TOPRIGHT", -10, -10)
+    randomSummon:SetPoint("CENTER", page, "TOPRIGHT", -24, -42)
     randomSummon:RegisterForClicks("LeftButtonUp")
     randomSummon:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
-    randomSummon:SetPushedTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    randomSummon:SetPushedTexture("Interface\\Buttons\\UI-Quickslot-Depress")
     randomSummon:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
     local randomIcon = randomSummon:GetNormalTexture()
-    if randomIcon then randomIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92) end
+    if randomIcon then randomIcon:SetAllPoints(randomSummon) end
     local randomPushed = randomSummon:GetPushedTexture()
-    if randomPushed then randomPushed:SetTexCoord(0.11, 0.89, 0.11, 0.89) end
+    if randomPushed then randomPushed:SetAllPoints(randomSummon) end
     local randomBorder = randomSummon:CreateTexture(nil, "OVERLAY")
-    randomBorder:SetTexture("Interface\\Buttons\\UI-Quickslot2")
-    randomBorder:SetPoint("TOPLEFT", randomSummon, "TOPLEFT", -15, 15)
-    randomBorder:SetPoint("BOTTOMRIGHT", randomSummon, "BOTTOMRIGHT", 15, -15)
+    randomBorder:SetTexture(UI.EzCollections:AssetPath(
+        "Interface\\Buttons\\ActionBarFlyoutButton.blp",
+        "Interface\\Buttons\\UI-Quickslot2"
+    ))
+    randomBorder:SetTexCoord(0.015625, 0.671875, 0.3984375, 0.7265625)
+    randomBorder:SetSize(35, 35)
+    randomBorder:SetPoint("CENTER", randomSummon, "CENTER", 0, 0)
+
+    local randomLabel = randomSummon:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    randomLabel:SetWidth(170)
+    randomLabel:SetJustifyH("RIGHT")
+    randomLabel:SetPoint("RIGHT", randomBorder, "LEFT", -2, 0)
+    randomLabel:SetText("召唤随机偏好坐骑")
 
     local name = createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
     name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
@@ -562,7 +572,7 @@ function UI.CreateMountsPage(parent)
         summonRecord(record)
     end)
     randomSummon:SetScript("OnEnter", function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
         GameTooltip:SetText("召唤随机坐骑", 1, 0.82, 0.18)
         GameTooltip:AddLine("优先从已收集的偏好坐骑中随机选择；没有偏好时从全部已收集坐骑中选择。", 1, 1, 1, true)
         GameTooltip:Show()
