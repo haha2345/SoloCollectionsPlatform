@@ -10,10 +10,9 @@ local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
 
 local PORTRAITS = {
     MOUNTS = {
-        relative = "Interface\\Icons\\MountJournalPortraitCircular.tga",
+        relative = "Interface\\Icons\\MountJournalPortrait.blp",
         fallback = function() return UI.Media and UI.Media.mountPortrait end,
-        texCoord = { 0, 1, 0, 1 },
-        precut = true,
+        texCoord = { 0.07, 0.93, 0.07, 0.93 },
     },
     PETS = {
         fallback = "Interface\\Icons\\INV_Misc_Rabbit",
@@ -178,10 +177,8 @@ function Ez:SetPortraitForTab(frame, key)
         portrait:SetTexture(texture)
         portrait:SetTexCoord(unpack(definition.texCoord))
     end
-    -- ezCollections uses the native PortraitFrameTemplate portrait at its
-    -- full cutout size; the metal corner remains above it as the visible ring.
-    -- This client does not alpha-mask custom BLP portraits, so the mount asset
-    -- is our equivalent pre-cut RGBA texture with transparent outer corners.
+    -- Match the working pet-page portrait route: let the native helper crop
+    -- the ezCollections BLP beneath the original gold ring.
     portrait:ClearAllPoints()
     portrait:SetSize(60, 60)
     portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 8)
