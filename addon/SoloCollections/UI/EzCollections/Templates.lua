@@ -572,6 +572,88 @@ function Ez:CreateWardrobeSetChrome(parent)
     return border, selected, favorite, highlight
 end
 
+function Ez:CreateTransmogSlotChrome(parent)
+    local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
+    local textures = self:MediaPath("Transmogrify", "Textures.tga", WHITE_TEXTURE)
+
+    local icon = parent:CreateTexture(nil, "BACKGROUND")
+    icon:SetWidth(36)
+    icon:SetHeight(36)
+    icon:SetPoint("CENTER")
+
+    local border = parent:CreateTexture(nil, "BORDER")
+    border:SetWidth(58)
+    border:SetHeight(57)
+    border:SetPoint("CENTER")
+    border:SetTexture(transmog)
+    border:SetTexCoord(0.205078125, 0.318359375, 0.783203125, 0.89453125)
+
+    local status = parent:CreateTexture(nil, "OVERLAY")
+    status:SetWidth(44)
+    status:SetHeight(43)
+    status:SetPoint("CENTER")
+    status:SetTexture(transmog)
+    status:SetTexCoord(0.466796875, 0.552734375, 0.001953125, 0.0859375)
+    status:Hide()
+
+    local selected = parent:CreateTexture(nil, "OVERLAY")
+    selected:SetWidth(62)
+    selected:SetHeight(62)
+    selected:SetPoint("TOP", parent, "TOP", 0, 9)
+    selected:SetTexture(transmog)
+    selected:SetTexCoord(0.205078125, 0.326171875, 0.658203125, 0.779296875)
+    selected:Hide()
+
+    local pendingGlow = parent:CreateTexture(nil, "OVERLAY")
+    pendingGlow:SetWidth(58)
+    pendingGlow:SetHeight(57)
+    pendingGlow:SetPoint("CENTER")
+    pendingGlow:SetTexture(textures)
+    pendingGlow:SetTexCoord(0.5234375, 0.9765625, 0.38476563, 0.49609375)
+    pendingGlow:SetBlendMode("ADD")
+    pendingGlow:Hide()
+
+    local undo = parent:CreateTexture(nil, "OVERLAY")
+    undo:SetWidth(24)
+    undo:SetHeight(22)
+    undo:SetPoint("TOPRIGHT", parent, "TOPRIGHT", 13, 12)
+    undo:SetTexture(textures)
+    undo:SetTexCoord(0.1796875, 0.3671875, 0.58203125, 0.625)
+    undo:Hide()
+
+    local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetWidth(44)
+    highlight:SetHeight(41)
+    highlight:SetPoint("CENTER")
+    highlight:SetTexture(transmog)
+    highlight:SetTexCoord(0.646484375, 0.732421875, 0.001953125, 0.08203125)
+    highlight:SetBlendMode("ADD")
+
+    function parent:SetSlotSelected(value)
+        if value then selected:Show() else selected:Hide() end
+    end
+
+    function parent:SetSlotPending(value)
+        if value then
+            status:Show()
+            pendingGlow:Show()
+            undo:Show()
+        else
+            status:Hide()
+            pendingGlow:Hide()
+            undo:Hide()
+        end
+    end
+
+    parent.scIcon = icon
+    parent.scBorder = border
+    parent.scStatusBorder = status
+    parent.scSelectedTexture = selected
+    parent.scPendingGlow = pendingGlow
+    parent.scUndoTexture = undo
+    return icon, border, selected, status, pendingGlow, undo
+end
+
 function Ez:CreateRotationButtons(model, onLeft, onRight)
     local left = CreateFrame("Button", nil, model)
     left:SetWidth(35)

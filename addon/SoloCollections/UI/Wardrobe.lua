@@ -1266,6 +1266,32 @@ local function applyItemModelRecord(model, record, pageGeneration)
     end
 end
 
+SC.WardrobeUI.ItemCardRenderer = SC.WardrobeUI.ItemCardRenderer or {}
+local ItemCardRenderer = SC.WardrobeUI.ItemCardRenderer
+
+function ItemCardRenderer:Attach(model, objectModel)
+    if model.scWardrobeItemCardRenderer then return end
+    model.scWardrobeItemCardRenderer = true
+    model.scObjectModel = objectModel
+    objectModel.scHostModel = model
+    model:SetScript("OnUpdateModel", function(self)
+        queueItemModelView(self, true)
+    end)
+    model.scUpdateHandler = updatePendingItemModel
+    objectModel:SetScript("OnUpdateModel", function(self)
+        applyStandaloneItemView(self)
+        queueStandaloneItemTransform(self)
+    end)
+end
+
+function ItemCardRenderer:Present(model, record, generation)
+    return applyItemModelRecord(model, record, generation)
+end
+
+function ItemCardRenderer:Clear(model, generation)
+    return applyItemModelRecord(model, nil, generation)
+end
+
 function UI.CreateWardrobePage(parent)
     local page = CreateFrame("Frame", nil, parent)
     page:SetAllPoints(parent)

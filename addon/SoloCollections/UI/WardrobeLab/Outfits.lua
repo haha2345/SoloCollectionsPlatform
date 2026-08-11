@@ -5,9 +5,15 @@ if not Lab then return end
 
 function Lab.CreateOutfits(parent, state)
     local host = CreateFrame("Frame", nil, parent)
-    host:SetPoint("TOPLEFT", parent, "TOPLEFT", 12, -46)
-    host:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", -12, 56)
-    local equipped = UI.CreateListRow(host, 160, 46, function()
+    host:SetAllPoints(parent)
+    host:SetFrameLevel(parent:GetFrameLevel() + 12)
+
+    local dropdown = CreateFrame("Frame", "SoloCollectionsTransmogOutfitDropdown", host, "UIDropDownMenuTemplate")
+    dropdown:SetPoint("TOPLEFT", parent, "TOPLEFT", -14, 28)
+    dropdown:SetFrameLevel(host:GetFrameLevel() + 2)
+    UIDropDownMenu_SetWidth(dropdown, 188)
+
+    local function chooseEquipped()
         if state:HasDraft() then
             if state.requestState.status == "CONFIRM_SWITCH_EQUIPPED" then
                 state:ClearDraft(); state:CaptureEquipped(); state:Notify("EQUIPPED_REFRESH")
@@ -16,14 +22,40 @@ function Lab.CreateOutfits(parent, state)
                 state:Notify("CONFIRM_SWITCH_EQUIPPED")
             end
         else state:CaptureEquipped(); state:Notify("EQUIPPED_REFRESH") end
+    end
+
+    UIDropDownMenu_Initialize(dropdown, function()
+        local equippedInfo = UIDropDownMenu_CreateInfo()
+        equippedInfo.text = "当前装备"
+        equippedInfo.checked = not state:HasDraft()
+        equippedInfo.func = chooseEquipped
+        UIDropDownMenu_AddButton(equippedInfo)
+
+        local draftInfo = UIDropDownMenu_CreateInfo()
+        if state.presetRecord then
+            draftInfo.text = "套装预设：" .. tostring(state.presetRecord.name or state.presetRecord.id)
+        else
+            draftInfo.text = "本地草稿（" .. state:GetDirtyCount() .. " 槽）"
+        end
+        draftInfo.checked = state:HasDraft()
+        draftInfo.disabled = not state:HasDraft()
+        draftInfo.func = function() state:Notify("DRAFT_SELECTED") end
+        UIDropDownMenu_AddButton(draftInfo)
     end)
-    equipped:SetPoint("TOPLEFT", host, "TOPLEFT", 0, 0)
-    equipped:SetRecord({ id = -1, name = "当前装备", source = "本地读取", collected = true })
-    local draft = UI.CreateListRow(host, 160, 46, function() state:Notify("DRAFT_SELECTED") end)
-    draft:SetPoint("TOPLEFT", equipped, "BOTTOMLEFT", 0, -6)
-    local clear = CreateFrame("Button", nil, parent, "UIPanelButtonTemplate")
-    clear:SetWidth(148); clear:SetHeight(25); clear:SetPoint("BOTTOM", parent, "BOTTOM", 0, 17)
-    clear:SetText("清除草稿")
+
+    local clear = CreateFrame("Button", nil, parent)
+    clear:SetWidth(26)
+    clear:SetHeight(26)
+    clear:SetPoint("TOPRIGHT", parent, "TOPRIGHT", -5, -10)
+    clear:SetFrameLevel(host:GetFrameLevel() + 2)
+    local clearIcon = clear:CreateTexture(nil, "ARTWORK")
+    clearIcon:SetWidth(25)
+    clearIcon:SetHeight(24)
+    clearIcon:SetPoint("LEFT", clear, "LEFT", 1, 0)
+    clearIcon:SetTexture(UI.EzCollections:MediaPath("Transmogrify", "Transmogrify.tga", "Interface\\Buttons\\UI-RotationRight-Button-Up"))
+    clearIcon:SetTexCoord(0.533203125, 0.58203125, 0.248046875, 0.294921875)
+    clear:SetNormalTexture(clearIcon)
+    clear:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight")
     clear:SetScript("OnClick", function()
         if not state:HasDraft() then return end
         if state.requestState.status == "CONFIRM_CLEAR" then state:ClearDraft()
@@ -32,13 +64,26 @@ function Lab.CreateOutfits(parent, state)
             state:Notify("CONFIRM_CLEAR")
         end
     end)
+    clear:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:SetText("清除所有本地草稿", 1, 0.82, 0.18)
+        GameTooltip:AddLine("首次点击进入确认状态，再点一次清除。", 0.72, 0.72, 0.72)
+        GameTooltip:Show()
+    end)
+    clear:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
     function host:Refresh()
         local dirtyCount = state:GetDirtyCount()
-        draft:SetRecord({ id = -2,
-            name = dirtyCount > 0 and ("当前草稿（" .. dirtyCount .. " 槽）") or "当前草稿（空）",
-            source = state.preservedOnClose and "关闭时已保留" or "仅本地", collected = dirtyCount > 0 })
-        equipped:SetSelected(dirtyCount == 0); draft:SetSelected(dirtyCount > 0)
-        if dirtyCount > 0 then clear:Enable() else clear:Disable() end
+        if state.presetRecord then
+            UIDropDownMenu_SetText(dropdown, "套装预设：" .. tostring(state.presetRecord.name or state.presetRecord.id))
+        elseif dirtyCount > 0 then
+            UIDropDownMenu_SetText(dropdown, "本地草稿（" .. dirtyCount .. " 槽）")
+        else
+            UIDropDownMenu_SetText(dropdown, "当前装备")
+        end
+        if state:HasDraft() then clear:Show() else clear:Hide() end
     end
+    host.scDropDown = dropdown
+    host.scClearButton = clear
     return host
 end

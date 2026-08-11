@@ -247,7 +247,7 @@ local function applyJournalControlLayout(frame, key)
     host:ClearAllPoints()
     search:ClearAllPoints()
     filter:ClearAllPoints()
-    if key == "TOYS" or key == "TITLES" or key == "WARDROBE" then
+    if key == "TOYS" or key == "TITLES" or key == "WARDROBE" or key == "TRANSMOG_LAB" then
         host:SetWidth(210)
         host:SetHeight(22)
         host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
@@ -596,7 +596,7 @@ function UI.CreateCollectionsFrame()
         TITLES = UI.CreateTitlesPage(contentHost),
     }
     if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
-        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(legacyContentHost)
+        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(contentHost)
     end
     UI.EzCollections:Guard(contentHost, "收藏日志内页已锁定到 ezCollections 2.2 素材")
 
