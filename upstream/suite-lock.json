@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-11T19:10:05+08:00",
+  "syncedAt": "2026-08-11T19:29:13+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,10 +47,10 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "b812532f6223120e804a259f5a572345c83bab03",
+      "commit": "1c5f4d1a651c84fce36b6f92df99defe761b6172",
       "tocVersion": "0.2.0",
-      "directoryHash": "b520f1db7bbcb19398e65a250fa745cb0f18d4619dfbf8eaae0361722fe3f779",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 17 ezCollections toy grid and title journal list with preserved use, drag, favorite, and authoritative read-only semantics",
+      "directoryHash": "de061377ed276cccde52e4142b3709cdce10b2f4862af2ae50f21efef50ccc66",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 18 ezCollections wardrobe item and set galleries with preserved application, ownership, presenter generation, and camera-workbench semantics",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     }
   ],
