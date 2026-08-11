@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端、视觉或服务端动作验收。实施证据见 [`docs/evidence/dragonui-migration/tasks9-12-implemented-local.md`](../../evidence/dragonui-migration/tasks9-12-implemented-local.md)。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`。2026-08-11 已把锁定的五个 AddOn 根部署到真实 3.3.5a 客户端，并完成登录、七个主页面与 `/reload` 恢复的 `CLIENT_RUNTIME_OBSERVED` 冒烟测试；当前窗口在测试分辨率/UI Scale 下向屏幕底部溢出，因此尚未达到 `VISUAL_ACCEPTED`。本轮未触发召唤、使用、应用等服务端写动作，故不声明 `SERVER_ACCEPTED`。实施证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md) 与 [`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md)。
 
 ---
 
