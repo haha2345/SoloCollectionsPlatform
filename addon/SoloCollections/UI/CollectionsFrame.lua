@@ -482,7 +482,7 @@ function UI.CreateCollectionsFrame()
         portrait = frame.portrait
         portraitRing = frame.portraitRing or frame.PortraitFrame
         portrait:SetTexture(UI.Media.mountPortrait)
-        portrait:SetTexCoord(0, 1, 0, 1)
+        portrait:SetTexCoord(0.10, 0.90, 0.10, 0.90)
     else
         portraitFrame = CreateFrame("Frame", nil, frame)
         portraitFrame:SetWidth(80)

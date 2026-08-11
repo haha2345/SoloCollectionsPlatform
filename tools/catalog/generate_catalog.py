@@ -1134,6 +1134,8 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
                      f"mount journal spell drift: {entry['collectionId']}")
             entry["sourceText"] = journal["source"]
             entry["description"] = journal["description"]
+            if journal.get("journalNameZhCN"):
+                entry["name"]["zhCN"] = journal["journalNameZhCN"]
             entry["uiCollectible"] = bool(journal["uiCollectible"])
             entry["uiExclusionReason"] = journal["exclusionReason"]
         elif entry["typeKey"] == "companion":

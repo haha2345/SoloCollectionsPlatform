@@ -166,6 +166,11 @@ function Ez:SetPortraitForTab(frame, key)
         or resolveFallback(definition.fallback)
     portrait:SetTexture(texture or "Interface\\Icons\\INV_Misc_QuestionMark")
     portrait:SetTexCoord(unpack(definition.texCoord))
+    -- The legacy client cannot apply a circular mask to custom textures. The
+    -- NewEra shell therefore owns a deliberately smaller safe cutout.
+    portrait:ClearAllPoints()
+    portrait:SetSize(40, 40)
+    portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", 5, -2)
 end
 
 function Ez:Guard(parent, context)

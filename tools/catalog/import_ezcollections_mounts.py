@@ -8,6 +8,7 @@ import ast
 import hashlib
 import json
 import re
+import struct
 from pathlib import Path
 from typing import Any
 
@@ -106,6 +107,37 @@ def localize_source(source: str) -> str:
     return localized
 
 
+def read_zhcn_spell_names(path: Path) -> dict[int, str]:
+    data = path.read_bytes()
+    if len(data) < 20 or data[:4] != b"WDBC":
+        raise ValueError(f"not a WDBC file: {path}")
+    rows, fields, record_size, string_size = struct.unpack_from("<4I", data, 4)
+    if fields not in (231, 234) or record_size != fields * 4:
+        raise ValueError(f"Spell.dbc is not the 3.3.5a schema: {path}")
+    records_end = 20 + rows * record_size
+    if records_end + string_size != len(data):
+        raise ValueError(f"truncated Spell.dbc: {path}")
+    strings = data[records_end:]
+    result: dict[int, str] = {}
+    name_field = 136 if fields == 234 else 143
+    for index in range(rows):
+        record = struct.unpack_from(f"<{fields}I", data, 20 + index * record_size)
+        offset = int(record[name_field])
+        if offset <= 0 or offset >= len(strings):
+            continue
+        end = strings.find(b"\0", offset)
+        if end >= 0:
+            result[int(record[0])] = strings[offset:end].decode("utf-8", errors="strict")
+    return result
+
+
+def translate_source(source: str, translations: dict[str, str]) -> str:
+    localized = localize_source(source)
+    for english in sorted(translations, key=len, reverse=True):
+        localized = localized.replace(english, translations[english])
+    return localized
+
+
 def classify(fields: list[Any] | None) -> str | None:
     if fields is None:
         return "MISSING_EZ_RECORD"
@@ -128,11 +160,16 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source", required=True, type=Path)
     parser.add_argument("--mount-actions", required=True, type=Path)
+    parser.add_argument("--zhcn-spell-dbc", required=True, type=Path)
+    parser.add_argument("--source-zhcn", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     args = parser.parse_args()
 
     source_bytes = args.source.read_bytes()
     mounts = parse_mounts(args.source)
+    zhcn_names = read_zhcn_spell_names(args.zhcn_spell_dbc)
+    source_zhcn = json.loads(args.source_zhcn.read_text(encoding="utf-8"))
+    translations = source_zhcn["translations"]
     actions = json.loads(args.mount_actions.read_text(encoding="utf-8"))["collections"]
     entries = []
     counts: dict[str, int] = {}
@@ -144,13 +181,16 @@ def main() -> int:
         counts[status] = counts.get(status, 0) + 1
         rich = fields is not None and len(fields) >= 7
         source = str(fields[6]) if rich and fields[6] else ""
+        zhcn_name = zhcn_names.get(spell_id, "")
         entries.append({
             "collectionId": int(action["collectionId"]),
             "spellId": spell_id,
             "journalName": str(fields[3]) if rich and fields[3] else "",
-            "description": str(fields[4]) if rich and fields[4] else "",
+            "journalNameZhCN": zhcn_name,
+            "description": (f"这是国服客户端中的“{zhcn_name}”坐骑。获取方式请参见来源信息。"
+                            if zhcn_name else "获取方式请参见来源信息。"),
             "sourceType": int(fields[5]) if rich and fields[5] is not None else None,
-            "source": localize_source(source),
+            "source": translate_source(source, translations),
             "flags": int(fields[2] or 0) if fields else 0,
             "uiCollectible": exclusion is None,
             "exclusionReason": exclusion,
@@ -163,6 +203,11 @@ def main() -> int:
             "version": "2.2",
             "resource": "Data/Mounts.enUS.lua",
             "sha256": hashlib.sha256(source_bytes).hexdigest(),
+        },
+        "zhCNProvenance": {
+            "spellDbcSha256": hashlib.sha256(args.zhcn_spell_dbc.read_bytes()).hexdigest(),
+            "sourceMapSha256": hashlib.sha256(args.source_zhcn.read_bytes()).hexdigest(),
+            "locale": "zhCN",
         },
         "eligibilityPolicy": {
             "included": ["vendor", "drop", "quest reward", "achievement", "profession", "world event", "fishing"],
