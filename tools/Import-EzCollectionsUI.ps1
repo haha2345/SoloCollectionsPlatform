@@ -113,14 +113,6 @@ try {
         Copy-Item -LiteralPath $file.FullName -Destination $target -Force
     }
 
-    $portraitSource = Join-Path $stagingPath 'Interface\Icons\MountJournalPortrait.blp'
-    $portraitOutput = Join-Path $stagingPath 'Interface\Icons\MountJournalPortraitCircular.tga'
-    & python (Join-Path $PSScriptRoot 'Build-EzCircularPortrait.py') `
-        --source $portraitSource --output $portraitOutput
-    if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $portraitOutput -PathType Leaf)) {
-        throw 'Failed to build the local circular ezCollections mount portrait projection.'
-    }
-
     $assetsLua = @"
 -- Generated local integration marker. Do not edit or publish with SoloCollections source.
 _G.SoloCollectionsEzUIAssets = {
@@ -160,7 +152,6 @@ Assets.lua
         assetFileCount = $assetFiles.Count
         sourcePathRecorded = $false
         importedCode = $false
-        localDerivedAssets = @('Interface/Icons/MountJournalPortraitCircular.tga')
         excludedRuntime = @('C_Transmog*', 'ezCollections server Lua', 'ezCollections message protocol')
         publicReleaseState = 'blocked pending explicit license and provenance review'
     }
@@ -168,12 +159,7 @@ Assets.lua
         Set-Content -LiteralPath (Join-Path $stagingPath 'EZUI-PROVENANCE.json') -Encoding utf8NoBOM
 
     $copiedAssetFiles = @(Get-ChildItem -LiteralPath $stagingPath -File -Recurse -Force | Where-Object {
-        $_.Name -notin @(
-            'Assets.lua',
-            'SoloCollections_EzUI.toc',
-            'EZUI-PROVENANCE.json',
-            'MountJournalPortraitCircular.tga'
-        )
+        $_.Name -notin @('Assets.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json')
     })
     $copiedAssetHash = Get-FileSetHash -Root $stagingPath -Files $copiedAssetFiles
     if ($copiedAssetHash -ne $ExpectedAssetTreeHash) {

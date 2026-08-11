@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-12T07:20:00+08:00",
+  "syncedAt": "2026-08-12T07:27:00+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,17 +47,17 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "7d50aa8c240932f5b5eabcef66982cc40224992f",
+      "commit": "40efdb072d207bd98c13d670e17efa4d05dfa326",
       "tocVersion": "0.2.0",
-      "directoryHash": "816588178f36efbdd0036d94d19ac3e4af4efe6cd9d196dd62d4b870f1538149",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20A curated 215-mount zhCN journal projection, localized sources, native ezCollections portrait crop, exact random mount control, aligned source currency icons, animation-preserving SetFacing drag, and load-on-demand wardrobe catalog bootstrap",
+      "directoryHash": "cdfcc0712779f9312a88b7f5e37968c29ebc500dad7b4d24b3d1eae06103001e",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20A curated 215-mount zhCN journal projection, localized sources, pet-style native ezCollections portrait crop, exact random mount control, aligned source currency icons, animation-preserving SetFacing drag, and load-on-demand wardrobe catalog bootstrap",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
     {
       "id": "solocollections-wardrobe-data",
       "addonRoot": "SoloCollections_WardrobeData",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "7d50aa8c240932f5b5eabcef66982cc40224992f",
+      "commit": "40efdb072d207bd98c13d670e17efa4d05dfa326",
       "tocVersion": "0.2.0",
       "directoryHash": "6fef42827ba7534fba392cc5384f13bae0c398f7113081f453707aefe16cc507",
       "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
