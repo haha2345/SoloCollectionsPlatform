@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-14 已完成失败基线冻结、来源锁定、完整本地素材导入和 fail-closed 适配。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 [`task14-ezcollections-ui-source-and-import.md`](../evidence/dragonui-migration/task14-ezcollections-ui-source-and-import.md)。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-17 已完成失败基线、来源与完整素材锁定、双尺寸外框，以及坐骑、宠物、玩具和头衔内页迁移。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 Tasks 13-17 各项证据。
 
 ---
 
@@ -852,13 +852,15 @@ DragonUI_NewEra 顶层外框（965×606）
 
 **证据：** [`task16-mount-and-pet-pages.md`](../evidence/dragonui-migration/task16-mount-and-pet-pages.md)
 
-### Task 17：迁移玩具箱与头衔页面
+### Task 17：迁移玩具箱与头衔页面（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
-- [ ] 玩具使用 `Blizzard_ToyBox` 网格、卡片、分页与状态覆盖。
-- [ ] 头衔没有上游现成页面，使用同一 CollectionsJournal 列表/Inset/搜索视觉构建。
-- [ ] 玩具 Use/拖动作栏/偏好与头衔权威只读语义不变。
+- [x] 玩具使用 `Blizzard_ToyBox` 网格、卡片、分页与状态覆盖。
+- [x] 头衔没有上游现成页面，使用同一 CollectionsJournal 列表/Inset/搜索视觉构建。
+- [x] 玩具 Use/拖动作栏/偏好与头衔权威只读语义不变。
 
 **完成条件：** 两页不再出现 NewEra 通用黑框/棕色卡片混搭。
+
+**证据：** [`task17-toy-and-title-pages.md`](../evidence/dragonui-migration/task17-toy-and-title-pages.md)
 
 ### Task 18：迁移外观物品与套装页面
 
