@@ -10,10 +10,11 @@ local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
 
 local PORTRAITS = {
     MOUNTS = {
-        relative = "Interface\\Icons\\MountJournalPortrait.blp",
+        texture = "Interface\\AddOns\\DragonUI\\Textures\\Collections\\MountPortrait.tga",
         fallback = function() return UI.Media and UI.Media.mountPortrait end,
-        texCoord = { 0.07, 0.93, 0.07, 0.93 },
+        texCoord = { 0, 1, 0, 1 },
         precut = true,
+        dragonUI = true,
     },
     PETS = {
         fallback = "Interface\\Icons\\INV_Misc_Rabbit",
@@ -163,7 +164,7 @@ function Ez:SetPortraitForTab(frame, key)
     local portrait = frame and frame.scPortrait
     if not portrait then return end
     local definition = PORTRAITS[key] or PORTRAITS.MOUNTS
-    local texture = definition.relative and self:AssetPath(definition.relative, definition.fallback)
+    local texture = definition.texture or (definition.relative and self:AssetPath(definition.relative, definition.fallback))
         or resolveFallback(definition.fallback)
     texture = texture or "Interface\\Icons\\INV_Misc_QuestionMark"
     local nativeCrop = false
@@ -178,11 +179,16 @@ function Ez:SetPortraitForTab(frame, key)
         portrait:SetTexture(texture)
         portrait:SetTexCoord(unpack(definition.texCoord))
     end
-    -- Match the working pet-page portrait route: let the native helper crop
-    -- the ezCollections BLP beneath the original gold ring.
     portrait:ClearAllPoints()
-    portrait:SetSize(60, 60)
-    portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 8)
+    if definition.dragonUI then
+        -- DragonUI collections/window.lua values measured against the opaque
+        -- opening of PortraitFrameTemplate's gold corner atlas.
+        portrait:SetSize(58, 58)
+        portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", -2, 6)
+    else
+        portrait:SetSize(60, 60)
+        portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 8)
+    end
 end
 
 function Ez:Guard(parent, context)

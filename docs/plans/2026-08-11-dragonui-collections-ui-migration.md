@@ -902,8 +902,8 @@ DragonUI_NewEra 顶层外框（965×606）
 - [x] 完成 40×40 安全区临时修复并在客户端复查；该方案尺寸不符合 ezCollections，已由下一项正式方案替代。
 - [x] 修正坐骑拖动旋转：改用仅改变朝向的 `SetFacing`，不再由 `SetRotation` 在每次鼠标位移时重新起播模型动画。
 - [x] 按 ezCollections 原实现恢复 PortraitFrameTemplate 头像尺寸和金框层级。
-- [x] 坐骑头像直接使用 ezCollections `MountJournalPortrait.blp`，复用已正常工作的宠物页原生 `SetPortraitToTexture` 裁切路径。
-- [x] 随机坐骑按钮严格复刻 ezCollections 的 33×33 尺寸、`TOPRIGHT(-24,-42)` 位置、骑术图标、Flyout 边框坐标、Quickslot 按下态、方形高亮和左侧标签。
+- [x] 坐骑头像改为 DragonUI 收藏页的透明圆形 `MountPortrait.tga`，照搬其 58×58 尺寸与 `TOPLEFT(-2,6)` 金框开口锚点。
+- [x] 随机坐骑按钮照搬 DragonUI 收藏页的 30×30 尺寸、`Ability_Mount_Charger` 图标、0.08–0.92 裁切、深色 ActionBar 图标框、Quickslot 按下态与方形高亮。
 - [x] 坐骑来源费用行的货币图标统一为 12×12 并按可见金币区域上移 4 像素，使图标与金币/货币数量垂直居中。
 
 - [x] 部署前重新备份真实客户端 AddOns 并保存部署清单。
