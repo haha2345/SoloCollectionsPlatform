@@ -48,6 +48,7 @@ function Modules:RegisterFeature(spec)
         refreshFn = spec.refresh,
         defaultPoint = spec.defaultPoint,
         order = spec.order,
+        autoOpen = false,
     })
 end
 
@@ -56,4 +57,3 @@ function Modules:IsEnabled(id)
 end
 
 Public._SetCapability("modules.feature-registry", type(NE.RegisterPanel) == "function")
-

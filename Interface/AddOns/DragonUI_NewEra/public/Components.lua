@@ -35,6 +35,26 @@ function Components:CreateBottomTab(parent, spec)
     button:SetHeight(spec.height or 30)
     setText(button, spec.label)
     if NE.buttonskin and NE.buttonskin.Skin then NE.buttonskin.Skin(button, spec.skinOptions or {}) end
+    local selected = button:CreateTexture(nil, "ARTWORK")
+    selected:SetTexture("Interface\\Buttons\\WHITE8X8")
+    selected:SetPoint("TOPLEFT", button, "TOPLEFT", 4, -4)
+    selected:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -4, 4)
+    selected:SetVertexColor(0.72, 0.38, 0.06, 0.42)
+    selected:Hide()
+    local line = button:CreateTexture(nil, "OVERLAY")
+    line:SetTexture("Interface\\Buttons\\WHITE8X8")
+    line:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT", 8, 3)
+    line:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -8, 3)
+    line:SetHeight(2)
+    line:SetVertexColor(1.00, 0.72, 0.16, 0.95)
+    line:Hide()
+    function button:SetSelected(value)
+        self.scSelected = value and true or false
+        if self.scSelected then selected:Show(); line:Show(); self:LockHighlight()
+        else selected:Hide(); line:Hide(); self:UnlockHighlight() end
+    end
+    button.scSelectedTexture = selected
+    button.scSelectedLine = line
     if spec.onClick then button:SetScript("OnClick", spec.onClick) end
     return button
 end
@@ -52,12 +72,29 @@ function Components:CreateSearchBox(parent, spec)
     box:SetWidth(spec.width or 210)
     box:SetHeight(spec.height or 24)
     box:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+    box:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
     if spec.onChanged then
         box:SetScript("OnTextChanged", function(self, userInput)
             if userInput then spec.onChanged(self:GetText() or "") end
         end)
     end
     return box
+end
+
+function Components:SkinProgressBar(statusBar, background, border)
+    if not statusBar then return false end
+    statusBar:SetStatusBarColor(0.76, 0.48, 0.08, 1)
+    if background then background:SetVertexColor(0.018, 0.020, 0.024, 1) end
+    if border then border:SetVertexColor(0.82, 0.68, 0.36, 0.95) end
+    return true
+end
+
+function Components:SkinCountFrame(frame)
+    if not frame then return false end
+    if NE.nineslice and NE.nineslice.Apply then
+        NE.nineslice.Apply(frame, "InsetFrameTemplate")
+    end
+    return true
 end
 
 function Components:CreateFilterButton(parent, spec)
@@ -95,4 +132,4 @@ Public._SetCapability("components.tabs", true)
 Public._SetCapability("components.search", true)
 Public._SetCapability("components.buttons", NE.buttonskin and type(NE.buttonskin.Skin) == "function")
 Public._SetCapability("components.scrollbar", NE.scrollbar and type(NE.scrollbar.Reskin) == "function")
-
+Public._SetCapability("components.progress", true)

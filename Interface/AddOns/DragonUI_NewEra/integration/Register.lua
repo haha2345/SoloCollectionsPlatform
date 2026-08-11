@@ -458,7 +458,9 @@ function NE.RegisterPanel(spec)
                 default = true,
                 onBoot  = function()
                     -- Only open/show when the panel is enabled in config.
-                    if isEnabled() and spec.openFn then
+                    if isEnabled() and spec.bootFn then
+                        spec.bootFn()
+                    elseif isEnabled() and spec.autoOpen ~= false and spec.openFn then
                         spec.openFn()
                     end
                 end,

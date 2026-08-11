@@ -24,10 +24,34 @@ function Chrome:PersistWindowPosition(frame, key, defaultPoint, dragHandle)
     return true
 end
 
+function Chrome:MigrateWindowPosition(key, legacy)
+    if not (key and type(legacy) == "table" and legacy.point and NE.db) then return false end
+    NE.db.windowPos = NE.db.windowPos or {}
+    if NE.db.windowPos[key] then return false end
+    NE.db.windowPos[key] = {
+        point = legacy.point,
+        relPoint = legacy.relPoint or legacy.relativePoint or legacy.point,
+        x = tonumber(legacy.x) or 0,
+        y = tonumber(legacy.y) or 0,
+    }
+    return true
+end
+
+function Chrome:RestoreWindowPosition(frame, key, defaultPoint)
+    if not (NE.FrameUtil and NE.FrameUtil.RestoreWindowPosition) then return false, "frameutil" end
+    return NE.FrameUtil.RestoreWindowPosition(frame, key, defaultPoint)
+end
+
+function Chrome:ResetWindowPosition(key)
+    if not (key and NE.db and NE.db.windowPos) then return false end
+    NE.db.windowPos[key] = nil
+    return true
+end
+
 function Chrome:KeepOnScreen(frame)
     if NE.FrameUtil and NE.FrameUtil.KeepOnScreen then return NE.FrameUtil.KeepOnScreen(frame) end
 end
 
 Public._SetCapability("chrome.panel", NE.panelchrome and type(NE.panelchrome.Apply) == "function")
 Public._SetCapability("chrome.persist", NE.FrameUtil and type(NE.FrameUtil.PersistWindowPosition) == "function")
-
+Public._SetCapability("chrome.position-migration", NE.FrameUtil and type(NE.FrameUtil.RestoreWindowPosition) == "function")
