@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-18 已完成失败基线、来源与完整素材锁定、双尺寸外框，以及坐骑、宠物、玩具、头衔、外观物品和套装内页迁移。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 Tasks 13-18 各项证据。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-19 已完成失败基线、来源与完整素材锁定、双尺寸外框、五类收藏内页与 WardrobeFrame 幻化页迁移。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 Tasks 13-19 各项证据。
 
 ---
 
@@ -872,13 +872,15 @@ DragonUI_NewEra 顶层外框（965×606）
 
 **完成条件：** 外观收藏在视觉和交互上与 ezCollections 同源，不退化现有目录/镜头能力。
 
-### Task 19：替换幻化实验室
+### Task 19：替换幻化实验室（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
-- [ ] 删除当前左/中/右三栏工作台布局。
-- [ ] 按 WardrobeFrame 965×606 重建左侧角色槽位区和右侧候选区。
-- [ ] 11 槽按钮围绕模型，点击槽位联动右侧物品/套装浏览。
-- [ ] local draft、清除、单槽 ApplyAppearance、预设 ApplySet 和 SC2 状态刷新保持明确分层。
-- [ ] 多槽自定义保存继续禁用，直到 Task 21 提供服务端原子合同。
+- [x] 删除当前左/中/右三栏工作台布局。
+- [x] 按 WardrobeFrame 965×606 重建左侧角色槽位区和右侧候选区。
+- [x] 11 槽按钮围绕模型，点击槽位联动右侧物品/套装浏览。
+- [x] local draft、清除、单槽 ApplyAppearance、预设 ApplySet 和 SC2 状态刷新保持明确分层。
+- [x] 多槽自定义保存继续禁用，直到 Task 21 提供服务端原子合同。
+
+**证据：** [`task19-ezcollections-transmog-frame.md`](../evidence/dragonui-migration/task19-ezcollections-transmog-frame.md)
 
 **完成条件：** 幻化页的页面树、主要控件和交互流来自 ezCollections，而不是概念参考。
 
