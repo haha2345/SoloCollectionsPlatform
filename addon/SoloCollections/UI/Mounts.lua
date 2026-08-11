@@ -70,11 +70,21 @@ function UI.CreateMountsPage(parent)
         controls = false,
         panelCheck = function() return page:IsShown() end,
     }) or nil
+    local function applyModelFacing(rotation)
+        -- On this 3.3.5a client PlayerModel:SetRotation restarts the active
+        -- animation sequence. SetFacing changes only the actor heading, which
+        -- keeps idle animation time continuous while the mouse is moving.
+        if model.SetFacing then
+            model:SetFacing(rotation)
+        elseif model.SetRotation then
+            model:SetRotation(rotation, false)
+        end
+    end
     local function rotateModel(delta)
         model.rotation = (model.rotation or DEFAULT_ROTATION) + delta
         if model.rotation < 0 then model.rotation = model.rotation + TWO_PI end
         if model.rotation > TWO_PI then model.rotation = model.rotation - TWO_PI end
-        if model.SetRotation then model:SetRotation(model.rotation, false) end
+        applyModelFacing(model.rotation)
     end
     local rotateLeft, rotateRight = UI.EzCollections:CreateRotationButtons(model, function()
         rotateModel(-0.18)
@@ -204,11 +214,12 @@ function UI.CreateMountsPage(parent)
         local cursorX = GetCursorPosition()
         local previousX = self.scLastCursorX or cursorX
         self.scLastCursorX = cursorX
-        self.rotation = (self.rotation or DEFAULT_ROTATION) +
-            ((cursorX - previousX) * DRAG_ROTATION_CONSTANT)
+        local delta = (cursorX - previousX) * DRAG_ROTATION_CONSTANT
+        if delta == 0 then return end
+        self.rotation = (self.rotation or DEFAULT_ROTATION) + delta
         if self.rotation < 0 then self.rotation = self.rotation + TWO_PI end
         if self.rotation > TWO_PI then self.rotation = self.rotation - TWO_PI end
-        self:SetRotation(self.rotation, false)
+        applyModelFacing(self.rotation)
     end
 
     local function getNativeModelScale()

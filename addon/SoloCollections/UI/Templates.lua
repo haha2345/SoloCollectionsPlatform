@@ -281,10 +281,10 @@ function UI.CreateJournalFrame(parent, name, width, height)
             title = "收藏",
             portrait = UI.Media.mountPortrait,
             portraitOpts = {
-                -- 3.3.5a exposes no functional texture masks. Keep the square
-                -- art wholly inside the gold ring's safe inner diameter.
-                size = 40,
-                anchor = { "TOPLEFT", 5, -2 },
+                -- Match ezCollections' PortraitFrameTemplate geometry. The
+                -- native SetPortraitToTexture call supplies the round crop.
+                size = 60,
+                anchor = { "TOPLEFT", -5, 8 },
                 mask = false,
             },
         })

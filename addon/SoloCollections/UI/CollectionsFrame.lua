@@ -481,8 +481,12 @@ function UI.CreateCollectionsFrame()
         portraitFrame = frame
         portrait = frame.portrait
         portraitRing = frame.portraitRing or frame.PortraitFrame
-        portrait:SetTexture(UI.Media.mountPortrait)
-        portrait:SetTexCoord(0.10, 0.90, 0.10, 0.90)
+        if SetPortraitToTexture then
+            SetPortraitToTexture(portrait, UI.Media.mountPortrait)
+        else
+            portrait:SetTexture(UI.Media.mountPortrait)
+            portrait:SetTexCoord(0, 1, 0, 1)
+        end
     else
         portraitFrame = CreateFrame("Frame", nil, frame)
         portraitFrame:SetWidth(80)
@@ -494,8 +498,12 @@ function UI.CreateCollectionsFrame()
         portrait:SetWidth(62)
         portrait:SetHeight(62)
         portrait:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
-        portrait:SetTexture(UI.Media.mountPortrait)
-        portrait:SetTexCoord(0, 1, 0, 1)
+        if SetPortraitToTexture then
+            SetPortraitToTexture(portrait, UI.Media.mountPortrait)
+        else
+            portrait:SetTexture(UI.Media.mountPortrait)
+            portrait:SetTexCoord(0, 1, 0, 1)
+        end
 
         portraitRing = portraitFrame:CreateTexture(nil, "OVERLAY")
         portraitRing:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")

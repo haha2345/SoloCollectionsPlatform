@@ -164,13 +164,20 @@ function Ez:SetPortraitForTab(frame, key)
     local definition = PORTRAITS[key] or PORTRAITS.MOUNTS
     local texture = definition.relative and self:AssetPath(definition.relative, definition.fallback)
         or resolveFallback(definition.fallback)
-    portrait:SetTexture(texture or "Interface\\Icons\\INV_Misc_QuestionMark")
-    portrait:SetTexCoord(unpack(definition.texCoord))
-    -- The legacy client cannot apply a circular mask to custom textures. The
-    -- NewEra shell therefore owns a deliberately smaller safe cutout.
+    texture = texture or "Interface\\Icons\\INV_Misc_QuestionMark"
+    local nativeCrop = false
+    if SetPortraitToTexture then
+        nativeCrop = pcall(SetPortraitToTexture, portrait, texture)
+    end
+    if not nativeCrop then
+        portrait:SetTexture(texture)
+        portrait:SetTexCoord(unpack(definition.texCoord))
+    end
+    -- ezCollections uses the native PortraitFrameTemplate portrait at its
+    -- full cutout size; the metal corner remains above it as the visible ring.
     portrait:ClearAllPoints()
-    portrait:SetSize(40, 40)
-    portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", 5, -2)
+    portrait:SetSize(60, 60)
+    portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 8)
 end
 
 function Ez:Guard(parent, context)
