@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-17 已完成失败基线、来源与完整素材锁定、双尺寸外框，以及坐骑、宠物、玩具和头衔内页迁移。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 Tasks 13-17 各项证据。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-18 已完成失败基线、来源与完整素材锁定、双尺寸外框，以及坐骑、宠物、玩具、头衔、外观物品和套装内页迁移。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 Tasks 13-18 各项证据。
 
 ---
 
@@ -862,11 +862,13 @@ DragonUI_NewEra 顶层外框（965×606）
 
 **证据：** [`task17-toy-and-title-pages.md`](../evidence/dragonui-migration/task17-toy-and-title-pages.md)
 
-### Task 18：迁移外观物品与套装页面
+### Task 18：迁移外观物品与套装页面（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
-- [ ] 复用 WardrobeCollectionFrame、物品/套装标签、搜索、来源过滤与分页几何。
-- [ ] 物品保持 3×6 模型卡；套装采用 ezCollections 的 2×4 卡/详情结构。
-- [ ] 保留 11 槽、DRESSUP/DISPLAY presenter、camera workbench、generation 和服务端拥有状态。
+- [x] 复用 WardrobeCollectionFrame、物品/套装标签、搜索、来源过滤与分页几何。
+- [x] 物品保持 3×6 模型卡；套装采用 ezCollections 的 2×4 卡/详情结构。
+- [x] 保留 11 槽、DRESSUP/DISPLAY presenter、camera workbench、generation 和服务端拥有状态。
+
+**证据：** [`task18-wardrobe-collection-pages.md`](../evidence/dragonui-migration/task18-wardrobe-collection-pages.md)
 
 **完成条件：** 外观收藏在视觉和交互上与 ezCollections 同源，不退化现有目录/镜头能力。
 
