@@ -1,4 +1,5 @@
 local SC = SoloCollections
+local UI = SC.UI
 local Lab = SC.WardrobeLab
 if not Lab then return end
 
