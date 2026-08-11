@@ -1,0 +1,9 @@
+{
+  "name": "ezCollections",
+  "version": "2.2 local snapshot",
+  "runtimeDependency": false,
+  "allowedUse": "local code and interaction reference under explicit user authorization",
+  "publicReleaseState": "pending license and provenance review",
+  "copiedIntoSuite": false
+}
+

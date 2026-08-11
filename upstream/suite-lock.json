@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "syncedAt": "2026-08-11T15:20:00+08:00",
+  "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
+  "components": [
+    {
+      "id": "classicapi",
+      "addonRoot": "!!!ClassicAPI",
+      "url": "https://gitlab.com/Tsoukie/classicapi.git",
+      "commit": "1ffaa484f62f225052de69dd82d97f78bf723fd7",
+      "tocVersion": "1.23",
+      "directoryHash": "7a0d42527efbe47c27a2ee789a9c29a0a8ee61e96ea7395ded27520dff047c10",
+      "localPatchState": "clean-export",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "dragonui",
+      "addonRoot": "DragonUI",
+      "url": "https://github.com/NeticSoul/DragonUI.git",
+      "commit": "9c7e5b189f438391e3de8731b4fc62fc2a0f0839",
+      "tocVersion": "2.5",
+      "directoryHash": "ce2c28c9bbe7e21be17fec45efb9d5b1a9936240e15256a6879dac3660f2fb1c",
+      "localPatchState": "clean-export",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "dragonui-options",
+      "addonRoot": "DragonUI_Options",
+      "url": "https://github.com/NeticSoul/DragonUI.git",
+      "commit": "9c7e5b189f438391e3de8731b4fc62fc2a0f0839",
+      "tocVersion": "2.5",
+      "directoryHash": "f3e96465b67183b44e3811192b0c0369bad24dd5fc886d5f3b35382ea202181e",
+      "localPatchState": "clean-export",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "dragonui-newera",
+      "addonRoot": "DragonUI_NewEra",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "b24b61007e53d24896476f02b7e1c64af626b67b1f7fa9cea485b8ae6e520e23",
+      "localPatchState": "project-patched: public-api-v1 and canonical module-state migration",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "solocollections",
+      "addonRoot": "SoloCollections",
+      "url": "https://github.com/haha2345/SoloCollections.git",
+      "commit": "df7e873059fcaeb8c3af6496b3c49b5a1f5fd818",
+      "tocVersion": "0.2.0",
+      "directoryHash": "509f596bf52c78c1a62627a8054ef302f4b74fa65b7224181d220397cdb2fa7a",
+      "localPatchState": "sibling-source; migration branch feat/dragonui-collections-shell",
+      "licenseState": "repository license applies only to SoloCollections-owned files"
+    }
+  ],
+  "references": [
+    {
+      "id": "ezcollections-2.2",
+      "runtimeDependency": false,
+      "purpose": "wardrobe interaction reference only",
+      "licenseState": "no-explicit-license-file-confirmed; user-authorized-local-reference; public-copying-prohibited-until-reviewed"
+    }
+  ]
+}

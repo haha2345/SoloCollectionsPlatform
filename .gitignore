@@ -1,0 +1,5 @@
+/build/
+/Interface/AddOns/SoloCollections/
+/.sync-staging/
+*.tmp
+

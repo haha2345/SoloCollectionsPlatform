@@ -1,0 +1,25 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- Localization strings (loaded first so all modules can use L[]) -->
+	<!-- Note: Locale files are loaded via TOC before this XML -->
+
+	<!-- Centralized locale-aware font system (must load before config.lua) -->
+	<Script file="core\fonts.lua"/>
+
+	<!-- Configuration and database defaults -->
+	<Script file="config.lua"/>
+	<Script file="database.lua"/>
+	
+	<!-- Core API and utilities (must load before core.lua) -->
+	<Include file="core\core.xml"/>
+	
+	<!-- Main addon initialization -->
+	<Script file="core.lua"/>
+	
+	<!-- Utility functions -->
+	<Include file="utils\utils.xml"/>
+	
+	<!-- All modules -->
+	<Include file="modules\modules.xml"/>
+	
+	<!-- Options are now in DragonUI_Options addon (loaded on demand) -->
+</Ui>
