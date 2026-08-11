@@ -99,8 +99,16 @@ if ($AllowGeneratedEzCollectionsUI) {
     if ($provenance.sourceTreeHash -ne $reference.directoryHash) {
         throw "$generatedEzUI source hash does not match ezCollections-reference.json"
     }
+    $derivedAssets = @($provenance.localDerivedAssets)
+    foreach ($relative in $derivedAssets) {
+        if (-not (Test-Path -LiteralPath (Join-Path $addon $relative) -PathType Leaf)) {
+            throw "$generatedEzUI is missing local derived asset: $relative"
+        }
+    }
     $assetFiles = @(Get-ChildItem -LiteralPath $addon -File -Recurse -Force | Where-Object {
-        $_.Name -notin @('Assets.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json')
+        $relative = [IO.Path]::GetRelativePath($addon, $_.FullName).Replace('\', '/')
+        $_.Name -notin @('Assets.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json') -and
+            $relative -notin $derivedAssets
     })
     $assetHash = Get-TreeHashFromFiles -Path $addon -Files $assetFiles
     if ($assetHash -ne $reference.localAssetProjection.directoryHash -or
