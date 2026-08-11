@@ -20,11 +20,8 @@ local SET_PIECE_SPACING = 5
 local SET_PIECE_COLUMNS = 8
 local SET_PIECE_POOL_LIMIT = 12
 local DEFAULT_ROTATION = 0.18
--- SoloCam v4 reserves this numeric range for direct CreatureDisplayInfo IDs.
--- Stock SetCreature interprets ordinary values as Creature entries; the
--- client bridge decodes base + displayId and supplies the persistent internal
--- creature-cache record required by PlayerModel.
-local DIRECT_DISPLAY_REQUEST_BASE = 0x6F000000
+-- SoloCam v4's direct CreatureDisplayInfo range is now owned by ModelProvider;
+-- this page passes display identity through the presenter contract only.
 local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
     HEAD = 0,
     SHOULDER = 2,
@@ -699,8 +696,8 @@ local function applyStandaloneItemTransform(model)
     if not record.m2Camera then
         rotation = record.modelRotation or record.modelFacing or 0
     end
-    -- Standalone cards use PlayerModel + SetCreature through the direct
-    -- CreatureDisplayInfo bridge. In 3.3.5 its visible actor is rotated by
+    -- Standalone cards use PlayerModel through the DISPLAY presenter. In
+    -- 3.3.5 its visible actor is rotated by
     -- CharacterModelBase:SetRotation; generic Model:SetFacing does not rotate
     -- that SetCreature result even though the inherited method is present.
     if model.SetRotation then
@@ -838,6 +835,7 @@ local function applyStandaloneItemRecord(model, record, pageGeneration)
     local generation = model.scStandaloneGeneration
     model.scPageGeneration = pageGeneration or generation
     if not record then
+        if model.scPresenter then model.scPresenter:Clear("NO_RECORD") end
         if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         model.scRecord = nil
         model.scRecordId = nil
@@ -867,10 +865,16 @@ local function applyStandaloneItemRecord(model, record, pageGeneration)
         if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         model.scRecordId = record.id
         model:ClearModel()
-        if record.syntheticDisplayId and model.SetCreature then
-            pcall(function()
-                model:SetCreature(DIRECT_DISPLAY_REQUEST_BASE + record.syntheticDisplayId)
-            end)
+        if record.syntheticDisplayId and SC.ModelProvider then
+            model.scPresenter = model.scPresenter or SC.ModelProvider.Create("DISPLAY", model)
+            model.scPresenter:Present({
+                displayId = record.syntheticDisplayId,
+                cameraPose = select(1, resolveM2CameraPose(record)),
+                applyCamera = SC.M2Camera and SC.M2Camera.ApplyPresenterPose,
+                onUnavailable = function(reason)
+                    showStandaloneItemUnavailable(model, generation, model.scPageGeneration, reason)
+                end,
+            })
         end
     end
     applyStandaloneItemView(model)

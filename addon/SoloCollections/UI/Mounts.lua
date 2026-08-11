@@ -8,12 +8,6 @@ local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
-local MODEL_RETRY_DELAYS = { 0.1, 0.25, 0.5 }
-local MODEL_STABILITY_DELAY = 0.35
-local MODEL_MAX_STABILITY_RESTARTS = 8
-local MODEL_MAX_WINDOW = 2
-local nextFrameDriver = CreateFrame("Frame")
-local nextFrameQueue = {}
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -21,25 +15,6 @@ local function createDetailLabel(parent, font, color)
     label:SetJustifyH("LEFT")
     label:SetJustifyV("TOP")
     return label
-end
-
-local function runNextFrameQueue(self)
-    local callbacks = nextFrameQueue
-    nextFrameQueue = {}
-    self:SetScript("OnUpdate", nil)
-    for _, callback in ipairs(callbacks) do
-        callback()
-    end
-end
-
-local function clearNextFrameQueue()
-    nextFrameQueue = {}
-    nextFrameDriver:SetScript("OnUpdate", nil)
-end
-
-local function deferNextFrame(callback)
-    table.insert(nextFrameQueue, callback)
-    nextFrameDriver:SetScript("OnUpdate", runNextFrameQueue)
 end
 
 local function showNotice(message)
@@ -59,10 +34,7 @@ function UI.CreateMountsPage(parent)
     page.scRecords = {}
     page.scSelectedId = nil
     page.scModelGeneration = 0
-    page.scModelTasks = {}
     page.scModelReady = false
-    page.scModelPaths = {}
-    local modelTimerDriver = CreateFrame("Frame", nil, page)
 
     local list = CreateFrame("Frame", nil, page)
     list:SetWidth(342)
@@ -86,6 +58,7 @@ function UI.CreateMountsPage(parent)
     detailBackground:SetPoint("TOPLEFT", detail, "TOPLEFT", 5, -5)
     detailBackground:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -5, 5)
     detailBackground:SetVertexColor(0.19, 0.055, 0.032, 0.96)
+    UI.StyleNewEraCompanionLayout(page, list, detail, listBackground, detailBackground)
 
     local model = CreateFrame("PlayerModel", nil, detail)
     model:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -112)
@@ -95,6 +68,10 @@ function UI.CreateMountsPage(parent)
     model.rotation = DEFAULT_ROTATION
     model.scZoom = DEFAULT_MODEL_SCALE
     model.scBaseScale = nil
+    local presenter = SC.ModelProvider and SC.ModelProvider.Create("CREATURE", model, {
+        controls = true,
+        panelCheck = function() return page:IsShown() end,
+    }) or nil
 
     local modelShade = model:CreateTexture(nil, "BACKGROUND")
     modelShade:SetTexture("Interface\\Buttons\\WHITE8X8")
@@ -150,6 +127,15 @@ function UI.CreateMountsPage(parent)
     reset:SetPoint("RIGHT", favorite, "LEFT", -8, 0)
     reset:SetText("重置视角")
 
+    local summon = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
+    summon:SetWidth(104)
+    summon:SetHeight(25)
+    summon:SetPoint("RIGHT", reset, "LEFT", -8, 0)
+    summon:SetText("召唤坐骑")
+    UI.RegisterNewEraCompanionAction(page, favorite)
+    UI.RegisterNewEraCompanionAction(page, reset)
+    UI.RegisterNewEraCompanionAction(page, summon)
+
     local empty = UI.CreateEmptyState(list, "没有符合条件的坐骑")
     empty:SetPoint("CENTER", list, "CENTER", -10, 15)
     empty:Hide()
@@ -181,16 +167,6 @@ function UI.CreateMountsPage(parent)
         model.scLastCursorX = nil
     end
 
-    local function getModelPath(self)
-        local checked, modelPath = pcall(function()
-            return self:GetModel()
-        end)
-        if checked and modelPath and modelPath ~= "" then
-            return modelPath
-        end
-        return nil
-    end
-
     local function getNativeModelScale()
         if not model.GetModelScale then
             return nil
@@ -205,46 +181,8 @@ function UI.CreateMountsPage(parent)
         return nil
     end
 
-    local function stopModelTimers()
-        page.scModelTasks = {}
-        modelTimerDriver:SetScript("OnUpdate", nil)
-    end
-
     local function clearModelInteraction()
         clearDragState()
-        clearNextFrameQueue()
-        stopModelTimers()
-    end
-
-    local function onModelTimerUpdate(self, elapsed)
-        local readyCallbacks = {}
-        for index = #page.scModelTasks, 1, -1 do
-            local task = page.scModelTasks[index]
-            if page.scModelGeneration ~= task.generation then
-                table.remove(page.scModelTasks, index)
-            else
-                task.remaining = task.remaining - elapsed
-                if task.remaining <= 0 then
-                    table.remove(page.scModelTasks, index)
-                    table.insert(readyCallbacks, 1, task.callback)
-                end
-            end
-        end
-        if #page.scModelTasks == 0 then
-            self:SetScript("OnUpdate", nil)
-        end
-        for _, callback in ipairs(readyCallbacks) do
-            callback()
-        end
-    end
-
-    local function scheduleModel(delay, generation, callback)
-        table.insert(page.scModelTasks, {
-            remaining = tonumber(delay) or 0,
-            generation = generation,
-            callback = callback,
-        })
-        modelTimerDriver:SetScript("OnUpdate", onModelTimerUpdate)
     end
 
     local function resetModelState()
@@ -320,160 +258,6 @@ function UI.CreateMountsPage(parent)
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
 
-    local function applyModel(record, generation)
-        if page.scModelGeneration ~= generation then
-            return
-        end
-        clearModelInteraction()
-        model:ClearModel()
-        unavailable:Hide()
-        rotateHint:Show()
-        resetModelState()
-
-        local retryIndex = 0
-        local stabilityRestarts = 0
-        local modelDeadline = GetTime() + MODEL_MAX_WINDOW
-        local candidatePath
-        local candidateFrames = 0
-        local verifyModel
-        local setCreatureAndVerify
-
-        local function failModel()
-            stopModelTimers()
-            resetModelState()
-            model:ClearModel()
-            unavailable:Show()
-        end
-
-        local function retryLoad()
-            if GetTime() >= modelDeadline then
-                failModel()
-                return
-            end
-            retryIndex = retryIndex + 1
-            if retryIndex <= #MODEL_RETRY_DELAYS then
-                local delay = MODEL_RETRY_DELAYS[retryIndex]
-                scheduleModel(delay, generation, setCreatureAndVerify)
-            else
-                failModel()
-            end
-        end
-
-        local function restartStability(modelPath)
-            if GetTime() >= modelDeadline then
-                failModel()
-                return false
-            end
-            stabilityRestarts = stabilityRestarts + 1
-            if stabilityRestarts > MODEL_MAX_STABILITY_RESTARTS then
-                failModel()
-                return false
-            end
-            candidatePath = modelPath
-            candidateFrames = modelPath and 1 or 0
-            scheduleModel(0, generation, verifyModel)
-            return true
-        end
-
-        local function finishStableModel(stablePath)
-            if page.scModelGeneration ~= generation then
-                return
-            end
-            local currentPath = getModelPath(model)
-            if not currentPath then
-                candidatePath = nil
-                candidateFrames = 0
-                retryLoad()
-                return
-            end
-            if currentPath ~= stablePath then
-                restartStability(currentPath)
-                return
-            end
-
-            local expectedPath = page.scModelPaths[record.id]
-            if expectedPath and currentPath ~= expectedPath then
-                restartStability(currentPath)
-                return
-            end
-
-            -- SetCreature owns the native camera, position and base scale.
-            -- Capture that per-creature scale only after the model path has
-            -- survived a cross-frame confirmation and the stability window.
-            model.scBaseScale = getNativeModelScale()
-            model.scZoom = DEFAULT_MODEL_SCALE
-            model.rotation = DEFAULT_ROTATION
-            model:SetRotation(DEFAULT_ROTATION)
-            page.scModelPaths[record.id] = currentPath
-            page.scModelReady = true
-            unavailable:Hide()
-        end
-
-        verifyModel = function()
-            if page.scModelGeneration ~= generation then
-                return
-            end
-            if GetTime() >= modelDeadline then
-                failModel()
-                return
-            end
-            local modelPath = getModelPath(model)
-            if not modelPath then
-                candidatePath = nil
-                candidateFrames = 0
-                retryLoad()
-                return
-            end
-
-            if modelPath ~= candidatePath then
-                if candidatePath then
-                    restartStability(modelPath)
-                else
-                    candidatePath = modelPath
-                    candidateFrames = 1
-                    scheduleModel(0, generation, verifyModel)
-                end
-                return
-            end
-
-            candidateFrames = candidateFrames + 1
-            if candidateFrames < 2 then
-                scheduleModel(0, generation, verifyModel)
-                return
-            end
-
-            local stablePath = candidatePath
-            scheduleModel(MODEL_STABILITY_DELAY, generation, function()
-                finishStableModel(stablePath)
-            end)
-        end
-
-        setCreatureAndVerify = function()
-            if page.scModelGeneration ~= generation then
-                return
-            end
-            if GetTime() >= modelDeadline then
-                failModel()
-                return
-            end
-            candidatePath = nil
-            candidateFrames = 0
-            local loaded = record.previewCreatureEntry and pcall(function()
-                -- GetModel() may retain its old path after ClearModel() on
-                -- 3.3.5, so emptiness cannot be used as a load barrier.
-                model:ClearModel()
-                model:SetCreature(record.previewCreatureEntry)
-            end)
-            if not loaded then
-                failModel()
-                return
-            end
-            scheduleModel(0, generation, verifyModel)
-        end
-
-        setCreatureAndVerify()
-    end
-
     local function requestModel(record)
         page.scModelGeneration = (page.scModelGeneration or 0) + 1
         local generation = page.scModelGeneration
@@ -482,30 +266,34 @@ function UI.CreateMountsPage(parent)
         model:ClearModel()
         unavailable:Hide()
 
-        if not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
+        if not presenter or not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
             unavailable:SetText("模型预览暂不可用")
             unavailable:Show()
             rotateHint:Hide()
             return
         end
-        SC.Bridge.RequestCreaturePreview(10, record.id, function(ok, reason)
-            if page.scModelGeneration ~= generation then
-                return
-            end
-            if not ok then
-                clearModelInteraction()
-                resetModelState()
-                model:ClearModel()
+        presenter:Present({
+            creatureEntry = record.previewCreatureEntry,
+            rotation = DEFAULT_ROTATION,
+            preview = function(done)
+                SC.Bridge.RequestCreaturePreview(10, record.id, function(ok, reason)
+                    if page.scModelGeneration == generation then done(ok, reason) end
+                end)
+            end,
+            onReady = function()
+                if page.scModelGeneration ~= generation then return end
+                model.scBaseScale = getNativeModelScale()
+                model.scZoom = DEFAULT_MODEL_SCALE
+                page.scModelReady = true
+                unavailable:Hide(); rotateHint:Show()
+            end,
+            onUnavailable = function(reason)
+                if page.scModelGeneration ~= generation then return end
                 model.scUnavailableReason = reason
                 unavailable:SetText("模型预览暂不可用")
-                unavailable:Show()
-                rotateHint:Hide()
-                return
-            end
-            deferNextFrame(function()
-                applyModel(record, generation)
-            end)
-        end)
+                unavailable:Show(); rotateHint:Hide()
+            end,
+        })
     end
 
     local function selectRecord(record)
@@ -526,11 +314,13 @@ function UI.CreateMountsPage(parent)
             collectionState:SetText("已收集")
             collectionState:SetTextColor(0.38, 0.9, 0.30)
             favorite:Enable()
+            summon:Enable()
             favorite:SetText(record.favorite and "取消偏好" or "设为偏好")
         else
             collectionState:SetText("未收集")
             collectionState:SetTextColor(0.72, 0.59, 0.52)
             favorite:Disable()
+            summon:Disable()
             favorite:SetText("尚未收集")
         end
         for _, row in ipairs(page.scRows) do
@@ -595,13 +385,14 @@ function UI.CreateMountsPage(parent)
         collectionState:SetText("")
         favorite:SetText("设为偏好")
         favorite:Disable()
+        summon:Disable()
         UI.SetFallbackTexture(infoIcon)
         infoBorder:SetCollected(false)
         infoSelectedBorder:Hide()
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
-        model:ClearModel()
+        if presenter then presenter:Clear("NO_SELECTION") else model:ClearModel() end
         for _, row in ipairs(self.scRows) do
             row:SetSelected(false)
         end
@@ -678,11 +469,11 @@ function UI.CreateMountsPage(parent)
     end)
 
     reset:SetScript("OnClick", function()
-        local record = page.scSelectedRecord
-        if record then
-            requestModel(record)
-        end
+        if presenter and presenter.ResetView then presenter:ResetView()
+        elseif page.scSelectedRecord then requestModel(page.scSelectedRecord) end
     end)
+
+    summon:SetScript("OnClick", function() summonRecord(page.scSelectedRecord) end)
 
     infoButton:SetScript("OnClick", function(self, button)
         local record = page.scSelectedRecord
@@ -693,6 +484,7 @@ function UI.CreateMountsPage(parent)
         end
     end)
 
+    if not SC.ModelProvider or SC.ModelProvider.GetMode("CREATURE") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
@@ -732,12 +524,13 @@ function UI.CreateMountsPage(parent)
         self.scZoom = zoom
         self:SetModelScale(self.scBaseScale * zoom)
     end)
+    end
 
     page:SetScript("OnHide", function(self)
         self.scModelGeneration = (self.scModelGeneration or 0) + 1
         clearModelInteraction()
         resetModelState()
-        model:ClearModel()
+        if presenter then presenter:Clear("PAGE_HIDDEN") else model:ClearModel() end
         unavailable:Hide()
         CloseDropDownMenus()
     end)
@@ -757,6 +550,8 @@ function UI.CreateMountsPage(parent)
     page.scCollectionState = collectionState
     page.scFavorite = favorite
     page.scReset = reset
+    page.scSummon = summon
+    page.scPresenter = presenter
     page.scScrollFrame = scrollFrame
     page.scScrollHint = scrollHint
     page.scContextMenu = contextMenu

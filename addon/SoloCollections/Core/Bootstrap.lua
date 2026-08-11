@@ -12,6 +12,8 @@ local DEFAULTS = {
     },
     experimental = {
         transmogLabEnabled = SC.BUILD_CHANNEL == "development",
+        modelProvider = "newera",
+        modelProviderByKind = { CREATURE = "newera", DRESSUP = "newera", DISPLAY = "newera" },
     },
     query = "",
     filters = {
@@ -410,6 +412,11 @@ local function normalizeDatabase(db)
         "boolean",
         DEFAULTS.experimental.transmogLabEnabled
     )
+    repairEnum(db.experimental, "modelProvider", { legacy = true, newera = true }, DEFAULTS.experimental.modelProvider)
+    repairScalar(db.experimental, "modelProviderByKind", "table", {})
+    for kind, fallback in pairs(DEFAULTS.experimental.modelProviderByKind) do
+        repairEnum(db.experimental.modelProviderByKind, kind, { legacy = true, newera = true }, fallback)
+    end
     repairEnum(db, "mainTab", VALID_MAIN_TABS, DEFAULTS.mainTab)
     if db.mainTab == "TRANSMOG_LAB" and not db.experimental.transmogLabEnabled then
         db.mainTab = DEFAULTS.mainTab
@@ -542,6 +549,21 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         else
             DEFAULT_CHAT_FRAME:AddMessage("用法：/sc shell dragonui 或 /sc shell legacy")
         end
+    elseif string.match(command, "^model%s+") then
+        local first, second = string.match(command, "^model%s+(%S+)%s*(%S*)$")
+        local kind = string.upper(first or "")
+        local mode = string.lower(second ~= "" and second or first or "")
+        if second == "" then kind = "ALL" end
+        if SC.db and (mode == "legacy" or mode == "newera") and
+            (kind == "ALL" or kind == "CREATURE" or kind == "DRESSUP" or kind == "DISPLAY") then
+            if kind == "ALL" then
+                SC.db.experimental.modelProvider = mode
+                for providerKind in pairs(SC.db.experimental.modelProviderByKind) do
+                    SC.db.experimental.modelProviderByKind[providerKind] = mode
+                end
+            else SC.db.experimental.modelProviderByKind[kind] = mode end
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections model provider " .. kind .. ": " .. mode .. "（/reload 后生效）")
+        else DEFAULT_CHAT_FRAME:AddMessage("用法：/sc model [creature|dressup|display] newera|legacy") end
     else
         SC:ToggleJournal()
     end

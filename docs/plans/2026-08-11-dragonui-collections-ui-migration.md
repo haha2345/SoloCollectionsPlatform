@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-5 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端或视觉验收。
+**状态：** Tasks 0-8 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端、视觉或服务端动作验收。
 
 ---
 
@@ -526,7 +526,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: add experimental transmog lab tab`
 
-### Task 6：移植 ezCollections 衣柜交互骨架
+### Task 6：移植 ezCollections 衣柜交互骨架（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **参考：**
 
@@ -564,7 +564,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: port wardrobe draft interaction into transmog lab`
 
-### Task 7：建立统一模型展示服务
+### Task 7：建立统一模型展示服务（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
@@ -602,7 +602,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: add shared DragonUI model presentation service`
 
-### Task 8：迁移坐骑和宠物页面
+### Task 8：迁移坐骑和宠物页面（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 

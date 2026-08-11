@@ -23,6 +23,7 @@ Core\CollectionState.lua
 Core\Catalog.lua
 Core\Bridge.lua
 Core\M2Camera.lua
+Core\ModelProvider.lua
 UI\Templates.lua
 UI\Launcher.lua
 UI\CompanionBase.lua
@@ -30,6 +31,11 @@ UI\Mounts.lua
 UI\Pets.lua
 UI\Toys.lua
 UI\Wardrobe.lua
+UI\WardrobeLab\State.lua
+UI\WardrobeLab\Slots.lua
+UI\WardrobeLab\Sources.lua
+UI\WardrobeLab\Outfits.lua
+UI\WardrobeLab\Preview.lua
 UI\WardrobeLab\Controller.lua
 UI\WardrobeLab\Layout.lua
 UI\CollectionsFrame.lua

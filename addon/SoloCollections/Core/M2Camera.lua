@@ -425,6 +425,13 @@ function M2Camera.Apply(model, pose)
     return activated and true or false
 end
 
+-- Presenter-facing adapter: pages pass camera intent without reaching into the
+-- legacy M2 implementation. A nil pose deliberately leaves the provider's native framing.
+function M2Camera.ApplyPresenterPose(model, pose)
+    if not pose then return false, "NO_POSE" end
+    return M2Camera.Apply(model, pose)
+end
+
 -- Send a complete transactional body-profile correction.  The DLL will not
 -- activate it until all full-hash chunks and all five delta fields have been
 -- accepted for this model.  The final camera 1 request is intentional: it is

@@ -5,6 +5,30 @@ local Catalog = SC.Catalog
 local VISIBLE_ROWS = 8
 local DEFAULT_ROTATION = 0.32
 
+-- Shared Task 8 layout skin. Data and actions stay owned by each SoloCollections
+-- page; this only standardizes the NewEra list/detail/action composition.
+function UI.StyleNewEraCompanionLayout(page, list, detail, listBackground, detailBackground)
+    local public = SC.UIPlatform and SC.UIPlatform:GetPublic()
+    if not public then return false end
+    local inset = public.Theme:GetToken("insetBackground")
+    if listBackground and inset then listBackground:SetVertexColor(inset[1], inset[2], inset[3], inset[4]) end
+    if detailBackground then
+        detailBackground:SetTexture(public.Theme:GetTexture("rock"))
+        detailBackground:SetTexCoord(0, 1, 0, 1)
+        detailBackground:SetVertexColor(0.34, 0.25, 0.16, 0.96)
+    end
+    page.scNewEraLayout = { list = list, detail = detail, actions = {} }
+    return true
+end
+
+function UI.RegisterNewEraCompanionAction(page, button)
+    local public = SC.UIPlatform and SC.UIPlatform:GetPublic()
+    if public and button then public.Components:SkinButton(button) end
+    if page.scNewEraLayout and button then
+        page.scNewEraLayout.actions[#page.scNewEraLayout.actions + 1] = button
+    end
+end
+
 local function setFilter(category, key, value, page)
     if not SC.db or not SC.db.filters then
         return
@@ -65,6 +89,9 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
         model:SetPosition(0, 0, 0)
     end
     model:SetRotation(DEFAULT_ROTATION)
+    local presenter = SC.ModelProvider and SC.ModelProvider.Create("CREATURE", model, {
+        controls = true, panelCheck = function() return page:IsShown() end,
+    }) or nil
 
     local unavailable = model:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     unavailable:SetPoint("CENTER", model, "CENTER", 0, 0)
@@ -139,37 +166,11 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
             row:SetSelected(row.scRecord and row.scRecord.id == record.id)
         end
         clearModelInteraction()
-        model:ClearModel()
-        model.rotation = DEFAULT_ROTATION
-        if model.SetCamera then
-            model:SetCamera(0)
-        end
-        if model.SetModelScale then
-            model:SetModelScale(1)
-        end
-        if model.SetPosition then
-            model:SetPosition(0, 0, 0)
-        end
-        model:SetRotation(DEFAULT_ROTATION)
-        local loaded = record.previewCreatureEntry and pcall(function()
-            model:SetCreature(record.previewCreatureEntry)
-            if model.SetCamera then
-                model:SetCamera(0)
-            end
-            if model.SetModelScale then
-                model:SetModelScale(1)
-            end
-            if model.SetPosition then
-                model:SetPosition(0, 0, 0)
-            end
-            model:SetRotation(DEFAULT_ROTATION)
-        end)
-        if loaded then
-            unavailable:Hide()
-            model.scModelCheckElapsed = 0
-        else
-            unavailable:Show()
-        end
+        if presenter then
+            presenter:Present({ creatureEntry = record.previewCreatureEntry, rotation = DEFAULT_ROTATION,
+                onReady = function() unavailable:Hide() end,
+                onUnavailable = function() unavailable:Show() end })
+        else unavailable:Show() end
     end
 
     for index = 1, VISIBLE_ROWS do
@@ -199,7 +200,7 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
         favorite:SetText("设为偏好")
         unavailable:Hide()
         clearModelInteraction()
-        model:ClearModel()
+        if presenter then presenter:Clear("NO_SELECTION") else model:ClearModel() end
         for _, row in ipairs(self.scRows) do
             row:SetSelected(false)
         end
@@ -273,10 +274,11 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
     end)
 
     reset:SetScript("OnClick", function()
-        model.rotation = DEFAULT_ROTATION
-        model:SetRotation(DEFAULT_ROTATION)
+        if presenter and presenter.ResetView then presenter:ResetView()
+        else model.rotation = DEFAULT_ROTATION; model:SetRotation(DEFAULT_ROTATION) end
     end)
 
+    if not SC.ModelProvider or SC.ModelProvider.GetMode("CREATURE") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
@@ -313,6 +315,7 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
             end
         end
     end)
+    end
 
     page:SetScript("OnHide", function(self)
         clearModelInteraction()
@@ -323,6 +326,7 @@ function UI.CreateCompanionPageBase(category, parent, emptyMessage)
     page.scList = list
     page.scDetail = detail
     page.scModel = model
+    page.scPresenter = presenter
     page.scUnavailable = unavailable
     page.scName = name
     page.scSource = source

@@ -8,8 +8,6 @@ local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
-local MODEL_RETRY_DELAYS = { 0.1, 0.25, 0.5 }
-local MODEL_MAX_WINDOW = 2
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -36,10 +34,7 @@ function UI.CreatePetsPage(parent)
     page.scRecords = {}
     page.scSelectedId = nil
     page.scModelGeneration = 0
-    page.scModelTasks = {}
     page.scModelReady = false
-
-    local modelTimerDriver = CreateFrame("Frame", nil, page)
 
     local list = CreateFrame("Frame", nil, page)
     list:SetWidth(342)
@@ -63,6 +58,7 @@ function UI.CreatePetsPage(parent)
     detailBackground:SetPoint("TOPLEFT", detail, "TOPLEFT", 5, -5)
     detailBackground:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -5, 5)
     detailBackground:SetVertexColor(0.19, 0.055, 0.032, 0.96)
+    UI.StyleNewEraCompanionLayout(page, list, detail, listBackground, detailBackground)
 
     local model = CreateFrame("PlayerModel", nil, detail)
     model:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -112)
@@ -72,6 +68,10 @@ function UI.CreatePetsPage(parent)
     model.rotation = DEFAULT_ROTATION
     model.scZoom = DEFAULT_MODEL_SCALE
     model.scBaseScale = nil
+    local presenter = SC.ModelProvider and SC.ModelProvider.Create("CREATURE", model, {
+        controls = true,
+        panelCheck = function() return page:IsShown() end,
+    }) or nil
 
     local modelShade = model:CreateTexture(nil, "BACKGROUND")
     modelShade:SetTexture("Interface\\Buttons\\WHITE8X8")
@@ -133,6 +133,9 @@ function UI.CreatePetsPage(parent)
     summon:SetHeight(25)
     summon:SetPoint("RIGHT", reset, "LEFT", -8, 0)
     summon:SetText("召唤小宠物")
+    UI.RegisterNewEraCompanionAction(page, favorite)
+    UI.RegisterNewEraCompanionAction(page, reset)
+    UI.RegisterNewEraCompanionAction(page, summon)
 
     local empty = UI.CreateEmptyState(list, "没有符合条件的小宠物")
     empty:SetPoint("CENTER", list, "CENTER", -10, 15)
@@ -165,16 +168,6 @@ function UI.CreatePetsPage(parent)
         model.scLastCursorX = nil
     end
 
-    local function getModelPath()
-        local checked, modelPath = pcall(function()
-            return model:GetModel()
-        end)
-        if checked and modelPath and modelPath ~= "" then
-            return modelPath
-        end
-        return nil
-    end
-
     local function getNativeModelScale()
         if not model.GetModelScale then
             return nil
@@ -189,45 +182,8 @@ function UI.CreatePetsPage(parent)
         return nil
     end
 
-    local function stopModelTimers()
-        page.scModelTasks = {}
-        modelTimerDriver:SetScript("OnUpdate", nil)
-    end
-
     local function clearModelInteraction()
         clearDragState()
-        stopModelTimers()
-    end
-
-    local function onModelTimerUpdate(self, elapsed)
-        local readyCallbacks = {}
-        for index = #page.scModelTasks, 1, -1 do
-            local task = page.scModelTasks[index]
-            if page.scModelGeneration ~= task.generation then
-                table.remove(page.scModelTasks, index)
-            else
-                task.remaining = task.remaining - elapsed
-                if task.remaining <= 0 then
-                    table.remove(page.scModelTasks, index)
-                    table.insert(readyCallbacks, 1, task.callback)
-                end
-            end
-        end
-        if #page.scModelTasks == 0 then
-            self:SetScript("OnUpdate", nil)
-        end
-        for _, callback in ipairs(readyCallbacks) do
-            callback()
-        end
-    end
-
-    local function scheduleModel(delay, generation, callback)
-        table.insert(page.scModelTasks, {
-            remaining = tonumber(delay) or 0,
-            generation = generation,
-            callback = callback,
-        })
-        modelTimerDriver:SetScript("OnUpdate", onModelTimerUpdate)
     end
 
     local function resetModelState()
@@ -303,73 +259,6 @@ function UI.CreatePetsPage(parent)
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
 
-    local function applyModel(record, generation)
-        if page.scModelGeneration ~= generation then
-            return
-        end
-        clearModelInteraction()
-        model:ClearModel()
-        unavailable:Hide()
-        rotateHint:Show()
-        resetModelState()
-
-        local retryIndex = 0
-        local modelDeadline = GetTime() + MODEL_MAX_WINDOW
-        local setCreatureAndVerify
-
-        local function failModel()
-            stopModelTimers()
-            resetModelState()
-            model:ClearModel()
-            unavailable:Show()
-        end
-
-        setCreatureAndVerify = function()
-            if page.scModelGeneration ~= generation then
-                return
-            end
-            if GetTime() >= modelDeadline then
-                failModel()
-                return
-            end
-            local loaded = record.previewCreatureEntry and pcall(function()
-                model:ClearModel()
-                model:SetCreature(record.previewCreatureEntry)
-            end)
-            if not loaded then
-                failModel()
-                return
-            end
-
-            scheduleModel(0.35, generation, function()
-                if page.scModelGeneration ~= generation then
-                    return
-                end
-                if GetTime() >= modelDeadline then
-                    failModel()
-                    return
-                end
-                if getModelPath() then
-                    model.scBaseScale = getNativeModelScale()
-                    model.scZoom = DEFAULT_MODEL_SCALE
-                    model.rotation = DEFAULT_ROTATION
-                    model:SetRotation(DEFAULT_ROTATION)
-                    page.scModelReady = true
-                    unavailable:Hide()
-                    return
-                end
-                retryIndex = retryIndex + 1
-                if retryIndex <= #MODEL_RETRY_DELAYS then
-                    scheduleModel(MODEL_RETRY_DELAYS[retryIndex], generation, setCreatureAndVerify)
-                else
-                    failModel()
-                end
-            end)
-        end
-
-        setCreatureAndVerify()
-    end
-
     local function requestModel(record)
         page.scModelGeneration = (page.scModelGeneration or 0) + 1
         local generation = page.scModelGeneration
@@ -378,30 +267,34 @@ function UI.CreatePetsPage(parent)
         model:ClearModel()
         unavailable:Hide()
 
-        if not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
+        if not presenter or not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
             unavailable:SetText("模型预览暂不可用")
             unavailable:Show()
             rotateHint:Hide()
             return
         end
-        SC.Bridge.RequestCreaturePreview(11, record.id, function(ok, reason)
-            if page.scModelGeneration ~= generation then
-                return
-            end
-            if not ok then
-                clearModelInteraction()
-                resetModelState()
-                model:ClearModel()
+        presenter:Present({
+            creatureEntry = record.previewCreatureEntry,
+            rotation = DEFAULT_ROTATION,
+            preview = function(done)
+                SC.Bridge.RequestCreaturePreview(11, record.id, function(ok, reason)
+                    if page.scModelGeneration == generation then done(ok, reason) end
+                end)
+            end,
+            onReady = function()
+                if page.scModelGeneration ~= generation then return end
+                model.scBaseScale = getNativeModelScale()
+                model.scZoom = DEFAULT_MODEL_SCALE
+                page.scModelReady = true
+                unavailable:Hide(); rotateHint:Show()
+            end,
+            onUnavailable = function(reason)
+                if page.scModelGeneration ~= generation then return end
                 model.scUnavailableReason = reason
                 unavailable:SetText("模型预览暂不可用")
-                unavailable:Show()
-                rotateHint:Hide()
-                return
-            end
-            scheduleModel(0, generation, function()
-                applyModel(record, generation)
-            end)
-        end)
+                unavailable:Show(); rotateHint:Hide()
+            end,
+        })
     end
 
     local function selectRecord(record)
@@ -500,7 +393,7 @@ function UI.CreatePetsPage(parent)
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
-        model:ClearModel()
+        if presenter then presenter:Clear("NO_SELECTION") else model:ClearModel() end
         for _, row in ipairs(self.scRows) do
             row:SetSelected(false)
         end
@@ -584,10 +477,8 @@ function UI.CreatePetsPage(parent)
     end)
 
     reset:SetScript("OnClick", function()
-        local record = page.scSelectedRecord
-        if record then
-            requestModel(record)
-        end
+        if presenter and presenter.ResetView then presenter:ResetView()
+        elseif page.scSelectedRecord then requestModel(page.scSelectedRecord) end
     end)
 
     infoButton:SetScript("OnClick", function(self, button)
@@ -599,6 +490,7 @@ function UI.CreatePetsPage(parent)
         end
     end)
 
+    if not SC.ModelProvider or SC.ModelProvider.GetMode("CREATURE") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
@@ -638,12 +530,13 @@ function UI.CreatePetsPage(parent)
         self.scZoom = zoom
         self:SetModelScale(self.scBaseScale * zoom)
     end)
+    end
 
     page:SetScript("OnHide", function(self)
         self.scModelGeneration = (self.scModelGeneration or 0) + 1
         clearModelInteraction()
         resetModelState()
-        model:ClearModel()
+        if presenter then presenter:Clear("PAGE_HIDDEN") else model:ClearModel() end
         unavailable:Hide()
         CloseDropDownMenus()
     end)
@@ -664,6 +557,7 @@ function UI.CreatePetsPage(parent)
     page.scFavorite = favorite
     page.scSummon = summon
     page.scReset = reset
+    page.scPresenter = presenter
     page.scScrollFrame = scrollFrame
     page.scScrollHint = scrollHint
     page.scContextMenu = contextMenu
