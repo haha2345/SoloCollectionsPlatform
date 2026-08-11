@@ -9,12 +9,6 @@ Platform.requiredCapabilities = {
     "chrome.panel",
     "chrome.persist",
     "chrome.position-migration",
-    "components.inset",
-    "components.tabs",
-    "components.search",
-    "components.buttons",
-    "components.scrollbar",
-    "components.progress",
     "modules.feature-registry",
 }
 

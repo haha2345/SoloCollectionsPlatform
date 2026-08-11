@@ -44,9 +44,6 @@ function Lab.CreateLayout(page, state)
     local save = CreateFrame("Button", nil, center, "UIPanelButtonTemplate")
     save:SetWidth(150); save:SetHeight(26); save:SetPoint("LEFT", apply, "RIGHT", 8, 0)
     save:SetText("保存整套（待原子协议）"); save:Disable()
-    local public = SC.UIPlatform and SC.UIPlatform:GetPublic()
-    if public then public.Components:SkinButton(apply); public.Components:SkinButton(save) end
-
     page.scStateText, page.scCapabilityText = stateText, capability
     page.scPanels = { left = left, center = center, right = right }
     page.scOutfits, page.scPreview, page.scSlots, page.scSources = outfits, preview, slots, sources

@@ -14,6 +14,7 @@ SC.TABS = {
     "MOUNTS",
     "PETS",
     "TOYS",
+    "TITLES",
     "WARDROBE",
     "TRANSMOG_LAB",
 }

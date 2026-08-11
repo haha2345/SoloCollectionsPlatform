@@ -32,8 +32,6 @@ function Lab.CreateOutfits(parent, state)
             state:Notify("CONFIRM_CLEAR")
         end
     end)
-    local public = SC.UIPlatform and SC.UIPlatform:GetPublic()
-    if public then public.Components:SkinButton(clear) end
     function host:Refresh()
         local dirtyCount = state:GetDirtyCount()
         draft:SetRecord({ id = -2,

@@ -1466,12 +1466,6 @@ function UI.CreateWardrobePage(parent)
     applySet:SetText("应用套装")
     applySet:Disable()
     page.scApplySet = applySet
-    local wardrobePublic = SC.UIPlatform and SC.UIPlatform:GetPublic()
-    if wardrobePublic then
-        wardrobePublic.Components:SkinButton(reset)
-        wardrobePublic.Components:SkinButton(applySet)
-    end
-
     local pieces = CreateFrame("Frame", nil, preview)
     pieces:SetPoint("TOP", name, "BOTTOM", 0, -8)
     -- The production catalogue currently tops out at eight pieces, but the
@@ -3038,8 +3032,6 @@ function UI.CreateWardrobePage(parent)
     setScrollbar:SetThumbTexture(setScrollbarThumb)
     local setScrollbarBorder = UI.CreateThinCardBorder(setScrollbar, 1)
     setScrollbarBorder:SetBorderColor(0.33, 0.34, 0.35, 0.62)
-    if wardrobePublic then wardrobePublic.Components:SkinScrollbar(setScrollbar) end
-
     setScrollbar:SetScript("OnValueChanged", function(self, value)
         if page.scSyncingSetScrollbar then return end
         setSetOffset(value)

@@ -18,8 +18,6 @@ function UI.IsDragonUIShell()
 end
 
 function UI.CreateInset(parent, options)
-    local public = platformPublic()
-    if public then return public.Components:CreateInset(parent, options or {}) end
     local inset = CreateFrame("Frame", nil, parent)
     inset:SetPoint("TOPLEFT", parent, "TOPLEFT", (options and options.left) or 0, -((options and options.top) or 0))
     inset:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", -((options and options.right) or 0), (options and options.bottom) or 0)
@@ -206,13 +204,6 @@ end
 -- The source image contains a complete 128px journal border. These nine
 -- sampled regions remain crisp when the frame is resized by the page shell.
 function UI.ApplyNineSlice(owner, texturePath, size)
-    local public = platformPublic()
-    if public then
-        if owner.scNineSlice then return owner.scNineSlice end
-        local inset = public.Components:CreateInset(owner, { left = 0, top = 0, right = 0, bottom = 0 })
-        owner.scNineSlice = inset
-        return inset
-    end
     texturePath = texturePath or UI.Media.border
     size = size or 28
 
@@ -290,7 +281,8 @@ function UI.CreateJournalFrame(parent, name, width, height)
             title = "收藏",
             portrait = UI.Media.mountPortrait,
         })
-        frame.scBackground = frame.Bg
+        if frame.Bg and frame.Bg.Hide then frame.Bg:Hide() end
+        frame.scBackground = UI.EzCollections and UI.EzCollections:CreateBodyCanvas(frame) or frame.Bg
         frame.scHeaderBackground = frame.TitleContainer or frame.TitleBand
         frame.scPlatformShell = "DRAGONUI"
         return frame
@@ -335,6 +327,10 @@ function UI.CreateJournalFrame(parent, name, width, height)
     frame.scInnerShade = innerShade
     frame.scHeaderBackground = header
     frame.scHeaderLine = headerLine
+    if UI.EzCollections then
+        background:Hide()
+        frame.scBackground = UI.EzCollections:CreateBodyCanvas(frame)
+    end
     return frame
 end
 
@@ -370,15 +366,6 @@ function UI.CreateThreeSlice(parent, leftTexture, middleTexture, rightTexture, h
 end
 
 function UI.CreateRetailBottomTab(parent, labelText, onClick)
-    local public = platformPublic()
-    if public then
-        return public.Components:CreateBottomTab(parent, {
-            label = labelText,
-            width = 128,
-            height = 40,
-            onClick = onClick,
-        })
-    end
     local button = CreateFrame("Button", nil, parent)
     button:SetWidth(128)
     button:SetHeight(40)
@@ -530,15 +517,6 @@ function UI.CreateBottomTab(parent, labelText, iconPath, onClick)
 end
 
 function UI.CreateTopSubTab(parent, labelText, onClick)
-    local public = platformPublic()
-    if public then
-        return public.Components:CreateTopTab(parent, {
-            label = labelText,
-            width = 104,
-            height = 28,
-            onClick = onClick,
-        })
-    end
     local button = CreateFrame("Button", nil, parent)
     button:SetWidth(104)
     button:SetHeight(28)
@@ -574,17 +552,6 @@ function UI.CreateTopSubTab(parent, labelText, onClick)
 end
 
 function UI.CreateRetailSearchBox(parent, width, onTextChanged)
-    local public = platformPublic()
-    if public then
-        local editBox = public.Components:CreateSearchBox(parent, {
-            width = width or 220,
-            height = 28,
-            onChanged = onTextChanged,
-        })
-        editBox:SetFontObject(GameFontHighlightSmall)
-        editBox:SetMaxLetters(60)
-        return editBox
-    end
     local editBox = CreateFrame("EditBox", nil, parent)
     editBox:SetWidth(width or 220)
     editBox:SetHeight(28)
@@ -763,13 +730,6 @@ function UI.CreateFilterPopup(parent, width)
     button.scPopup = popup
     button.scLabel = buttonLabel
     button.scArrow = arrow
-    local public = platformPublic()
-    if public then
-        buttonBackground:Hide()
-        buttonBorder:Hide()
-        buttonInner:Hide()
-        public.Components:SkinButton(button)
-    end
     return button, popup
 end
 
@@ -825,8 +785,6 @@ function UI.CreateRetailProgressBar(parent, width)
     holder.scBorderHost = borderHost
     holder.scBorder = border
     holder.scLabel = label
-    local public = platformPublic()
-    if public then public.Components:SkinProgressBar(statusBar, background, border) end
     return holder
 end
 
@@ -872,8 +830,6 @@ function UI.CreateCollectionCount(parent)
     count.scChrome = chrome
     count.scTitle = title
     count.scValue = value
-    local public = platformPublic()
-    if public then public.Components:SkinCountFrame(count) end
     return count
 end
 

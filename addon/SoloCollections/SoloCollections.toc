@@ -26,6 +26,7 @@ Core\Catalog.lua
 Core\Bridge.lua
 Core\M2Camera.lua
 Core\ModelProvider.lua
+UI\EzCollections\Templates.lua
 UI\Templates.lua
 UI\Launcher.lua
 UI\Wardrobe\Layout.lua

@@ -4,19 +4,20 @@ local CS = SC.CollectionState
 
 local DESIGN_SCREEN_WIDTH = 1920
 local DESIGN_SCREEN_HEIGHT = 1080
-local JOURNAL_WIDTH = 920
-local JOURNAL_HEIGHT = 793
+local COLLECTION_WIDTH = 703
+local TRANSMOG_WIDTH = 965
+local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
 local TITLE_VISIBLE_ROWS = 16
 local TITLE_ROW_HEIGHT = 35
 
 local TAB_DEFINITIONS = {
-    { key = "MOUNTS", label = "坐骑", title = "坐骑" },
-    { key = "PETS", label = "小宠物", title = "小宠物" },
+    { key = "MOUNTS", label = "坐骑", title = "坐骑", cutoff = true },
+    { key = "PETS", label = "小宠物", title = "小宠物", cutoff = true },
     { key = "TOYS", label = "玩具箱", title = "玩具箱" },
-    { key = "WARDROBE", label = "外观", title = "外观" },
-    { key = "TRANSMOG_LAB", label = "幻化实验室", title = "幻化实验室 · 实验" },
     { key = "TITLES", label = "头衔", title = "头衔（只读）" },
+    { key = "WARDROBE", label = "外观", title = "外观" },
+    { key = "TRANSMOG_LAB", label = "幻化", title = "幻化", cutoff = true },
 }
 
 local function isTabAvailable(key)
@@ -154,6 +155,18 @@ local function clampFrame(frame)
     frame:SetClampedToScreen(true)
 end
 
+local function applyJournalSize(frame, key)
+    local width = key == "TRANSMOG_LAB" and TRANSMOG_WIDTH or COLLECTION_WIDTH
+    frame:SetWidth(width)
+    frame:SetHeight(JOURNAL_HEIGHT)
+    frame.scJournalWidth = width
+    if UI.EzCollections then
+        UI.EzCollections:UpdateBodyCanvas(frame)
+        UI.EzCollections:LayoutJournalTabs(frame, frame.scMainTabOrder)
+    end
+    clampFrame(frame)
+end
+
 local function saveFramePosition(frame)
     if SC.UIPlatform and SC.UIPlatform:IsDragonUIShell() then return end
     if not SC.db then
@@ -275,11 +288,14 @@ function UI.SetMainTab(key)
     if not frame then
         return
     end
+    applyJournalSize(frame, selected)
     for tabKey, button in pairs(frame.scMainTabs) do
         button:SetSelected(tabKey == selected)
     end
     frame.scPageTitle:SetText(frame.scTabTitles[selected])
-    if selected == "MOUNTS" then
+    if UI.EzCollections then
+        UI.EzCollections:SetPortraitForTab(frame, selected)
+    elseif selected == "MOUNTS" then
         frame.scPortrait:SetTexture(UI.Media.mountPortrait)
         frame.scPortrait:SetTexCoord(0, 1, 0, 1)
     else
@@ -318,7 +334,7 @@ function UI.CreateCollectionsFrame()
     end
 
     if SC.UIPlatform and not SC.UIPlatform:CanCreateUI() then return nil end
-    local frame = UI.CreateJournalFrame(UIParent, "SoloCollectionsJournal", JOURNAL_WIDTH, JOURNAL_HEIGHT)
+    local frame = UI.CreateJournalFrame(UIParent, "SoloCollectionsJournal", COLLECTION_WIDTH, JOURNAL_HEIGHT)
     local dragonShell = UI.IsDragonUIShell and UI.IsDragonUIShell()
     frame:SetMovable(true)
     frame:EnableMouse(true)
@@ -423,24 +439,22 @@ function UI.CreateCollectionsFrame()
     contentHost:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -31, 24)
 
     frame.scMainTabs = {}
+    frame.scMainTabOrder = {}
     frame.scTabTitles = {}
-    local previousTab
+    local tabIndex = 0
     for _, definition in ipairs(TAB_DEFINITIONS) do
         if isTabAvailable(definition.key) then
+            tabIndex = tabIndex + 1
             local tabKey = definition.key
-            local button = UI.CreateRetailBottomTab(frame, definition.label, function()
+            local button = UI.EzCollections:CreateJournalTab(frame, tabIndex, definition.label, function()
                 UI.SetMainTab(tabKey)
-            end)
-            if previousTab then
-                button:SetPoint("TOPLEFT", previousTab, "TOPRIGHT", 6, 0)
-            else
-                button:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 11, 2)
-            end
+            end, definition.cutoff)
             frame.scMainTabs[tabKey] = button
+            frame.scMainTabOrder[#frame.scMainTabOrder + 1] = button
             frame.scTabTitles[tabKey] = definition.title
-            previousTab = button
         end
     end
+    UI.EzCollections:LayoutJournalTabs(frame, frame.scMainTabOrder)
 
     frame.scTitle = pageTitle
     frame.scPortraitFrame = portraitFrame
@@ -469,6 +483,7 @@ function UI.CreateCollectionsFrame()
     if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
         frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(contentHost)
     end
+    UI.EzCollections:Guard(contentHost, "收藏日志内页已锁定到 ezCollections 2.2 素材")
 
     UI.CollectionsFrame = frame
     search:SetText((SC.db and SC.db.query) or "")
