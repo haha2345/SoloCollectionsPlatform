@@ -10,7 +10,9 @@ local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
 
 local PORTRAITS = {
     MOUNTS = {
-        relative = "Interface\\Icons\\MountJournalPortrait.blp",
+        -- SetPortraitToTexture follows the FrameXML convention used by ez and
+        -- resolves custom portraits only from an extensionless texture path.
+        relative = "Interface\\Icons\\MountJournalPortrait",
         fallback = function() return UI.Media and UI.Media.mountPortrait end,
         texCoord = { 0.07, 0.93, 0.07, 0.93 },
     },
