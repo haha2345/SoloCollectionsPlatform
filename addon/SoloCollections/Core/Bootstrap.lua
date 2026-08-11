@@ -542,6 +542,13 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         if SC.Bridge.ConnectSC2 then
             SC.Bridge.ConnectSC2(true)
         end
+    elseif command == "assets" and SC.EzCollectionsUI then
+        local status = SC.EzCollectionsUI.GetStatus()
+        local message = status.available and "ready" or (status.reason or "unavailable")
+        DEFAULT_CHAT_FRAME:AddMessage(
+            "SoloCollections ezCollections UI assets: " .. message
+                .. " | asset=" .. tostring(status.assetTreeHash or "unknown")
+        )
     elseif string.match(command, "^shell%s+") then
         local mode = string.match(command, "^shell%s+(%S+)$")
         if SC.UIPlatform and SC.UIPlatform:SetShellMode(mode) then

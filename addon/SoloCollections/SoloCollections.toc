@@ -4,11 +4,13 @@
 ## Author: SoloCollections contributors
 ## Version: 0.2.0
 ## Dependencies: DragonUI_NewEra
+## OptionalDeps: SoloCollections_EzUI
 ## X-SoloCollections-BuildChannel: development
 ## SavedVariables: SoloCollectionsDB
 
 SoloCollections.lua
 Core\UIPlatform.lua
+Core\EzCollectionsUI.lua
 Data\Generated\Catalog.lua
 Data\Generated\IdentityRegistry.lua
 Data\Generated\PolicyRegistry.lua
