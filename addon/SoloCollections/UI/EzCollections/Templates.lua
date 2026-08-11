@@ -456,6 +456,122 @@ function Ez:CreateCollectionIconFrames(parent)
     return border, selected
 end
 
+local function setAtlasPixels(texture, path, atlasWidth, atlasHeight, left, right, top, bottom)
+    texture:SetTexture(path or WHITE_TEXTURE)
+    texture:SetTexCoord(
+        left / atlasWidth,
+        right / atlasWidth,
+        top / atlasHeight,
+        bottom / atlasHeight
+    )
+end
+
+function Ez:CreateWardrobeItemChrome(parent)
+    local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
+    local collections = self:MediaPath("Collections", "Collections.tga", WHITE_TEXTURE)
+
+    local border = CreateFrame("Frame", nil, parent)
+    border:SetAllPoints(parent)
+    border:SetFrameLevel(parent:GetFrameLevel() + 1)
+    local borderTexture = border:CreateTexture(nil, "OVERLAY")
+    borderTexture:SetPoint("CENTER", border, "CENTER", 0, -3)
+    function border:SetCollected(value)
+        self.scCollected = value and true or false
+        if self.scCollected then
+            borderTexture:SetWidth(96)
+            borderTexture:SetHeight(122)
+            setAtlasPixels(borderTexture, transmog, 512, 512, 1, 97, 131, 253)
+        else
+            borderTexture:SetWidth(96)
+            borderTexture:SetHeight(122)
+            setAtlasPixels(borderTexture, transmog, 512, 512, 1, 97, 255, 377)
+        end
+    end
+
+    local selected = CreateFrame("Frame", nil, parent)
+    selected:SetAllPoints(parent)
+    selected:SetFrameLevel(parent:GetFrameLevel() + 2)
+    local selectedTexture = selected:CreateTexture(nil, "OVERLAY")
+    selectedTexture:SetWidth(102)
+    selectedTexture:SetHeight(128)
+    selectedTexture:SetPoint("CENTER")
+    selectedTexture:SetBlendMode("ADD")
+    setAtlasPixels(selectedTexture, transmog, 512, 512, 1, 103, 1, 129)
+    selected:Hide()
+
+    local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetWidth(84)
+    highlight:SetHeight(110)
+    highlight:SetPoint("CENTER")
+    highlight:SetBlendMode("ADD")
+    setAtlasPixels(highlight, transmog, 512, 512, 105, 189, 225, 335)
+
+    local favorite = parent:CreateTexture(nil, "OVERLAY")
+    favorite:SetWidth(31)
+    favorite:SetHeight(33)
+    favorite:SetPoint("TOPLEFT", parent, "TOPLEFT", -12, 13)
+    setAtlasPixels(favorite, collections, 512, 512, 93, 124, 7, 40)
+    favorite:Hide()
+
+    border:SetCollected(false)
+    border.scTexture = borderTexture
+    selected.scTexture = selectedTexture
+    return border, selected, favorite, highlight
+end
+
+function Ez:CreateWardrobeSetChrome(parent)
+    local transmogSets = self:MediaPath("Transmogrify", "TransmogSetsVendor.tga", WHITE_TEXTURE)
+    local collections = self:MediaPath("Collections", "Collections.tga", WHITE_TEXTURE)
+
+    local border = CreateFrame("Frame", nil, parent)
+    border:SetAllPoints(parent)
+    border:SetFrameLevel(parent:GetFrameLevel() + 1)
+    local borderTexture = border:CreateTexture(nil, "OVERLAY")
+    borderTexture:SetPoint("CENTER", border, "CENTER", 0, -6)
+    function border:SetCollected(value)
+        self.scCollected = value and true or false
+        if self.scCollected then
+            borderTexture:SetWidth(152)
+            borderTexture:SetHeight(208)
+            setAtlasPixels(borderTexture, transmogSets, 512, 512, 1, 153, 1, 209)
+        else
+            borderTexture:SetWidth(144)
+            borderTexture:SetHeight(200)
+            setAtlasPixels(borderTexture, transmogSets, 512, 512, 155, 299, 1, 201)
+        end
+    end
+
+    local selected = CreateFrame("Frame", nil, parent)
+    selected:SetAllPoints(parent)
+    selected:SetFrameLevel(parent:GetFrameLevel() + 2)
+    local selectedTexture = selected:CreateTexture(nil, "OVERLAY")
+    selectedTexture:SetWidth(150)
+    selectedTexture:SetHeight(206)
+    selectedTexture:SetPoint("CENTER")
+    selectedTexture:SetBlendMode("ADD")
+    setAtlasPixels(selectedTexture, transmogSets, 512, 512, 1, 151, 211, 417)
+    selected:Hide()
+
+    local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetWidth(132)
+    highlight:SetHeight(188)
+    highlight:SetPoint("CENTER")
+    highlight:SetBlendMode("ADD")
+    setAtlasPixels(highlight, transmogSets, 512, 512, 289, 421, 203, 391)
+
+    local favorite = parent:CreateTexture(nil, "OVERLAY")
+    favorite:SetWidth(33)
+    favorite:SetHeight(31)
+    favorite:SetPoint("TOPLEFT", parent, "TOPLEFT", -12, 13)
+    setAtlasPixels(favorite, collections, 512, 512, 93, 124, 7, 40)
+    favorite:Hide()
+
+    border:SetCollected(false)
+    border.scTexture = borderTexture
+    selected.scTexture = selectedTexture
+    return border, selected, favorite, highlight
+end
+
 function Ez:CreateRotationButtons(model, onLeft, onRight)
     local left = CreateFrame("Button", nil, model)
     left:SetWidth(35)

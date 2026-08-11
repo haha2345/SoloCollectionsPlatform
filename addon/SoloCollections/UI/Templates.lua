@@ -517,37 +517,26 @@ function UI.CreateBottomTab(parent, labelText, iconPath, onClick)
 end
 
 function UI.CreateTopSubTab(parent, labelText, onClick)
-    local button = CreateFrame("Button", nil, parent)
-    button:SetWidth(104)
-    button:SetHeight(28)
-    local base = createSolidTexture(button, "BACKGROUND", 0.055, 0.052, 0.045, 0.95)
-    setAllPoints(base, button, 1)
-    local label = createLabel(button, "GameFontNormalSmall", labelText or "", COLORS.cream)
-    label:SetPoint("CENTER", button, "CENTER", 0, 0)
-    local selected = createSolidTexture(button, "ARTWORK", 0.53, 0.32, 0.045, 0.45)
-    setAllPoints(selected, button, 2)
-    selected:Hide()
-    local highlight = createSolidTexture(button, "HIGHLIGHT", 0.65, 0.48, 0.16, 0.16)
-    setAllPoints(highlight, button, 2)
+    UI.scWardrobeTabSerial = (UI.scWardrobeTabSerial or 0) + 1
+    local name = "SoloCollectionsWardrobeTab" .. UI.scWardrobeTabSerial
+    local button = CreateFrame("Button", name, parent, "OptionsFrameTabButtonTemplate")
+    button:SetWidth(70)
+    button:SetHeight(24)
+    button:SetText(labelText or "")
+    if PanelTemplates_TabResize then PanelTemplates_TabResize(button, 0, nil, 57) end
     button:SetScript("OnClick", function(self)
-        if onClick then
-            onClick(self)
-        end
+        if onClick then onClick(self) end
+        if PlaySound then PlaySound("igCharacterInfoTab") end
     end)
     function button:SetSelected(value)
         self.scSelected = value and true or false
         if self.scSelected then
-            selected:Show()
-            self:LockHighlight()
-            label:SetTextColor(1, 0.84, 0.24)
+            if PanelTemplates_SelectTab then PanelTemplates_SelectTab(self) else self:Disable() end
         else
-            selected:Hide()
-            self:UnlockHighlight()
-            label:SetTextColor(0.82, 0.72, 0.54)
+            if PanelTemplates_DeselectTab then PanelTemplates_DeselectTab(self) else self:Enable() end
         end
     end
-    button.scLabel = label
-    button.scSelectedTexture = selected
+    button.scLabel = button.Text or _G[name .. "Text"]
     return button
 end
 

@@ -247,7 +247,7 @@ local function applyJournalControlLayout(frame, key)
     host:ClearAllPoints()
     search:ClearAllPoints()
     filter:ClearAllPoints()
-    if key == "TOYS" or key == "TITLES" then
+    if key == "TOYS" or key == "TITLES" or key == "WARDROBE" then
         host:SetWidth(210)
         host:SetHeight(22)
         host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
@@ -532,9 +532,10 @@ function UI.CreateCollectionsFrame()
     UI.EzCollections:SkinSilverMenuButton(filterButton)
 
     local wardrobeTabs = CreateFrame("Frame", nil, frame)
-    wardrobeTabs:SetWidth(240)
-    wardrobeTabs:SetHeight(32)
-    wardrobeTabs:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -31, -84)
+    wardrobeTabs:SetWidth(150)
+    wardrobeTabs:SetHeight(24)
+    wardrobeTabs:SetPoint("TOPLEFT", frame, "TOPLEFT", 58, -28)
+    wardrobeTabs:SetFrameLevel(frame:GetFrameLevel() + 20)
     local itemTab = UI.CreateTopSubTab(wardrobeTabs, "物品", function()
         UI.SetWardrobeTab("ITEMS")
     end)
@@ -542,7 +543,7 @@ function UI.CreateCollectionsFrame()
     local setTab = UI.CreateTopSubTab(wardrobeTabs, "套装", function()
         UI.SetWardrobeTab("SETS")
     end)
-    setTab:SetPoint("LEFT", itemTab, "RIGHT", 6, 0)
+    setTab:SetPoint("LEFT", itemTab, "RIGHT", 0, 0)
     wardrobeTabs:Hide()
 
     local contentHost = CreateFrame("Frame", nil, frame)
@@ -591,7 +592,7 @@ function UI.CreateCollectionsFrame()
         MOUNTS = UI.CreateMountsPage(contentHost),
         PETS = UI.CreatePetsPage(contentHost),
         TOYS = UI.CreateToysPage(contentHost),
-        WARDROBE = UI.CreateWardrobePage(legacyContentHost),
+        WARDROBE = UI.CreateWardrobePage(contentHost),
         TITLES = UI.CreateTitlesPage(contentHost),
     }
     if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
