@@ -842,13 +842,15 @@ DragonUI_NewEra 顶层外框（965×606）
 
 **证据：** [`task15-newera-frame-and-dual-size-journal.md`](../evidence/dragonui-migration/task15-newera-frame-and-dual-size-journal.md)
 
-### Task 16：迁移坐骑与小宠物页面
+### Task 16：迁移坐骑与小宠物页面（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
-- [ ] 按 `Blizzard_MountCollection` / `Blizzard_PetCollection` 重建 260px 左列表与右侧详情模型区。
-- [ ] 搜索、过滤、数量、滚动、选择和动作按钮使用 ezCollections 页面视觉。
-- [ ] Catalog、CollectionState、Bridge 和 presenter 语义保持不变。
+- [x] 按 `Blizzard_MountCollection` / `Blizzard_PetCollection` 重建 260px 左列表与右侧详情模型区。
+- [x] 搜索、过滤、数量、滚动、选择和动作按钮使用 ezCollections 页面视觉。
+- [x] Catalog、CollectionState、Bridge 和 presenter 语义保持不变。
 
 **完成条件：** 两页几何与 ezCollections 母版一致，切换模型不串 generation。
+
+**证据：** [`task16-mount-and-pet-pages.md`](../evidence/dragonui-migration/task16-mount-and-pet-pages.md)
 
 ### Task 17：迁移玩具箱与头衔页面
 
