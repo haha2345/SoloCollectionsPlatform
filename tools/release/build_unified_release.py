@@ -402,7 +402,13 @@ def build(args: argparse.Namespace) -> Path:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(payload)
 
-    checksummed = sorted(path for path in output.rglob("*") if path.is_file())
+    integrated_paths = set()
+    if integrated_zip:
+        integrated_paths = {integrated_zip, output / "integrated-client-manifest.json"}
+    checksummed = sorted(
+        path for path in output.rglob("*")
+        if path.is_file() and path not in integrated_paths
+    )
     checksum_lines = [f"{sha256(path)}  {path.relative_to(output).as_posix()}" for path in checksummed]
     write_text(output / "SHA256SUMS.txt", "\n".join(checksum_lines) + "\n")
 
@@ -410,7 +416,7 @@ def build(args: argparse.Namespace) -> Path:
     bundle_inputs = sorted(
         path.relative_to(output)
         for path in output.rglob("*")
-        if path.is_file() and path != bundle_path
+        if path.is_file() and path != bundle_path and path not in integrated_paths
     )
     write_bundle_zip(
         bundle_path,
