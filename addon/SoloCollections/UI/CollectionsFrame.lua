@@ -8,8 +8,8 @@ local COLLECTION_WIDTH = 703
 local TRANSMOG_WIDTH = 965
 local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
-local TITLE_VISIBLE_ROWS = 16
-local TITLE_ROW_HEIGHT = 35
+local TITLE_VISIBLE_ROWS = 10
+local TITLE_ROW_HEIGHT = 46
 
 local TAB_DEFINITIONS = {
     { key = "MOUNTS", label = "坐骑", title = "坐骑", cutoff = true },
@@ -60,62 +60,70 @@ function UI.CreateTitlesPage(parent)
     local page = CreateFrame("Frame", nil, parent)
     page:SetAllPoints(parent)
     page:Hide()
-    page.scOffset = 0
     page.scRows = {}
-    page:EnableMouseWheel(true)
 
     local panel = CreateFrame("Frame", nil, page)
-    panel:SetPoint("TOPLEFT", page, "TOPLEFT", 5, -8)
-    panel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -5, 10)
-    UI.ApplyNineSlice(panel, UI.Media.border, 18)
-
-    local background = panel:CreateTexture(nil, "BACKGROUND")
-    background:SetTexture("Interface\\Buttons\\WHITE8X8")
-    background:SetPoint("TOPLEFT", panel, "TOPLEFT", 5, -5)
-    background:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -5, 5)
-    background:SetVertexColor(0.025, 0.019, 0.013, 0.94)
-    SC.WardrobeUI.Layout:StylePanel(panel, background)
+    panel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+    panel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    local panelInset = UI.EzCollections:ApplyInset(panel)
+    UI.EzCollections:AddShadowOverlay(panel)
+    SC.WardrobeUI.Layout:StylePanel(panel, panelInset.background)
 
     local note = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    note:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 11)
+    note:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 12)
     note:SetText("只读视图：头衔拥有状态来自服务端角色数据；本页不会授予或切换头衔。")
     note:SetTextColor(0.72, 0.68, 0.60)
 
+    local scrollFrame = CreateFrame(
+        "ScrollFrame",
+        "SoloCollectionsTitleScrollFrame",
+        panel,
+        "FauxScrollFrameTemplate"
+    )
+    scrollFrame:SetPoint("TOPLEFT", panel, "TOPLEFT", 3, -36)
+    scrollFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -2, 29)
+    scrollFrame:EnableMouseWheel(true)
+    UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
+
+    local listTexture = UI.EzCollections:MediaPath(
+        "Buttons",
+        "ListButtons.tga",
+        "Interface\\Buttons\\WHITE8X8"
+    )
     for index = 1, TITLE_VISIBLE_ROWS do
-        local row = CreateFrame("Frame", nil, panel)
+        local row = CreateFrame("Button", nil, panel)
         row:SetHeight(TITLE_ROW_HEIGHT)
-        row:SetPoint("TOPLEFT", panel, "TOPLEFT", 12, -12 - (index - 1) * TITLE_ROW_HEIGHT)
-        row:SetPoint("RIGHT", panel, "RIGHT", -12, 0)
-        local stripe = row:CreateTexture(nil, "BACKGROUND")
-        stripe:SetAllPoints(row)
-        stripe:SetTexture("Interface\\Buttons\\WHITE8X8")
-        stripe:SetVertexColor(index % 2 == 0 and 0.10 or 0.06, 0.055, 0.04, 0.65)
+        row:SetPoint("TOPLEFT", panel, "TOPLEFT", 7, -(36 + (index - 1) * TITLE_ROW_HEIGHT))
+        row:SetPoint("RIGHT", panel, "RIGHT", -22, 0)
+        local background = row:CreateTexture(nil, "BACKGROUND")
+        background:SetAllPoints(row)
+        background:SetTexture(listTexture)
+        background:SetTexCoord(0.00390625, 0.8203125, 0.00390625, 0.18359375)
+        local highlight = row:CreateTexture(nil, "HIGHLIGHT")
+        highlight:SetAllPoints(row)
+        highlight:SetTexture(listTexture)
+        highlight:SetTexCoord(0.00390625, 0.8203125, 0.19140625, 0.37109375)
         local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        name:SetPoint("LEFT", row, "LEFT", 10, 0)
+        name:SetPoint("LEFT", row, "LEFT", 12, 0)
+        name:SetJustifyH("LEFT")
         local status = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        status:SetPoint("RIGHT", row, "RIGHT", -10, 0)
+        status:SetWidth(370)
+        status:SetPoint("RIGHT", row, "RIGHT", -12, 0)
+        status:SetJustifyH("RIGHT")
+        name:SetPoint("RIGHT", status, "LEFT", -10, 0)
         row.scName = name
         row.scStatus = status
-        SC.WardrobeUI.Layout:StyleListRow(row, stripe, nil)
+        row.scBackground = background
         page.scRows[index] = row
     end
 
-    function page:Refresh()
-        local records, total = titleRecords()
-        local maximumOffset = math.max(0, #records - TITLE_VISIBLE_ROWS)
-        self.scOffset = math.max(0, math.min(self.scOffset, maximumOffset))
-        local ownedCount = 0
-        for titleIndex = 1, total do
-            local owned = CS.ResolveOwned("TITLES", titleIndex, false)
-            if owned then ownedCount = ownedCount + 1 end
-        end
-        if UI.CollectionsFrame then
-            UI.CollectionsFrame.scCollectionCount:SetCount(ownedCount, total)
-            UI.CollectionsFrame.scProgress:SetProgress(ownedCount, total)
-        end
+    local function refreshRows()
+        local records = page.scRecords or {}
+        FauxScrollFrame_Update(scrollFrame, #records, TITLE_VISIBLE_ROWS, TITLE_ROW_HEIGHT)
+        local offset = FauxScrollFrame_GetOffset(scrollFrame)
         local current = type(GetCurrentTitle) == "function" and tonumber(GetCurrentTitle()) or 0
-        for index, row in ipairs(self.scRows) do
-            local record = records[self.scOffset + index]
+        for index, row in ipairs(page.scRows) do
+            local record = records[offset + index]
             if record then
                 row.scName:SetText(record.name)
                 row.scName:SetTextColor(record.owned and 1.00 or 0.50, record.owned and 0.82 or 0.47, 0.24)
@@ -135,10 +143,74 @@ function UI.CreateTitlesPage(parent)
         end
     end
 
-    page:SetScript("OnMouseWheel", function(self, delta)
-        self.scOffset = math.max(0, self.scOffset - delta * 3)
-        self:Refresh()
+    local function scrollByWheel(self, delta)
+        local currentOffset = FauxScrollFrame_GetOffset(self) or 0
+        local maximumOffset = math.max(0, #(page.scRecords or {}) - TITLE_VISIBLE_ROWS)
+        local newOffset = math.max(0, math.min(maximumOffset, currentOffset - delta))
+        FauxScrollFrame_OnVerticalScroll(
+            self,
+            newOffset * TITLE_ROW_HEIGHT,
+            TITLE_ROW_HEIGHT,
+            refreshRows
+        )
+    end
+
+    for _, row in ipairs(page.scRows) do
+        row:EnableMouseWheel(true)
+        row:SetScript("OnMouseWheel", function(_, delta)
+            scrollByWheel(scrollFrame, delta)
+        end)
+    end
+    scrollFrame:SetScript("OnVerticalScroll", function(self, offset)
+        FauxScrollFrame_OnVerticalScroll(self, offset, TITLE_ROW_HEIGHT, refreshRows)
     end)
+    scrollFrame:SetScript("OnMouseWheel", function(self, delta)
+        scrollByWheel(self, delta)
+    end)
+
+    function page:SyncFilters()
+        local frame = UI.CollectionsFrame
+        if not (frame and frame.scFilterPopup and SC.db and SC.db.filters) then return end
+        frame.scFilterPopup:SetOptions({
+            {
+                label = "已收集",
+                checked = SC.db.filters.collected ~= false,
+                onClick = function()
+                    SC.db.filters.collected = not (SC.db.filters.collected ~= false)
+                    page:Refresh()
+                end,
+            },
+            {
+                label = "未收集",
+                checked = SC.db.filters.uncollected ~= false,
+                onClick = function()
+                    SC.db.filters.uncollected = not (SC.db.filters.uncollected ~= false)
+                    page:Refresh()
+                end,
+            },
+        })
+    end
+
+    function page:Refresh()
+        local records, total = titleRecords()
+        self.scRecords = records
+        local ownedCount = 0
+        for titleIndex = 1, total do
+            local owned = CS.ResolveOwned("TITLES", titleIndex, false)
+            if owned then ownedCount = ownedCount + 1 end
+        end
+        if UI.CollectionsFrame then
+            UI.CollectionsFrame.scCollectionCount:SetCount(ownedCount, total)
+            UI.CollectionsFrame.scProgress:SetProgress(ownedCount, total)
+        end
+        refreshRows()
+        self:SyncFilters()
+    end
+
+    page.scPanel = panel
+    page.scPanelBackground = panelInset.background
+    page.scScrollFrame = scrollFrame
+    page.scNote = note
     return page
 end
 
@@ -165,6 +237,31 @@ local function applyJournalSize(frame, key)
         UI.EzCollections:LayoutJournalTabs(frame, frame.scMainTabOrder)
     end
     clampFrame(frame)
+end
+
+local function applyJournalControlLayout(frame, key)
+    local host = frame.scSearchFilterHost
+    local search = frame.scSearchBox
+    local filter = frame.scFilterButton
+    if not (host and search and filter) then return end
+    host:ClearAllPoints()
+    search:ClearAllPoints()
+    filter:ClearAllPoints()
+    if key == "TOYS" or key == "TITLES" then
+        host:SetWidth(210)
+        host:SetHeight(22)
+        host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
+        search:SetWidth(115)
+        search:SetPoint("LEFT", host, "LEFT", 0, -1)
+        filter:SetPoint("LEFT", search, "RIGHT", 2, 1)
+    else
+        host:SetWidth(240)
+        host:SetHeight(22)
+        host:SetPoint("TOPLEFT", frame, "TOPLEFT", 19, -69)
+        search:SetWidth(145)
+        search:SetPoint("LEFT", host, "LEFT", 0, 0)
+        filter:SetPoint("LEFT", search, "RIGHT", 2, 0)
+    end
 end
 
 local function saveFramePosition(frame)
@@ -289,6 +386,7 @@ function UI.SetMainTab(key)
         return
     end
     applyJournalSize(frame, selected)
+    applyJournalControlLayout(frame, selected)
     for tabKey, button in pairs(frame.scMainTabs) do
         button:SetSelected(tabKey == selected)
     end
@@ -492,9 +590,9 @@ function UI.CreateCollectionsFrame()
     frame.scPages = {
         MOUNTS = UI.CreateMountsPage(contentHost),
         PETS = UI.CreatePetsPage(contentHost),
-        TOYS = UI.CreateToysPage(legacyContentHost),
+        TOYS = UI.CreateToysPage(contentHost),
         WARDROBE = UI.CreateWardrobePage(legacyContentHost),
-        TITLES = UI.CreateTitlesPage(legacyContentHost),
+        TITLES = UI.CreateTitlesPage(contentHost),
     }
     if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
         frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(legacyContentHost)
