@@ -19,6 +19,14 @@ local function createDetailLabel(parent, font, color)
     return label
 end
 
+local function alignSourceInlineIcons(text)
+    -- ezCollections source strings use :0 textures, whose native baseline is
+    -- several pixels below Chinese GameFontHighlight on this 3.3.5a client.
+    -- Give every source currency icon an explicit text-line size and lift it
+    -- two pixels so the amount and icon read as one horizontal cost row.
+    return (tostring(text or ""):gsub("|T([^|]-):0|t", "|T%1:13:13:0:2|t"))
+end
+
 local function showNotice(message)
     if UIErrorsFrame and UIErrorsFrame.AddMessage then
         UIErrorsFrame:AddMessage(message, 1, 0.35, 0.2, 1)
@@ -394,7 +402,7 @@ function UI.CreateMountsPage(parent)
         infoBorder:SetCollected(record.collected)
         infoSelectedBorder:Show()
         name:SetText(record.name or "未知坐骑")
-        source:SetText("来源：" .. (record.source or "未知"))
+        source:SetText("来源：" .. alignSourceInlineIcons(record.source or "未知"))
         description:SetText(record.description or "暂无说明。")
         if record.collected then
             collectionState:SetText("已收集")

@@ -904,6 +904,7 @@ DragonUI_NewEra 顶层外框（965×606）
 - [x] 按 ezCollections 原实现恢复 PortraitFrameTemplate 头像尺寸和金框层级；因本客户端不会裁掉自定义 BLP 四角，坐骑页使用等价的预裁透明圆形 RGBA 素材，撤销缩小方图方案。
 - [x] 坐骑头像改为 ezCollections `MountJournalPortrait.blp` 的本地圆形 Alpha 派生投影，保留原图内容且不让四角越出 NewEra 金框。
 - [x] 随机坐骑按钮严格复刻 ezCollections 的 33×33 尺寸、`TOPRIGHT(-24,-42)` 位置、骑术图标、Flyout 边框坐标、Quickslot 按下态、方形高亮和左侧标签。
+- [x] 坐骑来源费用行的货币图标统一为 13×13 并上移 2 像素，使图标与金币/货币数量保持同一文字基线。
 
 - [x] 部署前重新备份真实客户端 AddOns 并保存部署清单。
 - [ ] 登录后逐页观察坐骑、宠物、玩具、外观物品、套装、幻化和头衔。
