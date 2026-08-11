@@ -12,6 +12,7 @@ local PORTRAITS = {
     MOUNTS = {
         fallback = function() return UI.Media and UI.Media.mountPortrait end,
         texCoord = { 0, 1, 0, 1 },
+        precut = true,
     },
     PETS = {
         fallback = "Interface\\Icons\\INV_Misc_Rabbit",
@@ -165,7 +166,11 @@ function Ez:SetPortraitForTab(frame, key)
         or resolveFallback(definition.fallback)
     texture = texture or "Interface\\Icons\\INV_Misc_QuestionMark"
     local nativeCrop = false
-    if SetPortraitToTexture then
+    if definition.precut then
+        portrait:SetTexture(texture)
+        portrait:SetTexCoord(unpack(definition.texCoord))
+        nativeCrop = true
+    elseif SetPortraitToTexture then
         nativeCrop = pcall(SetPortraitToTexture, portrait, texture)
     end
     if not nativeCrop then
