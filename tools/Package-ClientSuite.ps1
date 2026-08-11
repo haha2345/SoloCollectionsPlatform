@@ -1,7 +1,9 @@
 [CmdletBinding()]
 param(
     [string] $Version = 'development',
-    [string] $PackageRoot = (Join-Path $PSScriptRoot '..\build\packages')
+    [string] $PackageRoot = (Join-Path $PSScriptRoot '..\build\packages'),
+    [string] $SoloCollectionsSource = (Join-Path $PSScriptRoot '..\..\SoloCollections\addon\SoloCollections'),
+    [string] $EzCollectionsSource = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -13,7 +15,11 @@ $output = [IO.Path]::GetFullPath($PackageRoot)
 if ($output -ne $allowedRoot) { throw "PackageRoot must be the suite's exact build/packages directory: $output" }
 if ($Version -notmatch '^[0-9A-Za-z][0-9A-Za-z._-]*$') { throw 'Version contains unsupported characters.' }
 
-& (Join-Path $PSScriptRoot 'Build-ClientSuite.ps1')
+$buildParameters = @{ SoloCollectionsSource = $SoloCollectionsSource }
+if (-not [string]::IsNullOrWhiteSpace($EzCollectionsSource)) {
+    $buildParameters.EzCollectionsSource = $EzCollectionsSource
+}
+& (Join-Path $PSScriptRoot 'Build-ClientSuite.ps1') @buildParameters
 $buildRoot = Join-Path $suiteRoot 'build'
 $addonsRoot = Join-Path $buildRoot 'Interface\AddOns'
 [IO.Directory]::CreateDirectory($output) | Out-Null
@@ -24,11 +30,15 @@ if ((Test-Path -LiteralPath $archive) -or (Test-Path -LiteralPath $manifestPath)
 }
 
 $files = Get-ChildItem -LiteralPath $addonsRoot -File -Recurse | Sort-Object FullName
+$ezUiProvenancePath = Join-Path $addonsRoot 'SoloCollections_EzUI\EZUI-PROVENANCE.json'
 $manifest = [ordered]@{
-    schemaVersion = 1
+    schemaVersion = 2
     version = $Version
     installRoot = 'Interface/AddOns'
     suiteLock = (Get-Content -LiteralPath (Join-Path $suiteRoot 'upstream\suite-lock.json') -Raw | ConvertFrom-Json)
+    localEzCollectionsUI = if (Test-Path -LiteralPath $ezUiProvenancePath -PathType Leaf) {
+        Get-Content -LiteralPath $ezUiProvenancePath -Raw | ConvertFrom-Json
+    } else { $null }
     files = @($files | ForEach-Object {
         [ordered]@{
             path = ('Interface/AddOns/' + [IO.Path]::GetRelativePath($addonsRoot, $_.FullName).Replace('\', '/'))

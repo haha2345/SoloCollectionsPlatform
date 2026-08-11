@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-11T18:30:00+08:00",
+  "syncedAt": "2026-08-11T18:29:11+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -39,18 +39,18 @@
       "url": "https://github.com/ghbset/DragonUI_NewEra.git",
       "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
       "tocVersion": "0.2.0",
-      "directoryHash": "3bb269eff8b47a2b2b884f7c5124a44ac92caec6967c08ad8013a830ba1dd8ac",
-      "localPatchState": "project-patched: public-api-v1, canonical module state, shared components, generation-safe model presenters, and DRESSUP settle/undress requests",
+      "directoryHash": "01d07c2f77487eb1cb9603817502ae47f925c01e71b1e5d5efc02f4e4836ac28",
+      "localPatchState": "project-patched: public-api-v1, canonical module state, shared components, generation-safe model presenters, DRESSUP settle/undress requests, and LF-stable deployed source bytes",
       "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
     },
     {
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "df7e873059fcaeb8c3af6496b3c49b5a1f5fd818",
+      "commit": "3c904dd6b697a713a8836614717fcbb2bb9fdba7",
       "tocVersion": "0.2.0",
-      "directoryHash": "9438bafbfa5600f54c883525f8da0defd60d50f66f3acc287eb04e75f4ca6c3a",
-      "localPatchState": "sibling-source; migration branch feat/dragonui-collections-shell; tasks 3-12 NewEra production pages, shared wardrobe presenters, and integrated delivery",
+      "directoryHash": "ba968e0608ec7b2d8038583e440a2afd79ca399096cf9d0ec455cb86d607334d",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 14 namespaced local ezCollections UI asset adapter and fail-closed capability",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     }
   ],
@@ -58,7 +58,11 @@
     {
       "id": "ezcollections-2.2",
       "runtimeDependency": false,
-      "purpose": "wardrobe interaction reference only",
+      "purpose": "local UI master plus complete generated media projection; no ezCollections runtime code",
+      "sourceTreeHash": "218c65a59b42d810935963013cdf6b729cd7d1d69dc67a52a70632b89911c7f6",
+      "assetProjectionHash": "4673b2c8631c5f28050b9eecde7dad4a6bb33dc6a2ed5f0630a64a17945dbf53",
+      "assetFileCount": 222,
+      "generatedAddon": "SoloCollections_EzUI",
       "licenseState": "no-explicit-license-file-confirmed; user-authorized-local-reference; public-copying-prohibited-until-reviewed"
     }
   ]
