@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-11T20:09:20+08:00",
+  "syncedAt": "2026-08-11T20:58:59+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,17 +47,17 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "c949b112131cbff2cc60f22914c1312b6f75d0fa",
+      "commit": "3c3c192c51a7969b07c2ace28201c215c23eadb7",
       "tocVersion": "0.2.0",
-      "directoryHash": "2c6beea5041230163a8529d5e06f07eb3d12d6f31e47e1b1bbd5f16ca7d6db19",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20A mount page fixes and load-on-demand wardrobe catalog bootstrap",
+      "directoryHash": "1eb24ba2bd9941aca96e73fab75b2ae3c526afc0b7c8e13ee9108721b380a1ea",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20A curated 215-mount journal projection, ezCollections sources, exact model drag, and load-on-demand wardrobe catalog bootstrap",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
     {
       "id": "solocollections-wardrobe-data",
       "addonRoot": "SoloCollections_WardrobeData",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "c949b112131cbff2cc60f22914c1312b6f75d0fa",
+      "commit": "3c3c192c51a7969b07c2ace28201c215c23eadb7",
       "tocVersion": "0.2.0",
       "directoryHash": "6fef42827ba7534fba392cc5384f13bae0c398f7113081f453707aefe16cc507",
       "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
