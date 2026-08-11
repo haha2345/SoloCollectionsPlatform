@@ -22,9 +22,10 @@ end
 local function alignSourceInlineIcons(text)
     -- ezCollections source strings use :0 textures, whose native baseline is
     -- several pixels below Chinese GameFontHighlight on this 3.3.5a client.
-    -- Give every source currency icon an explicit text-line size and lift it
-    -- two pixels so the amount and icon read as one horizontal cost row.
-    return (tostring(text or ""):gsub("|T([^|]-):0|t", "|T%1:13:13:0:2|t"))
+    -- Give every source currency icon an explicit text-line size.  The stock
+    -- money textures include transparent padding below the visible coin, so a
+    -- four-pixel lift aligns the visible coin with the Chinese text centre.
+    return (tostring(text or ""):gsub("|T([^|]-):0|t", "|T%1:12:12:0:4|t"))
 end
 
 local function showNotice(message)
