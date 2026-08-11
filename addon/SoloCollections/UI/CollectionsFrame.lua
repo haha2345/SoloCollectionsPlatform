@@ -363,8 +363,14 @@ function UI.CreateCollectionsFrame()
     if not dragonShell then closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -9) end
     closeButton:SetScript("OnClick", function() frame:Hide() end)
 
-    local progress = UI.CreateRetailProgressBar(frame, 286)
-    progress:SetPoint("TOP", frame, "TOP", 0, -51)
+    local progress = UI.CreateRetailProgressBar(frame, 194)
+    progress:SetWidth(210)
+    progress:SetHeight(20)
+    progress:SetPoint("TOP", frame, "TOP", 0, -35)
+    progress.scStatusBar:SetWidth(194)
+    progress.scStatusBar:SetHeight(10)
+    progress.scBorder:Hide()
+    UI.EzCollections:ApplyInputBorder(progress)
 
     local pageTitle = dragonShell and frame.Title or frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     if not dragonShell then pageTitle:SetPoint("TOP", frame, "TOP", 0, -17) end
@@ -402,23 +408,30 @@ function UI.CreateCollectionsFrame()
     end
 
     local collectionCount = UI.CreateCollectionCount(frame)
-    collectionCount:SetPoint("TOPLEFT", frame, "TOPLEFT", 70, -42)
+    collectionCount:SetWidth(130)
+    collectionCount:SetHeight(20)
+    collectionCount:SetPoint("TOPLEFT", frame, "TOPLEFT", 70, -35)
+    UI.EzCollections:ApplyInputBorder(collectionCount)
 
     local searchFilterHost = CreateFrame("Frame", nil, frame)
-    searchFilterHost:SetHeight(32)
-    searchFilterHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 31, -84)
-    searchFilterHost:SetWidth(338)
+    searchFilterHost:SetHeight(22)
+    searchFilterHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 19, -69)
+    searchFilterHost:SetWidth(240)
+    searchFilterHost:SetFrameLevel(frame:GetFrameLevel() + 20)
 
-    local search = UI.CreateRetailSearchBox(searchFilterHost, 210, function(value)
+    local search = UI.CreateRetailSearchBox(searchFilterHost, 145, function(value)
         if SC.db then
             SC.db.query = value or ""
         end
         refreshPage()
     end)
     search:SetPoint("LEFT", searchFilterHost, "LEFT", 0, 0)
+    UI.EzCollections:SkinSearchBox(search)
 
-    local filterButton, filterPopup = UI.CreateFilterPopup(searchFilterHost, 116)
-    filterButton:SetPoint("LEFT", search, "RIGHT", 7, 0)
+    local filterButton, filterPopup = UI.CreateFilterPopup(searchFilterHost, 93)
+    filterButton:SetHeight(22)
+    filterButton:SetPoint("LEFT", search, "RIGHT", 2, 0)
+    UI.EzCollections:SkinSilverMenuButton(filterButton)
 
     local wardrobeTabs = CreateFrame("Frame", nil, frame)
     wardrobeTabs:SetWidth(240)
@@ -435,8 +448,10 @@ function UI.CreateCollectionsFrame()
     wardrobeTabs:Hide()
 
     local contentHost = CreateFrame("Frame", nil, frame)
-    contentHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 31, -122)
-    contentHost:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -31, 24)
+    contentHost:SetAllPoints(frame)
+    local legacyContentHost = CreateFrame("Frame", nil, contentHost)
+    legacyContentHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 31, -122)
+    legacyContentHost:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -31, 24)
 
     frame.scMainTabs = {}
     frame.scMainTabOrder = {}
@@ -473,15 +488,16 @@ function UI.CreateCollectionsFrame()
     frame.scWardrobeItemTab = itemTab
     frame.scWardrobeSetTab = setTab
     frame.scContentHost = contentHost
+    frame.scLegacyContentHost = legacyContentHost
     frame.scPages = {
         MOUNTS = UI.CreateMountsPage(contentHost),
         PETS = UI.CreatePetsPage(contentHost),
-        TOYS = UI.CreateToysPage(contentHost),
-        WARDROBE = UI.CreateWardrobePage(contentHost),
-        TITLES = UI.CreateTitlesPage(contentHost),
+        TOYS = UI.CreateToysPage(legacyContentHost),
+        WARDROBE = UI.CreateWardrobePage(legacyContentHost),
+        TITLES = UI.CreateTitlesPage(legacyContentHost),
     }
     if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
-        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(contentHost)
+        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(legacyContentHost)
     end
     UI.EzCollections:Guard(contentHost, "收藏日志内页已锁定到 ezCollections 2.2 素材")
 

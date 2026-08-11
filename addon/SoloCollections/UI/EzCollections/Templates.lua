@@ -174,3 +174,305 @@ function Ez:Guard(parent, context)
     end
     return false, "asset-addon-missing"
 end
+
+local function makeTexture(parent, layer, path, width, height, texCoord)
+    local texture = parent:CreateTexture(nil, layer or "BORDER")
+    texture:SetTexture(path)
+    if width then texture:SetWidth(width) end
+    if height then texture:SetHeight(height) end
+    if texCoord then texture:SetTexCoord(unpack(texCoord)) end
+    return texture
+end
+
+function Ez:ApplyInset(frame)
+    if not frame then return nil end
+    if frame.scEzCollectionsInset then return frame.scEzCollectionsInset end
+
+    local marble = self:AssetPath("Interface\\FrameGeneral\\UI-Background-Marble.tga", WHITE_TEXTURE)
+    local frameAtlas = self:AssetPath("Interface\\FrameGeneral\\UI-Frame.tga", WHITE_TEXTURE)
+    local horizontalAtlas = self:AssetPath("Interface\\FrameGeneral\\_UI-Frame.tga", WHITE_TEXTURE)
+    local verticalAtlas = self:AssetPath("Interface\\FrameGeneral\\!UI-Frame.tga", WHITE_TEXTURE)
+
+    local background = makeTexture(frame, "BACKGROUND", marble)
+    background:SetAllPoints(frame)
+    background:SetHorizTile(true)
+    background:SetVertTile(true)
+    if marble == WHITE_TEXTURE then background:SetVertexColor(0.08, 0.07, 0.055, 0.98) end
+
+    local topLeft = makeTexture(frame, "BORDER", frameAtlas, 6, 6, {
+        0.63281250, 0.67968750, 0.54687500, 0.59375000,
+    })
+    topLeft:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
+    local topRight = makeTexture(frame, "BORDER", frameAtlas, 6, 6, {
+        0.90625000, 0.95312500, 0.21875000, 0.26562500,
+    })
+    topRight:SetPoint("TOPRIGHT", frame, "TOPRIGHT", 0, 0)
+    local bottomLeft = makeTexture(frame, "BORDER", frameAtlas, 6, 6, {
+        0.69531250, 0.74218750, 0.54687500, 0.59375000,
+    })
+    bottomLeft:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 0, -1)
+    local bottomRight = makeTexture(frame, "BORDER", frameAtlas, 6, 6, {
+        0.75781250, 0.80468750, 0.54687500, 0.59375000,
+    })
+    bottomRight:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, -1)
+
+    local top = makeTexture(frame, "BORDER", horizontalAtlas, nil, 3, { 0, 1, 0.08593750, 0.10937500 })
+    top:SetPoint("TOPLEFT", topLeft, "TOPRIGHT", 0, 0)
+    top:SetPoint("TOPRIGHT", topRight, "TOPLEFT", 0, 0)
+    top:SetHorizTile(true)
+    local bottom = makeTexture(frame, "BORDER", horizontalAtlas, nil, 3, { 0, 1, 0.00781250, 0.03125000 })
+    bottom:SetPoint("BOTTOMLEFT", bottomLeft, "BOTTOMRIGHT", 0, 0)
+    bottom:SetPoint("BOTTOMRIGHT", bottomRight, "BOTTOMLEFT", 0, 0)
+    bottom:SetHorizTile(true)
+    local left = makeTexture(frame, "BORDER", verticalAtlas, 3, nil, { 0.09375000, 0.14062500, 0, 1 })
+    left:SetPoint("TOPLEFT", topLeft, "BOTTOMLEFT", 0, 0)
+    left:SetPoint("BOTTOMLEFT", bottomLeft, "TOPLEFT", 0, 0)
+    left:SetVertTile(true)
+    local right = makeTexture(frame, "BORDER", verticalAtlas, 3, nil, { 0.01562500, 0.06250000, 0, 1 })
+    right:SetPoint("TOPRIGHT", topRight, "BOTTOMRIGHT", 0, 0)
+    right:SetPoint("BOTTOMRIGHT", bottomRight, "TOPRIGHT", 0, 0)
+    right:SetVertTile(true)
+
+    frame.scEzCollectionsInset = {
+        background = background,
+        topLeft = topLeft,
+        topRight = topRight,
+        bottomLeft = bottomLeft,
+        bottomRight = bottomRight,
+        top = top,
+        bottom = bottom,
+        left = left,
+        right = right,
+    }
+    return frame.scEzCollectionsInset
+end
+
+function Ez:AddShadowOverlay(frame)
+    if not frame then return nil end
+    if frame.scEzCollectionsShadow then return frame.scEzCollectionsShadow end
+    local overlay = CreateFrame("Frame", nil, frame)
+    overlay:SetAllPoints(frame)
+    overlay:SetFrameLevel(frame:GetFrameLevel() + 2)
+    overlay:EnableMouse(false)
+
+    local cornerPath = self:MediaPath("Common", "ShadowOverlay-Corner.blp", WHITE_TEXTURE)
+    local topPath = self:MediaPath("Common", "ShadowOverlay-Top.blp", WHITE_TEXTURE)
+    local bottomPath = self:MediaPath("Common", "ShadowOverlay-Bottom.blp", WHITE_TEXTURE)
+    local leftPath = self:MediaPath("Common", "ShadowOverlay-Left.blp", WHITE_TEXTURE)
+    local rightPath = self:MediaPath("Common", "ShadowOverlay-Right.blp", WHITE_TEXTURE)
+    local topLeft = makeTexture(overlay, "OVERLAY", cornerPath, 64, 64)
+    topLeft:SetPoint("TOPLEFT")
+    local topRight = makeTexture(overlay, "OVERLAY", cornerPath, 64, 64)
+    topRight:SetPoint("TOPRIGHT")
+    topRight:SetTexCoord(0, 1, 1, 1, 0, 0, 1, 0)
+    local bottomLeft = makeTexture(overlay, "OVERLAY", cornerPath, 64, 64)
+    bottomLeft:SetPoint("BOTTOMLEFT")
+    bottomLeft:SetTexCoord(1, 0, 0, 0, 1, 1, 0, 1)
+    local bottomRight = makeTexture(overlay, "OVERLAY", cornerPath, 64, 64)
+    bottomRight:SetPoint("BOTTOMRIGHT")
+    bottomRight:SetTexCoord(1, 1, 1, 0, 0, 1, 0, 0)
+    local top = makeTexture(overlay, "OVERLAY", topPath, nil, 64)
+    top:SetPoint("TOPLEFT", topLeft, "TOPRIGHT")
+    top:SetPoint("TOPRIGHT", topRight, "TOPLEFT")
+    top:SetHorizTile(true)
+    local bottom = makeTexture(overlay, "OVERLAY", bottomPath, nil, 64)
+    bottom:SetPoint("BOTTOMLEFT", bottomLeft, "BOTTOMRIGHT")
+    bottom:SetPoint("BOTTOMRIGHT", bottomRight, "BOTTOMLEFT")
+    bottom:SetHorizTile(true)
+    local left = makeTexture(overlay, "OVERLAY", leftPath, 64)
+    left:SetPoint("TOPLEFT", topLeft, "BOTTOMLEFT")
+    left:SetPoint("BOTTOMLEFT", bottomLeft, "TOPLEFT")
+    left:SetVertTile(true)
+    local right = makeTexture(overlay, "OVERLAY", rightPath, 64)
+    right:SetPoint("TOPRIGHT", topRight, "BOTTOMRIGHT")
+    right:SetPoint("BOTTOMRIGHT", bottomRight, "TOPRIGHT")
+    right:SetVertTile(true)
+    frame.scEzCollectionsShadow = overlay
+    return overlay
+end
+
+function Ez:ApplyInputBorder(frame)
+    if not frame then return nil end
+    if frame.scEzCollectionsInputBorder then return frame.scEzCollectionsInputBorder end
+    if frame.scChrome then
+        for _, texture in pairs(frame.scChrome) do
+            if texture and texture.Hide then texture:Hide() end
+        end
+    end
+    local path = "Interface\\Common\\Common-Input-Border"
+    local slices = {}
+    local function piece(key, width, height, coord)
+        local texture = makeTexture(frame, "BORDER", path, width, height, coord)
+        slices[key] = texture
+        return texture
+    end
+    local topLeft = piece("topLeft", 8, 8, { 0, 0.0625, 0, 0.25 })
+    topLeft:SetPoint("TOPLEFT")
+    local topRight = piece("topRight", 8, 8, { 0.9375, 1, 0, 0.25 })
+    topRight:SetPoint("TOPRIGHT")
+    local bottomLeft = piece("bottomLeft", 8, 8, { 0, 0.0625, 0.375, 0.625 })
+    bottomLeft:SetPoint("BOTTOMLEFT")
+    local bottomRight = piece("bottomRight", 8, 8, { 0.9375, 1, 0.375, 0.625 })
+    bottomRight:SetPoint("BOTTOMRIGHT")
+    local top = piece("top", nil, 8, { 0.0625, 0.9375, 0, 0.25 })
+    top:SetPoint("LEFT", topLeft, "RIGHT")
+    top:SetPoint("RIGHT", topRight, "LEFT")
+    local bottom = piece("bottom", nil, 8, { 0.0625, 0.9375, 0.375, 0.625 })
+    bottom:SetPoint("LEFT", bottomLeft, "RIGHT")
+    bottom:SetPoint("RIGHT", bottomRight, "LEFT")
+    local left = piece("left", 8, nil, { 0, 0.0625, 0.25, 0.375 })
+    left:SetPoint("TOP", topLeft, "BOTTOM")
+    left:SetPoint("BOTTOM", bottomLeft, "TOP")
+    local right = piece("right", 8, nil, { 0.9375, 1, 0.25, 0.375 })
+    right:SetPoint("TOP", topRight, "BOTTOM")
+    right:SetPoint("BOTTOM", bottomRight, "TOP")
+    local background = makeTexture(frame, "BACKGROUND", path, nil, nil, { 0.0625, 0.9375, 0.25, 0.375 })
+    background:SetPoint("TOPLEFT", topLeft, "BOTTOMRIGHT")
+    background:SetPoint("BOTTOMRIGHT", bottomRight, "TOPLEFT")
+    slices.background = background
+    frame.scEzCollectionsInputBorder = slices
+    return slices
+end
+
+function Ez:SkinSearchBox(editBox)
+    if not editBox then return end
+    editBox:SetHeight(20)
+    editBox:SetTextInsets(18, 20, 0, 0)
+    if editBox.scIcon then
+        editBox.scIcon:SetTexture(self:MediaPath("Common", "UI-Searchbox-Icon.tga", "Interface\\Common\\UI-Searchbox-Icon"))
+        editBox.scIcon:SetWidth(14)
+        editBox.scIcon:SetHeight(14)
+        editBox.scIcon:ClearAllPoints()
+        editBox.scIcon:SetPoint("LEFT", editBox, "LEFT", 0, -2)
+    end
+    if editBox.scClearButton then
+        editBox.scClearButton:SetWidth(17)
+        editBox.scClearButton:SetHeight(17)
+        editBox.scClearButton:SetNormalTexture(self:AssetPath("Interface\\FriendsFrame\\ClearBroadcastIcon.tga", "Interface\\Buttons\\UI-Panel-MinimizeButton-Up"))
+    end
+end
+
+function Ez:SkinSilverMenuButton(button)
+    if not button or button.scEzCollectionsSilver then return end
+    for _, texture in ipairs({ button.scBackground, button.scBorder, button.scInner }) do
+        if texture and texture.Hide then texture:Hide() end
+    end
+    if button.scLabel then button.scLabel:SetTextColor(1, 1, 1) end
+    if button.scArrow then
+        button.scArrow:SetWidth(10)
+        button.scArrow:SetHeight(12)
+        button.scArrow:ClearAllPoints()
+        button.scArrow:SetPoint("RIGHT", button, "RIGHT", -5, 0)
+    end
+    local up = self:MediaPath("Buttons", "UI-Silver-Button-Up.tga")
+    local down = self:MediaPath("Buttons", "UI-Silver-Button-Down.tga", up)
+    local highlightPath = self:MediaPath("Buttons", "UI-Silver-Button-Highlight.tga", up)
+    if not up then return end
+    local definitions = {
+        { "topLeft", 12, 6, { 0, 0.09375, 0, 0.1875 }, "TOPLEFT" },
+        { "topRight", 12, 6, { 0.53125, 0.625, 0, 0.1875 }, "TOPRIGHT" },
+        { "bottomLeft", 12, 6, { 0, 0.09375, 0.625, 0.8125 }, "BOTTOMLEFT" },
+        { "bottomRight", 12, 6, { 0.53125, 0.625, 0.625, 0.8125 }, "BOTTOMRIGHT" },
+    }
+    local parts = {}
+    for _, definition in ipairs(definitions) do
+        local texture = makeTexture(button, "BACKGROUND", up, definition[2], definition[3], definition[4])
+        texture:SetPoint(definition[5])
+        parts[definition[1]] = texture
+    end
+    local top = makeTexture(button, "BACKGROUND", up, nil, 6, { 0.09375, 0.53125, 0, 0.1875 })
+    top:SetPoint("TOPLEFT", parts.topLeft, "TOPRIGHT")
+    top:SetPoint("TOPRIGHT", parts.topRight, "TOPLEFT")
+    parts.top = top
+    local bottom = makeTexture(button, "BACKGROUND", up, nil, 6, { 0.09375, 0.53125, 0.625, 0.8125 })
+    bottom:SetPoint("BOTTOMLEFT", parts.bottomLeft, "BOTTOMRIGHT")
+    bottom:SetPoint("BOTTOMRIGHT", parts.bottomRight, "BOTTOMLEFT")
+    parts.bottom = bottom
+    local left = makeTexture(button, "BACKGROUND", up, 12, nil, { 0, 0.09375, 0.1875, 0.625 })
+    left:SetPoint("TOP", parts.topLeft, "BOTTOM")
+    left:SetPoint("BOTTOM", parts.bottomLeft, "TOP")
+    parts.left = left
+    local right = makeTexture(button, "BACKGROUND", up, 12, nil, { 0.53125, 0.625, 0.1875, 0.625 })
+    right:SetPoint("TOP", parts.topRight, "BOTTOM")
+    right:SetPoint("BOTTOM", parts.bottomRight, "TOP")
+    parts.right = right
+    local middle = makeTexture(button, "BACKGROUND", up, nil, nil, { 0.09375, 0.53125, 0.1875, 0.625 })
+    middle:SetPoint("TOPLEFT", parts.topLeft, "BOTTOMRIGHT")
+    middle:SetPoint("BOTTOMRIGHT", parts.bottomRight, "TOPLEFT")
+    parts.middle = middle
+    local highlight = makeTexture(button, "HIGHLIGHT", highlightPath)
+    highlight:SetAllPoints(button)
+    highlight:SetTexCoord(0, 1, 0.03, 0.7175)
+    highlight:SetBlendMode("ADD")
+
+    local function setPath(path)
+        for _, texture in pairs(parts) do texture:SetTexture(path) end
+    end
+    button:SetScript("OnMouseDown", function(self)
+        if self:IsEnabled() == 1 then setPath(down) end
+    end)
+    button:SetScript("OnMouseUp", function(self)
+        if self:IsEnabled() == 1 then setPath(up) end
+    end)
+    button.scEzCollectionsSilver = parts
+end
+
+function Ez:SkinTrimScrollFrame(scrollFrame)
+    if not scrollFrame or scrollFrame.scEzCollectionsScroll then return end
+    local name = scrollFrame:GetName()
+    local scrollBar = name and _G[name .. "ScrollBar"]
+    if not scrollBar then return end
+    local track = scrollBar:CreateTexture(nil, "BACKGROUND")
+    track:SetTexture(WHITE_TEXTURE)
+    track:SetPoint("TOPLEFT", scrollBar, "TOPLEFT", 4, -17)
+    track:SetPoint("BOTTOMRIGHT", scrollBar, "BOTTOMRIGHT", -4, 17)
+    track:SetVertexColor(0, 0, 0, 0.75)
+    scrollFrame.scEzCollectionsScroll = { scrollBar = scrollBar, track = track }
+end
+
+function Ez:CreateCollectionIconFrames(parent)
+    local border = CreateFrame("Frame", nil, parent)
+    border:SetAllPoints(parent)
+    local borderTexture = border:CreateTexture(nil, "OVERLAY")
+    borderTexture:SetAllPoints(border)
+    borderTexture:SetTexture(self:MediaPath("Common", "WhiteIconFrame.blp", WHITE_TEXTURE))
+    function border:SetCollected(value)
+        self.scCollected = value and true or false
+        if self.scCollected then
+            borderTexture:SetVertexColor(1.00, 0.82, 0.24, 0.92)
+        else
+            borderTexture:SetVertexColor(0.46, 0.46, 0.46, 0.72)
+        end
+    end
+
+    local selected = CreateFrame("Frame", nil, parent)
+    selected:SetAllPoints(parent)
+    local selectedTexture = selected:CreateTexture(nil, "OVERLAY")
+    selectedTexture:SetAllPoints(selected)
+    selectedTexture:SetTexture(self:MediaPath("Common", "WhiteIconFrame.blp", WHITE_TEXTURE))
+    selectedTexture:SetVertexColor(1.00, 0.90, 0.30, 1)
+    selectedTexture:SetBlendMode("ADD")
+    selected:Hide()
+    return border, selected
+end
+
+function Ez:CreateRotationButtons(model, onLeft, onRight)
+    local left = CreateFrame("Button", nil, model)
+    left:SetWidth(35)
+    left:SetHeight(35)
+    left:SetPoint("BOTTOMRIGHT", model, "BOTTOM", -5, 15)
+    left:SetNormalTexture("Interface\\Buttons\\UI-RotationLeft-Button-Up")
+    left:SetPushedTexture("Interface\\Buttons\\UI-RotationLeft-Button-Down")
+    left:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Round", "ADD")
+    left:SetScript("OnClick", function() if onLeft then onLeft() end end)
+
+    local right = CreateFrame("Button", nil, model)
+    right:SetWidth(35)
+    right:SetHeight(35)
+    right:SetPoint("BOTTOMLEFT", model, "BOTTOM", 5, 15)
+    right:SetNormalTexture("Interface\\Buttons\\UI-RotationRight-Button-Up")
+    right:SetPushedTexture("Interface\\Buttons\\UI-RotationRight-Button-Down")
+    right:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Round", "ADD")
+    right:SetScript("OnClick", function() if onRight then onRight() end end)
+    return left, right
+end

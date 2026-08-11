@@ -2,8 +2,8 @@ local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
 
-local VISIBLE_ROWS = 12
-local ROW_HEIGHT = 50
+local VISIBLE_ROWS = 10
+local ROW_HEIGHT = 46
 local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
@@ -37,32 +37,28 @@ function UI.CreateMountsPage(parent)
     page.scModelReady = false
 
     local list = CreateFrame("Frame", nil, page)
-    list:SetWidth(342)
-    list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -4)
-    list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 4)
-    UI.ApplyNineSlice(list, UI.Media.border, 14)
-
-    local listBackground = list:CreateTexture(nil, "BACKGROUND")
-    listBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-    listBackground:SetPoint("TOPLEFT", list, "TOPLEFT", 5, -5)
-    listBackground:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -5, 5)
-    listBackground:SetVertexColor(0.018, 0.014, 0.01, 0.97)
+    list:SetWidth(260)
+    list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+    list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    local listInset = UI.EzCollections:ApplyInset(list)
+    local listBackground = listInset.background
 
     local detail = CreateFrame("Frame", nil, page)
-    detail:SetPoint("TOPLEFT", list, "TOPRIGHT", 17, 0)
-    detail:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -4, 4)
-    UI.ApplyNineSlice(detail, UI.Media.border, 18)
+    detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
+    detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    UI.EzCollections:ApplyInset(detail)
 
     local detailBackground = detail:CreateTexture(nil, "BACKGROUND")
-    detailBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-    detailBackground:SetPoint("TOPLEFT", detail, "TOPLEFT", 5, -5)
-    detailBackground:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -5, 5)
-    detailBackground:SetVertexColor(0.19, 0.055, 0.032, 0.96)
+    detailBackground:SetTexture(UI.EzCollections:AssetPath("Interface\\PetBattles\\MountJournal-BG.blp", "Interface\\Buttons\\WHITE8X8"))
+    detailBackground:SetPoint("TOPLEFT", detail, "TOPLEFT", 3, -3)
+    detailBackground:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -3, 3)
+    detailBackground:SetTexCoord(0, 0.78515625, 0, 1)
+    UI.EzCollections:AddShadowOverlay(detail)
     UI.StyleNewEraCompanionLayout(page, list, detail, listBackground, detailBackground)
 
     local model = CreateFrame("PlayerModel", nil, detail)
-    model:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -112)
-    model:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -9, 47)
+    model:SetPoint("TOPLEFT", detail, "TOPLEFT", 3, -163)
+    model:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -3, 31)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
     model.rotation = DEFAULT_ROTATION
@@ -72,11 +68,20 @@ function UI.CreateMountsPage(parent)
         controls = true,
         panelCheck = function() return page:IsShown() end,
     }) or nil
+    local function rotateModel(delta)
+        model.rotation = (model.rotation or DEFAULT_ROTATION) + delta
+        if model.SetRotation then model:SetRotation(model.rotation) end
+    end
+    local rotateLeft, rotateRight = UI.EzCollections:CreateRotationButtons(model, function()
+        rotateModel(-0.18)
+    end, function()
+        rotateModel(0.18)
+    end)
 
     local modelShade = model:CreateTexture(nil, "BACKGROUND")
     modelShade:SetTexture("Interface\\Buttons\\WHITE8X8")
     modelShade:SetAllPoints(model)
-    modelShade:SetVertexColor(0.11, 0.025, 0.018, 0.56)
+    modelShade:SetVertexColor(0, 0, 0, 0.10)
 
     local unavailable = model:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     unavailable:SetPoint("CENTER", model, "CENTER", 0, 0)
@@ -91,46 +96,46 @@ function UI.CreateMountsPage(parent)
     local infoButton = CreateFrame("Button", nil, detail)
     infoButton:SetWidth(38)
     infoButton:SetHeight(38)
-    infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 20, -18)
+    infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
     infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 
     local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
     infoIcon:SetAllPoints(infoButton)
     UI.SetFallbackTexture(infoIcon)
-    local infoBorder, infoSelectedBorder = UI.CreateCollectionCardBorders(infoButton)
+    local infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
 
-    local name = createDetailLabel(detail, "GameFontNormalLarge", { 1, 0.82, 0.18 })
+    local name = createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
     name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
     name:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
 
     local collectionState = createDetailLabel(detail, "GameFontHighlight", { 0.45, 0.9, 0.35 })
     collectionState:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, -7)
 
-    local source = createDetailLabel(detail, "GameFontHighlightSmall", { 0.94, 0.82, 0.58 })
+    local source = createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
     source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
     source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
 
-    local description = createDetailLabel(detail, "GameFontDisableSmall", { 0.74, 0.68, 0.59 })
+    local description = createDetailLabel(detail, "GameFontNormal", { 1, 0.82, 0.18 })
     description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
     description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
     description:SetHeight(38)
 
     local favorite = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
     favorite:SetWidth(104)
-    favorite:SetHeight(25)
-    favorite:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -18, 15)
+    favorite:SetHeight(22)
+    favorite:SetPoint("BOTTOMRIGHT", detail, "BOTTOMRIGHT", -8, 5)
     favorite:SetText("设为偏好")
 
     local reset = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
     reset:SetWidth(104)
-    reset:SetHeight(25)
+    reset:SetHeight(22)
     reset:SetPoint("RIGHT", favorite, "LEFT", -8, 0)
     reset:SetText("重置视角")
 
     local summon = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
-    summon:SetWidth(104)
-    summon:SetHeight(25)
-    summon:SetPoint("RIGHT", reset, "LEFT", -8, 0)
+    summon:SetWidth(140)
+    summon:SetHeight(22)
+    summon:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 0, 0)
     summon:SetText("召唤坐骑")
     UI.RegisterNewEraCompanionAction(page, favorite)
     UI.RegisterNewEraCompanionAction(page, reset)
@@ -144,6 +149,7 @@ function UI.CreateMountsPage(parent)
     scrollHint:SetPoint("BOTTOM", list, "BOTTOM", 0, 13)
     scrollHint:SetText("滚轮或拖动滚动条查看更多坐骑")
     scrollHint:SetTextColor(0.62, 0.56, 0.46)
+    scrollHint:Hide()
 
     local scrollFrame = CreateFrame(
         "ScrollFrame",
@@ -151,9 +157,10 @@ function UI.CreateMountsPage(parent)
         list,
         "FauxScrollFrameTemplate"
     )
-    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 9, -9)
-    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -30, 31)
+    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -36)
+    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, 5)
     scrollFrame:EnableMouseWheel(true)
+    UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
 
     local contextMenu = CreateFrame(
         "Frame",
@@ -355,12 +362,12 @@ function UI.CreateMountsPage(parent)
     end
 
     for index = 1, VISIBLE_ROWS do
-        local row = UI.CreateMountListRow(list, 302, 48, function(_, record)
+        local row = UI.CreateMountListRow(list, 208, 46, function(_, record)
             selectRecord(record)
         end, function(anchor, record)
             openContextMenu(anchor, record)
         end)
-        row:SetPoint("TOPLEFT", list, "TOPLEFT", 9, -(9 + ((index - 1) * ROW_HEIGHT)))
+        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(36 + ((index - 1) * ROW_HEIGHT)))
         row:EnableMouseWheel(true)
         row:SetScript("OnMouseWheel", function(_, delta)
             scrollByWheel(scrollFrame, delta)
@@ -469,6 +476,7 @@ function UI.CreateMountsPage(parent)
     end)
 
     reset:SetScript("OnClick", function()
+        model.rotation = DEFAULT_ROTATION
         if presenter and presenter.ResetView then presenter:ResetView()
         elseif page.scSelectedRecord then requestModel(page.scSelectedRecord) end
     end)
@@ -552,6 +560,8 @@ function UI.CreateMountsPage(parent)
     page.scReset = reset
     page.scSummon = summon
     page.scPresenter = presenter
+    page.scRotateLeft = rotateLeft
+    page.scRotateRight = rotateRight
     page.scScrollFrame = scrollFrame
     page.scScrollHint = scrollHint
     page.scContextMenu = contextMenu
