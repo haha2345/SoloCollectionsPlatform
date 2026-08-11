@@ -901,7 +901,7 @@ DragonUI_NewEra 顶层外框（965×606）
 - [x] 增加 DragonUI_NewEra 一次性登录可见性守卫，模块照常初始化，但进入世界时不会遗留角色、收藏、法术书、天赋、专业、社交、地下城手册、背包或冷却编辑窗口。
 - [x] 完成 40×40 安全区临时修复并在客户端复查；该方案尺寸不符合 ezCollections，已由下一项正式方案替代。
 - [x] 修正坐骑拖动旋转：改用仅改变朝向的 `SetFacing`，不再由 `SetRotation` 在每次鼠标位移时重新起播模型动画。
-- [x] 按 ezCollections 原实现改用原生 `SetPortraitToTexture` 圆形裁切和 PortraitFrameTemplate 头像尺寸，撤销缩小方形纹理的临时方案。
+- [x] 按 ezCollections 原实现恢复 PortraitFrameTemplate 头像尺寸和金框层级；因本客户端不会裁掉自定义 BLP 四角，坐骑页使用等价的预裁透明圆形 RGBA 素材，撤销缩小方图方案。
 
 - [x] 部署前重新备份真实客户端 AddOns 并保存部署清单。
 - [ ] 登录后逐页观察坐骑、宠物、玩具、外观物品、套装、幻化和头衔。

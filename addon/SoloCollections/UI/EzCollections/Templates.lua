@@ -10,7 +10,6 @@ local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
 
 local PORTRAITS = {
     MOUNTS = {
-        relative = "Interface\\Icons\\MountJournalPortrait.blp",
         fallback = function() return UI.Media and UI.Media.mountPortrait end,
         texCoord = { 0, 1, 0, 1 },
     },
@@ -175,6 +174,8 @@ function Ez:SetPortraitForTab(frame, key)
     end
     -- ezCollections uses the native PortraitFrameTemplate portrait at its
     -- full cutout size; the metal corner remains above it as the visible ring.
+    -- This client does not alpha-mask custom BLP portraits, so the mount asset
+    -- is our equivalent pre-cut RGBA texture with transparent outer corners.
     portrait:ClearAllPoints()
     portrait:SetSize(60, 60)
     portrait:SetPoint("TOPLEFT", frame, "TOPLEFT", -5, 8)
