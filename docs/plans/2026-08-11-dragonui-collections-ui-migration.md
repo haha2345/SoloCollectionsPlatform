@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md) 与 [`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md)。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”；Tasks 13-14 已完成失败基线冻结、来源锁定、完整本地素材导入和 fail-closed 适配。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md)、[`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md) 与 [`task14-ezcollections-ui-source-and-import.md`](../evidence/dragonui-migration/task14-ezcollections-ui-source-and-import.md)。
 
 ---
 
@@ -820,14 +820,16 @@ DragonUI_NewEra 顶层外框（965×606）
 
 **证据：** [`task13-visual-correction-baseline.md`](../evidence/dragonui-migration/task13-visual-correction-baseline.md)
 
-### Task 14：引入 ezCollections UI 母版、素材与来源清单
+### Task 14：引入 ezCollections UI 母版、素材与来源清单（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
-- [ ] 记录本地 2.2 快照的目录 Hash、关键文件 Hash、作者/来源与“公开发布待许可证复核”。
-- [ ] 创建 namespaced `EzCollectionsUI` 适配层，复用布局和交互但不加载 ezCollections 服务端 Lua/消息协议。
-- [ ] 代码与项目自有适配进入 SoloCollections；来源不明的客户端素材只由 SoloClientSuite 参数化导入到忽略的本地构建，不进入公共源码包。
-- [ ] 所有素材缺失都明确 fail closed，不显示空白按钮或伪完成页面。
+- [x] 记录本地 2.2 快照的目录 Hash、关键文件 Hash、作者/来源与“公开发布待许可证复核”。
+- [x] 创建 namespaced `EzCollectionsUI` 适配层，复用布局和交互但不加载 ezCollections 服务端 Lua/消息协议。
+- [x] 代码与项目自有适配进入 SoloCollections；用户授权的完整客户端素材只由 SoloClientSuite 参数化导入到忽略的本地构建，不进入公共源码包。
+- [x] 所有素材缺失、版本错误或 Hash 不匹配都明确 fail closed，不显示空白按钮或伪完成页面。
 
 **完成条件：** 本地构建能解析所需模板/素材；公共源码边界保持不含提取 BLP/TGA。
+
+**证据：** [`task14-ezcollections-ui-source-and-import.md`](../evidence/dragonui-migration/task14-ezcollections-ui-source-and-import.md)
 
 ### Task 15：NewEra 外框与双尺寸窗口
 
