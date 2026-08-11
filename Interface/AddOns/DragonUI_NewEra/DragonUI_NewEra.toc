@@ -324,3 +324,7 @@ modules\levelup\SideDisplay.lua
 modules\levelup\Register.lua
 
 # Sprint-0 proof panel is intentionally not loaded in the playable suite.
+
+# Final one-time guard: module constructors may build on PLAYER_LOGIN, but no
+# modal NewEra panel is allowed to remain visible merely because the UI booted.
+core\StartupVisibility.lua
