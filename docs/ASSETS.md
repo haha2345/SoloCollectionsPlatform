@@ -66,3 +66,7 @@ Missing optional media must not change the base UI or leave a default control
 blank. Missing MPQs must degrade to AddOn-only previews rather than modifying
 unrelated client archives. A release is rejected when any default production
 media reference lacks a tracked, hash-verified base file.
+
+## Integrated DragonUI client UI bundle
+
+`tools/release/build_unified_release.py` accepts the optional paired arguments `--client-suite-root` and `--suite-lock`. This produces a separate full `Interface/AddOns` archive that may contain the pinned DragonUI BLP resources already present in the authorized local SoloClientSuite. It does not change the public AddOn ZIP's `project-authored-files-only` media contract. Treat this integrated output as a distinct delivery with its own provenance review; do not attach it to a public release unless every upstream license and redistribution right has been cleared.

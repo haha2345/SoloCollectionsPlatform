@@ -168,9 +168,14 @@ AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8
 | SoloCam x86 DLL | `client-extension/SoloCam/scripts/build.ps1` |
 | 目录生成 | `tools/catalog/generate_catalog.py`，需要合法取得的外部 evidence 输入 |
 | 统一源码发布包 | `tools/release/build_unified_release.py` |
+| 可选完整客户端 UI 包 | 同一脚本增加 `--client-suite-root <AddOns> --suite-lock <suite-lock.json>`；与公共源码包分开生成 |
 
 完整依赖、环境变量、产物位置和目录生成边界见
 [编译与开发指南](docs/BUILDING.zh-CN.md)。
+
+### 两种交付物
+
+公共 SoloCollections 源码/服务端包继续只包含项目自有源码和已审核媒体，不内置 DragonUI BLP。需要一次安装完整 UI 的本地集成构建，可从 SoloClientSuite 的精确五 AddOn 根目录生成独立 `integrated-client-ui.zip` 和逐文件 SHA-256 manifest。集成包的第三方来源、固定 commit、项目 patch 状态和目录 Hash 以 `suite-lock.json` 为准；它不是默认公共源码附件，也不会由构建脚本写入真实客户端。
 
 ## 文档导航
 

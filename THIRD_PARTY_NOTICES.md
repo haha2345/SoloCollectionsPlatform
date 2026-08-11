@@ -10,6 +10,7 @@ This file is a publication checklist, not a completed grant of rights.
 | Python packages | `capstone` and `pefile` are development dependencies | Preserve their upstream license notices in any bundle that redistributes them |
 | StormLib | MPQ tooling dynamically loads the separately supplied x64 StormLib library; upstream uses the MIT license | Link to upstream, preserve its license when redistributing the DLL, and do not commit local binaries |
 | AzerothCore/ALE API | Server bridge targets the AzerothCore ALE environment | Document compatibility; do not imply AzerothCore endorsement |
+| DragonUI integrated UI | Not vendored by the public SoloCollections source release | The optional integrated archive is assembled from SoloClientSuite; pinned commits, patch state, hashes, and license review state are recorded in its `upstream/suite-lock.json` |
 
 Game names and marks belong to their respective owners. This project must not
 distribute proprietary game executables or archives.

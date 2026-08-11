@@ -73,6 +73,7 @@ function UI.CreateTitlesPage(parent)
     background:SetPoint("TOPLEFT", panel, "TOPLEFT", 5, -5)
     background:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -5, 5)
     background:SetVertexColor(0.025, 0.019, 0.013, 0.94)
+    SC.WardrobeUI.Layout:StylePanel(panel, background)
 
     local note = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     note:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 11)
@@ -94,6 +95,7 @@ function UI.CreateTitlesPage(parent)
         status:SetPoint("RIGHT", row, "RIGHT", -10, 0)
         row.scName = name
         row.scStatus = status
+        SC.WardrobeUI.Layout:StyleListRow(row, stripe, nil)
         page.scRows[index] = row
     end
 

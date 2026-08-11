@@ -197,6 +197,7 @@ function UI.CreateToysPage(parent)
     gridBackground:SetPoint("TOPLEFT", grid, "TOPLEFT", 5, -5)
     gridBackground:SetPoint("BOTTOMRIGHT", grid, "BOTTOMRIGHT", -5, 5)
     gridBackground:SetVertexColor(0.025, 0.019, 0.013, 0.94)
+    SC.WardrobeUI.Layout:StylePanel(grid, gridBackground)
 
     local empty = UI.CreateEmptyState(grid, "没有符合条件的玩具")
     empty:SetPoint("CENTER", grid, "CENTER", 0, 10)
@@ -297,6 +298,7 @@ function UI.CreateToysPage(parent)
         tile:HookScript("OnLeave", function()
             GameTooltip:Hide()
         end)
+        SC.WardrobeUI.Layout:StyleCard(tile, tile.scHover, tile.scBorder)
         page.scTiles[index] = tile
     end
 

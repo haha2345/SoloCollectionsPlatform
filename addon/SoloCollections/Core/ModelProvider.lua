@@ -39,6 +39,7 @@ function Legacy:Present(request)
         else load() end
     elseif self.kind == "DRESSUP" then
         ok = frame.SetUnit and pcall(frame.SetUnit, frame, request.unit or "player")
+        if ok and request.undress and frame.Undress then pcall(frame.Undress, frame) end
         for _, item in ipairs(request.items or {}) do if frame.TryOn then pcall(frame.TryOn, frame, item) end end
         local callback = ok and request.onReady or request.onUnavailable
         if type(callback) == "function" then pcall(callback, ok and self or "set-unit") end

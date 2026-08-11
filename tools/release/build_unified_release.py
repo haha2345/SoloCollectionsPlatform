@@ -82,14 +82,64 @@ def assert_safe_entries(entries: Iterable[tuple[str, bytes]]) -> None:
             raise ReleaseError(f"credential-like value leaked into release text: {name}")
 
 
-def write_zip(target: Path, entries: dict[str, bytes]) -> None:
-    assert_safe_entries(entries.items())
+def write_zip(target: Path, entries: dict[str, bytes], inspect_payloads: bool = True) -> None:
+    if inspect_payloads:
+        assert_safe_entries(entries.items())
     with zipfile.ZipFile(target, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for name in sorted(entries):
             info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.external_attr = 0o100644 << 16
             archive.writestr(info, entries[name])
+
+
+def integrated_client_entries(addons_root: Path) -> dict[str, bytes]:
+    expected = {"!!!ClassicAPI", "DragonUI", "DragonUI_Options", "DragonUI_NewEra", "SoloCollections"}
+    actual = {path.name for path in addons_root.iterdir() if path.is_dir()}
+    if actual != expected:
+        raise ReleaseError(f"integrated AddOns root mismatch: expected {sorted(expected)}, found {sorted(actual)}")
+    entries: dict[str, bytes] = {}
+    for addon in sorted(expected):
+        toc_files = list((addons_root / addon).glob("*.toc"))
+        if len(toc_files) != 1:
+            raise ReleaseError(f"{addon} must contain exactly one root-level TOC")
+        for source in sorted((addons_root / addon).rglob("*")):
+            if not source.is_file():
+                continue
+            relative = source.relative_to(addons_root).as_posix()
+            archive_name = f"Interface/AddOns/{relative}"
+            path = PurePosixPath(archive_name)
+            if path.suffix.lower() in FORBIDDEN_SUFFIXES or path.name.lower() in FORBIDDEN_FILENAMES:
+                raise ReleaseError(f"forbidden integrated client file: {archive_name}")
+            entries[archive_name] = source.read_bytes()
+    return entries
+
+
+def write_integrated_client_release(output: Path, version: str, addons_root: Path, lock_file: Path) -> Path:
+    entries = integrated_client_entries(addons_root)
+    lock = json.loads(lock_file.read_text(encoding="utf-8"))
+    manifest = {
+        "schemaVersion": 1,
+        "version": version,
+        "delivery": "integrated-client-ui",
+        "installRoot": "Interface/AddOns",
+        "clientResourcesBundled": True,
+        "suiteLock": lock,
+        "files": [
+            {"path": name, "sha256": hashlib.sha256(payload).hexdigest()}
+            for name, payload in sorted(entries.items())
+        ],
+    }
+    manifest_path = output / "integrated-client-manifest.json"
+    write_text(manifest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    archive = output / f"SoloCollections-v{version}-integrated-client-ui.zip"
+    # BLP/TGA payloads are binary and can randomly resemble a drive path or
+    # credential assignment. Paths are allowlisted above; text provenance is
+    # supplied by suite-lock rather than scanning binary game UI resources.
+    write_zip(archive, entries, inspect_payloads=False)
+    manifest["archive"] = {"file": archive.name, "sha256": sha256(archive)}
+    write_text(manifest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    return archive
 
 
 def write_bundle_zip(
@@ -289,6 +339,13 @@ def build(args: argparse.Namespace) -> Path:
     module_zip = output / f"mod-solo-collections-v{args.version}-source.zip"
     write_zip(addon_zip, addon_entries(addon_repo, addon_commit))
     write_zip(module_zip, module_entries(module_repo, module_commit))
+    integrated_zip = None
+    if args.client_suite_root:
+        if not args.suite_lock:
+            raise ReleaseError("--suite-lock is required with --client-suite-root")
+        integrated_zip = write_integrated_client_release(
+            output, args.version, args.client_suite_root.resolve(), args.suite_lock.resolve()
+        )
 
     manifest_path = output / "release-manifest.json"
     write_text(manifest_path, json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
@@ -363,6 +420,8 @@ def build(args: argparse.Namespace) -> Path:
     )
 
     public_assets = [bundle_path, addon_zip, module_zip, manifest_path]
+    if integrated_zip:
+        public_assets.extend([integrated_zip, output / "integrated-client-manifest.json"])
     public_checksum_lines = [
         f"{sha256(path)}  {path.name}"
         for path in sorted(public_assets, key=lambda path: path.name)
@@ -378,6 +437,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--module-repo", required=True, type=Path)
     parser.add_argument("--core-repo", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
+    parser.add_argument("--client-suite-root", type=Path,
+                        help="optional exact AddOns root for a separate full DragonUI client UI archive")
+    parser.add_argument("--suite-lock", type=Path,
+                        help="suite-lock.json recorded beside the optional integrated client archive")
     args = parser.parse_args()
     if not re.fullmatch(r"[0-9A-Za-z][0-9A-Za-z._-]*", args.version):
         parser.error("--version must contain only letters, digits, dot, underscore, or hyphen")

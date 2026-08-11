@@ -26,6 +26,10 @@ Core\M2Camera.lua
 Core\ModelProvider.lua
 UI\Templates.lua
 UI\Launcher.lua
+UI\Wardrobe\Layout.lua
+UI\Wardrobe\ItemPresenter.lua
+UI\Wardrobe\Filters.lua
+UI\Wardrobe\CameraWorkbench.lua
 UI\CompanionBase.lua
 UI\Mounts.lua
 UI\Pets.lua

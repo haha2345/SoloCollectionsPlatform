@@ -675,6 +675,7 @@ local function createSetListRow(parent, width, onClick)
     row.scName = name
     row.scDetail = detail
     row.scStar = star
+    SC.WardrobeUI.Layout:StyleListRow(row, background, selected)
     return row
 end
 
@@ -929,6 +930,13 @@ local function selectItemModelCamera(model)
     local profile = model.scProfile or WARDROBE_MODEL_PROFILES.DEFAULT
     local bodyProfile = getCharacterCameraProfile(model)
     model.scBodyCameraProfile = bodyProfile
+    if model.scCameraStrategy == "NEWERA_POSITION" then
+        model.scClientCameraSentinel = nil
+        model.scUsesClientCamera = false
+        model.scBodyCameraReason = "AB_NEWERA_POSITION"
+        if model.SetCamera then pcall(function() model:SetCamera(1) end) end
+        return
+    end
     model.scClientCameraSentinel = bodyProfile and bodyProfile.sentinel or nil
     model.scUsesClientCamera = model.scClientCameraSentinel ~= nil
     if model.SetCamera then
@@ -1127,9 +1135,11 @@ end
 
 local function applyItemModelRecord(model, record, pageGeneration)
     local objectModel = model.scObjectModel
+    local itemPresenter = SC.WardrobeUI and SC.WardrobeUI.ItemPresenter
     pageGeneration = pageGeneration or ((model.scItemGeneration or 0) + 1)
     model.scItemGeneration = pageGeneration
     if not record then
+        if itemPresenter then itemPresenter:ClearBody(model, "NO_ITEM") end
         if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         model.scRecord = nil
         model.scRecordId = nil
@@ -1179,6 +1189,7 @@ local function applyItemModelRecord(model, record, pageGeneration)
     if model.scUnavailable then model.scUnavailable:Hide() end
 
     if renderKind == "UNAVAILABLE" then
+        if itemPresenter then itemPresenter:ClearBody(model, "ITEM_UNAVAILABLE") end
         if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         model.scRecordId = record.id
         model.scRenderKind = renderKind
@@ -1193,6 +1204,7 @@ local function applyItemModelRecord(model, record, pageGeneration)
     end
 
     if renderKind == "STANDALONE" then
+        if itemPresenter then itemPresenter:ClearBody(model, "STANDALONE_ITEM") end
         if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         model.scRecordId = record.id
         model.scRenderKind = renderKind
@@ -1226,8 +1238,8 @@ local function applyItemModelRecord(model, record, pageGeneration)
     if not unchanged then
         if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         model.scRecordId = record.id
-        model.scPendingItemString = resolveTryOnItem(record.itemId)
-        model.scModelReadyFrames = 0
+        model.scPendingItemString = nil
+        model.scModelReadyFrames = nil
         model.scAppearanceGeneration = (model.scAppearanceGeneration or 0) + 1
         model.scViewAppliedGeneration = nil
         model.scNativeScale = nil
@@ -1237,11 +1249,12 @@ local function applyItemModelRecord(model, record, pageGeneration)
         model.scBaselineGeneration = nil
         model.scViewStage = nil
         model.scViewFrames = nil
-        model.scApplyingAppearance = true
-        model:ClearModel()
-        pcall(function() model:SetUnit("player") end)
         model.scApplyingAppearance = nil
-        queueItemModelView(model, true)
+        itemPresenter:PresentBody(model, resolveTryOnItem(record.itemId), function()
+            if model.scItemGeneration == pageGeneration and model.scRecordId == record.id then
+                queueItemModelView(model, true)
+            end
+        end, function() return model.scCard and model.scCard:IsShown() end)
     end
 end
 
@@ -1260,6 +1273,8 @@ function UI.CreateWardrobePage(parent)
     page.scSetRows = {}
     page.scPieceIcons = {}
     local setSetOffset
+    local wardrobeFilters = SC.WardrobeUI.Filters:Create(page, Catalog)
+    SC.WardrobeUI.CameraWorkbench:Attach(page)
 
     local filterBar = CreateFrame("Frame", nil, page)
     filterBar:SetHeight(78)
@@ -1290,7 +1305,7 @@ function UI.CreateWardrobePage(parent)
 
     local function chooseDedicatedFilter(key, value)
         if not SC.db or not SC.db.filters then return end
-        SC.db.filters[key] = value
+        wardrobeFilters:Set(key, value)
         if key == "slot" and STANDALONE_ITEM_SLOTS[value] then
             ensureWeaponTypeForSlot(SC.db.filters, value)
         end
@@ -1408,6 +1423,7 @@ function UI.CreateWardrobePage(parent)
     previewBackground:SetPoint("TOPLEFT", preview, "TOPLEFT", 5, -5)
     previewBackground:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -5, 5)
     previewBackground:SetVertexColor(0.48, 0.34, 0.18, 0.88)
+    SC.WardrobeUI.Layout:StylePanel(preview, previewBackground)
     preview:Hide()
 
     local model = CreateFrame("DressUpModel", nil, preview)
@@ -1415,6 +1431,9 @@ function UI.CreateWardrobePage(parent)
     model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
+    local setPresenter = SC.WardrobeUI.ItemPresenter:AttachSet(model, function()
+        return page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
+    end)
 
     local name = preview:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     name:SetPoint("TOPLEFT", preview, "TOPLEFT", 16, -13)
@@ -1447,6 +1466,11 @@ function UI.CreateWardrobePage(parent)
     applySet:SetText("应用套装")
     applySet:Disable()
     page.scApplySet = applySet
+    local wardrobePublic = SC.UIPlatform and SC.UIPlatform:GetPublic()
+    if wardrobePublic then
+        wardrobePublic.Components:SkinButton(reset)
+        wardrobePublic.Components:SkinButton(applySet)
+    end
 
     local pieces = CreateFrame("Frame", nil, preview)
     pieces:SetPoint("TOP", name, "BOTTOM", 0, -8)
@@ -1507,6 +1531,7 @@ function UI.CreateWardrobePage(parent)
         piece:SetScript("OnLeave", function() GameTooltip:Hide() end)
         piece.scIcon = icon
         piece.scBorder = border
+        SC.WardrobeUI.Layout:StyleItemButton(piece, nil)
         piece:Hide()
         page.scPieceIcons[index] = piece
     end
@@ -1566,6 +1591,7 @@ function UI.CreateWardrobePage(parent)
         piece.scBorder:SetBorderColor(red, green, blue, collected and 1.00 or 0.74)
         piece.scQuality = quality
         piece.scCollected = collected and true or false
+        SC.WardrobeUI.Layout:StyleItemButton(piece, quality)
     end
 
     -- Preview uses exactly one deterministic source item per selected-variant
@@ -1620,6 +1646,7 @@ function UI.CreateWardrobePage(parent)
         page.scAdvanceSetPreview = nil
         model.scSetPreviewGeneration = page.scSetPreviewGeneration
         model.scSetPreviewPending = nil
+        if setPresenter then setPresenter:Clear("SET_PREVIEW_INVALIDATED") end
     end
 
     local function queueSetPreview(record)
@@ -1635,43 +1662,22 @@ function UI.CreateWardrobePage(parent)
         page.scSetPreviewPending = pending
         model.scSetPreviewGeneration = generation
         model.scSetPreviewPending = pending
-        preparePlayerModel()
-
-        page.scAdvanceSetPreview = function()
-            if page.scSetPreviewPending ~= pending or
-                page.scSetPreviewGeneration ~= pending.generation or
-                model.scSetPreviewGeneration ~= pending.generation then
-                return false
-            end
-            if not page:IsShown() or not SC.db or SC.db.wardrobeTab ~= "SETS" or
-                page.scSetSelectedId ~= pending.recordId then
-                return false
-            end
-
-            -- Wait two render ticks after ClearModel/SetUnit. DressUpModel may
-            -- otherwise reapply the player's current equipment after pieces
-            -- have been applied.
-            pending.renderTicks = pending.renderTicks + 1
-            if pending.renderTicks < 2 then
-                return true
-            end
-
-            pcall(function() model:Undress() end)
-            for _, previewItem in ipairs(pending.items) do
-                if page.scSetPreviewPending ~= pending or
-                    page.scSetPreviewGeneration ~= pending.generation then
-                    return false
-                end
-                local itemString = resolveTryOnItem(previewItem.previewSourceItemId)
-                pcall(function() model:TryOn(itemString) end)
-            end
-            if page.scSetPreviewPending == pending and
-                page.scSetPreviewGeneration == pending.generation then
-                page.scSetPreviewPending = nil
-                model.scSetPreviewPending = nil
-            end
-            return false
+        local itemStrings = {}
+        for _, previewItem in ipairs(previewItems) do
+            itemStrings[#itemStrings + 1] = resolveTryOnItem(previewItem.previewSourceItemId)
         end
+        setPresenter:Present({
+            unit = "player",
+            undress = true,
+            settleTicks = 2,
+            items = itemStrings,
+            onReady = function()
+                if page.scSetPreviewPending == pending and page.scSetSelectedId == pending.recordId then
+                    page.scSetPreviewPending = nil
+                    model.scSetPreviewPending = nil
+                end
+            end,
+        })
         return previewItems
     end
 
@@ -1718,6 +1724,7 @@ function UI.CreateWardrobePage(parent)
         setProgress:Show()
     end
 
+    if SC.ModelProvider.GetMode("DRESSUP") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
@@ -1726,9 +1733,6 @@ function UI.CreateWardrobePage(parent)
     end)
     model:SetScript("OnMouseUp", function() clearDragState() end)
     model:SetScript("OnUpdate", function(self)
-        if page.scAdvanceSetPreview and not page.scAdvanceSetPreview() then
-            page.scAdvanceSetPreview = nil
-        end
         if self.scDragging and IsMouseButtonDown("LeftButton") then
             local cursorX = GetCursorPosition()
             local delta = cursorX - (self.scLastCursorX or cursorX)
@@ -1745,7 +1749,10 @@ function UI.CreateWardrobePage(parent)
             pcall(function() self:SetPosition(0, 0, self.scZoom) end)
         end
     end)
-    reset:SetScript("OnClick", resetModelView)
+    end
+    reset:SetScript("OnClick", function()
+        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() else resetModelView() end
+    end)
     applySet:SetScript("OnClick", function()
         local record = page.scSetSelectedRecord
         if not record or not record.collected then
@@ -1830,6 +1837,21 @@ function UI.CreateWardrobePage(parent)
     tuningMetadata:SetJustifyH("LEFT")
     tuningMetadata:SetJustifyV("TOP")
     tuningMetadata:SetTextColor(0.63, 0.59, 0.51)
+
+    local tuningStrategy = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelButtonTemplate")
+    tuningStrategy:SetWidth(118)
+    tuningStrategy:SetHeight(21)
+    tuningStrategy:SetPoint("TOPLEFT", cameraTuningPanel, "TOPLEFT", 12, -70)
+    local function syncTuningStrategyLabel()
+        local strategy = page.scCameraWorkbench and page.scCameraWorkbench.strategy
+        tuningStrategy:SetText(strategy == "NEWERA_POSITION" and "A: NewEra 位移" or "B: Profile/SoloCam")
+    end
+    tuningStrategy:SetScript("OnClick", function()
+        page.scCameraWorkbench:ToggleStrategy()
+        syncTuningStrategyLabel()
+        page:Refresh()
+    end)
+    syncTuningStrategyLabel()
 
     local tuningClose = CreateFrame("Button", nil, cameraTuningPanel, "UIPanelCloseButton")
     tuningClose:SetPoint("TOPRIGHT", cameraTuningPanel, "TOPRIGHT", 2, 2)
@@ -2921,6 +2943,7 @@ function UI.CreateWardrobePage(parent)
         itemModel.scName = itemName
         itemModel.scFavorite = favorite
         itemModel.scCollectionState = collectionState
+        SC.WardrobeUI.Layout:StyleCard(itemCard, cardBackground, border)
         itemCard:Hide()
         itemModel:Hide()
         page.scItemModels[index] = itemModel
@@ -3015,6 +3038,7 @@ function UI.CreateWardrobePage(parent)
     setScrollbar:SetThumbTexture(setScrollbarThumb)
     local setScrollbarBorder = UI.CreateThinCardBorder(setScrollbar, 1)
     setScrollbarBorder:SetBorderColor(0.33, 0.34, 0.35, 0.62)
+    if wardrobePublic then wardrobePublic.Components:SkinScrollbar(setScrollbar) end
 
     setScrollbar:SetScript("OnValueChanged", function(self, value)
         if page.scSyncingSetScrollbar then return end
@@ -3190,8 +3214,7 @@ function UI.CreateWardrobePage(parent)
         preview:Hide()
         cameraTuningButton:Show()
         local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
-        local records, currentPage, totalPages = Catalog.Query("APPEARANCES",
-            SC.db.query, SC.db.filters, page.scItemPage, itemPageSize)
+        local records, currentPage, totalPages = wardrobeFilters:QueryItems(page.scItemPage, itemPageSize)
         page.scItemPage = currentPage
         page.scItemTotalPages = totalPages
         itemControls:SetPage(currentPage, totalPages)
@@ -3317,12 +3340,7 @@ function UI.CreateWardrobePage(parent)
         preview:ClearAllPoints()
         preview:SetPoint("TOPLEFT", setsPanel, "TOPRIGHT", 16, 0)
         preview:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", 0, 0)
-        local setFilters = {}
-        for key, value in pairs(SC.db.filters) do
-            setFilters[key] = value
-        end
-        setFilters.slot = "ALL"
-        local allRecords = Catalog.QueryAll("SETS", SC.db.query, setFilters)
+        local allRecords, setFilters = wardrobeFilters:QuerySets()
         page.scSetRecordCount = #allRecords
         local maxOffset = math.max(0, #allRecords - VISIBLE_SET_ROWS)
         setSetOffset(page.scSetOffset, true)
