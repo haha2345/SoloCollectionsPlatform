@@ -22,8 +22,18 @@ function DressUp:Begin(presenter, request, generation)
             presenter:Ready(generation)
         end
     end
-    presenter:Schedule(generation, 0, advance)
+    local settleTicks = math.max(0, tonumber(request.settleTicks) or 0)
+    local function settle()
+        if not presenter:IsCurrent(generation) then return end
+        if settleTicks > 0 then
+            settleTicks = settleTicks - 1
+            presenter:Schedule(generation, 0, settle)
+            return
+        end
+        if request.undress and frame.Undress then pcall(frame.Undress, frame) end
+        advance()
+    end
+    presenter:Schedule(generation, 0, settle)
 end
 
 NE.model.Register("DRESSUP", DressUp)
-

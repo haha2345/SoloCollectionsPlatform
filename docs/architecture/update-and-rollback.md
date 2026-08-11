@@ -6,7 +6,8 @@
 2. 运行 `tools/Sync-Upstream.ps1`，输入三个 clone 路径和明确 commit。
 3. 更新 `upstream/suite-lock.json` 的 commit、TOC、目录 Hash、日期与 patch 状态。
 4. 运行布局检查，再构建到 `build/`。
-5. 不在此流程中部署真实客户端。
+5. 运行 `tools/Package-ClientSuite.ps1 -Version <id>`，保留 ZIP 的 SHA-256 输出和逐文件 JSON manifest。
+6. 不在此流程中部署真实客户端。
 
 ## Rollback
 
@@ -14,3 +15,4 @@
 - 构建回退：删除仓库内忽略的 `build/`，重新从旧 commit 构建。
 - 客户端回退：必须在另行授权的部署步骤中先备份目标 AddOns，再以 manifest 校验恢复；本仓库工具不直接写真实客户端。
 
+项目 patch commit 由本仓库 Git 历史记录；上游 commit 和每个 AddOn 的目录 Hash 由 suite lock 记录。更新后必须同时提交 vendor 变更、lock 变更和相关文档，不能只改 Hash。
