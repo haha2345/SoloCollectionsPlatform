@@ -15,8 +15,16 @@ local TAB_DEFINITIONS = {
     { key = "PETS", label = "小宠物", title = "小宠物" },
     { key = "TOYS", label = "玩具箱", title = "玩具箱" },
     { key = "WARDROBE", label = "外观", title = "外观" },
+    { key = "TRANSMOG_LAB", label = "幻化实验室", title = "幻化实验室 · 实验" },
     { key = "TITLES", label = "头衔", title = "头衔（只读）" },
 }
+
+local function isTabAvailable(key)
+    if key == "TRANSMOG_LAB" then
+        return SC.db and SC.db.experimental and SC.db.experimental.transmogLabEnabled == true
+    end
+    return true
+end
 
 local function titleRecords()
     local records = {}
@@ -145,6 +153,7 @@ local function clampFrame(frame)
 end
 
 local function saveFramePosition(frame)
+    if SC.UIPlatform and SC.UIPlatform:IsDragonUIShell() then return end
     if not SC.db then
         return
     end
@@ -158,6 +167,11 @@ local function saveFramePosition(frame)
 end
 
 local function restoreFramePosition(frame)
+    if SC.UIPlatform and SC.UIPlatform:IsDragonUIShell() then
+        SC.UIPlatform:RestoreWindow(frame)
+        clampFrame(frame)
+        return
+    end
     local saved = SC.db and SC.db.frame
     frame:ClearAllPoints()
     frame:SetPoint(
@@ -193,6 +207,8 @@ function UI.RefreshActivePage()
         activeKey = "TOYS"
     elseif SC.db.mainTab == "WARDROBE" then
         activeKey = "WARDROBE"
+    elseif SC.db.mainTab == "TRANSMOG_LAB" then
+        activeKey = "TRANSMOG_LAB"
     elseif SC.db.mainTab == "TITLES" then
         activeKey = "TITLES"
     end
@@ -246,7 +262,7 @@ end
 function UI.SetMainTab(key)
     local selected = "MOUNTS"
     for _, definition in ipairs(TAB_DEFINITIONS) do
-        if definition.key == key then
+        if definition.key == key and isTabAvailable(key) then
             selected = key
             break
         end
@@ -299,58 +315,73 @@ function UI.CreateCollectionsFrame()
         return UI.CollectionsFrame
     end
 
+    if SC.UIPlatform and not SC.UIPlatform:CanCreateUI() then return nil end
     local frame = UI.CreateJournalFrame(UIParent, "SoloCollectionsJournal", JOURNAL_WIDTH, JOURNAL_HEIGHT)
+    local dragonShell = UI.IsDragonUIShell and UI.IsDragonUIShell()
     frame:SetMovable(true)
     frame:EnableMouse(true)
     frame:RegisterForDrag("LeftButton")
     frame:SetClampedToScreen(true)
     frame:Hide()
 
-    frame:SetScript("OnDragStart", function(self)
-        self:StartMoving()
-    end)
-    frame:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-        clampFrame(self)
-        saveFramePosition(self)
-    end)
+    if not dragonShell then
+        frame:SetScript("OnDragStart", function(self)
+            self:StartMoving()
+        end)
+        frame:SetScript("OnDragStop", function(self)
+            self:StopMovingOrSizing()
+            clampFrame(self)
+            saveFramePosition(self)
+        end)
+    end
     frame:SetScript("OnShow", function(self)
         clampFrame(self)
         UI.RefreshActivePage()
     end)
 
-    local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-    closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -9)
+    if dragonShell and SC.UIPlatform then SC.UIPlatform:PersistWindow(frame, frame) end
+
+    local closeButton = dragonShell and frame.CloseButton or CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+    if not dragonShell then closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -9) end
+    closeButton:SetScript("OnClick", function() frame:Hide() end)
 
     local progress = UI.CreateRetailProgressBar(frame, 286)
     progress:SetPoint("TOP", frame, "TOP", 0, -51)
 
-    local pageTitle = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    pageTitle:SetPoint("TOP", frame, "TOP", 0, -17)
+    local pageTitle = dragonShell and frame.Title or frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    if not dragonShell then pageTitle:SetPoint("TOP", frame, "TOP", 0, -17) end
     pageTitle:SetTextColor(1, 0.82, 0.18)
 
-    local portraitFrame = CreateFrame("Frame", nil, frame)
-    portraitFrame:SetWidth(80)
-    portraitFrame:SetHeight(80)
-    portraitFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -7, 5)
-    portraitFrame:SetFrameLevel(frame:GetFrameLevel() + 4)
+    local portraitFrame
+    local portrait
+    local portraitRing
+    if dragonShell and frame.portrait then
+        portraitFrame = frame
+        portrait = frame.portrait
+        portraitRing = frame.portraitRing or frame.PortraitFrame
+        portrait:SetTexture(UI.Media.mountPortrait)
+        portrait:SetTexCoord(0, 1, 0, 1)
+    else
+        portraitFrame = CreateFrame("Frame", nil, frame)
+        portraitFrame:SetWidth(80)
+        portraitFrame:SetHeight(80)
+        portraitFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -7, 5)
+        portraitFrame:SetFrameLevel(frame:GetFrameLevel() + 4)
 
-    local portrait = portraitFrame:CreateTexture(nil, "ARTWORK")
-    portrait:SetWidth(62)
-    portrait:SetHeight(62)
-    portrait:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
-    portrait:SetTexture(UI.Media.mountPortrait)
-    portrait:SetTexCoord(0, 1, 0, 1)
+        portrait = portraitFrame:CreateTexture(nil, "ARTWORK")
+        portrait:SetWidth(62)
+        portrait:SetHeight(62)
+        portrait:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
+        portrait:SetTexture(UI.Media.mountPortrait)
+        portrait:SetTexCoord(0, 1, 0, 1)
 
-    local portraitRing = portraitFrame:CreateTexture(nil, "OVERLAY")
-    portraitRing:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
-    portraitRing:SetWidth(80)
-    portraitRing:SetHeight(80)
-    portraitRing:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
-    -- MiniMap-TrackingBorder stores its complete ring in the top-left 40px
-    -- of a 64px texture. Crop that region before stretching so the ring is
-    -- centered and fully encloses the pre-masked 62px circular portrait.
-    portraitRing:SetTexCoord(0, 0.625, 0, 0.625)
+        portraitRing = portraitFrame:CreateTexture(nil, "OVERLAY")
+        portraitRing:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+        portraitRing:SetWidth(80)
+        portraitRing:SetHeight(80)
+        portraitRing:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
+        portraitRing:SetTexCoord(0, 0.625, 0, 0.625)
+    end
 
     local collectionCount = UI.CreateCollectionCount(frame)
     collectionCount:SetPoint("TOPLEFT", frame, "TOPLEFT", 70, -42)
@@ -393,18 +424,20 @@ function UI.CreateCollectionsFrame()
     frame.scTabTitles = {}
     local previousTab
     for _, definition in ipairs(TAB_DEFINITIONS) do
-        local tabKey = definition.key
-        local button = UI.CreateRetailBottomTab(frame, definition.label, function()
-            UI.SetMainTab(tabKey)
-        end)
-        if previousTab then
-            button:SetPoint("TOPLEFT", previousTab, "TOPRIGHT", 6, 0)
-        else
-            button:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 11, 2)
+        if isTabAvailable(definition.key) then
+            local tabKey = definition.key
+            local button = UI.CreateRetailBottomTab(frame, definition.label, function()
+                UI.SetMainTab(tabKey)
+            end)
+            if previousTab then
+                button:SetPoint("TOPLEFT", previousTab, "TOPRIGHT", 6, 0)
+            else
+                button:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 11, 2)
+            end
+            frame.scMainTabs[tabKey] = button
+            frame.scTabTitles[tabKey] = definition.title
+            previousTab = button
         end
-        frame.scMainTabs[tabKey] = button
-        frame.scTabTitles[tabKey] = definition.title
-        previousTab = button
     end
 
     frame.scTitle = pageTitle
@@ -431,6 +464,9 @@ function UI.CreateCollectionsFrame()
         WARDROBE = UI.CreateWardrobePage(contentHost),
         TITLES = UI.CreateTitlesPage(contentHost),
     }
+    if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
+        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(contentHost)
+    end
 
     UI.CollectionsFrame = frame
     search:SetText((SC.db and SC.db.query) or "")
@@ -445,12 +481,17 @@ end
 
 function UI.ToggleJournal()
     local frame = UI.CreateCollectionsFrame()
+    if not frame then return end
     if frame:IsShown() then
         frame:Hide()
     else
         restoreFramePosition(frame)
         frame:Show()
     end
+end
+
+function UI.HideJournal()
+    if UI.CollectionsFrame then UI.CollectionsFrame:Hide() end
 end
 
 local displayWatcher = CreateFrame("Frame")

@@ -35,6 +35,7 @@ function UI.CreateLauncher()
     if UI.Launcher then
         return UI.Launcher
     end
+    if SC.UIPlatform and not SC.UIPlatform:CanCreateUI() then return nil end
 
     local button = CreateFrame("Button", "SoloCollectionsLauncher", UIParent)
     button:SetWidth(46)
@@ -73,6 +74,13 @@ function UI.CreateLauncher()
 
     button:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
 
+    local public = SC.UIPlatform and SC.UIPlatform:GetPublic()
+    if public and SC.UIPlatform:IsDragonUIShell() then
+        plate:SetVertexColor(0.035, 0.025, 0.018, 0.98)
+        ring:SetVertexColor(1.00, 0.72, 0.16, 1)
+        public.Components:SkinButton(button)
+    end
+
     button:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_LEFT")
         GameTooltip:SetText("收藏")
@@ -109,11 +117,15 @@ function UI.ResetPositions()
     if UI.Launcher then
         applySavedPosition(UI.Launcher)
     end
-    if UI.CollectionsFrame and SC.db and SC.db.frame then
-        local saved = SC.db.frame
-        UI.CollectionsFrame:ClearAllPoints()
-        UI.CollectionsFrame:SetPoint(saved.point, UIParent, saved.relativePoint, saved.x, saved.y)
-        UI.CollectionsFrame:SetClampedToScreen(true)
+    if UI.CollectionsFrame then
+        if SC.UIPlatform and SC.UIPlatform:IsDragonUIShell() then
+            SC.UIPlatform:RestoreWindow(UI.CollectionsFrame)
+        elseif SC.db and SC.db.frame then
+            local saved = SC.db.frame
+            UI.CollectionsFrame:ClearAllPoints()
+            UI.CollectionsFrame:SetPoint(saved.point, UIParent, saved.relativePoint, saved.x, saved.y)
+            UI.CollectionsFrame:SetClampedToScreen(true)
+        end
     end
     if UI.SyncJournalFromDatabase then
         UI.SyncJournalFromDatabase()

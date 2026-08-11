@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** 第一批实施中。Tasks 0-2 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端或视觉验收。
+**状态：** Tasks 0-5 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端或视觉验收。
 
 ---
 
@@ -453,7 +453,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: expose stable DragonUI NewEra public API`
 
-### Task 3：接入 SoloCollections 平台适配层
+### Task 3：接入 SoloCollections 平台适配层（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
@@ -479,7 +479,7 @@ SoloCollections 主窗口
 
 **建议提交：** `refactor: route collection UI through DragonUI platform`
 
-### Task 4：第一阶段整体替换主窗口外壳
+### Task 4：第一阶段整体替换主窗口外壳（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
@@ -502,7 +502,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: replace collection journal shell with DragonUI chrome`
 
-### Task 5：增加“幻化实验室”独立标签和空页面
+### Task 5：增加“幻化实验室”独立标签和空页面（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 

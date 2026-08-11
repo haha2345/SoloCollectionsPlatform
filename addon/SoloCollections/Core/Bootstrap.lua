@@ -1,11 +1,18 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 4,
+    schemaVersion = 5,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
     mainTab = "MOUNTS",
     wardrobeTab = "ITEMS",
+    uiPlatform = {
+        uiShell = SC.DEFAULT_UI_SHELL or "DRAGONUI",
+        positionMigrated = false,
+    },
+    experimental = {
+        transmogLabEnabled = SC.BUILD_CHANNEL == "development",
+    },
     query = "",
     filters = {
         collected = true,
@@ -39,7 +46,10 @@ local VALID_POINTS = {
     BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
 }
 
-local VALID_MAIN_TABS = { MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true, TITLES = true }
+local VALID_MAIN_TABS = {
+    MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true,
+    TRANSMOG_LAB = true, TITLES = true,
+}
 local VALID_WARDROBE_TABS = { ITEMS = true, SETS = true }
 local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()
 local VALID_SLOTS = {
@@ -385,8 +395,25 @@ local function normalizeDatabase(db)
     end
 
     normalizePosition(db, "launcher", DEFAULTS.launcher)
-    normalizePosition(db, "frame", DEFAULTS.frame)
+    repairScalar(db, "uiPlatform", "table", {})
+    repairEnum(db.uiPlatform, "uiShell", { LEGACY = true, DRAGONUI = true }, DEFAULTS.uiPlatform.uiShell)
+    repairScalar(db.uiPlatform, "positionMigrated", "boolean", DEFAULTS.uiPlatform.positionMigrated)
+    if db.uiPlatform.positionMigrated then
+        db.frame = nil
+    else
+        normalizePosition(db, "frame", DEFAULTS.frame)
+    end
+    repairScalar(db, "experimental", "table", {})
+    repairScalar(
+        db.experimental,
+        "transmogLabEnabled",
+        "boolean",
+        DEFAULTS.experimental.transmogLabEnabled
+    )
     repairEnum(db, "mainTab", VALID_MAIN_TABS, DEFAULTS.mainTab)
+    if db.mainTab == "TRANSMOG_LAB" and not db.experimental.transmogLabEnabled then
+        db.mainTab = DEFAULTS.mainTab
+    end
     repairEnum(db, "wardrobeTab", VALID_WARDROBE_TABS, DEFAULTS.wardrobeTab)
     repairScalar(db, "query", "string", DEFAULTS.query)
 
@@ -434,6 +461,9 @@ function SC:ResetLayoutAndFilters()
     if type(SoloCollectionsDB) ~= "table" then
         SoloCollectionsDB = {}
     end
+    if self.UIPlatform and self.UIPlatform.ResetWindowPosition then
+        self.UIPlatform:ResetWindowPosition()
+    end
     SoloCollectionsDB.launcher = nil
     SoloCollectionsDB.frame = nil
     SoloCollectionsDB.mainTab = nil
@@ -448,6 +478,7 @@ function SC:ResetLayoutAndFilters()
 end
 
 function SC:ToggleJournal()
+    if self.UIPlatform and not self.UIPlatform:CanCreateUI() then return end
     if self.UI.ToggleJournal then
         self.UI.ToggleJournal()
     end
@@ -466,9 +497,10 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
             return
         end
         SC:InitializeDatabase()
-        if SC.UI.CreateLauncher then
+        if SC.UIPlatform and SC.UIPlatform:CanCreateUI() and SC.UI.CreateLauncher then
             SC.UI.CreateLauncher()
         end
+        if SC.UIPlatform then SC.UIPlatform:RegisterFeature() end
     elseif event == "PLAYER_LOGIN" then
         if SC.Bridge and SC.Bridge.OnLogin then
             SC.Bridge.OnLogin()
@@ -502,6 +534,13 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         SC.Bridge.Connect(true)
         if SC.Bridge.ConnectSC2 then
             SC.Bridge.ConnectSC2(true)
+        end
+    elseif string.match(command, "^shell%s+") then
+        local mode = string.match(command, "^shell%s+(%S+)$")
+        if SC.UIPlatform and SC.UIPlatform:SetShellMode(mode) then
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections UI shell: " .. string.upper(mode) .. "（/reload 后生效）")
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("用法：/sc shell dragonui 或 /sc shell legacy")
         end
     else
         SC:ToggleJournal()
