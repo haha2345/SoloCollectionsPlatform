@@ -69,6 +69,14 @@ Textures\Assets.lua
 integration\Register.lua
 integration\Options.lua
 
+# --- shared model presentation service: one scheduler, generation-safe providers ---
+model\Lifecycle.lua
+model\Controls.lua
+model\Presenter.lua
+model\CreaturePresenter.lua
+model\DressUpPresenter.lua
+model\DisplayPresenter.lua
+
 # --- stable public platform API: the only supported surface for external AddOns ---
 public\API.lua
 public\Theme.lua

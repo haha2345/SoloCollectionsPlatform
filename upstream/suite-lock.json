@@ -39,8 +39,8 @@
       "url": "https://github.com/ghbset/DragonUI_NewEra.git",
       "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
       "tocVersion": "0.2.0",
-      "directoryHash": "29744054735998f390fdc9e7716e2fd473fa2f9b8b1969c8cd83ef98803c90fa",
-      "localPatchState": "project-patched: public-api-v1, canonical module state, position migration, and shared component extensions",
+      "directoryHash": "28cd1941fa40126c89ff873ef744d0844af180c22ca676bc33aeaea6cc7fb500",
+      "localPatchState": "project-patched: public-api-v1, canonical module state, shared components, and generation-safe model presenters",
       "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
     },
     {
@@ -49,8 +49,8 @@
       "url": "https://github.com/haha2345/SoloCollections.git",
       "commit": "df7e873059fcaeb8c3af6496b3c49b5a1f5fd818",
       "tocVersion": "0.2.0",
-      "directoryHash": "5b29eae7de05ab61b240288f438bae9201fe673d24834bd604bb394be4fc6140",
-      "localPatchState": "sibling-source; migration branch feat/dragonui-collections-shell; tasks 3-5 platform shell and local wardrobe lab",
+      "directoryHash": "9217aa6d969c61b6f50ba6be9c3d0d59ce1a77b40dac8a7dfb9a4640f480a051",
+      "localPatchState": "sibling-source; migration branch feat/dragonui-collections-shell; tasks 3-8 wardrobe draft interaction and shared model consumers",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     }
   ],

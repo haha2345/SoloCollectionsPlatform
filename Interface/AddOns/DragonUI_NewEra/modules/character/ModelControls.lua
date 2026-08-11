@@ -303,6 +303,15 @@ local function buildControlBar(model, opts)
 end
 
 CP.BuildModelControls = buildControlBar
+if NE.model and NE.model.Controls then
+  -- The Character panel remains the implementation owner; external panels reach it only
+  -- through Public.Model:AttachControls, which resolves this shared builder dynamically.
+  function NE.model.Controls:Attach(model, options)
+    local ok, result = pcall(buildControlBar, model, options or {})
+    if not ok then return nil, tostring(result) end
+    return result or (model and model._neControlBar), nil
+  end
+end
 
 local boot = CreateFrame("Frame")
 boot:RegisterEvent("PLAYER_LOGIN")

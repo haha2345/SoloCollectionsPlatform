@@ -456,7 +456,7 @@ local function createJournal(kind)
   -- ------------------------------------------------------------------------
   -- 3D model + info panel (right inset)
   -- ------------------------------------------------------------------------
-  local model, infoIcon, infoName, infoSource, infoLore, emptyLabel, notCollectedHint
+  local model, presenter, infoIcon, infoName, infoSource, infoLore, emptyLabel, notCollectedHint
 
   local function buildDisplay()
     -- Generic model backdrop (retail's MountJournal-BG). Visible slice is left 0..0.785.
@@ -481,14 +481,15 @@ local function createJournal(kind)
     -- Same modern DF model control bar as the Character panel (zoom in/out, rotate L/R, reset,
     -- hover-reveal, click-drag rotate/pan, wheel-zoom) instead of the old bespoke drag-rotate +
     -- native rotation-art button pair.
-    if NE.charpanel and NE.charpanel.BuildModelControls then
+    if NE.Public and NE.Public.Model then
       -- rotateButtons MUST be forced to an empty table: the shared helper's own default targets the
       -- Character panel's GLOBAL rotate-button names by _G lookup — without this override, building
       -- controls for THIS model would reach into and hide the Character panel's own buttons too.
-      pcall(NE.charpanel.BuildModelControls, model, {
+      NE.Public.Model:AttachControls(model, {
         rotateButtons = {},
         panelCheck = function() return C.frame and C.frame:IsShown() and C.activeKind == kind end,
       })
+      presenter = NE.Public.Model:CreatePresenter("CREATURE", model)
     end
 
     -- Shown over the model area instead of a 3D preview when the selected row is not yet learned
@@ -561,6 +562,7 @@ local function createJournal(kind)
   local function showModel(data)
     J.selected = data
     if not data then
+      if presenter then presenter:Clear("NO_SELECTION") end
       if model then model:Hide() end
       if notCollectedHint then notCollectedHint:Hide() end
       if infoIcon then infoIcon:SetTexture(nil) end
@@ -578,13 +580,16 @@ local function createJournal(kind)
     if model then
       if previewID then
         model:Show()
-        pcall(model.SetCreature, model, previewID)
-        -- `.rotation` (not the old `._facing`) is the field the shared modern control bar
-        -- (ModelControls.lua) reads as its drag-rotate baseline — keep it in sync with the actual
-        -- visual reset here, or the next drag would jump from a stale angle.
-        model.rotation = 0
-        pcall(model.SetRotation, model, 0)
+        if presenter then
+          presenter:Present({ creatureEntry = previewID, rotation = 0,
+            onUnavailable = function() if model then model:Hide() end end })
+        else
+          pcall(model.SetCreature, model, previewID)
+          model.rotation = 0
+          pcall(model.SetRotation, model, 0)
+        end
       else
+        if presenter then presenter:Clear("NOT_COLLECTED") end
         model:Hide()
       end
     end

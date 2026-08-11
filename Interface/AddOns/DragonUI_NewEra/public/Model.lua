@@ -4,15 +4,24 @@ if not Public then return end
 
 Public.Model = Public.Model or {}
 
-function Public.Model:CreatePresenter()
-    return nil, "model-presenter-not-installed"
+function Public.Model:CreatePresenter(kind, frame, options)
+    if not (NE.model and type(NE.model.Create) == "function") then
+        return nil, "model-presenter-not-installed"
+    end
+    return NE.model.Create(kind, frame, options)
 end
 
-function Public.Model:AttachControls()
-    return nil, "model-controls-not-installed"
+function Public.Model:AttachControls(model, options)
+    if not (NE.model and NE.model.Controls and type(NE.model.Controls.Attach) == "function") then
+        return nil, "model-controls-not-installed"
+    end
+    return NE.model.Controls:Attach(model, options)
 end
 
--- Task 7 installs the shared presenter service and flips these capabilities.
-Public._SetCapability("model.presenter", false)
-Public._SetCapability("model.controls", false)
+function Public.Model:GetPendingTaskCount()
+    return NE.model and NE.model.Lifecycle and NE.model.Lifecycle:GetPendingCount() or 0
+end
 
+Public._SetCapability("model.presenter", NE.model and type(NE.model.Create) == "function")
+Public._SetCapability("model.controls", NE.model and NE.model.Controls and type(NE.model.Controls.Attach) == "function")
+Public._SetCapability("model.generation-safe", NE.model and NE.model.Lifecycle ~= nil)
