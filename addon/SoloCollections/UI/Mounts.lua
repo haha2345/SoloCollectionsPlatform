@@ -8,6 +8,8 @@ local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
+local TWO_PI = math.pi * 2
+local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -70,7 +72,9 @@ function UI.CreateMountsPage(parent)
     }) or nil
     local function rotateModel(delta)
         model.rotation = (model.rotation or DEFAULT_ROTATION) + delta
-        if model.SetRotation then model:SetRotation(model.rotation) end
+        if model.rotation < 0 then model.rotation = model.rotation + TWO_PI end
+        if model.rotation > TWO_PI then model.rotation = model.rotation - TWO_PI end
+        if model.SetRotation then model:SetRotation(model.rotation, false) end
     end
     local rotateLeft, rotateRight = UI.EzCollections:CreateRotationButtons(model, function()
         rotateModel(-0.18)
@@ -189,6 +193,22 @@ function UI.CreateMountsPage(parent)
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
+        model:SetScript("OnUpdate", nil)
+    end
+
+    local function updateModelDrag(self)
+        if not self.scDragging or not IsMouseButtonDown("LeftButton") then
+            clearDragState()
+            return
+        end
+        local cursorX = GetCursorPosition()
+        local previousX = self.scLastCursorX or cursorX
+        self.scLastCursorX = cursorX
+        self.rotation = (self.rotation or DEFAULT_ROTATION) +
+            ((cursorX - previousX) * DRAG_ROTATION_CONSTANT)
+        if self.rotation < 0 then self.rotation = self.rotation + TWO_PI end
+        if self.rotation > TWO_PI then self.rotation = self.rotation - TWO_PI end
+        self:SetRotation(self.rotation, false)
     end
 
     local function getNativeModelScale()
@@ -550,29 +570,12 @@ function UI.CreateMountsPage(parent)
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
-            local cursorX = GetCursorPosition()
-            local scale = self:GetEffectiveScale()
-            self.scLastCursorX = cursorX / scale
+            self.scLastCursorX = GetCursorPosition()
+            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
     model:SetScript("OnMouseUp", function()
         clearDragState()
-    end)
-    model:SetScript("OnUpdate", function(self)
-        if not self.scDragging then
-            return
-        end
-        if not IsMouseButtonDown("LeftButton") then
-            clearDragState()
-            return
-        end
-        local cursorX = GetCursorPosition()
-        local scale = self:GetEffectiveScale()
-        cursorX = cursorX / scale
-        local previousX = self.scLastCursorX or cursorX
-        self.scLastCursorX = cursorX
-        self.rotation = (self.rotation or DEFAULT_ROTATION) + ((cursorX - previousX) * 0.012)
-        self:SetRotation(self.rotation)
     end)
     model:SetScript("OnMouseWheel", function(self, delta)
         if not page.scModelReady or not self.SetModelScale or not self.GetModelScale then

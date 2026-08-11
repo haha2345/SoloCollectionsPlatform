@@ -1087,6 +1087,14 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     mount_actions_by_id = {
         int(entry["collectionId"]): entry for entry in model["mountActions"]["collections"]
     }
+    mount_journal = _read_json(repo_root / "catalog/source/mount_journal_metadata.json")
+    mount_journal_by_id = {
+        int(entry["collectionId"]): entry for entry in mount_journal["entries"]
+    }
+    _require(
+        set(mount_journal_by_id) == set(mount_actions_by_id),
+        "mount journal metadata must cover every canonical mount action",
+    )
     companion_actions_by_id = {
         int(entry["collectionId"]): entry for entry in model["companionActions"]["entries"]
     }
@@ -1121,6 +1129,13 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
             action = mount_actions_by_id[int(entry["collectionId"])]
             entry["spellId"] = int(action["canonicalSpellId"])
             entry["faction"] = faction_by_spell.get(entry["spellId"])
+            journal = mount_journal_by_id[int(entry["collectionId"])]
+            _require(entry["spellId"] == int(journal["spellId"]),
+                     f"mount journal spell drift: {entry['collectionId']}")
+            entry["sourceText"] = journal["source"]
+            entry["description"] = journal["description"]
+            entry["uiCollectible"] = bool(journal["uiCollectible"])
+            entry["uiExclusionReason"] = journal["exclusionReason"]
         elif entry["typeKey"] == "companion":
             entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
         elif entry["typeKey"] == "toy":

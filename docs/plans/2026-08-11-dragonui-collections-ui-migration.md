@@ -894,6 +894,9 @@ DragonUI_NewEra 顶层外框（965×606）
 - [x] 按 ezCollections 的坐骑阵营数据判定和 `MountJournalIcons` 图集恢复联盟/部落列表水印。
 - [x] 按 ezCollections 位置与图标补回右上角随机坐骑按钮，优先随机已收集的偏好坐骑。
 - [x] 坐骑模型改用页面专属直接拖动处理，移除通用控制器每帧保护调用和鼠标区域轮询。
+- [x] 按 ezCollections 原版模型拖动算法改用原始鼠标坐标与 `SetRotation(angle, false)`，并仅在按住左键期间注册逐帧回调。
+- [x] 从 ezCollections 2.2 `Mounts.enUS.lua` 按 canonical spell ID 回填坐骑真实来源和说明。
+- [x] 坐骑 UI 投影排除职业召唤、无正式日志元数据的内部/废弃记录、绝版、促销和仅服务端条目；永久任务奖励坐骑继续保留。
 
 - [x] 部署前重新备份真实客户端 AddOns 并保存部署清单。
 - [ ] 登录后逐页观察坐骑、宠物、玩具、外观物品、套装、幻化和头衔。

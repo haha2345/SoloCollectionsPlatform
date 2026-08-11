@@ -47,7 +47,8 @@ local function getGeneratedMountSource()
     generatedMountSource = {}
     local generated = SC.GeneratedCatalog or {}
     for _, collection in ipairs(generated.collections or {}) do
-        if collection.typeKey == "mount" and collection.lifecycle == "active" then
+        if collection.typeKey == "mount" and collection.lifecycle == "active" and
+            collection.uiCollectible ~= false then
             local names = collection.name or {}
             table.insert(generatedMountSource, {
                 id = collection.collectionId,
@@ -57,8 +58,11 @@ local function getGeneratedMountSource()
                 presentationStatus = collection.presentationStatus,
                 spellId = collection.spellId,
                 faction = collection.faction,
-                source = "账号收藏",
-                description = "由 SoloCollections 服务端权威目录提供。",
+                source = collection.sourceText and collection.sourceText ~= "" and
+                    collection.sourceText or "来源未知",
+                description = collection.description and collection.description ~= "" and
+                    collection.description or
+                    "由 SoloCollections 服务端权威目录提供。",
                 collected = false,
                 favorite = false,
             })
