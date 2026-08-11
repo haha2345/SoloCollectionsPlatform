@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-11T18:29:11+08:00",
+  "syncedAt": "2026-08-11T18:46:56+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,10 +47,10 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "3c904dd6b697a713a8836614717fcbb2bb9fdba7",
+      "commit": "ad5215b642548b8942e6b098428835137f7eee5a",
       "tocVersion": "0.2.0",
-      "directoryHash": "ba968e0608ec7b2d8038583e440a2afd79ca399096cf9d0ec455cb86d607334d",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 14 namespaced local ezCollections UI asset adapter and fail-closed capability",
+      "directoryHash": "04594bc381652e85a44643b3de656051786245b610b775bb871786a533cfcd60",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 15 DragonUI outer chrome plus ezCollections journal shell and dual-size tabs",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     }
   ],
