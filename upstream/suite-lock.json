@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-12T07:04:12+08:00",
+  "syncedAt": "2026-08-12T07:05:54+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,9 +47,9 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "e0949f298aae0287eb6a0f6acaebc4ccba1bb8c6",
+      "commit": "de5ce50a60766cd51d4fce9d8730e648e4da3d84",
       "tocVersion": "0.2.0",
-      "directoryHash": "bfbf21b0fcce37e101a56667ca35dce30e1c26ac7eabdc040c33ae6e8e275307",
+      "directoryHash": "8f4a5452131dedf1f6418343b0604323d2045c9c2ab8f01347d9768fb332e621",
       "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20A curated 215-mount zhCN journal projection, localized sources, native ezCollections portrait crop, animation-preserving SetFacing drag, and load-on-demand wardrobe catalog bootstrap",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
@@ -57,7 +57,7 @@
       "id": "solocollections-wardrobe-data",
       "addonRoot": "SoloCollections_WardrobeData",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "e0949f298aae0287eb6a0f6acaebc4ccba1bb8c6",
+      "commit": "de5ce50a60766cd51d4fce9d8730e648e4da3d84",
       "tocVersion": "0.2.0",
       "directoryHash": "6fef42827ba7534fba392cc5384f13bae0c398f7113081f453707aefe16cc507",
       "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
