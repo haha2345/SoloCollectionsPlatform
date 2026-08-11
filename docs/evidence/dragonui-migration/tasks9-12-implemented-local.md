@@ -38,6 +38,7 @@ This record is source/build evidence only. No files were copied to a real WoW cl
 ## Source and package evidence
 
 - SoloCollections implementation commit: `0e92ed2c163d8116671dd2a271c1971d34c95181` (`feat/dragonui-collections-shell`).
+- SoloCollections delivery-boundary follow-up: `75520a3d2fe4ccf5ecaf8c106be44bac82845463` (keeps the optional integrated ZIP outside the public unified-source ZIP).
 - SoloClientSuite implementation commit: `ef2f79e9a6de3a9866cfba98a720a0dfc6718401` (`feat/bootstrap-ui-platform`).
 - DragonUI_NewEra directory SHA-256 tree hash: `3bb269eff8b47a2b2b884f7c5124a44ac92caec6967c08ad8013a830ba1dd8ac`.
 - SoloCollections AddOn directory SHA-256 tree hash: `9438bafbfa5600f54c883525f8da0defd60d50f66f3acc287eb04e75f4ca6c3a`.
