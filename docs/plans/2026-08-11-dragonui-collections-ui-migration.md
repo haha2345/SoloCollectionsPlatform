@@ -831,14 +831,16 @@ DragonUI_NewEra 顶层外框（965×606）
 
 **证据：** [`task14-ezcollections-ui-source-and-import.md`](../evidence/dragonui-migration/task14-ezcollections-ui-source-and-import.md)
 
-### Task 15：NewEra 外框与双尺寸窗口
+### Task 15：NewEra 外框与双尺寸窗口（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
-- [ ] NewEra 只负责顶层 NineSlice、标题带、肖像、关闭按钮和窗口持久化。
-- [ ] 普通收藏页使用 703×606，幻化页使用 965×606；高度固定为 606。
-- [ ] 主标签改用 ezCollections CollectionsJournalTab 几何与状态，不再使用宽红按钮。
-- [ ] 去掉页面内层 NewEra Rock/Inserts 的统一强制换肤。
+- [x] NewEra 只负责顶层 NineSlice、标题带、肖像、关闭按钮和窗口持久化。
+- [x] 普通收藏页使用 703×606，幻化页使用 965×606；高度固定为 606。
+- [x] 主标签改用 ezCollections CollectionsJournalTab 几何与状态，不再使用宽红按钮。
+- [x] 去掉页面内层 NewEra Rock/Inserts 的统一强制换肤。
 
 **完成条件：** 切页尺寸正确，底部标签不越界，外框仍可识别为 DragonUI_NewEra。
+
+**证据：** [`task15-newera-frame-and-dual-size-journal.md`](../evidence/dragonui-migration/task15-newera-frame-and-dual-size-journal.md)
 
 ### Task 16：迁移坐骑与小宠物页面
 
