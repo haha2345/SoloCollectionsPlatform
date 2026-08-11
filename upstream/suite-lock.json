@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-11T19:47:39+08:00",
+  "syncedAt": "2026-08-11T20:09:20+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,10 +47,10 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "982ef1766a800532f84727b7d907368b21727eec",
+      "commit": "e4ebc5db2f83d9d06f5b704fed72b5672bdaf326",
       "tocVersion": "0.2.0",
-      "directoryHash": "b5a4a7cef4052ee575e88e2d7de3580e25d7f811e7e0b43213ccabeeb5538697",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 19 ezCollections transmog frame with 11-slot local draft, item and set galleries, single-slot ApplyAppearance, preset ApplySet, and disabled custom multi-slot save",
+      "directoryHash": "cb6c5f30b461447cc1d892de925304bf9d8263444e40e58186b1aaa452fde7dd",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20 runtime fix binds WardrobeLab Slots to the SoloCollections UI namespace after the Task 19 ezCollections transmog frame migration",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     }
   ],
