@@ -2,13 +2,13 @@
 
 > **执行方式：** 按工作区 `AGENTS.md` 使用小步敏捷迭代；不主动引入 TDD、子代理开发、独立代码审查或独立验证阶段。每个视觉阶段都把源码检查、客户端运行和真实视觉验收分别记录。
 
-**目标：** 把 `!!!ClassicAPI`、DragonUI、项目维护的 DragonUI_NewEra 分支和 SoloCollections 组合成可扩展的 WoW 3.3.5a 客户端 UI 平台，先整体替换收藏窗口外壳，再逐面板迁移，并提前提供独立的“幻化实验室”标签。
+**目标：** 把 `!!!ClassicAPI`、DragonUI、项目维护的 DragonUI_NewEra 分支和 SoloCollections 组合成可扩展的 WoW 3.3.5a 客户端 UI 平台；最终视觉合同是 DragonUI_NewEra 只提供顶层金属外框、标题栏、肖像和关闭按钮，收藏内页与幻化工作流按 ezCollections 2.2 的页面树、尺寸、交互和本地授权素材重建。
 
-**架构：** `!!!ClassicAPI` 只拥有现代 API 兼容层，DragonUI 只拥有基础 HUD、设置和模块注册，DragonUI_NewEra 作为项目 UI 平台提供公共视觉与模型展示 API，SoloCollections 继续拥有收藏产品、目录、SC2 客户端和页面状态。ezCollections 只作为衣柜/幻化交互与代码参考，不进入运行依赖；C++/SC2 后端仍是收藏、授权、费用、revision、持久化和动作结果的唯一权威。
+**架构：** `!!!ClassicAPI` 只拥有现代 API 兼容层，DragonUI 只拥有基础 HUD、设置和模块注册，DragonUI_NewEra 提供顶层 Chrome 与稳定模型 presenter，SoloCollections 继续拥有收藏产品、目录、SC2 客户端和页面状态。ezCollections 的 UI 树、FrameXML 布局、交互和素材作为本地集成皮肤母版，由 namespaced 适配层连接 SoloCollections 数据，不加载它的服务端 Lua、消息协议或 `C_Transmog*` 生产逻辑；C++/SC2 后端仍是收藏、授权、费用、revision、持久化和动作结果的唯一权威。
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`。2026-08-11 已把锁定的五个 AddOn 根部署到真实 3.3.5a 客户端，并完成登录、七个主页面与 `/reload` 恢复的 `CLIENT_RUNTIME_OBSERVED` 冒烟测试；当前窗口在测试分辨率/UI Scale 下向屏幕底部溢出，因此尚未达到 `VISUAL_ACCEPTED`。本轮未触发召唤、使用、应用等服务端写动作，故不声明 `SERVER_ACCEPTED`。实施证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md) 与 [`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md)。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`，并完成真实客户端冒烟观察，但未达到 `VISUAL_ACCEPTED`。2026-08-11 实机反馈否决了“所有内页都使用 NewEra 通用组件”的视觉方向，Tasks 13-20 作为纠偏阶段，改为“NewEra 外框 + ezCollections 内页”。Tasks 0-12 保留为历史实现与回退点，不将其实机可运行误写为最终视觉通过。既有证据见 [`tasks9-12-implemented-local.md`](../evidence/dragonui-migration/tasks9-12-implemented-local.md) 与 [`client-runtime-observed-20260811.md`](../evidence/dragonui-migration/client-runtime-observed-20260811.md)。
 
 ---
 
@@ -16,13 +16,13 @@
 
 1. 允许把 DragonUI、DragonUI_NewEra、`!!!ClassicAPI` 的代码和美术资源直接纳入集成客户端项目。
 2. DragonUI 是整套客户端的基础 UI；`!!!ClassicAPI` 是未来移植现代插件的底层兼容包。
-3. DragonUI_NewEra 不再只是外观参考，而是项目统一的面板、组件和模型展示平台。
+3. DragonUI_NewEra 是项目顶层窗口 Chrome 和模型 presenter 平台；SoloCollections 内部页面不再强制使用它的通用 Inset、卡片和标签视觉。
 4. SoloCollections 的 C++/SC2 后端方向保留，并继续作为收藏系统的核心竞争力和唯一生产权威。
 5. 第一阶段只替换收藏窗口外壳和公共组件，不修改 SC2、收藏逻辑、模型桥和幻化动作。
 6. 第一阶段之后允许替换或重构现有模型桥、相机配置和异步 `TryOn` 状态机；旧路线只作为迁移期 A/B 与回退实现。
-7. DragonUI_NewEra 的模型显示、背景、控制条、拖动、旋转、平移和缩放效果作为新目标。
-8. ezCollections 的衣柜/幻化交互提前进入 SoloCollections，但使用独立的“幻化实验室”主标签，不直接替换现有“外观收藏”页面。
-9. “幻化实验室”初期用于开发测试，必须显式显示实验状态，不能把本地试穿误报为服务端已应用。
+7. 模型加载、generation 和 provider 继续复用 NewEra/SoloCollections presenter；可见的模型背景、槽位、控制和页面几何按 ezCollections 母版呈现。
+8. ezCollections 的收藏日志、衣柜和幻化页面作为实际 UI 母版进入本地集成实现；“外观收藏”和“幻化实验室”共享其 WardrobeCollectionFrame 视觉树，但保持独立产品状态。
+9. “幻化实验室”必须沿用 ezCollections `WardrobeFrame` 的 300px 角色编辑区与 662px 候选区；实验状态使用低干扰标题/状态文字，不能用独立三栏工作台替代，也不能把本地试穿误报为服务端已应用。
 10. 现有 11 个槽位保持为 `HEAD`、`SHOULDER`、`BACK`、`CHEST`、`WRIST`、`HANDS`、`WAIST`、`LEGS`、`FEET`、`MAINHAND`、`OFFHAND`；不增加衬衣和战袍。
 
 ## 2. 已核对的上游快照
@@ -305,7 +305,7 @@ SoloCollections 主窗口
 └─ DragonUI_NewEra 底部悬挂标签
 ```
 
-第一阶段保留当前 `920×793` 画布和内容锚点，避免换壳时同时改变页面容量。逐面板优化时再根据真实客户端截图决定是否切换为统一宽屏尺寸。
+Tasks 0-12 历史阶段使用 `920×793` 画布。实机证明该高度会让底部标签溢出屏幕；纠偏阶段采用 ezCollections 的标准高度 `606`，普通收藏日志宽 `703`，幻化工作台宽 `965`。切页只改变窗口宽度，不改变高度。
 
 ## 8. 统一状态语义
 
@@ -326,45 +326,41 @@ SoloCollections 主窗口
 
 任何页面不得把 `PREVIEWING` 或 `DRAFT` 显示为 `OWNED`/`APPLIED`。
 
-## 9. 幻化实验室交互设计
+## 9. 幻化实验室交互设计（Tasks 13-20 覆盖版）
 
-标签键：`TRANSMOG_LAB`；显示文字：`幻化实验室`；副标题或角标：`实验`。
+标签键：`TRANSMOG_LAB`；显示文字：`幻化实验室`；低干扰状态文字：`实验 / 本地草稿`。
 
 ```text
-幻化实验室
-├─ 左栏：外观方案
-│  ├─ 当前装备
-│  ├─ 本地测试方案
-│  └─ 后续服务端方案
-├─ 中栏：大型角色模型
-│  ├─ 11 个槽位按钮
-│  ├─ NewEra 模型控制条
-│  ├─ 当前装备层
-│  └─ 待应用草稿层
-├─ 右栏：候选来源
-│  ├─ 物品
-│  ├─ 官方套装
-│  └─ 自定义方案（后续）
-└─ 底栏
-   ├─ 待修改槽位数量
-   ├─ 清除当前槽位
-   ├─ 清除全部草稿
-   ├─ 应用当前槽位
-   └─ 保存整套（后端未支持时禁用并说明）
+DragonUI_NewEra 顶层外框（965×606）
+├─ 左侧 WardrobeTransmogFrame（300px）
+│  ├─ 外观方案下拉框与保存入口
+│  ├─ 294×488 DressUpModel
+│  ├─ 围绕角色排列的 11 个槽位按钮
+│  ├─ 清除待应用按钮
+│  └─ 权威费用/状态与应用按钮
+└─ 右侧 WardrobeCollectionFrame（662px）
+   ├─ 物品 / 套装标签
+   ├─ 搜索与来源过滤
+   ├─ 3×6 外观模型卡或 2×4 套装卡
+   └─ 分页、拥有状态、候选来源与空状态
 ```
 
 ### 9.1 初始测试范围
 
 - 只支持现有 11 个槽位；
-- 选择候选后立即在中央模型本地试穿；
+- 点击左侧槽位后，右侧切换对应类别；选择候选后立即在左侧模型本地试穿；
 - 草稿按槽位保存 `appearanceId/sourceItemId/state`；
-- “应用当前槽位”复用现有 SC2 type 13；
+- 只有一个 dirty 槽位时，“应用”复用现有 SC2 type 13；
 - 官方套装的现有应用继续复用 type 14；
 - “保存整套”初期禁用，不能在客户端循环发送 11 个单槽动作伪装原子成功；
-- 关闭窗口、切换方案或重载前必须处理未保存草稿；初始策略为弹窗确认后丢弃；
+- 关闭窗口、切换方案或重载前必须处理未保存草稿；切换方案先确认，关闭窗口保留会话草稿但不持久化为权威状态；
 - 费用只能由服务端返回，初始 UI 不自行计算。
 
-### 9.2 不直接移植的 ezCollections 部分
+### 9.2 直接复用与明确排除
+
+本地集成允许复用 `Blizzard_Collections`、`Blizzard_MountCollection`、`Blizzard_PetCollection`、`Blizzard_ToyBox`、`Blizzard_Wardrobe`、`WardrobeOutfits` 的布局、模板、交互代码和所需素材。所有全局符号必须 namespaced；数据访问必须通过 SoloCollections adapter。
+
+仍然排除：
 
 - `C_Transmog*` 仿真层；
 - ezCollections 插件消息协议；
@@ -725,7 +721,10 @@ SoloCollections 主窗口
 | P1 | Tasks 9-10 | 外观物品/套装是主要价值，但复杂度最高 |
 | P2 | Task 11 | 玩具/头衔收尾并删除重复组件 |
 | P2 | Task 12 | 集成发布、来源和回退收敛 |
-| Future | Task 13 | 后端原子外观方案，必须独立设计协议和数据库 |
+| P0 | Tasks 13-15 | 冻结失败基线、引入 ezCollections 母版并修正窗口尺寸/外框职责 |
+| P1 | Tasks 16-19 | 逐页替换收藏内页并完整重建幻化工作流 |
+| P1 | Task 20 | 真实客户端矩阵验收与证据收敛 |
+| Future | Task 21 | 后端原子外观方案，必须独立设计协议和数据库 |
 
 ## 12. 风险与控制
 
@@ -806,3 +805,78 @@ SoloCollections 主窗口
 6. 添加“幻化实验室”空标签。
 
 本批不移植 ezCollections 业务代码、不改变模型 presenter、不修改 SC2，也不修改真实客户端。完成后先看新的主窗口和六标签截图，再进入 Tasks 6-8。
+
+## 16. 2026-08-11 实机视觉纠偏阶段
+
+这一阶段覆盖 Tasks 0-12 的视觉选择，但不抹除其历史实现和证据。分支为 `feat/ezcollections-ui-rehost`，F 盘隔离 worktree 为 `SoloCollectionsPlatform/_work/ezcollections-ui-rehost`。
+
+### Task 13：冻结失败基线与建立回退分支（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
+
+- [x] 记录 `b8b59e9`、当前实机七页截图、窗口溢出和幻化三栏偏离 ezCollections 的失败结论。
+- [x] 建立 `feat/ezcollections-ui-rehost`，保留 `feat/dragonui-collections-shell` 不动。
+- [x] 保存用户确认的视觉所有权表和 703×606 / 965×606 尺寸合同。
+
+**完成条件：** 回退 commit、视觉失败原因和新分支都可核对；不修改真实客户端。
+
+**证据：** [`task13-visual-correction-baseline.md`](../evidence/dragonui-migration/task13-visual-correction-baseline.md)
+
+### Task 14：引入 ezCollections UI 母版、素材与来源清单
+
+- [ ] 记录本地 2.2 快照的目录 Hash、关键文件 Hash、作者/来源与“公开发布待许可证复核”。
+- [ ] 创建 namespaced `EzCollectionsUI` 适配层，复用布局和交互但不加载 ezCollections 服务端 Lua/消息协议。
+- [ ] 代码与项目自有适配进入 SoloCollections；来源不明的客户端素材只由 SoloClientSuite 参数化导入到忽略的本地构建，不进入公共源码包。
+- [ ] 所有素材缺失都明确 fail closed，不显示空白按钮或伪完成页面。
+
+**完成条件：** 本地构建能解析所需模板/素材；公共源码边界保持不含提取 BLP/TGA。
+
+### Task 15：NewEra 外框与双尺寸窗口
+
+- [ ] NewEra 只负责顶层 NineSlice、标题带、肖像、关闭按钮和窗口持久化。
+- [ ] 普通收藏页使用 703×606，幻化页使用 965×606；高度固定为 606。
+- [ ] 主标签改用 ezCollections CollectionsJournalTab 几何与状态，不再使用宽红按钮。
+- [ ] 去掉页面内层 NewEra Rock/Inserts 的统一强制换肤。
+
+**完成条件：** 切页尺寸正确，底部标签不越界，外框仍可识别为 DragonUI_NewEra。
+
+### Task 16：迁移坐骑与小宠物页面
+
+- [ ] 按 `Blizzard_MountCollection` / `Blizzard_PetCollection` 重建 260px 左列表与右侧详情模型区。
+- [ ] 搜索、过滤、数量、滚动、选择和动作按钮使用 ezCollections 页面视觉。
+- [ ] Catalog、CollectionState、Bridge 和 presenter 语义保持不变。
+
+**完成条件：** 两页几何与 ezCollections 母版一致，切换模型不串 generation。
+
+### Task 17：迁移玩具箱与头衔页面
+
+- [ ] 玩具使用 `Blizzard_ToyBox` 网格、卡片、分页与状态覆盖。
+- [ ] 头衔没有上游现成页面，使用同一 CollectionsJournal 列表/Inset/搜索视觉构建。
+- [ ] 玩具 Use/拖动作栏/偏好与头衔权威只读语义不变。
+
+**完成条件：** 两页不再出现 NewEra 通用黑框/棕色卡片混搭。
+
+### Task 18：迁移外观物品与套装页面
+
+- [ ] 复用 WardrobeCollectionFrame、物品/套装标签、搜索、来源过滤与分页几何。
+- [ ] 物品保持 3×6 模型卡；套装采用 ezCollections 的 2×4 卡/详情结构。
+- [ ] 保留 11 槽、DRESSUP/DISPLAY presenter、camera workbench、generation 和服务端拥有状态。
+
+**完成条件：** 外观收藏在视觉和交互上与 ezCollections 同源，不退化现有目录/镜头能力。
+
+### Task 19：替换幻化实验室
+
+- [ ] 删除当前左/中/右三栏工作台布局。
+- [ ] 按 WardrobeFrame 965×606 重建左侧角色槽位区和右侧候选区。
+- [ ] 11 槽按钮围绕模型，点击槽位联动右侧物品/套装浏览。
+- [ ] local draft、清除、单槽 ApplyAppearance、预设 ApplySet 和 SC2 状态刷新保持明确分层。
+- [ ] 多槽自定义保存继续禁用，直到 Task 21 提供服务端原子合同。
+
+**完成条件：** 幻化页的页面树、主要控件和交互流来自 ezCollections，而不是概念参考。
+
+### Task 20：真实客户端部署与视觉验收
+
+- [ ] 部署前重新备份真实客户端 AddOns 并保存 Hash。
+- [ ] 登录后逐页观察坐骑、宠物、玩具、外观物品、套装、幻化和头衔。
+- [ ] 检查 703/965 宽度切换、606 高度、底部标签、搜索、过滤、分页和 `/reload`。
+- [ ] 分别记录 `CLIENT_RUNTIME_OBSERVED`、`VISUAL_ACCEPTED` 与未执行的 `SERVER_ACCEPTED` 动作。
+
+**完成条件：** 用户确认视觉方向；没有确认前不把这一阶段标为 `VISUAL_ACCEPTED`。
