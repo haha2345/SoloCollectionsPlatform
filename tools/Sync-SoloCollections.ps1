@@ -17,11 +17,19 @@ if ([IO.Path]::GetDirectoryName($destinationPath) -ne $allowedParent -or [IO.Pat
 if (-not (Test-Path -LiteralPath (Join-Path $sourcePath 'SoloCollections.toc') -PathType Leaf)) {
     throw "Source is not a SoloCollections AddOn root: $sourcePath"
 }
-if (Test-Path -LiteralPath $destinationPath) {
-    [IO.Directory]::Delete($destinationPath, $true)
+$sourceParent = [IO.Path]::GetDirectoryName($sourcePath)
+foreach ($addonName in @('SoloCollections', 'SoloCollections_WardrobeData')) {
+    $addonSource = if ($addonName -eq 'SoloCollections') { $sourcePath } else { Join-Path $sourceParent $addonName }
+    $addonDestination = Join-Path $allowedParent $addonName
+    if (-not (Test-Path -LiteralPath (Join-Path $addonSource "$addonName.toc") -PathType Leaf)) {
+        throw "Source is not a $addonName AddOn root: $addonSource"
+    }
+    if (Test-Path -LiteralPath $addonDestination) {
+        [IO.Directory]::Delete($addonDestination, $true)
+    }
+    [IO.Directory]::CreateDirectory($addonDestination) | Out-Null
+    Get-ChildItem -LiteralPath $addonSource -Force | ForEach-Object {
+        Copy-Item -LiteralPath $_.FullName -Destination $addonDestination -Recurse -Force
+    }
+    Write-Output "Synced ${addonName}: $addonSource -> $addonDestination"
 }
-[IO.Directory]::CreateDirectory($destinationPath) | Out-Null
-Get-ChildItem -LiteralPath $sourcePath -Force | ForEach-Object {
-    Copy-Item -LiteralPath $_.FullName -Destination $destinationPath -Recurse -Force
-}
-Write-Output "Synced SoloCollections: $sourcePath -> $destinationPath"

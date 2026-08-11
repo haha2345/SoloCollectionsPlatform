@@ -39,18 +39,28 @@
       "url": "https://github.com/ghbset/DragonUI_NewEra.git",
       "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
       "tocVersion": "0.2.0",
-      "directoryHash": "01d07c2f77487eb1cb9603817502ae47f925c01e71b1e5d5efc02f4e4836ac28",
-      "localPatchState": "project-patched: public-api-v1, canonical module state, shared components, generation-safe model presenters, DRESSUP settle/undress requests, and LF-stable deployed source bytes",
+      "directoryHash": "0c118e54d548d8c32333c9e066b9d31ecb2aabae9c463dfb9a1124e94db3da22",
+      "localPatchState": "project-patched: public-api-v1, canonical module state, shared components, generation-safe model presenters, DRESSUP settle/undress requests, LF-stable deployed source bytes, and production suite demo disabled",
       "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
     },
     {
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "e4ebc5db2f83d9d06f5b704fed72b5672bdaf326",
+      "commit": "c949b112131cbff2cc60f22914c1312b6f75d0fa",
       "tocVersion": "0.2.0",
-      "directoryHash": "cb6c5f30b461447cc1d892de925304bf9d8263444e40e58186b1aaa452fde7dd",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20 runtime fix binds WardrobeLab Slots to the SoloCollections UI namespace after the Task 19 ezCollections transmog frame migration",
+      "directoryHash": "2c6beea5041230163a8529d5e06f07eb3d12d6f31e47e1b1bbd5f16ca7d6db19",
+      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20A mount page fixes and load-on-demand wardrobe catalog bootstrap",
+      "licenseState": "repository license applies only to SoloCollections-owned files"
+    },
+    {
+      "id": "solocollections-wardrobe-data",
+      "addonRoot": "SoloCollections_WardrobeData",
+      "url": "https://github.com/haha2345/SoloCollections.git",
+      "commit": "c949b112131cbff2cc60f22914c1312b6f75d0fa",
+      "tocVersion": "0.2.0",
+      "directoryHash": "6fef42827ba7534fba392cc5384f13bae0c398f7113081f453707aefe16cc507",
+      "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     }
   ],

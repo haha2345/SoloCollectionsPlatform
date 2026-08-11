@@ -10,7 +10,7 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$expected = @('!!!ClassicAPI', 'DragonUI', 'DragonUI_Options', 'DragonUI_NewEra', 'SoloCollections')
+$expected = @('!!!ClassicAPI', 'DragonUI', 'DragonUI_Options', 'DragonUI_NewEra', 'SoloCollections', 'SoloCollections_WardrobeData')
 $generatedEzUI = 'SoloCollections_EzUI'
 $root = (Resolve-Path -LiteralPath $SourceRoot).Path
 

@@ -18,7 +18,7 @@ $allowed = [IO.Path]::GetFullPath((Join-Path $suiteRoot 'build\Interface\AddOns'
 if ($output -ne $allowed) { throw "Output must be the suite's exact ignored build/Interface/AddOns directory: $output" }
 if (Test-Path -LiteralPath $output) { [IO.Directory]::Delete($output, $true) }
 [IO.Directory]::CreateDirectory($output) | Out-Null
-foreach ($name in @('!!!ClassicAPI', 'DragonUI', 'DragonUI_Options', 'DragonUI_NewEra', 'SoloCollections')) {
+foreach ($name in @('!!!ClassicAPI', 'DragonUI', 'DragonUI_Options', 'DragonUI_NewEra', 'SoloCollections', 'SoloCollections_WardrobeData')) {
     Copy-Item -LiteralPath (Join-Path $SourceRoot $name) -Destination (Join-Path $output $name) -Recurse -Force
 }
 if (-not [string]::IsNullOrWhiteSpace($EzCollectionsSource)) {

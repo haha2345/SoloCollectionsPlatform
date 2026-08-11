@@ -323,5 +323,4 @@ modules\levelup\Banner.lua
 modules\levelup\SideDisplay.lua
 modules\levelup\Register.lua
 
-# --- demo: Sprint-0 proof panel (owner: Core/Chrome Engineer) ---
-core\_HelloDemo.lua
+# Sprint-0 proof panel is intentionally not loaded in the playable suite.
