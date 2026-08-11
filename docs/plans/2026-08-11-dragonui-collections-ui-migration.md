@@ -8,7 +8,7 @@
 
 **技术栈：** WoW 3.3.5a build 12340、Lua 5.1、FrameXML、`!!!ClassicAPI` 1.23、DragonUI 2.5、DragonUI_NewEra、SoloCollections SC2、可选 SoloCam、PowerShell 7、Python 3.10。
 
-**状态：** Tasks 0-8 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端、视觉或服务端动作验收。
+**状态：** Tasks 0-12 已达到 `IMPLEMENTED_LOCAL`；尚未部署新 UI，也未进行新 UI 的真实客户端、视觉或服务端动作验收。实施证据见 [`docs/evidence/dragonui-migration/tasks9-12-implemented-local.md`](../../evidence/dragonui-migration/tasks9-12-implemented-local.md)。
 
 ---
 
@@ -629,7 +629,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: migrate mount and pet journals to NewEra layout`
 
-### Task 9：优化现有外观物品页
+### Task 9：优化现有外观物品页（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
@@ -650,7 +650,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: migrate wardrobe item cards to shared presenters`
 
-### Task 10：优化现有套装页
+### Task 10：优化现有套装页（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
@@ -668,7 +668,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: migrate wardrobe sets to NewEra layout`
 
-### Task 11：优化玩具与头衔页面
+### Task 11：优化玩具与头衔页面（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
@@ -687,7 +687,7 @@ SoloCollections 主窗口
 
 **建议提交：** `feat: finish NewEra styling for collection panels`
 
-### Task 12：收敛模块、资源和发布方式
+### Task 12：收敛模块、资源和发布方式（已完成：`IMPLEMENTED_LOCAL`，2026-08-11）
 
 **修改：**
 
