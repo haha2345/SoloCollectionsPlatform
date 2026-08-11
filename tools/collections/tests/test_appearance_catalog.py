@@ -131,7 +131,7 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
 
     def test_renderer_uses_synthetic_display_only_at_adapter_boundary(self):
         wardrobe = (ROOT / "addon/SoloCollections/UI/Wardrobe.lua").read_text(encoding="utf-8")
-        generated = (ROOT / "addon/SoloCollections/Data/Generated/Catalog.lua").read_text(encoding="utf-8")
+        generated = (ROOT / "addon/SoloCollections_WardrobeData/Data/Generated/WardrobeCatalog.lua").read_text(encoding="utf-8")
         self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + record.syntheticDisplayId", wardrobe)
         self.assertNotIn("creatureDisplayId", wardrobe)
         self.assertNotIn("creatureDisplayId", generated)

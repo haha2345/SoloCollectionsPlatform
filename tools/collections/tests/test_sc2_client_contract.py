@@ -67,7 +67,8 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertNotIn('"SUMMON|" .. requestId', bridge)
         self.assertIn("getGeneratedMountSource", catalog)
         self.assertIn("displayCreatureId", generated)
-        self.assertNotIn("spellId =", generated)
+        self.assertIn("spellId =", generated)
+        self.assertIn("faction =", generated)
         self.assertNotIn("actionId =", generated)
 
     def test_companion_and_toy_actions_submit_only_logical_collection_id(self):

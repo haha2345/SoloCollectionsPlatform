@@ -27,6 +27,18 @@ local generatedMountSource = nil
 local generatedCompanionSource = nil
 local generatedToySource = nil
 local generatedAppearanceSource = nil
+local wardrobeLoadAttempted = false
+
+local function ensureWardrobeCatalog()
+    if SC.GeneratedWardrobeCatalog then
+        return true
+    end
+    if not wardrobeLoadAttempted and type(LoadAddOn) == "function" then
+        wardrobeLoadAttempted = true
+        LoadAddOn("SoloCollections_WardrobeData")
+    end
+    return SC.GeneratedWardrobeCatalog ~= nil
+end
 
 local function getGeneratedMountSource()
     if generatedMountSource then
@@ -43,6 +55,8 @@ local function getGeneratedMountSource()
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = collection.iconTexture,
                 presentationStatus = collection.presentationStatus,
+                spellId = collection.spellId,
+                faction = collection.faction,
                 source = "账号收藏",
                 description = "由 SoloCollections 服务端权威目录提供。",
                 collected = false,
@@ -109,7 +123,8 @@ local function getGeneratedAppearanceSource()
         return generatedAppearanceSource
     end
     generatedAppearanceSource = {}
-    local generated = SC.GeneratedCatalog or {}
+    ensureWardrobeCatalog()
+    local generated = SC.GeneratedWardrobeCatalog or {}
     for _, collection in ipairs(generated.collections or {}) do
         if collection.typeKey == "appearance" and collection.lifecycle == "active" and
             collection.uiLifecycle == "public" then
@@ -305,7 +320,7 @@ local function getSource(category)
     if category == "TOYS" and SC.GeneratedCatalog then
         return getGeneratedToySource()
     end
-    if category == "APPEARANCES" and SC.GeneratedCatalog then
+    if category == "APPEARANCES" and ensureWardrobeCatalog() then
         return getGeneratedAppearanceSource()
     end
     local key = CATEGORY_KEYS[category]

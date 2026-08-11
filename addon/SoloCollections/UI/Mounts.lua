@@ -65,7 +65,7 @@ function UI.CreateMountsPage(parent)
     model.scZoom = DEFAULT_MODEL_SCALE
     model.scBaseScale = nil
     local presenter = SC.ModelProvider and SC.ModelProvider.Create("CREATURE", model, {
-        controls = true,
+        controls = false,
         panelCheck = function() return page:IsShown() end,
     }) or nil
     local function rotateModel(delta)
@@ -104,9 +104,26 @@ function UI.CreateMountsPage(parent)
     UI.SetFallbackTexture(infoIcon)
     local infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
 
+    local randomSummon = CreateFrame("Button", nil, detail)
+    randomSummon:SetWidth(33)
+    randomSummon:SetHeight(33)
+    randomSummon:SetPoint("TOPRIGHT", detail, "TOPRIGHT", -10, -10)
+    randomSummon:RegisterForClicks("LeftButtonUp")
+    randomSummon:SetNormalTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    randomSummon:SetPushedTexture("Interface\\Icons\\Ability_Mount_RidingHorse")
+    randomSummon:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
+    local randomIcon = randomSummon:GetNormalTexture()
+    if randomIcon then randomIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92) end
+    local randomPushed = randomSummon:GetPushedTexture()
+    if randomPushed then randomPushed:SetTexCoord(0.11, 0.89, 0.11, 0.89) end
+    local randomBorder = randomSummon:CreateTexture(nil, "OVERLAY")
+    randomBorder:SetTexture("Interface\\Buttons\\UI-Quickslot2")
+    randomBorder:SetPoint("TOPLEFT", randomSummon, "TOPLEFT", -15, 15)
+    randomBorder:SetPoint("BOTTOMRIGHT", randomSummon, "BOTTOMRIGHT", 15, -15)
+
     local name = createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
     name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
-    name:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    name:SetPoint("RIGHT", randomSummon, "LEFT", -8, 0)
 
     local collectionState = createDetailLabel(detail, "GameFontHighlight", { 0.45, 0.9, 0.35 })
     collectionState:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, -7)
@@ -219,6 +236,26 @@ function UI.CreateMountsPage(parent)
         end)
     end
 
+    local function getRandomOwnedMount()
+        local owned = {}
+        local favorites = {}
+        for _, record in ipairs(Catalog.QueryAll("MOUNTS")) do
+            if record.collected then
+                owned[#owned + 1] = record
+                if record.favorite then favorites[#favorites + 1] = record end
+            end
+        end
+        local pool = #favorites > 0 and favorites or owned
+        if #pool == 0 then return nil end
+        if #pool > 1 and page.scLastRandomMountId then
+            for _ = 1, 4 do
+                local candidate = pool[math.random(1, #pool)]
+                if candidate.id ~= page.scLastRandomMountId then return candidate end
+            end
+        end
+        return pool[math.random(1, #pool)]
+    end
+
     local function openContextMenu(anchor, record)
         if not record then
             return
@@ -308,6 +345,7 @@ function UI.CreateMountsPage(parent)
             page:ClearSelection()
             return
         end
+        local modelChanged = page.scSelectedId ~= record.id or not page.scModelReady
         page.scSelectedId = record.id
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
@@ -333,7 +371,7 @@ function UI.CreateMountsPage(parent)
         for _, row in ipairs(page.scRows) do
             row:SetSelected(row.scRecord and row.scRecord.id == record.id)
         end
-        requestModel(record)
+        if modelChanged then requestModel(record) end
     end
 
     local function refreshRows()
@@ -483,6 +521,23 @@ function UI.CreateMountsPage(parent)
 
     summon:SetScript("OnClick", function() summonRecord(page.scSelectedRecord) end)
 
+    randomSummon:SetScript("OnClick", function()
+        local record = getRandomOwnedMount()
+        if not record then
+            showNotice("尚未收集可召唤的坐骑。")
+            return
+        end
+        page.scLastRandomMountId = record.id
+        summonRecord(record)
+    end)
+    randomSummon:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_LEFT")
+        GameTooltip:SetText("召唤随机坐骑", 1, 0.82, 0.18)
+        GameTooltip:AddLine("优先从已收集的偏好坐骑中随机选择；没有偏好时从全部已收集坐骑中选择。", 1, 1, 1, true)
+        GameTooltip:Show()
+    end)
+    randomSummon:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
     infoButton:SetScript("OnClick", function(self, button)
         local record = page.scSelectedRecord
         if button == "RightButton" then
@@ -492,12 +547,11 @@ function UI.CreateMountsPage(parent)
         end
     end)
 
-    if not SC.ModelProvider or SC.ModelProvider.GetMode("CREATURE") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
             local cursorX = GetCursorPosition()
-            local scale = UIParent:GetEffectiveScale()
+            local scale = self:GetEffectiveScale()
             self.scLastCursorX = cursorX / scale
         end
     end)
@@ -513,7 +567,7 @@ function UI.CreateMountsPage(parent)
             return
         end
         local cursorX = GetCursorPosition()
-        local scale = UIParent:GetEffectiveScale()
+        local scale = self:GetEffectiveScale()
         cursorX = cursorX / scale
         local previousX = self.scLastCursorX or cursorX
         self.scLastCursorX = cursorX
@@ -532,7 +586,6 @@ function UI.CreateMountsPage(parent)
         self.scZoom = zoom
         self:SetModelScale(self.scBaseScale * zoom)
     end)
-    end
 
     page:SetScript("OnHide", function(self)
         self.scModelGeneration = (self.scModelGeneration or 0) + 1
@@ -559,6 +612,7 @@ function UI.CreateMountsPage(parent)
     page.scFavorite = favorite
     page.scReset = reset
     page.scSummon = summon
+    page.scRandomSummon = randomSummon
     page.scPresenter = presenter
     page.scRotateLeft = rotateLeft
     page.scRotateRight = rotateRight

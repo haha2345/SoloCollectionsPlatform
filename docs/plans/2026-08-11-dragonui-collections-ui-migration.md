@@ -886,7 +886,16 @@ DragonUI_NewEra 顶层外框（965×606）
 
 ### Task 20：真实客户端部署与视觉验收
 
-- [ ] 部署前重新备份真实客户端 AddOns 并保存 Hash。
+#### Task 20A：坐骑页逐项修复
+
+- [x] 将 18,190 条外观和 465 条套装记录拆入 `SoloCollections_WardrobeData`，登录阶段仅加载坐骑、宠物、玩具和协议元数据。
+- [x] 移除真实客户端临时自动开页探针，并停载 DragonUI_NewEra 的 Sprint-0 自动显示演示面板。
+- [x] 将收藏窗口左上角图像缩至金色圆框的安全内径并保持居中。
+- [x] 按 ezCollections 的坐骑阵营数据判定和 `MountJournalIcons` 图集恢复联盟/部落列表水印。
+- [x] 按 ezCollections 位置与图标补回右上角随机坐骑按钮，优先随机已收集的偏好坐骑。
+- [x] 坐骑模型改用页面专属直接拖动处理，移除通用控制器每帧保护调用和鼠标区域轮询。
+
+- [x] 部署前重新备份真实客户端 AddOns 并保存部署清单。
 - [ ] 登录后逐页观察坐骑、宠物、玩具、外观物品、套装、幻化和头衔。
 - [ ] 检查 703/965 宽度切换、606 高度、底部标签、搜索、过滤、分页和 `/reload`。
 - [ ] 分别记录 `CLIENT_RUNTIME_OBSERVED`、`VISUAL_ACCEPTED` 与未执行的 `SERVER_ACCEPTED` 动作。

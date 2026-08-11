@@ -280,6 +280,11 @@ function UI.CreateJournalFrame(parent, name, width, height)
             layout = "PortraitFrameTemplate",
             title = "收藏",
             portrait = UI.Media.mountPortrait,
+            portraitOpts = {
+                size = 52,
+                anchor = { "TOPLEFT", -1, 4 },
+                mask = false,
+            },
         })
         if frame.Bg and frame.Bg.Hide then frame.Bg:Hide() end
         frame.scBackground = UI.EzCollections and UI.EzCollections:CreateBodyCanvas(frame) or frame.Bg
@@ -851,6 +856,17 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     selected:SetTexCoord(0.00390625, 0.8203125, 0.37890625, 0.55859375)
     selected:Hide()
 
+    local faction = row:CreateTexture(nil, "BORDER")
+    faction:SetTexture(UI.EzCollections and UI.EzCollections:AssetPath(
+        "Interface\\PetBattles\\MountJournalIcons.blp",
+        "Interface\\Buttons\\WHITE8X8"
+    ) or "Interface\\Buttons\\WHITE8X8")
+    faction:SetWidth(46)
+    faction:SetHeight(44)
+    faction:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -1, 1)
+    faction:SetAlpha(0.42)
+    faction:Hide()
+
     local highlight = row:CreateTexture(nil, "HIGHLIGHT")
     highlight:SetAllPoints(row)
     highlight:SetTexture(listTexture)
@@ -925,6 +941,7 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
             self.scSelected = nil
             selected:Hide()
             star:Hide()
+            faction:Hide()
             collectedTint:Hide()
             name:SetText("")
             source:SetText("")
@@ -938,6 +955,15 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
         collectionBorder:SetCollected(record.collected)
         collectedTint:Hide()
         if record.favorite then star:Show() else star:Hide() end
+        if record.faction == "ALLIANCE" then
+            faction:SetTexCoord(1 / 128, 47 / 128, 1 / 64, 45 / 64)
+            faction:Show()
+        elseif record.faction == "HORDE" then
+            faction:SetTexCoord(49 / 128, 95 / 128, 1 / 64, 45 / 64)
+            faction:Show()
+        else
+            faction:Hide()
+        end
         self:Show()
     end
 
@@ -962,6 +988,7 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     row.scName = name
     row.scDetail = source
     row.scStar = star
+    row.scFaction = faction
     return row
 end
 

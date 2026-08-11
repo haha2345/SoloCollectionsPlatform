@@ -181,8 +181,13 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertIn("iconSpellId", rendered)
         self.assertIn("iconTexture", rendered)
         self.assertIn("previewCreatureEntry", rendered)
+        self.assertIn("faction", rendered)
+        self.assertRegex(rendered, r"(?m)^\s+spellId = ")
         self.assertNotIn("canonicalSpellId", rendered)
-        self.assertNotRegex(rendered, r"(?m)^\s+(?:actionId|spellId) = ")
+        self.assertNotRegex(rendered, r"(?m)^\s+actionId = ")
+        wardrobe = outputs[ROOT / "addon/SoloCollections_WardrobeData/Data/Generated/WardrobeCatalog.lua"]
+        self.assertIn('typeKey = "appearance"', wardrobe)
+        self.assertNotIn('typeKey = "appearance"', rendered)
 
     def test_localized_metadata_does_not_change_mapping_hash(self):
         before = generator.build_model(self.source)["mappingHash"]
