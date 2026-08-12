@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-12T12:00:00+08:00",
+  "syncedAt": "2026-08-13T00:00:00+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,17 +47,17 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "4a281b4a655402d2dd9b1f1abbd0fa775b2be302",
+      "commit": "79572c385dbeb1f4be878b6b0c499ba83780d613",
       "tocVersion": "0.2.0",
       "directoryHash": "3abafb87e674524e3050451ade0c34a256a66fda6d39905fdcc91097e13b4e6f",
-      "localPatchState": "sibling-source; corrective branch feat/ezcollections-ui-rehost; Task 20D curated 258-mount zhCN journal projection, reviewed legacy/promotion visibility, duplicate/transport exclusions, official Spell.dbc descriptions, DragonUI mount controls, SC2-ready preview retry, and load-on-demand wardrobe catalog bootstrap",
+      "localPatchState": "sibling-source; branch feat/ezcollections-ui-rehost; curated 258-mount zhCN journal projection, reviewed legacy/promotion visibility, duplicate/transport exclusions, official Spell.dbc descriptions, server-backed favorites, native mount actions, random spell integration, DragonUI mount controls, SC2-ready preview retry, and load-on-demand wardrobe catalog bootstrap",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
     {
       "id": "solocollections-wardrobe-data",
       "addonRoot": "SoloCollections_WardrobeData",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "4a281b4a655402d2dd9b1f1abbd0fa775b2be302",
+      "commit": "79572c385dbeb1f4be878b6b0c499ba83780d613",
       "tocVersion": "0.2.0",
       "directoryHash": "6fef42827ba7534fba392cc5384f13bae0c398f7113081f453707aefe16cc507",
       "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
