@@ -1,0 +1,16 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Talents|r
+## Notes: Load-on-demand New Era talents.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\talents\Assets.lua
+modules\talents\NodeData.lua
+modules\talents\Talents.lua
+modules\talents\SpecTabs.lua
+modules\talents\Behavior.lua
+modules\talents\Loadouts.lua
+modules\talents\LoadoutsUI.lua
+modules\talents\Glyphs.lua

@@ -31,10 +31,17 @@ local function warn(msg)
 end
 NE._warn = NE._warn or warn
 
+local function profileMark(kind, id, detail)
+    if NE.StartupProfile and NE.StartupProfile.Mark then
+        NE.StartupProfile:Mark(kind, id, detail)
+    end
+end
+
 -- The ordered list the Options builder renders one toggle per panel from.
 -- Each entry: { id, title, desc, refresh, order }. Kept here (not in Options.lua)
 -- so it is populated even if DragonUI_Options never loads.
 NE.optionPanels = NE.optionPanels or {}
+NE._registeredPanels = NE._registeredPanels or {}
 
 -- ----------------------------------------------------------------------------
 -- DB bootstrap. Panel ENABLE flags + the per-panel `enabled` toggles live in
@@ -67,6 +74,9 @@ end
 -- (after ADDON_LOADED for our addon, i.e. DragonUI.db is already an AceDB).
 -- ----------------------------------------------------------------------------
 function NE.OnReady()
+    if NE.StartupProfile and type(NE.StartupProfile.Initialize) == "function" then
+        NE.StartupProfile:Initialize()
+    end
     local cfg = ensureProfile()
     if not cfg then
         warn("DragonUI.db.profile not available at OnReady; newera settings not initialised.")
@@ -428,6 +438,14 @@ function NE.RegisterPanel(spec)
     local id    = spec.id
     local title = spec.title or id
     local desc  = spec.desc or ""
+    profileMark("register", id)
+
+    -- A LoadOnDemand route, an options refresh, and a late module file may all
+    -- reach this seam. Keep the registry idempotent so the same panel cannot
+    -- acquire duplicate boot/event/options registrations.
+    if NE._registeredPanels[id] then
+        return NE._registeredPanels[id]
+    end
 
     -- (1) DB default. Guarded: profile may not exist yet pre-login; the default
     -- is re-asserted in OnReady for panels that registered early.
@@ -457,10 +475,13 @@ function NE.RegisterPanel(spec)
                 name    = id,
                 default = true,
                 onBoot  = function()
-                    -- Only open/show when the panel is enabled in config.
+                    profileMark("boot", id)
+                    -- Boot constructs/wires only. Opening is opt-in and must be
+                    -- requested by a real entry point, not PLAYER_LOGIN.
                     if isEnabled() and spec.bootFn then
                         spec.bootFn()
-                    elseif isEnabled() and spec.autoOpen ~= false and spec.openFn then
+                    elseif isEnabled() and spec.autoOpen == true and spec.openFn then
+                        profileMark("open", id, "autoOpen")
                         spec.openFn()
                     end
                 end,
@@ -479,20 +500,24 @@ function NE.RegisterPanel(spec)
     local moduleTable = {
         ne_id = id,
         Enable = function()
-            if spec.openFn then spec.openFn() end
+            profileMark("enable", id)
+            if isEnabled() and spec.bootFn then spec.bootFn()
+            end
         end,
         Disable = function()
+            profileMark("disable", id)
             if spec.closeFn then spec.closeFn() end
         end,
         Refresh = function()
+            profileMark("refresh", id)
             if isEnabled() then
-                if spec.refreshFn then spec.refreshFn()
-                elseif spec.openFn then spec.openFn() end
+                if spec.refreshFn then spec.refreshFn() end
             else
                 if spec.closeFn then spec.closeFn() end
             end
         end,
     }
+    NE._registeredPanels[id] = moduleTable
     local dragon = NE.dragon
     if dragon then
         local registered = false

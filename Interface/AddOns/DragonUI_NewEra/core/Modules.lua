@@ -203,6 +203,9 @@ dispatcher:SetScript("OnEvent", function(_, event, arg1, ...)
     local opts = Mods.registry[name]
     if opts and opts.onBoot and shouldBoot(name) then
       Mods.booted[name] = true
+      if NE.StartupProfile and NE.StartupProfile.Mark then
+        NE.StartupProfile:Mark("boot", name, event)
+      end
       local ok, err = pcall(opts.onBoot, event, arg1, ...)
       if not ok and NE.Log then NE.Log("MODULES", "onBoot error in "..name..": "..tostring(err)) end
       local subs = Mods.subBoots[name]
@@ -246,6 +249,9 @@ function Mods.Register(arg1, arg2)
   if not name then
     if NE.Log then NE.Log("MODULES", "Register called without a name") end
     return
+  end
+  if NE.StartupProfile and NE.StartupProfile.Mark then
+    NE.StartupProfile:Mark("register", name)
   end
   if Mods.registry[name] then
     if NE.Log then NE.Log("MODULES", "duplicate module registration: "..tostring(name)) end

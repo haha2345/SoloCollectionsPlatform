@@ -30,6 +30,9 @@ local headers, entries
 local flat = {}
 local collapsed = {}
 local repaint
+local variablesLoaded = false
+local tabPending = false
+local characterFrameHooked = false
 
 local function num(v)
     return tostring(tonumber(v) or 0)
@@ -256,7 +259,7 @@ CP.RefreshHonorPane = refresh
 -- NAMED CharacterFrameTab6: PanelTemplates_UpdateTabs finds tabs by that pattern.
 local function buildTab()
     local cf = _G.CharacterFrame
-    if not cf or _G["CharacterFrameTab" .. TAB_INDEX] then return end
+    if not (variablesLoaded and cf and cf:IsShown()) or _G["CharacterFrameTab" .. TAB_INDEX] then return end
 
     local tab = CreateFrame("Button", "CharacterFrameTab" .. TAB_INDEX, cf,
                             "CharacterFrameTabButtonTemplate")
@@ -269,6 +272,47 @@ local function buildTab()
 
     if PanelTemplates_SetNumTabs then PanelTemplates_SetNumTabs(cf, TAB_INDEX) end
     if CP.RechainTabs then CP.RechainTabs() end
+    tabPending = false
+end
+
+local function ensureCharacterFrameHook()
+    local cf = _G.CharacterFrame
+    if not (cf and not characterFrameHooked) then return end
+    characterFrameHooked = true
+    cf:HookScript("OnShow", function()
+        if variablesLoaded then
+            if C_Timer and C_Timer.After then
+                C_Timer.After(0, buildTab)
+            else
+                buildTab()
+            end
+        else
+            tabPending = true
+        end
+    end)
+end
+
+local function scheduleTabBuild()
+    ensureCharacterFrameHook()
+    if not variablesLoaded then
+        tabPending = true
+        return
+    end
+    local cf = _G.CharacterFrame
+    if not (cf and cf:IsShown()) then
+        tabPending = true
+        return
+    end
+    -- FrameXML localization and tab re-chaining happen in the same startup
+    -- window. Always defer one frame so CharacterFrameTab6 cannot be inserted
+    -- into that call stack.
+    if C_Timer and C_Timer.After then
+        C_Timer.After(0, function()
+            if tabPending or not _G["CharacterFrameTab" .. TAB_INDEX] then buildTab() end
+        end)
+    else
+        buildTab()
+    end
 end
 
 -- The pet tab goes away here because this is what replaces it. The frame is pinned shut too:
@@ -333,16 +377,26 @@ local function build()
     end)
     pane:SetScript("OnHide", function() host:Hide() end)
 
-    buildTab()
+    ensureCharacterFrameHook()
+    scheduleTabBuild()
 end
 
 CP.HonorPane = function() return pane end
 
 local events = CreateFrame("Frame")
+events:RegisterEvent("VARIABLES_LOADED")
 events:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
 events:RegisterEvent("PLAYER_PVP_RANK_CHANGED")
 events:RegisterEvent("HONOR_CURRENCY_UPDATE")
 events:RegisterEvent("ARENA_TEAM_UPDATE")
-events:SetScript("OnEvent", refresh)
+events:SetScript("OnEvent", function(_, event)
+    if event == "VARIABLES_LOADED" then
+        variablesLoaded = true
+        ensureCharacterFrameHook()
+        scheduleTabBuild()
+        return
+    end
+    refresh()
+end)
 
 CP:RegisterBuilder("honorpane", build)

@@ -1,0 +1,25 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Encounter Journal|r
+## Notes: Load-on-demand New Era Adventure Guide.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\encounterjournal\Support.lua
+modules\encounterjournal\Assets.lua
+modules\encounterjournal\Slices.lua
+modules\encounterjournal\Data.lua
+modules\encounterjournal\DataTBC.lua
+modules\encounterjournal\DataWotLK.lua
+modules\encounterjournal\PortraitOverrides.lua
+modules\encounterjournal\AbilitiesEra.lua
+modules\encounterjournal\AbilitiesTBC.lua
+modules\encounterjournal\AbilitiesWotLK.lua
+modules\encounterjournal\LootEra.lua
+modules\encounterjournal\ModelCam.lua
+modules\encounterjournal\EncounterItem.lua
+modules\encounterjournal\EncounterPage.lua
+modules\encounterjournal\NavBar.lua
+modules\encounterjournal\EncounterJournal.lua
+modules\encounterjournal\MicroButton.lua
