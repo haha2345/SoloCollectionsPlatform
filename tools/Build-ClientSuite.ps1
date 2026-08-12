@@ -3,7 +3,8 @@ param(
     [string] $SourceRoot = (Join-Path $PSScriptRoot '..\Interface\AddOns'),
     [string] $OutputRoot = (Join-Path $PSScriptRoot '..\build\Interface\AddOns'),
     [string] $SoloCollectionsSource = (Join-Path $PSScriptRoot '..\..\SoloCollections\addon\SoloCollections'),
-    [string] $EzCollectionsSource = ''
+    [string] $EzCollectionsSource = '',
+    [string] $MountDescriptions = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -18,11 +19,12 @@ $allowed = [IO.Path]::GetFullPath((Join-Path $suiteRoot 'build\Interface\AddOns'
 if ($output -ne $allowed) { throw "Output must be the suite's exact ignored build/Interface/AddOns directory: $output" }
 if (Test-Path -LiteralPath $output) { [IO.Directory]::Delete($output, $true) }
 [IO.Directory]::CreateDirectory($output) | Out-Null
-foreach ($name in @('!!!ClassicAPI', 'DragonUI', 'DragonUI_Options', 'DragonUI_NewEra', 'SoloCollections', 'SoloCollections_WardrobeData')) {
+$lock = Get-Content -LiteralPath (Join-Path $suiteRoot 'upstream\suite-lock.json') -Raw | ConvertFrom-Json
+foreach ($name in @($lock.components | ForEach-Object { $_.addonRoot })) {
     Copy-Item -LiteralPath (Join-Path $SourceRoot $name) -Destination (Join-Path $output $name) -Recurse -Force
 }
 if (-not [string]::IsNullOrWhiteSpace($EzCollectionsSource)) {
-    & (Join-Path $PSScriptRoot 'Import-EzCollectionsUI.ps1') -Source $EzCollectionsSource
+    & (Join-Path $PSScriptRoot 'Import-EzCollectionsUI.ps1') -Source $EzCollectionsSource -MountDescriptions $MountDescriptions
 }
 $inspectParameters = @{ SourceRoot = $output; VerifyLock = $true }
 if (-not [string]::IsNullOrWhiteSpace($EzCollectionsSource)) {

@@ -3,7 +3,8 @@ param(
     [string] $Version = 'development',
     [string] $PackageRoot = (Join-Path $PSScriptRoot '..\build\packages'),
     [string] $SoloCollectionsSource = (Join-Path $PSScriptRoot '..\..\SoloCollections\addon\SoloCollections'),
-    [string] $EzCollectionsSource = ''
+    [string] $EzCollectionsSource = '',
+    [string] $MountDescriptions = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -18,6 +19,9 @@ if ($Version -notmatch '^[0-9A-Za-z][0-9A-Za-z._-]*$') { throw 'Version contains
 $buildParameters = @{ SoloCollectionsSource = $SoloCollectionsSource }
 if (-not [string]::IsNullOrWhiteSpace($EzCollectionsSource)) {
     $buildParameters.EzCollectionsSource = $EzCollectionsSource
+}
+if (-not [string]::IsNullOrWhiteSpace($MountDescriptions)) {
+    $buildParameters.MountDescriptions = $MountDescriptions
 }
 & (Join-Path $PSScriptRoot 'Build-ClientSuite.ps1') @buildParameters
 $buildRoot = Join-Path $suiteRoot 'build'

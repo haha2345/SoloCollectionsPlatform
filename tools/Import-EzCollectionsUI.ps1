@@ -2,6 +2,7 @@
 param(
     [Parameter(Mandatory)]
     [string] $Source,
+    [string] $MountDescriptions = '',
     [string] $Destination = (Join-Path $PSScriptRoot '..\build\Interface\AddOns\SoloCollections_EzUI')
 )
 
@@ -126,6 +127,15 @@ _G.SoloCollectionsEzUIAssets = {
 "@
     Set-Content -LiteralPath (Join-Path $stagingPath 'Assets.lua') -Value $assetsLua -Encoding utf8NoBOM
 
+    $descriptionTocLine = ''
+    $descriptionHash = $null
+    if (-not [string]::IsNullOrWhiteSpace($MountDescriptions)) {
+        $descriptionPath = (Resolve-Path -LiteralPath $MountDescriptions).Path
+        Copy-Item -LiteralPath $descriptionPath -Destination (Join-Path $stagingPath 'MountDescriptions.zhCN.lua') -Force
+        $descriptionHash = (Get-FileHash -LiteralPath $descriptionPath -Algorithm SHA256).Hash.ToLowerInvariant()
+        $descriptionTocLine = "`nMountDescriptions.zhCN.lua"
+    }
+
     $generatedToc = @"
 ## Interface: 30300
 ## Title: SoloCollections ezCollections UI Assets (Local)
@@ -136,6 +146,7 @@ _G.SoloCollectionsEzUIAssets = {
 ## X-SoloCollections-EzUI-AssetHash: $ExpectedAssetTreeHash
 
 Assets.lua
+$descriptionTocLine
 "@
     Set-Content -LiteralPath (Join-Path $stagingPath 'SoloCollections_EzUI.toc') -Value $generatedToc -Encoding utf8NoBOM
 
@@ -152,6 +163,8 @@ Assets.lua
         assetFileCount = $assetFiles.Count
         sourcePathRecorded = $false
         importedCode = $false
+        mountDescriptionSource = if ($descriptionHash) { 'locked zhCN 3.3.5a Spell.dbc projection' } else { 'not supplied' }
+        mountDescriptionSha256 = $descriptionHash
         excludedRuntime = @('C_Transmog*', 'ezCollections server Lua', 'ezCollections message protocol')
         publicReleaseState = 'blocked pending explicit license and provenance review'
     }
@@ -159,7 +172,7 @@ Assets.lua
         Set-Content -LiteralPath (Join-Path $stagingPath 'EZUI-PROVENANCE.json') -Encoding utf8NoBOM
 
     $copiedAssetFiles = @(Get-ChildItem -LiteralPath $stagingPath -File -Recurse -Force | Where-Object {
-        $_.Name -notin @('Assets.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json')
+        $_.Name -notin @('Assets.lua', 'MountDescriptions.zhCN.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json')
     })
     $copiedAssetHash = Get-FileSetHash -Root $stagingPath -Files $copiedAssetFiles
     if ($copiedAssetHash -ne $ExpectedAssetTreeHash) {

@@ -12,7 +12,7 @@
 ## Delivery layers / 交付分层
 
 - Public source delivery is built by the SoloCollections repository and excludes vendored DragonUI media.
-- The repository source tree contains exactly five base AddOn roots. A user-authorized local build may add generated `SoloCollections_EzUI` as the sixth root under the ignored `build/` tree.
+- The repository source tree contains exactly the 17 AddOn roots listed by `upstream/suite-lock.json`: the six base roots, `SoloCollections_WardrobeData`, and 11 explicit `DragonUI_NewEra_*` LoadOnDemand siblings. A user-authorized local build may add generated `SoloCollections_EzUI` as the 18th root under the ignored `build/` tree.
 - `upstream/suite-lock.json` is the provenance boundary: upstream commits, project patch state, TOC versions, and deterministic directory hashes must match before packaging.
 - `upstream/ezCollections-reference.json` separately locks the 2.2 source and complete media projection. It records no machine-local source path and does not authorize public redistribution.
 - Ownership and actions remain authoritative in mod-solo-collections; the integrated archive changes presentation and install shape only.

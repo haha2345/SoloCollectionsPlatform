@@ -10,9 +10,11 @@ param(
 $ErrorActionPreference = 'Stop'
 Set-StrictMode -Version Latest
 
-$expected = @('!!!ClassicAPI', 'DragonUI', 'DragonUI_Options', 'DragonUI_NewEra', 'SoloCollections', 'SoloCollections_WardrobeData')
 $generatedEzUI = 'SoloCollections_EzUI'
 $root = (Resolve-Path -LiteralPath $SourceRoot).Path
+$lock = Get-Content -LiteralPath $LockFile -Raw | ConvertFrom-Json
+$expected = @($lock.components | ForEach-Object { $_.addonRoot })
+if (-not $expected -or $expected.Count -eq 0) { throw "Suite lock has no component addonRoot entries." }
 
 function Get-TreeHash([string] $Path) {
     $resolved = (Resolve-Path -LiteralPath $Path).Path
@@ -38,7 +40,7 @@ $expectedRoots = @($expected)
 if ($AllowGeneratedEzCollectionsUI) { $expectedRoots += $generatedEzUI }
 $expectedSorted = @($expectedRoots | Sort-Object)
 if (($actual -join "`n") -ne ($expectedSorted -join "`n")) {
-    $shape = if ($AllowGeneratedEzCollectionsUI) { 'five base AddOns plus generated SoloCollections_EzUI' } else { 'exactly five base AddOn roots' }
+    $shape = if ($AllowGeneratedEzCollectionsUI) { 'the locked AddOn roots plus generated SoloCollections_EzUI' } else { 'exactly the locked AddOn roots' }
     throw "Expected ${shape}: $($expectedRoots -join ', '); found: $($actual -join ', ')"
 }
 
@@ -66,7 +68,7 @@ function Get-TreeHashFromFiles {
     }
 }
 
-$lock = if ($VerifyLock) { Get-Content -LiteralPath $LockFile -Raw | ConvertFrom-Json } else { $null }
+$lockForVerification = if ($VerifyLock) { $lock } else { $null }
 $rows = foreach ($name in $expected) {
     $addon = Join-Path $root $name
     $toc = @(Get-ChildItem -LiteralPath $addon -Filter '*.toc' -File)
@@ -75,7 +77,7 @@ $rows = foreach ($name in $expected) {
     if (Test-Path -LiteralPath $nested -PathType Container) { throw "$name is nested one directory too deep: $nested" }
     $hash = Get-TreeHash $addon
     if ($VerifyLock) {
-        $entry = @($lock.components | Where-Object addonRoot -eq $name)
+        $entry = @($lockForVerification.components | Where-Object addonRoot -eq $name)
         if ($entry.Count -ne 1) { throw "Lock must contain exactly one entry for $name" }
         if ($entry[0].directoryHash -ne $hash) { throw "Directory hash mismatch for $name. expected=$($entry[0].directoryHash) actual=$hash" }
     }
@@ -100,7 +102,7 @@ if ($AllowGeneratedEzCollectionsUI) {
         throw "$generatedEzUI source hash does not match ezCollections-reference.json"
     }
     $assetFiles = @(Get-ChildItem -LiteralPath $addon -File -Recurse -Force | Where-Object {
-        $_.Name -notin @('Assets.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json')
+        $_.Name -notin @('Assets.lua', 'MountDescriptions.zhCN.lua', 'SoloCollections_EzUI.toc', 'EZUI-PROVENANCE.json')
     })
     $assetHash = Get-TreeHashFromFiles -Path $addon -Files $assetFiles
     if ($assetHash -ne $reference.localAssetProjection.directoryHash -or
