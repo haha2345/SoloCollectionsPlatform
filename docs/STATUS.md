@@ -1,6 +1,6 @@
 # SoloCollections source status / 源码状态
 
-Snapshot date / 快照日期：2026-07-27
+Snapshot date / 快照日期：2026-08-12
 
 ## 中文
 
@@ -37,6 +37,10 @@ Snapshot date / 快照日期：2026-07-27
 - 3,690 条武器展示终态扫描和代表 family 抽样；
 - 参考客户端分辨率/UI Scale 布局检查；
 - 无 SoloCam、错误 asset token 和冷/热缓存的失败关闭行为。
+- 坐骑偏好由 characters 数据库和 SC2 type 16 投影持久化，未收集记录不能设为偏好；
+- 随机技能 `150544`、随机按钮与已收集坐骑图标可拖出原生动作，不创建宏；
+- 同一动作在 1/19/20/44/45/59/60 级按服务端能力解析地面/飞行速度，连续换乘只保留当前坐骑 aura；
+- `CLIENT-20260812-089` 的源码和构建为 `IMPLEMENTED_LOCAL`，匹配 worldserver 启动为 `SERVER_ACCEPTED`，坐骑功能矩阵为 `REAL_CLIENT_ACCEPTED`。
 
 这些结论只说明当时参考客户端与对应源码/资源组合通过。新的客户端修改、HD
 模型、不同 EXE、不同资源包或目录变更都需要重新验收。
@@ -49,6 +53,10 @@ Snapshot date / 快照日期：2026-07-27
 - 英文 UI 和更多 locale 仍可继续完善；
 - `v0.2.0` 只发布可审核源码、清单与说明，不重新分发旧 `v0.1.0` 中的
   MPQ、DLL 或客户端补丁。
+
+本次用于技能 `150544` 和旧世界地面回落的 Spell/SkillLineAbility DBC 及
+`patch-zhCN-z.MPQ` 只属于维护者本地私有客户端变更。它们不进入公共源码仓库或
+Release，也不能由上述 `REAL_CLIENT_ACCEPTED` 推导为可公开分发资源。
 
 镜头工作请从 [CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md) 开始。
 
@@ -78,8 +86,19 @@ fail-closed behavior for missing SoloCam, bad asset tokens, and cache changes.
 Those results do not automatically transfer to a modified executable, HD
 model, different resource pack, or changed catalog.
 
+The local `CLIENT-20260812-089` evidence also covers server-persisted mount
+favorites (SC2 type 16), native action-bar dragging without macros, random
+spell `150544`, the 1/19/20/44/45/59/60 capability matrix, and single-mount
+aura cleanup. Source/build work is `IMPLEMENTED_LOCAL`, matched worldserver
+startup is `SERVER_ACCEPTED`, and that scoped client matrix is
+`REAL_CLIENT_ACCEPTED`.
+
 Known contribution areas are body and weapon framing across more models,
 extreme weapon bounds, English/locale coverage, and a future matched source
 update. `v0.2.0` intentionally does not redistribute the MPQs, DLL, or client
 patches from `v0.1.0`. Start camera work with
 [CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md).
+
+The Spell/SkillLineAbility DBC files and `patch-zhCN-z.MPQ` used by that local
+acceptance are private client mutations. They are excluded from public source
+and Releases and are not redistributable artifacts.
