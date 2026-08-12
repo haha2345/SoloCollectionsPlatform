@@ -11,9 +11,39 @@ local ok, missing = Public and Public.Require(1, {
     "components.inset",
     "components.tabs",
     "components.buttons",
+    "components.collection-header",
+    "components.journal-filter",
+    "components.random-mount",
+    "components.red-action",
+    "components.journal-tabs",
 })
 if not ok then error("DragonUI_NewEra capability missing: " .. tostring(missing)) end
 ```
+
+## Collection journal components
+
+The following stable methods are available from `Public.Components` for a collection journal
+adapter. They expose widgets and visual behavior only; collection ownership, filtering state,
+and action authorization remain with the consuming AddOn and its server bridge.
+
+```lua
+local Components = DragonUI_NewEra.Public.Components
+local header = Components:CreateCollectionInfoHeader(parent, spec)
+local filter = Components:CreateJournalFilterButton(parent, spec)
+local random = Components:CreateRandomMountButton(parent, spec)
+Components:SkinRedActionButton(actionButton)
+local tab = Components:CreateJournalTab(parent, {
+    index = 1, label = "Mounts", onClick = onClick, height = 36, selectedHeight = 42,
+})
+Components:SetJournalTabSelected(tab, true)
+Components:LayoutJournalTabs(frame, tabs, { startX = 14, startY = 2, gap = 1 })
+```
+
+`CreateCollectionInfoHeader` returns a projection containing `frame`, `icon`, `button`, `name`,
+`source`, and `description`. `CreateJournalTab` uses the classic character tab template internally;
+it exposes 36/42px inactive/selected heights and raises the selected tab's frame level by 8 before
+restoring the normal level on deselection. Callers must not reach into `NE.tabs` or DragonUI's private
+skin tables.
 
 ## Minimal external window example
 
