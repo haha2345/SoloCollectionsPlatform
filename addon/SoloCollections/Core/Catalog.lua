@@ -20,6 +20,13 @@ local DEFAULT_FILTERS = {
     armorType = "AUTO",
     slot = "HEAD",
     weaponType = "AUTO",
+    mounts = {
+        unusable = true,
+        ground = true,
+        flying = true,
+        aquatic = true,
+        hiddenSources = {},
+    },
 }
 
 local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
@@ -28,6 +35,55 @@ local generatedCompanionSource = nil
 local generatedToySource = nil
 local generatedAppearanceSource = nil
 local wardrobeLoadAttempted = false
+local mountDescriptionCache = {}
+local mountDescriptionGaps = {}
+local mountDescriptionGapKeys = {}
+local getGeneratedMountSource
+
+local MOUNT_SOURCE_LABELS = {
+    [0] = "掉落",
+    [1] = "任务",
+    [2] = "商人",
+    [3] = "专业",
+    [4] = "宠物对战",
+    [5] = "成就",
+    [6] = "世界事件",
+    [7] = "促销",
+    [8] = "集换式卡牌",
+    [9] = "游戏商城",
+    [10] = "发现",
+    [11] = "其他",
+}
+
+Catalog.MOUNT_SOURCE_ORDER = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 }
+
+local function refreshMountSourceOrder(source)
+    local seen = {}
+    for _, record in ipairs(source or {}) do
+        local sourceType = tonumber(record.sourceType)
+        if sourceType ~= nil then
+            seen[sourceType] = true
+        end
+    end
+    local order = {}
+    for sourceType in pairs(seen) do
+        order[#order + 1] = sourceType
+    end
+    table.sort(order)
+    if #order > 0 then
+        Catalog.MOUNT_SOURCE_ORDER = order
+    end
+end
+
+function Catalog.GetMountSourceOrder()
+    getGeneratedMountSource()
+    return Catalog.MOUNT_SOURCE_ORDER
+end
+
+function Catalog.MountSourceLabel(sourceType)
+    sourceType = tonumber(sourceType)
+    return MOUNT_SOURCE_LABELS[sourceType] or "其他"
+end
 
 local function ensureWardrobeCatalog()
     if SC.GeneratedWardrobeCatalog then
@@ -40,15 +96,16 @@ local function ensureWardrobeCatalog()
     return SC.GeneratedWardrobeCatalog ~= nil
 end
 
-local function getGeneratedMountSource()
+function getGeneratedMountSource()
     if generatedMountSource then
         return generatedMountSource
     end
     generatedMountSource = {}
     local generated = SC.GeneratedCatalog or {}
     for _, collection in ipairs(generated.collections or {}) do
-        if collection.typeKey == "mount" and collection.lifecycle == "active" and
-            collection.uiCollectible ~= false then
+        local journalVisible = collection.journalVisible
+        if journalVisible == nil then journalVisible = collection.uiCollectible ~= false end
+        if collection.typeKey == "mount" and collection.lifecycle == "active" and journalVisible then
             local names = collection.name or {}
             table.insert(generatedMountSource, {
                 id = collection.collectionId,
@@ -57,17 +114,28 @@ local function getGeneratedMountSource()
                 icon = collection.iconTexture,
                 presentationStatus = collection.presentationStatus,
                 spellId = collection.spellId,
+                canonicalActionSpellId = collection.canonicalActionSpellId,
+                actionable = collection.actionable and true or false,
+                draggable = collection.draggable and true or false,
+                randomEligible = collection.randomEligible and true or false,
+                capability = collection.capability,
+                exclusionReason = collection.exclusionReason,
                 faction = collection.faction,
+                mountType = collection.mountType,
+                flags = collection.flags,
+                sourceType = collection.sourceType,
+                descriptionKey = collection.descriptionKey or collection.spellId,
+                descriptionStatus = collection.descriptionStatus or "MISSING",
+                acquisitionClass = collection.acquisitionClass or "STANDARD",
+                visibilityReason = collection.visibilityReason,
                 source = collection.sourceText and collection.sourceText ~= "" and
                     collection.sourceText or "来源未知",
-                description = collection.description and collection.description ~= "" and
-                    collection.description or
-                    "由 SoloCollections 服务端权威目录提供。",
                 collected = false,
                 favorite = false,
             })
         end
     end
+    refreshMountSourceOrder(generatedMountSource)
     return generatedMountSource
 end
 
@@ -357,6 +425,14 @@ local function getFavorite(category, record)
     if isCollectibleCompanion(category) and not record.collected then
         return false
     end
+    -- Mount favorites are a server projection (SC2 type 16).  Never let the
+    -- legacy SavedVariables table affect production ordering, even while the
+    -- preference snapshot is still loading.
+    if category == "MOUNTS" then
+        local collectionState = SC.CollectionState
+        return collectionState and collectionState.IsOwnedByType
+            and collectionState.IsOwnedByType(16, record.id) or false
+    end
     local database = SoloCollectionsDB
     if type(database) ~= "table" then
         return record.favorite and true or false
@@ -379,9 +455,39 @@ local function resolvedFilters(filters)
     local result = {}
     for key, defaultValue in pairs(DEFAULT_FILTERS) do
         if filters and filters[key] ~= nil then
-            result[key] = filters[key]
+            if type(defaultValue) == "table" then
+                result[key] = {}
+                for nestedKey, nestedDefault in pairs(defaultValue) do
+                    if type(nestedDefault) == "table" then
+                        result[key][nestedKey] = {}
+                        local savedNested = type(filters[key]) == "table" and filters[key][nestedKey]
+                        if type(savedNested) == "table" then
+                            for savedKey, savedValue in pairs(savedNested) do
+                                result[key][nestedKey][savedKey] = savedValue
+                            end
+                        end
+                    elseif type(filters[key]) == "table" and filters[key][nestedKey] ~= nil then
+                        result[key][nestedKey] = filters[key][nestedKey]
+                    else
+                        result[key][nestedKey] = nestedDefault
+                    end
+                end
+            else
+                result[key] = filters[key]
+            end
         else
-            result[key] = defaultValue
+            if type(defaultValue) == "table" then
+                result[key] = {}
+                for nestedKey, nestedDefault in pairs(defaultValue) do
+                    if type(nestedDefault) == "table" then
+                        result[key][nestedKey] = {}
+                    else
+                        result[key][nestedKey] = nestedDefault
+                    end
+                end
+            else
+                result[key] = defaultValue
+            end
         end
     end
     return result
@@ -421,6 +527,122 @@ local function stateMatches(record, filters)
     return filters.uncollected
 end
 
+local function hasMountBit(value, mask)
+    value = tonumber(value) or 0
+    if bit and bit.band then
+        return bit.band(value, mask) ~= 0
+    end
+    return math.floor(value / mask) % 2 == 1
+end
+
+local function mountCategories(record)
+    local categories = {}
+    local mountType = tonumber(record.mountType) or 0
+    local flags = tonumber(record.flags) or 0
+    -- Keep ezCollections' original journal filter semantics. The 0x4 group is
+    -- intentionally an OR category: either ground or flying must remain
+    -- enabled for the row to stay visible. Do not infer movement from flags;
+    -- 0x10 is only the aquatic display category.
+    if hasMountBit(mountType, 0x4) then
+        categories.kind = "GROUND_FLYING"
+        categories.ground = true
+        categories.flying = true
+    elseif hasMountBit(flags, 0x10) then
+        categories.kind = "AQUATIC"
+        categories.aquatic = true
+    elseif hasMountBit(mountType, 0x1) then
+        categories.kind = "FLYING"
+        categories.flying = true
+    else
+        categories.kind = "GROUND"
+        categories.ground = true
+    end
+    return categories
+end
+
+local function mountIsUsable(record)
+    if type(UnitIsDeadOrGhost) == "function" and UnitIsDeadOrGhost("player") then
+        return false
+    end
+    if record.faction and type(UnitFactionGroup) == "function" then
+        local faction = UnitFactionGroup("player")
+        local expectedFaction = string.upper(tostring(record.faction))
+        local playerFaction = faction and string.upper(tostring(faction))
+        if playerFaction and expectedFaction ~= "ALL" and expectedFaction ~= playerFaction then
+            return false
+        end
+    end
+
+    -- Match ezCollections' pure client-side usability checks. The 0x1 bit
+    -- means flying-only; 0x2 means the mount can be used underwater. The 0x4
+    -- scripted ground/flying group is deliberately not blocked by
+    -- IsFlyableArea().
+    local mountType = tonumber(record.mountType) or 0
+    if type(IsOutdoors) == "function" and not IsOutdoors() then
+        return false
+    end
+    if hasMountBit(mountType, 0x1) and type(IsFlyableArea) == "function" then
+        if IsFlyableArea() == false then return false end
+    end
+    if not hasMountBit(mountType, 0x2) and type(IsSwimming) == "function" then
+        if IsSwimming() then return false end
+    end
+
+    local spellId = tonumber(record.spellId or record.descriptionKey)
+    local isAhnQirajMount = spellId == 25953 or spellId == 26054
+        or spellId == 26055 or spellId == 26056
+    if isAhnQirajMount and type(GetMinimapZoneText) == "function" then
+        local zone = tostring(GetMinimapZoneText() or "")
+        local isAhnQiraj = zone == "Ahn'Qiraj" or zone == "Ahn Qiraj"
+            or zone == "Ан'Кираж" or zone == "安其拉"
+            or zone == "安其拉神殿" or zone == "安其拉废墟"
+        if isAhnQiraj ~= true then
+            return false
+        end
+    elseif not isAhnQirajMount and type(GetMinimapZoneText) == "function" then
+        local zone = tostring(GetMinimapZoneText() or "")
+        if zone == "Ahn'Qiraj" or zone == "Ahn Qiraj"
+            or zone == "Ан'Кираж" or zone == "安其拉"
+            or zone == "安其拉神殿" or zone == "安其拉废墟" then
+            return false
+        end
+    end
+    return true
+end
+
+local function enrichMountRecord(record)
+    if not record.mountCategories then
+        record.mountCategories = mountCategories(record)
+    end
+    record.mountUsable = mountIsUsable(record)
+    return record
+end
+
+local function mountFilterMatches(record, filters)
+    local mountFilters = filters.mounts or DEFAULT_FILTERS.mounts
+    local categories = record.mountCategories or mountCategories(record)
+    if mountFilters.unusable == false and not record.mountUsable then
+        return false
+    end
+    if categories.kind == "GROUND_FLYING" then
+        if mountFilters.ground == false and mountFilters.flying == false then
+            return false
+        end
+    elseif categories.kind == "AQUATIC" then
+        if mountFilters.aquatic == false then return false end
+    elseif categories.kind == "FLYING" then
+        if mountFilters.flying == false then return false end
+    elseif mountFilters.ground == false then
+        return false
+    end
+    local hiddenSources = mountFilters.hiddenSources
+    local sourceType = tonumber(record.sourceType)
+    if type(hiddenSources) == "table" and sourceType ~= nil and hiddenSources[sourceType] then
+        return false
+    end
+    return true
+end
+
 local function metadataMatches(record, query)
     query = string.lower(tostring(query or ""))
     query = string.gsub(query, "^%s+", "")
@@ -432,11 +654,73 @@ local function metadataMatches(record, query)
         tostring(record.name or ""),
         tostring(record.source or ""),
         tostring(record.description or ""),
+        record.acquisitionClass == "LEGACY" and "绝版" or "",
+        record.acquisitionClass == "PROMOTION" and "促销" or "",
     }, " ")
     return string.find(string.lower(haystack), query, 1, true) ~= nil
 end
 
+local function normalizeMountDescription(text, record)
+    if type(text) ~= "string" then return nil end
+    text = string.gsub(text, "^%s+", "")
+    text = string.gsub(text, "%s+$", "")
+    if text == "" or string.match(text, "^%d+$") or
+        string.find(text, "法术ID", 1, true) or string.find(string.lower(text), "spell id", 1, true) then
+        return nil
+    end
+    local male = type(UnitSex) ~= "function" or UnitSex("player") ~= 3
+    text = string.gsub(text, "%$g([^:;]*):([^;]*);", function(maleText, femaleText)
+        return male and maleText or femaleText
+    end)
+    if record and record.name and text == record.name then return nil end
+    return text
+end
+
+function Catalog.ResolveMountDescription(record)
+    local spellId = tonumber(record and (record.descriptionKey or record.spellId))
+    if spellId then
+        if mountDescriptionCache[spellId] then
+            return mountDescriptionCache[spellId]
+        end
+        local ezui = _G.SoloCollections_EzUI
+        local fallback = ezui and ezui.MountDescriptionsZhCN
+        local localText = normalizeMountDescription(fallback and fallback[spellId], record)
+        if localText then
+            mountDescriptionCache[spellId] = localText
+            return localText
+        end
+    end
+    return nil
+end
+
+function Catalog.RecordMountDescriptionGap(record)
+    local key = record and (record.descriptionKey or record.spellId or record.id)
+    if key == nil then return end
+    key = tostring(key)
+    if mountDescriptionGapKeys[key] then return end
+    mountDescriptionGapKeys[key] = true
+    mountDescriptionGaps[#mountDescriptionGaps + 1] = {
+        spellId = tonumber(record.spellId or record.descriptionKey),
+        name = record.name,
+        descriptionStatus = "MISSING",
+    }
+end
+
+function Catalog.GetMountDescriptionGaps()
+    local result = {}
+    for index, gap in ipairs(mountDescriptionGaps) do
+        result[index] = gap
+    end
+    return result
+end
+
 local function filterMatches(category, record, query, filters, includeCollectionState)
+    if category == "MOUNTS" then
+        enrichMountRecord(record)
+        if not mountFilterMatches(record, filters) then
+            return false
+        end
+    end
     if includeCollectionState and not stateMatches(record, filters) then
         return false
     end
@@ -489,6 +773,23 @@ local function setPresentationLess(left, right)
     return (tonumber(left and left.id) or 0) < (tonumber(right and right.id) or 0)
 end
 
+local function mountPresentationLess(left, right)
+    local leftRank = left.collected and (left.favorite and 0 or 1) or 2
+    local rightRank = right.collected and (right.favorite and 0 or 1) or 2
+    if leftRank ~= rightRank then
+        return leftRank < rightRank
+    end
+    local leftName = tostring(left.name or "")
+    local rightName = tostring(right.name or "")
+    if leftName ~= rightName then
+        if type(strcmputf8i) == "function" then
+            return strcmputf8i(leftName, rightName) < 0
+        end
+        return leftName < rightName
+    end
+    return (tonumber(left.id) or 0) < (tonumber(right.id) or 0)
+end
+
 function Catalog.Get(category)
     local result = {}
     local source = getSource(category)
@@ -514,7 +815,9 @@ function Catalog.QueryAll(category, query, filters)
             table.insert(matches, record)
         end
     end
-    if category == "SETS" then
+    if category == "MOUNTS" then
+        table.sort(matches, mountPresentationLess)
+    elseif category == "SETS" then
         table.sort(matches, setPresentationLess)
     end
     return matches
@@ -671,6 +974,9 @@ function Catalog.GetProgress(category, filters)
 end
 
 function Catalog.ToggleDemoFavorite(category, id)
+    if category == "MOUNTS" then
+        return nil
+    end
     local source = getSource(category) or {}
     for _, sourceRecord in ipairs(source) do
         if sourceRecord.id == id then

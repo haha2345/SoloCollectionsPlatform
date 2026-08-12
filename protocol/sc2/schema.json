@@ -12,6 +12,10 @@
   "maxSnapshotChunks": 256,
   "checksum": "ADLER32_LOWER_HEX8",
   "collectionPayload": "SORTED_UNIQUE_UINT32_BASE36_COMMA_OR_DASH",
+  "projectionTypes": {
+    "10": "authoritative account-owned mount collection IDs",
+    "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress"
+  },
   "fields": {
     "nonce": "LOWER_HEX16",
     "checksum": "LOWER_HEX8",
@@ -48,6 +52,21 @@
     "X": "ERROR"
   },
   "actionSemantics": {
+    "SET_FAVORITE": {
+      "typeIds": [10],
+      "target": "0_OR_1",
+      "requiresOwned": true,
+      "sideEffects": "PERSIST_TYPE_16_PREFERENCE_AND_EMIT_DELTA",
+      "acceptedMeaning": "SERVER_VALIDATION_ACCEPTED_FOR_ASYNC_COMMIT"
+    },
+    "RANDOM_SUMMON": {
+      "typeIds": [10],
+      "collectionId": 1,
+      "target": "-",
+      "requiresOwned": false,
+      "sideEffects": "SERVER_SELECTS_AND_SUMMONS_FROM_AUTHORITATIVE_OWNED_POOL",
+      "acceptedMeaning": "SERVER_SELECTED_AND_CAST_A_USABLE_MOUNT"
+    },
     "PREVIEW": {
       "typeIds": [10, 11],
       "target": "-",
@@ -61,6 +80,9 @@
     "DISMISSED",
     "LOADING",
     "NOT_OWNED",
+    "FAVORITE_NOT_OWNED",
+    "NO_MOUNTS",
+    "NO_USABLE_MOUNTS",
     "CATALOG_MISMATCH",
     "ASSET_MISMATCH",
     "UNKNOWN_IDENTITY",
