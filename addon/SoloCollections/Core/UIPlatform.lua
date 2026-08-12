@@ -10,6 +10,11 @@ Platform.requiredCapabilities = {
     "chrome.persist",
     "chrome.position-migration",
     "modules.feature-registry",
+    "components.collection-header",
+    "components.journal-filter",
+    "components.random-mount",
+    "components.red-action",
+    "components.journal-tabs",
 }
 
 local function copyPosition(source)

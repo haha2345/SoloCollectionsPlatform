@@ -1,15 +1,57 @@
 local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
+local MountJournal = UI.DragonUI and UI.DragonUI.MountJournal
 
-local VISIBLE_ROWS = 10
-local ROW_HEIGHT = 46
+local JOURNAL_LAYOUT = MountJournal and MountJournal:GetLayout() or {}
+local VISIBLE_ROWS = JOURNAL_LAYOUT.visibleRows or 10
+local ROW_HEIGHT = JOURNAL_LAYOUT.rowHeight or 46
+local ROW_START_Y = JOURNAL_LAYOUT.rowStartY or 3
 local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
 local TWO_PI = math.pi * 2
 local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
+local RANDOM_MOUNT_SPELL_ID = 150544
+local RANDOM_MOUNT_ICON = "Interface\\Icons\\SoloCollections_RandomMount"
+
+local MOUNT_ACTION_MESSAGES = {
+    LOADING = "收藏数据仍在加载，请稍后再试。",
+    NOT_OWNED = "你尚未收集该坐骑。",
+    FAVORITE_NOT_OWNED = "只有已获得的坐骑才能设为偏好。",
+    NO_MOUNTS = "尚未获得可召唤的坐骑。",
+    NO_USABLE_MOUNTS = "当前没有可在此处召唤的坐骑。",
+    CATALOG_MISMATCH = "客户端与服务端的坐骑目录版本不一致。",
+    ASSET_MISMATCH = "客户端坐骑资源版本与服务端不一致。",
+    UNKNOWN_IDENTITY = "服务端无法识别当前角色。",
+    CLASS_RESTRICTED = "当前职业不能使用这只坐骑。",
+    RACE_RESTRICTED = "当前种族不能使用这只坐骑。",
+    SKILL_REQUIRED = "当前骑术等级不足，无法召唤这只坐骑。",
+    INVALID_TARGET_SLOT = "当前目标栏位无效。",
+    NOT_ENOUGH_MONEY = "金币不足，无法完成该操作。",
+    NOT_ENOUGH_TOKENS = "所需代币不足，无法完成该操作。",
+    DB_UNAVAILABLE = "收藏数据库暂时不可用。",
+    RATE_LIMITED = "操作过于频繁，请稍后再试。",
+    INVALID_REQUEST = "坐骑召唤请求无效。",
+    UNSUPPORTED = "当前坐骑暂不支持召唤。",
+    IN_COMBAT = "战斗中不能召唤坐骑。",
+    DEAD = "死亡状态下不能召唤坐骑。",
+    IN_VEHICLE = "乘坐载具时不能召唤坐骑。",
+    ON_TAXI = "正在使用飞行路线时不能召唤坐骑。",
+    INDOORS = "室内不能召唤坐骑。",
+    FLYING_NOT_ALLOWED = "当前等级或区域尚未开放飞行。",
+    MAP_RESTRICTED = "当前地图不能使用这只坐骑。",
+    BATTLEGROUND_RESTRICTED = "战场中不能通过收藏系统召唤坐骑。",
+    SHAPESHIFT_RESTRICTED = "当前非人形状态不能召唤坐骑。",
+    CAST_FAILED = "坐骑召唤失败，请检查当前角色状态。",
+    BRIDGE_UNAVAILABLE = "收藏服务尚未连接。",
+    TIMEOUT = "坐骑召唤请求超时，请重试。",
+}
+
+local function getMountActionMessage(reason)
+    return MOUNT_ACTION_MESSAGES[reason] or "坐骑召唤请求失败。"
+end
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -17,15 +59,6 @@ local function createDetailLabel(parent, font, color)
     label:SetJustifyH("LEFT")
     label:SetJustifyV("TOP")
     return label
-end
-
-local function alignSourceInlineIcons(text)
-    -- ezCollections source strings use :0 textures, whose native baseline is
-    -- several pixels below Chinese GameFontHighlight on this 3.3.5a client.
-    -- Give every source currency icon an explicit text-line size.  The stock
-    -- money textures include transparent padding below the visible coin, so a
-    -- four-pixel lift aligns the visible coin with the Chinese text centre.
-    return (tostring(text or ""):gsub("|T([^|]-):0|t", "|T%1:12:12:0:4|t"))
 end
 
 local function showNotice(message)
@@ -46,17 +79,67 @@ function UI.CreateMountsPage(parent)
     page.scSelectedId = nil
     page.scModelGeneration = 0
     page.scModelReady = false
+    local summonRecord, setFavoriteRecord, summonRandomMount, openContextMenu, pickupRandomMountSpell
+    local companionIndexBySpell = {}
 
+    local function rebuildCompanionIndex()
+        companionIndexBySpell = {}
+        if type(GetNumCompanions) ~= "function" or type(GetCompanionInfo) ~= "function" then return end
+        for index = 1, (GetNumCompanions("MOUNT") or 0) do
+            local _, _, spellId = GetCompanionInfo("MOUNT", index)
+            spellId = tonumber(spellId)
+            if spellId and spellId > 0 then companionIndexBySpell[spellId] = index end
+        end
+    end
+
+    local function pickupMountCompanion(record)
+        if not record or not record.collected then
+            showNotice("尚未获得该坐骑，不能拖到动作条。")
+            return false
+        end
+        local spellId = tonumber(record.canonicalActionSpellId)
+        if not spellId or spellId <= 0 then
+            showNotice("该坐骑暂不支持动作条拖拽。")
+            return false
+        end
+        local index = companionIndexBySpell[spellId]
+        if not index then
+            rebuildCompanionIndex()
+            index = companionIndexBySpell[spellId]
+        end
+        if not index or type(PickupCompanion) ~= "function" then
+            showNotice("坐骑技能正在同步，请稍后再试。")
+            return false
+        end
+        PickupCompanion("MOUNT", index)
+        return true
+    end
+
+    local function insertMountLink(record)
+        local spellId = record and tonumber(record.canonicalActionSpellId)
+        local link = spellId and GetSpellLink and GetSpellLink(spellId)
+        if link and ChatEdit_InsertLink then ChatEdit_InsertLink(link) end
+    end
+
+    local bands = MountJournal and MountJournal:CreateBands(page)
     local list = CreateFrame("Frame", nil, page)
-    list:SetWidth(260)
-    list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    if MountJournal then
+        MountJournal:LayoutInset(list, "left")
+    else
+        list:SetWidth(260)
+        list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+        list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    end
     local listInset = UI.EzCollections:ApplyInset(list)
     local listBackground = listInset.background
 
     local detail = CreateFrame("Frame", nil, page)
-    detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
-    detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    if MountJournal then
+        MountJournal:LayoutInset(detail, "right")
+    else
+        detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
+        detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    end
     UI.EzCollections:ApplyInset(detail)
 
     local detailBackground = detail:CreateTexture(nil, "BACKGROUND")
@@ -116,62 +199,109 @@ function UI.CreateMountsPage(parent)
     rotateHint:SetPoint("BOTTOM", model, "BOTTOM", 0, 7)
     rotateHint:SetText("按住鼠标左键拖动旋转 · 滚轮缩放")
 
-    local infoButton = CreateFrame("Button", nil, detail)
-    infoButton:SetWidth(38)
-    infoButton:SetHeight(38)
-    infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
-    infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-
-    local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
-    infoIcon:SetAllPoints(infoButton)
-    UI.SetFallbackTexture(infoIcon)
-    local infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
-
-    local randomSummon = CreateFrame("Button", nil, detail)
-    randomSummon:SetWidth(30)
-    randomSummon:SetHeight(30)
-    randomSummon:SetPoint("CENTER", page, "TOPRIGHT", -24, -42)
-    randomSummon:RegisterForClicks("LeftButtonUp")
-    randomSummon:SetNormalTexture("Interface\\Icons\\Ability_Mount_Charger")
-    randomSummon:SetPushedTexture("Interface\\Buttons\\UI-Quickslot-Depress")
-    randomSummon:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
-    local randomIcon = randomSummon:GetNormalTexture()
-    if randomIcon then
-        randomIcon:SetAllPoints(randomSummon)
-        randomIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+    local infoHeader = MountJournal and MountJournal:CreateCollectionInfoHeader(detail, {
+        x = 4,
+        y = 4,
+        width = 420,
+        height = 124,
+        textWidth = 320,
+        onClick = function(self, button)
+            local record = page.scSelectedRecord
+            if button == "RightButton" then
+                openContextMenu(self, record)
+            else
+                summonRecord(record)
+            end
+        end,
+    })
+    local infoButton = infoHeader and infoHeader.button or CreateFrame("Button", nil, detail)
+    if not infoHeader then
+        infoButton:SetSize(40, 40)
+        infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
+        infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
     end
-    local randomPushed = randomSummon:GetPushedTexture()
-    if randomPushed then randomPushed:SetAllPoints(randomSummon) end
-    local randomBorder = randomSummon:CreateTexture(nil, "OVERLAY")
-    randomBorder:SetTexture("Interface\\AddOns\\DragonUI\\Textures\\ActionBars\\uiactionbariconframe_white.tga")
-    randomBorder:SetVertexColor(0.08, 0.08, 0.08)
-    local randomFrameScale = 30 / 37
-    local randomFrameX = 2.2 * randomFrameScale
-    local randomFrameTop = 2.3 * randomFrameScale
-    randomBorder:SetPoint("TOPRIGHT", randomSummon, "TOPRIGHT", randomFrameX, randomFrameTop)
-    randomBorder:SetPoint("BOTTOMLEFT", randomSummon, "BOTTOMLEFT", -randomFrameX, -randomFrameX)
+    infoButton:RegisterForDrag("LeftButton")
+    local infoIcon = infoHeader and infoHeader.icon or infoButton:CreateTexture(nil, "ARTWORK")
+    if not infoHeader then
+        infoIcon:SetAllPoints(infoButton)
+        UI.SetFallbackTexture(infoIcon)
+    end
+    local infoBorder, infoSelectedBorder
+    if not infoHeader then
+        infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
+    end
 
-    local randomLabel = randomSummon:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    local randomHost = CreateFrame("Frame", nil, (bands and bands.top) or detail)
+    randomHost:SetSize(190, 30)
+    randomHost:SetPoint("BOTTOMRIGHT", detail, "TOPRIGHT", -8, JOURNAL_LAYOUT.randomDetailGap or 6)
+    local randomSummon = MountJournal and MountJournal:CreateRandomMountButton(randomHost, {
+        icon = RANDOM_MOUNT_ICON,
+        onClick = function()
+            summonRandomMount()
+        end,
+        onDragStart = function()
+            pickupRandomMountSpell()
+        end,
+    }) or CreateFrame("Button", nil, randomHost)
+    randomSummon:SetSize(30, 30)
+    randomSummon:SetPoint("RIGHT", randomHost, "RIGHT", 0, 0)
+    randomSummon:RegisterForDrag("LeftButton")
+
+    local function findRandomMountSpellBookSlot()
+        if type(GetNumSpellTabs) ~= "function" then return nil end
+        for tab = 1, (GetNumSpellTabs() or 0) do
+            local _, _, offset, count = GetSpellTabInfo(tab)
+            for slot = (offset or 0) + 1, (offset or 0) + (count or 0) do
+                local spellType, spellId = GetSpellBookItemInfo(slot, BOOKTYPE_SPELL)
+                if spellType == "SPELL" and tonumber(spellId) == RANDOM_MOUNT_SPELL_ID then
+                    return slot
+                end
+                local link = GetSpellLink and GetSpellLink(slot, BOOKTYPE_SPELL)
+                if link and tonumber(link:match("spell:(%d+)")) == RANDOM_MOUNT_SPELL_ID then
+                    return slot
+                end
+            end
+        end
+        return nil
+    end
+
+    pickupRandomMountSpell = function()
+        local slot = findRandomMountSpellBookSlot()
+        if not slot or type(PickupSpell) ~= "function" then
+            showNotice("随机坐骑技能正在同步，请稍后再试。")
+            return false
+        end
+        PickupSpell(slot, BOOKTYPE_SPELL)
+        return true
+    end
+
+    local randomLabel = randomHost:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     randomLabel:SetWidth(150)
     randomLabel:SetJustifyH("RIGHT")
-    randomLabel:SetPoint("RIGHT", randomBorder, "LEFT", -6, 0)
+    randomLabel:SetPoint("RIGHT", randomSummon, "LEFT", -6, 0)
     randomLabel:SetText("随机骑乘收藏坐骑")
 
-    local name = createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
-    name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
-    name:SetPoint("RIGHT", randomSummon, "LEFT", -8, 0)
+    local name = infoHeader and infoHeader.name or createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
+    if not infoHeader then
+        name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
+        name:SetPoint("RIGHT", randomSummon, "LEFT", -8, 0)
+    end
 
     local collectionState = createDetailLabel(detail, "GameFontHighlight", { 0.45, 0.9, 0.35 })
     collectionState:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, -7)
 
-    local source = createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
-    source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
-    source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    local source = infoHeader and infoHeader.source or createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
+    if not infoHeader then
+        source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
+        source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    end
 
-    local description = createDetailLabel(detail, "GameFontNormal", { 1, 0.82, 0.18 })
-    description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
-    description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
-    description:SetHeight(38)
+    local description = infoHeader and infoHeader.description or createDetailLabel(detail, "GameFontNormal", { 0.82, 0.82, 0.82 })
+    if not infoHeader then
+        description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
+        description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+        description:SetHeight(38)
+    end
 
     local favorite = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
     favorite:SetWidth(104)
@@ -185,11 +315,12 @@ function UI.CreateMountsPage(parent)
     reset:SetPoint("RIGHT", favorite, "LEFT", -8, 0)
     reset:SetText("重置视角")
 
-    local summon = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
-    summon:SetWidth(140)
-    summon:SetHeight(22)
-    summon:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 0, 0)
+    local summon = CreateFrame("Button", nil, (bands and bands.bottom) or page, "UIPanelButtonTemplate")
+    summon:SetWidth(180)
+    summon:SetHeight(26)
+    summon:SetPoint("CENTER", (bands and bands.bottom) or page, "CENTER", 0, 0)
     summon:SetText("召唤坐骑")
+    if MountJournal then MountJournal:SkinRedActionButton(summon) end
     UI.RegisterNewEraCompanionAction(page, favorite)
     UI.RegisterNewEraCompanionAction(page, reset)
     UI.RegisterNewEraCompanionAction(page, summon)
@@ -210,8 +341,8 @@ function UI.CreateMountsPage(parent)
         list,
         "FauxScrollFrameTemplate"
     )
-    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -36)
-    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, 5)
+    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -ROW_START_Y)
+    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, ROW_START_Y)
     scrollFrame:EnableMouseWheel(true)
     UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
 
@@ -270,7 +401,7 @@ function UI.CreateMountsPage(parent)
         clearDragState()
     end
 
-    local function summonRecord(record)
+    summonRecord = function(record)
         if not record then
             return
         end
@@ -284,37 +415,195 @@ function UI.CreateMountsPage(parent)
         end
         SC.Bridge.SummonMount(record.id, function(ok, reason)
             if ok == false then
-                showNotice(reason or "坐骑召唤请求失败。")
+                showNotice(getMountActionMessage(reason))
             end
         end)
     end
 
-    local function getRandomOwnedMount()
-        local owned = {}
-        local favorites = {}
-        for _, record in ipairs(Catalog.QueryAll("MOUNTS")) do
-            if record.collected then
-                owned[#owned + 1] = record
-                if record.favorite then favorites[#favorites + 1] = record end
-            end
+    setFavoriteRecord = function(record)
+        if not record or not record.collected then
+            showNotice(MOUNT_ACTION_MESSAGES.FAVORITE_NOT_OWNED)
+            return
         end
-        local pool = #favorites > 0 and favorites or owned
-        if #pool == 0 then return nil end
-        if #pool > 1 and page.scLastRandomMountId then
-            for _ = 1, 4 do
-                local candidate = pool[math.random(1, #pool)]
-                if candidate.id ~= page.scLastRandomMountId then return candidate end
-            end
+        if not SC.Bridge or type(SC.Bridge.SetMountFavorite) ~= "function" or
+            SC.Bridge.GetCategoryState(16) ~= "Ready" then
+            showNotice("坐骑偏好正在同步，请稍后再试。")
+            return
         end
-        return pool[math.random(1, #pool)]
+        favorite:Disable()
+        SC.Bridge.SetMountFavorite(record.id, not record.favorite, function(ok, reason)
+            if ok == false then showNotice(getMountActionMessage(reason)) end
+            page:Refresh()
+        end)
     end
 
-    local function openContextMenu(anchor, record)
+    summonRandomMount = function()
+        if not SC.Bridge or type(SC.Bridge.SummonRandomMount) ~= "function" then
+            showNotice(MOUNT_ACTION_MESSAGES.BRIDGE_UNAVAILABLE)
+            return
+        end
+        SC.Bridge.SummonRandomMount(function(ok, reason)
+            if ok == false then showNotice(getMountActionMessage(reason)) end
+        end)
+    end
+
+    openContextMenu = function(anchor, record)
         if not record then
             return
         end
         page.scContextRecord = record
         ToggleDropDownMenu(1, nil, contextMenu, anchor, 0, 0)
+    end
+
+    local filterMenu
+    local function mountFilters()
+        if not SC.db then return nil end
+        SC.db.filters = SC.db.filters or {}
+        SC.db.filters.mounts = SC.db.filters.mounts or {}
+        local filters = SC.db.filters.mounts
+        if type(filters.hiddenSources) ~= "table" then filters.hiddenSources = {} end
+        return filters
+    end
+
+    local function refreshFilterMenu()
+        if filterMenu and UIDropDownMenu_Refresh then
+            pcall(UIDropDownMenu_Refresh, filterMenu, nil, 1)
+        end
+        if not UIDROPDOWNMENU_MAXBUTTONS then return end
+        for level = 1, 2 do
+            for index = 1, UIDROPDOWNMENU_MAXBUTTONS do
+                local button = _G["DropDownList" .. level .. "Button" .. index]
+                local check = _G["DropDownList" .. level .. "Button" .. index .. "Check"]
+                if button and check then
+                    local checked = button:IsShown() and type(button.checked) == "function"
+                        and button.checked()
+                    if checked then check:Show() else check:Hide() end
+                end
+            end
+        end
+    end
+
+    local function filterMenuInit(self, level)
+        level = level or 1
+        local filters = SC.db and SC.db.filters or {}
+        local mount = filters.mounts or {}
+        if level == 1 then
+            local function addToggle(label, key, target)
+                local info = UIDropDownMenu_CreateInfo()
+                info.isNotRadio = true
+                info.keepShownOnClick = true
+                info.text = label
+                info.checked = function()
+                    local values = target and mount or filters
+                    return values[key] and true or false
+                end
+                info.func = function(_, _, _, checked)
+                    local values = target and mount or filters
+                    values[key] = checked == nil and not values[key] or checked and true or false
+                    page:Refresh()
+                    page:SyncFilters()
+                    refreshFilterMenu()
+                end
+                UIDropDownMenu_AddButton(info, level)
+            end
+
+            addToggle("已收集", "collected")
+            addToggle("未收集", "uncollected")
+            addToggle("仅显示偏好", "favorites")
+            addToggle("显示当前不可用", "unusable", true)
+
+            local title = UIDropDownMenu_CreateInfo()
+            title.text = "坐骑类型"
+            title.isTitle = true
+            title.notCheckable = true
+            UIDropDownMenu_AddButton(title, level)
+            addToggle("地面", "ground", true)
+            addToggle("飞行", "flying", true)
+            addToggle("水栖", "aquatic", true)
+
+            if UIDropDownMenu_AddSpace then pcall(UIDropDownMenu_AddSpace, level) end
+
+            local sources = UIDropDownMenu_CreateInfo()
+            sources.text = "来源"
+            sources.notCheckable = true
+            sources.hasArrow = true
+            sources.value = "sources"
+            UIDropDownMenu_AddButton(sources, level)
+        elseif level == 2 and UIDROPDOWNMENU_MENU_VALUE == "sources" then
+            local all = UIDropDownMenu_CreateInfo()
+            all.notCheckable = true
+            all.keepShownOnClick = true
+            all.text = "显示全部来源"
+            all.func = function()
+                local state = mountFilters()
+                state.hiddenSources = {}
+                page:Refresh()
+                page:SyncFilters()
+                refreshFilterMenu()
+            end
+            UIDropDownMenu_AddButton(all, level)
+
+            local none = UIDropDownMenu_CreateInfo()
+            none.notCheckable = true
+            none.keepShownOnClick = true
+            none.text = "隐藏全部来源"
+            none.func = function()
+                local state = mountFilters()
+                state.hiddenSources = {}
+                local sourceOrder = Catalog.GetMountSourceOrder and Catalog.GetMountSourceOrder()
+                    or Catalog.MOUNT_SOURCE_ORDER
+                    or {}
+                for _, sourceType in ipairs(sourceOrder) do
+                    state.hiddenSources[sourceType] = true
+                end
+                page:Refresh()
+                page:SyncFilters()
+                refreshFilterMenu()
+            end
+            UIDropDownMenu_AddButton(none, level)
+
+            local sourceOrder = Catalog.GetMountSourceOrder and Catalog.GetMountSourceOrder()
+                or Catalog.MOUNT_SOURCE_ORDER
+                or {}
+            for _, sourceType in ipairs(sourceOrder) do
+                local info = UIDropDownMenu_CreateInfo()
+                info.isNotRadio = true
+                info.keepShownOnClick = true
+                info.text = Catalog.MountSourceLabel(sourceType)
+                info.checked = function()
+                    local state = mountFilters()
+                    return not state.hiddenSources[sourceType]
+                end
+                info.func = function(_, _, _, checked)
+                    local state = mountFilters()
+                    if checked == nil then checked = not state.hiddenSources[sourceType] end
+                    state.hiddenSources[sourceType] = checked and nil or true
+                    page:Refresh()
+                    page:SyncFilters()
+                    refreshFilterMenu()
+                end
+                UIDropDownMenu_AddButton(info, level)
+            end
+        end
+    end
+
+    -- WoW 3.3.5a's UIDropDownMenu_Initialize concatenates GetName()
+    -- with the template region suffixes when displayMode is "MENU".  An
+    -- anonymous frame therefore fails at FrameXML/UIDropDownMenu.lua:75.
+    -- Reuse the named frame as well, so a later page-construction error does
+    -- not create a second global dropdown while the journal singleton is
+    -- still incomplete.
+    filterMenu = _G.SoloCollectionsMountFilterMenu
+    if not filterMenu then
+        filterMenu = CreateFrame(
+            "Frame",
+            "SoloCollectionsMountFilterMenu",
+            UIParent,
+            "UIDropDownMenuTemplate"
+        )
+    end
+    if UIDropDownMenu_Initialize then
+        UIDropDownMenu_Initialize(filterMenu, filterMenuInit, "MENU")
     end
 
     UIDropDownMenu_Initialize(contextMenu, function()
@@ -341,27 +630,48 @@ function UI.CreateMountsPage(parent)
         UIDropDownMenu_AddButton(summonInfo)
 
         local favoriteInfo = UIDropDownMenu_CreateInfo()
-        favoriteInfo.text = record.favorite and "取消收藏" or "收藏"
+        favoriteInfo.text = record.favorite and "取消偏好" or "设为偏好"
         favoriteInfo.notCheckable = 1
         favoriteInfo.func = function()
-            Catalog.ToggleDemoFavorite("MOUNTS", record.id)
-            page:Refresh()
+            setFavoriteRecord(record)
         end
         if not record.collected then
             favoriteInfo.disabled = 1
             favoriteInfo.tooltipTitle = "尚未收集"
             favoriteInfo.tooltipText = "未收集的坐骑不能设为偏好。"
+        elseif not SC.Bridge or SC.Bridge.GetCategoryState(16) ~= "Ready" then
+            favoriteInfo.disabled = 1
+            favoriteInfo.tooltipTitle = "偏好正在同步"
+            favoriteInfo.tooltipText = "服务端偏好状态就绪后才能修改。"
         end
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
 
-    local function requestModel(record)
+    local function requestModel(record, force)
         page.scModelGeneration = (page.scModelGeneration or 0) + 1
         local generation = page.scModelGeneration
         clearModelInteraction()
         resetModelState()
         model:ClearModel()
         unavailable:Hide()
+
+        local bridgeState = SC.Bridge and SC.Bridge.GetCategoryState
+            and SC.Bridge.GetCategoryState(10)
+            or "Disconnected"
+        if not force and bridgeState ~= "Ready" then
+            page.scPendingModelId = record and record.id or nil
+            if bridgeState == "Loading" or bridgeState == "Disconnected" then
+                unavailable:SetText("正在连接收藏服务…")
+            elseif bridgeState == "Mismatch" then
+                unavailable:SetText("坐骑目录版本不匹配")
+            else
+                unavailable:SetText("坐骑模型服务不可用")
+            end
+            unavailable:Show()
+            rotateHint:Hide()
+            return
+        end
+        page.scPendingModelId = nil
 
         if not presenter or not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
             unavailable:SetText("模型预览暂不可用")
@@ -379,6 +689,7 @@ function UI.CreateMountsPage(parent)
             end,
             onReady = function()
                 if page.scModelGeneration ~= generation then return end
+                page.scPendingModelId = nil
                 model.scBaseScale = getNativeModelScale()
                 model.scZoom = DEFAULT_MODEL_SCALE
                 page.scModelReady = true
@@ -387,7 +698,12 @@ function UI.CreateMountsPage(parent)
             onUnavailable = function(reason)
                 if page.scModelGeneration ~= generation then return end
                 model.scUnavailableReason = reason
-                unavailable:SetText("模型预览暂不可用")
+                if reason == "BRIDGE_UNAVAILABLE" or reason == "TIMEOUT" then
+                    page.scPendingModelId = record.id
+                    unavailable:SetText("正在连接收藏服务…")
+                else
+                    unavailable:SetText("模型预览暂不可用")
+                end
                 unavailable:Show(); rotateHint:Hide()
             end,
         })
@@ -402,16 +718,33 @@ function UI.CreateMountsPage(parent)
         page.scSelectedId = record.id
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
+        infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
         UI.SetCollectedVisual(infoIcon, record.collected)
-        infoBorder:SetCollected(record.collected)
-        infoSelectedBorder:Show()
+        if infoBorder then infoBorder:SetCollected(record.collected) end
+        if infoSelectedBorder then infoSelectedBorder:Show() end
         name:SetText(record.name or "未知坐骑")
-        source:SetText("来源：" .. alignSourceInlineIcons(record.source or "未知"))
-        description:SetText(record.description or "暂无说明。")
+        local acquisition = record.acquisitionClass
+        local acquisitionText = acquisition == "LEGACY" and "|cffffd200获取类型：|r绝版|n"
+            or acquisition == "PROMOTION" and "|cffffd200获取类型：|r促销|n"
+            or ""
+        source:SetText(acquisitionText .. "来源：" .. (record.source or "未知"))
+        local descriptionText = Catalog.ResolveMountDescription and Catalog.ResolveMountDescription(record)
+        if descriptionText and descriptionText ~= "" then
+            description:SetText(descriptionText)
+            description:Show()
+        else
+            description:SetText("")
+            description:Hide()
+            if Catalog.RecordMountDescriptionGap then Catalog.RecordMountDescriptionGap(record) end
+        end
         if record.collected then
             collectionState:SetText("已收集")
             collectionState:SetTextColor(0.38, 0.9, 0.30)
-            favorite:Enable()
+            if SC.Bridge and SC.Bridge.GetCategoryState(16) == "Ready" then
+                favorite:Enable()
+            else
+                favorite:Disable()
+            end
             summon:Enable()
             favorite:SetText(record.favorite and "取消偏好" or "设为偏好")
         else
@@ -419,7 +752,7 @@ function UI.CreateMountsPage(parent)
             collectionState:SetTextColor(0.72, 0.59, 0.52)
             favorite:Disable()
             summon:Disable()
-            favorite:SetText("尚未收集")
+            favorite:SetText("设为偏好")
         end
         for _, row in ipairs(page.scRows) do
             row:SetSelected(row.scRecord and row.scRecord.id == record.id)
@@ -445,6 +778,29 @@ function UI.CreateMountsPage(parent)
         end
     end
 
+    local function scrollSelectionIntoView(records, selectedId)
+        if not selectedId then return end
+        local selectedIndex
+        for index, record in ipairs(records) do
+            if record.id == selectedId then
+                selectedIndex = index
+                break
+            end
+        end
+        if not selectedIndex then return end
+        local offset = FauxScrollFrame_GetOffset(scrollFrame) or 0
+        local newOffset = offset
+        if selectedIndex <= offset then
+            newOffset = selectedIndex - 1
+        elseif selectedIndex > offset + VISIBLE_ROWS then
+            newOffset = selectedIndex - VISIBLE_ROWS
+        end
+        newOffset = math.max(0, math.min(math.max(0, #records - VISIBLE_ROWS), newOffset))
+        if newOffset ~= offset then
+            FauxScrollFrame_OnVerticalScroll(scrollFrame, newOffset * ROW_HEIGHT, ROW_HEIGHT, refreshRows)
+        end
+    end
+
     local function scrollByWheel(self, delta)
         local currentOffset = FauxScrollFrame_GetOffset(self) or 0
         local maxOffset = math.max(0, #(page.scRecords or {}) - VISIBLE_ROWS)
@@ -458,10 +814,23 @@ function UI.CreateMountsPage(parent)
         end, function(anchor, record)
             openContextMenu(anchor, record)
         end)
-        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(36 + ((index - 1) * ROW_HEIGHT)))
+        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(ROW_START_Y + ((index - 1) * ROW_HEIGHT)))
         row:EnableMouseWheel(true)
         row:SetScript("OnMouseWheel", function(_, delta)
             scrollByWheel(scrollFrame, delta)
+        end)
+        row.scDragButton:SetScript("OnDragStart", function(self)
+            pickupMountCompanion(row.scRecord)
+        end)
+        row.scDragButton:SetScript("OnClick", function(self, button)
+            local record = row.scRecord
+            if button == "RightButton" then
+                openContextMenu(self, record)
+            elseif IsShiftKeyDown and IsShiftKeyDown() then
+                insertMountLink(record)
+            elseif record then
+                selectRecord(record)
+            end
         end)
         page.scRows[index] = row
     end
@@ -480,13 +849,15 @@ function UI.CreateMountsPage(parent)
         name:SetText("")
         source:SetText("")
         description:SetText("")
+        description:Hide()
         collectionState:SetText("")
         favorite:SetText("设为偏好")
         favorite:Disable()
         summon:Disable()
         UI.SetFallbackTexture(infoIcon)
-        infoBorder:SetCollected(false)
-        infoSelectedBorder:Hide()
+        infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        if infoBorder then infoBorder:SetCollected(false) end
+        if infoSelectedBorder then infoSelectedBorder:Hide() end
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
@@ -497,27 +868,17 @@ function UI.CreateMountsPage(parent)
     end
 
     function page:SyncFilters()
-        local frame = UI.CollectionsFrame
-        if not frame or not frame.scFilterPopup or not SC.db or SC.db.mainTab ~= "MOUNTS" then
+        if not SC.db or SC.db.mainTab ~= "MOUNTS" then
             return
         end
-        local filters = SC.db.filters
-        local function toggleFilter(key)
-            filters[key] = not filters[key]
-            self:Refresh()
-            self:SyncFilters()
-        end
-        frame.scFilterPopup:SetOptions({
-            { label = "已收集", checked = filters.collected, onClick = function()
-                toggleFilter("collected")
-            end },
-            { label = "未收集", checked = filters.uncollected, onClick = function()
-                toggleFilter("uncollected")
-            end },
-            { label = "仅显示偏好", checked = filters.favorites, onClick = function()
-                toggleFilter("favorites")
-            end },
-        })
+        mountFilters()
+        refreshFilterMenu()
+    end
+
+    function page:OpenFilterMenu(anchor)
+        if not filterMenu or not ToggleDropDownMenu then return end
+        self:SyncFilters()
+        ToggleDropDownMenu(1, nil, filterMenu, anchor or self, 0, 0)
     end
 
     function page:Refresh()
@@ -551,6 +912,7 @@ function UI.CreateMountsPage(parent)
             UI.ShowEmptyState(empty, self, "没有符合条件的坐骑", "调整搜索文字或过滤条件后再试。")
         else
             UI.HideEmptyState(empty)
+            scrollSelectionIntoView(records, selectedRecord and selectedRecord.id or records[1].id)
             selectRecord(selectedRecord or records[1])
             refreshRows()
         end
@@ -562,8 +924,7 @@ function UI.CreateMountsPage(parent)
         if not record or not record.collected then
             return
         end
-        Catalog.ToggleDemoFavorite("MOUNTS", record.id)
-        page:Refresh()
+        setFavoriteRecord(record)
     end)
 
     reset:SetScript("OnClick", function()
@@ -575,30 +936,63 @@ function UI.CreateMountsPage(parent)
     summon:SetScript("OnClick", function() summonRecord(page.scSelectedRecord) end)
 
     randomSummon:SetScript("OnClick", function()
-        local record = getRandomOwnedMount()
-        if not record then
-            showNotice("尚未收集可召唤的坐骑。")
-            return
-        end
-        page.scLastRandomMountId = record.id
-        summonRecord(record)
+        summonRandomMount()
+    end)
+    randomSummon:SetScript("OnDragStart", function()
+        pickupRandomMountSpell()
     end)
     randomSummon:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_LEFT")
         GameTooltip:SetText("召唤随机坐骑", 1, 0.82, 0.18)
         GameTooltip:AddLine("优先从已收集的偏好坐骑中随机选择；没有偏好时从全部已收集坐骑中选择。", 1, 1, 1, true)
+        GameTooltip:AddLine("拖动到动作条可放置真实随机坐骑技能。", 0.35, 0.85, 1, true)
+        local bridgeState = SC.Bridge and SC.Bridge.GetCategoryState and SC.Bridge.GetCategoryState(10)
+        if bridgeState ~= "Ready" then
+            GameTooltip:AddLine("收藏状态正在同步。", 1, 0.45, 0.2, true)
+        elseif not findRandomMountSpellBookSlot() then
+            GameTooltip:AddLine("随机坐骑技能正在同步。", 1, 0.45, 0.2, true)
+        end
         GameTooltip:Show()
     end)
     randomSummon:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
+    if SC.Bridge and type(SC.Bridge.RegisterStateListener) == "function" then
+        page.scBridgeStateListener = SC.Bridge.RegisterStateListener(function(_, typeId)
+            if typeId ~= nil and tonumber(typeId) ~= 10 then return end
+            if not page:IsShown() or not page.scSelectedRecord then return end
+            local state = SC.Bridge.GetCategoryState and SC.Bridge.GetCategoryState(10)
+            if state == "Ready" and page.scPendingModelId == page.scSelectedRecord.id then
+                requestModel(page.scSelectedRecord, true)
+            elseif page.scPendingModelId == page.scSelectedRecord.id and state == "Mismatch" then
+                unavailable:SetText("坐骑目录版本不匹配")
+                unavailable:Show(); rotateHint:Hide()
+            end
+        end)
+    end
 
     infoButton:SetScript("OnClick", function(self, button)
         local record = page.scSelectedRecord
         if button == "RightButton" then
             openContextMenu(self, record)
+        elseif IsShiftKeyDown and IsShiftKeyDown() then
+            insertMountLink(record)
         else
             summonRecord(record)
         end
     end)
+    infoButton:SetScript("OnDragStart", function()
+        pickupMountCompanion(page.scSelectedRecord)
+    end)
+
+    page:RegisterEvent("COMPANION_LEARNED")
+    page:RegisterEvent("COMPANION_UNLEARNED")
+    page:RegisterEvent("COMPANION_UPDATE")
+    page:RegisterEvent("SPELLS_CHANGED")
+    page:RegisterEvent("LEARNED_SPELL_IN_TAB")
+    page:SetScript("OnEvent", function()
+        rebuildCompanionIndex()
+    end)
+    rebuildCompanionIndex()
 
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
@@ -625,6 +1019,7 @@ function UI.CreateMountsPage(parent)
 
     page:SetScript("OnHide", function(self)
         self.scModelGeneration = (self.scModelGeneration or 0) + 1
+        self.scPendingModelId = nil
         clearModelInteraction()
         resetModelState()
         if presenter then presenter:Clear("PAGE_HIDDEN") else model:ClearModel() end
@@ -655,6 +1050,7 @@ function UI.CreateMountsPage(parent)
     page.scScrollFrame = scrollFrame
     page.scScrollHint = scrollHint
     page.scContextMenu = contextMenu
+    page.scFilterMenu = filterMenu
     page.scEmpty = empty
     return page
 end

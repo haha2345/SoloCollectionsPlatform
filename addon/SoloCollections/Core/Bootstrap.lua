@@ -1,7 +1,7 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 5,
+    schemaVersion = 6,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
     mainTab = "MOUNTS",
@@ -24,6 +24,13 @@ local DEFAULTS = {
         armorType = "AUTO",
         slot = "HEAD",
         weaponType = "AUTO",
+        mounts = {
+            unusable = true,
+            ground = true,
+            flying = true,
+            aquatic = true,
+            hiddenSources = {},
+        },
     },
     favorites = {},
     debug = false,
@@ -432,6 +439,17 @@ local function normalizeDatabase(db)
     repairEnum(db.filters, "armorType", VALID_ARMOR_TYPES, DEFAULTS.filters.armorType)
     repairEnum(db.filters, "slot", VALID_SLOTS, DEFAULTS.filters.slot)
     repairEnum(db.filters, "weaponType", VALID_WEAPON_TYPES, DEFAULTS.filters.weaponType)
+    repairScalar(db.filters, "mounts", "table", {})
+    repairScalar(db.filters.mounts, "unusable", "boolean", DEFAULTS.filters.mounts.unusable)
+    repairScalar(db.filters.mounts, "ground", "boolean", DEFAULTS.filters.mounts.ground)
+    repairScalar(db.filters.mounts, "flying", "boolean", DEFAULTS.filters.mounts.flying)
+    repairScalar(db.filters.mounts, "aquatic", "boolean", DEFAULTS.filters.mounts.aquatic)
+    repairScalar(db.filters.mounts, "hiddenSources", "table", {})
+    for sourceType, hidden in pairs(db.filters.mounts.hiddenSources) do
+        if type(sourceType) ~= "number" or type(hidden) ~= "boolean" then
+            db.filters.mounts.hiddenSources[sourceType] = nil
+        end
+    end
 
     repairScalar(db, "favorites", "table", {})
     normalizeCameraTuning(db)

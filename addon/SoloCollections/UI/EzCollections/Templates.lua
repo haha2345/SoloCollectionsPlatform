@@ -7,6 +7,7 @@ local UI = SC.UI
 local Ez = UI.EzCollections
 local Assets = SC.EzCollectionsUI
 local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
+local MountJournal = UI.DragonUI and UI.DragonUI.MountJournal
 
 local PORTRAITS = {
     MOUNTS = {
@@ -108,6 +109,9 @@ local function setTabWidth(button)
 end
 
 function Ez:CreateJournalTab(parent, index, labelText, onClick, cutoff)
+    if MountJournal and MountJournal.CreateJournalTab then
+        return MountJournal:CreateJournalTab(parent, index, labelText, onClick, cutoff)
+    end
     local name = "SoloCollectionsJournalTab" .. tostring(index)
     local button = CreateFrame("Button", name, parent, "CharacterFrameTabButtonTemplate")
     button:SetID(index)
@@ -146,6 +150,9 @@ function Ez:CreateJournalTab(parent, index, labelText, onClick, cutoff)
 end
 
 function Ez:LayoutJournalTabs(frame, tabs)
+    if MountJournal and MountJournal.LayoutJournalTabs then
+        return MountJournal:LayoutJournalTabs(frame, tabs)
+    end
     local previous
     local count = #(tabs or {})
     for index, button in ipairs(tabs or {}) do
@@ -359,18 +366,10 @@ end
 
 function Ez:SkinSearchBox(editBox)
     if not editBox then return end
-    editBox:SetHeight(20)
-    editBox:SetTextInsets(18, 20, 0, 0)
     if editBox.scIcon then
         editBox.scIcon:SetTexture(self:MediaPath("Common", "UI-Searchbox-Icon.tga", "Interface\\Common\\UI-Searchbox-Icon"))
-        editBox.scIcon:SetWidth(14)
-        editBox.scIcon:SetHeight(14)
-        editBox.scIcon:ClearAllPoints()
-        editBox.scIcon:SetPoint("LEFT", editBox, "LEFT", 0, -2)
     end
     if editBox.scClearButton then
-        editBox.scClearButton:SetWidth(17)
-        editBox.scClearButton:SetHeight(17)
         editBox.scClearButton:SetNormalTexture(self:AssetPath("Interface\\FriendsFrame\\ClearBroadcastIcon.tga", "Interface\\Buttons\\UI-Panel-MinimizeButton-Up"))
     end
 end

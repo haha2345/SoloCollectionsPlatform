@@ -1,10 +1,12 @@
 local SC = SoloCollections
 local UI = SC.UI
 local CS = SC.CollectionState
+local MountJournal = UI.DragonUI and UI.DragonUI.MountJournal
 
 local DESIGN_SCREEN_WIDTH = 1920
 local DESIGN_SCREEN_HEIGHT = 1080
 local COLLECTION_WIDTH = 703
+local MOUNT_JOURNAL_WIDTH = 768
 local TRANSMOG_WIDTH = 965
 local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
@@ -222,13 +224,14 @@ end
 
 local function clampFrame(frame)
     frame:SetScale(getResponsiveScale())
-    frame:SetClampRectInsets(0, 0, 0, -40)
+    frame:SetClampRectInsets(0, 0, 0, -44)
     frame:SetClampedToScreen(false)
     frame:SetClampedToScreen(true)
 end
 
 local function applyJournalSize(frame, key)
-    local width = key == "TRANSMOG_LAB" and TRANSMOG_WIDTH or COLLECTION_WIDTH
+    local width = key == "MOUNTS" and MOUNT_JOURNAL_WIDTH or
+        (key == "TRANSMOG_LAB" and TRANSMOG_WIDTH or COLLECTION_WIDTH)
     frame:SetWidth(width)
     frame:SetHeight(JOURNAL_HEIGHT)
     frame.scJournalWidth = width
@@ -243,24 +246,41 @@ local function applyJournalControlLayout(frame, key)
     local host = frame.scSearchFilterHost
     local search = frame.scSearchBox
     local filter = frame.scFilterButton
+    local mountFilter = frame.scMountFilterButton
     if not (host and search and filter) then return end
     host:ClearAllPoints()
     search:ClearAllPoints()
     filter:ClearAllPoints()
-    if key == "TOYS" or key == "TITLES" or key == "WARDROBE" or key == "TRANSMOG_LAB" then
-        host:SetWidth(210)
-        host:SetHeight(22)
-        host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
-        search:SetWidth(115)
-        search:SetPoint("LEFT", host, "LEFT", 0, -1)
-        filter:SetPoint("LEFT", search, "RIGHT", 2, 1)
-    else
-        host:SetWidth(240)
-        host:SetHeight(22)
-        host:SetPoint("TOPLEFT", frame, "TOPLEFT", 19, -69)
-        search:SetWidth(145)
+    if key == "MOUNTS" and mountFilter then
+        filter:Hide()
+        if frame.scFilterPopup then frame.scFilterPopup:Hide() end
+        mountFilter:Show()
+        host:SetWidth(276)
+        host:SetHeight(20)
+        host:SetPoint("TOPLEFT", frame, "TOPLEFT", 14, -68)
+        search:SetWidth(194)
         search:SetPoint("LEFT", host, "LEFT", 0, 0)
-        filter:SetPoint("LEFT", search, "RIGHT", 2, 0)
+        mountFilter:ClearAllPoints()
+        mountFilter:SetSize(76, 20)
+        mountFilter:SetPoint("LEFT", search, "RIGHT", 4, 0)
+    else
+        if mountFilter then mountFilter:Hide() end
+        filter:Show()
+        if key == "TOYS" or key == "TITLES" or key == "WARDROBE" or key == "TRANSMOG_LAB" then
+            host:SetWidth(210)
+            host:SetHeight(22)
+            host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
+            search:SetWidth(115)
+            search:SetPoint("LEFT", host, "LEFT", 0, -1)
+            filter:SetPoint("LEFT", search, "RIGHT", 2, 1)
+        else
+            host:SetWidth(240)
+            host:SetHeight(22)
+            host:SetPoint("TOPLEFT", frame, "TOPLEFT", 19, -69)
+            search:SetWidth(145)
+            search:SetPoint("LEFT", host, "LEFT", 0, 0)
+            filter:SetPoint("LEFT", search, "RIGHT", 2, 0)
+        end
     end
 end
 
@@ -344,7 +364,8 @@ function UI.SyncJournalFromDatabase()
 
     UI.scSuppressRefresh = true
     frame.scSearchBox:SetText(SC.db.query or "")
-    frame.scFilterPopup:Hide()
+    if frame.scFilterPopup then frame.scFilterPopup:Hide() end
+    if CloseDropDownMenus then CloseDropDownMenus() end
     if frame.scFilterButton.scArrow then
         frame.scFilterButton.scArrow:SetTexCoord(0, 1, 0, 1)
     end
@@ -539,6 +560,23 @@ function UI.CreateCollectionsFrame()
     filterButton:SetPoint("LEFT", search, "RIGHT", 2, 0)
     UI.EzCollections:SkinSilverMenuButton(filterButton)
 
+    local mountFilterButton = MountJournal and MountJournal:CreateJournalFilterButton(searchFilterHost, {
+        label = "筛选",
+        width = 76,
+        height = 20,
+    })
+    if not mountFilterButton then
+        mountFilterButton = CreateFrame("Button", nil, searchFilterHost, "UIPanelButtonTemplate")
+        mountFilterButton:SetText("筛选")
+        UI.EzCollections:SkinSilverMenuButton(mountFilterButton)
+    end
+    mountFilterButton:SetSize(76, 20)
+    mountFilterButton:SetScript("OnClick", function(self)
+        local page = UI.CollectionsFrame and UI.CollectionsFrame.scPages and UI.CollectionsFrame.scPages.MOUNTS
+        if page and page.OpenFilterMenu then page:OpenFilterMenu(self) end
+    end)
+    mountFilterButton:Hide()
+
     local wardrobeTabs = CreateFrame("Frame", nil, frame)
     wardrobeTabs:SetWidth(150)
     wardrobeTabs:SetHeight(24)
@@ -591,6 +629,7 @@ function UI.CreateCollectionsFrame()
     frame.scSearchBox = search
     frame.scFilterButton = filterButton
     frame.scFilterPopup = filterPopup
+    frame.scMountFilterButton = mountFilterButton
     frame.scWardrobeTabs = wardrobeTabs
     frame.scWardrobeItemTab = itemTab
     frame.scWardrobeSetTab = setTab

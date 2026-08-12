@@ -550,10 +550,10 @@ end
 function UI.CreateRetailSearchBox(parent, width, onTextChanged)
     local editBox = CreateFrame("EditBox", nil, parent)
     editBox:SetWidth(width or 220)
-    editBox:SetHeight(28)
+    editBox:SetHeight(20)
     editBox:SetAutoFocus(false)
     editBox:SetFontObject(GameFontHighlightSmall)
-    editBox:SetTextInsets(30, 24, 0, 0)
+    editBox:SetTextInsets(24, 21, 0, 0)
     editBox:SetMaxLetters(60)
 
     local chrome = UI.CreateThreeSlice(
@@ -561,24 +561,24 @@ function UI.CreateRetailSearchBox(parent, width, onTextChanged)
         UI.Media.stock.searchLeft,
         UI.Media.stock.searchMiddle,
         UI.Media.stock.searchRight,
-        28,
+        20,
         13,
         13
     )
 
     local icon = editBox:CreateTexture(nil, "ARTWORK")
     icon:SetTexture(UI.Media.stock.searchIcon)
-    icon:SetWidth(18)
-    icon:SetHeight(18)
-    icon:SetPoint("LEFT", editBox, "LEFT", 7, 0)
+    icon:SetWidth(14)
+    icon:SetHeight(14)
+    icon:SetPoint("LEFT", editBox, "LEFT", 6, 0)
 
     local placeholder = createLabel(editBox, "GameFontDisableSmall", "搜索")
-    placeholder:SetPoint("LEFT", editBox, "LEFT", 31, 0)
+    placeholder:SetPoint("LEFT", editBox, "LEFT", 24, 0)
 
     local clear = CreateFrame("Button", nil, editBox)
-    clear:SetWidth(18)
-    clear:SetHeight(18)
-    clear:SetPoint("RIGHT", editBox, "RIGHT", -5, 0)
+    clear:SetWidth(17)
+    clear:SetHeight(17)
+    clear:SetPoint("RIGHT", editBox, "RIGHT", -3, 0)
     clear:SetNormalTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
     clear:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight")
     clear:SetScript("OnClick", function()
@@ -881,6 +881,13 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     local icon = iconHolder:CreateTexture(nil, "ARTWORK")
     icon:SetAllPoints(iconHolder)
     UI.SetFallbackTexture(icon)
+    local dragButton = CreateFrame("Button", nil, row)
+    dragButton:SetWidth(38)
+    dragButton:SetHeight(38)
+    dragButton:SetPoint("CENTER", iconHolder, "CENTER", 0, 0)
+    dragButton:SetFrameLevel(row:GetFrameLevel() + 4)
+    dragButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    dragButton:RegisterForDrag("LeftButton")
 
     local collectionBorder = CreateFrame("Frame", nil, iconHolder)
     collectionBorder:SetAllPoints(iconHolder)
@@ -984,6 +991,7 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     row.scCollectedTint = collectedTint
     row.scSelectedTexture = selected
     row.scIcon = icon
+    row.scDragButton = dragButton
     row.scIconFrame = collectionBorder
     row.scCollectionBorder = collectionBorder
     row.scSelectionBorder = selectedBorder
