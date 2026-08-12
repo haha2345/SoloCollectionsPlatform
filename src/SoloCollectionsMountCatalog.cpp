@@ -20,11 +20,21 @@ MountCatalog::MountCatalog(std::vector<MountCollectionDefinition> collections)
             collection.CreatureIds.empty() || collection.UnlockSpellIds.empty() || collection.ActionVariants.empty() ||
             collection.PreviewCreatureEntry == 0)
             throw std::invalid_argument("invalid generated mount collection definition");
+        if ((collection.Actionable && !collection.JournalVisible) ||
+            (collection.Draggable && !collection.Actionable) ||
+            (collection.RandomEligible && (!collection.JournalVisible || !collection.Actionable)) ||
+            ((collection.ExclusionReason == MountExclusionReason::None) != collection.JournalVisible) ||
+            (collection.Draggable && collection.CanonicalActionSpellId != collection.CanonicalSpellId) ||
+            (!collection.Draggable && collection.CanonicalActionSpellId != 0))
+            throw std::invalid_argument("invalid generated mount journal/action contract");
         if (!_byCollection.emplace(collection.Id, index).second)
             throw std::invalid_argument("duplicate generated mount collection ID");
         for (std::uint32_t spellId : collection.UnlockSpellIds)
             if (spellId == 0 || !_byUnlockSpell.emplace(spellId, index).second)
                 throw std::invalid_argument("duplicate or invalid generated mount unlock spell");
+        if (collection.CanonicalActionSpellId != 0 &&
+            !_byActionSpell.emplace(collection.CanonicalActionSpellId, index).second)
+            throw std::invalid_argument("duplicate generated mount action spell");
     }
 }
 
@@ -38,6 +48,12 @@ MountCollectionDefinition const* MountCatalog::FindByUnlockSpell(std::uint32_t s
 {
     auto found = _byUnlockSpell.find(spellId);
     return found == _byUnlockSpell.end() ? nullptr : &_collections[found->second];
+}
+
+MountCollectionDefinition const* MountCatalog::FindByActionSpell(std::uint32_t spellId) const
+{
+    auto found = _byActionSpell.find(spellId);
+    return found == _byActionSpell.end() ? nullptr : &_collections[found->second];
 }
 
 MountCatalog const& GetMountCatalog()
