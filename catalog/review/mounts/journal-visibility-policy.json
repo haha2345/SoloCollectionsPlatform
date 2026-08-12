@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-08-12",
+  "inputs": {
+    "ezCollectionsMountsSha256": "665c3dde522e2bc38e4ef607164a0a2b5fbdd0a72c756aefd5bc6e764e818696",
+    "zhcnSpellDbcSha256": "9d4bcf6b0990b2fd1afaeeba09bc1c5bc800336f15e7c10b8edc12a99d3df5c1"
+  },
+  "visibleLegacySpellIds": [
+    43688, 16056, 16055, 59572, 59976, 17461, 43899, 49378, 58615,
+    64927, 17460, 65439, 18991, 17459, 17450, 44744, 16084, 16082,
+    60021, 16080, 67336, 8980, 37015, 18992, 49193, 15779, 16083,
+    16081, 71810
+  ],
+  "visiblePromotionSpellIds": [
+    51412, 58983, 74856, 75614, 65917, 30174, 42776, 42777, 48954,
+    49322, 74918, 46197, 46199, 75973
+  ],
+  "supersededDuplicateSpellIds": [60136, 60140]
+}

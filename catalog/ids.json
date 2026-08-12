@@ -105,6 +105,12 @@
         "key": "title",
         "lifecycle": "active",
         "ordinal": 6
+      },
+      {
+        "id": 16,
+        "key": "mount-favorite",
+        "lifecycle": "active",
+        "ordinal": 7
       }
     ],
     "collections": [

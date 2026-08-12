@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-08-12",
+  "decisionRule": "Names only trigger review. Collection identity, permanent source and display/model signatures determine whether records are distinct.",
+  "decisions": [
+    {
+      "decision": "SUPERSEDED_INTERNAL_DUPLICATE",
+      "collectionId": 100098,
+      "spellId": 60136,
+      "creatureEntry": 32212,
+      "displayId": 27237,
+      "keptCollectionId": 100248,
+      "keptSpellId": 61425,
+      "reason": "No permanent acquisition source; exact display identity is superseded by the formal item-backed mount. Collection ID remains a tombstone and is never reused."
+    },
+    {
+      "decision": "SUPERSEDED_INTERNAL_DUPLICATE",
+      "collectionId": 100099,
+      "spellId": 60140,
+      "creatureEntry": 32213,
+      "displayId": 27238,
+      "keptCollectionId": 100249,
+      "keptSpellId": 61447,
+      "reason": "No permanent acquisition source; exact display identity is superseded by the formal item-backed mount. Collection ID remains a tombstone and is never reused."
+    },
+    {
+      "decision": "KEEP_DISTINCT",
+      "spellIds": [48954, 49322],
+      "reason": "Separate creature model identities and independent permanent item sources; same localized name is not a duplicate key."
+    }
+  ],
+  "explicitTransportExclusions": [60120, 64681, 64761]
+}

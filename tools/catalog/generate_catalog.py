@@ -188,6 +188,8 @@ def _parse_collections(source_root: Path, type_keys: set[str]) -> list[dict[str,
 def _load_mount_actions(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
     path = source_root / "mount_actions.json"
     mount_collections = [entry for entry in collections if entry["typeKey"] == "mount"]
+    _require(all(int(entry["collectionId"]) != 1 for entry in mount_collections),
+             "mount collectionId 1 is reserved for RANDOM_SUMMON")
     if not path.exists():
         _require(not mount_collections, "mount_actions.json is required when mount collections exist")
         return {"schemaVersion": 1, "collections": [], "mappingHash": _hash({"schemaVersion": 1, "collections": []})}
@@ -217,6 +219,79 @@ def _load_mount_actions(source_root: Path, collections: list[dict[str, Any]]) ->
     claimed_hash = actions.pop("mappingHash", "")
     _require(claimed_hash == _hash(actions), "mount action mappingHash is stale")
     actions["mappingHash"] = claimed_hash
+    return actions
+
+
+def _apply_mount_journal_contract(source_root: Path, actions: dict[str, Any]) -> dict[str, Any]:
+    journal = _read_json(source_root / "mount_journal_metadata.json")
+    _require(journal.get("schemaVersion") == 2, "unsupported mount journal metadata schema")
+    rows = journal.get("entries")
+    _require(isinstance(rows, list), "mount journal entries must be an array")
+    by_id = {int(row["collectionId"]): row for row in rows}
+    entries = actions["collections"]
+    _require(len(by_id) == len(rows) == len(entries), "mount journal/action coverage differs")
+    seen_action_spells: set[int] = set()
+    allowed_capabilities = {"GROUND", "FLYING", "AQUATIC", "SPECIAL"}
+    allowed_exclusions = {None, "TAXI", "QUEST_TEMPORARY", "CLASS_FORM", "TEST", "DUPLICATE", "INTERNAL"}
+    for entry in entries:
+        row = by_id.get(int(entry["collectionId"]))
+        _require(row is not None and int(row["spellId"]) == int(entry["canonicalSpellId"]),
+                 f"mount journal action identity drift: {entry['collectionKey']}")
+        journal_visible = bool(row.get("journalVisible"))
+        actionable = bool(row.get("actionable"))
+        draggable = bool(row.get("draggable"))
+        random_eligible = bool(row.get("randomEligible"))
+        action_spell_id = int(row.get("canonicalActionSpellId") or 0)
+        capability = row.get("capability")
+        exclusion_reason = row.get("exclusionReason")
+        _require(capability in allowed_capabilities, f"invalid mount capability: {entry['collectionKey']}")
+        _require(exclusion_reason in allowed_exclusions, f"invalid mount exclusion reason: {entry['collectionKey']}")
+        _require(not actionable or journal_visible, f"hidden mount is actionable: {entry['collectionKey']}")
+        _require(not draggable or actionable, f"non-actionable mount is draggable: {entry['collectionKey']}")
+        _require(not random_eligible or (journal_visible and actionable),
+                 f"invalid random-eligible mount: {entry['collectionKey']}")
+        _require((exclusion_reason is None) == journal_visible,
+                 f"mount exclusion/visibility mismatch: {entry['collectionKey']}")
+        _require(not draggable or action_spell_id == int(entry["canonicalSpellId"]),
+                 f"mount draggable spell is not canonical: {entry['collectionKey']}")
+        _require(draggable or action_spell_id == 0,
+                 f"non-draggable mount exposes an action spell: {entry['collectionKey']}")
+        if action_spell_id:
+            _require(action_spell_id not in seen_action_spells,
+                     f"mount action spell is mapped twice: {entry['collectionKey']}")
+            seen_action_spells.add(action_spell_id)
+        entry.update({
+            "journalVisible": journal_visible,
+            "actionable": actionable,
+            "draggable": draggable,
+            "randomEligible": random_eligible,
+            "canonicalActionSpellId": action_spell_id,
+            "capability": capability,
+            "exclusionReason": exclusion_reason,
+        })
+    audit = _read_json(source_root.parent / "review/mounts/action-identity-audit.json")
+    _require(audit.get("schemaVersion") == 1, "unsupported mount action identity audit schema")
+    summary = audit.get("summary", {})
+    visible_count = sum(bool(entry["journalVisible"]) for entry in entries)
+    creature_groups = [tuple(map(int, entry["creatureIds"])) for entry in entries]
+    name_groups: dict[str, list[int]] = {}
+    for row in rows:
+        name_groups.setdefault(str(row["journalNameZhCN"]), []).append(int(row["collectionId"]))
+    duplicate_name_groups = {name: sorted(ids) for name, ids in name_groups.items() if len(ids) > 1}
+    reviewed_name_groups = {
+        str(decision["name"]): sorted(map(int, decision["collectionIds"]))
+        for decision in audit.get("sameZhCNNameDecisions", [])
+    }
+    _require(summary.get("canonicalRows") == len(entries) and summary.get("visibleRows") == visible_count,
+             "mount action identity audit count drift")
+    _require(summary.get("uniqueVisibleCanonicalActionSpells") == len(seen_action_spells),
+             "mount action identity audit spell count drift")
+    _require(summary.get("duplicateCanonicalActionSpells") == 0 and len(seen_action_spells) == visible_count,
+             "mount action identity audit found duplicate canonical action spells")
+    _require(summary.get("duplicateCreatureTuples") == len(creature_groups) - len(set(creature_groups)) == 0,
+             "mount action identity audit creature grouping drift")
+    _require(reviewed_name_groups == duplicate_name_groups,
+             "mount action identity audit zhCN name decisions are incomplete")
     return actions
 
 
@@ -699,7 +774,7 @@ def build_model(source_root: Path) -> dict[str, Any]:
         identity = (override.get("collectionKey"), override.get("classKey", ""), override.get("raceKey", ""))
         _require(identity not in seen_override, f"duplicate identity override: {identity}")
         seen_override.add(identity)
-    mount_actions = _load_mount_actions(source_root, collections)
+    mount_actions = _apply_mount_journal_contract(source_root, _load_mount_actions(source_root, collections))
     companion_actions = _load_companion_actions(source_root, collections)
     toy_actions = _load_toy_actions(source_root, collections)
     creature_presentations = _load_creature_presentations(source_root, collections)
@@ -801,6 +876,13 @@ def build_model(source_root: Path) -> dict[str, Any]:
         basis: Any = [row for row in mapping_basis["collections"] if row["typeKey"] == entry["typeKey"]]
         if entry["typeKey"] == "mount":
             basis = {"collections": basis, "actions": mapping_basis["mountActions"]}
+        elif entry["typeKey"] == "mount-favorite":
+            # Internal type 16 projects preference membership over the exact
+            # same stable IDs as the mount catalog; it has no navigation rows.
+            basis = {
+                "collections": [row for row in mapping_basis["collections"] if row["typeKey"] == "mount"],
+                "actions": mapping_basis["mountActions"],
+            }
         elif entry["typeKey"] == "companion":
             basis = {"collections": basis, "actions": mapping_basis["companionActions"]}
         elif entry["typeKey"] == "toy":
@@ -939,6 +1021,16 @@ def _mount_catalog_inc(model: dict[str, Any]) -> str:
         "DISABLED": "CatalogLifecycle::Disabled",
         "TOMBSTONE": "CatalogLifecycle::Tombstone",
     }
+    capability_names = {
+        "GROUND": "MountCapability::Ground", "FLYING": "MountCapability::Flying",
+        "AQUATIC": "MountCapability::Aquatic", "SPECIAL": "MountCapability::Special",
+    }
+    exclusion_names = {
+        None: "MountExclusionReason::None", "TAXI": "MountExclusionReason::Taxi",
+        "QUEST_TEMPORARY": "MountExclusionReason::QuestTemporary",
+        "CLASS_FORM": "MountExclusionReason::ClassForm", "TEST": "MountExclusionReason::Test",
+        "DUPLICATE": "MountExclusionReason::Duplicate", "INTERNAL": "MountExclusionReason::Internal",
+    }
     for entry in model["mountActions"]["collections"]:
         collection = collections[int(entry["collectionId"])]
         variants = []
@@ -959,6 +1051,13 @@ def _mount_catalog_inc(model: dict[str, Any]) -> str:
                 _cpp_uints(entry["unlockSpellIds"]), "{" + ", ".join(variants) + "}",
                 str(int(collection["previewCreatureEntry"])) + "u",
                 lifecycle_names[collection["catalogLifecycle"]],
+                "true" if entry["journalVisible"] else "false",
+                "true" if entry["actionable"] else "false",
+                "true" if entry["draggable"] else "false",
+                "true" if entry["randomEligible"] else "false",
+                str(int(entry["canonicalActionSpellId"])) + "u",
+                capability_names[entry["capability"]],
+                exclusion_names[entry["exclusionReason"]],
             ]) + "},"
         )
     lines += ["    };", "}", ""]
@@ -1133,11 +1232,24 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
             _require(entry["spellId"] == int(journal["spellId"]),
                      f"mount journal spell drift: {entry['collectionId']}")
             entry["sourceText"] = journal["source"]
-            entry["description"] = journal["description"]
+            entry["mountType"] = journal.get("mountType")
+            entry["flags"] = int(journal.get("flags") or 0)
+            entry["sourceType"] = journal.get("sourceType")
+            entry["descriptionKey"] = int(journal.get("descriptionKey") or entry["spellId"])
+            entry["descriptionStatus"] = journal.get("descriptionStatus") or "MISSING"
             if journal.get("journalNameZhCN"):
                 entry["name"]["zhCN"] = journal["journalNameZhCN"]
-            entry["uiCollectible"] = bool(journal["uiCollectible"])
-            entry["uiExclusionReason"] = journal["exclusionReason"]
+            entry["journalVisible"] = bool(journal.get("journalVisible", journal["uiCollectible"]))
+            entry["actionable"] = bool(journal["actionable"])
+            entry["draggable"] = bool(journal["draggable"])
+            entry["randomEligible"] = bool(journal["randomEligible"])
+            entry["canonicalActionSpellId"] = int(journal.get("canonicalActionSpellId") or 0)
+            entry["capability"] = journal["capability"]
+            entry["exclusionReason"] = journal.get("exclusionReason")
+            entry["acquisitionClass"] = journal.get("acquisitionClass") or "STANDARD"
+            entry["visibilityReason"] = journal.get("visibilityReason", journal.get("exclusionReason"))
+            entry["uiCollectible"] = entry["journalVisible"]
+            entry["uiExclusionReason"] = entry["visibilityReason"]
         elif entry["typeKey"] == "companion":
             entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
         elif entry["typeKey"] == "toy":
@@ -1216,6 +1328,183 @@ def validate_module_root(repo_root: Path, module_root: Path) -> Path:
     _require((module_root / ".git").exists(), "module root must be a Git checkout")
     _require((module_root / "src/SoloCollectionsTypes.h").is_file(), "module root does not contain SoloCollectionsTypes.h")
     return module_root
+
+
+def project_mount_journal(repo_root: Path, check: bool) -> int:
+    """Regenerate the UI-only mount journal projection from reviewed metadata.
+
+    This deliberately leaves protocol/action projections and their mapping hashes
+    untouched, so a visibility/source-text correction does not require unrelated
+    external model evidence or a server catalog rewrite.
+    """
+    # Rebuild the canonical model so UI-only fields never leak back into the
+    # manifest's mapping basis. The selected two outputs are rendered by the
+    # same production renderer; module/action artifacts are intentionally not
+    # written in this mode.
+    model = build_model(repo_root / "catalog/source")
+    render = render_outputs(model, repo_root, repo_root.parent / "mod-solo-collections")
+    selected_paths = {
+        repo_root / "catalog/generated/catalog-manifest.json",
+        repo_root / "addon/SoloCollections/Data/Generated/Catalog.lua",
+    }
+    drift = []
+    for path in selected_paths:
+        content = render[path]
+        current = path.read_text(encoding="utf-8") if path.exists() else None
+        if current == content:
+            continue
+        if check:
+            drift.append(path)
+        else:
+            path.write_text(content, encoding="utf-8", newline="\n")
+            print(f"generated: {path}")
+    if drift:
+        for path in drift:
+            print(f"out of date: {path}", file=sys.stderr)
+        return 1
+    print(f"mount journal projection mapping hash unchanged: {model['mappingHash']}")
+    return 0
+
+    # Kept below as an explicit description of the equivalent projection
+    # mechanics; execution returns above after using the shared renderer.
+    manifest_path = repo_root / "catalog/generated/catalog-manifest.json"
+    catalog_path = repo_root / "addon/SoloCollections/Data/Generated/Catalog.lua"
+    manifest = _read_json(manifest_path)
+    journal = _read_json(repo_root / "catalog/source/mount_journal_metadata.json")
+    by_id = {int(entry["collectionId"]): entry for entry in journal["entries"]}
+    mount_actions = _read_json(repo_root / "catalog/source/mount_actions.json")
+    mount_actions_by_id = {
+        int(entry["collectionId"]): entry for entry in mount_actions["collections"]
+    }
+    mounts = [entry for entry in manifest["collections"] if entry.get("typeKey") == "mount"]
+    _require({int(entry["collectionId"]) for entry in mounts} == set(by_id),
+             "mount journal metadata must cover every generated mount")
+    for entry in mounts:
+        row = by_id[int(entry["collectionId"])]
+        action = mount_actions_by_id[int(entry["collectionId"])]
+        _require(int(action["canonicalSpellId"]) == int(row["spellId"]),
+                 f"mount journal spell drift: {entry['collectionId']}")
+        entry["sourceText"] = row["source"]
+        entry["mountType"] = row.get("mountType")
+        entry["flags"] = int(row.get("flags") or 0)
+        entry["sourceType"] = row.get("sourceType")
+        entry["descriptionKey"] = int(row.get("descriptionKey") or action["canonicalSpellId"])
+        entry["descriptionStatus"] = row.get("descriptionStatus") or "MISSING"
+        entry["journalVisible"] = bool(row.get("journalVisible", row.get("uiCollectible", True)))
+        entry["acquisitionClass"] = row.get("acquisitionClass") or "STANDARD"
+        entry["visibilityReason"] = row.get("visibilityReason", row.get("exclusionReason"))
+        entry["uiCollectible"] = entry["journalVisible"]
+        entry["uiExclusionReason"] = entry["visibilityReason"]
+        if row.get("journalNameZhCN"):
+            entry["name"]["zhCN"] = row["journalNameZhCN"]
+
+    startup_collections = deepcopy([
+        entry for entry in manifest["collections"] if entry["typeKey"] not in {"appearance", "set"}
+    ])
+    companion_actions = _read_json(repo_root / "catalog/source/companion_actions.json")
+    companion_actions_by_id = {int(entry["collectionId"]): entry for entry in companion_actions["entries"]}
+    toy_actions = _read_json(repo_root / "catalog/source/toy_actions.json")
+    toy_actions_by_id = {int(entry["collectionId"]): entry for entry in toy_actions["entries"]}
+    mount_evidence = _read_json(repo_root / "catalog/review/mounts/evidence.json")
+    alliance_mask, horde_mask = 1101, 690
+    faction_by_spell = {}
+    for candidate in mount_evidence.get("candidates", []):
+        masks = {int(source.get("allowableRace", 0)) for source in candidate.get("itemSources", [])
+                 if int(source.get("allowableRace", 0)) > 0}
+        masks.update(int(source.get("raceMask", 0)) for source in candidate.get("skillLineAbilities", [])
+                     if int(source.get("raceMask", 0)) > 0)
+        if masks and all(mask & ~alliance_mask == 0 for mask in masks):
+            faction_by_spell[int(candidate["spellId"])] = "ALLIANCE"
+        elif masks and all(mask & ~horde_mask == 0 for mask in masks):
+            faction_by_spell[int(candidate["spellId"])] = "HORDE"
+    for entry in startup_collections:
+        if entry["typeKey"] == "mount":
+            row = by_id[int(entry["collectionId"])]
+            action = mount_actions_by_id[int(entry["collectionId"])]
+            entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
+            entry["spellId"] = int(action["canonicalSpellId"])
+            entry["faction"] = faction_by_spell.get(entry["spellId"])
+            entry["sourceText"] = row["source"]
+            entry["mountType"] = row.get("mountType")
+            entry["flags"] = int(row.get("flags") or 0)
+            entry["sourceType"] = row.get("sourceType")
+            entry["descriptionKey"] = int(row.get("descriptionKey") or entry["spellId"])
+            entry["descriptionStatus"] = row.get("descriptionStatus") or "MISSING"
+            entry["journalVisible"] = bool(row.get("journalVisible", row.get("uiCollectible", True)))
+            entry["acquisitionClass"] = row.get("acquisitionClass") or "STANDARD"
+            entry["visibilityReason"] = row.get("visibilityReason", row.get("exclusionReason"))
+            entry["uiCollectible"] = entry["journalVisible"]
+            entry["uiExclusionReason"] = entry["visibilityReason"]
+            if row.get("journalNameZhCN"):
+                entry["name"]["zhCN"] = row["journalNameZhCN"]
+        elif entry["typeKey"] == "companion":
+            entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
+        elif entry["typeKey"] == "toy":
+            action = toy_actions_by_id[int(entry["collectionId"])]
+            entry["displayItemId"] = int(action["itemId"])
+            entry["targetPolicy"] = action["targetPolicy"]
+            entry["requiresTarget"] = action["targetPolicy"] == "REQUIRED_UNIT"
+        if entry["typeKey"] in {"mount", "companion", "toy"}:
+            entry.pop("actionId", None)
+            entry.pop("sourceId", None)
+    catalog_payload = {
+        "schemaVersion": manifest["schemaVersion"], "metadataVersion": manifest["metadataVersion"],
+        "assetPackVersion": manifest["assetPackVersion"], "mappingHash": manifest["mappingHash"],
+        "collectionTypes": manifest["collectionTypes"], "collections": startup_collections,
+        "typeMappingHashes": manifest["typeMappingHashes"], "presentationHash": manifest["presentationHash"],
+        "presentationEvidenceHash": manifest["presentationEvidenceHash"],
+        "presentationEvidenceId": manifest["presentationEvidenceId"],
+        "presentationEvidencePackHash": manifest["presentationEvidencePackHash"],
+        "appearancePresentationHash": manifest["appearancePresentationHash"],
+        "appearancePresentationEvidence": manifest["appearancePresentationEvidence"],
+        "appearancePresentationPublicCount": manifest["appearancePresentationPublicCount"],
+        "deprecatedAliases": manifest["deprecatedAliases"],
+    }
+    outputs = {
+        manifest_path: json.dumps(manifest, ensure_ascii=False, sort_keys=True, indent=2) + "\n",
+        catalog_path: "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedCatalog = " + _lua(catalog_payload) + "\n",
+    }
+    drift = []
+    for path, content in outputs.items():
+        current = path.read_text(encoding="utf-8") if path.exists() else None
+        if current == content:
+            continue
+        if check:
+            drift.append(path)
+        else:
+            path.write_text(content, encoding="utf-8", newline="\n")
+            print(f"generated: {path}")
+    if drift:
+        for path in drift:
+            print(f"out of date: {path}", file=sys.stderr)
+        return 1
+    print(f"mount journal projection mapping hash unchanged: {manifest['mappingHash']}")
+    return 0
+
+
+def project_mount_action_contract(repo_root: Path, module_root: Path, check: bool) -> int:
+    """Render the cross-repository mount action contract from tracked canonical inputs."""
+    module_root = validate_module_root(repo_root, module_root)
+    model = build_model(repo_root / "catalog/source")
+    outputs = render_outputs(model, repo_root, module_root)
+    drift = []
+    for path, content in outputs.items():
+        current = path.read_text(encoding="utf-8") if path.exists() else None
+        if current == content:
+            continue
+        if check:
+            drift.append(path)
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8", newline="\n")
+            print(f"generated: {path}")
+    if drift:
+        for path in drift:
+            print(f"out of date: {path}", file=sys.stderr)
+        return 1
+    print(f"mount action contract mapping hash: {model['mappingHash']}")
+    print(f"mount action type hash: {model['typeMappingHashes']['mount']}")
+    return 0
 
 
 def _validate_creature_presentation_evidence(source_root: Path, evidence_root: Path) -> None:
@@ -1357,8 +1646,8 @@ def generate(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--module-root", required=True, type=Path)
-    parser.add_argument("--evidence-root", required=True, type=Path)
+    parser.add_argument("--module-root", type=Path)
+    parser.add_argument("--evidence-root", type=Path)
     parser.add_argument("--source-root", type=Path)
     parser.add_argument(
         "--addon-only",
@@ -1366,8 +1655,34 @@ def main(argv: list[str] | None = None) -> int:
         help="regenerate or check AddOn/catalog projections without writing module projections",
     )
     parser.add_argument("--check", action="store_true")
+    parser.add_argument(
+        "--mount-journal-only",
+        action="store_true",
+        help="regenerate only reviewed client mount-journal fields; protocol mappings remain unchanged",
+    )
+    parser.add_argument(
+        "--mount-action-contract-only",
+        action="store_true",
+        help="regenerate the tracked cross-repository mount action contract without external presentation evidence",
+    )
     args = parser.parse_args(argv)
     repo_root = Path(__file__).resolve().parents[2]
+    if args.mount_journal_only:
+        try:
+            return project_mount_journal(repo_root, args.check)
+        except CatalogError as exc:
+            print(f"catalog error: {exc}", file=sys.stderr)
+            return 2
+    if args.mount_action_contract_only:
+        if args.module_root is None:
+            parser.error("--module-root is required with --mount-action-contract-only")
+        try:
+            return project_mount_action_contract(repo_root, args.module_root, args.check)
+        except CatalogError as exc:
+            print(f"catalog error: {exc}", file=sys.stderr)
+            return 2
+    if args.module_root is None or args.evidence_root is None:
+        parser.error("--module-root and --evidence-root are required unless --mount-journal-only is used")
     source_root = args.source_root.resolve() if args.source_root else repo_root / "catalog/source"
     try:
         return generate(
