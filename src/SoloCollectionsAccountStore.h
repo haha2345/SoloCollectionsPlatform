@@ -11,7 +11,7 @@
 
 namespace SoloCollections
 {
-inline constexpr std::uint32_t AccountStoreSchemaVersion = 1;
+inline constexpr std::uint32_t AccountStoreSchemaVersion = 2;
 
 enum class CollectionMutationKind : std::uint8_t
 {
@@ -70,6 +70,7 @@ struct AccountStoreDiagnostics
     std::uint64_t FailedMutations = 0;
     std::uint64_t LoadQueryCount = 0;
     std::uint64_t LoadedUnlockRows = 0;
+    std::uint64_t LoadedPreferenceRows = 0;
     std::uint64_t LastLoadMicroseconds = 0;
     std::uint64_t MaxLoadMicroseconds = 0;
     std::uint64_t TotalLoadMicroseconds = 0;
@@ -127,6 +128,7 @@ public:
     [[nodiscard]] bool RetryLoad(AccountId accountId, std::uint32_t playerGuid);
     [[nodiscard]] bool ReloadAccount(AccountId accountId, std::uint32_t playerGuid);
     [[nodiscard]] MutationStartResult BeginMutation(AccountCollectionMutation mutation);
+    [[nodiscard]] MutationStartResult BeginPreferenceMutation(AccountCollectionMutation mutation);
     [[nodiscard]] bool RecordRejectedMutation(
         AccountCollectionMutation const& mutation, CollectionReasonCode reason);
     [[nodiscard]] bool RequestResync(AccountId accountId);

@@ -34,6 +34,7 @@ namespace SoloCollections
 {
 namespace
 {
+// Generated build identity; touching this include site makes build-info refreshes explicit to MSBuild.
 #include "SoloCollectionsBuildInfo.inc"
 #include "generated/SoloCollectionsProtocolCatalog.inc"
 
@@ -203,6 +204,59 @@ bool Sc2ProtocolCanUsePrivateChat(
                 return finish("invalid", "INVALID_REQUEST");
             if (request.TypeId == MountCollectionTypeId.Value())
             {
+                if (request.ActionId == "RANDOM_SUMMON")
+                {
+                    if (request.CollectionId != MountRandomActionCollectionId.Value() || request.Target != "-")
+                        return finish("mount_random", "INVALID_REQUEST");
+                    return finish("mount_random", GetMountCollectionService().ExecuteRandomSummon(player));
+                }
+                if (request.ActionId == "SET_FAVORITE")
+                {
+                    if (request.Target != "0" && request.Target != "1")
+                        return finish("mount_favorite", "INVALID_REQUEST");
+                    MountCollectionDefinition const* definition =
+                        GetMountCatalog().Find(CollectionId(request.CollectionId));
+                    if (!definition || definition->Lifecycle != CatalogLifecycle::Active ||
+                        !definition->JournalVisible || !definition->Actionable)
+                        return finish("mount_favorite", "UNSUPPORTED");
+
+                    std::optional<AccountCacheSnapshot> snapshot =
+                        GetAccountCollectionCache().Snapshot(accountId);
+                    if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
+                        return finish("mount_favorite", "LOADING");
+                    CollectionKey mountKey { MountCollectionTypeId, CollectionId(request.CollectionId) };
+                    if (!GetAccountCollectionCache().IsOwned(accountId, mountKey))
+                        return finish("mount_favorite", "FAVORITE_NOT_OWNED");
+
+                    AccountCollectionMutation mutation;
+                    mutation.Account = accountId;
+                    mutation.Generation = snapshot->Generation;
+                    mutation.Key = { MountFavoriteCollectionTypeId, CollectionId(request.CollectionId) };
+                    mutation.Kind = request.Target == "1" ?
+                        CollectionMutationKind::Grant : CollectionMutationKind::Revoke;
+                    mutation.SourceKind = CollectionSourceKind::Gameplay;
+                    mutation.CharacterGuid = player->GetGUID().GetCounter();
+                    mutation.ActorAccountId = accountId.Value();
+                    mutation.ActorGuid = player->GetGUID().GetCounter();
+                    MutationStartResult started =
+                        GetAccountCollectionStore().BeginPreferenceMutation(std::move(mutation));
+                    if (started.Accepted)
+                        return finish("mount_favorite", "ACCEPTED");
+                    switch (started.Reason)
+                    {
+                        case CollectionReasonCode::NotOwned:
+                            return finish("mount_favorite", "FAVORITE_NOT_OWNED");
+                        case CollectionReasonCode::NotReady:
+                            return finish("mount_favorite", "LOADING");
+                        case CollectionReasonCode::DatabaseError:
+                        case CollectionReasonCode::ReadOnly:
+                            return finish("mount_favorite", "DB_UNAVAILABLE");
+                        case CollectionReasonCode::PendingOperation:
+                            return finish("mount_favorite", "RATE_LIMITED");
+                        default:
+                            return finish("mount_favorite", "INVALID_REQUEST");
+                    }
+                }
                 if (request.ActionId == "PREVIEW")
                 {
                     if (request.Target != "-")

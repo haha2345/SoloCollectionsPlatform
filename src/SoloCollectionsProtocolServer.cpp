@@ -21,12 +21,14 @@ constexpr std::size_t MaxOutboundPackets = 512;
 bool IsActionStatus(std::string_view value)
 {
     constexpr std::string_view values[] = {
-        "ACCEPTED", "DISMISSED", "LOADING", "NOT_OWNED", "CATALOG_MISMATCH", "ASSET_MISMATCH",
+        "ACCEPTED", "DISMISSED", "LOADING", "NOT_OWNED", "FAVORITE_NOT_OWNED",
+        "CATALOG_MISMATCH", "ASSET_MISMATCH",
         "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED",
         "INVALID_TARGET_SLOT", "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED",
         "NOT_ENOUGH_MONEY", "NOT_ENOUGH_TOKENS",
         "IN_COMBAT", "DEAD", "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED",
         "MAP_RESTRICTED", "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED",
+        "NO_MOUNTS", "NO_USABLE_MOUNTS",
     };
     return std::find(std::begin(values), std::end(values), value) != std::end(values);
 }

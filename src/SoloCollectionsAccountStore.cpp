@@ -1,4 +1,5 @@
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsMountCatalog.h"
 
 #include "AsyncCallbackProcessor.h"
 #include "DatabaseEnv.h"
@@ -47,10 +48,11 @@ public:
 
         _initialized = true;
         std::string schemaQuery =
-            "SELECT CASE WHEN COUNT(*) = 4 THEN 1 ELSE 0 END "
+            "SELECT CASE WHEN COUNT(*) = 5 THEN 1 ELSE 0 END "
             "FROM information_schema.tables "
             "WHERE table_schema = DATABASE() AND table_name IN "
-            "('sc_account_state','sc_collection_unlock','sc_collection_audit','sc_migration_marker')";
+            "('sc_account_state','sc_collection_unlock','sc_collection_audit','sc_migration_marker',"
+            "'solo_collection_preference')";
         _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(schemaQuery).WithCallback(
             [this](QueryResult result)
             {
@@ -124,8 +126,13 @@ public:
             "UNION ALL "
             "SELECT 1 AS row_kind, u.revision, u.type_id, u.collection_id "
             "FROM sc_collection_unlock u WHERE u.account_id = {} "
+            "UNION ALL "
+            "SELECT 2 AS row_kind, COALESCE(s.revision, 0) AS revision, 16 AS type_id, p.collection_id "
+            "FROM solo_collection_preference p "
+            "LEFT JOIN sc_account_state s ON s.account_id = p.account_id "
+            "WHERE p.account_id = {} AND p.type_id = 10 AND p.favorite = 1 "
             "ORDER BY row_kind, type_id, collection_id",
-            load.Account.Value(), load.Account.Value());
+            load.Account.Value(), load.Account.Value(), load.Account.Value());
 
         ++_diagnostics.LoadQueryCount;
         auto loadStarted = std::chrono::steady_clock::now();
@@ -145,6 +152,7 @@ public:
                 CollectionRevision revision;
                 bool valid = static_cast<bool>(result);
                 bool sawSentinel = false;
+                std::size_t loadedPreferenceRows = 0;
                 if (result)
                 {
                     do
@@ -166,9 +174,11 @@ public:
 
                         uint64 typeId = fields[2].Get<uint64>();
                         uint64 collectionId = fields[3].Get<uint64>();
-                        if (rowKind != 1 || typeId == 0 || typeId > std::numeric_limits<std::uint16_t>::max() ||
+                        if ((rowKind != 1 && rowKind != 2) || typeId == 0 ||
+                            typeId > std::numeric_limits<std::uint16_t>::max() ||
                             collectionId == 0 || collectionId > std::numeric_limits<std::uint32_t>::max() ||
-                            rowRevision > revision.Value())
+                            rowRevision > revision.Value() ||
+                            (rowKind == 2 && typeId != MountFavoriteCollectionTypeId.Value()))
                         {
                             valid = false;
                             break;
@@ -178,6 +188,8 @@ public:
                             CollectionId(static_cast<std::uint32_t>(collectionId))
                         };
                         owned.insert(key);
+                        if (rowKind == 2)
+                            ++loadedPreferenceRows;
                     } while (result->NextRow());
                 }
 
@@ -196,13 +208,14 @@ public:
                     accountId, generation, std::move(owned), revision);
                 if (accepted)
                 {
-                    _diagnostics.LoadedUnlockRows += loadedUnlockRows;
+                    _diagnostics.LoadedUnlockRows += loadedUnlockRows - loadedPreferenceRows;
+                    _diagnostics.LoadedPreferenceRows += loadedPreferenceRows;
                     ++_diagnostics.SuccessfulLoads;
                     LOG_INFO("module.solocollections.performance",
                         "event=account_load result=ready account={} character={} generation={} revision={} "
-                        "queries=1 unlock_rows={} elapsed_us={}",
+                        "queries=1 unlock_rows={} preference_rows={} elapsed_us={}",
                         accountId.Value(), playerGuid, generation.Value(), revision.Value(),
-                        loadedUnlockRows, elapsedMicroseconds);
+                        loadedUnlockRows - loadedPreferenceRows, loadedPreferenceRows, elapsedMicroseconds);
                 }
                 else
                 {
@@ -243,7 +256,7 @@ public:
         CollectionRevision nextRevision(snapshot->Revision.Value() + 1);
         CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
         transaction->Append(
-            "INSERT INTO sc_account_state(account_id, revision, schema_version) VALUES ({}, 0, 1) "
+            "INSERT INTO sc_account_state(account_id, revision, schema_version) VALUES ({}, 0, 2) "
             "ON DUPLICATE KEY UPDATE schema_version = schema_version",
             mutation.Account.Value());
 
@@ -313,6 +326,114 @@ public:
                 ++_diagnostics.SuccessfulMutations;
                 LOG_INFO("module.solocollections.store",
                     "event=mutation_commit result=success account={} type={} collection={} generation={} revision={} cache_result={}",
+                    mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                    mutation.Generation.Value(), nextRevision.Value(), static_cast<std::uint8_t>(cacheResult));
+                if (_eventSink && cacheResult != DeltaQueueResult::Rejected)
+                    _eventSink->OnCollectionDeltaCommitted(mutation.Account, delta);
+            });
+
+        return { true, CollectionReasonCode::Ok, nextRevision };
+    }
+
+    MutationStartResult BeginPreferenceMutation(AccountCollectionMutation mutation)
+    {
+        if (!_writesEnabled)
+            return { false, CollectionReasonCode::ReadOnly, {} };
+        if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid() ||
+            !mutation.Generation.IsValid() || mutation.Key.TypeId != MountFavoriteCollectionTypeId ||
+            !mutation.Key.Id.IsValid() || StableSourceKind(mutation.SourceKind) == 0)
+            return { false, _diagnostics.SchemaState == AccountStoreSchemaState::Ready ?
+                CollectionReasonCode::InvalidArgument : CollectionReasonCode::DatabaseError, {} };
+
+        std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(mutation.Account);
+        if (!snapshot || snapshot->State != AccountCacheLoadState::Ready || snapshot->Generation != mutation.Generation)
+            return { false, CollectionReasonCode::NotReady, {} };
+        if (_pendingMutations.contains(mutation.Account))
+            return { false, CollectionReasonCode::PendingOperation, {} };
+
+        CollectionKey mountKey { MountCollectionTypeId, mutation.Key.Id };
+        if (!GetAccountCollectionCache().IsOwned(mutation.Account, mountKey))
+            return { false, CollectionReasonCode::NotOwned, snapshot->Revision };
+
+        bool favorite = GetAccountCollectionCache().IsOwned(mutation.Account, mutation.Key);
+        if ((mutation.Kind == CollectionMutationKind::Grant && favorite) ||
+            (mutation.Kind == CollectionMutationKind::Revoke && !favorite))
+            return { true, CollectionReasonCode::Ok, snapshot->Revision };
+        if (snapshot->Revision.Value() == std::numeric_limits<std::uint64_t>::max())
+            return { false, CollectionReasonCode::RevisionConflict, snapshot->Revision };
+
+        CollectionRevision nextRevision(snapshot->Revision.Value() + 1);
+        CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
+        transaction->Append(
+            "INSERT INTO sc_account_state(account_id, revision, schema_version) VALUES ({}, 0, 2) "
+            "ON DUPLICATE KEY UPDATE schema_version = GREATEST(schema_version, 2)",
+            mutation.Account.Value());
+
+        bool requireExisting = mutation.Kind == CollectionMutationKind::Revoke;
+        transaction->Append(
+            "UPDATE sc_account_state SET revision = IF(revision = {} AND {}EXISTS("
+            "SELECT 1 FROM solo_collection_preference p WHERE p.account_id = {} AND p.type_id = 10 "
+            "AND p.collection_id = {} AND p.favorite = 1), {}, NULL) WHERE account_id = {}",
+            snapshot->Revision.Value(), requireExisting ? "" : "NOT ", mutation.Account.Value(),
+            mutation.Key.Id.Value(), nextRevision.Value(), mutation.Account.Value());
+
+        if (mutation.Kind == CollectionMutationKind::Grant)
+        {
+            transaction->Append(
+                "INSERT INTO solo_collection_preference(account_id, type_id, collection_id, favorite) "
+                "VALUES ({}, 10, {}, 1)",
+                mutation.Account.Value(), mutation.Key.Id.Value());
+        }
+        else
+        {
+            transaction->Append(
+                "DELETE FROM solo_collection_preference WHERE account_id = {} AND type_id = 10 AND collection_id = {}",
+                mutation.Account.Value(), mutation.Key.Id.Value());
+        }
+
+        transaction->Append(
+            "INSERT INTO sc_collection_audit(account_id, type_id, collection_id, action_kind, source_kind, source_id, "
+            "character_guid, actor_account_id, actor_guid, revision, result_code) "
+            "VALUES ({}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {})",
+            mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+            StableMutationKind(mutation.Kind), StableSourceKind(mutation.SourceKind), mutation.SourceId,
+            mutation.CharacterGuid, mutation.ActorAccountId, mutation.ActorGuid, nextRevision.Value(),
+            ToStableReasonCode(CollectionReasonCode::Ok));
+
+        _pendingMutations.emplace(mutation.Account, mutation);
+        TransactionCallback& callback = _transactionCallbacks.AddCallback(
+            CharacterDatabase.AsyncCommitTransaction(transaction));
+        callback.AfterComplete(
+            [this, mutation, nextRevision](bool committed)
+            {
+                _pendingMutations.erase(mutation.Account);
+                if (!committed)
+                {
+                    ++_diagnostics.FailedMutations;
+                    LOG_ERROR("module.solocollections.database",
+                        "event=preference_commit result=failed account={} type={} collection={} generation={} revision={}",
+                        mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
+                        mutation.Generation.Value(), nextRevision.Value());
+                    if (_eventSink)
+                        _eventSink->OnCollectionMutationFailed(
+                            mutation.Account, mutation.Key, CollectionReasonCode::DatabaseError);
+                    return;
+                }
+
+                CollectionDelta delta {
+                    mutation.Key,
+                    mutation.Kind == CollectionMutationKind::Grant ?
+                        CollectionDeltaKind::Unlock : CollectionDeltaKind::Revoke,
+                    nextRevision
+                };
+                std::optional<AccountCacheSnapshot> current = GetAccountCollectionCache().Snapshot(mutation.Account);
+                DeltaQueueResult cacheResult = DeltaQueueResult::Rejected;
+                if (current && current->Generation == mutation.Generation)
+                    cacheResult = GetAccountCollectionCache().QueueDelta(mutation.Account, delta);
+
+                ++_diagnostics.SuccessfulMutations;
+                LOG_INFO("module.solocollections.store",
+                    "event=preference_commit result=success account={} type={} collection={} generation={} revision={} cache_result={}",
                     mutation.Account.Value(), mutation.Key.TypeId.Value(), mutation.Key.Id.Value(),
                     mutation.Generation.Value(), nextRevision.Value(), static_cast<std::uint8_t>(cacheResult));
                 if (_eventSink && cacheResult != DeltaQueueResult::Rejected)
@@ -578,6 +699,11 @@ bool AccountCollectionStore::ReloadAccount(AccountId accountId, std::uint32_t pl
 MutationStartResult AccountCollectionStore::BeginMutation(AccountCollectionMutation mutation)
 {
     return _impl->BeginMutation(std::move(mutation));
+}
+
+MutationStartResult AccountCollectionStore::BeginPreferenceMutation(AccountCollectionMutation mutation)
+{
+    return _impl->BeginPreferenceMutation(std::move(mutation));
 }
 
 bool AccountCollectionStore::RecordRejectedMutation(
