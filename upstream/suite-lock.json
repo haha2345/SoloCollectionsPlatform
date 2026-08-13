@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-13T10:04:00+08:00",
+  "syncedAt": "2026-08-13T18:20:00+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -47,9 +47,9 @@
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "6ff5e4c6f4da86ffdf55a4a87bc15074c5eb6a2f",
+      "commit": "35354284c7e5dca82960fae1e13f79936e400143",
       "tocVersion": "0.2.0",
-      "directoryHash": "353555aecb91cbed452f6188abbca02c38a073558e340b3d2053489b70a34fc9",
+      "directoryHash": "d8088a8c724d2488f15a5e438acdf25c66c555c0597be42c8fd451d5bb1a06a2",
       "localPatchState": "sibling-source; branch feat/pet-journal-parity; reviewed companion journal projection, server-backed companion favorites and authoritative random summon, DragonUI mount and companion controls, generation-safe model presentation, and load-on-demand wardrobe catalog bootstrap",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
@@ -57,7 +57,7 @@
       "id": "solocollections-wardrobe-data",
       "addonRoot": "SoloCollections_WardrobeData",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "6ff5e4c6f4da86ffdf55a4a87bc15074c5eb6a2f",
+      "commit": "35354284c7e5dca82960fae1e13f79936e400143",
       "tocVersion": "0.2.0",
       "directoryHash": "24ac33f1edde2039105e53e7c2d63288218e8287d4e0a0262ec65b78d2023ff8",
       "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
