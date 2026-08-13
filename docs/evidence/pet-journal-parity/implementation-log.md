@@ -78,3 +78,13 @@ Task 1 direct checks passed. No cleanup command was used.
 - The existing append-only `2026_08_12_00_mount_preferences.sql` already creates the generic table required by upgraded installations. The clean-install schema snapshot lacked it, so the same generic table definition was added there; no new SQL update was created and no executed migration semantics were changed.
 - Direct checks: required source searches and `git diff --check` passed. Full AzerothCore compilation remains deferred to the plan's build gate.
 - Module commit: `ca6abfe feat(companions): persist account favorites`.
+
+## Task 7 - Authoritative random companion summon
+
+- Specified and random companion summons converge on one internal executor for alive, combat, vehicle, taxi, map, cast, and toggle checks.
+- Random candidates are derived only from the server catalog, type 11 ownership, and type 17 favorites.
+- No owned type 11 entries returns `NO_COMPANIONS`; owned but no active/visible/actionable/random-eligible entries returns `NO_USABLE_COMPANIONS`.
+- A non-empty favorite pool is authoritative; otherwise the eligible owned pool is used. When more than one candidate exists, the currently summoned companion is removed from the pool; a single current candidate retains the existing dismiss toggle.
+- Type 11 `RANDOM_SUMMON` requires control collection ID 1 and target `-` before entering the service.
+- Direct checks: required source searches and `git diff --check` passed. Full AzerothCore compilation remains deferred to the plan's build gate.
+- Module commit: `b03ccd1 feat(companions): add authoritative random summon`.

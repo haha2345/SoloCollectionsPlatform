@@ -505,12 +505,12 @@ cmake --build <AzerothCoreBuildRoot> --config RelWithDebInfo --target worldserve
 
 **Steps:**
 
-1. [ ] 把指定召唤的条件检查与实际执行整理为内部中央执行器，不改变现有 `SUMMON` 成功/解散语义。
-2. [ ] 新增 `ExecuteRandomSummon(Player*)`，只读取服务端目录、type 11 ownership 和 type 17 favorite。
-3. [ ] 按第 3.3 节建立 eligible/favorite/fallback pool。
-4. [ ] 候选多于一个时排除当前宠物；只剩当前一个时允许走解散语义。
-5. [ ] 在 type 11 协议分支处理 `RANDOM_SUMMON`，返回新的稳定状态 token。
-6. [ ] 确认随机与指定召唤都不会绕过死亡、战斗、载具和飞行点检查。
+1. [x] 把指定召唤的条件检查与实际执行整理为内部中央执行器，不改变现有 `SUMMON` 成功/解散语义。
+2. [x] 新增 `ExecuteRandomSummon(Player*)`，只读取服务端目录、type 11 ownership 和 type 17 favorite。
+3. [x] 按第 3.3 节建立 eligible/favorite/fallback pool。
+4. [x] 候选多于一个时排除当前宠物；只剩当前一个时允许走解散语义。
+5. [x] 在 type 11 协议分支处理 `RANDOM_SUMMON`，返回新的稳定状态 token。
+6. [x] 确认随机与指定召唤都不会绕过死亡、战斗、载具和飞行点检查。
 
 **Direct checks:**
 
