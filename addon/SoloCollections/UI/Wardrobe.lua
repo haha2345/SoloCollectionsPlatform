@@ -933,21 +933,72 @@ local function isBodyCameraTunableRecord(record)
         and SC.M2Camera and SC.M2Camera.NormalizeBodyDelta
 end
 
+local function getNativeBodyFacing(record, camera)
+    -- SoloCam's body camera looks toward the opposite side of stock camera 1.
+    -- The ezCollections BACK sentinel (pi) therefore exposes the character's
+    -- front and hides the cloak. Facing zero restores ez's intended rear view.
+    if record and record.slot == "BACK" then return 0 end
+    return camera and camera[4]
+end
+
 local function selectItemModelCamera(model)
-    -- Match the implicit state of ezCollections' WardrobeItemsModelTemplate.
-    -- Our cards are independent DressUpModels, so camera 1 is selected at
-    -- SetUnit/SetCreature/TryOn rebuild boundaries before applying the copied
-    -- model-space tuple.
-    model.scClientCameraSentinel = nil
-    model.scUsesClientCamera = false
-    model.scBodyCameraProfile = nil
-    if EzCamera and type(EzCamera.ActivateRecordCamera) == "function" then
-        local activated, reason = EzCamera:ActivateRecordCamera(model)
-        model.scBodyCameraReason = reason
-        return activated, reason
+    local record = model and model.scRecord
+    local isWeapon = EzCamera and EzCamera:IsWeaponRecord(record)
+    local camera, cameraID, cameraReason
+    if EzCamera and type(EzCamera.GetRecordCamera) == "function" then
+        camera, cameraID, cameraReason = EzCamera:GetRecordCamera(record)
+    else
+        cameraReason = "EZ_CAMERA_ADAPTER_UNAVAILABLE"
     end
-    model.scBodyCameraReason = "EZ_CAMERA_ACTIVATOR_UNAVAILABLE"
-    return false, model.scBodyCameraReason
+    model.scEzCameraID = cameraID
+    model.scEzCameraReason = cameraReason
+    model.scEzCameraTuple = camera
+    model.scEzAnimID = EzCamera and EzCamera:GetRecordAnimation(record, camera) or model.scEzAnimID
+
+    if isWeapon then
+        model.scClientCameraSentinel = nil
+        model.scUsesClientCamera = false
+        model.scBodyCameraProfile = nil
+        if EzCamera and type(EzCamera.ActivateRecordCamera) == "function" then
+            local activated, reason = EzCamera:ActivateRecordCamera(model)
+            model.scBodyCameraReason = reason
+            return activated, reason
+        end
+        model.scBodyCameraReason = "EZ_CAMERA_ACTIVATOR_UNAVAILABLE"
+        return false, model.scBodyCameraReason
+    end
+
+    -- The stock 3.3.5 DressUpModel camera stores ezCollections' SetPosition
+    -- values but camera 1 ignores them while rendering. SoloCam supplies the
+    -- missing body-part camera for this client. Keep ezCollections as the data
+    -- source (camera ID, animation and facing), then submit one slot/race/sex
+    -- camera transaction after TryOn has finished rebuilding the model.
+    local bodyProfile = getCharacterCameraProfile(model)
+    model.scBodyCameraProfile = bodyProfile
+    model.scClientCameraSentinel = bodyProfile and bodyProfile.sentinel or nil
+    model.scUsesClientCamera = model.scClientCameraSentinel ~= nil
+    if not model.scUsesClientCamera or not model.SetCamera then
+        model.scBodyCameraReason = bodyProfile and "CAMERA_API_UNAVAILABLE" or "PROFILE_UNAVAILABLE"
+        if model.SetCamera then pcall(function() model:SetCamera(1) end) end
+        return false, model.scBodyCameraReason
+    end
+
+    if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
+    if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
+    local facing = getNativeBodyFacing(record, camera)
+    if type(facing) == "number" then
+        if model.SetFacing then
+            pcall(function() model:SetFacing(facing) end)
+        elseif model.SetRotation then
+            pcall(function() model:SetRotation(facing) end)
+        end
+    end
+    local selected = pcall(function()
+        model:SetCamera(model.scClientCameraSentinel)
+        model:SetCamera(1)
+    end)
+    model.scBodyCameraReason = selected and "READY" or "CAMERA_TRANSACTION_FAILED"
+    return selected, model.scBodyCameraReason
 end
 
 local function captureItemModelBaseline(model)
@@ -979,6 +1030,24 @@ local function captureItemModelBaseline(model)
 end
 
 local function applyItemModelTransform(model)
+    if model.scUsesClientCamera then
+        -- SoloCam owns zoom and target. Applying ezCollections' model-space
+        -- translation here would double-transform the same card and push the
+        -- equipped region out of view. Only its facing remains meaningful.
+        if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
+        if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
+        local camera = model.scEzCameraTuple
+        local facing = getNativeBodyFacing(model.scRecord, camera)
+        if type(facing) == "number" then
+            if model.SetFacing then
+                pcall(function() model:SetFacing(facing) end)
+            elseif model.SetRotation then
+                pcall(function() model:SetRotation(facing) end)
+            end
+        end
+        model.scEzCameraReason = "READY_NATIVE_BRIDGE"
+        return true, model.scEzCameraReason
+    end
     if not EzCamera or type(EzCamera.ApplyRecordCamera) ~= "function" then
         model.scEzCameraID = nil
         model.scEzCameraReason = "EZ_CAMERA_ADAPTER_UNAVAILABLE"
@@ -1054,7 +1123,8 @@ local function finishPendingItemModelView(model)
 
     if model.scViewStage == "TRANSFORM" then
         model.scApplyingView = true
-        local applied = applyItemModelTransform(model)
+        local selected = selectItemModelCamera(model)
+        local applied = selected and applyItemModelTransform(model)
         model.scApplyingView = nil
         if applied then
             model.scViewStage = nil
@@ -1123,10 +1193,8 @@ local function finishPendingItemModel(model, elapsed)
     end
     pcall(function() model:TryOn(itemString) end)
     model.scApplyingAppearance = nil
-    -- Match ezCollections: apply once immediately after TryOn, then retain the
-    -- delayed reapply for any model rebuild that lands on a later frame.
-    selectItemModelCamera(model)
-    applyItemModelTransform(model)
+    -- TryOn rebuilds asynchronously. Queue one final camera transaction after
+    -- the model has settled instead of selecting camera 1 in this same tick.
     queueItemModelView(model, true)
     return true
 end
@@ -1143,32 +1211,6 @@ local function updatePendingItemModel(self, elapsed)
     if self.scEzFreeze and self.SetSequenceTime and self.scEzAnimID then
         pcall(function() self:SetSequenceTime(self.scEzAnimID, 0) end)
     end
-    -- Keep the copied ezCollections pose as the final per-frame model action.
-    -- This closes the 3.3.5 timing hole where animation freezing leaves the
-    -- item equipped but restores camera 1's native full-body composition.
-    if self.scEzFreeze and self.scRecord and EzCamera
-        and type(EzCamera.RetainRecordCamera) == "function" then
-        local retained, reason = EzCamera:RetainRecordCamera(self)
-        self.scEzRetentionReason = reason
-        if not retained and not self.scApplyingAppearance and not self.scApplyingView then
-            selectItemModelCamera(self)
-            applyItemModelTransform(self)
-        end
-    end
-    if self.scEzFreeze and self.scRecord and EzCamera
-        and type(EzCamera.VerifyRecordCamera) == "function" then
-        self.scEzVerifyElapsed = (self.scEzVerifyElapsed or 0) + (elapsed or 0)
-        if self.scEzVerifyElapsed >= 0.20 then
-            self.scEzVerifyElapsed = 0
-            local retained, reason = EzCamera:VerifyRecordCamera(self, self.scRecord)
-            self.scEzRetentionReason = reason
-            if not retained and not self.scApplyingAppearance and not self.scApplyingView then
-                self.scEzRetentionRepairs = (self.scEzRetentionRepairs or 0) + 1
-                selectItemModelCamera(self)
-                applyItemModelTransform(self)
-            end
-        end
-    end
     if not self.scPendingItemString and not self.scViewStage and not self.scEzFreeze then
         self:SetScript("OnUpdate", nil)
     end
@@ -1182,6 +1224,7 @@ local function clearEzItemModelState(model)
     model.scUsesClientCamera = nil
     model.scBodyCameraProfile = nil
     model.scBodyCameraReason = nil
+    model.scEzCameraTuple = nil
     model.scPendingItemString = nil
     model.scModelReadyFrames = nil
     model.scModelWaitElapsed = nil
@@ -1280,7 +1323,6 @@ local function applyItemModelRecord(model, record, pageGeneration)
     applyEzCollectionsCardLight(model)
 
     if unchanged then
-        applyItemModelTransform(model)
         queueItemModelView(model, true)
         return
     end
@@ -1316,8 +1358,6 @@ local function applyItemModelRecord(model, record, pageGeneration)
             showEzCardUnavailable(model, record, "PREVIEW_CREATURE_LOAD_FAILED")
             return
         end
-        selectItemModelCamera(model)
-        applyItemModelTransform(model)
         model.scPendingItemString = resolveTryOnItem(record.itemId)
         model.scModelReadyFrames = 0
         model.scModelWaitElapsed = 0
@@ -1329,14 +1369,12 @@ local function applyItemModelRecord(model, record, pageGeneration)
         showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
         return
     end
-    if model.SetModelScale then pcall(function() model:SetModelScale(10) end) end
+    if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
     local loaded = pcall(function() model:SetUnit("player") end)
     if not loaded then
         showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
         return
     end
-    selectItemModelCamera(model)
-    applyItemModelTransform(model)
     model.scPendingItemString = resolveTryOnItem(record.itemId)
     model.scModelReadyFrames = 0
     model.scModelWaitElapsed = 0
@@ -1351,13 +1389,11 @@ function ItemCardRenderer:Attach(model, objectModel)
     model.scWardrobeItemCardRenderer = true
     model.scObjectModel = objectModel
     objectModel.scHostModel = model
-    model:SetScript("OnUpdateModel", function(self)
-        if self.scRecord and not self.scApplyingAppearance and not self.scApplyingView then
-            selectItemModelCamera(self)
-            applyItemModelTransform(self)
-        end
-        queueItemModelView(self, true)
-    end)
+    -- SetSequenceTime fires OnUpdateModel on this 3.3.5 client. Attaching a
+    -- camera replay there keeps resetting the settle queue every render frame,
+    -- so the final SoloCam transaction can never run. The pending TryOn state
+    -- machine below already supplies the required delayed application.
+    model:SetScript("OnUpdateModel", nil)
     model.scUpdateHandler = updatePendingItemModel
     objectModel:SetScript("OnUpdateModel", function(self)
         applyStandaloneItemView(self)
@@ -3038,16 +3074,7 @@ function UI.CreateWardrobePage(parent)
         collectionStateLabel:SetTextColor(0.72, 0.73, 0.74)
         collectionState:Hide()
 
-        itemModel:SetScript("OnUpdateModel", function(self)
-            -- SetUnit/TryOn may finish after our first transform and silently
-            -- restore the native full-body view. Force the same generation's
-            -- relative framing to be applied again after every late rebuild.
-            if self.scRecord and not self.scApplyingAppearance and not self.scApplyingView then
-                selectItemModelCamera(self)
-                applyItemModelTransform(self)
-            end
-            queueItemModelView(self, true)
-        end)
+        itemModel:SetScript("OnUpdateModel", nil)
         itemModel.scUpdateHandler = updatePendingItemModel
         itemObjectModel:SetScript("OnUpdateModel", function(self)
             applyStandaloneItemView(self)
