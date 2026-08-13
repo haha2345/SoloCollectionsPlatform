@@ -122,3 +122,15 @@ Task 1 direct checks passed. No cleanup command was used.
 - Public API documentation now assigns state and action authority to the consuming AddOn/server bridge.
 - Checks: `Inspect-ClientSuiteLayout.ps1` passed; source search confirmed both capabilities/entry points and no macro behavior in the component; `git diff --check` passed.
 - SoloClientSuite commit: `77bcb8e feat(newera): generalize random collection control`.
+
+## Task 11 - Shared mount/pet journal shell
+
+- Exposed the existing `MountJournal` adapter as the compatible `CompanionJournal` alias and retained every mount entry point.
+- Added `CreateRandomCompanionButton`, backed by the new `components.random-collection` capability while preserving `components.random-mount`.
+- MOUNTS and PETS now both use a 768 x 606 frame and the same bands, inset geometry, side padding, gap, bottom inset, row height, and ten-row layout.
+- PETS rows and FauxScrollFrame begin at `ROW_START_Y = 3`; ten 46px rows fit the 466px list viewport.
+- Replaced the mount-only shell filter control with a MOUNTS/PETS companion control that routes to the active page. `scMountFilterButton` remains as a compatibility alias.
+- PETS owns the named `SoloCollectionsPetFilterMenu` UIDropDownMenu frame and no longer writes options into the legacy shared popup.
+- Existing DragonUI journal tabs remain the only bottom-tab implementation.
+- Focused shell contract and `git diff --check` passed. The required full AddOn contract command ran 63 tests but remains at 21 failures/1 error from the previously recorded stale cross-feature expectations; no new Task 11 focused assertion failed.
+- AddOn commit: `210ed9d feat(ui): align pet journal shell with mounts`.

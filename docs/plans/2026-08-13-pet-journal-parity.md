@@ -648,14 +648,14 @@ git diff --check
 
 **Steps:**
 
-1. [ ] 将 `MountJournal` 的布局说明泛化为 companion journal 兼容适配器，但保留现有表名/方法别名，避免坐骑页回归。
-2. [ ] 增加 `CreateRandomCompanionButton`，内部使用 `components.random-collection`。
-3. [ ] `applyJournalSize` 对 MOUNTS/PETS 都使用 768 × 606。
-4. [ ] 将 `scMountFilterButton` 泛化为 companion filter button；点击时路由到当前 MOUNTS/PETS 页的 `OpenFilterMenu`。
-5. [ ] 小宠物页使用相同 top/bottom band、left/detail inset、sidePad、gap 和 bottomInset。
-6. [ ] 列表 scroll frame 顶部改为 `ROW_START_Y=3`，首行不再从 36px 开始，10 行全部落在容器内。
-7. [ ] 使用独立、具名的 `UIDropDownMenuTemplate` frame，避免 nil name 错误；不再使用旧共享 popup。
-8. [ ] 底部标签继续使用已验收的 DragonUI journal tab 样式，不复制新材质。
+1. [x] 将 `MountJournal` 的布局说明泛化为 companion journal 兼容适配器，但保留现有表名/方法别名，避免坐骑页回归。
+2. [x] 增加 `CreateRandomCompanionButton`，内部使用 `components.random-collection`。
+3. [x] `applyJournalSize` 对 MOUNTS/PETS 都使用 768 × 606。
+4. [x] 将 `scMountFilterButton` 泛化为 companion filter button；点击时路由到当前 MOUNTS/PETS 页的 `OpenFilterMenu`。
+5. [x] 小宠物页使用相同 top/bottom band、left/detail inset、sidePad、gap 和 bottomInset。
+6. [x] 列表 scroll frame 顶部改为 `ROW_START_Y=3`，首行不再从 36px 开始，10 行全部落在容器内。
+7. [x] 使用独立、具名的 `UIDropDownMenuTemplate` frame，避免 nil name 错误；不再使用旧共享 popup。
+8. [x] 底部标签继续使用已验收的 DragonUI journal tab 样式，不复制新材质。
 
 **Commands:**
 
