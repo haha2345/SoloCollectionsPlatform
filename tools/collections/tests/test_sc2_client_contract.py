@@ -92,6 +92,16 @@ class SC2ClientContractTests(unittest.TestCase):
         for token in ("out of order", "conflicting duplicate", "old nonce", "revision gap"):
             self.assertIn(token, text)
 
+    def test_schema_reserves_companion_favorite_as_an_internal_projection(self):
+        schema = (ROOT / "protocol/sc2/schema.json").read_text(encoding="utf-8")
+        docs = (ROOT / "docs/protocol/sc2-wire-v1.md").read_text(encoding="utf-8")
+        self.assertIn('"17": "internal companion-favorite membership', schema)
+        self.assertIn('"typeIds": [10, 11]', schema)
+        self.assertIn("Types 16 and", docs)
+        self.assertIn("17 are internal projections", docs)
+        self.assertIn("never", docs)
+        self.assertIn("collection totals or progress", docs)
+
 
 if __name__ == "__main__":
     unittest.main()

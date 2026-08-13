@@ -428,12 +428,12 @@ python .\tools\catalog\generate_catalog.py `
 
 **Steps:**
 
-1. [ ] 在 `projectionTypes` 加入 type 11 所有权和内部 type 17 偏好投影。
-2. [ ] 将 `SET_FAVORITE` 的合法 typeIds 扩展为 `[10, 11]`，明确 10→16、11→17。
-3. [ ] 将 `RANDOM_SUMMON` 的合法 typeIds 扩展为 `[10, 11]`，两者都使用控制 collectionId 1。
-4. [ ] 加入 `NO_COMPANIONS`、`NO_USABLE_COMPANIONS`，保留现有坐骑状态兼容性。
-5. [ ] 为 type 11 favorite on/off、random summon、未拥有偏好和非法控制 ID 增加 golden vectors。
-6. [ ] 更新协议文档，声明 type 17 不参与导航、总数或进度。
+1. [x] 在 `projectionTypes` 加入 type 11 所有权和内部 type 17 偏好投影。
+2. [x] 将 `SET_FAVORITE` 的合法 typeIds 扩展为 `[10, 11]`，明确 10→16、11→17。
+3. [x] 将 `RANDOM_SUMMON` 的合法 typeIds 扩展为 `[10, 11]`，两者都使用控制 collectionId 1。
+4. [x] 加入 `NO_COMPANIONS`、`NO_USABLE_COMPANIONS`，保留现有坐骑状态兼容性。
+5. [x] 为 type 11 favorite on/off、random summon、未拥有偏好和非法控制 ID 增加 golden vectors。
+6. [x] 更新协议文档，声明 type 17 不参与导航、总数或进度。
 
 **Commands:**
 

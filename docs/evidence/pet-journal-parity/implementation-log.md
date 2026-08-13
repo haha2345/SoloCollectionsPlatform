@@ -57,3 +57,13 @@ Task 1 direct checks passed. No cleanup command was used.
 - Module JSON/C++ projections contain execution identity and eligibility only; no source or description strings are emitted to C++.
 - `--companion-journal-only` and `--check` use the shared production renderer and synchronize both repositories.
 - Direct checks: projection check passed; catalog generator 19 tests passed with 1 external-evidence check skipped; companion catalog 13 tests passed with 1 optional named-pack check skipped; both repository diffs passed whitespace checks.
+
+## Task 5 - SC2 companion favorite/random protocol
+
+- Type 11 remains the authoritative owned companion set.
+- Type 17 is the internal companion-favorite projection over type 11 IDs and is excluded from navigation and progress.
+- `SET_FAVORITE` and `RANDOM_SUMMON` now allow owned types 10 and 11; projection mapping is explicit as 10 -> 16 and 11 -> 17.
+- Added stable `NO_COMPANIONS` and `NO_USABLE_COMPANIONS` result tokens.
+- Added golden packets for type 17 snapshot/delta, companion favorite on/off, random summon, not-owned rejection and invalid random control ID.
+- Existing mount packets remain present and unchanged.
+- Direct checks: 8 SC2 protocol tests and 9 client contract tests passed; `git diff --check` passed.
