@@ -24,6 +24,7 @@ public:
     void OnPlayerLearnSpell(Player* player, std::uint32_t spellId);
     void Update();
     [[nodiscard]] std::string ExecuteSummon(Player* player, CollectionId collectionId);
+    [[nodiscard]] std::string ExecuteRandomSummon(Player* player);
 
 private:
     class Impl;

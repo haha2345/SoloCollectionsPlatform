@@ -13,6 +13,7 @@ namespace SoloCollections
 inline constexpr CollectionTypeId CompanionCollectionTypeId { std::uint16_t { 11 } };
 // Internal SC2 projection of account preferences; not a journal/navigation category.
 inline constexpr CollectionTypeId CompanionFavoriteCollectionTypeId { std::uint16_t { 17 } };
+inline constexpr CollectionId CompanionRandomActionCollectionId { std::uint32_t { 1 } };
 
 struct CompanionCollectionDefinition
 {

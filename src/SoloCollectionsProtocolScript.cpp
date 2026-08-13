@@ -272,6 +272,12 @@ bool Sc2ProtocolCanUsePrivateChat(
             }
             if (request.TypeId == CompanionCollectionTypeId.Value())
             {
+                if (request.ActionId == "RANDOM_SUMMON")
+                {
+                    if (request.CollectionId != CompanionRandomActionCollectionId.Value() || request.Target != "-")
+                        return finish("companion_random", "INVALID_REQUEST");
+                    return finish("companion_random", GetCompanionCollectionService().ExecuteRandomSummon(player));
+                }
                 if (request.ActionId == "SET_FAVORITE")
                 {
                     if (request.Target != "0" && request.Target != "1")
