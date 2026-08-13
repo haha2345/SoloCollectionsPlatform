@@ -102,6 +102,13 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertIn("never", docs)
         self.assertIn("collection totals or progress", docs)
 
+    def test_collection_state_recognizes_companion_favorites_without_page_progress(self):
+        state = (ADDON / "Core/CollectionState.lua").read_text(encoding="utf-8")
+        self.assertIn('[17] = { typeId = 17, typeKey = "companion-favorite"', state)
+        self.assertIn('mappingSourceKey = "companion"', state)
+        category_keys = state[state.index("local CATEGORY_TYPE_KEYS"):state.index("local INTERNAL_PROJECTION_TYPES")]
+        self.assertNotIn("companion-favorite", category_keys)
+
 
 if __name__ == "__main__":
     unittest.main()

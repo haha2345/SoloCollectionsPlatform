@@ -1,7 +1,7 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 6,
+    schemaVersion = 7,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
     mainTab = "MOUNTS",
@@ -29,6 +29,9 @@ local DEFAULTS = {
             ground = true,
             flying = true,
             aquatic = true,
+            hiddenSources = {},
+        },
+        pets = {
             hiddenSources = {},
         },
     },
@@ -448,6 +451,13 @@ local function normalizeDatabase(db)
     for sourceType, hidden in pairs(db.filters.mounts.hiddenSources) do
         if type(sourceType) ~= "number" or type(hidden) ~= "boolean" then
             db.filters.mounts.hiddenSources[sourceType] = nil
+        end
+    end
+    repairScalar(db.filters, "pets", "table", {})
+    repairScalar(db.filters.pets, "hiddenSources", "table", {})
+    for sourceType, hidden in pairs(db.filters.pets.hiddenSources) do
+        if type(sourceType) ~= "number" or type(hidden) ~= "boolean" then
+            db.filters.pets.hiddenSources[sourceType] = nil
         end
     end
 
