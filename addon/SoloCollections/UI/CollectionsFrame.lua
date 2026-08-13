@@ -6,7 +6,7 @@ local MountJournal = UI.DragonUI and UI.DragonUI.MountJournal
 local DESIGN_SCREEN_WIDTH = 1920
 local DESIGN_SCREEN_HEIGHT = 1080
 local COLLECTION_WIDTH = 703
-local MOUNT_JOURNAL_WIDTH = 768
+local COMPANION_JOURNAL_WIDTH = 768
 local TRANSMOG_WIDTH = 965
 local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
@@ -230,7 +230,7 @@ local function clampFrame(frame)
 end
 
 local function applyJournalSize(frame, key)
-    local width = key == "MOUNTS" and MOUNT_JOURNAL_WIDTH or
+    local width = (key == "MOUNTS" or key == "PETS") and COMPANION_JOURNAL_WIDTH or
         (key == "TRANSMOG_LAB" and TRANSMOG_WIDTH or COLLECTION_WIDTH)
     frame:SetWidth(width)
     frame:SetHeight(JOURNAL_HEIGHT)
@@ -246,25 +246,25 @@ local function applyJournalControlLayout(frame, key)
     local host = frame.scSearchFilterHost
     local search = frame.scSearchBox
     local filter = frame.scFilterButton
-    local mountFilter = frame.scMountFilterButton
+    local companionFilter = frame.scCompanionFilterButton
     if not (host and search and filter) then return end
     host:ClearAllPoints()
     search:ClearAllPoints()
     filter:ClearAllPoints()
-    if key == "MOUNTS" and mountFilter then
+    if (key == "MOUNTS" or key == "PETS") and companionFilter then
         filter:Hide()
         if frame.scFilterPopup then frame.scFilterPopup:Hide() end
-        mountFilter:Show()
+        companionFilter:Show()
         host:SetWidth(276)
         host:SetHeight(20)
         host:SetPoint("TOPLEFT", frame, "TOPLEFT", 14, -68)
         search:SetWidth(194)
         search:SetPoint("LEFT", host, "LEFT", 0, 0)
-        mountFilter:ClearAllPoints()
-        mountFilter:SetSize(76, 20)
-        mountFilter:SetPoint("LEFT", search, "RIGHT", 4, 0)
+        companionFilter:ClearAllPoints()
+        companionFilter:SetSize(76, 20)
+        companionFilter:SetPoint("LEFT", search, "RIGHT", 4, 0)
     else
-        if mountFilter then mountFilter:Hide() end
+        if companionFilter then companionFilter:Hide() end
         filter:Show()
         if key == "TOYS" or key == "TITLES" or key == "WARDROBE" or key == "TRANSMOG_LAB" then
             host:SetWidth(210)
@@ -560,22 +560,23 @@ function UI.CreateCollectionsFrame()
     filterButton:SetPoint("LEFT", search, "RIGHT", 2, 0)
     UI.EzCollections:SkinSilverMenuButton(filterButton)
 
-    local mountFilterButton = MountJournal and MountJournal:CreateJournalFilterButton(searchFilterHost, {
+    local companionFilterButton = MountJournal and MountJournal:CreateJournalFilterButton(searchFilterHost, {
         label = "筛选",
         width = 76,
         height = 20,
     })
-    if not mountFilterButton then
-        mountFilterButton = CreateFrame("Button", nil, searchFilterHost, "UIPanelButtonTemplate")
-        mountFilterButton:SetText("筛选")
-        UI.EzCollections:SkinSilverMenuButton(mountFilterButton)
+    if not companionFilterButton then
+        companionFilterButton = CreateFrame("Button", nil, searchFilterHost, "UIPanelButtonTemplate")
+        companionFilterButton:SetText("筛选")
+        UI.EzCollections:SkinSilverMenuButton(companionFilterButton)
     end
-    mountFilterButton:SetSize(76, 20)
-    mountFilterButton:SetScript("OnClick", function(self)
-        local page = UI.CollectionsFrame and UI.CollectionsFrame.scPages and UI.CollectionsFrame.scPages.MOUNTS
+    companionFilterButton:SetSize(76, 20)
+    companionFilterButton:SetScript("OnClick", function(self)
+        local key = SC.db and SC.db.mainTab
+        local page = UI.CollectionsFrame and UI.CollectionsFrame.scPages and UI.CollectionsFrame.scPages[key]
         if page and page.OpenFilterMenu then page:OpenFilterMenu(self) end
     end)
-    mountFilterButton:Hide()
+    companionFilterButton:Hide()
 
     local wardrobeTabs = CreateFrame("Frame", nil, frame)
     wardrobeTabs:SetWidth(150)
@@ -629,7 +630,8 @@ function UI.CreateCollectionsFrame()
     frame.scSearchBox = search
     frame.scFilterButton = filterButton
     frame.scFilterPopup = filterPopup
-    frame.scMountFilterButton = mountFilterButton
+    frame.scCompanionFilterButton = companionFilterButton
+    frame.scMountFilterButton = companionFilterButton
     frame.scWardrobeTabs = wardrobeTabs
     frame.scWardrobeItemTab = itemTab
     frame.scWardrobeSetTab = setTab

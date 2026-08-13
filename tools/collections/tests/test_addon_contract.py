@@ -1407,6 +1407,24 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn('local petFilters = filters.pets or DEFAULT_FILTERS.pets', catalog)
         self.assertIn("SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected", pets)
 
+    def test_mount_and_pet_journals_share_shell_geometry_and_named_filters(self):
+        adapter = read_text(ADDON / "UI" / "DragonUI" / "MountJournal.lua")
+        platform = read_text(ADDON / "Core" / "UIPlatform.lua")
+        frame = read_text(ADDON / "UI" / "CollectionsFrame.lua")
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        self.assertIn("UI.DragonUI.CompanionJournal = MountJournal", adapter)
+        self.assertIn("width = 768", adapter)
+        self.assertIn("height = 606", adapter)
+        self.assertIn("rowStartY = 3", adapter)
+        self.assertIn("function MountJournal:CreateRandomCompanionButton", adapter)
+        self.assertIn('"components.random-collection"', platform)
+        self.assertIn('(key == "MOUNTS" or key == "PETS") and COMPANION_JOURNAL_WIDTH', frame)
+        self.assertIn("frame.scCompanionFilterButton = companionFilterButton", frame)
+        self.assertIn('local ROW_START_Y = JOURNAL_LAYOUT.rowStartY or 3', pets)
+        self.assertIn('"SoloCollectionsPetFilterMenu", UIParent, "UIDropDownMenuTemplate"', pets)
+        self.assertIn("function page:OpenFilterMenu(anchor)", pets)
+        self.assertNotIn("frame.scFilterPopup:SetOptions", pets)
+
 
 if __name__ == "__main__":
     unittest.main()

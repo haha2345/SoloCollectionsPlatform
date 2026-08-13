@@ -1,9 +1,12 @@
 local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
+local CompanionJournal = UI.DragonUI and (UI.DragonUI.CompanionJournal or UI.DragonUI.MountJournal)
 
-local VISIBLE_ROWS = 10
-local ROW_HEIGHT = 46
+local JOURNAL_LAYOUT = CompanionJournal and CompanionJournal:GetLayout() or {}
+local VISIBLE_ROWS = JOURNAL_LAYOUT.visibleRows or 10
+local ROW_HEIGHT = JOURNAL_LAYOUT.rowHeight or 46
+local ROW_START_Y = JOURNAL_LAYOUT.rowStartY or 3
 local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
@@ -36,16 +39,25 @@ function UI.CreatePetsPage(parent)
     page.scModelGeneration = 0
     page.scModelReady = false
 
+    local bands = CompanionJournal and CompanionJournal:CreateBands(page)
     local list = CreateFrame("Frame", nil, page)
-    list:SetWidth(260)
-    list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    if CompanionJournal then
+        CompanionJournal:LayoutInset(list, "left")
+    else
+        list:SetWidth(260)
+        list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+        list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    end
     local listInset = UI.EzCollections:ApplyInset(list)
     local listBackground = listInset.background
 
     local detail = CreateFrame("Frame", nil, page)
-    detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
-    detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    if CompanionJournal then
+        CompanionJournal:LayoutInset(detail, "right")
+    else
+        detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
+        detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    end
     UI.EzCollections:ApplyInset(detail)
 
     local detailBackground = detail:CreateTexture(nil, "BACKGROUND")
@@ -136,7 +148,8 @@ function UI.CreatePetsPage(parent)
     local summon = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
     summon:SetWidth(140)
     summon:SetHeight(22)
-    summon:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 0, 0)
+    if bands and bands.bottom then summon:SetParent(bands.bottom) end
+    summon:SetPoint("CENTER", (bands and bands.bottom) or page, "CENTER", 0, 0)
     summon:SetText("召唤小宠物")
     UI.RegisterNewEraCompanionAction(page, favorite)
     UI.RegisterNewEraCompanionAction(page, reset)
@@ -158,8 +171,8 @@ function UI.CreatePetsPage(parent)
         list,
         "FauxScrollFrameTemplate"
     )
-    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -36)
-    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, 5)
+    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -ROW_START_Y)
+    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, ROW_START_Y)
     scrollFrame:EnableMouseWheel(true)
     UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
 
@@ -169,6 +182,40 @@ function UI.CreatePetsPage(parent)
         page,
         "UIDropDownMenuTemplate"
     )
+    local filterMenu = _G.SoloCollectionsPetFilterMenu
+    if not filterMenu then
+        filterMenu = CreateFrame(
+            "Frame", "SoloCollectionsPetFilterMenu", UIParent, "UIDropDownMenuTemplate"
+        )
+    end
+    local function refreshFilterMenu()
+        if filterMenu and UIDropDownMenu_Refresh then
+            pcall(UIDropDownMenu_Refresh, filterMenu, nil, 1)
+        end
+    end
+    local function filterMenuInit(self, level)
+        if (level or 1) ~= 1 or not SC.db then return end
+        local filters = SC.db.filters
+        local function addToggle(label, key)
+            local info = UIDropDownMenu_CreateInfo()
+            info.isNotRadio = true
+            info.keepShownOnClick = true
+            info.text = label
+            info.checked = function() return filters[key] and true or false end
+            info.func = function(_, _, _, checked)
+                filters[key] = checked == nil and not filters[key] or checked and true or false
+                page:Refresh()
+                refreshFilterMenu()
+            end
+            UIDropDownMenu_AddButton(info, 1)
+        end
+        addToggle("已收集", "collected")
+        addToggle("未收集", "uncollected")
+        addToggle("仅显示偏好", "favorites")
+    end
+    if UIDropDownMenu_Initialize then
+        UIDropDownMenu_Initialize(filterMenu, filterMenuInit, "MENU")
+    end
 
     local function clearDragState()
         model.scDragging = nil
@@ -370,7 +417,7 @@ function UI.CreatePetsPage(parent)
         end, function(anchor, record)
             openContextMenu(anchor, record)
         end)
-        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(36 + ((index - 1) * ROW_HEIGHT)))
+        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(ROW_START_Y + ((index - 1) * ROW_HEIGHT)))
         row:EnableMouseWheel(true)
         row:SetScript("OnMouseWheel", function(_, delta)
             scrollByWheel(scrollFrame, delta)
@@ -409,27 +456,14 @@ function UI.CreatePetsPage(parent)
     end
 
     function page:SyncFilters()
-        local frame = UI.CollectionsFrame
-        if not frame or not frame.scFilterPopup or not SC.db or SC.db.mainTab ~= "PETS" then
-            return
-        end
-        local filters = SC.db.filters
-        local function toggleFilter(key)
-            filters[key] = not filters[key]
-            self:Refresh()
-            self:SyncFilters()
-        end
-        frame.scFilterPopup:SetOptions({
-            { label = "已收集", checked = filters.collected, onClick = function()
-                toggleFilter("collected")
-            end },
-            { label = "未收集", checked = filters.uncollected, onClick = function()
-                toggleFilter("uncollected")
-            end },
-            { label = "仅显示偏好", checked = filters.favorites, onClick = function()
-                toggleFilter("favorites")
-            end },
-        })
+        if not SC.db or SC.db.mainTab ~= "PETS" then return end
+        refreshFilterMenu()
+    end
+
+    function page:OpenFilterMenu(anchor)
+        if not filterMenu or not ToggleDropDownMenu then return end
+        self:SyncFilters()
+        ToggleDropDownMenu(1, nil, filterMenu, anchor or self, 0, 0)
     end
 
     function page:Refresh()
@@ -575,6 +609,7 @@ function UI.CreatePetsPage(parent)
     page.scScrollFrame = scrollFrame
     page.scScrollHint = scrollHint
     page.scContextMenu = contextMenu
+    page.scFilterMenu = filterMenu
     page.scEmpty = empty
     return page
 end
