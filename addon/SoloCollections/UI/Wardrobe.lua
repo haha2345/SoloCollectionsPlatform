@@ -968,37 +968,18 @@ local function selectItemModelCamera(model)
         return false, model.scBodyCameraReason
     end
 
-    -- The stock 3.3.5 DressUpModel camera stores ezCollections' SetPosition
-    -- values but camera 1 ignores them while rendering. SoloCam supplies the
-    -- missing body-part camera for this client. Keep ezCollections as the data
-    -- source (camera ID, animation and facing), then submit one slot/race/sex
-    -- camera transaction after TryOn has finished rebuilding the model.
-    local bodyProfile = getCharacterCameraProfile(model)
-    model.scBodyCameraProfile = bodyProfile
-    model.scClientCameraSentinel = bodyProfile and bodyProfile.sentinel or nil
-    model.scUsesClientCamera = model.scClientCameraSentinel ~= nil
-    if not model.scUsesClientCamera or not model.SetCamera then
-        model.scBodyCameraReason = bodyProfile and "CAMERA_API_UNAVAILABLE" or "PROFILE_UNAVAILABLE"
-        if model.SetCamera then pcall(function() model:SetCamera(1) end) end
-        return false, model.scBodyCameraReason
-    end
-
-    if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
-    if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
-    local facing = getNativeBodyFacing(record, camera)
-    if type(facing) == "number" then
-        if model.SetFacing then
-            pcall(function() model:SetFacing(facing) end)
-        elseif model.SetRotation then
-            pcall(function() model:SetRotation(facing) end)
-        end
-    end
-    local selected = pcall(function()
-        model:SetCamera(model.scClientCameraSentinel)
-        model:SetCamera(1)
-    end)
-    model.scBodyCameraReason = selected and "READY" or "CAMERA_TRANSACTION_FAILED"
-    return selected, model.scBodyCameraReason
+    -- Armor cards follow ezCollections verbatim.  Its
+    -- WardrobeItemsModelTemplate never selects a custom body camera: the
+    -- race/sex/inventory tuple is applied directly to the player
+    -- DressUpModel.  In particular, do not send the older SoloCollections
+    -- generated-profile sentinel here; that creates a second camera owner and
+    -- makes pooled cards depend on whether they were first used on page one or
+    -- on a later page.
+    model.scClientCameraSentinel = nil
+    model.scUsesClientCamera = false
+    model.scBodyCameraProfile = nil
+    model.scBodyCameraReason = camera and "EZ_COLLECTIONS_DIRECT" or cameraReason
+    return camera ~= nil, model.scBodyCameraReason
 end
 
 local function captureItemModelBaseline(model)
@@ -1030,24 +1011,6 @@ local function captureItemModelBaseline(model)
 end
 
 local function applyItemModelTransform(model)
-    if model.scUsesClientCamera then
-        -- SoloCam owns zoom and target. Applying ezCollections' model-space
-        -- translation here would double-transform the same card and push the
-        -- equipped region out of view. Only its facing remains meaningful.
-        if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
-        if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
-        local camera = model.scEzCameraTuple
-        local facing = getNativeBodyFacing(model.scRecord, camera)
-        if type(facing) == "number" then
-            if model.SetFacing then
-                pcall(function() model:SetFacing(facing) end)
-            elseif model.SetRotation then
-                pcall(function() model:SetRotation(facing) end)
-            end
-        end
-        model.scEzCameraReason = "READY_NATIVE_BRIDGE"
-        return true, model.scEzCameraReason
-    end
     if not EzCamera or type(EzCamera.ApplyRecordCamera) ~= "function" then
         model.scEzCameraID = nil
         model.scEzCameraReason = "EZ_CAMERA_ADAPTER_UNAVAILABLE"
@@ -1188,14 +1151,25 @@ local function finishPendingItemModel(model, elapsed)
     model.scModelReadyFrames = nil
     model.scModelWaitElapsed = nil
     model.scApplyingAppearance = true
+    -- Exact ezCollections UpdateItems order for armor: apply the camera tuple
+    -- before changing the displayed item.  TryOn does not rebuild the player
+    -- DressUpModel, so there is no second camera selection afterward.
+    local cameraApplied = false
+    if model.scRenderKind == "EZ_ARMOR" then
+        local selected = selectItemModelCamera(model)
+        cameraApplied = selected and applyItemModelTransform(model) or false
+    end
     if model.Undress then
         pcall(function() model:Undress() end)
     end
     pcall(function() model:TryOn(itemString) end)
     model.scApplyingAppearance = nil
-    -- TryOn rebuilds asynchronously. Queue one final camera transaction after
-    -- the model has settled instead of selecting camera 1 in this same tick.
-    queueItemModelView(model, true)
+    if model.scRenderKind == "EZ_ARMOR" and cameraApplied then
+        model.scViewStage = nil
+        model.scViewAppliedGeneration = model.scAppearanceGeneration
+    else
+        queueItemModelView(model, true)
+    end
     return true
 end
 
@@ -1300,6 +1274,9 @@ local function applyItemModelRecord(model, record, pageGeneration)
         return
     end
 
+    local previousRecord = model.scRecord
+    local previousRenderKind = model.scRenderKind
+    local previousRuntimeUnavailable = model.scRuntimeUnavailableReason
     local isWeapon = EzCamera and EzCamera:IsWeaponRecord(record)
     local renderKind = isWeapon and "EZ_WEAPON" or "EZ_ARMOR"
     local unchanged = model.scRecordId == record.id
@@ -1323,7 +1300,12 @@ local function applyItemModelRecord(model, record, pageGeneration)
     applyEzCollectionsCardLight(model)
 
     if unchanged then
-        queueItemModelView(model, true)
+        if not isWeapon then
+            selectItemModelCamera(model)
+            applyItemModelTransform(model)
+        else
+            queueItemModelView(model, true)
+        end
         return
     end
 
@@ -1343,6 +1325,30 @@ local function applyItemModelRecord(model, record, pageGeneration)
     model.scNativeVertical = nil
     model.scNativeDepth = nil
     model.scBaselineGeneration = nil
+
+    -- ezCollections keeps the same 18 player DressUpModels alive while the
+    -- user changes pages.  Rebuild only when the equipment slot (or renderer
+    -- kind) changes; page changes merely redress the existing player model.
+    local reuseArmorModel = not isWeapon
+        and previousRenderKind == "EZ_ARMOR"
+        and previousRecord and previousRecord.slot == record.slot
+        and not previousRuntimeUnavailable
+    if reuseArmorModel then
+        local selected = selectItemModelCamera(model)
+        local cameraApplied = selected and applyItemModelTransform(model) or false
+        model.scApplyingAppearance = true
+        if model.Undress then pcall(function() model:Undress() end) end
+        pcall(function() model:TryOn(resolveTryOnItem(record.itemId)) end)
+        model.scApplyingAppearance = nil
+        if cameraApplied then
+            model.scViewAppliedGeneration = model.scAppearanceGeneration
+        else
+            queueItemModelView(model, true)
+        end
+        model:SetScript("OnUpdate", model.scUpdateHandler)
+        return
+    end
+
     model:ClearModel()
 
     if isWeapon then
@@ -1369,12 +1375,21 @@ local function applyItemModelRecord(model, record, pageGeneration)
         showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
         return
     end
-    if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
+    -- WardrobeItemsModelMixin:SetType("player") uses scale 10 and resets
+    -- position/facing before SetUnit.  Keep that exact initialization.
+    if model.SetModelScale then pcall(function() model:SetModelScale(10) end) end
+    if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
+    if model.SetFacing then pcall(function() model:SetFacing(0) end) end
     local loaded = pcall(function() model:SetUnit("player") end)
     if not loaded then
         showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
         return
     end
+    -- ezCollections assumes the stock dressing-room camera.  Select that
+    -- native camera once after rebuilding the player model so a DLL that
+    -- survived /reload cannot retain an older SoloCollections sentinel for a
+    -- recycled frame address.  Page changes never repeat this call.
+    if model.SetCamera then pcall(function() model:SetCamera(1) end) end
     model.scPendingItemString = resolveTryOnItem(record.itemId)
     model.scModelReadyFrames = 0
     model.scModelWaitElapsed = 0
