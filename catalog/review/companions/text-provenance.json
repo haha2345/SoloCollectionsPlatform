@@ -1,0 +1,6600 @@
+{
+  "candidateHash": "de5468f5047f6b8afbe9fdceadd5b3124b7854cd91f5104bd619aac175a15e55",
+  "entries": [
+    {
+      "collectionId": 100281,
+      "description": {
+        "descriptionKey": 15999,
+        "lookupKeys": {
+          "creatureEntry": 10259,
+          "journalNameZhCN": "座狼幼崽",
+          "spellId": 15999
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 10259,
+          "itemIds": [
+            12264
+          ],
+          "questIds": [
+            4729
+          ],
+          "spellId": 15999
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15999",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15999",
+          "world.quest:4729"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100282,
+      "description": {
+        "descriptionKey": 16450,
+        "lookupKeys": {
+          "creatureEntry": 10598,
+          "journalNameZhCN": "烟网小蜘蛛",
+          "spellId": 16450
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 10598,
+          "itemIds": [
+            12529
+          ],
+          "questIds": [
+            4862
+          ],
+          "spellId": 16450
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:16450",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:16450",
+          "world.quest:4862"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100283,
+      "description": {
+        "descriptionKey": 10698,
+        "lookupKeys": {
+          "creatureEntry": 7545,
+          "journalNameZhCN": "绿色翼手龙",
+          "spellId": 10698
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7545,
+          "itemIds": [
+            8498
+          ],
+          "questIds": [],
+          "spellId": 10698
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10698",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10698",
+          "world.loot:creature_loot_template:740",
+          "world.loot:creature_loot_template:741"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100284,
+      "description": {
+        "descriptionKey": 51851,
+        "lookupKeys": {
+          "creatureEntry": 28513,
+          "journalNameZhCN": "吸血鬼小蝶",
+          "spellId": 51851
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 28513,
+          "itemIds": [
+            38658
+          ],
+          "questIds": [],
+          "spellId": 51851
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:51851",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:51851",
+          "world.loot:creature_loot_template:28194"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100285,
+      "description": {
+        "descriptionKey": 40990,
+        "lookupKeys": {
+          "creatureEntry": 23274,
+          "journalNameZhCN": "臭臭",
+          "spellId": 40990
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [
+            1250
+          ],
+          "creatureEntry": 23274,
+          "itemIds": [
+            40653
+          ],
+          "questIds": [],
+          "spellId": 40990
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40990",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40990",
+          "world.achievement:1250"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100286,
+      "description": {
+        "descriptionKey": 42609,
+        "lookupKeys": {
+          "creatureEntry": 23909,
+          "journalNameZhCN": "邪恶的南瓜娃娃",
+          "spellId": 42609
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23909,
+          "itemIds": [
+            33154
+          ],
+          "questIds": [],
+          "spellId": 42609
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:42609",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:42609"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100287,
+      "description": {
+        "descriptionKey": 45082,
+        "lookupKeys": {
+          "creatureEntry": 25062,
+          "journalNameZhCN": "迷你孢子蝙",
+          "spellId": 45082
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 25062,
+          "itemIds": [
+            34478
+          ],
+          "questIds": [],
+          "spellId": 45082
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45082",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45082",
+          "world.vendor:18382"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100288,
+      "description": {
+        "descriptionKey": 28738,
+        "lookupKeys": {
+          "creatureEntry": 16547,
+          "journalNameZhCN": "跳跳",
+          "spellId": 28738
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16547,
+          "itemIds": [
+            23002
+          ],
+          "questIds": [
+            171,
+            5502
+          ],
+          "spellId": 28738
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28738",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28738",
+          "world.event:10"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100289,
+      "description": {
+        "descriptionKey": 46599,
+        "lookupKeys": {
+          "creatureEntry": 26119,
+          "journalNameZhCN": "凤凰宝宝",
+          "spellId": 46599
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 26119,
+          "itemIds": [
+            35504
+          ],
+          "questIds": [],
+          "spellId": 46599
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:46599",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:46599",
+          "world.loot:creature_loot_template:24664",
+          "world.loot:creature_loot_template:24857"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100290,
+      "description": {
+        "descriptionKey": 53316,
+        "lookupKeys": {
+          "creatureEntry": 29147,
+          "journalNameZhCN": "幽灵颅骨",
+          "spellId": 53316
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 29147,
+          "itemIds": [
+            39973
+          ],
+          "questIds": [],
+          "spellId": 53316
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:53316",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:53316",
+          "world.vendor:29537"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100291,
+      "description": {
+        "descriptionKey": 10682,
+        "lookupKeys": {
+          "creatureEntry": 7391,
+          "journalNameZhCN": "花羽鹦鹉",
+          "spellId": 10682
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7391,
+          "itemIds": [
+            8494
+          ],
+          "questIds": [],
+          "spellId": 10682
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10682",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10682",
+          "world.loot:creature_loot_template:1561",
+          "world.loot:creature_loot_template:1562",
+          "world.loot:creature_loot_template:1563",
+          "world.loot:creature_loot_template:1564",
+          "world.loot:creature_loot_template:1565",
+          "world.loot:creature_loot_template:1653",
+          "world.loot:creature_loot_template:2545",
+          "world.loot:creature_loot_template:2546",
+          "world.loot:creature_loot_template:4505",
+          "world.loot:creature_loot_template:4506"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100292,
+      "description": {
+        "descriptionKey": 25162,
+        "lookupKeys": {
+          "creatureEntry": 15429,
+          "journalNameZhCN": "恶心的软泥怪",
+          "spellId": 25162
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15429,
+          "itemIds": [
+            20769
+          ],
+          "questIds": [],
+          "spellId": 25162
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:25162",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:25162",
+          "world.loot:item_loot_template:20768"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100293,
+      "description": {
+        "descriptionKey": 28739,
+        "lookupKeys": {
+          "creatureEntry": 16548,
+          "journalNameZhCN": "哼哼先生",
+          "spellId": 28739
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16548,
+          "itemIds": [
+            23007
+          ],
+          "questIds": [
+            171,
+            5502
+          ],
+          "spellId": 28739
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28739",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28739",
+          "world.event:10"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100294,
+      "description": {
+        "descriptionKey": 19772,
+        "lookupKeys": {
+          "creatureEntry": 12419,
+          "journalNameZhCN": "仿真机械蛙",
+          "spellId": 19772
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 12419,
+          "itemIds": [
+            15996
+          ],
+          "questIds": [],
+          "spellId": 19772
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:19772",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:19772"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100295,
+      "description": {
+        "descriptionKey": 45127,
+        "lookupKeys": {
+          "creatureEntry": 25110,
+          "journalNameZhCN": "龙鹰风筝",
+          "spellId": 45127
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 25110,
+          "itemIds": [
+            34493
+          ],
+          "questIds": [],
+          "spellId": 45127
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45127",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45127",
+          "world.loot:item_loot_template:50301"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100296,
+      "description": {
+        "descriptionKey": 36034,
+        "lookupKeys": {
+          "creatureEntry": 21076,
+          "journalNameZhCN": "火蝇",
+          "spellId": 36034
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21076,
+          "itemIds": [
+            29960
+          ],
+          "questIds": [],
+          "spellId": 36034
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36034",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36034",
+          "world.loot:creature_loot_template:20197"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100297,
+      "description": {
+        "descriptionKey": 17709,
+        "lookupKeys": {
+          "creatureEntry": 11327,
+          "journalNameZhCN": "跳虫",
+          "spellId": 17709
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 11327,
+          "itemIds": [
+            13582
+          ],
+          "questIds": [
+            5805,
+            5841,
+            5842,
+            5843,
+            5844,
+            5847,
+            8547,
+            9278,
+            12781
+          ],
+          "spellId": 17709
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:17709",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:17709",
+          "world.quest:12781",
+          "world.quest:5805",
+          "world.quest:5841",
+          "world.quest:5842",
+          "world.quest:5843",
+          "world.quest:5844",
+          "world.quest:5847",
+          "world.quest:8547",
+          "world.quest:9278"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100298,
+      "description": {
+        "descriptionKey": 17707,
+        "lookupKeys": {
+          "creatureEntry": 11325,
+          "journalNameZhCN": "熊猫幼崽",
+          "spellId": 17707
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 11325,
+          "itemIds": [
+            13583
+          ],
+          "questIds": [
+            5805,
+            5841,
+            5842,
+            5843,
+            5844,
+            5847,
+            8547,
+            9278,
+            12781
+          ],
+          "spellId": 17707
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:17707",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:17707",
+          "world.quest:12781",
+          "world.quest:5805",
+          "world.quest:5841",
+          "world.quest:5842",
+          "world.quest:5843",
+          "world.quest:5844",
+          "world.quest:5847",
+          "world.quest:8547",
+          "world.quest:9278"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100299,
+      "description": {
+        "descriptionKey": 52615,
+        "lookupKeys": {
+          "creatureEntry": 28883,
+          "journalNameZhCN": "冰霜幼龙",
+          "spellId": 52615
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 28883,
+          "itemIds": [
+            39286
+          ],
+          "questIds": [],
+          "spellId": 52615
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:52615",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:52615"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100300,
+      "description": {
+        "descriptionKey": 40549,
+        "lookupKeys": {
+          "creatureEntry": 23234,
+          "journalNameZhCN": "香蕉爱好者",
+          "spellId": 40549
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23234,
+          "itemIds": [
+            32588
+          ],
+          "questIds": [],
+          "spellId": 40549
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40549",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40549",
+          "world.loot:item_loot_template:50301"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100301,
+      "description": {
+        "descriptionKey": 55068,
+        "lookupKeys": {
+          "creatureEntry": 29726,
+          "journalNameZhCN": "寒冰先生",
+          "spellId": 55068
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 29726,
+          "itemIds": [
+            41133
+          ],
+          "questIds": [],
+          "spellId": 55068
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:55068",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:55068"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100302,
+      "description": {
+        "descriptionKey": 59250,
+        "lookupKeys": {
+          "creatureEntry": 31575,
+          "journalNameZhCN": "巨型下水道老鼠",
+          "spellId": 59250
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 31575,
+          "itemIds": [
+            43698
+          ],
+          "questIds": [],
+          "spellId": 59250
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:59250",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:59250"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100303,
+      "description": {
+        "descriptionKey": 61725,
+        "lookupKeys": {
+          "creatureEntry": 32791,
+          "journalNameZhCN": "春季兔",
+          "spellId": 61725
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32791,
+          "itemIds": [
+            44794
+          ],
+          "questIds": [],
+          "spellId": 61725
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61725",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61725"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100304,
+      "description": {
+        "descriptionKey": 69002,
+        "lookupKeys": {
+          "creatureEntry": 36607,
+          "journalNameZhCN": "奥妮克希亚幼龙",
+          "spellId": 69002
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36607,
+          "itemIds": [
+            49362
+          ],
+          "questIds": [],
+          "spellId": 69002
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69002",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69002"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100309,
+      "description": {
+        "descriptionKey": 4055,
+        "lookupKeys": {
+          "creatureEntry": 2671,
+          "journalNameZhCN": "机械松鼠",
+          "spellId": 4055
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 2671,
+          "itemIds": [
+            4401
+          ],
+          "questIds": [],
+          "spellId": 4055
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:4055",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:4055"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100310,
+      "description": {
+        "descriptionKey": 10677,
+        "lookupKeys": {
+          "creatureEntry": 7380,
+          "journalNameZhCN": "黑尾白猫",
+          "spellId": 10677
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7380,
+          "itemIds": [
+            8490
+          ],
+          "questIds": [],
+          "spellId": 10677
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10677",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10677",
+          "world.vendor:20980"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100311,
+      "description": {
+        "descriptionKey": 10678,
+        "lookupKeys": {
+          "creatureEntry": 7381,
+          "journalNameZhCN": "黑斑白猫",
+          "spellId": 10678
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7381,
+          "itemIds": [
+            8488
+          ],
+          "questIds": [],
+          "spellId": 10678
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10678",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10678",
+          "world.vendor:6367"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100312,
+      "description": {
+        "descriptionKey": 10676,
+        "lookupKeys": {
+          "creatureEntry": 7382,
+          "journalNameZhCN": "虎皮猫",
+          "spellId": 10676
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7382,
+          "itemIds": [
+            8487
+          ],
+          "questIds": [],
+          "spellId": 10676
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10676",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10676",
+          "world.vendor:6367"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100313,
+      "description": {
+        "descriptionKey": 10675,
+        "lookupKeys": {
+          "creatureEntry": 7383,
+          "journalNameZhCN": "黑纹灰猫",
+          "spellId": 10675
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7383,
+          "itemIds": [
+            8491
+          ],
+          "questIds": [],
+          "spellId": 10675
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10675",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10675",
+          "world.loot:creature_loot_template:1920",
+          "world.loot:creature_loot_template:2271",
+          "world.loot:creature_loot_template:2272",
+          "world.loot:creature_loot_template:2358"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100314,
+      "description": {
+        "descriptionKey": 10674,
+        "lookupKeys": {
+          "creatureEntry": 7384,
+          "journalNameZhCN": "黄猫",
+          "spellId": 10674
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7384,
+          "itemIds": [
+            8486
+          ],
+          "questIds": [],
+          "spellId": 10674
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10674",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10674",
+          "world.vendor:6367"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100315,
+      "description": {
+        "descriptionKey": 10673,
+        "lookupKeys": {
+          "creatureEntry": 7385,
+          "journalNameZhCN": "灰猫",
+          "spellId": 10673
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7385,
+          "itemIds": [
+            8485
+          ],
+          "questIds": [],
+          "spellId": 10673
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10673",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10673",
+          "world.vendor:6367"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100316,
+      "description": {
+        "descriptionKey": 10679,
+        "lookupKeys": {
+          "creatureEntry": 7386,
+          "journalNameZhCN": "白猫",
+          "spellId": 10679
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7386,
+          "itemIds": [
+            8489
+          ],
+          "questIds": [],
+          "spellId": 10679
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10679",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10679",
+          "world.vendor:8666"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100317,
+      "description": {
+        "descriptionKey": 10683,
+        "lookupKeys": {
+          "creatureEntry": 7387,
+          "journalNameZhCN": "绿翼鹦鹉",
+          "spellId": 10683
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7387,
+          "itemIds": [
+            8492
+          ],
+          "questIds": [],
+          "spellId": 10683
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10683",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10683",
+          "world.loot:creature_loot_template:657"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100318,
+      "description": {
+        "descriptionKey": 10681,
+        "lookupKeys": {
+          "creatureEntry": 7388,
+          "journalNameZhCN": "美冠鹦鹉",
+          "spellId": 10681
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7388,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10681
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100319,
+      "description": {
+        "descriptionKey": 10684,
+        "lookupKeys": {
+          "creatureEntry": 7389,
+          "journalNameZhCN": "金翼鹦鹉",
+          "spellId": 10684
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7389,
+          "itemIds": [
+            8495
+          ],
+          "questIds": [],
+          "spellId": 10684
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10684",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10684",
+          "world.vendor:20980",
+          "world.vendor:2663"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100320,
+      "description": {
+        "descriptionKey": 10680,
+        "lookupKeys": {
+          "creatureEntry": 7390,
+          "journalNameZhCN": "红尾鹦鹉",
+          "spellId": 10680
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7390,
+          "itemIds": [
+            8496
+          ],
+          "questIds": [],
+          "spellId": 10680
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10680",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10680",
+          "world.vendor:2663"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100321,
+      "description": {
+        "descriptionKey": 10686,
+        "lookupKeys": {
+          "creatureEntry": 7392,
+          "journalNameZhCN": "农场小鸡",
+          "spellId": 10686
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7392,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10686
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100322,
+      "description": {
+        "descriptionKey": 10687,
+        "lookupKeys": {
+          "creatureEntry": 7393,
+          "journalNameZhCN": "白色小鸡",
+          "spellId": 10687
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7393,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10687
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100323,
+      "description": {
+        "descriptionKey": 10685,
+        "lookupKeys": {
+          "creatureEntry": 7394,
+          "journalNameZhCN": "灰色小鸡",
+          "spellId": 10685
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7394,
+          "itemIds": [
+            11023
+          ],
+          "questIds": [],
+          "spellId": 10685
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10685",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10685",
+          "world.vendor:6548"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100324,
+      "description": {
+        "descriptionKey": 10688,
+        "lookupKeys": {
+          "creatureEntry": 7395,
+          "journalNameZhCN": "蟑螂",
+          "spellId": 10688
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7395,
+          "itemIds": [
+            10393
+          ],
+          "questIds": [],
+          "spellId": 10688
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10688",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10688",
+          "world.vendor:20980",
+          "world.vendor:8403"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100325,
+      "description": {
+        "descriptionKey": 10695,
+        "lookupKeys": {
+          "creatureEntry": 7543,
+          "journalNameZhCN": "黑龙宝宝",
+          "spellId": 10695
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7543,
+          "itemIds": [
+            10822
+          ],
+          "questIds": [],
+          "spellId": 10695
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10695",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10695",
+          "world.loot:creature_loot_template:2725",
+          "world.loot:creature_loot_template:4324"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100326,
+      "description": {
+        "descriptionKey": 10697,
+        "lookupKeys": {
+          "creatureEntry": 7544,
+          "journalNameZhCN": "红龙宝宝",
+          "spellId": 10697
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7544,
+          "itemIds": [
+            8499
+          ],
+          "questIds": [],
+          "spellId": 10697
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10697",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10697",
+          "world.loot:creature_loot_template:1042",
+          "world.loot:creature_loot_template:1044",
+          "world.loot:creature_loot_template:1069"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100327,
+      "description": {
+        "descriptionKey": 10699,
+        "lookupKeys": {
+          "creatureEntry": 7546,
+          "journalNameZhCN": "青铜龙宝宝",
+          "spellId": 10699
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7546,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10699
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10699",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10699"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100328,
+      "description": {
+        "descriptionKey": 10696,
+        "lookupKeys": {
+          "creatureEntry": 7547,
+          "journalNameZhCN": "蓝龙宝宝",
+          "spellId": 10696
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7547,
+          "itemIds": [
+            34535
+          ],
+          "questIds": [],
+          "spellId": 10696
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10696",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10696",
+          "world.loot:creature_loot_template:193",
+          "world.loot:creature_loot_template:6129",
+          "world.loot:creature_loot_template:6130",
+          "world.loot:creature_loot_template:6131"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100329,
+      "description": {
+        "descriptionKey": 10700,
+        "lookupKeys": {
+          "creatureEntry": 7548,
+          "journalNameZhCN": "精灵龙宝宝",
+          "spellId": 10700
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7548,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10700
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100330,
+      "description": {
+        "descriptionKey": 10704,
+        "lookupKeys": {
+          "creatureEntry": 7549,
+          "journalNameZhCN": "树蛙",
+          "spellId": 10704
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7549,
+          "itemIds": [
+            11026
+          ],
+          "questIds": [],
+          "spellId": 10704
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10704",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10704",
+          "world.vendor:14860"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100331,
+      "description": {
+        "descriptionKey": 10703,
+        "lookupKeys": {
+          "creatureEntry": 7550,
+          "journalNameZhCN": "林蛙",
+          "spellId": 10703
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7550,
+          "itemIds": [
+            11027
+          ],
+          "questIds": [],
+          "spellId": 10703
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10703",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10703",
+          "world.vendor:14860"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100332,
+      "description": {
+        "descriptionKey": 10701,
+        "lookupKeys": {
+          "creatureEntry": 7551,
+          "journalNameZhCN": "蓝蛙",
+          "spellId": 10701
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7551,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10701
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100333,
+      "description": {
+        "descriptionKey": 10702,
+        "lookupKeys": {
+          "creatureEntry": 7552,
+          "journalNameZhCN": "岛蛙",
+          "spellId": 10702
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7552,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10702
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100334,
+      "description": {
+        "descriptionKey": 10707,
+        "lookupKeys": {
+          "creatureEntry": 7553,
+          "journalNameZhCN": "棕色猫头鹰",
+          "spellId": 10707
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7553,
+          "itemIds": [
+            8500
+          ],
+          "questIds": [],
+          "spellId": 10707
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10707",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10707",
+          "world.vendor:8665"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100335,
+      "description": {
+        "descriptionKey": 10708,
+        "lookupKeys": {
+          "creatureEntry": 7554,
+          "journalNameZhCN": "白色猫头鹰",
+          "spellId": 10708
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7554,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10708
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10708",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10708"
+        ],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100336,
+      "description": {
+        "descriptionKey": 10706,
+        "lookupKeys": {
+          "creatureEntry": 7555,
+          "journalNameZhCN": "黑色猫头鹰",
+          "spellId": 10706
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7555,
+          "itemIds": [
+            8501
+          ],
+          "questIds": [],
+          "spellId": 10706
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10706",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10706",
+          "world.vendor:8665"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100337,
+      "description": {
+        "descriptionKey": 10705,
+        "lookupKeys": {
+          "creatureEntry": 7556,
+          "journalNameZhCN": "黄色猫头鹰",
+          "spellId": 10705
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7556,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10705
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100338,
+      "description": {
+        "descriptionKey": 10710,
+        "lookupKeys": {
+          "creatureEntry": 7558,
+          "journalNameZhCN": "黄毛兔",
+          "spellId": 10710
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7558,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10710
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100339,
+      "description": {
+        "descriptionKey": 10712,
+        "lookupKeys": {
+          "creatureEntry": 7559,
+          "journalNameZhCN": "斑点兔",
+          "spellId": 10712
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7559,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10712
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100340,
+      "description": {
+        "descriptionKey": 10711,
+        "lookupKeys": {
+          "creatureEntry": 7560,
+          "journalNameZhCN": "雪兔",
+          "spellId": 10711
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7560,
+          "itemIds": [
+            8497
+          ],
+          "questIds": [],
+          "spellId": 10711
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10711",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10711",
+          "world.vendor:1263"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100341,
+      "description": {
+        "descriptionKey": 10713,
+        "lookupKeys": {
+          "creatureEntry": 7561,
+          "journalNameZhCN": "白鳞蛇",
+          "spellId": 10713
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7561,
+          "itemIds": [
+            44822
+          ],
+          "questIds": [],
+          "spellId": 10713
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10713",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10713",
+          "world.vendor:28951"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100342,
+      "description": {
+        "descriptionKey": 10716,
+        "lookupKeys": {
+          "creatureEntry": 7562,
+          "journalNameZhCN": "棕色蟒蛇",
+          "spellId": 10716
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7562,
+          "itemIds": [
+            10361
+          ],
+          "questIds": [],
+          "spellId": 10716
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10716",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10716",
+          "world.vendor:8404"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100343,
+      "description": {
+        "descriptionKey": 10715,
+        "lookupKeys": {
+          "creatureEntry": 7563,
+          "journalNameZhCN": "蓝鳞蛇",
+          "spellId": 10715
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7563,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10715
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100344,
+      "description": {
+        "descriptionKey": 10714,
+        "lookupKeys": {
+          "creatureEntry": 7565,
+          "journalNameZhCN": "黑色王蛇",
+          "spellId": 10714
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7565,
+          "itemIds": [
+            10360
+          ],
+          "questIds": [],
+          "spellId": 10714
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10714",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10714",
+          "world.vendor:8404"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100345,
+      "description": {
+        "descriptionKey": 10720,
+        "lookupKeys": {
+          "creatureEntry": 7566,
+          "journalNameZhCN": "血纹蛇",
+          "spellId": 10720
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7566,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10720
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100346,
+      "description": {
+        "descriptionKey": 10717,
+        "lookupKeys": {
+          "creatureEntry": 7567,
+          "journalNameZhCN": "赤练蛇",
+          "spellId": 10717
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7567,
+          "itemIds": [
+            10392
+          ],
+          "questIds": [],
+          "spellId": 10717
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10717",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10717",
+          "world.vendor:20980",
+          "world.vendor:8404"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100347,
+      "description": {
+        "descriptionKey": 10719,
+        "lookupKeys": {
+          "creatureEntry": 7568,
+          "journalNameZhCN": "赤环蛇",
+          "spellId": 10719
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7568,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10719
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100348,
+      "description": {
+        "descriptionKey": 10718,
+        "lookupKeys": {
+          "creatureEntry": 7569,
+          "journalNameZhCN": "绿色水蛇",
+          "spellId": 10718
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7569,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10718
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100349,
+      "description": {
+        "descriptionKey": 10721,
+        "lookupKeys": {
+          "creatureEntry": 7570,
+          "journalNameZhCN": "小精灵",
+          "spellId": 10721
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 7570,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 10721
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100350,
+      "description": {
+        "descriptionKey": 12243,
+        "lookupKeys": {
+          "creatureEntry": 8376,
+          "journalNameZhCN": "机械小鸡",
+          "spellId": 12243
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 8376,
+          "itemIds": [
+            10398
+          ],
+          "questIds": [
+            3721
+          ],
+          "spellId": 12243
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:12243",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:12243",
+          "world.quest:3721"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100351,
+      "description": {
+        "descriptionKey": 15048,
+        "lookupKeys": {
+          "creatureEntry": 9656,
+          "journalNameZhCN": "步行炸弹",
+          "spellId": 15048
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 9656,
+          "itemIds": [
+            11825
+          ],
+          "questIds": [],
+          "spellId": 15048
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15048",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15048"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100352,
+      "description": {
+        "descriptionKey": 15049,
+        "lookupKeys": {
+          "creatureEntry": 9657,
+          "journalNameZhCN": "发条机器人",
+          "spellId": 15049
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 9657,
+          "itemIds": [
+            11826
+          ],
+          "questIds": [],
+          "spellId": 15049
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15049",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15049"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100353,
+      "description": {
+        "descriptionKey": 15067,
+        "lookupKeys": {
+          "creatureEntry": 9662,
+          "journalNameZhCN": "精龙宝宝",
+          "spellId": 15067
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 9662,
+          "itemIds": [
+            11474
+          ],
+          "questIds": [
+            4298
+          ],
+          "spellId": 15067
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15067",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15067",
+          "world.loot:creature_loot_template:5278"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100354,
+      "description": {
+        "descriptionKey": 15648,
+        "lookupKeys": {
+          "creatureEntry": 9936,
+          "journalNameZhCN": "腐化猫",
+          "spellId": 15648
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 9936,
+          "itemIds": [
+            11903
+          ],
+          "questIds": [],
+          "spellId": 15648
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15648"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100355,
+      "description": {
+        "descriptionKey": 17567,
+        "lookupKeys": {
+          "creatureEntry": 11236,
+          "journalNameZhCN": "红鹦鹉",
+          "spellId": 17567
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 11236,
+          "itemIds": [
+            12185
+          ],
+          "questIds": [
+            4621
+          ],
+          "spellId": 17567
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "world.quest:4621"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100356,
+      "description": {
+        "descriptionKey": 17708,
+        "lookupKeys": {
+          "creatureEntry": 11326,
+          "journalNameZhCN": "迷你破坏神",
+          "spellId": 17708
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 11326,
+          "itemIds": [
+            13584
+          ],
+          "questIds": [
+            5805,
+            5841,
+            5842,
+            5843,
+            5844,
+            5847,
+            8547,
+            9278,
+            12781
+          ],
+          "spellId": 17708
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:17708",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:17708",
+          "world.quest:12781",
+          "world.quest:5805",
+          "world.quest:5841",
+          "world.quest:5842",
+          "world.quest:5843",
+          "world.quest:5844",
+          "world.quest:5847",
+          "world.quest:8547",
+          "world.quest:9278"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100357,
+      "description": {
+        "descriptionKey": 19363,
+        "lookupKeys": {
+          "creatureEntry": 12257,
+          "journalNameZhCN": "机械雪人",
+          "spellId": 19363
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 12257,
+          "itemIds": [
+            15778
+          ],
+          "questIds": [
+            5163
+          ],
+          "spellId": 19363
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "world.quest:5163"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100358,
+      "description": {
+        "descriptionKey": 10709,
+        "lookupKeys": {
+          "creatureEntry": 14421,
+          "journalNameZhCN": "棕色土拨鼠",
+          "spellId": 10709
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14421,
+          "itemIds": [
+            10394
+          ],
+          "questIds": [],
+          "spellId": 10709
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10709",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10709",
+          "world.vendor:8401"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100359,
+      "description": {
+        "descriptionKey": 23429,
+        "lookupKeys": {
+          "creatureEntry": 14629,
+          "journalNameZhCN": "圆头钳嘴龟",
+          "spellId": 23429
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14629,
+          "itemIds": [
+            18964
+          ],
+          "questIds": [],
+          "spellId": 23429
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23429"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100360,
+      "description": {
+        "descriptionKey": 23431,
+        "lookupKeys": {
+          "creatureEntry": 14630,
+          "journalNameZhCN": "硬皮钳嘴龟",
+          "spellId": 23431
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14630,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 23431
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23431"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100361,
+      "description": {
+        "descriptionKey": 23430,
+        "lookupKeys": {
+          "creatureEntry": 14631,
+          "journalNameZhCN": "绿色钳嘴龟",
+          "spellId": 23430
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14631,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 23430
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23430"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100362,
+      "description": {
+        "descriptionKey": 23432,
+        "lookupKeys": {
+          "creatureEntry": 14632,
+          "journalNameZhCN": "鹰喙钳嘴龟",
+          "spellId": 23432
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14632,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 23432
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23432"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100363,
+      "description": {
+        "descriptionKey": 23428,
+        "lookupKeys": {
+          "creatureEntry": 14633,
+          "journalNameZhCN": "白色钳嘴龟",
+          "spellId": 23428
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14633,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 23428
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23428"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100364,
+      "description": {
+        "descriptionKey": 23531,
+        "lookupKeys": {
+          "creatureEntry": 14755,
+          "journalNameZhCN": "绿色小神龙",
+          "spellId": 23531
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14755,
+          "itemIds": [
+            19055
+          ],
+          "questIds": [],
+          "spellId": 23531
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23531",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:23531"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100365,
+      "description": {
+        "descriptionKey": 23530,
+        "lookupKeys": {
+          "creatureEntry": 14756,
+          "journalNameZhCN": "红色小神龙",
+          "spellId": 23530
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14756,
+          "itemIds": [
+            19054
+          ],
+          "questIds": [],
+          "spellId": 23530
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23530",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:23530"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100366,
+      "description": {
+        "descriptionKey": 23811,
+        "lookupKeys": {
+          "creatureEntry": 14878,
+          "journalNameZhCN": "加布林",
+          "spellId": 23811
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 14878,
+          "itemIds": [
+            19450
+          ],
+          "questIds": [],
+          "spellId": 23811
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23811",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:23811"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100367,
+      "description": {
+        "descriptionKey": 24696,
+        "lookupKeys": {
+          "creatureEntry": 15186,
+          "journalNameZhCN": "奔波尔霸",
+          "spellId": 24696
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15186,
+          "itemIds": [
+            20371
+          ],
+          "questIds": [
+            316
+          ],
+          "spellId": 24696
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:24696",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:24696",
+          "world.quest:316"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100368,
+      "description": {
+        "descriptionKey": 24985,
+        "lookupKeys": {
+          "creatureEntry": 15356,
+          "journalNameZhCN": "蓝色小鱼人",
+          "spellId": 24985
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15356,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 24985
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100369,
+      "description": {
+        "descriptionKey": 24990,
+        "lookupKeys": {
+          "creatureEntry": 15357,
+          "journalNameZhCN": "紫色小鱼人",
+          "spellId": 24990
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15357,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 24990
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100370,
+      "description": {
+        "descriptionKey": 24988,
+        "lookupKeys": {
+          "creatureEntry": 15358,
+          "journalNameZhCN": "乐奇",
+          "spellId": 24988
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15358,
+          "itemIds": [
+            30360
+          ],
+          "questIds": [],
+          "spellId": 24988
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:24988",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:24988"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100371,
+      "description": {
+        "descriptionKey": 24989,
+        "lookupKeys": {
+          "creatureEntry": 15359,
+          "journalNameZhCN": "粉色小鱼人",
+          "spellId": 24989
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15359,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 24989
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100372,
+      "description": {
+        "descriptionKey": 24986,
+        "lookupKeys": {
+          "creatureEntry": 15360,
+          "journalNameZhCN": "绿色小鱼人",
+          "spellId": 24986
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15360,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 24986
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100373,
+      "description": {
+        "descriptionKey": 25018,
+        "lookupKeys": {
+          "creatureEntry": 15361,
+          "journalNameZhCN": "霸波尔奔",
+          "spellId": 25018
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15361,
+          "itemIds": [
+            20651
+          ],
+          "questIds": [
+            316
+          ],
+          "spellId": 25018
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:25018",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:25018",
+          "world.quest:316"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100374,
+      "description": {
+        "descriptionKey": 25849,
+        "lookupKeys": {
+          "creatureEntry": 15661,
+          "journalNameZhCN": "鲨鱼宝宝",
+          "spellId": 25849
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15661,
+          "itemIds": [
+            21168
+          ],
+          "questIds": [],
+          "spellId": 25849
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:25849"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100375,
+      "description": {
+        "descriptionKey": 26533,
+        "lookupKeys": {
+          "creatureEntry": 15698,
+          "journalNameZhCN": "冬天爷爷的助手",
+          "spellId": 26533
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15698,
+          "itemIds": [
+            21301
+          ],
+          "questIds": [],
+          "spellId": 26533
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26533",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26533"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100376,
+      "description": {
+        "descriptionKey": 26010,
+        "lookupKeys": {
+          "creatureEntry": 15699,
+          "journalNameZhCN": "安静的机械雪人",
+          "spellId": 26010
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15699,
+          "itemIds": [
+            21277
+          ],
+          "questIds": [],
+          "spellId": 26010
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26010",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26010"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100377,
+      "description": {
+        "descriptionKey": 26541,
+        "lookupKeys": {
+          "creatureEntry": 15705,
+          "journalNameZhCN": "冬天爷爷的小助手",
+          "spellId": 26541
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15705,
+          "itemIds": [
+            21305
+          ],
+          "questIds": [],
+          "spellId": 26541
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26541",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26541"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100378,
+      "description": {
+        "descriptionKey": 26529,
+        "lookupKeys": {
+          "creatureEntry": 15706,
+          "journalNameZhCN": "冬季驯鹿",
+          "spellId": 26529
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15706,
+          "itemIds": [
+            21308
+          ],
+          "questIds": [],
+          "spellId": 26529
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26529",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26529"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100379,
+      "description": {
+        "descriptionKey": 26045,
+        "lookupKeys": {
+          "creatureEntry": 15710,
+          "journalNameZhCN": "雪孩子",
+          "spellId": 26045
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15710,
+          "itemIds": [
+            21309
+          ],
+          "questIds": [],
+          "spellId": 26045
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26045",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26045"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100380,
+      "description": {
+        "descriptionKey": 26067,
+        "lookupKeys": {
+          "creatureEntry": 15721,
+          "journalNameZhCN": "机械格林奇",
+          "spellId": 26067
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15721,
+          "itemIds": [
+            21325
+          ],
+          "questIds": [],
+          "spellId": 26067
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "world.loot:item_loot_template:21327"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100381,
+      "description": {
+        "descriptionKey": 26391,
+        "lookupKeys": {
+          "creatureEntry": 15901,
+          "journalNameZhCN": "被砍下来的触须",
+          "spellId": 26391
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 15901,
+          "itemIds": [
+            21579
+          ],
+          "questIds": [],
+          "spellId": 26391
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "world.loot:creature_loot_template:15727"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100382,
+      "description": {
+        "descriptionKey": 27241,
+        "lookupKeys": {
+          "creatureEntry": 16069,
+          "journalNameZhCN": "咕唧",
+          "spellId": 27241
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16069,
+          "itemIds": [
+            22114
+          ],
+          "questIds": [
+            316
+          ],
+          "spellId": 27241
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:27241",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:27241",
+          "world.quest:316"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100383,
+      "description": {
+        "descriptionKey": 27570,
+        "lookupKeys": {
+          "creatureEntry": 16085,
+          "journalNameZhCN": "小匹德菲特",
+          "spellId": 27570
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16085,
+          "itemIds": [
+            22235
+          ],
+          "questIds": [],
+          "spellId": 27570
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:27570",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:27570"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100384,
+      "description": {
+        "descriptionKey": 28487,
+        "lookupKeys": {
+          "creatureEntry": 16445,
+          "journalNameZhCN": "塔吉",
+          "spellId": 28487
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16445,
+          "itemIds": [
+            22780
+          ],
+          "questIds": [
+            316,
+            8021,
+            8022,
+            8023,
+            8024,
+            8025,
+            8026
+          ],
+          "spellId": 28487
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28487",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28487",
+          "world.quest:316",
+          "world.quest:8021",
+          "world.quest:8022",
+          "world.quest:8023",
+          "world.quest:8024",
+          "world.quest:8025",
+          "world.quest:8026"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100385,
+      "description": {
+        "descriptionKey": 28505,
+        "lookupKeys": {
+          "creatureEntry": 16456,
+          "journalNameZhCN": "波利",
+          "spellId": 28505
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16456,
+          "itemIds": [
+            22781
+          ],
+          "questIds": [
+            9273
+          ],
+          "spellId": 28505
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28505",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28505",
+          "world.quest:9273"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100386,
+      "description": {
+        "descriptionKey": 28740,
+        "lookupKeys": {
+          "creatureEntry": 16549,
+          "journalNameZhCN": "小老鼠吱吱",
+          "spellId": 28740
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16549,
+          "itemIds": [
+            23015
+          ],
+          "questIds": [
+            171,
+            5502
+          ],
+          "spellId": 28740
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28740",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28740",
+          "world.event:10"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100387,
+      "description": {
+        "descriptionKey": 28871,
+        "lookupKeys": {
+          "creatureEntry": 16701,
+          "journalNameZhCN": "仲夏之魂",
+          "spellId": 28871
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 16701,
+          "itemIds": [
+            23083
+          ],
+          "questIds": [
+            9319
+          ],
+          "spellId": 28871
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28871",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28871"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100388,
+      "description": {
+        "descriptionKey": 30152,
+        "lookupKeys": {
+          "creatureEntry": 17254,
+          "journalNameZhCN": "白色虎崽",
+          "spellId": 30152
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 17254,
+          "itemIds": [
+            23712
+          ],
+          "questIds": [],
+          "spellId": 30152
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:30152",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:30152"
+        ],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100389,
+      "description": {
+        "descriptionKey": 30156,
+        "lookupKeys": {
+          "creatureEntry": 17255,
+          "journalNameZhCN": "角鹰兽宝宝",
+          "spellId": 30156
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 17255,
+          "itemIds": [
+            23713
+          ],
+          "questIds": [],
+          "spellId": 30156
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:30156",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:30156"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100390,
+      "description": {
+        "descriptionKey": 32298,
+        "lookupKeys": {
+          "creatureEntry": 18381,
+          "journalNameZhCN": "虚空龙宝宝",
+          "spellId": 32298
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 18381,
+          "itemIds": [
+            25535
+          ],
+          "questIds": [],
+          "spellId": 32298
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:32298",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:32298"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100391,
+      "description": {
+        "descriptionKey": 33050,
+        "lookupKeys": {
+          "creatureEntry": 18839,
+          "journalNameZhCN": "魔法龙虾",
+          "spellId": 33050
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 18839,
+          "itemIds": [
+            27445
+          ],
+          "questIds": [],
+          "spellId": 33050
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:33050",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:33050"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100392,
+      "description": {
+        "descriptionKey": 33057,
+        "lookupKeys": {
+          "creatureEntry": 18845,
+          "journalNameZhCN": "善良的钳子先生",
+          "spellId": 33057
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 18845,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 33057
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "MISSING"
+      }
+    },
+    {
+      "collectionId": 100393,
+      "description": {
+        "descriptionKey": 35156,
+        "lookupKeys": {
+          "creatureEntry": 20408,
+          "journalNameZhCN": "法力龙宝宝",
+          "spellId": 35156
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 20408,
+          "itemIds": [
+            29363
+          ],
+          "questIds": [],
+          "spellId": 35156
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35156",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35156",
+          "world.vendor:20980"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100394,
+      "description": {
+        "descriptionKey": 35239,
+        "lookupKeys": {
+          "creatureEntry": 20472,
+          "journalNameZhCN": "棕兔",
+          "spellId": 35239
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 20472,
+          "itemIds": [
+            29364
+          ],
+          "questIds": [
+            13303
+          ],
+          "spellId": 35239
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35239",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35239",
+          "world.vendor:20980"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100395,
+      "description": {
+        "descriptionKey": 35910,
+        "lookupKeys": {
+          "creatureEntry": 21008,
+          "journalNameZhCN": "黄色飞蛾",
+          "spellId": 35910
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21008,
+          "itemIds": [
+            29903
+          ],
+          "questIds": [],
+          "spellId": 35910
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35910",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35910",
+          "world.vendor:21019"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100396,
+      "description": {
+        "descriptionKey": 35909,
+        "lookupKeys": {
+          "creatureEntry": 21009,
+          "journalNameZhCN": "红色飞蛾",
+          "spellId": 35909
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21009,
+          "itemIds": [
+            29902
+          ],
+          "questIds": [],
+          "spellId": 35909
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35909",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35909",
+          "world.vendor:20980"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100397,
+      "description": {
+        "descriptionKey": 35907,
+        "lookupKeys": {
+          "creatureEntry": 21010,
+          "journalNameZhCN": "蓝色飞蛾",
+          "spellId": 35907
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21010,
+          "itemIds": [
+            29901
+          ],
+          "questIds": [],
+          "spellId": 35907
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35907",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35907",
+          "world.vendor:21019"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100398,
+      "description": {
+        "descriptionKey": 35911,
+        "lookupKeys": {
+          "creatureEntry": 21018,
+          "journalNameZhCN": "白色飞蛾",
+          "spellId": 35911
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21018,
+          "itemIds": [
+            29904
+          ],
+          "questIds": [],
+          "spellId": 35911
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35911",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35911",
+          "world.vendor:21019"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100399,
+      "description": {
+        "descriptionKey": 36027,
+        "lookupKeys": {
+          "creatureEntry": 21055,
+          "journalNameZhCN": "金色龙鹰幼崽",
+          "spellId": 36027
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21055,
+          "itemIds": [
+            29953
+          ],
+          "questIds": [],
+          "spellId": 36027
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36027",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36027",
+          "world.vendor:16860"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100400,
+      "description": {
+        "descriptionKey": 36031,
+        "lookupKeys": {
+          "creatureEntry": 21056,
+          "journalNameZhCN": "蓝色龙鹰幼崽",
+          "spellId": 36031
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21056,
+          "itemIds": [
+            29958
+          ],
+          "questIds": [],
+          "spellId": 36031
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36031",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36031",
+          "world.vendor:20980"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100401,
+      "description": {
+        "descriptionKey": 36029,
+        "lookupKeys": {
+          "creatureEntry": 21063,
+          "journalNameZhCN": "银色龙鹰幼崽",
+          "spellId": 36029
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21063,
+          "itemIds": [
+            29957
+          ],
+          "questIds": [],
+          "spellId": 36029
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36029",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36029",
+          "world.vendor:16860"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100402,
+      "description": {
+        "descriptionKey": 36028,
+        "lookupKeys": {
+          "creatureEntry": 21064,
+          "journalNameZhCN": "红色龙鹰幼崽",
+          "spellId": 36028
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 21064,
+          "itemIds": [
+            29956
+          ],
+          "questIds": [],
+          "spellId": 36028
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36028",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36028",
+          "world.vendor:16860"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100403,
+      "description": {
+        "descriptionKey": 39181,
+        "lookupKeys": {
+          "creatureEntry": 22445,
+          "journalNameZhCN": "迷你鹦鹉",
+          "spellId": 39181
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 22445,
+          "itemIds": [
+            31760
+          ],
+          "questIds": [
+            10898
+          ],
+          "spellId": 39181
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:39181",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:39181",
+          "world.quest:10898"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100404,
+      "description": {
+        "descriptionKey": 39709,
+        "lookupKeys": {
+          "creatureEntry": 22943,
+          "journalNameZhCN": "鹿角小飞兔",
+          "spellId": 39709
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 22943,
+          "itemIds": [
+            32233
+          ],
+          "questIds": [
+            11117,
+            11431
+          ],
+          "spellId": 39709
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:39709",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:39709"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100405,
+      "description": {
+        "descriptionKey": 40319,
+        "lookupKeys": {
+          "creatureEntry": 23114,
+          "journalNameZhCN": "金猪",
+          "spellId": 40319
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23114,
+          "itemIds": [
+            32465
+          ],
+          "questIds": [],
+          "spellId": 40319
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100406,
+      "description": {
+        "descriptionKey": 40405,
+        "lookupKeys": {
+          "creatureEntry": 23198,
+          "journalNameZhCN": "金猪",
+          "spellId": 40405
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23198,
+          "itemIds": [
+            32498
+          ],
+          "questIds": [],
+          "spellId": 40405
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40405",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40405"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100407,
+      "description": {
+        "descriptionKey": 40613,
+        "lookupKeys": {
+          "creatureEntry": 23231,
+          "journalNameZhCN": "威利",
+          "spellId": 40613
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23231,
+          "itemIds": [
+            32617
+          ],
+          "questIds": [
+            10966,
+            10967
+          ],
+          "spellId": 40613
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40613",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40613",
+          "world.event:10"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100408,
+      "description": {
+        "descriptionKey": 40614,
+        "lookupKeys": {
+          "creatureEntry": 23258,
+          "journalNameZhCN": "蛋蛋",
+          "spellId": 40614
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23258,
+          "itemIds": [
+            32616
+          ],
+          "questIds": [
+            10966,
+            10967
+          ],
+          "spellId": 40614
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40614",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40614",
+          "world.event:10"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100409,
+      "description": {
+        "descriptionKey": 40634,
+        "lookupKeys": {
+          "creatureEntry": 23266,
+          "journalNameZhCN": "小新",
+          "spellId": 40634
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 23266,
+          "itemIds": [
+            32622
+          ],
+          "questIds": [
+            10966,
+            10967
+          ],
+          "spellId": 40634
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40634",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40634",
+          "world.event:10"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100410,
+      "description": {
+        "descriptionKey": 43697,
+        "lookupKeys": {
+          "creatureEntry": 24388,
+          "journalNameZhCN": "牙牙",
+          "spellId": 43697
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 24388,
+          "itemIds": [
+            33816
+          ],
+          "questIds": [],
+          "spellId": 43697
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:43697",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:43697"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100411,
+      "description": {
+        "descriptionKey": 43698,
+        "lookupKeys": {
+          "creatureEntry": 24389,
+          "journalNameZhCN": "毒皮",
+          "spellId": 43698
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 24389,
+          "itemIds": [
+            33818
+          ],
+          "questIds": [],
+          "spellId": 43698
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:43698",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:43698"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100412,
+      "description": {
+        "descriptionKey": 43918,
+        "lookupKeys": {
+          "creatureEntry": 24480,
+          "journalNameZhCN": "魔汁",
+          "spellId": 43918
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 24480,
+          "itemIds": [
+            33993
+          ],
+          "questIds": [],
+          "spellId": 43918
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:43918",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:43918"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100413,
+      "description": {
+        "descriptionKey": 44369,
+        "lookupKeys": {
+          "creatureEntry": 24753,
+          "journalNameZhCN": "粉色小雷象",
+          "spellId": 44369
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 24753,
+          "itemIds": [
+            46707
+          ],
+          "questIds": [],
+          "spellId": 44369
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:44369",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:44369"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100414,
+      "description": {
+        "descriptionKey": 54187,
+        "lookupKeys": {
+          "creatureEntry": 24968,
+          "journalNameZhCN": "发条战士",
+          "spellId": 54187
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 24968,
+          "itemIds": [
+            34425
+          ],
+          "questIds": [],
+          "spellId": 54187
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:54187",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:54187"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100415,
+      "description": {
+        "descriptionKey": 45125,
+        "lookupKeys": {
+          "creatureEntry": 25109,
+          "journalNameZhCN": "火箭鸡",
+          "spellId": 45125
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 25109,
+          "itemIds": [
+            34492
+          ],
+          "questIds": [],
+          "spellId": 45125
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45125",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45125"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100416,
+      "description": {
+        "descriptionKey": 45174,
+        "lookupKeys": {
+          "creatureEntry": 25146,
+          "journalNameZhCN": "金猪",
+          "spellId": 45174
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 25146,
+          "itemIds": [
+            34518
+          ],
+          "questIds": [],
+          "spellId": 45174
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45174",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45174"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100417,
+      "description": {
+        "descriptionKey": 45175,
+        "lookupKeys": {
+          "creatureEntry": 25147,
+          "journalNameZhCN": "银猪",
+          "spellId": 45175
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 25147,
+          "itemIds": [
+            34519
+          ],
+          "questIds": [],
+          "spellId": 45175
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45175",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45175"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100418,
+      "description": {
+        "descriptionKey": 45890,
+        "lookupKeys": {
+          "creatureEntry": 25706,
+          "journalNameZhCN": "灼烧元素",
+          "spellId": 45890
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 25706,
+          "itemIds": [
+            34955
+          ],
+          "questIds": [],
+          "spellId": 45890
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45890",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45890"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100419,
+      "description": {
+        "descriptionKey": 46425,
+        "lookupKeys": {
+          "creatureEntry": 26050,
+          "journalNameZhCN": "尼尼",
+          "spellId": 46425
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 26050,
+          "itemIds": [
+            35349
+          ],
+          "questIds": [],
+          "spellId": 46425
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:46425",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:46425"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100420,
+      "description": {
+        "descriptionKey": 46426,
+        "lookupKeys": {
+          "creatureEntry": 26056,
+          "journalNameZhCN": "莫莫",
+          "spellId": 46426
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 26056,
+          "itemIds": [
+            35350
+          ],
+          "questIds": [],
+          "spellId": 46426
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:46426",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:46426"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100421,
+      "description": {
+        "descriptionKey": 48406,
+        "lookupKeys": {
+          "creatureEntry": 27217,
+          "journalNameZhCN": "竞争之魂",
+          "spellId": 48406
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 27217,
+          "itemIds": [
+            37297
+          ],
+          "questIds": [],
+          "spellId": 48406
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:48406",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:48406"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100422,
+      "description": {
+        "descriptionKey": 48408,
+        "lookupKeys": {
+          "creatureEntry": 27346,
+          "journalNameZhCN": "竞争之精华",
+          "spellId": 48408
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 27346,
+          "itemIds": [
+            37298
+          ],
+          "questIds": [],
+          "spellId": 48408
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:48408",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:48408"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100423,
+      "description": {
+        "descriptionKey": 49964,
+        "lookupKeys": {
+          "creatureEntry": 27914,
+          "journalNameZhCN": "灵魂商人",
+          "spellId": 49964
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 27914,
+          "itemIds": [
+            38050
+          ],
+          "questIds": [],
+          "spellId": 49964
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:49964",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:49964",
+          "world.loot:item_loot_template:50301"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100424,
+      "description": {
+        "descriptionKey": 51716,
+        "lookupKeys": {
+          "creatureEntry": 28470,
+          "journalNameZhCN": "小虚空鳐",
+          "spellId": 51716
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 28470,
+          "itemIds": [
+            38628
+          ],
+          "questIds": [],
+          "spellId": 51716
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:51716",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:51716",
+          "world.vendor:23367"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100425,
+      "description": {
+        "descriptionKey": 53082,
+        "lookupKeys": {
+          "creatureEntry": 29089,
+          "journalNameZhCN": "迷你泰瑞尔",
+          "spellId": 53082
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 29089,
+          "itemIds": [
+            39656
+          ],
+          "questIds": [],
+          "spellId": 53082
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:53082",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:53082"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100426,
+      "description": {
+        "descriptionKey": 53768,
+        "lookupKeys": {
+          "creatureEntry": 29238,
+          "journalNameZhCN": "天灾幽灵",
+          "spellId": 53768
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 29238,
+          "itemIds": [
+            40110
+          ],
+          "questIds": [],
+          "spellId": 53768
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "world.loot:creature_loot_template:16141",
+          "world.loot:creature_loot_template:16298",
+          "world.loot:creature_loot_template:16299",
+          "world.loot:reference_loot_template:40110"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100427,
+      "description": {
+        "descriptionKey": 13548,
+        "lookupKeys": {
+          "creatureEntry": 30379,
+          "journalNameZhCN": "西部荒野小鸡",
+          "spellId": 13548
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 30379,
+          "itemIds": [
+            11110
+          ],
+          "questIds": [],
+          "spellId": 13548
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:13548",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:13548",
+          "world.loot:gameobject_loot_template:10100"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100428,
+      "description": {
+        "descriptionKey": 61348,
+        "lookupKeys": {
+          "creatureEntry": 32589,
+          "journalNameZhCN": "小食虱鸟",
+          "spellId": 61348
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32589,
+          "itemIds": [
+            39896
+          ],
+          "questIds": [],
+          "spellId": 61348
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61348",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61348",
+          "world.loot:item_loot_template:39883"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100429,
+      "description": {
+        "descriptionKey": 61349,
+        "lookupKeys": {
+          "creatureEntry": 32590,
+          "journalNameZhCN": "白色小食虱鸟",
+          "spellId": 61349
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32590,
+          "itemIds": [
+            39899
+          ],
+          "questIds": [],
+          "spellId": 61349
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61349",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61349",
+          "world.loot:item_loot_template:39883"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100430,
+      "description": {
+        "descriptionKey": 61351,
+        "lookupKeys": {
+          "creatureEntry": 32591,
+          "journalNameZhCN": "小眼镜蛇",
+          "spellId": 61351
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32591,
+          "itemIds": [
+            39898
+          ],
+          "questIds": [],
+          "spellId": 61351
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61351",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61351",
+          "world.loot:item_loot_template:39883"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100431,
+      "description": {
+        "descriptionKey": 61350,
+        "lookupKeys": {
+          "creatureEntry": 32592,
+          "journalNameZhCN": "始祖龙宝宝",
+          "spellId": 61350
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32592,
+          "itemIds": [
+            44721
+          ],
+          "questIds": [],
+          "spellId": 61350
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61350",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61350",
+          "world.loot:item_loot_template:39883"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100432,
+      "description": {
+        "descriptionKey": 61357,
+        "lookupKeys": {
+          "creatureEntry": 32595,
+          "journalNameZhCN": "小潘",
+          "spellId": 61357
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32595,
+          "itemIds": [
+            43517,
+            44723
+          ],
+          "questIds": [],
+          "spellId": 61357
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61357",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61357",
+          "world.vendor:31916",
+          "world.vendor:32763"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100433,
+      "description": {
+        "descriptionKey": 61472,
+        "lookupKeys": {
+          "creatureEntry": 32643,
+          "journalNameZhCN": "肯瑞托魔仆",
+          "spellId": 61472
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32643,
+          "itemIds": [
+            44738
+          ],
+          "questIds": [],
+          "spellId": 61472
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61472",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61472"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100434,
+      "description": {
+        "descriptionKey": 61773,
+        "lookupKeys": {
+          "creatureEntry": 32818,
+          "journalNameZhCN": "肥胖的火鸡",
+          "spellId": 61773
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [
+            3478,
+            3656
+          ],
+          "creatureEntry": 32818,
+          "itemIds": [
+            44810
+          ],
+          "questIds": [],
+          "spellId": 61773
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61773",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61773"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100435,
+      "description": {
+        "descriptionKey": 61855,
+        "lookupKeys": {
+          "creatureEntry": 32841,
+          "journalNameZhCN": "暴雪熊宝宝",
+          "spellId": 61855
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 32841,
+          "itemIds": [
+            44819
+          ],
+          "questIds": [],
+          "spellId": 61855
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61855",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61855"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100436,
+      "description": {
+        "descriptionKey": 61991,
+        "lookupKeys": {
+          "creatureEntry": 32939,
+          "journalNameZhCN": "小鹿",
+          "spellId": 61991
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [
+            2516
+          ],
+          "creatureEntry": 32939,
+          "itemIds": [
+            44841
+          ],
+          "questIds": [],
+          "spellId": 61991
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61991",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61991",
+          "world.achievement:2516"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100437,
+      "description": {
+        "descriptionKey": 62491,
+        "lookupKeys": {
+          "creatureEntry": 33188,
+          "journalNameZhCN": "泰达希尔树苗",
+          "spellId": 62491
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33188,
+          "itemIds": [
+            44965
+          ],
+          "questIds": [],
+          "spellId": 62491
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62491",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62491",
+          "world.vendor:33653"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100438,
+      "description": {
+        "descriptionKey": 62508,
+        "lookupKeys": {
+          "creatureEntry": 33194,
+          "journalNameZhCN": "丹莫罗熊宝宝",
+          "spellId": 62508
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33194,
+          "itemIds": [
+            44970
+          ],
+          "questIds": [],
+          "spellId": 62508
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62508",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62508",
+          "world.vendor:33310"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100439,
+      "description": {
+        "descriptionKey": 62510,
+        "lookupKeys": {
+          "creatureEntry": 33197,
+          "journalNameZhCN": "提瑞斯法蝙蝠宝宝",
+          "spellId": 62510
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33197,
+          "itemIds": [
+            44971
+          ],
+          "questIds": [],
+          "spellId": 62510
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62510",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62510",
+          "world.vendor:33555"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100440,
+      "description": {
+        "descriptionKey": 62513,
+        "lookupKeys": {
+          "creatureEntry": 33198,
+          "journalNameZhCN": "杜隆塔尔蝎子",
+          "spellId": 62513
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33198,
+          "itemIds": [
+            44973
+          ],
+          "questIds": [],
+          "spellId": 62513
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62513",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62513",
+          "world.vendor:33553"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100441,
+      "description": {
+        "descriptionKey": 62514,
+        "lookupKeys": {
+          "creatureEntry": 33199,
+          "journalNameZhCN": "报警发条机器人",
+          "spellId": 62514
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33199,
+          "itemIds": [
+            44972
+          ],
+          "questIds": [],
+          "spellId": 62514
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62514"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100442,
+      "description": {
+        "descriptionKey": 62516,
+        "lookupKeys": {
+          "creatureEntry": 33200,
+          "journalNameZhCN": "艾尔文小羊羔",
+          "spellId": 62516
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33200,
+          "itemIds": [
+            44974
+          ],
+          "questIds": [],
+          "spellId": 62516
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62516",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62516",
+          "world.vendor:33307"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100443,
+      "description": {
+        "descriptionKey": 62562,
+        "lookupKeys": {
+          "creatureEntry": 33205,
+          "journalNameZhCN": "埃门谷花苗",
+          "spellId": 62562
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33205,
+          "itemIds": [
+            44984
+          ],
+          "questIds": [],
+          "spellId": 62562
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62562",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62562",
+          "world.vendor:33657"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100444,
+      "description": {
+        "descriptionKey": 62542,
+        "lookupKeys": {
+          "creatureEntry": 33219,
+          "journalNameZhCN": "莫高雷小陆行鸟",
+          "spellId": 62542
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33219,
+          "itemIds": [
+            44980
+          ],
+          "questIds": [],
+          "spellId": 62542
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62542",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62542",
+          "world.vendor:33556"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100445,
+      "description": {
+        "descriptionKey": 62561,
+        "lookupKeys": {
+          "creatureEntry": 33226,
+          "journalNameZhCN": "沙滩蟹",
+          "spellId": 62561
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33226,
+          "itemIds": [
+            44983
+          ],
+          "questIds": [],
+          "spellId": 62561
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62561",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62561"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100446,
+      "description": {
+        "descriptionKey": 62564,
+        "lookupKeys": {
+          "creatureEntry": 33227,
+          "journalNameZhCN": "魔法扫帚",
+          "spellId": 62564
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33227,
+          "itemIds": [
+            44982
+          ],
+          "questIds": [],
+          "spellId": 62564
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62564",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62564",
+          "world.vendor:33557"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100447,
+      "description": {
+        "descriptionKey": 62609,
+        "lookupKeys": {
+          "creatureEntry": 33238,
+          "journalNameZhCN": "银色侍从",
+          "spellId": 62609
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33238,
+          "itemIds": [
+            44998
+          ],
+          "questIds": [
+            13702,
+            13732,
+            13733,
+            13734,
+            13735
+          ],
+          "spellId": 62609
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62609",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62609",
+          "world.quest:13702",
+          "world.quest:13732",
+          "world.quest:13733",
+          "world.quest:13734",
+          "world.quest:13735"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100448,
+      "description": {
+        "descriptionKey": 62746,
+        "lookupKeys": {
+          "creatureEntry": 33239,
+          "journalNameZhCN": "银色小步兵",
+          "spellId": 62746
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33239,
+          "itemIds": [
+            45022
+          ],
+          "questIds": [
+            13736,
+            13737,
+            13738,
+            13739,
+            13740
+          ],
+          "spellId": 62746
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62746",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62746",
+          "world.quest:13736",
+          "world.quest:13737",
+          "world.quest:13738",
+          "world.quest:13739",
+          "world.quest:13740"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100449,
+      "description": {
+        "descriptionKey": 62674,
+        "lookupKeys": {
+          "creatureEntry": 33274,
+          "journalNameZhCN": "机械鸟",
+          "spellId": 62674
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33274,
+          "itemIds": [
+            45002
+          ],
+          "questIds": [],
+          "spellId": 62674
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62674",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62674",
+          "world.vendor:33650"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100450,
+      "description": {
+        "descriptionKey": 65382,
+        "lookupKeys": {
+          "creatureEntry": 33529,
+          "journalNameZhCN": "好奇的小狼獾人",
+          "spellId": 65382
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33529,
+          "itemIds": [
+            46544
+          ],
+          "questIds": [],
+          "spellId": 65382
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65382",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65382"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100451,
+      "description": {
+        "descriptionKey": 65381,
+        "lookupKeys": {
+          "creatureEntry": 33530,
+          "journalNameZhCN": "好奇的小神谕者",
+          "spellId": 65381
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33530,
+          "itemIds": [
+            46545
+          ],
+          "questIds": [],
+          "spellId": 65381
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65381",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65381"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100452,
+      "description": {
+        "descriptionKey": 63318,
+        "lookupKeys": {
+          "creatureEntry": 33578,
+          "journalNameZhCN": "角斗士莫叽姆斯",
+          "spellId": 63318
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33578,
+          "itemIds": [
+            45180,
+            46892
+          ],
+          "questIds": [],
+          "spellId": 63318
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:63318",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:63318"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100453,
+      "description": {
+        "descriptionKey": 63712,
+        "lookupKeys": {
+          "creatureEntry": 33810,
+          "journalNameZhCN": "森金神像",
+          "spellId": 63712
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 33810,
+          "itemIds": [
+            45606
+          ],
+          "questIds": [],
+          "spellId": 63712
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:63712",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:63712",
+          "world.vendor:33554"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100454,
+      "description": {
+        "descriptionKey": 64351,
+        "lookupKeys": {
+          "creatureEntry": 34031,
+          "journalNameZhCN": "XS-001建筑机器人",
+          "spellId": 64351
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34031,
+          "itemIds": [
+            45942
+          ],
+          "questIds": [],
+          "spellId": 64351
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:64351"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100455,
+      "description": {
+        "descriptionKey": 65358,
+        "lookupKeys": {
+          "creatureEntry": 34364,
+          "journalNameZhCN": "玳瑁猫",
+          "spellId": 65358
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34364,
+          "itemIds": [
+            46398
+          ],
+          "questIds": [],
+          "spellId": 65358
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65358",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65358",
+          "world.vendor:28951"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100456,
+      "description": {
+        "descriptionKey": 65682,
+        "lookupKeys": {
+          "creatureEntry": 34587,
+          "journalNameZhCN": "战斗机器人",
+          "spellId": 65682
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34587,
+          "itemIds": [
+            46767
+          ],
+          "questIds": [],
+          "spellId": 65682
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65682",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65682"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100457,
+      "description": {
+        "descriptionKey": 66030,
+        "lookupKeys": {
+          "creatureEntry": 34694,
+          "journalNameZhCN": "玛润",
+          "spellId": 66030
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34694,
+          "itemIds": [
+            46802
+          ],
+          "questIds": [],
+          "spellId": 66030
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66030",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66030"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100458,
+      "description": {
+        "descriptionKey": 66096,
+        "lookupKeys": {
+          "creatureEntry": 34724,
+          "journalNameZhCN": "幽光雏龙",
+          "spellId": 66096
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34724,
+          "itemIds": [
+            46820,
+            46821
+          ],
+          "questIds": [],
+          "spellId": 66096
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66096",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66096",
+          "world.vendor:34772",
+          "world.vendor:34881"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100459,
+      "description": {
+        "descriptionKey": 66175,
+        "lookupKeys": {
+          "creatureEntry": 34770,
+          "journalNameZhCN": "死亡木偶",
+          "spellId": 66175
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34770,
+          "itemIds": [
+            46831
+          ],
+          "questIds": [
+            13952,
+            14166,
+            14167,
+            14168,
+            14169,
+            14170,
+            14171,
+            14172,
+            14173,
+            14174,
+            14175,
+            14176,
+            14177
+          ],
+          "spellId": 66175
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66175",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66175"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100460,
+      "description": {
+        "descriptionKey": 66520,
+        "lookupKeys": {
+          "creatureEntry": 34930,
+          "journalNameZhCN": "碧玉虎",
+          "spellId": 66520
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 34930,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 66520
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66520",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66520"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100461,
+      "description": {
+        "descriptionKey": 67416,
+        "lookupKeys": {
+          "creatureEntry": 35387,
+          "journalNameZhCN": "小塔克",
+          "spellId": 67416
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35387,
+          "itemIds": [
+            48118
+          ],
+          "questIds": [],
+          "spellId": 67416
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67416",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67416",
+          "world.loot:gameobject_loot_template:27827"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100462,
+      "description": {
+        "descriptionKey": 67420,
+        "lookupKeys": {
+          "creatureEntry": 35394,
+          "journalNameZhCN": "拉扎什幼龙",
+          "spellId": 67420
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35394,
+          "itemIds": [
+            48126
+          ],
+          "questIds": [],
+          "spellId": 67420
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67420",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67420",
+          "world.loot:creature_loot_template:14821"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100463,
+      "description": {
+        "descriptionKey": 67414,
+        "lookupKeys": {
+          "creatureEntry": 35395,
+          "journalNameZhCN": "变异幼龙",
+          "spellId": 67414
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35395,
+          "itemIds": [
+            48114
+          ],
+          "questIds": [],
+          "spellId": 67414
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67414",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67414",
+          "world.loot:creature_loot_template:3636",
+          "world.loot:creature_loot_template:3637"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100464,
+      "description": {
+        "descriptionKey": 67413,
+        "lookupKeys": {
+          "creatureEntry": 35396,
+          "journalNameZhCN": "小达尔特",
+          "spellId": 67413
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35396,
+          "itemIds": [
+            48112
+          ],
+          "questIds": [],
+          "spellId": 67413
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67413",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67413",
+          "world.loot:gameobject_loot_template:27828"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100465,
+      "description": {
+        "descriptionKey": 67418,
+        "lookupKeys": {
+          "creatureEntry": 35397,
+          "journalNameZhCN": "暴掠幼龙",
+          "spellId": 67418
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35397,
+          "itemIds": [
+            48122
+          ],
+          "questIds": [],
+          "spellId": 67418
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67418",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67418",
+          "world.loot:gameobject_loot_template:27829"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100466,
+      "description": {
+        "descriptionKey": 67419,
+        "lookupKeys": {
+          "creatureEntry": 35398,
+          "journalNameZhCN": "刺喉幼龙",
+          "spellId": 67419
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35398,
+          "itemIds": [
+            48124
+          ],
+          "questIds": [],
+          "spellId": 67419
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67419",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67419",
+          "world.loot:gameobject_loot_template:27826"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100467,
+      "description": {
+        "descriptionKey": 67417,
+        "lookupKeys": {
+          "creatureEntry": 35399,
+          "journalNameZhCN": "黑曜石幼龙",
+          "spellId": 67417
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35399,
+          "itemIds": [
+            48120
+          ],
+          "questIds": [],
+          "spellId": 67417
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67417",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67417",
+          "world.vendor:28951"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100468,
+      "description": {
+        "descriptionKey": 67415,
+        "lookupKeys": {
+          "creatureEntry": 35400,
+          "journalNameZhCN": "古达克幼龙",
+          "spellId": 67415
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35400,
+          "itemIds": [
+            48116
+          ],
+          "questIds": [],
+          "spellId": 67415
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67415",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67415",
+          "world.loot:creature_loot_template:29334"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100469,
+      "description": {
+        "descriptionKey": 67527,
+        "lookupKeys": {
+          "creatureEntry": 35468,
+          "journalNameZhCN": "墨玉猎豹",
+          "spellId": 67527
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 35468,
+          "itemIds": [
+            48527
+          ],
+          "questIds": [],
+          "spellId": 67527
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67527",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67527"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100470,
+      "description": {
+        "descriptionKey": 68767,
+        "lookupKeys": {
+          "creatureEntry": 36482,
+          "journalNameZhCN": "海象人风筝",
+          "spellId": 68767
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36482,
+          "itemIds": [
+            49287
+          ],
+          "questIds": [],
+          "spellId": 68767
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:68767",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:68767"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100471,
+      "description": {
+        "descriptionKey": 68810,
+        "lookupKeys": {
+          "creatureEntry": 36511,
+          "journalNameZhCN": "幽灵虎幼崽",
+          "spellId": 68810
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36511,
+          "itemIds": [
+            49343
+          ],
+          "questIds": [],
+          "spellId": 68810
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:68810",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:68810"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100472,
+      "description": {
+        "descriptionKey": 69452,
+        "lookupKeys": {
+          "creatureEntry": 36871,
+          "journalNameZhCN": "熔火恶犬宝宝",
+          "spellId": 69452
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36871,
+          "itemIds": [
+            49646
+          ],
+          "questIds": [],
+          "spellId": 69452
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69452",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69452"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100473,
+      "description": {
+        "descriptionKey": 69535,
+        "lookupKeys": {
+          "creatureEntry": 36908,
+          "journalNameZhCN": "狮鹫宝宝",
+          "spellId": 69535
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36908,
+          "itemIds": [
+            49662
+          ],
+          "questIds": [],
+          "spellId": 69535
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69535",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69535"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100474,
+      "description": {
+        "descriptionKey": 69536,
+        "lookupKeys": {
+          "creatureEntry": 36909,
+          "journalNameZhCN": "驭风者宝宝",
+          "spellId": 69536
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36909,
+          "itemIds": [
+            49663
+          ],
+          "questIds": [],
+          "spellId": 69536
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69536",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69536"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100475,
+      "description": {
+        "descriptionKey": 69539,
+        "lookupKeys": {
+          "creatureEntry": 36910,
+          "journalNameZhCN": "紫袍玉虎",
+          "spellId": 69539
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36910,
+          "itemIds": [],
+          "questIds": [],
+          "spellId": 69539
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69539",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69539"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100476,
+      "description": {
+        "descriptionKey": 69541,
+        "lookupKeys": {
+          "creatureEntry": 36911,
+          "journalNameZhCN": "熊猫人僧侣",
+          "spellId": 69541
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36911,
+          "itemIds": [
+            49665
+          ],
+          "questIds": [],
+          "spellId": 69541
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69541",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69541"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100477,
+      "description": {
+        "descriptionKey": 69677,
+        "lookupKeys": {
+          "creatureEntry": 36979,
+          "journalNameZhCN": "小克",
+          "spellId": 69677
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 36979,
+          "itemIds": [
+            49693
+          ],
+          "questIds": [],
+          "spellId": 69677
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69677",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69677"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100478,
+      "description": {
+        "descriptionKey": 70613,
+        "lookupKeys": {
+          "creatureEntry": 37865,
+          "journalNameZhCN": "溜溜",
+          "spellId": 70613
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [
+            4478
+          ],
+          "creatureEntry": 37865,
+          "itemIds": [
+            49912
+          ],
+          "questIds": [],
+          "spellId": 70613
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:70613",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:70613",
+          "world.achievement:4478"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100479,
+      "description": {
+        "descriptionKey": 71840,
+        "lookupKeys": {
+          "creatureEntry": 38374,
+          "journalNameZhCN": "毒毒",
+          "spellId": 71840
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 38374,
+          "itemIds": [
+            50446
+          ],
+          "questIds": [],
+          "spellId": 71840
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:71840",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:71840"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100480,
+      "description": {
+        "descriptionKey": 74932,
+        "lookupKeys": {
+          "creatureEntry": 40198,
+          "journalNameZhCN": "雪孩子",
+          "spellId": 74932
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 40198,
+          "itemIds": [
+            53641
+          ],
+          "questIds": [],
+          "spellId": 74932
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:74932",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:74932"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100481,
+      "description": {
+        "descriptionKey": 75134,
+        "lookupKeys": {
+          "creatureEntry": 40295,
+          "journalNameZhCN": "发条战士",
+          "spellId": 75134
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 40295,
+          "itemIds": [
+            54436
+          ],
+          "questIds": [],
+          "spellId": 75134
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75134",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75134",
+          "world.vendor:29478",
+          "world.vendor:29716"
+        ],
+        "status": "REVIEWED_ZHCN_WORLD"
+      }
+    },
+    {
+      "collectionId": 100482,
+      "description": {
+        "descriptionKey": 75613,
+        "lookupKeys": {
+          "creatureEntry": 40624,
+          "journalNameZhCN": "星界灵龙",
+          "spellId": 75613
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 40624,
+          "itemIds": [
+            54810
+          ],
+          "questIds": [],
+          "spellId": 75613
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75613",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75613"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100483,
+      "description": {
+        "descriptionKey": 75906,
+        "lookupKeys": {
+          "creatureEntry": 40703,
+          "journalNameZhCN": "小拆",
+          "spellId": 75906
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 40703,
+          "itemIds": [
+            54847
+          ],
+          "questIds": [],
+          "spellId": 75906
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75906",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75906"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100484,
+      "description": {
+        "descriptionKey": 75936,
+        "lookupKeys": {
+          "creatureEntry": 40721,
+          "journalNameZhCN": "角斗士莫叽姆斯",
+          "spellId": 75936
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 40721,
+          "itemIds": [
+            54857
+          ],
+          "questIds": [],
+          "spellId": 75936
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75936",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75936"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    },
+    {
+      "collectionId": 100485,
+      "description": {
+        "descriptionKey": 78381,
+        "lookupKeys": {
+          "creatureEntry": 42078,
+          "journalNameZhCN": "迷你雷神",
+          "spellId": 78381
+        },
+        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "status": "MISSING"
+      },
+      "name": {
+        "keys": {
+          "achievementIds": [],
+          "creatureEntry": 42078,
+          "itemIds": [
+            56806
+          ],
+          "questIds": [],
+          "spellId": 78381
+        },
+        "status": "REVIEWED_ZHCN_CLIENT_AND_WORLD"
+      },
+      "source": {
+        "references": [
+          "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:78381",
+          "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:78381"
+        ],
+        "status": "REVIEWED_CATEGORY_CROSS_REFERENCE"
+      }
+    }
+  ],
+  "schemaVersion": 1,
+  "sourceBuild": "3.3.5.12340"
+}

@@ -1,0 +1,2309 @@
+{
+  "candidateHash": "de5468f5047f6b8afbe9fdceadd5b3124b7854cd91f5104bd619aac175a15e55",
+  "entries": [
+    {
+      "collectionId": 100281,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15999",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15999",
+        "world.quest:4729"
+      ],
+      "source": "|cFFFFD200任务：|r基布雷尔的特殊宠物",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 15999
+    },
+    {
+      "collectionId": 100282,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:16450",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:16450",
+        "world.quest:4862"
+      ],
+      "source": "|cFFFFD200任务：|r蜘蛛卵",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 16450
+    },
+    {
+      "collectionId": 100283,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10698",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10698",
+        "world.loot:creature_loot_template:740",
+        "world.loot:creature_loot_template:741"
+      ],
+      "source": "|cFFFFD200掉落：|r绿龙宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10698
+    },
+    {
+      "collectionId": 100284,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:51851",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:51851",
+        "world.loot:creature_loot_template:28194"
+      ],
+      "source": "|cFFFFD200掉落：|r吸血蝙蝠宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 51851
+    },
+    {
+      "collectionId": 100285,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40990",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40990",
+        "world.achievement:1250"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 5,
+      "spellId": 40990
+    },
+    {
+      "collectionId": 100286,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:42609",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:42609"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 42609
+    },
+    {
+      "collectionId": 100287,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45082",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45082",
+        "world.vendor:18382"
+      ],
+      "source": "|cFFFFD200商人：|r麦卡",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 45082
+    },
+    {
+      "collectionId": 100288,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28738",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28738",
+        "world.event:10"
+      ],
+      "source": "|cFFFFD200世界事件：|rChildren's Week",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 6,
+      "spellId": 28738
+    },
+    {
+      "collectionId": 100289,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:46599",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:46599",
+        "world.loot:creature_loot_template:24664",
+        "world.loot:creature_loot_template:24857"
+      ],
+      "source": "|cFFFFD200掉落：|r凤凰宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 46599
+    },
+    {
+      "collectionId": 100290,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:53316",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:53316",
+        "world.vendor:29537"
+      ],
+      "source": "|cFFFFD200商人：|r达拉希尔|n|cFFFFD200费用：|r40|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 53316
+    },
+    {
+      "collectionId": 100291,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10682",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10682",
+        "world.loot:creature_loot_template:1561",
+        "world.loot:creature_loot_template:1562",
+        "world.loot:creature_loot_template:1563",
+        "world.loot:creature_loot_template:1564",
+        "world.loot:creature_loot_template:1565",
+        "world.loot:creature_loot_template:1653",
+        "world.loot:creature_loot_template:2545",
+        "world.loot:creature_loot_template:2546",
+        "world.loot:creature_loot_template:4505",
+        "world.loot:creature_loot_template:4506"
+      ],
+      "source": "|cFFFFD200掉落：|r鹦鹉笼（花羽鹦鹉）",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10682
+    },
+    {
+      "collectionId": 100292,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:25162",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:25162",
+        "world.loot:item_loot_template:20768"
+      ],
+      "source": "|cFFFFD200掉落：|r恶心的软泥怪",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 25162
+    },
+    {
+      "collectionId": 100293,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28739",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28739",
+        "world.event:10"
+      ],
+      "source": "|cFFFFD200世界事件：|rChildren's Week",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 6,
+      "spellId": 28739
+    },
+    {
+      "collectionId": 100294,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:19772",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:19772"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 19772
+    },
+    {
+      "collectionId": 100295,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45127",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45127",
+        "world.loot:item_loot_template:50301"
+      ],
+      "source": "|cFFFFD200掉落：|r风筝龙",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 45127
+    },
+    {
+      "collectionId": 100296,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36034",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36034",
+        "world.loot:creature_loot_template:20197"
+      ],
+      "source": "|cFFFFD200掉落：|r被捕获的萤火虫",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 36034
+    },
+    {
+      "collectionId": 100297,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:17709",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:17709",
+        "world.quest:12781",
+        "world.quest:5805",
+        "world.quest:5841",
+        "world.quest:5842",
+        "world.quest:5843",
+        "world.quest:5844",
+        "world.quest:5847",
+        "world.quest:8547",
+        "world.quest:9278"
+      ],
+      "source": "|cFFFFD200任务：|r欢迎！",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 17709
+    },
+    {
+      "collectionId": 100298,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:17707",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:17707",
+        "world.quest:12781",
+        "world.quest:5805",
+        "world.quest:5841",
+        "world.quest:5842",
+        "world.quest:5843",
+        "world.quest:5844",
+        "world.quest:5847",
+        "world.quest:8547",
+        "world.quest:9278"
+      ],
+      "source": "|cFFFFD200任务：|r欢迎！",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 17707
+    },
+    {
+      "collectionId": 100299,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:52615",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:52615"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 52615
+    },
+    {
+      "collectionId": 100300,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40549",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40549",
+        "world.loot:item_loot_template:50301"
+      ],
+      "source": "|cFFFFD200掉落：|r猴子护符",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 40549
+    },
+    {
+      "collectionId": 100301,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:55068",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:55068"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 55068
+    },
+    {
+      "collectionId": 100302,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:59250",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:59250"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 59250
+    },
+    {
+      "collectionId": 100303,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61725",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61725"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 61725
+    },
+    {
+      "collectionId": 100304,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69002",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69002"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 5,
+      "spellId": 69002
+    },
+    {
+      "collectionId": 100309,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:4055",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:4055"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 4055
+    },
+    {
+      "collectionId": 100310,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10677",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10677",
+        "world.vendor:20980"
+      ],
+      "source": "|cFFFFD200商人：|r商人拉沙德|n|cFFFFD200费用：|r0.6|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10677
+    },
+    {
+      "collectionId": 100311,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10678",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10678",
+        "world.vendor:6367"
+      ],
+      "source": "|cFFFFD200商人：|r冬妮·安萨妮娅|n|cFFFFD200费用：|r0.4|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10678
+    },
+    {
+      "collectionId": 100312,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10676",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10676",
+        "world.vendor:6367"
+      ],
+      "source": "|cFFFFD200商人：|r冬妮·安萨妮娅|n|cFFFFD200费用：|r0.4|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10676
+    },
+    {
+      "collectionId": 100313,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10675",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10675",
+        "world.loot:creature_loot_template:1920",
+        "world.loot:creature_loot_template:2271",
+        "world.loot:creature_loot_template:2272",
+        "world.loot:creature_loot_template:2358"
+      ],
+      "source": "|cFFFFD200掉落：|r猫笼（黑纹灰猫）",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10675
+    },
+    {
+      "collectionId": 100314,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10674",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10674",
+        "world.vendor:6367"
+      ],
+      "source": "|cFFFFD200商人：|r冬妮·安萨妮娅|n|cFFFFD200费用：|r0.4|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10674
+    },
+    {
+      "collectionId": 100315,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10673",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10673",
+        "world.vendor:6367"
+      ],
+      "source": "|cFFFFD200商人：|r冬妮·安萨妮娅|n|cFFFFD200费用：|r0.4|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10673
+    },
+    {
+      "collectionId": 100316,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10679",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10679",
+        "world.vendor:8666"
+      ],
+      "source": "|cFFFFD200商人：|r利尔·迪米|n|cFFFFD200费用：|r0.6|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10679
+    },
+    {
+      "collectionId": 100317,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10683",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10683",
+        "world.loot:creature_loot_template:657"
+      ],
+      "source": "|cFFFFD200掉落：|r鹦鹉笼（绿翼鹦鹉）",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10683
+    },
+    {
+      "collectionId": 100318,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10681
+    },
+    {
+      "collectionId": 100319,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10684",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10684",
+        "world.vendor:20980",
+        "world.vendor:2663"
+      ],
+      "source": "|cFFFFD200商人：|r纳尔克、商人拉沙德|n|cFFFFD200费用：|r0.4|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10684
+    },
+    {
+      "collectionId": 100320,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10680",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10680",
+        "world.vendor:2663"
+      ],
+      "source": "|cFFFFD200商人：|r纳尔克|n|cFFFFD200费用：|r0.4|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10680
+    },
+    {
+      "collectionId": 100321,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10686
+    },
+    {
+      "collectionId": 100322,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10687
+    },
+    {
+      "collectionId": 100323,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10685",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10685",
+        "world.vendor:6548"
+      ],
+      "source": "|cFFFFD200商人：|r大法师提尔斯|n|cFFFFD200费用：|r1|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10685
+    },
+    {
+      "collectionId": 100324,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10688",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10688",
+        "world.vendor:20980",
+        "world.vendor:8403"
+      ],
+      "source": "|cFFFFD200商人：|r杰雷米亚·派森、商人拉沙德|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10688
+    },
+    {
+      "collectionId": 100325,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10695",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10695",
+        "world.loot:creature_loot_template:2725",
+        "world.loot:creature_loot_template:4324"
+      ],
+      "source": "|cFFFFD200掉落：|r黑龙宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10695
+    },
+    {
+      "collectionId": 100326,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10697",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10697",
+        "world.loot:creature_loot_template:1042",
+        "world.loot:creature_loot_template:1044",
+        "world.loot:creature_loot_template:1069"
+      ],
+      "source": "|cFFFFD200掉落：|r红龙宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10697
+    },
+    {
+      "collectionId": 100327,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10699",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10699"
+      ],
+      "source": "|cFFFFD200掉落：|r游戏内掉落",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 0,
+      "spellId": 10699
+    },
+    {
+      "collectionId": 100328,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10696",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10696",
+        "world.loot:creature_loot_template:193",
+        "world.loot:creature_loot_template:6129",
+        "world.loot:creature_loot_template:6130",
+        "world.loot:creature_loot_template:6131"
+      ],
+      "source": "|cFFFFD200掉落：|r蓝龙宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 10696
+    },
+    {
+      "collectionId": 100329,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10700
+    },
+    {
+      "collectionId": 100330,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10704",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10704",
+        "world.vendor:14860"
+      ],
+      "source": "|cFFFFD200商人：|r弗里克|n|cFFFFD200费用：|r1|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10704
+    },
+    {
+      "collectionId": 100331,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10703",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10703",
+        "world.vendor:14860"
+      ],
+      "source": "|cFFFFD200商人：|r弗里克|n|cFFFFD200费用：|r1|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10703
+    },
+    {
+      "collectionId": 100332,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10701
+    },
+    {
+      "collectionId": 100333,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10702
+    },
+    {
+      "collectionId": 100334,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10707",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10707",
+        "world.vendor:8665"
+      ],
+      "source": "|cFFFFD200商人：|r夏琳奈尔|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10707
+    },
+    {
+      "collectionId": 100335,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10708",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10708"
+      ],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10708
+    },
+    {
+      "collectionId": 100336,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10706",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10706",
+        "world.vendor:8665"
+      ],
+      "source": "|cFFFFD200商人：|r夏琳奈尔|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10706
+    },
+    {
+      "collectionId": 100337,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10705
+    },
+    {
+      "collectionId": 100338,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10710
+    },
+    {
+      "collectionId": 100339,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10712
+    },
+    {
+      "collectionId": 100340,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10711",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10711",
+        "world.vendor:1263"
+      ],
+      "source": "|cFFFFD200商人：|r亚尔林·冻石|n|cFFFFD200费用：|r0.2|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10711
+    },
+    {
+      "collectionId": 100341,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10713",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10713",
+        "world.vendor:28951"
+      ],
+      "source": "|cFFFFD200商人：|r布琳妮|n|cFFFFD200费用：|r50|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10713
+    },
+    {
+      "collectionId": 100342,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10716",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10716",
+        "world.vendor:8404"
+      ],
+      "source": "|cFFFFD200商人：|r克萨迪斯|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10716
+    },
+    {
+      "collectionId": 100343,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10715
+    },
+    {
+      "collectionId": 100344,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10714",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10714",
+        "world.vendor:8404"
+      ],
+      "source": "|cFFFFD200商人：|r克萨迪斯|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10714
+    },
+    {
+      "collectionId": 100345,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10720
+    },
+    {
+      "collectionId": 100346,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10717",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10717",
+        "world.vendor:20980",
+        "world.vendor:8404"
+      ],
+      "source": "|cFFFFD200商人：|r克萨迪斯、商人拉沙德|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10717
+    },
+    {
+      "collectionId": 100347,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10719
+    },
+    {
+      "collectionId": 100348,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10718
+    },
+    {
+      "collectionId": 100349,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 10721
+    },
+    {
+      "collectionId": 100350,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:12243",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:12243",
+        "world.quest:3721"
+      ],
+      "source": "|cFFFFD200任务：|r你自己的OOX",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 12243
+    },
+    {
+      "collectionId": 100351,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15048",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15048"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 15048
+    },
+    {
+      "collectionId": 100352,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15049",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15049"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 15049
+    },
+    {
+      "collectionId": 100353,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15067",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:15067",
+        "world.loot:creature_loot_template:5278"
+      ],
+      "source": "|cFFFFD200掉落：|r精龙的蛋",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 15067
+    },
+    {
+      "collectionId": 100354,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:15648"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 15648
+    },
+    {
+      "collectionId": 100355,
+      "provenanceRefs": [
+        "world.quest:4621"
+      ],
+      "source": "|cFFFFD200任务：|r敬礼，舰队司令！",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 17567
+    },
+    {
+      "collectionId": 100356,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:17708",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:17708",
+        "world.quest:12781",
+        "world.quest:5805",
+        "world.quest:5841",
+        "world.quest:5842",
+        "world.quest:5843",
+        "world.quest:5844",
+        "world.quest:5847",
+        "world.quest:8547",
+        "world.quest:9278"
+      ],
+      "source": "|cFFFFD200任务：|r欢迎！",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 17708
+    },
+    {
+      "collectionId": 100357,
+      "provenanceRefs": [
+        "world.quest:5163"
+      ],
+      "source": "|cFFFFD200任务：|r雪怪计划！",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 19363
+    },
+    {
+      "collectionId": 100358,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:10709",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:10709",
+        "world.vendor:8401"
+      ],
+      "source": "|cFFFFD200商人：|r哈尔帕|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 10709
+    },
+    {
+      "collectionId": 100359,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23429"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 23429
+    },
+    {
+      "collectionId": 100360,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23431"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 23431
+    },
+    {
+      "collectionId": 100361,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23430"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 23430
+    },
+    {
+      "collectionId": 100362,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23432"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 23432
+    },
+    {
+      "collectionId": 100363,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23428"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 23428
+    },
+    {
+      "collectionId": 100364,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23531",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:23531"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 23531
+    },
+    {
+      "collectionId": 100365,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23530",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:23530"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 23530
+    },
+    {
+      "collectionId": 100366,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:23811",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:23811"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 23811
+    },
+    {
+      "collectionId": 100367,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:24696",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:24696",
+        "world.quest:316"
+      ],
+      "source": "|cFFFFD200任务：|r<UNUSED>",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 24696
+    },
+    {
+      "collectionId": 100368,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 24985
+    },
+    {
+      "collectionId": 100369,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 24990
+    },
+    {
+      "collectionId": 100370,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:24988",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:24988"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 24988
+    },
+    {
+      "collectionId": 100371,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 24989
+    },
+    {
+      "collectionId": 100372,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 24986
+    },
+    {
+      "collectionId": 100373,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:25018",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:25018",
+        "world.quest:316"
+      ],
+      "source": "|cFFFFD200任务：|r<UNUSED>",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 25018
+    },
+    {
+      "collectionId": 100374,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:25849"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 25849
+    },
+    {
+      "collectionId": 100375,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26533",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26533"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 26533
+    },
+    {
+      "collectionId": 100376,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26010",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26010"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 26010
+    },
+    {
+      "collectionId": 100377,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26541",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26541"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 26541
+    },
+    {
+      "collectionId": 100378,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26529",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26529"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 26529
+    },
+    {
+      "collectionId": 100379,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:26045",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:26045"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 26045
+    },
+    {
+      "collectionId": 100380,
+      "provenanceRefs": [
+        "world.loot:item_loot_template:21327"
+      ],
+      "source": "|cFFFFD200掉落：|r机械格林奇",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 26067
+    },
+    {
+      "collectionId": 100381,
+      "provenanceRefs": [
+        "world.loot:creature_loot_template:15727"
+      ],
+      "source": "|cFFFFD200掉落：|r克苏恩的触须",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 26391
+    },
+    {
+      "collectionId": 100382,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:27241",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:27241",
+        "world.quest:316"
+      ],
+      "source": "|cFFFFD200任务：|r<UNUSED>",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 27241
+    },
+    {
+      "collectionId": 100383,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:27570",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:27570"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 27570
+    },
+    {
+      "collectionId": 100384,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28487",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28487",
+        "world.quest:316",
+        "world.quest:8021",
+        "world.quest:8022",
+        "world.quest:8023",
+        "world.quest:8024",
+        "world.quest:8025",
+        "world.quest:8026"
+      ],
+      "source": "|cFFFFD200任务：|r<UNUSED>、Redeem iCoke Prize Voucher",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 28487
+    },
+    {
+      "collectionId": 100385,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28505",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28505",
+        "world.quest:9273"
+      ],
+      "source": "|cFFFFD200任务：|rRedeem iCoke Prize Voucher",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 28505
+    },
+    {
+      "collectionId": 100386,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28740",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28740",
+        "world.event:10"
+      ],
+      "source": "|cFFFFD200世界事件：|rChildren's Week",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 6,
+      "spellId": 28740
+    },
+    {
+      "collectionId": 100387,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:28871",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:28871"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 28871
+    },
+    {
+      "collectionId": 100388,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:30152",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:30152"
+      ],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 2,
+      "spellId": 30152
+    },
+    {
+      "collectionId": 100389,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:30156",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:30156"
+      ],
+      "source": "|cFFFFD200集换式卡牌：|rTCG 奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 8,
+      "spellId": 30156
+    },
+    {
+      "collectionId": 100390,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:32298",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:32298"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 32298
+    },
+    {
+      "collectionId": 100391,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:33050",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:33050"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 33050
+    },
+    {
+      "collectionId": 100392,
+      "provenanceRefs": [],
+      "source": "",
+      "sourceStatus": "MISSING",
+      "sourceType": 11,
+      "spellId": 33057
+    },
+    {
+      "collectionId": 100393,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35156",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35156",
+        "world.vendor:20980"
+      ],
+      "source": "|cFFFFD200商人：|r商人拉沙德|n|cFFFFD200费用：|r40|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 35156
+    },
+    {
+      "collectionId": 100394,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35239",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35239",
+        "world.vendor:20980"
+      ],
+      "source": "|cFFFFD200商人：|r商人拉沙德|n|cFFFFD200费用：|r10|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 35239
+    },
+    {
+      "collectionId": 100395,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35910",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35910",
+        "world.vendor:21019"
+      ],
+      "source": "|cFFFFD200商人：|r希克斯|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 35910
+    },
+    {
+      "collectionId": 100396,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35909",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35909",
+        "world.vendor:20980"
+      ],
+      "source": "|cFFFFD200商人：|r商人拉沙德|n|cFFFFD200费用：|r10|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 35909
+    },
+    {
+      "collectionId": 100397,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35907",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35907",
+        "world.vendor:21019"
+      ],
+      "source": "|cFFFFD200商人：|r希克斯|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 35907
+    },
+    {
+      "collectionId": 100398,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:35911",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:35911",
+        "world.vendor:21019"
+      ],
+      "source": "|cFFFFD200商人：|r希克斯|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 35911
+    },
+    {
+      "collectionId": 100399,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36027",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36027",
+        "world.vendor:16860"
+      ],
+      "source": "|cFFFFD200商人：|r基尔兰妮|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 36027
+    },
+    {
+      "collectionId": 100400,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36031",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36031",
+        "world.vendor:20980"
+      ],
+      "source": "|cFFFFD200商人：|r商人拉沙德|n|cFFFFD200费用：|r10|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 36031
+    },
+    {
+      "collectionId": 100401,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36029",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36029",
+        "world.vendor:16860"
+      ],
+      "source": "|cFFFFD200商人：|r基尔兰妮|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 36029
+    },
+    {
+      "collectionId": 100402,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:36028",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:36028",
+        "world.vendor:16860"
+      ],
+      "source": "|cFFFFD200商人：|r基尔兰妮|n|cFFFFD200费用：|r0.5|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 36028
+    },
+    {
+      "collectionId": 100403,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:39181",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:39181",
+        "world.quest:10898"
+      ],
+      "source": "|cFFFFD200任务：|r天空之翼",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 39181
+    },
+    {
+      "collectionId": 100404,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:39709",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:39709"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 39709
+    },
+    {
+      "collectionId": 100405,
+      "provenanceRefs": [],
+      "source": "|cFFFFD200其他：|r幸运金币",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 11,
+      "spellId": 40319
+    },
+    {
+      "collectionId": 100406,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40405",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40405"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 40405
+    },
+    {
+      "collectionId": 100407,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40613",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40613",
+        "world.event:10"
+      ],
+      "source": "|cFFFFD200世界事件：|rChildren's Week",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 6,
+      "spellId": 40613
+    },
+    {
+      "collectionId": 100408,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40614",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40614",
+        "world.event:10"
+      ],
+      "source": "|cFFFFD200世界事件：|rChildren's Week",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 6,
+      "spellId": 40614
+    },
+    {
+      "collectionId": 100409,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:40634",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:40634",
+        "world.event:10"
+      ],
+      "source": "|cFFFFD200世界事件：|rChildren's Week",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 6,
+      "spellId": 40634
+    },
+    {
+      "collectionId": 100410,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:43697",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:43697"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 43697
+    },
+    {
+      "collectionId": 100411,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:43698",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:43698"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 43698
+    },
+    {
+      "collectionId": 100412,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:43918",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:43918"
+      ],
+      "source": "|cFFFFD200掉落：|r魔汁",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 0,
+      "spellId": 43918
+    },
+    {
+      "collectionId": 100413,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:44369",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:44369"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 44369
+    },
+    {
+      "collectionId": 100414,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:54187",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:54187"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 54187
+    },
+    {
+      "collectionId": 100415,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45125",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45125"
+      ],
+      "source": "|cFFFFD200集换式卡牌：|rTCG 奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 8,
+      "spellId": 45125
+    },
+    {
+      "collectionId": 100416,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45174",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45174"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 45174
+    },
+    {
+      "collectionId": 100417,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45175",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45175"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 45175
+    },
+    {
+      "collectionId": 100418,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:45890",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:45890"
+      ],
+      "source": "|cFFFFD200其他：|r灼烧石",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 11,
+      "spellId": 45890
+    },
+    {
+      "collectionId": 100419,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:46425",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:46425"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 46425
+    },
+    {
+      "collectionId": 100420,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:46426",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:46426"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 46426
+    },
+    {
+      "collectionId": 100421,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:48406",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:48406"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 48406
+    },
+    {
+      "collectionId": 100422,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:48408",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:48408"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 48408
+    },
+    {
+      "collectionId": 100423,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:49964",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:49964",
+        "world.loot:item_loot_template:50301"
+      ],
+      "source": "|cFFFFD200掉落：|r灵魂商人的信标",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 49964
+    },
+    {
+      "collectionId": 100424,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:51716",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:51716",
+        "world.vendor:23367"
+      ],
+      "source": "|cFFFFD200商人：|r格蕾拉|n|cFFFFD200费用：|r40|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 51716
+    },
+    {
+      "collectionId": 100425,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:53082",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:53082"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 53082
+    },
+    {
+      "collectionId": 100426,
+      "provenanceRefs": [
+        "world.loot:creature_loot_template:16141",
+        "world.loot:creature_loot_template:16298",
+        "world.loot:creature_loot_template:16299",
+        "world.loot:reference_loot_template:40110"
+      ],
+      "source": "|cFFFFD200掉落：|r闹鬼的纪念品",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 53768
+    },
+    {
+      "collectionId": 100427,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:13548",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:13548",
+        "world.loot:gameobject_loot_template:10100"
+      ],
+      "source": "|cFFFFD200掉落：|r鸡蛋",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 13548
+    },
+    {
+      "collectionId": 100428,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61348",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61348",
+        "world.loot:item_loot_template:39883"
+      ],
+      "source": "|cFFFFD200掉落：|r小食虱鸟",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 61348
+    },
+    {
+      "collectionId": 100429,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61349",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61349",
+        "world.loot:item_loot_template:39883"
+      ],
+      "source": "|cFFFFD200掉落：|r白色小食虱鸟",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 61349
+    },
+    {
+      "collectionId": 100430,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61351",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61351",
+        "world.loot:item_loot_template:39883"
+      ],
+      "source": "|cFFFFD200掉落：|r小眼镜蛇",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 61351
+    },
+    {
+      "collectionId": 100431,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61350",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61350",
+        "world.loot:item_loot_template:39883"
+      ],
+      "source": "|cFFFFD200掉落：|r始祖龙宝宝",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 61350
+    },
+    {
+      "collectionId": 100432,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61357",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61357",
+        "world.vendor:31916",
+        "world.vendor:32763"
+      ],
+      "source": "|cFFFFD200商人：|r塔奈卡、塞鲁克|n|cFFFFD200费用：|r12|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 61357
+    },
+    {
+      "collectionId": 100433,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61472",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61472"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 5,
+      "spellId": 61472
+    },
+    {
+      "collectionId": 100434,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61773",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61773"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 61773
+    },
+    {
+      "collectionId": 100435,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61855",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61855"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 5,
+      "spellId": 61855
+    },
+    {
+      "collectionId": 100436,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:61991",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:61991",
+        "world.achievement:2516"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 5,
+      "spellId": 61991
+    },
+    {
+      "collectionId": 100437,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62491",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62491",
+        "world.vendor:33653"
+      ],
+      "source": "|cFFFFD200商人：|r鲁克·鹰爪",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62491
+    },
+    {
+      "collectionId": 100438,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62508",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62508",
+        "world.vendor:33310"
+      ],
+      "source": "|cFFFFD200商人：|r德里克·斑须",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62508
+    },
+    {
+      "collectionId": 100439,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62510",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62510",
+        "world.vendor:33555"
+      ],
+      "source": "|cFFFFD200商人：|r伊莉莎·基连",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62510
+    },
+    {
+      "collectionId": 100440,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62513",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62513",
+        "world.vendor:33553"
+      ],
+      "source": "|cFFFFD200商人：|r弗蕾卡·血斧",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62513
+    },
+    {
+      "collectionId": 100441,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62514"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 62514
+    },
+    {
+      "collectionId": 100442,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62516",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62516",
+        "world.vendor:33307"
+      ],
+      "source": "|cFFFFD200商人：|r下士亚瑟·弗卢",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62516
+    },
+    {
+      "collectionId": 100443,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62562",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62562",
+        "world.vendor:33657"
+      ],
+      "source": "|cFFFFD200商人：|r艾蕾希",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62562
+    },
+    {
+      "collectionId": 100444,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62542",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62542",
+        "world.vendor:33556"
+      ],
+      "source": "|cFFFFD200商人：|r杜尔鲁·雷角",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62542
+    },
+    {
+      "collectionId": 100445,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62561",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62561"
+      ],
+      "source": "|cFFFFD200专业：|r专业技能制作或获取",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 3,
+      "spellId": 62561
+    },
+    {
+      "collectionId": 100446,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62564",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62564",
+        "world.vendor:33557"
+      ],
+      "source": "|cFFFFD200商人：|r特雷利斯·晨日",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62564
+    },
+    {
+      "collectionId": 100447,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62609",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62609",
+        "world.quest:13702",
+        "world.quest:13732",
+        "world.quest:13733",
+        "world.quest:13734",
+        "world.quest:13735"
+      ],
+      "source": "|cFFFFD200任务：|r冠军诞生",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 62609
+    },
+    {
+      "collectionId": 100448,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62746",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62746",
+        "world.quest:13736",
+        "world.quest:13737",
+        "world.quest:13738",
+        "world.quest:13739",
+        "world.quest:13740"
+      ],
+      "source": "|cFFFFD200任务：|r冠军诞生",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 1,
+      "spellId": 62746
+    },
+    {
+      "collectionId": 100449,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:62674",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:62674",
+        "world.vendor:33650"
+      ],
+      "source": "|cFFFFD200商人：|r莉蕾·转轴",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 62674
+    },
+    {
+      "collectionId": 100450,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65382",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65382"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 65382
+    },
+    {
+      "collectionId": 100451,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65381",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65381"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 65381
+    },
+    {
+      "collectionId": 100452,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:63318",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:63318"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 63318
+    },
+    {
+      "collectionId": 100453,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:63712",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:63712",
+        "world.vendor:33554"
+      ],
+      "source": "|cFFFFD200商人：|r萨玛巴",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 63712
+    },
+    {
+      "collectionId": 100454,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:64351"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 64351
+    },
+    {
+      "collectionId": 100455,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65358",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65358",
+        "world.vendor:28951"
+      ],
+      "source": "|cFFFFD200商人：|r布琳妮|n|cFFFFD200费用：|r50|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 65358
+    },
+    {
+      "collectionId": 100456,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:65682",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:65682"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 65682
+    },
+    {
+      "collectionId": 100457,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66030",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66030"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 66030
+    },
+    {
+      "collectionId": 100458,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66096",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66096",
+        "world.vendor:34772",
+        "world.vendor:34881"
+      ],
+      "source": "|cFFFFD200商人：|r瓦萨林·彤曦、海伦·慧歌",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 66096
+    },
+    {
+      "collectionId": 100459,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66175",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66175"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 66175
+    },
+    {
+      "collectionId": 100460,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:66520",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:66520"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 66520
+    },
+    {
+      "collectionId": 100461,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67416",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67416",
+        "world.loot:gameobject_loot_template:27827"
+      ],
+      "source": "|cFFFFD200掉落：|r小塔克",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67416
+    },
+    {
+      "collectionId": 100462,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67420",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67420",
+        "world.loot:creature_loot_template:14821"
+      ],
+      "source": "|cFFFFD200掉落：|r拉扎什幼龙",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67420
+    },
+    {
+      "collectionId": 100463,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67414",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67414",
+        "world.loot:creature_loot_template:3636",
+        "world.loot:creature_loot_template:3637"
+      ],
+      "source": "|cFFFFD200掉落：|r变异幼龙",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67414
+    },
+    {
+      "collectionId": 100464,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67413",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67413",
+        "world.loot:gameobject_loot_template:27828"
+      ],
+      "source": "|cFFFFD200掉落：|r小达尔特",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67413
+    },
+    {
+      "collectionId": 100465,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67418",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67418",
+        "world.loot:gameobject_loot_template:27829"
+      ],
+      "source": "|cFFFFD200掉落：|r暴掠幼龙",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67418
+    },
+    {
+      "collectionId": 100466,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67419",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67419",
+        "world.loot:gameobject_loot_template:27826"
+      ],
+      "source": "|cFFFFD200掉落：|r刺喉幼龙",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67419
+    },
+    {
+      "collectionId": 100467,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67417",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67417",
+        "world.vendor:28951"
+      ],
+      "source": "|cFFFFD200商人：|r布琳妮|n|cFFFFD200费用：|r50|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 67417
+    },
+    {
+      "collectionId": 100468,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67415",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67415",
+        "world.loot:creature_loot_template:29334"
+      ],
+      "source": "|cFFFFD200掉落：|r古达克幼龙",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 0,
+      "spellId": 67415
+    },
+    {
+      "collectionId": 100469,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:67527",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:67527"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 67527
+    },
+    {
+      "collectionId": 100470,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:68767",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:68767"
+      ],
+      "source": "|cFFFFD200集换式卡牌：|rTCG 奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 8,
+      "spellId": 68767
+    },
+    {
+      "collectionId": 100471,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:68810",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:68810"
+      ],
+      "source": "|cFFFFD200集换式卡牌：|rTCG 奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 8,
+      "spellId": 68810
+    },
+    {
+      "collectionId": 100472,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69452",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69452"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 69452
+    },
+    {
+      "collectionId": 100473,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69535",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69535"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 69535
+    },
+    {
+      "collectionId": 100474,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69536",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69536"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 69536
+    },
+    {
+      "collectionId": 100475,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69539",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69539"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 69539
+    },
+    {
+      "collectionId": 100476,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69541",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69541"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 69541
+    },
+    {
+      "collectionId": 100477,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:69677",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:69677"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 69677
+    },
+    {
+      "collectionId": 100478,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:70613",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:70613",
+        "world.achievement:4478"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 5,
+      "spellId": 70613
+    },
+    {
+      "collectionId": 100479,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:71840",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:71840"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 71840
+    },
+    {
+      "collectionId": 100480,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:74932",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:74932"
+      ],
+      "source": "|cFFFFD200世界事件：|r节日或世界事件奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 6,
+      "spellId": 74932
+    },
+    {
+      "collectionId": 100481,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75134",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75134",
+        "world.vendor:29478",
+        "world.vendor:29716"
+      ],
+      "source": "|cFFFFD200商人：|r耶比托·乔巴斯、发条助手|n|cFFFFD200费用：|r50|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t",
+      "sourceStatus": "REVIEWED_ZHCN_WORLD",
+      "sourceType": 2,
+      "spellId": 75134
+    },
+    {
+      "collectionId": 100482,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75613",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75613"
+      ],
+      "source": "|cFFFFD200成就：|r成就奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 5,
+      "spellId": 75613
+    },
+    {
+      "collectionId": 100483,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75906",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75906"
+      ],
+      "source": "|cFFFFD200游戏商城：|r商城奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 9,
+      "spellId": 75906
+    },
+    {
+      "collectionId": 100484,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:75936",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:75936"
+      ],
+      "source": "|cFFFFD200其他：|r莫叽姆斯的小矛",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 11,
+      "spellId": 75936
+    },
+    {
+      "collectionId": 100485,
+      "provenanceRefs": [
+        "petdata:3b90812409067fe400fa2f159a61d4a647544577dbefc732d6125327b7d4aed3:78381",
+        "petdata:6ebf2001827d638c7d28612884ada617d9fc4101c58560481cd1e31c49c8a35e:78381"
+      ],
+      "source": "|cFFFFD200促销：|r历史促销或典藏奖励",
+      "sourceStatus": "REVIEWED_CATEGORY_CROSS_REFERENCE",
+      "sourceType": 7,
+      "spellId": 78381
+    }
+  ],
+  "schemaVersion": 1
+}

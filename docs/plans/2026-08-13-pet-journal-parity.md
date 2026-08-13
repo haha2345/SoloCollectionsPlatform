@@ -345,13 +345,13 @@ python -m unittest discover -s .\tools\collections\tests -p "test_companion_cata
 
 **Steps:**
 
-1. [ ] 为全部规范小宠物建立一一对应的 journal metadata 记录。
-2. [ ] 从国服 Spell/Item/Quest/Creature/Achievement 和 world 数据库生成中文来源块。
-3. [ ] 从合法取得的国服客户端/数据库提取描述，按 spell/creature/name 三键核对。
-4. [ ] 记录每条描述的 `descriptionStatus` 与 provenance reference；来源冲突进入 review 文件，不自动猜测。
-5. [ ] 金币费用统一输出 `数字|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t`；多行使用 `|n`。
-6. [ ] 缺少可核验描述时保留空值和 `MISSING`，不写“账号收藏”或“服务端权威目录提供”等模板文案。
-7. [ ] 检查所有可见记录都有国服中文名、稳定来源类型和明确描述状态。
+1. [x] 为全部规范小宠物建立一一对应的 journal metadata 记录。
+2. [x] 从国服 Spell/Item/Quest/Creature/Achievement 和 world 数据库生成中文来源块。
+3. [x] 从合法取得的国服客户端/数据库提取描述，按 spell/creature/name 三键核对。
+4. [x] 记录每条描述的 `descriptionStatus` 与 provenance reference；来源冲突进入 review 文件，不自动猜测。
+5. [x] 金币费用统一输出 `数字|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t`；多行使用 `|n`。
+6. [x] 缺少可核验描述时保留空值和 `MISSING`，不写“账号收藏”或“服务端权威目录提供”等模板文案。
+7. [x] 检查所有可见记录都有国服中文名、稳定来源类型和明确描述状态。
 
 **Commands:**
 

@@ -36,3 +36,15 @@ Task 1 direct checks passed. No cleanup command was used.
 - Visible/actionable/random-eligible canonical companions: 201/201/201.
 - zhCN source gaps recorded: 20; zhCN description gaps recorded: 201.
 - Direct checks: companion generator check passed; 10 focused tests passed with 1 optional named-pack check skipped because no review-pack environment variable was supplied; `git diff --check` passed.
+
+## Task 3 - zhCN journal metadata
+
+- Metadata coverage: 201/201 canonical companion actions.
+- Reviewed zhCN names: 201; missing names: 0.
+- Reviewed world-backed source blocks: 103.
+- Reviewed category cross-reference source blocks: 77.
+- Explicit source gaps: 21.
+- Verified zhCN lore descriptions found: 0; all 201 records retain an empty description with `descriptionStatus=MISSING`.
+- Description provenance records the attempted spell/creature/name lookup keys and does not copy English PetData lore.
+- Currency lines use only inline `UI-GoldIcon.blp:0` textures; source line breaks use `|n`.
+- Direct checks: deterministic catalog check passed; 13 focused tests passed with 1 optional named-pack check skipped; `git diff --check` passed.

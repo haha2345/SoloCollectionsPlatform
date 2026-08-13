@@ -1,5 +1,5 @@
 {
-  "candidateHash": "98900e63c77dcfdc1fdc0931182dfacbd638c45b6c6fd8ccf41e13f228a6c933",
+  "candidateHash": "de5468f5047f6b8afbe9fdceadd5b3124b7854cd91f5104bd619aac175a15e55",
   "entries": [
     {
       "acquisitionClass": "STANDARD",
@@ -884,14 +884,14 @@
       "journalVisible": true,
       "randomEligible": true,
       "referenceSourceTypes": [],
-      "sourceType": 11,
+      "sourceType": 1,
       "unlockSpellIds": [
         17567
       ],
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 17707,
       "collectionId": 100298,
@@ -902,14 +902,14 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         17707
       ],
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 17708,
       "collectionId": 100356,
@@ -920,14 +920,14 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         17708
       ],
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 17709,
       "collectionId": 100297,
@@ -938,7 +938,7 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         17709
       ],
@@ -954,7 +954,7 @@
       "journalVisible": true,
       "randomEligible": true,
       "referenceSourceTypes": [],
-      "sourceType": 11,
+      "sourceType": 1,
       "unlockSpellIds": [
         19363
       ],
@@ -1141,7 +1141,7 @@
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 24696,
       "collectionId": 100367,
@@ -1152,7 +1152,7 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         24696
       ],
@@ -1241,7 +1241,7 @@
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 25018,
       "collectionId": 100373,
@@ -1252,7 +1252,7 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         24987,
         25018
@@ -1395,7 +1395,7 @@
       "journalVisible": true,
       "randomEligible": true,
       "referenceSourceTypes": [],
-      "sourceType": 11,
+      "sourceType": 0,
       "unlockSpellIds": [
         26067
       ],
@@ -1411,14 +1411,14 @@
       "journalVisible": true,
       "randomEligible": true,
       "referenceSourceTypes": [],
-      "sourceType": 11,
+      "sourceType": 0,
       "unlockSpellIds": [
         26391
       ],
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 27241,
       "collectionId": 100382,
@@ -1429,7 +1429,7 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         27241
       ],
@@ -1465,14 +1465,14 @@
       "referenceSourceTypes": [
         0
       ],
-      "sourceType": 0,
+      "sourceType": 1,
       "unlockSpellIds": [
         28487
       ],
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 28505,
       "collectionId": 100385,
@@ -1483,7 +1483,7 @@
       "referenceSourceTypes": [
         7
       ],
-      "sourceType": 7,
+      "sourceType": 1,
       "unlockSpellIds": [
         28505
       ],
@@ -1936,7 +1936,7 @@
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 40549,
       "collectionId": 100300,
@@ -1947,7 +1947,7 @@
       "referenceSourceTypes": [
         8
       ],
-      "sourceType": 8,
+      "sourceType": 0,
       "unlockSpellIds": [
         40549
       ],
@@ -2152,7 +2152,7 @@
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 45127,
       "collectionId": 100295,
@@ -2163,7 +2163,7 @@
       "referenceSourceTypes": [
         8
       ],
-      "sourceType": 8,
+      "sourceType": 0,
       "unlockSpellIds": [
         45127
       ],
@@ -2314,7 +2314,7 @@
       "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
     },
     {
-      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "acquisitionClass": "STANDARD",
       "actionable": true,
       "canonicalSpellId": 49964,
       "collectionId": 100423,
@@ -2325,7 +2325,7 @@
       "referenceSourceTypes": [
         8
       ],
-      "sourceType": 8,
+      "sourceType": 0,
       "unlockSpellIds": [
         49964
       ],
@@ -2431,7 +2431,7 @@
       "journalVisible": true,
       "randomEligible": true,
       "referenceSourceTypes": [],
-      "sourceType": 11,
+      "sourceType": 0,
       "unlockSpellIds": [
         53768
       ],
@@ -2467,7 +2467,7 @@
       "referenceSourceTypes": [
         1
       ],
-      "sourceType": 1,
+      "sourceType": 0,
       "unlockSpellIds": [
         13548
       ],

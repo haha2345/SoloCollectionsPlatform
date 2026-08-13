@@ -26,6 +26,9 @@ PRESENTATIONS = ROOT / "catalog/source/creature_presentations.json"
 VISIBILITY = ROOT / "catalog/review/companions/journal-visibility-policy.json"
 DUPLICATES = ROOT / "catalog/review/companions/duplicate-audit.json"
 JOURNAL_AUDIT = ROOT / "catalog/generated/companion-journal-audit.json"
+JOURNAL_METADATA = ROOT / "catalog/source/companion_journal_metadata.json"
+SOURCE_ZHCN = ROOT / "catalog/source/companion_source_zhCN.json"
+TEXT_PROVENANCE = ROOT / "catalog/review/companions/text-provenance.json"
 EVIDENCE_ROOT = Path(os.environ["SOLOCOLLECTIONS_EVIDENCE_ROOT"]) if os.environ.get("SOLOCOLLECTIONS_EVIDENCE_ROOT") else None
 
 
@@ -42,6 +45,9 @@ class CompanionCatalogTests(unittest.TestCase):
         cls.visibility = read_json(VISIBILITY)
         cls.duplicates = read_json(DUPLICATES)
         cls.journal_audit = read_json(JOURNAL_AUDIT)
+        cls.journal_metadata = read_json(JOURNAL_METADATA)
+        cls.source_zhcn = read_json(SOURCE_ZHCN)
+        cls.text_provenance = read_json(TEXT_PROVENANCE)
         with COLLECTIONS.open(encoding="utf-8-sig", newline="") as handle:
             cls.collections = list(csv.DictReader(handle))
 
@@ -126,6 +132,54 @@ class CompanionCatalogTests(unittest.TestCase):
         )
         for forbidden in ("账号收藏", "服务端权威目录提供", "AI generated", "AI 生成"):
             self.assertNotIn(forbidden, serialized)
+
+    def test_journal_metadata_has_exact_action_coverage_and_reviewed_zhcn_names(self):
+        metadata = self.journal_metadata["entries"]
+        actions = self.actions["entries"]
+        self.assertEqual(
+            {row["collectionId"] for row in actions},
+            {row["collectionId"] for row in metadata},
+        )
+        action_by_id = {row["collectionId"]: row for row in actions}
+        for row in metadata:
+            action = action_by_id[row["collectionId"]]
+            self.assertEqual(action["canonicalSpellId"], row["spellId"])
+            self.assertEqual(action["canonicalSpellId"], row["canonicalActionSpellId"])
+            self.assertTrue(row["journalNameZhCN"].strip())
+            self.assertIn(row["sourceType"], range(12))
+            self.assertTrue(row["journalVisible"])
+            self.assertTrue(row["actionable"])
+            self.assertTrue(row["randomEligible"])
+
+    def test_missing_descriptions_remain_explicit_and_are_never_fabricated(self):
+        metadata = self.journal_metadata["entries"]
+        provenance = {row["collectionId"]: row for row in self.text_provenance["entries"]}
+        self.assertEqual(201, len(metadata))
+        self.assertEqual(201, self.journal_audit["counts"]["zhCNDescriptionGapCount"])
+        for row in metadata:
+            self.assertEqual("", row["descriptionZhCN"])
+            self.assertEqual("MISSING", row["descriptionStatus"])
+            self.assertEqual("MISSING", provenance[row["collectionId"]]["description"]["status"])
+        serialized = json.dumps(metadata, ensure_ascii=False)
+        for forbidden in ("账号收藏", "服务端权威目录提供", "AI generated", "AI 生成"):
+            self.assertNotIn(forbidden, serialized)
+
+    def test_zhcn_sources_are_traceable_and_money_icons_stay_inline(self):
+        sources = self.source_zhcn["entries"]
+        self.assertEqual(201, len(sources))
+        self.assertEqual(
+            self.journal_audit["counts"]["zhCNSourceGapCount"],
+            sum(row["sourceStatus"] == "MISSING" for row in sources),
+        )
+        for row in sources:
+            self.assertIn(row["sourceStatus"], {"REVIEWED_ZHCN_WORLD", "REVIEWED_CATEGORY_CROSS_REFERENCE", "MISSING"})
+            if "MoneyFrame" in row["source"]:
+                self.assertIn("|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t", row["source"])
+                self.assertNotIn("UI-SilverIcon", row["source"])
+                self.assertNotIn("UI-CopperIcon", row["source"])
+            if row["sourceStatus"] != "MISSING":
+                self.assertTrue(row["source"])
+                self.assertTrue(row["provenanceRefs"] or row["sourceStatus"] == "REVIEWED_CATEGORY_CROSS_REFERENCE")
 
     def test_schema_v2_preserves_old_ids_and_indexes_all_unlock_variants(self):
         self.assertEqual(2, self.actions["schemaVersion"])

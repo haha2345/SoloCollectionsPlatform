@@ -1,5 +1,5 @@
 {
-  "candidateHash": "98900e63c77dcfdc1fdc0931182dfacbd638c45b6c6fd8ccf41e13f228a6c933",
+  "candidateHash": "de5468f5047f6b8afbe9fdceadd5b3124b7854cd91f5104bd619aac175a15e55",
   "candidates": [
     {
       "creature": {
@@ -22,6 +22,7 @@
           "iconTexture": "Interface\\Icons\\INV_Crate_01",
           "itemSources": [
             {
+              "buyPriceCopper": 400,
               "itemId": 4401,
               "name_zhCN": "机械松鼠笼"
             }
@@ -91,6 +92,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 6000,
               "itemId": 8490,
               "name_zhCN": "猫笼（黑尾白猫）"
             }
@@ -170,6 +172,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8488,
               "name_zhCN": "猫笼（黑斑白猫）"
             }
@@ -242,6 +245,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8487,
               "name_zhCN": "猫笼（虎皮猫）"
             }
@@ -314,6 +318,7 @@
           "iconTexture": "Interface\\Icons\\Achievement_Halloween_Cat_01",
           "itemSources": [
             {
+              "buyPriceCopper": 6000,
               "itemId": 8491,
               "name_zhCN": "猫笼（黑纹灰猫）"
             }
@@ -403,6 +408,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8486,
               "name_zhCN": "猫笼（黄猫）"
             }
@@ -475,6 +481,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8485,
               "name_zhCN": "猫笼（灰猫）"
             }
@@ -547,6 +554,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 6000,
               "itemId": 8489,
               "name_zhCN": "猫笼（白猫）"
             }
@@ -619,6 +627,7 @@
           "iconTexture": "Interface\\Icons\\INV_Feather_12",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8492,
               "name_zhCN": "鹦鹉笼（绿翼鹦鹉）"
             }
@@ -728,6 +737,7 @@
           "iconTexture": "Interface\\Icons\\INV_Feather_11",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8495,
               "name_zhCN": "鹦鹉笼（金翼鹦鹉）"
             }
@@ -807,6 +817,7 @@
           "iconTexture": "Interface\\Icons\\INV_Feather_08",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8496,
               "name_zhCN": "鹦鹉笼（红尾鹦鹉）"
             }
@@ -879,6 +890,7 @@
           "iconTexture": "Interface\\Icons\\INV_Feather_08",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 8494,
               "name_zhCN": "鹦鹉笼（花羽鹦鹉）"
             }
@@ -1080,6 +1092,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 11023,
               "name_zhCN": "灰色小鸡"
             }
@@ -1159,6 +1172,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_cockroach",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 10393,
               "name_zhCN": "蟑螂"
             }
@@ -1238,6 +1252,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Black",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 10822,
               "name_zhCN": "黑龙宝宝"
             }
@@ -1315,6 +1330,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Red",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 8499,
               "name_zhCN": "红龙宝宝"
             }
@@ -1398,6 +1414,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Green",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 8498,
               "name_zhCN": "绿龙宝宝"
             }
@@ -1532,6 +1549,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Blue",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 34535,
               "name_zhCN": "蓝龙宝宝"
             }
@@ -1659,6 +1677,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 11026,
               "name_zhCN": "树蛙盒"
             }
@@ -1738,6 +1757,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 11027,
               "name_zhCN": "林蛙盒"
             }
@@ -1886,6 +1906,7 @@
           "iconTexture": "Interface\\Icons\\Ability_EyeOfTheOwl",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 8500,
               "name_zhCN": "棕色猫头鹰"
             }
@@ -2015,6 +2036,7 @@
           "iconTexture": "Interface\\Icons\\Ability_EyeOfTheOwl",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 8501,
               "name_zhCN": "黑色猫头鹰"
             }
@@ -2222,6 +2244,7 @@
           "iconTexture": "Interface\\Icons\\INV_Crate_02",
           "itemSources": [
             {
+              "buyPriceCopper": 2000,
               "itemId": 8497,
               "name_zhCN": "兔笼（黄纹兔）"
             }
@@ -2294,6 +2317,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
           "itemSources": [
             {
+              "buyPriceCopper": 500000,
               "itemId": 44822,
               "name_zhCN": "白鳞蛇"
             }
@@ -2366,6 +2390,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 10361,
               "name_zhCN": "棕色蟒蛇"
             }
@@ -2476,6 +2501,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 10360,
               "name_zhCN": "黑色王蛇"
             }
@@ -2586,6 +2612,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_GuardianWard",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 10392,
               "name_zhCN": "赤练蛇"
             }
@@ -2779,6 +2806,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 10398,
               "name_zhCN": "机械小鸡"
             }
@@ -2852,6 +2880,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Bomb_04",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 11825,
               "name_zhCN": "炸弹宠物"
             }
@@ -2921,6 +2950,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_lilsmoky",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 11826,
               "name_zhCN": "发条娃娃"
             }
@@ -2990,6 +3020,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_02",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 11474,
               "name_zhCN": "精龙的蛋"
             }
@@ -3070,6 +3101,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 11903,
               "name_zhCN": "猫笼（腐化猫）"
             }
@@ -3126,6 +3158,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 12264,
               "name_zhCN": "座狼笼"
             }
@@ -3199,6 +3232,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_Birdcage_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 12529,
               "name_zhCN": "烟网蜘蛛笼"
             }
@@ -3272,6 +3306,7 @@
           "iconTexture": "Interface\\Icons\\INV_Helmet_66",
           "itemSources": [
             {
+              "buyPriceCopper": 64478,
               "itemId": 12185,
               "name_zhCN": "血帆舰长之帽"
             }
@@ -3326,6 +3361,7 @@
           "iconTexture": "Interface\\Icons\\INV_Belt_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 13583,
               "name_zhCN": "熊猫项圈"
             }
@@ -3455,6 +3491,7 @@
           "iconTexture": "Interface\\Icons\\INV_DiabloStone",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 13584,
               "name_zhCN": "破坏神之石"
             }
@@ -3584,6 +3621,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shadow_SummonFelHunter",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 13582,
               "name_zhCN": "跳虫绳索"
             }
@@ -3713,6 +3751,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Gorilla",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 15778,
               "name_zhCN": "机械雪人"
             }
@@ -3767,6 +3806,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 15996,
               "name_zhCN": "仿真机械蛙"
             }
@@ -3836,6 +3876,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_BeastCall",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 10394,
               "name_zhCN": "土拨鼠哨"
             }
@@ -3908,6 +3949,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Turtle",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 18964,
               "name_zhCN": "海龟蛋（圆头钳嘴龟）"
             }
@@ -4155,6 +4197,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Orb_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 19055,
               "name_zhCN": "绿色龙珠"
             }
@@ -4219,6 +4262,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Orb_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 19054,
               "name_zhCN": "红色龙珠"
             }
@@ -4288,6 +4332,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 19450,
               "name_zhCN": "加布林的小窝"
             }
@@ -4352,6 +4397,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 20371,
               "name_zhCN": "蓝色鱼人卵"
             }
@@ -4501,6 +4547,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 30360,
               "name_zhCN": "乐奇的蛋"
             }
@@ -4662,6 +4709,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 20651,
               "name_zhCN": "橙色鱼人卵"
             }
@@ -4735,6 +4783,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Creature_Poison_05",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 20769,
               "name_zhCN": "恶心的软泥怪"
             }
@@ -4806,6 +4855,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_babyshark",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 21168,
               "name_zhCN": "鲨鱼宝宝"
             }
@@ -4866,6 +4916,7 @@
           "iconTexture": "Interface\\Icons\\INV_Holiday_Christmas_Present_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 21301,
               "name_zhCN": "绿色助手盒"
             }
@@ -4937,6 +4988,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Gorilla",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 21277,
               "name_zhCN": "安静的机械雪人"
             }
@@ -5011,6 +5063,7 @@
           "iconTexture": "Interface\\Icons\\INV_Holiday_Christmas_Present_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 21305,
               "name_zhCN": "红色助手盒"
             }
@@ -5087,6 +5140,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Bell_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 21308,
               "name_zhCN": "圣诞铃铛"
             }
@@ -5163,6 +5217,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Bag_17",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 21309,
               "name_zhCN": "雪孩子工具包"
             }
@@ -5234,6 +5289,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Gorilla",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 21325,
               "name_zhCN": "机械格林奇"
             }
@@ -5286,6 +5342,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_AhnQirajTrinket_05",
           "itemSources": [
             {
+              "buyPriceCopper": 432121,
               "itemId": 21579,
               "name_zhCN": "克苏恩的触须"
             }
@@ -5338,6 +5395,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_pinkmurlocegg",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 22114,
               "name_zhCN": "粉色鱼人卵"
             }
@@ -5416,6 +5474,7 @@
           "iconTexture": "Interface\\Icons\\INV_Ammo_Arrow_02",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 22235,
               "name_zhCN": "真银箭头"
             }
@@ -5543,6 +5602,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 22780,
               "name_zhCN": "白色鱼人卵"
             }
@@ -5658,6 +5718,7 @@
           "iconTexture": "Interface\\Icons\\INV_Belt_09",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 22781,
               "name_zhCN": "北极熊项圈"
             }
@@ -5742,6 +5803,7 @@
           "iconTexture": "Interface\\Icons\\INV_Crate_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 23002,
               "name_zhCN": "乌龟盒"
             }
@@ -5833,6 +5895,7 @@
           "iconTexture": "Interface\\Icons\\INV_Belt_25",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 23007,
               "name_zhCN": "小猪项圈"
             }
@@ -5924,6 +5987,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_ratcage",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 23015,
               "name_zhCN": "老鼠笼"
             }
@@ -6009,6 +6073,7 @@
           "iconTexture": "Interface\\Icons\\INV_Potion_33",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 23083,
               "name_zhCN": "被捕获的火焰"
             }
@@ -6097,6 +6162,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Head_Tiger_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 23712,
               "name_zhCN": "白色虎崽"
             }
@@ -6161,6 +6227,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_02",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 23713,
               "name_zhCN": "角鹰兽宝宝"
             }
@@ -6225,6 +6292,7 @@
           "iconTexture": "Interface\\Icons\\INV_Netherwhelp",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 25535,
               "name_zhCN": "虚空龙宝宝项圈"
             }
@@ -6289,6 +6357,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Fish_14",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 27445,
               "name_zhCN": "魔法龙虾盒"
             }
@@ -6396,6 +6465,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_AbolishMagic",
           "itemSources": [
             {
+              "buyPriceCopper": 400000,
               "itemId": 29363,
               "name_zhCN": "法力龙宝宝"
             }
@@ -6468,6 +6538,7 @@
           "iconTexture": "Interface\\Icons\\INV_Crate_02",
           "itemSources": [
             {
+              "buyPriceCopper": 100000,
               "itemId": 29364,
               "name_zhCN": "棕兔笼"
             }
@@ -6549,6 +6620,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29903,
               "name_zhCN": "黄色蛾卵"
             }
@@ -6621,6 +6693,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
           "itemSources": [
             {
+              "buyPriceCopper": 100000,
               "itemId": 29902,
               "name_zhCN": "红色蛾卵"
             }
@@ -6693,6 +6766,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29901,
               "name_zhCN": "蓝色蛾卵"
             }
@@ -6765,6 +6839,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Moth",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29904,
               "name_zhCN": "白色蛾卵"
             }
@@ -6837,6 +6912,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29953,
               "name_zhCN": "金色龙鹰卵"
             }
@@ -6909,6 +6985,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
           "itemSources": [
             {
+              "buyPriceCopper": 100000,
               "itemId": 29958,
               "name_zhCN": "蓝色龙鹰卵"
             }
@@ -6981,6 +7058,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29957,
               "name_zhCN": "银色龙鹰卵"
             }
@@ -7053,6 +7131,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_DragonHawk",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29956,
               "name_zhCN": "红色龙鹰卵"
             }
@@ -7125,6 +7204,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Wasp",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 29960,
               "name_zhCN": "被捕获的萤火虫"
             }
@@ -7196,6 +7276,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_Birdcage_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 31760,
               "name_zhCN": "迷你鹦鹉"
             }
@@ -7274,6 +7355,7 @@
           "iconTexture": "Interface\\Icons\\INV_Drink_13",
           "itemSources": [
             {
+              "buyPriceCopper": 5000,
               "itemId": 32233,
               "name_zhCN": "鹿角小飞兔的酒杯"
             }
@@ -7383,6 +7465,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_ElvenCoins",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 32465,
               "name_zhCN": "幸运金币"
             }
@@ -7428,6 +7511,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_ElvenCoins",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 32498,
               "name_zhCN": "幸运硬币"
             }
@@ -7503,6 +7587,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_sleepywilly",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 32617,
               "name_zhCN": "贪睡的威利"
             }
@@ -7583,6 +7668,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Food_24",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 32588,
               "name_zhCN": "猴子护符"
             }
@@ -7665,6 +7751,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_egbert",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 32616,
               "name_zhCN": "蛋蛋的蛋"
             }
@@ -7756,6 +7843,7 @@
           "iconTexture": "Interface\\Icons\\INV_Belt_16",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 32622,
               "name_zhCN": "小象项圈"
             }
@@ -7842,6 +7930,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 6000,
               "itemId": 40653,
               "name_zhCN": "臭乎乎的宠物笼"
             }
@@ -7913,6 +8002,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Food_59",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 33154,
               "name_zhCN": "邪恶的南瓜娃娃"
             }
@@ -7990,6 +8080,7 @@
           "iconTexture": "Interface\\Icons\\INV_Drink_19",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 33816,
               "name_zhCN": "牙牙的小桶"
             }
@@ -8066,6 +8157,7 @@
           "iconTexture": "Interface\\Icons\\INV_Drink_19",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 33818,
               "name_zhCN": "毒皮的小桶"
             }
@@ -8142,6 +8234,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shaman_Hex",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 33993,
               "name_zhCN": "魔汁"
             }
@@ -8211,6 +8304,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_RidingElekk_Purple",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46707,
               "name_zhCN": "小丸子"
             }
@@ -8309,6 +8403,7 @@
           "iconTexture": "Interface\\Icons\\INV_Gizmo_06",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34425,
               "name_zhCN": "发条战士"
             }
@@ -8373,6 +8468,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Sporebat",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34478,
               "name_zhCN": "微型孢子蝠"
             }
@@ -8445,6 +8541,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_EngGizmos_RocketChicken",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34492,
               "name_zhCN": "火箭鸡"
             }
@@ -8512,6 +8609,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_DragonKite_02",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34493,
               "name_zhCN": "风筝龙"
             }
@@ -8583,6 +8681,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Coin_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34518,
               "name_zhCN": "金猪硬币"
             }
@@ -8647,6 +8746,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Coin_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34519,
               "name_zhCN": "银猪硬币"
             }
@@ -8711,6 +8811,7 @@
           "iconTexture": "Interface\\Icons\\INV_Pet_ScorchedStone",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 34955,
               "name_zhCN": "灼烧石"
             }
@@ -8775,6 +8876,7 @@
           "iconTexture": "Interface\\Icons\\INV_Drink_19",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 35349,
               "name_zhCN": "尼尼的小桶"
             }
@@ -8851,6 +8953,7 @@
           "iconTexture": "Interface\\Icons\\INV_Drink_19",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 35350,
               "name_zhCN": "莫莫的小桶"
             }
@@ -8927,6 +9030,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_PheonixPet_01",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 35504,
               "name_zhCN": "凤凰宝宝"
             }
@@ -9004,6 +9108,7 @@
           "iconTexture": "Interface\\Icons\\INV_Jewelry_Amulet_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 37297,
               "name_zhCN": "金色勋章"
             }
@@ -9068,6 +9173,7 @@
           "iconTexture": "Interface\\Icons\\INV_Jewelry_Talisman_10",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 37298,
               "name_zhCN": "竞争者的纪念品"
             }
@@ -9132,6 +9238,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_GroundingTotem",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 38050,
               "name_zhCN": "灵魂商人的信标"
             }
@@ -9203,6 +9310,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_NetherRay",
           "itemSources": [
             {
+              "buyPriceCopper": 400000,
               "itemId": 38628,
               "name_zhCN": "小虚空鳐"
             }
@@ -9275,6 +9383,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Bat",
           "itemSources": [
             {
+              "buyPriceCopper": 400000,
               "itemId": 38658,
               "name_zhCN": "吸血蝙蝠宝宝"
             }
@@ -9346,6 +9455,7 @@
           "iconTexture": "Interface\\Icons\\INV_PET_FROSTWYRM",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 39286,
               "name_zhCN": "霜霜的项圈"
             }
@@ -9410,6 +9520,7 @@
           "iconTexture": "Interface\\Icons\\INV_Sword_07",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 39656,
               "name_zhCN": "泰瑞尔的剑柄"
             }
@@ -9474,6 +9585,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Bone_HumanSkull_01",
           "itemSources": [
             {
+              "buyPriceCopper": 400000,
               "itemId": 39973,
               "name_zhCN": "魅影精灵"
             }
@@ -9546,6 +9658,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Shadow_AuraOfDarkness",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 40110,
               "name_zhCN": "闹鬼的纪念品"
             }
@@ -9616,6 +9729,7 @@
           "iconTexture": "INTERFACE\\ICONS\\inv_misc_penguinpet",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 41133,
               "name_zhCN": "企鹅小叽"
             }
@@ -9680,6 +9794,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Magic_PolymorphChicken",
           "itemSources": [
             {
+              "buyPriceCopper": 10,
               "itemId": 11110,
               "name_zhCN": "鸡蛋"
             }
@@ -9751,6 +9866,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_MonsterTail_03",
           "itemSources": [
             {
+              "buyPriceCopper": 4000,
               "itemId": 43698,
               "name_zhCN": "巨型下水道老鼠"
             }
@@ -9827,6 +9943,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Owl",
           "itemSources": [
             {
+              "buyPriceCopper": 3000,
               "itemId": 39896,
               "name_zhCN": "小食虱鸟"
             }
@@ -9898,6 +10015,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Owl",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 39899,
               "name_zhCN": "白色小食虱鸟"
             }
@@ -9969,6 +10087,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_CobraStrikes",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 39898,
               "name_zhCN": "小眼镜蛇"
             }
@@ -10040,6 +10159,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_Drake_Proto",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 44721,
               "name_zhCN": "始祖龙宝宝"
             }
@@ -10111,10 +10231,12 @@
           "iconTexture": "Interface\\Icons\\inv_pet_nurturedpenguinegg",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 43517,
               "name_zhCN": "企鹅小潘"
             },
             {
+              "buyPriceCopper": 120000,
               "itemId": 44723,
               "name_zhCN": "驯养的企鹅卵"
             }
@@ -10200,6 +10322,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Creature_Disease_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44738,
               "name_zhCN": "肯瑞托魔仆"
             }
@@ -10269,6 +10392,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Food_54",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44794,
               "name_zhCN": "春季兔脚"
             }
@@ -10371,6 +10495,7 @@
           "iconTexture": "Interface\\Icons\\inv_thanksgiving_turkey",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44810,
               "name_zhCN": "火鸡笼"
             }
@@ -10443,6 +10568,7 @@
           "iconTexture": "Interface\\Icons\\inv_pet_babyblizzardbear",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44819,
               "name_zhCN": "暴雪熊宝宝"
             }
@@ -10513,6 +10639,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Gem_FlameSpessarite_03",
           "itemSources": [
             {
+              "buyPriceCopper": 6000,
               "itemId": 44841,
               "name_zhCN": "小鹿的盐块"
             }
@@ -10579,6 +10706,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Herb_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44965,
               "name_zhCN": "泰达希尔树苗"
             }
@@ -10651,6 +10779,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_PolarBear_Black",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44970,
               "name_zhCN": "丹莫罗熊宝宝"
             }
@@ -10723,6 +10852,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Bat",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44971,
               "name_zhCN": "提瑞斯法蝙蝠宝宝"
             }
@@ -10795,6 +10925,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Scorpid",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44973,
               "name_zhCN": "杜隆塔尔蝎子"
             }
@@ -10867,6 +10998,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_EngGizmos_13",
           "itemSources": [
             {
+              "buyPriceCopper": 400000,
               "itemId": 44972,
               "name_zhCN": "报警发条机器人"
             }
@@ -10922,6 +11054,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Nature_Polymorph",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44974,
               "name_zhCN": "艾尔文小羊羔"
             }
@@ -10994,6 +11127,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Flower_04",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44984,
               "name_zhCN": "埃门谷花苗"
             }
@@ -11066,6 +11200,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_TallStrider",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44980,
               "name_zhCN": "莫高雷小陆行鸟"
             }
@@ -11138,6 +11273,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Crab",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44983,
               "name_zhCN": "沙滩蟹"
             }
@@ -11214,6 +11350,7 @@
           "iconTexture": "Interface\\Icons\\INV_Staff_10",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44982,
               "name_zhCN": "魔法扫帚"
             }
@@ -11286,6 +11423,7 @@
           "iconTexture": "Interface\\Icons\\Achievement_Reputation_ArgentChampion",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 44998,
               "name_zhCN": "银色侍从"
             }
@@ -11387,6 +11525,7 @@
           "iconTexture": "Interface\\Icons\\Achievement_Reputation_ArgentChampion",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 45022,
               "name_zhCN": "银色小步兵"
             }
@@ -11488,6 +11627,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_MechaStrider",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 45002,
               "name_zhCN": "机械鸟"
             }
@@ -11565,6 +11705,7 @@
           "iconTexture": "Interface\\Icons\\achievement_reputation_wolvar",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46544,
               "name_zhCN": "好奇的小狼獾人"
             }
@@ -11647,6 +11788,7 @@
           "iconTexture": "Interface\\Icons\\achievement_reputation_murlocoracle",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46545,
               "name_zhCN": "好奇的小神谕者"
             }
@@ -11724,10 +11866,12 @@
           "iconTexture": "Interface\\Icons\\INV_Spear_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 45180,
               "name_zhCN": "莫叽姆斯的小矛"
             },
             {
+              "buyPriceCopper": 0,
               "itemId": 46892,
               "name_zhCN": "莫叽姆斯的小矛"
             }
@@ -11793,6 +11937,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Coin_15",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 45606,
               "name_zhCN": "森金神像"
             }
@@ -11865,6 +12010,7 @@
           "iconTexture": "Interface\\Icons\\achievement_boss_xt002deconstructor_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 45942,
               "name_zhCN": "XS-001建筑机器人"
             }
@@ -11920,6 +12066,7 @@
           "iconTexture": "Interface\\Icons\\INV_Box_PetCarrier_01",
           "itemSources": [
             {
+              "buyPriceCopper": 500000,
               "itemId": 46398,
               "name_zhCN": "玳瑁猫"
             }
@@ -11992,6 +12139,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Key_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46767,
               "name_zhCN": "战斗机器人的点火钥匙"
             }
@@ -12056,6 +12204,7 @@
           "iconTexture": "Interface\\Icons\\INV_Egg_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46802,
               "name_zhCN": "沉重的鱼人卵"
             }
@@ -12120,10 +12269,12 @@
           "iconTexture": "Interface\\Icons\\INV_Elemental_Primal_Mana",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46820,
               "name_zhCN": "幽光雏龙"
             },
             {
+              "buyPriceCopper": 0,
               "itemId": 46821,
               "name_zhCN": "幽光雏龙"
             }
@@ -12209,6 +12360,7 @@
           "iconTexture": "Interface\\Icons\\inv_misc_bone_humanskull_02",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 46831,
               "name_zhCN": "死亡木偶"
             }
@@ -12423,6 +12575,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48118,
               "name_zhCN": "小塔克"
             }
@@ -12494,6 +12647,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48126,
               "name_zhCN": "拉扎什幼龙"
             }
@@ -12565,6 +12719,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48114,
               "name_zhCN": "变异幼龙"
             }
@@ -12642,6 +12797,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48112,
               "name_zhCN": "小达尔特"
             }
@@ -12713,6 +12869,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48122,
               "name_zhCN": "暴掠幼龙"
             }
@@ -12784,6 +12941,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Hunter_Pet_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48124,
               "name_zhCN": "刺喉幼龙"
             }
@@ -12855,6 +13013,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 500000,
               "itemId": 48120,
               "name_zhCN": "黑曜石幼龙"
             }
@@ -12927,6 +13086,7 @@
           "iconTexture": "Interface\\Icons\\Ability_Mount_Raptor",
           "itemSources": [
             {
+              "buyPriceCopper": 10000,
               "itemId": 48116,
               "name_zhCN": "古达克幼龙"
             }
@@ -12998,6 +13158,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_QirajiCrystal_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 48527,
               "name_zhCN": "墨玉猎豹"
             }
@@ -13062,6 +13223,7 @@
           "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49287,
               "name_zhCN": "海象人风筝"
             }
@@ -13126,6 +13288,7 @@
           "iconTexture": "Interface\\Icons\\ability_mount_spectraltiger",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49343,
               "name_zhCN": "幽灵虎幼崽"
             }
@@ -13195,6 +13358,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Head_Dragon_Black",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49362,
               "name_zhCN": "奥妮克希亚龙宝宝"
             }
@@ -13259,6 +13423,7 @@
           "iconTexture": "INTERFACE\\ICONS\\ability_hunter_pet_corehound",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49646,
               "name_zhCN": "熔火恶犬宝宝"
             }
@@ -13323,6 +13488,7 @@
           "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_02",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49662,
               "name_zhCN": "狮鹫宝宝"
             }
@@ -13387,6 +13553,7 @@
           "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_04",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49663,
               "name_zhCN": "驭风者宝宝"
             }
@@ -13508,6 +13675,7 @@
           "iconTexture": "INTERFACE\\ICONS\\inv_misc_pet_03",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49665,
               "name_zhCN": "熊猫人僧侣"
             }
@@ -13572,6 +13740,7 @@
           "iconTexture": "INTERFACE\\ICONS\\achievement_boss_kelthuzad_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49693,
               "name_zhCN": "小克的护符匣"
             }
@@ -13642,6 +13811,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Bone_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 49912,
               "name_zhCN": "溜溜"
             }
@@ -13713,6 +13883,7 @@
           "iconTexture": "Interface\\Icons\\INV_Misc_Slime_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 50446,
               "name_zhCN": "毒毒"
             }
@@ -13789,6 +13960,7 @@
           "iconTexture": "Interface\\Icons\\Spell_Frost_FrozenCore",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 53641,
               "name_zhCN": "冰片"
             }
@@ -13860,6 +14032,7 @@
           "iconTexture": "Interface\\Icons\\INV_Gizmo_06",
           "itemSources": [
             {
+              "buyPriceCopper": 500000,
               "itemId": 54436,
               "name_zhCN": "蓝色发条战士"
             }
@@ -13944,6 +14117,7 @@
           "iconTexture": "Interface\\Icons\\INV_Jewelry_Talisman_10",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 54810,
               "name_zhCN": "星界灵龙"
             }
@@ -14008,6 +14182,7 @@
           "iconTexture": "Interface\\Icons\\achievement_boss_xt002deconstructor_01",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 54847,
               "name_zhCN": "小拆"
             }
@@ -14072,6 +14247,7 @@
           "iconTexture": "Interface\\Icons\\INV_Spear_05",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 54857,
               "name_zhCN": "莫叽姆斯的小矛"
             }
@@ -14136,6 +14312,7 @@
           "iconTexture": "INTERFACE\\ICONS\\t_roboticon",
           "itemSources": [
             {
+              "buyPriceCopper": 0,
               "itemId": 56806,
               "name_zhCN": "迷你雷神"
             }
