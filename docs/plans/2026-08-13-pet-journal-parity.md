@@ -544,13 +544,13 @@ cmake --build <AzerothCoreBuildRoot> --config RelWithDebInfo --target worldserve
 
 **Steps:**
 
-1. [ ] 新增 `SetPetFavorite(collectionId, favorite, callback)`，发送 type 11 `SET_FAVORITE`。
-2. [ ] 新增 `SummonRandomPet(callback)`，发送 type 11 / collectionId 1 `RANDOM_SUMMON`。
-3. [ ] 将 type 17 加入 CollectionState 内部投影识别，但不加入进度。
-4. [ ] 实现 `SoloCollectionsDB.favorites.PETS` 的幂等迁移队列：只迁移已拥有条目，只在观察到 type 17 delta 后记完成。
-5. [ ] 迁移完成后不再读取本地 PETS 偏好作为权威真值；保留数据直到整轮迁移完成，便于回滚。
-6. [ ] 加入小宠物状态 token 的中文映射。
-7. [ ] 在 `Bootstrap.lua` 增加 `filters.pets.hiddenSources` 修复与 schema version 迁移，不清空其他筛选。
+1. [x] 新增 `SetPetFavorite(collectionId, favorite, callback)`，发送 type 11 `SET_FAVORITE`。
+2. [x] 新增 `SummonRandomPet(callback)`，发送 type 11 / collectionId 1 `RANDOM_SUMMON`。
+3. [x] 将 type 17 加入 CollectionState 内部投影识别，但不加入进度。
+4. [x] 实现 `SoloCollectionsDB.favorites.PETS` 的幂等迁移队列：只迁移已拥有条目，只在观察到 type 17 delta 后记完成。
+5. [x] 迁移完成后不再读取本地 PETS 偏好作为权威真值；保留数据直到整轮迁移完成，便于回滚。
+6. [x] 加入小宠物状态 token 的中文映射。
+7. [x] 在 `Bootstrap.lua` 增加 `filters.pets.hiddenSources` 修复与 schema version 迁移，不清空其他筛选。
 
 **Commands:**
 

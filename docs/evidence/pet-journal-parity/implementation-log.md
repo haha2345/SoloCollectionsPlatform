@@ -88,3 +88,15 @@ Task 1 direct checks passed. No cleanup command was used.
 - Type 11 `RANDOM_SUMMON` requires control collection ID 1 and target `-` before entering the service.
 - Direct checks: required source searches and `git diff --check` passed. Full AzerothCore compilation remains deferred to the plan's build gate.
 - Module commit: `b03ccd1 feat(companions): add authoritative random summon`.
+
+## Task 8 - AddOn bridge and legacy pet favorite migration
+
+- Added type 11 `SetPetFavorite` and control-ID-1 `SummonRandomPet` SC2 wrappers; no display spell, creature, or local ownership bit is sent.
+- CollectionState recognizes type 17 through an internal projection definition whose mapping hash is inherited from companion type 11. It is absent from page category keys and therefore cannot enter navigation or progress.
+- Generalized the existing mount migration driver into two explicit migrations: MOUNTS 10 -> 16 and PETS 11 -> 17.
+- PETS migration queues only legacy `true` entries that are currently owned in type 11 and absent from type 17. An accepted request does not complete an item; the driver advances only after authoritative type 17 state is observed.
+- Completion is persisted as `migrations.petFavoritesToServer = 1`; the legacy PETS table is retained for rollback but is no longer read after that marker.
+- Added stable zhCN text for companion action results, including the two new empty-pool statuses.
+- SavedVariables schema is now version 7. `filters.pets.hiddenSources` is repaired in place and unrelated filter values are preserved.
+- Checks: 30 bridge contracts and 10 SC2 client contracts passed; `git diff --check` passed. The bridge test's existing preview locator was updated to recognize both direct and presenter-based safe-failure implementations.
+- AddOn commit: `823f20f feat(addon): bridge companion preferences and random summon`.
