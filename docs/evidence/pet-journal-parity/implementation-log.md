@@ -178,3 +178,18 @@ Task 1 direct checks passed. No cleanup command was used.
 - Updated the Suite lock to the AddOn sibling commit, current SoloCollections/WardrobeData hashes, and the DragonUI_NewEra generic random-collection component hash. Suite commit: `6fddc51 chore(suite): lock pet journal parity build`.
 - Suite layout inspection passed before and after the ignored local build. The build contains the 17 locked roots plus the authorized generated `SoloCollections_EzUI` projection (222 assets); no real client directory was modified.
 - Cross-artifact comparison passed for AddOn commit, module commit, mapping hash, companion mapping hash, metadataVersion `2026.07.23.2`, and assetPackVersion `round-two-stage8-weapon-presentation-v2`.
+
+## Task 16 - Read-only deployment preflight
+
+- Confirmed no WoW client process is running. `authserver.exe` and the current production `worldserver.exe` remain running; no stop or mutation was performed without the deployment gate authorization.
+- Deployment target: `D:\AzerothCore_NPCBots_Clean\worldserver.exe`, current SHA-256 `25C681EE3988A7AD1AFA09FD497C1F615013410D824B15CA8B1864CCB519092E`.
+- Candidate build: `F:\1_projects\wow_projects\azerothcore-wotlk\build-npcbots-clean-vs18\bin\RelWithDebInfo\worldserver.exe`, SHA-256 `16167910EA15C552A54685BE0C01885E7DB2410B8267B4DED8DA286F84912B51`.
+- No Task 6-specific append-only SQL was created. The generic `2026_08_12_00_mount_preferences.sql` update and clean-install schema already cover type 11/17 preference persistence, so Task 16 requires no database mutation for this change.
+- Existing startup evidence is only the pre-deployment binary and therefore does not satisfy `SERVER_VALIDATED` for this plan. Deployment, startup-log validation, and account snapshot checks remain pending explicit authorization.
+
+## Current evidence state
+
+- `SOURCE_COMPLETE`: achieved by Tasks 1-14.
+- `STATIC_VALIDATED`: achieved by Task 15.
+- `SERVER_VALIDATED`: pending Task 16 deployment and runtime evidence.
+- `REAL_CLIENT_ACCEPTED`: pending Task 17 real-client interaction and visual evidence.

@@ -31,12 +31,12 @@ SoloCollections 功能 worktree 中已有其他坐骑计划和证据文档；Sol
 
 ### 0.3 完成标记规则
 
-- [ ] 只有源码改动完成并通过该任务列出的直接检查后，才能把对应任务标记为完成。
-- [ ] `SOURCE_COMPLETE`：规范源、审计文件和生成器已完成。
-- [ ] `STATIC_VALIDATED`：生成器、协议/契约检查和套件布局检查通过。
+- [x] 只有源码改动完成并通过该任务列出的直接检查后，才能把对应任务标记为完成。
+- [x] `SOURCE_COMPLETE`：规范源、审计文件和生成器已完成。
+- [x] `STATIC_VALIDATED`：生成器、协议/契约检查和套件布局检查通过。
 - [ ] `SERVER_VALIDATED`：模块编译成功，数据库迁移和 worldserver 启动日志正常。
 - [ ] `REAL_CLIENT_ACCEPTED`：国服 3.3.5a 客户端实际交互与视觉由真实客户端验收通过。
-- [ ] Git 提交、服务端部署、客户端安装和真实客户端验收必须分别记录，不能互相替代。
+- [x] Git 提交、服务端部署、客户端安装和真实客户端验收必须分别记录，不能互相替代。
 
 ### 0.4 明确不做
 
@@ -821,7 +821,7 @@ pwsh -File .\tools\Build-ClientSuite.ps1 `
 
 1. [ ] 确认客户端已退出、worldserver 已停止，记录目标路径和现有二进制 SHA-256。
 2. [ ] 创建可恢复备份；不得覆盖唯一副本。
-3. [ ] 如有 append-only SQL，先确认目标数据库和 schema version，再应用迁移。
+3. [x] 如有 append-only SQL，先确认目标数据库和 schema version，再应用迁移。（本轮无新增 SQL；现有通用 preference 表已覆盖）
 4. [ ] 安装新 worldserver/module 构建，记录新 SHA-256。
 5. [ ] 启动 worldserver，检查模块注册、schema、mapping hash、目录数量和 SC2 capability 日志。
 6. [ ] 登录一个已有收藏账号，确认 type 11/type 17 快照均可同步且没有加载错误。
