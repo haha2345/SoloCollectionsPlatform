@@ -34,8 +34,8 @@ SoloCollections 功能 worktree 中已有其他坐骑计划和证据文档；Sol
 - [x] 只有源码改动完成并通过该任务列出的直接检查后，才能把对应任务标记为完成。
 - [x] `SOURCE_COMPLETE`：规范源、审计文件和生成器已完成。
 - [x] `STATIC_VALIDATED`：生成器、协议/契约检查和套件布局检查通过。
-- [ ] `SERVER_VALIDATED`：模块编译成功，数据库迁移和 worldserver 启动日志正常。
-- [ ] `REAL_CLIENT_ACCEPTED`：国服 3.3.5a 客户端实际交互与视觉由真实客户端验收通过。
+- [x] `SERVER_VALIDATED`：模块编译成功，数据库迁移和 worldserver 启动日志正常。
+- [x] `REAL_CLIENT_ACCEPTED`：国服 3.3.5a 客户端实际交互与视觉由真实客户端验收通过。
 - [x] Git 提交、服务端部署、客户端安装和真实客户端验收必须分别记录，不能互相替代。
 
 ### 0.4 明确不做
@@ -819,12 +819,12 @@ pwsh -File .\tools\Build-ClientSuite.ps1 `
 
 **Steps:**
 
-1. [ ] 确认客户端已退出、worldserver 已停止，记录目标路径和现有二进制 SHA-256。
-2. [ ] 创建可恢复备份；不得覆盖唯一副本。
+1. [x] 确认客户端已退出、worldserver 已停止，记录目标路径和现有二进制 SHA-256。
+2. [x] 创建可恢复备份；不得覆盖唯一副本。
 3. [x] 如有 append-only SQL，先确认目标数据库和 schema version，再应用迁移。（本轮无新增 SQL；现有通用 preference 表已覆盖）
-4. [ ] 安装新 worldserver/module 构建，记录新 SHA-256。
-5. [ ] 启动 worldserver，检查模块注册、schema、mapping hash、目录数量和 SC2 capability 日志。
-6. [ ] 登录一个已有收藏账号，确认 type 11/type 17 快照均可同步且没有加载错误。
+4. [x] 安装新 worldserver/module 构建，记录新 SHA-256。
+5. [x] 启动 worldserver，检查模块注册、schema、mapping hash、目录数量和 SC2 capability 日志。
+6. [x] 登录一个已有收藏账号，确认 type 11/type 17 快照均可同步且没有加载错误。
 
 **Expected:** worldserver 正常启动；无 schema/catalog mismatch；可随时恢复备份。
 
@@ -838,46 +838,46 @@ pwsh -File .\tools\Build-ClientSuite.ps1 `
 
 #### A. 启动与稳定性
 
-- [ ] 登录或 `/reload` 不自动打开 DragonUI_NewEra 的其他窗口。
-- [ ] 无 Lua 报错、UIDropDownMenu nil-name 报错、Localization.lua 报错或模型 provider 报错。
-- [ ] 收藏窗口首次打开时间与已验收坐骑页同级，不出现明显长时间卡顿。
+- [x] 登录或 `/reload` 不自动打开 DragonUI_NewEra 的其他窗口。
+- [x] 无 Lua 报错、UIDropDownMenu nil-name 报错、Localization.lua 报错或模型 provider 报错。
+- [x] 收藏窗口首次打开时间与已验收坐骑页同级，不出现明显长时间卡顿。
 
 #### B. 页面与列表
 
-- [ ] 小宠物页与坐骑页外框都是 768 × 606，标题、头像、进度、底部标签对齐。
-- [ ] 搜索框和筛选按钮不越界。
-- [ ] 10 个列表卡片全部位于列表容器内，首行/末行无裁切和溢出。
-- [ ] 排序为偏好已收集 → 已收集 → 未收集，同组按国服中文名。
-- [ ] 列表没有重复小宠物、交通工具、任务临时实体或职业临时召唤物。
-- [ ] 绝版、促销、TCG、活动小宠物按审计结果正常显示。
+- [x] 小宠物页与坐骑页外框都是 768 × 606，标题、头像、进度、底部标签对齐。
+- [x] 搜索框和筛选按钮不越界。
+- [x] 10 个列表卡片全部位于列表容器内，首行/末行无裁切和溢出。
+- [x] 排序为偏好已收集 → 已收集 → 未收集，同组按国服中文名。
+- [x] 列表没有重复小宠物、交通工具、任务临时实体或职业临时召唤物。
+- [x] 绝版、促销、TCG、活动小宠物按审计结果正常显示。
 
 #### C. 筛选与偏好
 
-- [ ] 已收集、未收集、仅偏好筛选正确。
-- [ ] 来源筛选类别和结果正确，不出现坐骑类型菜单。
-- [ ] 已收集宠物可设置/取消偏好，重新登录仍保留。
-- [ ] 未收集宠物的偏好按钮禁用，无法通过其他入口设置。
-- [ ] 偏好变化后列表立即按既定顺序重排。
+- [x] 已收集、未收集、仅偏好筛选正确。
+- [x] 来源筛选类别和结果正确，不出现坐骑类型菜单。
+- [x] 已收集宠物可设置/取消偏好，重新登录仍保留。
+- [x] 未收集宠物的偏好按钮禁用，无法通过其他入口设置。
+- [x] 偏好变化后列表立即按既定顺序重排。
 
 #### D. 详情与模型
 
-- [ ] 图标、金色边框、名称和来源起点与坐骑页一致。
-- [ ] 国服中文名、来源、费用和描述正确；金币数字与图标在同一行垂直居中。
-- [ ] 无可核验描述时显示明确缺失文案，不出现 AI/账号收藏模板。
-- [ ] 已收集和未收集状态正确。
-- [ ] 模型可见，连续拖动旋转不重播动画、不出现一卡一卡的感觉。
-- [ ] 滚轮缩放、重置视角、快速切换列表均正常；旧模型不会覆盖当前选择。
+- [x] 图标、金色边框、名称和来源起点与坐骑页一致。
+- [x] 国服中文名、来源、费用和描述正确；金币数字与图标在同一行垂直居中。
+- [x] 无可核验描述时显示明确缺失文案，不出现 AI/账号收藏模板。
+- [x] 已收集和未收集状态正确。
+- [x] 模型可见，连续拖动旋转不重播动画、不出现一卡一卡的感觉。
+- [x] 滚轮缩放、重置视角、快速切换列表均正常；旧模型不会覆盖当前选择。
 
 #### E. 召唤与随机
 
-- [ ] 底部“召唤小宠物”按钮样式、尺寸、位置与坐骑页一致且不压边框。
-- [ ] 召唤已收集宠物成功，再点同一宠物可解散。
-- [ ] 未收集宠物不能召唤，提示中文。
-- [ ] 随机按钮位于详情区右上方、图标正确、不与边框重叠。
-- [ ] 有偏好时随机只从已收集偏好 eligible 池选择。
-- [ ] 无偏好时随机从全部已收集 eligible 池选择。
-- [ ] 多个候选时不会连续选择当前宠物；切换后只保留一个小宠物。
-- [ ] 战斗、死亡、载具、飞行点等受限状态显示中文提示。
+- [x] 底部“召唤小宠物”按钮样式、尺寸、位置与坐骑页一致且不压边框。
+- [x] 召唤已收集宠物成功，再点同一宠物可解散。
+- [x] 未收集宠物不能召唤，提示中文。
+- [x] 随机按钮位于详情区右上方、图标正确、不与边框重叠。
+- [x] 有偏好时随机只从已收集偏好 eligible 池选择。
+- [x] 无偏好时随机从全部已收集 eligible 池选择。
+- [x] 多个候选时不会连续选择当前宠物；切换后只保留一个小宠物。
+- [x] 战斗、死亡、载具、飞行点等受限状态显示中文提示。
 
 全部通过后，附客户端 build、AddOn/module commit、时间和证据路径，将本计划状态改为 `REAL_CLIENT_ACCEPTED`。
 
@@ -951,3 +951,21 @@ git status --short
 ```
 
 只有 `REAL_CLIENT_ACCEPTED: YES` 才表示小宠物页已经达到用户可见验收；源码检查、编译成功或安装完成均不能单独声明验收通过。
+
+## Implementation Record
+
+- SOURCE_COMPLETE: YES
+- STATIC_VALIDATED: YES
+- SERVER_VALIDATED: YES
+- REAL_CLIENT_ACCEPTED: YES
+- SoloCollections commit: `6ff5e4c6f4da86ffdf55a4a87bc15074c5eb6a2f`
+- mod-solo-collections commit: `f15574295af614652948c777c58e8b997104a1db`
+- SoloClientSuite commit: `973983a097248a46e04e1adfabdb7ce3649ff7db`
+- AzerothCore commit/build: `28463899f4857bffdc1af59a78c1d359f7e7784a` / RelWithDebInfo 2026-08-13
+- Catalog mapping hash: `15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7`
+- Module binary SHA-256: `d91c99bdcf2fb1a04da6fefb208dccd78a321a94703a872ce221b65fe02d77b4`
+- Client package SHA-256: `1d8cb337b796eefb82732c1d2c49c8e72c3a8aa0d958e2f6395c4d009be477ab`
+- Database migration applied: none; schema version 2 already present
+- Rollback backup: `CLIENT-20260813-pet-journal-parity-redeploy/20260813-100353`
+- Real-client evidence: `docs/evidence/pet-journal-parity/runtime/REAL_CLIENT_ACCEPTANCE.md`
+- Remaining known issues: none in the implemented pet-journal parity scope
