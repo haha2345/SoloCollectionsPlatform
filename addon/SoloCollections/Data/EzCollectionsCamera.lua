@@ -93,11 +93,40 @@ ezCollections.InvTypeToCameraID =
 };
 ezCollections.SubClassToCameraID =       1;
 
+local RACE_TOKEN_ALIASES = {
+    human = "Human", orc = "Orc", dwarf = "Dwarf", nightelf = "NightElf",
+    scourge = "Scourge", undead = "Scourge", tauren = "Tauren", gnome = "Gnome",
+    troll = "Troll", goblin = "Goblin", bloodelf = "BloodElf", draenei = "Draenei",
+    ["人类"] = "Human", ["兽人"] = "Orc", ["矮人"] = "Dwarf",
+    ["暗夜精灵"] = "NightElf", ["亡灵"] = "Scourge", ["被遗忘者"] = "Scourge",
+    ["牛头人"] = "Tauren", ["侏儒"] = "Gnome", ["巨魔"] = "Troll",
+    ["地精"] = "Goblin", ["血精灵"] = "BloodElf", ["德莱尼"] = "Draenei",
+}
+
+local function normalizeRaceToken(localizedRace, raceToken)
+    if raceToken and ezCollections.RaceToCameraID[raceToken] then return raceToken end
+    if localizedRace and ezCollections.RaceToCameraID[localizedRace] then return localizedRace end
+    local function resolve(value)
+        if type(value) == "string" and value ~= "" then
+            local compact = string.lower((string.gsub(value, "[%s%-']", "")))
+            local normalized = RACE_TOKEN_ALIASES[compact] or RACE_TOKEN_ALIASES[value]
+            if normalized then return normalized end
+        end
+        return nil
+    end
+    return resolve(raceToken) or resolve(localizedRace)
+end
+
 function ezCollections:GetCharacterCameraID(invTypeName, cameraID)
     local fallback = self.CameraOptionsToCameraID[ezCollections.CameraOptions[1]];
     local option = self.CameraOptionsToCameraID[ezCollections.Config.Wardrobe.CameraOption];
-    local race = self.RaceToCameraID[select(2, UnitRace("player"))];
+    if not option or not fallback then return nil, "CAMERA_OPTION_UNAVAILABLE" end
+    local localizedRace, raceToken = UnitRace("player");
+    raceToken = normalizeRaceToken(localizedRace, raceToken);
+    local race = raceToken and self.RaceToCameraID[raceToken] or nil;
+    if not race then return nil, "RACE_UNAVAILABLE" end
     local sex = self.SexToCameraID[UnitSex("player")];
+    if not sex then return nil, "SEX_UNAVAILABLE" end
     if cameraID then
         local fullCameraID = option + race + sex + cameraID;
         local fallbackCameraID = fallback + race + sex + cameraID;
@@ -109,6 +138,7 @@ function ezCollections:GetCharacterCameraID(invTypeName, cameraID)
     end
 
     local invType = self.InvTypeToCameraID[invTypeName];
+    if not invType then return nil, "INVENTORY_TYPE_UNAVAILABLE" end
     local fullCameraID = option + race + sex + invType;
     local fallbackCameraID = fallback + race + sex + invType;
     if self.Cameras[fullCameraID] then
@@ -126,6 +156,7 @@ function ezCollections:GetWeaponCameraID(invTypeName, subType, cameraID)
     end
 
     local invType = self.InvTypeToCameraID[invTypeName];
+    if not invType then return nil, "INVENTORY_TYPE_UNAVAILABLE" end
     local subType = self.SubClassToCameraID * ((subType or 0) + 1);
     if self.Cameras[invType + subType] then
         return invType + subType;
@@ -575,16 +606,19 @@ function ezCollections:IsWeaponRecord(record)
 end
 
 function ezCollections:GetRecordCamera(record)
-    if not record then return nil end
+    if not record then return nil, nil, "RECORD_UNAVAILABLE" end
     local inventoryType = getRecordInventoryType(record)
-    if not inventoryType then return nil end
-    local cameraID
+    if not inventoryType then return nil, nil, "INVENTORY_TYPE_UNAVAILABLE" end
+    local cameraID, reason
     if self:IsWeaponRecord(record) then
-        cameraID = self:GetWeaponCameraID(inventoryType, WEAPON_SUBCLASS_BY_TYPE[record.weaponType])
+        cameraID, reason = self:GetWeaponCameraID(inventoryType, WEAPON_SUBCLASS_BY_TYPE[record.weaponType])
     else
-        cameraID = self:GetCharacterCameraID(inventoryType)
+        cameraID, reason = self:GetCharacterCameraID(inventoryType)
     end
-    return cameraID and self.Cameras[cameraID] or nil, cameraID
+    if not cameraID then return nil, nil, reason or "CAMERA_ID_UNAVAILABLE" end
+    local camera = self.Cameras[cameraID]
+    if not camera then return nil, cameraID, "CAMERA_TUPLE_UNAVAILABLE" end
+    return camera, cameraID, "READY"
 end
 
 function ezCollections:GetRecordAnimation(record, camera)
@@ -596,25 +630,39 @@ function ezCollections:GetRecordAnimation(record, camera)
 end
 
 function ezCollections:ApplyRecordCamera(model, record)
-    if not model or not record then return false end
-    local camera = self:GetRecordCamera(record)
-    if not camera then return false end
+    if not model then return false, "MODEL_UNAVAILABLE" end
+    if not record then return false, "RECORD_UNAVAILABLE" end
+    local camera, cameraID, cameraReason = self:GetRecordCamera(record)
+    if not camera then return false, cameraReason or "CAMERA_UNAVAILABLE", cameraID end
+    if not model.SetPosition then return false, "SET_POSITION_UNAVAILABLE", cameraID end
     local modelScale = self:IsWeaponRecord(record) and 1 or 10
     if model.SetModelScale then
-        pcall(function() model:SetModelScale(modelScale) end)
+        local scaleApplied = pcall(function() model:SetModelScale(modelScale) end)
+        if not scaleApplied then return false, "SET_SCALE_FAILED", cameraID end
     end
     if model.GetModelScale then
         local ok, value = pcall(function() return model:GetModelScale() end)
         if ok and type(value) == "number" then modelScale = value end
     end
-    local screenRatio = GetScreenWidth() / GetScreenHeight()
-    local ratio = (0.5 + ((1600 / 900) / screenRatio) / 2) * modelScale
-    if model.SetPosition then
-        pcall(function() model:SetPosition(camera[1] * ratio, camera[2] * ratio, camera[3] * ratio) end)
+    local screenWidth, screenHeight = GetScreenWidth(), GetScreenHeight()
+    if type(screenWidth) ~= "number" or type(screenHeight) ~= "number" or screenHeight <= 0 then
+        return false, "SCREEN_SIZE_UNAVAILABLE", cameraID
     end
+    local screenRatio = screenWidth / screenHeight
+    local ratio = (0.5 + ((1600 / 900) / screenRatio) / 2) * modelScale
+    local positioned = pcall(function()
+        model:SetPosition(camera[1] * ratio, camera[2] * ratio, camera[3] * ratio)
+    end)
+    if not positioned then return false, "SET_POSITION_FAILED", cameraID end
     if model.SetFacing then
-        pcall(function() model:SetFacing(camera[4]) end)
+        local faced = pcall(function() model:SetFacing(camera[4]) end)
+        if not faced then return false, "SET_FACING_FAILED", cameraID end
+    elseif model.SetRotation then
+        local rotated = pcall(function() model:SetRotation(camera[4]) end)
+        if not rotated then return false, "SET_ROTATION_FAILED", cameraID end
+    else
+        return false, "SET_FACING_UNAVAILABLE", cameraID
     end
     model.scEzAnimID = self:GetRecordAnimation(record, camera)
-    return true
+    return true, "READY", cameraID
 end

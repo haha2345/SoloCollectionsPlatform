@@ -940,7 +940,7 @@ local function selectItemModelCamera(model)
     model.scClientCameraSentinel = nil
     model.scUsesClientCamera = false
     model.scBodyCameraProfile = nil
-    model.scBodyCameraReason = "EZCOLLECTIONS_CLASSIC"
+    model.scBodyCameraReason = "EZCOLLECTIONS_PENDING"
 end
 
 local function captureItemModelBaseline(model)
@@ -972,8 +972,39 @@ local function captureItemModelBaseline(model)
 end
 
 local function applyItemModelTransform(model)
-    if not EzCamera or type(EzCamera.ApplyRecordCamera) ~= "function" then return false end
-    return EzCamera:ApplyRecordCamera(model, model.scRecord)
+    if not EzCamera or type(EzCamera.ApplyRecordCamera) ~= "function" then
+        model.scEzCameraID = nil
+        model.scEzCameraReason = "EZ_CAMERA_ADAPTER_UNAVAILABLE"
+        model.scBodyCameraReason = model.scEzCameraReason
+        return false, model.scEzCameraReason
+    end
+    local applied, reason, cameraID = EzCamera:ApplyRecordCamera(model, model.scRecord)
+    model.scEzCameraID = cameraID
+    model.scEzCameraReason = reason or (applied and "READY" or "CAMERA_APPLY_FAILED")
+    model.scBodyCameraReason = model.scEzCameraReason
+    return applied, model.scEzCameraReason
+end
+
+local reportedEzCameraFailures = {}
+
+local function reportEzCameraFailure(model)
+    if not model or not model.scRecord or not model.scEzCameraReason then return end
+    local record = model.scRecord
+    local key = table.concat({
+        tostring(record.slot or "UNKNOWN"),
+        tostring(model.scEzCameraReason),
+        tostring(model.scEzCameraID or "NONE"),
+    }, ":")
+    if reportedEzCameraFailures[key] then return end
+    reportedEzCameraFailures[key] = true
+    if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage(string.format(
+            "|cffff6060[SoloCollections]|r ezCollections镜头应用失败：slot=%s reason=%s camera=%s",
+            tostring(record.slot or "UNKNOWN"),
+            tostring(model.scEzCameraReason),
+            tostring(model.scEzCameraID or "NONE")
+        ))
+    end
 end
 
 local function queueItemModelView(model, force)
@@ -988,30 +1019,21 @@ local function queueItemModelView(model, force)
             return false
         end
     end
-    model.scViewStage = "CAMERA"
+    model.scViewStage = "SETTLE"
     model.scViewFrames = 0
+    model.scViewRetryCount = 0
     if model.scUpdateHandler then
         model:SetScript("OnUpdate", model.scUpdateHandler)
     end
     return true
 end
 
--- SetUnit and TryOn both rebuild the model asynchronously. Selecting camera 1
--- and translating the model in the same update lets the later camera rebuild
--- overwrite our transform. Keep camera selection and the final body-part
--- transform in separate render ticks so scale, position and rotation survive.
+-- ezCollections applies its UI camera during the item refresh and again from
+-- OnModelLoaded.  The 3.3.5 frame exposes OnUpdateModel instead, so this short
+-- settle queue repeats the same tuple after late SetUnit/TryOn rebuilds.
 local function finishPendingItemModelView(model)
     if not model.scViewStage or model.scPendingItemString or model.scApplyingAppearance or model.scApplyingView then
         return false
-    end
-
-    if model.scViewStage == "CAMERA" then
-        model.scApplyingView = true
-        selectItemModelCamera(model)
-        model.scApplyingView = nil
-        model.scViewStage = "SETTLE"
-        model.scViewFrames = 0
-        return true
     end
 
     if model.scViewStage == "SETTLE" then
@@ -1025,11 +1047,27 @@ local function finishPendingItemModelView(model)
 
     if model.scViewStage == "TRANSFORM" then
         model.scApplyingView = true
-        applyItemModelTransform(model)
+        local applied = applyItemModelTransform(model)
         model.scApplyingView = nil
-        model.scViewStage = nil
-        model.scViewFrames = nil
-        model.scViewAppliedGeneration = model.scAppearanceGeneration
+        if applied then
+            model.scViewStage = nil
+            model.scViewFrames = nil
+            model.scViewRetryCount = nil
+            model.scViewAppliedGeneration = model.scAppearanceGeneration
+        else
+            model.scViewRetryCount = (model.scViewRetryCount or 0) + 1
+            if model.scViewRetryCount < 8 then
+                model.scViewStage = "SETTLE"
+                model.scViewFrames = 0
+            else
+                -- Do not lie about success. Preserve the failure reason on the
+                -- model for runtime inspection and wait for the next refresh.
+                model.scViewStage = nil
+                model.scViewFrames = nil
+                model.scViewAppliedGeneration = nil
+                reportEzCameraFailure(model)
+            end
+        end
         return true
     end
 
@@ -1078,6 +1116,9 @@ local function finishPendingItemModel(model, elapsed)
     end
     pcall(function() model:TryOn(itemString) end)
     model.scApplyingAppearance = nil
+    -- Match ezCollections: apply once immediately after TryOn, then retain the
+    -- delayed reapply for any model rebuild that lands on a later frame.
+    applyItemModelTransform(model)
     queueItemModelView(model, true)
     return true
 end
@@ -1115,6 +1156,7 @@ local function clearEzItemModelState(model)
     model.scViewAppliedGeneration = nil
     model.scViewStage = nil
     model.scViewFrames = nil
+    model.scViewRetryCount = nil
     model.scApplyingView = nil
     model.scNativeScale = nil
     model.scNativeHorizontal = nil
@@ -1124,6 +1166,8 @@ local function clearEzItemModelState(model)
     model.scRenderKind = nil
     model.scEzFreeze = nil
     model.scEzAnimID = nil
+    model.scEzCameraID = nil
+    model.scEzCameraReason = nil
     model:SetScript("OnUpdate", nil)
 end
 
@@ -1160,8 +1204,9 @@ local function applyItemModelRecord(model, record, pageGeneration)
 
     if not record then
         if itemPresenter then itemPresenter:ClearBody(model, "NO_ITEM") end
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
         clearEzItemModelState(model)
+        if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
+        if model.SetFacing then pcall(function() model:SetFacing(0) end) end
         model:ClearModel()
         model:Hide()
         applyStandaloneItemRecord(objectModel, nil, pageGeneration)
@@ -1193,12 +1238,12 @@ local function applyItemModelRecord(model, record, pageGeneration)
     applyEzCollectionsCardLight(model)
 
     if unchanged then
+        applyItemModelTransform(model)
         queueItemModelView(model, true)
         return
     end
 
     if itemPresenter then itemPresenter:ClearBody(model, isWeapon and "EZ_WEAPON" or "EZ_ARMOR") end
-    if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
     model.scPendingItemString = nil
     model.scModelReadyFrames = nil
     model.scModelWaitElapsed = nil
@@ -1206,6 +1251,7 @@ local function applyItemModelRecord(model, record, pageGeneration)
     model.scViewAppliedGeneration = nil
     model.scViewStage = nil
     model.scViewFrames = nil
+    model.scViewRetryCount = nil
     model.scApplyingAppearance = nil
     model.scApplyingView = nil
     model.scNativeScale = nil
@@ -1228,6 +1274,8 @@ local function applyItemModelRecord(model, record, pageGeneration)
             showEzCardUnavailable(model, record, "PREVIEW_CREATURE_LOAD_FAILED")
             return
         end
+        selectItemModelCamera(model)
+        applyItemModelTransform(model)
         model.scPendingItemString = resolveTryOnItem(record.itemId)
         model.scModelReadyFrames = 0
         model.scModelWaitElapsed = 0
@@ -1245,6 +1293,8 @@ local function applyItemModelRecord(model, record, pageGeneration)
         showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
         return
     end
+    selectItemModelCamera(model)
+    applyItemModelTransform(model)
     model.scPendingItemString = resolveTryOnItem(record.itemId)
     model.scModelReadyFrames = 0
     model.scModelWaitElapsed = 0
@@ -1260,6 +1310,9 @@ function ItemCardRenderer:Attach(model, objectModel)
     model.scObjectModel = objectModel
     objectModel.scHostModel = model
     model:SetScript("OnUpdateModel", function(self)
+        if self.scRecord and not self.scApplyingAppearance and not self.scApplyingView then
+            applyItemModelTransform(self)
+        end
         queueItemModelView(self, true)
     end)
     model.scUpdateHandler = updatePendingItemModel
@@ -2946,6 +2999,9 @@ function UI.CreateWardrobePage(parent)
             -- SetUnit/TryOn may finish after our first transform and silently
             -- restore the native full-body view. Force the same generation's
             -- relative framing to be applied again after every late rebuild.
+            if self.scRecord and not self.scApplyingAppearance and not self.scApplyingView then
+                applyItemModelTransform(self)
+            end
             queueItemModelView(self, true)
         end)
         itemModel.scUpdateHandler = updatePendingItemModel
@@ -3629,29 +3685,9 @@ function UI.CreateWardrobePage(parent)
         setSetOffset(0, true)
         self.scSetRecordCount = 0
         for _, itemModel in ipairs(self.scItemModels) do
-            if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(itemModel) end
-            itemModel.scRecord = nil
-            itemModel.scRecordId = nil
-            itemModel.scProfile = nil
-            itemModel.scClientCameraSentinel = nil
-            itemModel.scUsesClientCamera = nil
-            itemModel.scBodyCameraProfile = nil
-            itemModel.scBodyCameraReason = nil
-            itemModel.scPendingItemString = nil
-            itemModel.scModelReadyFrames = nil
-            itemModel.scApplyingAppearance = nil
-            itemModel.scAppearanceGeneration = nil
-            itemModel.scViewAppliedGeneration = nil
-            itemModel.scViewStage = nil
-            itemModel.scViewFrames = nil
-            itemModel.scApplyingView = nil
-            itemModel.scNativeScale = nil
-            itemModel.scNativeHorizontal = nil
-            itemModel.scNativeVertical = nil
-            itemModel.scNativeDepth = nil
-            itemModel.scBaselineGeneration = nil
-            itemModel.scRenderKind = nil
-            itemModel:SetScript("OnUpdate", nil)
+            clearEzItemModelState(itemModel)
+            if itemModel.SetPosition then pcall(function() itemModel:SetPosition(0, 0, 0) end) end
+            if itemModel.SetFacing then pcall(function() itemModel:SetFacing(0) end) end
             itemModel:ClearModel()
             itemModel:Hide()
             applyStandaloneItemRecord(itemModel.scObjectModel, nil)
