@@ -616,11 +616,11 @@ foreach ($pattern in $testPatterns) {
 
 **Steps:**
 
-1. [ ] 新增 `Components:CreateRandomCollectionButton(parent, spec)`，允许调用方传 label、icon、fallbackIcon、tooltip 和 onClick。
-2. [ ] 保留 `CreateRandomMountButton` 作为兼容别名，确保已验收坐骑页视觉不变。
-3. [ ] 新增 capability `components.random-collection`，保留 `components.random-mount`。
-4. [ ] 宠物按钮沿用 DragonUI 图标裁切、边框、按下纹理和高亮；不复制 Journal.lua 的宏创建/`/script` 行为。
-5. [ ] 更新 Public API 文档，强调组件只负责视觉，随机与收藏状态仍由调用 AddOn/服务端负责。
+1. [x] 新增 `Components:CreateRandomCollectionButton(parent, spec)`，允许调用方传 label、icon、fallbackIcon、tooltip 和 onClick。
+2. [x] 保留 `CreateRandomMountButton` 作为兼容别名，确保已验收坐骑页视觉不变。
+3. [x] 新增 capability `components.random-collection`，保留 `components.random-mount`。
+4. [x] 宠物按钮沿用 DragonUI 图标裁切、边框、按下纹理和高亮；不复制 Journal.lua 的宏创建/`/script` 行为。
+5. [x] 更新 Public API 文档，强调组件只负责视觉，随机与收藏状态仍由调用 AddOn/服务端负责。
 
 **Commands:**
 

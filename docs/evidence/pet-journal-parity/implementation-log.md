@@ -112,3 +112,13 @@ Task 1 direct checks passed. No cleanup command was used.
 - Focused checks: the new companion query contract passed; all 14 companion catalog checks passed with 1 optional evidence-pack check skipped; `git diff --check` passed.
 - The plan's full `test_addon_contract.py` run remains red on numerous pre-existing DragonUI/NewEra assertions outside Task 9 (layout, presenter, TOC, wardrobe and toy expectations). These are retained for Tasks 10-15 integration cleanup rather than masking them here.
 - AddOn commit: `a20aea5 feat(addon): align companion catalog query semantics`.
+
+## Task 10 - Generic DragonUI random collection control
+
+- Added `CreateRandomCollectionButton(parent, spec)` with caller-provided label, icon, fallback icon, tooltip, click handler, and optional drag handler.
+- Preserved `CreateRandomMountButton` as a compatibility alias with the exact existing mount icon default.
+- Both `components.random-collection` and `components.random-mount` capabilities are advertised.
+- The generic control retains the accepted icon crop, thin action border, pushed texture, and additive highlight. It contains no collection selection, favorite state, macro creation, or `/script` behavior.
+- Public API documentation now assigns state and action authority to the consuming AddOn/server bridge.
+- Checks: `Inspect-ClientSuiteLayout.ps1` passed; source search confirmed both capabilities/entry points and no macro behavior in the component; `git diff --check` passed.
+- SoloClientSuite commit: `77bcb8e feat(newera): generalize random collection control`.
