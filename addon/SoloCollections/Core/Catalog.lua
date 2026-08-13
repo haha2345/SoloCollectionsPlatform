@@ -78,6 +78,18 @@ local function refreshMountSourceOrder(source)
     end
 end
 
+local function sourceOrder(source)
+    local seen = {}
+    for _, record in ipairs(source or {}) do
+        local sourceType = tonumber(record.sourceType)
+        if sourceType ~= nil then seen[sourceType] = true end
+    end
+    local order = {}
+    for sourceType in pairs(seen) do order[#order + 1] = sourceType end
+    table.sort(order)
+    return order
+end
+
 function Catalog.GetMountSourceOrder()
     getGeneratedMountSource()
     return Catalog.MOUNT_SOURCE_ORDER
@@ -174,6 +186,15 @@ local function getGeneratedCompanionSource()
         end
     end
     return generatedCompanionSource
+end
+
+function Catalog.GetPetSourceOrder()
+    return sourceOrder(getGeneratedCompanionSource())
+end
+
+function Catalog.PetSourceLabel(sourceType)
+    sourceType = tonumber(sourceType)
+    return MOUNT_SOURCE_LABELS[sourceType] or "其他"
 end
 
 local function getGeneratedToySource()

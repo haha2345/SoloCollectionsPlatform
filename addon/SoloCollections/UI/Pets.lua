@@ -13,6 +13,7 @@ local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
 local TWO_PI = math.pi * 2
 local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
+local RANDOM_PET_FALLBACK_ICON = "Interface\\Icons\\INV_Misc_QuestionMark"
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -28,6 +29,13 @@ local function showNotice(message)
     elseif DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
         DEFAULT_CHAT_FRAME:AddMessage("|cffff9f40SoloCollections:|r " .. message)
     end
+end
+
+local function getPetActionMessage(reason)
+    if SC.Bridge and type(SC.Bridge.GetPetActionMessage) == "function" then
+        return SC.Bridge.GetPetActionMessage(reason)
+    end
+    return reason or "小宠物操作失败，请稍后再试。"
 end
 
 function UI.CreatePetsPage(parent)
@@ -139,6 +147,18 @@ function UI.CreatePetsPage(parent)
         infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
     end
 
+    local randomHost = CreateFrame("Frame", nil, (bands and bands.top) or detail)
+    randomHost:SetSize(190, 30)
+    randomHost:SetPoint("BOTTOMRIGHT", detail, "TOPRIGHT", -8, JOURNAL_LAYOUT.randomDetailGap or 6)
+    local randomSummon = CompanionJournal and CompanionJournal:CreateRandomCompanionButton(randomHost, {
+        label = "随机召唤小宠物",
+        icon = RANDOM_PET_FALLBACK_ICON,
+        fallbackIcon = RANDOM_PET_FALLBACK_ICON,
+        tooltip = "优先从已收集的偏好小宠物中随机选择；没有偏好时由服务端从全部可用小宠物中选择。",
+    }) or CreateFrame("Button", nil, randomHost)
+    randomSummon:SetSize(30, 30)
+    randomSummon:SetPoint("RIGHT", randomHost, "RIGHT", 0, 0)
+
     local name = infoHeader and infoHeader.name or createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
     if not infoHeader then
         name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
@@ -221,25 +241,86 @@ function UI.CreatePetsPage(parent)
             pcall(UIDropDownMenu_Refresh, filterMenu, nil, 1)
         end
     end
+    local function petFilters()
+        if not SC.db then return nil end
+        SC.db.filters = SC.db.filters or {}
+        SC.db.filters.pets = SC.db.filters.pets or {}
+        local filters = SC.db.filters.pets
+        if type(filters.hiddenSources) ~= "table" then filters.hiddenSources = {} end
+        return filters
+    end
     local function filterMenuInit(self, level)
-        if (level or 1) ~= 1 or not SC.db then return end
+        level = level or 1
+        if not SC.db then return end
         local filters = SC.db.filters
-        local function addToggle(label, key)
-            local info = UIDropDownMenu_CreateInfo()
-            info.isNotRadio = true
-            info.keepShownOnClick = true
-            info.text = label
-            info.checked = function() return filters[key] and true or false end
-            info.func = function(_, _, _, checked)
-                filters[key] = checked == nil and not filters[key] or checked and true or false
+        if level == 1 then
+            local function addToggle(label, key)
+                local info = UIDropDownMenu_CreateInfo()
+                info.isNotRadio = true
+                info.keepShownOnClick = true
+                info.text = label
+                info.checked = function() return filters[key] and true or false end
+                info.func = function(_, _, _, checked)
+                    filters[key] = checked == nil and not filters[key] or checked and true or false
+                    page:Refresh()
+                    refreshFilterMenu()
+                end
+                UIDropDownMenu_AddButton(info, level)
+            end
+            addToggle("已收集", "collected")
+            addToggle("未收集", "uncollected")
+            addToggle("仅显示偏好", "favorites")
+
+            local sources = UIDropDownMenu_CreateInfo()
+            sources.text = "来源"
+            sources.notCheckable = true
+            sources.hasArrow = true
+            sources.value = "sources"
+            UIDropDownMenu_AddButton(sources, level)
+        elseif level == 2 and UIDROPDOWNMENU_MENU_VALUE == "sources" then
+            local all = UIDropDownMenu_CreateInfo()
+            all.notCheckable = true
+            all.keepShownOnClick = true
+            all.text = "显示全部来源"
+            all.func = function()
+                petFilters().hiddenSources = {}
                 page:Refresh()
                 refreshFilterMenu()
             end
-            UIDropDownMenu_AddButton(info, 1)
+            UIDropDownMenu_AddButton(all, level)
+
+            local none = UIDropDownMenu_CreateInfo()
+            none.notCheckable = true
+            none.keepShownOnClick = true
+            none.text = "隐藏全部来源"
+            none.func = function()
+                local state = petFilters()
+                state.hiddenSources = {}
+                for _, sourceType in ipairs(Catalog.GetPetSourceOrder()) do
+                    state.hiddenSources[sourceType] = true
+                end
+                page:Refresh()
+                refreshFilterMenu()
+            end
+            UIDropDownMenu_AddButton(none, level)
+
+            for _, sourceType in ipairs(Catalog.GetPetSourceOrder()) do
+                local sourceKey = sourceType
+                local info = UIDropDownMenu_CreateInfo()
+                info.isNotRadio = true
+                info.keepShownOnClick = true
+                info.text = Catalog.PetSourceLabel(sourceKey)
+                info.checked = function() return not petFilters().hiddenSources[sourceKey] end
+                info.func = function(_, _, _, checked)
+                    local state = petFilters()
+                    if checked == nil then checked = not state.hiddenSources[sourceKey] end
+                    state.hiddenSources[sourceKey] = checked and nil or true
+                    page:Refresh()
+                    refreshFilterMenu()
+                end
+                UIDropDownMenu_AddButton(info, level)
+            end
         end
-        addToggle("已收集", "collected")
-        addToggle("未收集", "uncollected")
-        addToggle("仅显示偏好", "favorites")
     end
     if UIDropDownMenu_Initialize then
         UIDropDownMenu_Initialize(filterMenu, filterMenuInit, "MENU")
@@ -293,6 +374,7 @@ function UI.CreatePetsPage(parent)
         clearDragState()
     end
 
+    local refreshSummonButton
     local function summonRecord(record)
         if not record then
             return
@@ -307,8 +389,9 @@ function UI.CreatePetsPage(parent)
         end
         SC.Bridge.SummonPet(record.id, function(ok, reason)
             if ok == false then
-                showNotice(reason or "小宠物召唤请求失败。")
+                showNotice(getPetActionMessage(reason))
             end
+            refreshSummonButton(record)
         end)
     end
 
@@ -327,8 +410,53 @@ function UI.CreatePetsPage(parent)
         return false
     end
 
-    local function refreshSummonButton(record)
+    refreshSummonButton = function(record)
         summon:SetText(isRecordSummoned(record) and "解散小宠物" or "召唤小宠物")
+    end
+
+    local function setFavoriteRecord(record)
+        if not record or not record.collected then
+            showNotice(getPetActionMessage("FAVORITE_NOT_OWNED"))
+            return
+        end
+        if not SC.Bridge or type(SC.Bridge.SetPetFavorite) ~= "function" or
+            SC.Bridge.GetCategoryState(17) ~= "Ready" then
+            showNotice("小宠物偏好正在同步，请稍后再试。")
+            return
+        end
+        page.scPendingFavoriteId = record.id
+        favorite:Disable()
+        SC.Bridge.SetPetFavorite(record.id, not record.favorite, function(ok, reason)
+            if ok == false then
+                page.scPendingFavoriteId = nil
+                showNotice(getPetActionMessage(reason))
+                page:Refresh()
+            end
+        end)
+    end
+
+    local function summonRandomPet()
+        if not SC.Bridge or type(SC.Bridge.SummonRandomPet) ~= "function" then
+            showNotice(getPetActionMessage("BRIDGE_UNAVAILABLE"))
+            return
+        end
+        SC.Bridge.SummonRandomPet(function(ok, reason)
+            if ok == false then showNotice(getPetActionMessage(reason)) end
+            refreshSummonButton(page.scSelectedRecord)
+        end)
+    end
+
+    local function updateRandomPetIcon()
+        local preferred, eligible
+        for _, record in ipairs(Catalog.Get("PETS")) do
+            if record.collected and record.actionable and record.randomEligible then
+                if record.favorite and not preferred then preferred = record end
+                if not eligible then eligible = record end
+            end
+        end
+        local iconRecord = preferred or eligible
+        local icon = randomSummon._neIcon or randomSummon._tex
+        if icon then UI.SetIconTexture(icon, iconRecord and iconRecord.icon or RANDOM_PET_FALLBACK_ICON) end
     end
 
     local function openContextMenu(anchor, record)
@@ -346,7 +474,7 @@ function UI.CreatePetsPage(parent)
         end
 
         local summonInfo = UIDropDownMenu_CreateInfo()
-        summonInfo.text = "召唤小宠物"
+        summonInfo.text = isRecordSummoned(record) and "解散小宠物" or "召唤小宠物"
         summonInfo.notCheckable = 1
         summonInfo.func = function()
             summonRecord(record)
@@ -366,15 +494,16 @@ function UI.CreatePetsPage(parent)
         favoriteInfo.text = record.favorite and "取消偏好" or "设为偏好"
         favoriteInfo.notCheckable = 1
         favoriteInfo.func = function()
-            if SC.Bridge and SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected then
-                Catalog.ToggleDemoFavorite("PETS", record.id)
-                page:Refresh()
-            end
+            setFavoriteRecord(record)
         end
         if not record.collected then
             favoriteInfo.disabled = 1
             favoriteInfo.tooltipTitle = "尚未收集"
             favoriteInfo.tooltipText = "未收集的小宠物不能设为偏好。"
+        elseif not SC.Bridge or SC.Bridge.GetCategoryState(17) ~= "Ready" then
+            favoriteInfo.disabled = 1
+            favoriteInfo.tooltipTitle = "偏好正在同步"
+            favoriteInfo.tooltipText = "服务端偏好状态就绪后才能修改。"
         end
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
@@ -467,7 +596,12 @@ function UI.CreatePetsPage(parent)
         if record.collected then
             collectionState:SetText("已收集")
             collectionState:SetTextColor(0.38, 0.9, 0.30)
-            favorite:Enable()
+            if SC.Bridge and SC.Bridge.GetCategoryState(17) == "Ready" and
+                page.scPendingFavoriteId ~= record.id then
+                favorite:Enable()
+            else
+                favorite:Disable()
+            end
             summon:Enable()
             favorite:SetText(record.favorite and "取消偏好" or "设为偏好")
         else
@@ -498,6 +632,26 @@ function UI.CreatePetsPage(parent)
             scrollHint:SetText("滚轮或拖动滚动条查看更多小宠物  " .. first .. "-" .. last .. " / " .. #records)
         else
             scrollHint:SetText("共 " .. #records .. " 个小宠物")
+        end
+    end
+
+    local function scrollSelectionIntoView(records, selectedId)
+        if not selectedId then return end
+        local selectedIndex
+        for index, record in ipairs(records) do
+            if record.id == selectedId then selectedIndex = index; break end
+        end
+        if not selectedIndex then return end
+        local offset = FauxScrollFrame_GetOffset(scrollFrame) or 0
+        local newOffset = offset
+        if selectedIndex <= offset then
+            newOffset = selectedIndex - 1
+        elseif selectedIndex > offset + VISIBLE_ROWS then
+            newOffset = selectedIndex - VISIBLE_ROWS
+        end
+        newOffset = math.max(0, math.min(math.max(0, #records - VISIBLE_ROWS), newOffset))
+        if newOffset ~= offset then
+            FauxScrollFrame_OnVerticalScroll(scrollFrame, newOffset * ROW_HEIGHT, ROW_HEIGHT, refreshRows)
         end
     end
 
@@ -583,7 +737,7 @@ function UI.CreatePetsPage(parent)
             end
         end
 
-        local collected, total = Catalog.GetProgress("PETS", SC.db.filters)
+        local collected, total = Catalog.GetProgress("PETS")
         if UI.CollectionsFrame and UI.CollectionsFrame.scProgress then
             UI.CollectionsFrame.scProgress:SetProgress(collected, total)
         end
@@ -601,9 +755,11 @@ function UI.CreatePetsPage(parent)
             UI.ShowEmptyState(empty, self, "没有符合条件的小宠物", "调整搜索文字或过滤条件后再试。")
         else
             UI.HideEmptyState(empty)
+            scrollSelectionIntoView(records, selectedRecord and selectedRecord.id or records[1].id)
             selectRecord(selectedRecord or records[1])
             refreshRows()
         end
+        updateRandomPetIcon()
         self:SyncFilters()
     end
 
@@ -612,10 +768,7 @@ function UI.CreatePetsPage(parent)
         if not record or not record.collected then
             return
         end
-        if SC.Bridge and SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected then
-            Catalog.ToggleDemoFavorite("PETS", record.id)
-            page:Refresh()
-        end
+        setFavoriteRecord(record)
     end)
 
     summon:SetScript("OnClick", function()
@@ -623,6 +776,8 @@ function UI.CreatePetsPage(parent)
         summonRecord(record)
         refreshSummonButton(record)
     end)
+
+    randomSummon:SetScript("OnClick", summonRandomPet)
 
     reset:SetScript("OnClick", function()
         model.rotation = DEFAULT_ROTATION
@@ -632,9 +787,14 @@ function UI.CreatePetsPage(parent)
 
     if SC.Bridge and type(SC.Bridge.RegisterStateListener) == "function" then
         page.scBridgeStateListener = SC.Bridge.RegisterStateListener(function(_, typeId)
-            if typeId ~= nil and tonumber(typeId) ~= 11 then return end
+            typeId = tonumber(typeId)
+            if typeId ~= nil and typeId ~= 11 and typeId ~= 17 then return end
             local record = page.scSelectedRecord
-            if not page:IsShown() or not record then return end
+            if typeId == 17 then page.scPendingFavoriteId = nil end
+            if not page:IsShown() then return end
+            page:Refresh()
+            record = page.scSelectedRecord
+            if typeId == 17 or not record then return end
             local state = SC.Bridge.GetCategoryState and SC.Bridge.GetCategoryState(11)
             if state == "Ready" and page.scPendingModelId == record.id then
                 requestModel(record, true)
@@ -704,6 +864,7 @@ function UI.CreatePetsPage(parent)
     page.scCollectionState = collectionState
     page.scFavorite = favorite
     page.scSummon = summon
+    page.scRandomSummon = randomSummon
     page.scReset = reset
     page.scPresenter = presenter
     page.scRotateLeft = rotateLeft

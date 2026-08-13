@@ -1405,7 +1405,8 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn('local projectionType = category == "MOUNTS" and 16 or 17', catalog)
         self.assertIn('if category == "MOUNTS" or category == "PETS" then\n        table.sort(matches, collectionPresentationLess)', catalog)
         self.assertIn('local petFilters = filters.pets or DEFAULT_FILTERS.pets', catalog)
-        self.assertIn("SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected", pets)
+        self.assertNotIn('Catalog.ToggleDemoFavorite("PETS"', pets)
+        self.assertIn("SC.Bridge.SetPetFavorite(record.id, not record.favorite", pets)
 
     def test_mount_and_pet_journals_share_shell_geometry_and_named_filters(self):
         adapter = read_text(ADDON / "UI" / "DragonUI" / "MountJournal.lua")
@@ -1458,6 +1459,27 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("SC.Bridge.GetCategoryState(11)", pets)
         self.assertIn("SC.Bridge.RegisterStateListener", pets)
         self.assertIn("requestModel(record, true)", pets)
+
+    def test_companion_interactions_are_server_authoritative(self):
+        catalog = read_text(ADDON / "Core" / "Catalog.lua")
+        bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        self.assertIn("function Catalog.GetPetSourceOrder()", catalog)
+        self.assertIn("function Catalog.PetSourceLabel(sourceType)", catalog)
+        self.assertIn('sources.value = "sources"', pets)
+        self.assertIn("Catalog.GetPetSourceOrder()", pets)
+        self.assertIn("Catalog.PetSourceLabel(sourceKey)", pets)
+        self.assertIn("SC.Bridge.SetPetFavorite(record.id, not record.favorite", pets)
+        self.assertNotIn('Catalog.ToggleDemoFavorite("PETS"', pets)
+        self.assertIn("SC.Bridge.SummonRandomPet(function(ok, reason)", pets)
+        self.assertIn("CompanionJournal:CreateRandomCompanionButton", pets)
+        self.assertIn("record.collected and record.actionable and record.randomEligible", pets)
+        self.assertIn("local iconRecord = preferred or eligible", pets)
+        self.assertIn('local collected, total = Catalog.GetProgress("PETS")', pets)
+        self.assertIn("scrollSelectionIntoView(records", pets)
+        self.assertIn("if typeId == 17 then page.scPendingFavoriteId = nil end", pets)
+        self.assertIn("function B.SetPetFavorite", bridge)
+        self.assertIn("function B.SummonRandomPet", bridge)
 
 
 if __name__ == "__main__":
