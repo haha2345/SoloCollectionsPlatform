@@ -383,12 +383,12 @@ python -m unittest discover -s .\tools\collections\tests -p "test_companion_cata
 
 **Steps:**
 
-1. [ ] 新增 `_apply_companion_journal_contract`，要求 metadata 与 companion action collectionId 完全等集。
-2. [ ] AddOn 投影加入 `sourceText`、`sourceType`、`descriptionZhCN`、`descriptionStatus`、`journalVisible`、`actionable`、`randomEligible`、`canonicalActionSpellId`、`acquisitionClass` 和排除原因。
-3. [ ] 模块投影只加入执行所需的 `Actionable`、`RandomEligible`、`JournalVisible`、`CanonicalActionSpellId`，不把整段显示文案写进 C++。
-4. [ ] 为 companion journal 增加与 mount journal 相同的 `--companion-journal-only` / `--check` 轻量投影入口。
-5. [ ] 生成器拒绝 collectionId/spellId 漂移、覆盖不全、随机条目不可执行、隐藏条目仍可随机等错误。
-6. [ ] 重新生成 AddOn 与 module 投影，禁止手工调整生成文件。
+1. [x] 新增 `_apply_companion_journal_contract`，要求 metadata 与 companion action collectionId 完全等集。
+2. [x] AddOn 投影加入 `sourceText`、`sourceType`、`descriptionZhCN`、`descriptionStatus`、`journalVisible`、`actionable`、`randomEligible`、`canonicalActionSpellId`、`acquisitionClass` 和排除原因。
+3. [x] 模块投影只加入执行所需的 `Actionable`、`RandomEligible`、`JournalVisible`、`CanonicalActionSpellId`，不把整段显示文案写进 C++。
+4. [x] 为 companion journal 增加与 mount journal 相同的 `--companion-journal-only` / `--check` 轻量投影入口。
+5. [x] 生成器拒绝 collectionId/spellId 漂移、覆盖不全、随机条目不可执行、隐藏条目仍可随机等错误。
+6. [x] 重新生成 AddOn 与 module 投影，禁止手工调整生成文件。
 
 **Commands:**
 

@@ -48,3 +48,12 @@ Task 1 direct checks passed. No cleanup command was used.
 - Description provenance records the attempted spell/creature/name lookup keys and does not copy English PetData lore.
 - Currency lines use only inline `UI-GoldIcon.blp:0` textures; source line breaks use `|n`.
 - Direct checks: deterministic catalog check passed; 13 focused tests passed with 1 optional named-pack check skipped; `git diff --check` passed.
+
+## Task 4 - AddOn/module journal projection
+
+- Catalog mapping hash: `ea9c46e76154da493c64a0b2f79c1399a83f3852ea3ad6c228edc9494f1a8d42`.
+- Companion type mapping hash: `15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7`.
+- AddOn projection includes reviewed display metadata and execution eligibility flags.
+- Module JSON/C++ projections contain execution identity and eligibility only; no source or description strings are emitted to C++.
+- `--companion-journal-only` and `--check` use the shared production renderer and synchronize both repositories.
+- Direct checks: projection check passed; catalog generator 19 tests passed with 1 external-evidence check skipped; companion catalog 13 tests passed with 1 optional named-pack check skipped; both repository diffs passed whitespace checks.

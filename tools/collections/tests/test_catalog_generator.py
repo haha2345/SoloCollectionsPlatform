@@ -187,7 +187,59 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertNotRegex(rendered, r"(?m)^\s+actionId = ")
         wardrobe = outputs[ROOT / "addon/SoloCollections_WardrobeData/Data/Generated/WardrobeCatalog.lua"]
         self.assertIn('typeKey = "appearance"', wardrobe)
-        self.assertNotIn('typeKey = "appearance"', rendered)
+        self.assertNotIn('collectionKey = "appearance.', rendered)
+
+    def test_companion_journal_contract_projects_display_and_execution_fields(self):
+        model = generator.build_model(self.source)
+        actions = model["companionActions"]["entries"]
+        self.assertEqual(201, len(actions))
+        for entry in actions:
+            self.assertTrue(entry["journalVisible"])
+            self.assertTrue(entry["actionable"])
+            self.assertTrue(entry["randomEligible"])
+            self.assertEqual(entry["canonicalSpellId"], entry["canonicalActionSpellId"])
+
+        outputs = generator.render_outputs(model, ROOT, MODULE_ROOT)
+        addon = outputs[ROOT / "addon/SoloCollections/Data/Generated/Catalog.lua"]
+        for token in (
+            "sourceText", "sourceType", "descriptionZhCN", "descriptionStatus",
+            "journalVisible", "actionable", "randomEligible", "canonicalActionSpellId",
+            "acquisitionClass", "exclusionReason",
+        ):
+            self.assertIn(token, addon)
+        module_json = json.loads(outputs[MODULE_ROOT / "data/generated/solo_collections_companion_actions.json"])
+        self.assertEqual(201, len(module_json["entries"]))
+        self.assertNotIn("sourceText", module_json["entries"][0])
+        self.assertNotIn("descriptionZhCN", module_json["entries"][0])
+        module_inc = outputs[MODULE_ROOT / "src/generated/SoloCollectionsCompanionCatalog.inc"]
+        self.assertIn("true, true, true", module_inc)
+        self.assertNotIn("|cFFFFD200", module_inc)
+
+    def test_companion_journal_rejects_missing_or_drifted_identity(self):
+        journal = self.read_json("catalog/source/companion_journal_metadata.json")
+        journal["entries"].pop()
+        self.write_json("catalog/source/companion_journal_metadata.json", journal)
+        with self.assertRaisesRegex(generator.CatalogError, "coverage|sets differ"):
+            generator.build_model(self.source)
+
+    def test_companion_journal_rejects_spell_drift(self):
+        journal = self.read_json("catalog/source/companion_journal_metadata.json")
+        journal["entries"][0]["spellId"] += 1
+        self.write_json("catalog/source/companion_journal_metadata.json", journal)
+        with self.assertRaisesRegex(generator.CatalogError, "spell drift"):
+            generator.build_model(self.source)
+
+    def test_companion_journal_rejects_hidden_random_entry(self):
+        journal = self.read_json("catalog/source/companion_journal_metadata.json")
+        row = journal["entries"][0]
+        row["journalVisible"] = False
+        row["actionable"] = False
+        row["randomEligible"] = True
+        row["canonicalActionSpellId"] = 0
+        row["exclusionReason"] = "TEST"
+        self.write_json("catalog/source/companion_journal_metadata.json", journal)
+        with self.assertRaisesRegex(generator.CatalogError, "random-eligible"):
+            generator.build_model(self.source)
 
     def test_localized_metadata_does_not_change_mapping_hash(self):
         before = generator.build_model(self.source)["mappingHash"]
