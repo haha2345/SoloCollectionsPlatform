@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "syncedAt": "2026-08-13T00:00:00+08:00",
+  "syncedAt": "2026-08-13T09:08:23+08:00",
   "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
   "components": [
     {
@@ -39,27 +39,27 @@
       "url": "https://github.com/ghbset/DragonUI_NewEra.git",
       "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
       "tocVersion": "0.2.0",
-      "directoryHash": "8d8d6b08973998ac775df18cedc055a44b16df360d500f4c5a4974e936db5592",
-      "localPatchState": "project-patched: Lua-5.1-safe LoadOnDemand wrapper registry, public-api-v1, startup-profile, canonical module state, shared DragonUI collection components, generation-safe model presenters, and no base heavy feature implementations",
+      "directoryHash": "cba8a9f36b56692231b0f9efdd8bed006e1b92fe18cc06fdfe5bec96fc7ce26e",
+      "localPatchState": "project-patched: Lua-5.1-safe LoadOnDemand wrapper registry, public-api-v1, startup-profile, canonical module state, shared DragonUI collection components including generic random collection controls, generation-safe model presenters, and no base heavy feature implementations",
       "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
     },
     {
       "id": "solocollections",
       "addonRoot": "SoloCollections",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "79572c385dbeb1f4be878b6b0c499ba83780d613",
+      "commit": "52e29fadb2a4a5d29e2b2336b768b50be5e257ed",
       "tocVersion": "0.2.0",
-      "directoryHash": "3abafb87e674524e3050451ade0c34a256a66fda6d39905fdcc91097e13b4e6f",
-      "localPatchState": "sibling-source; branch feat/ezcollections-ui-rehost; curated 258-mount zhCN journal projection, reviewed legacy/promotion visibility, duplicate/transport exclusions, official Spell.dbc descriptions, server-backed favorites, native mount actions, random spell integration, DragonUI mount controls, SC2-ready preview retry, and load-on-demand wardrobe catalog bootstrap",
+      "directoryHash": "0675860a027f43eb43cbc6a9de32e7ac3e831aad93f9432554545f96df51daaa",
+      "localPatchState": "sibling-source; branch feat/pet-journal-parity; reviewed companion journal projection, server-backed companion favorites and authoritative random summon, DragonUI mount and companion controls, generation-safe model presentation, and load-on-demand wardrobe catalog bootstrap",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
     {
       "id": "solocollections-wardrobe-data",
       "addonRoot": "SoloCollections_WardrobeData",
       "url": "https://github.com/haha2345/SoloCollections.git",
-      "commit": "79572c385dbeb1f4be878b6b0c499ba83780d613",
+      "commit": "52e29fadb2a4a5d29e2b2336b768b50be5e257ed",
       "tocVersion": "0.2.0",
-      "directoryHash": "6fef42827ba7534fba392cc5384f13bae0c398f7113081f453707aefe16cc507",
+      "directoryHash": "3370b8e4c7bd1dd0cc8d0d0983a3ad189a0bbcb23d9754a5ac22885be3d4d244",
       "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
       "licenseState": "repository license applies only to SoloCollections-owned files"
     },
