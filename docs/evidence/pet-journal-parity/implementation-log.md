@@ -145,3 +145,14 @@ Task 1 direct checks passed. No cleanup command was used.
 - Clearing selection or hiding the page clears header, model, selection border, and button state. `COMPANION_UPDATE` refreshes the current summon label.
 - Focused detail contract and `git diff --check` passed. The direct placeholder search now finds only the known demo-only PETS toggle and unrelated TOYS/APPEARANCES placeholder records; the generated companion source contains neither old placeholder.
 - AddOn commit: `971d224 feat(ui): add reviewed companion detail presentation`.
+
+## Task 13 - Continuous companion model rotation and recovery
+
+- Pet model buttons and drag updates now share the mount journal's wrapped heading state and use `SetFacing`; `SetRotation(rotation, false)` is only the API fallback.
+- Drag updates are attached only while captured by the left mouse interaction and are removed on release, selection changes, model resets, and page hide.
+- Wheel zoom retains the native loaded scale and the same bounded 0.35-2.5 multiplier used by mounts; the reset path restores the shared default orientation.
+- Every preview request records both a generation and selected collection ID. Preview, ready, and unavailable callbacks are ignored unless both still match.
+- Type 11 bridge state is checked before preview. Pending requests retry only when type 11 becomes Ready and the same record remains selected and visible; mismatch has a dedicated state message.
+- Refreshing an unchanged ready selection no longer reloads the model. Hidden/filtered selections invalidate pending callbacks and clear the old model.
+- Focused rotation/recovery contract and `git diff --check` passed. The required full AddOn contract run executed 65 tests and remains at the same 21 stale cross-feature failures plus 1 stale scheduler error; both new Task 12/13 contracts passed.
+- AddOn commit: `b905b72 fix(ui): keep companion model animation continuous while rotating`.

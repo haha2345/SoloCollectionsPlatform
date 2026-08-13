@@ -711,12 +711,12 @@ git diff --check
 
 **Steps:**
 
-1. [ ] 将每次拖动的 `SetRotation` 改为坐骑页同款 `SetFacing` 路径。
-2. [ ] 仅在没有 `SetFacing` 时调用 `SetRotation(rotation, false)`。
-3. [ ] 复用坐骑页默认朝向、滚轮缩放、重置视角和鼠标捕获清理。
-4. [ ] 选择变化时递增 generation；回调只接受当前 generation 和当前 selectedId。
-5. [ ] provider/bridge Ready 后仅对当前仍选中的条目重试模型请求。
-6. [ ] 页面隐藏或记录不可见时停止拖动并清空旧模型。
+1. [x] 将每次拖动的 `SetRotation` 改为坐骑页同款 `SetFacing` 路径。
+2. [x] 仅在没有 `SetFacing` 时调用 `SetRotation(rotation, false)`。
+3. [x] 复用坐骑页默认朝向、滚轮缩放、重置视角和鼠标捕获清理。
+4. [x] 选择变化时递增 generation；回调只接受当前 generation 和当前 selectedId。
+5. [x] provider/bridge Ready 后仅对当前仍选中的条目重试模型请求。
+6. [x] 页面隐藏或记录不可见时停止拖动并清空旧模型。
 
 **Commands:**
 
