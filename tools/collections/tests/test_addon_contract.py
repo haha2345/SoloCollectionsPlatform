@@ -1425,6 +1425,25 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("function page:OpenFilterMenu(anchor)", pets)
         self.assertNotIn("frame.scFilterPopup:SetOptions", pets)
 
+    def test_companion_detail_uses_shared_header_and_reviewed_copy(self):
+        adapter = read_text(ADDON / "UI" / "DragonUI" / "MountJournal.lua")
+        catalog = read_text(ADDON / "Core" / "Catalog.lua")
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        self.assertIn("function MountJournal:CreateCompanionInfoHeader", adapter)
+        self.assertIn("CompanionJournal:CreateCollectionInfoHeader(detail", pets)
+        self.assertIn("infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)", pets)
+        self.assertIn('source:SetText(record.source or "来源未知")', pets)
+        self.assertIn('or "暂无可核验的中文描述"', pets)
+        self.assertIn('summon:SetWidth(180)', pets)
+        self.assertIn('summon:SetHeight(26)', pets)
+        self.assertIn('CompanionJournal:SkinRedActionButton(summon)', pets)
+        self.assertIn('"解散小宠物" or "召唤小宠物"', pets)
+        self.assertIn('GetCompanionInfo("CRITTER", index)', pets)
+        companion_source = catalog[catalog.index("local function getGeneratedCompanionSource"):
+                                   catalog.index("local function getGeneratedToySource")]
+        self.assertIn("canonicalActionSpellId = collection.canonicalActionSpellId", companion_source)
+        self.assertNotIn('description:SetText(record.description or "暂无说明。")', pets)
+
 
 if __name__ == "__main__":
     unittest.main()

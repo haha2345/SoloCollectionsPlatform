@@ -105,33 +105,50 @@ function UI.CreatePetsPage(parent)
     rotateHint:SetPoint("BOTTOM", model, "BOTTOM", 0, 7)
     rotateHint:SetText("按住鼠标左键拖动旋转 · 滚轮缩放")
 
-    local infoButton = CreateFrame("Button", nil, detail)
-    infoButton:SetWidth(38)
-    infoButton:SetHeight(38)
-    infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
-    infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    local infoHeader = CompanionJournal and CompanionJournal:CreateCollectionInfoHeader(detail, {
+        x = 4,
+        y = 4,
+        width = 420,
+        height = 124,
+        textWidth = 320,
+    })
+    local infoButton = infoHeader and infoHeader.button or CreateFrame("Button", nil, detail)
+    if not infoHeader then
+        infoButton:SetSize(40, 40)
+        infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
+        infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    end
+    local infoIcon = infoHeader and infoHeader.icon or infoButton:CreateTexture(nil, "ARTWORK")
+    if not infoHeader then
+        infoIcon:SetAllPoints(infoButton)
+        UI.SetFallbackTexture(infoIcon)
+    end
+    local infoBorder, infoSelectedBorder
+    if not infoHeader then
+        infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
+    end
 
-    local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
-    infoIcon:SetAllPoints(infoButton)
-    UI.SetFallbackTexture(infoIcon)
-
-    local infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
-
-    local name = createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
-    name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
-    name:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    local name = infoHeader and infoHeader.name or createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
+    if not infoHeader then
+        name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
+        name:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    end
 
     local collectionState = createDetailLabel(detail, "GameFontHighlight", { 0.45, 0.9, 0.35 })
     collectionState:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, -7)
 
-    local source = createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
-    source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
-    source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    local source = infoHeader and infoHeader.source or createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
+    if not infoHeader then
+        source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
+        source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    end
 
-    local description = createDetailLabel(detail, "GameFontNormal", { 1, 0.82, 0.18 })
-    description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
-    description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
-    description:SetHeight(38)
+    local description = infoHeader and infoHeader.description or createDetailLabel(detail, "GameFontNormal", { 0.82, 0.82, 0.82 })
+    if not infoHeader then
+        description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
+        description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+        description:SetHeight(38)
+    end
 
     local favorite = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
     favorite:SetWidth(104)
@@ -145,12 +162,12 @@ function UI.CreatePetsPage(parent)
     reset:SetPoint("RIGHT", favorite, "LEFT", -8, 0)
     reset:SetText("重置视角")
 
-    local summon = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
-    summon:SetWidth(140)
-    summon:SetHeight(22)
-    if bands and bands.bottom then summon:SetParent(bands.bottom) end
+    local summon = CreateFrame("Button", nil, (bands and bands.bottom) or page, "UIPanelButtonTemplate")
+    summon:SetWidth(180)
+    summon:SetHeight(26)
     summon:SetPoint("CENTER", (bands and bands.bottom) or page, "CENTER", 0, 0)
     summon:SetText("召唤小宠物")
+    if CompanionJournal then CompanionJournal:SkinRedActionButton(summon) end
     UI.RegisterNewEraCompanionAction(page, favorite)
     UI.RegisterNewEraCompanionAction(page, reset)
     UI.RegisterNewEraCompanionAction(page, summon)
@@ -267,6 +284,25 @@ function UI.CreatePetsPage(parent)
         end)
     end
 
+    local function isRecordSummoned(record)
+        local wantedSpellId = record and tonumber(record.canonicalActionSpellId or record.spellId)
+        if not wantedSpellId or type(GetNumCompanions) ~= "function" or
+            type(GetCompanionInfo) ~= "function" then
+            return false
+        end
+        for index = 1, (GetNumCompanions("CRITTER") or 0) do
+            local _, _, spellId, _, active = GetCompanionInfo("CRITTER", index)
+            if tonumber(spellId) == wantedSpellId and active then
+                return true
+            end
+        end
+        return false
+    end
+
+    local function refreshSummonButton(record)
+        summon:SetText(isRecordSummoned(record) and "解散小宠物" or "召唤小宠物")
+    end
+
     local function openContextMenu(anchor, record)
         if not record then
             return
@@ -361,12 +397,17 @@ function UI.CreatePetsPage(parent)
         page.scSelectedId = record.id
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
+        infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
         UI.SetCollectedVisual(infoIcon, record.collected)
-        infoBorder:SetCollected(record.collected)
-        infoSelectedBorder:Show()
+        if infoBorder then infoBorder:SetCollected(record.collected) end
+        if infoSelectedBorder then infoSelectedBorder:Show() end
         name:SetText(record.name or "未知小宠物")
-        source:SetText("来源：" .. (record.source or "未知"))
-        description:SetText(record.description or "暂无说明。")
+        source:SetText(record.source or "来源未知")
+        local descriptionText = record.description and record.description ~= "" and record.description
+            or "暂无可核验的中文描述"
+        description:SetText(descriptionText)
+        description:Show()
+        refreshSummonButton(record)
         if record.collected then
             collectionState:SetText("已收集")
             collectionState:SetTextColor(0.38, 0.9, 0.30)
@@ -439,13 +480,16 @@ function UI.CreatePetsPage(parent)
         name:SetText("")
         source:SetText("")
         description:SetText("")
+        description:Hide()
         collectionState:SetText("")
         favorite:SetText("设为偏好")
         favorite:Disable()
+        summon:SetText("召唤小宠物")
         summon:Disable()
         UI.SetFallbackTexture(infoIcon)
-        infoBorder:SetCollected(false)
-        infoSelectedBorder:Hide()
+        infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        if infoBorder then infoBorder:SetCollected(false) end
+        if infoSelectedBorder then infoSelectedBorder:Hide() end
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
@@ -518,7 +562,9 @@ function UI.CreatePetsPage(parent)
     end)
 
     summon:SetScript("OnClick", function()
-        summonRecord(page.scSelectedRecord)
+        local record = page.scSelectedRecord
+        summonRecord(record)
+        refreshSummonButton(record)
     end)
 
     reset:SetScript("OnClick", function()
@@ -579,12 +625,13 @@ function UI.CreatePetsPage(parent)
     end
 
     page:SetScript("OnHide", function(self)
-        self.scModelGeneration = (self.scModelGeneration or 0) + 1
-        clearModelInteraction()
-        resetModelState()
-        if presenter then presenter:Clear("PAGE_HIDDEN") else model:ClearModel() end
-        unavailable:Hide()
+        self:ClearSelection()
         CloseDropDownMenus()
+    end)
+
+    page:RegisterEvent("COMPANION_UPDATE")
+    page:SetScript("OnEvent", function()
+        refreshSummonButton(page.scSelectedRecord)
     end)
 
     page.scList = list

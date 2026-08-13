@@ -155,6 +155,8 @@ local function getGeneratedCompanionSource()
             local names = collection.name or {}
             table.insert(generatedCompanionSource, {
                 id = collection.collectionId,
+                spellId = collection.spellId,
+                canonicalActionSpellId = collection.canonicalActionSpellId,
                 previewCreatureEntry = collection.previewCreatureEntry or collection.displayCreatureId,
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = collection.iconTexture,

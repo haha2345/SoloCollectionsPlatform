@@ -71,6 +71,12 @@ function MountJournal:CreateCollectionInfoHeader(parent, spec)
     return c:CreateCollectionInfoHeader(parent, spec or {})
 end
 
+-- Semantic companion alias: both journals intentionally share the same
+-- icon crop, gold ornament, name origin, and source/description widths.
+function MountJournal:CreateCompanionInfoHeader(parent, spec)
+    return self:CreateCollectionInfoHeader(parent, spec or {})
+end
+
 function MountJournal:CreateJournalFilterButton(parent, spec)
     local c = components()
     if not c then return nil end
