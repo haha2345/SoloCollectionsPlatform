@@ -934,13 +934,20 @@ local function isBodyCameraTunableRecord(record)
 end
 
 local function selectItemModelCamera(model)
-    -- ezCollections does not select the stock portrait/dressing-room cameras
-    -- for wardrobe cards. Its copied camera tuples are applied as model-space
-    -- position/facing after SetUnit/SetCreature and TryOn have settled.
+    -- Match the implicit state of ezCollections' WardrobeItemsModelTemplate.
+    -- Our cards are independent DressUpModels, so camera 1 is selected at
+    -- SetUnit/SetCreature/TryOn rebuild boundaries before applying the copied
+    -- model-space tuple.
     model.scClientCameraSentinel = nil
     model.scUsesClientCamera = false
     model.scBodyCameraProfile = nil
-    model.scBodyCameraReason = "EZCOLLECTIONS_PENDING"
+    if EzCamera and type(EzCamera.ActivateRecordCamera) == "function" then
+        local activated, reason = EzCamera:ActivateRecordCamera(model)
+        model.scBodyCameraReason = reason
+        return activated, reason
+    end
+    model.scBodyCameraReason = "EZ_CAMERA_ACTIVATOR_UNAVAILABLE"
+    return false, model.scBodyCameraReason
 end
 
 local function captureItemModelBaseline(model)
@@ -1118,6 +1125,7 @@ local function finishPendingItemModel(model, elapsed)
     model.scApplyingAppearance = nil
     -- Match ezCollections: apply once immediately after TryOn, then retain the
     -- delayed reapply for any model rebuild that lands on a later frame.
+    selectItemModelCamera(model)
     applyItemModelTransform(model)
     queueItemModelView(model, true)
     return true
@@ -1134,6 +1142,32 @@ local function updatePendingItemModel(self, elapsed)
     end
     if self.scEzFreeze and self.SetSequenceTime and self.scEzAnimID then
         pcall(function() self:SetSequenceTime(self.scEzAnimID, 0) end)
+    end
+    -- Keep the copied ezCollections pose as the final per-frame model action.
+    -- This closes the 3.3.5 timing hole where animation freezing leaves the
+    -- item equipped but restores camera 1's native full-body composition.
+    if self.scEzFreeze and self.scRecord and EzCamera
+        and type(EzCamera.RetainRecordCamera) == "function" then
+        local retained, reason = EzCamera:RetainRecordCamera(self)
+        self.scEzRetentionReason = reason
+        if not retained and not self.scApplyingAppearance and not self.scApplyingView then
+            selectItemModelCamera(self)
+            applyItemModelTransform(self)
+        end
+    end
+    if self.scEzFreeze and self.scRecord and EzCamera
+        and type(EzCamera.VerifyRecordCamera) == "function" then
+        self.scEzVerifyElapsed = (self.scEzVerifyElapsed or 0) + (elapsed or 0)
+        if self.scEzVerifyElapsed >= 0.20 then
+            self.scEzVerifyElapsed = 0
+            local retained, reason = EzCamera:VerifyRecordCamera(self, self.scRecord)
+            self.scEzRetentionReason = reason
+            if not retained and not self.scApplyingAppearance and not self.scApplyingView then
+                self.scEzRetentionRepairs = (self.scEzRetentionRepairs or 0) + 1
+                selectItemModelCamera(self)
+                applyItemModelTransform(self)
+            end
+        end
     end
     if not self.scPendingItemString and not self.scViewStage and not self.scEzFreeze then
         self:SetScript("OnUpdate", nil)
@@ -1168,6 +1202,14 @@ local function clearEzItemModelState(model)
     model.scEzAnimID = nil
     model.scEzCameraID = nil
     model.scEzCameraReason = nil
+    model.scEzExpectedScale = nil
+    model.scEzExpectedX = nil
+    model.scEzExpectedY = nil
+    model.scEzExpectedZ = nil
+    model.scEzExpectedFacing = nil
+    model.scEzVerifyElapsed = nil
+    model.scEzRetentionReason = nil
+    model.scEzRetentionRepairs = nil
     model:SetScript("OnUpdate", nil)
 end
 
@@ -1311,6 +1353,7 @@ function ItemCardRenderer:Attach(model, objectModel)
     objectModel.scHostModel = model
     model:SetScript("OnUpdateModel", function(self)
         if self.scRecord and not self.scApplyingAppearance and not self.scApplyingView then
+            selectItemModelCamera(self)
             applyItemModelTransform(self)
         end
         queueItemModelView(self, true)
@@ -3000,6 +3043,7 @@ function UI.CreateWardrobePage(parent)
             -- restore the native full-body view. Force the same generation's
             -- relative framing to be applied again after every late rebuild.
             if self.scRecord and not self.scApplyingAppearance and not self.scApplyingView then
+                selectItemModelCamera(self)
                 applyItemModelTransform(self)
             end
             queueItemModelView(self, true)

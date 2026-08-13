@@ -650,8 +650,11 @@ function ezCollections:ApplyRecordCamera(model, record)
     end
     local screenRatio = screenWidth / screenHeight
     local ratio = (0.5 + ((1600 / 900) / screenRatio) / 2) * modelScale
+    local expectedX = camera[1] * ratio
+    local expectedY = camera[2] * ratio
+    local expectedZ = camera[3] * ratio
     local positioned = pcall(function()
-        model:SetPosition(camera[1] * ratio, camera[2] * ratio, camera[3] * ratio)
+        model:SetPosition(expectedX, expectedY, expectedZ)
     end)
     if not positioned then return false, "SET_POSITION_FAILED", cameraID end
     if model.SetFacing then
@@ -664,5 +667,75 @@ function ezCollections:ApplyRecordCamera(model, record)
         return false, "SET_FACING_UNAVAILABLE", cameraID
     end
     model.scEzAnimID = self:GetRecordAnimation(record, camera)
+    model.scEzExpectedScale = modelScale
+    model.scEzExpectedX = expectedX
+    model.scEzExpectedY = expectedY
+    model.scEzExpectedZ = expectedZ
+    model.scEzExpectedFacing = camera[4]
     return true, "READY", cameraID
+end
+
+-- The upstream WardrobeItemsModelTemplate is already on the native dressing
+-- room camera. SoloCollections owns independent DressUpModels, so repeat that
+-- template state only at model rebuild boundaries. Do not run SetCamera every
+-- render frame: SoloCam also uses this API as a private command transport.
+function ezCollections:ActivateRecordCamera(model)
+    if not model then return false, "MODEL_UNAVAILABLE" end
+    if not model.SetCamera then return true, "CAMERA_API_UNAVAILABLE" end
+    local selected = pcall(function() model:SetCamera(1) end)
+    return selected and true or false, selected and "READY" or "SET_CAMERA_FAILED"
+end
+
+-- SetSequenceTime is evaluated every frame to keep wardrobe cards static. On
+-- the target 3.3.5 client that operation can restore the model's default
+-- full-body pose after the initial camera application. Reapply only the cheap
+-- ezCollections position/facing tuple after the animation freeze; scale and
+-- camera selection remain lifecycle operations.
+function ezCollections:RetainRecordCamera(model)
+    if not model then return false, "MODEL_UNAVAILABLE" end
+    if type(model.scEzExpectedX) ~= "number"
+        or type(model.scEzExpectedY) ~= "number"
+        or type(model.scEzExpectedZ) ~= "number" then
+        return false, "EXPECTED_POSITION_UNAVAILABLE"
+    end
+    if not model.SetPosition then return false, "SET_POSITION_UNAVAILABLE" end
+    local positioned = pcall(function()
+        model:SetPosition(model.scEzExpectedX, model.scEzExpectedY, model.scEzExpectedZ)
+    end)
+    if not positioned then return false, "SET_POSITION_FAILED" end
+    if model.SetFacing and type(model.scEzExpectedFacing) == "number" then
+        local faced = pcall(function() model:SetFacing(model.scEzExpectedFacing) end)
+        if not faced then return false, "SET_FACING_FAILED" end
+    elseif model.SetRotation and type(model.scEzExpectedFacing) == "number" then
+        local rotated = pcall(function() model:SetRotation(model.scEzExpectedFacing) end)
+        if not rotated then return false, "SET_ROTATION_FAILED" end
+    end
+    return true, "READY"
+end
+
+local function nearlyEqual(actual, expected, tolerance)
+    return type(actual) == "number" and type(expected) == "number"
+        and math.abs(actual - expected) <= tolerance
+end
+
+function ezCollections:VerifyRecordCamera(model, record)
+    if not model or not record then return false, "VERIFY_INPUT_UNAVAILABLE" end
+    if not model.GetPosition then return false, "GET_POSITION_UNAVAILABLE" end
+    if type(model.scEzExpectedX) ~= "number" then return false, "EXPECTED_POSITION_UNAVAILABLE" end
+    local ok, actualX, actualY, actualZ = pcall(function() return model:GetPosition() end)
+    if not ok then return false, "GET_POSITION_FAILED" end
+    local positionReady = nearlyEqual(actualX, model.scEzExpectedX, 0.02)
+        and nearlyEqual(actualY, model.scEzExpectedY, 0.02)
+        and nearlyEqual(actualZ, model.scEzExpectedZ, 0.02)
+    if not positionReady then
+        return false, "CAMERA_POSITION_RESET", actualX, actualY, actualZ
+    end
+    if model.GetModelScale and type(model.scEzExpectedScale) == "number" then
+        local scaleOK, actualScale = pcall(function() return model:GetModelScale() end)
+        if not scaleOK then return false, "GET_SCALE_FAILED" end
+        if not nearlyEqual(actualScale, model.scEzExpectedScale, 0.02) then
+            return false, "CAMERA_SCALE_RESET", actualScale
+        end
+    end
+    return true, "READY", actualX, actualY, actualZ
 end
