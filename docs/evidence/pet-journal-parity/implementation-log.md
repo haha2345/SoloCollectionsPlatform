@@ -100,3 +100,15 @@ Task 1 direct checks passed. No cleanup command was used.
 - SavedVariables schema is now version 7. `filters.pets.hiddenSources` is repaired in place and unrelated filter values are preserved.
 - Checks: 30 bridge contracts and 10 SC2 client contracts passed; `git diff --check` passed. The bridge test's existing preview locator was updated to recognize both direct and presenter-based safe-failure implementations.
 - AddOn commit: `823f20f feat(addon): bridge companion preferences and random summon`.
+
+## Task 9 - Companion catalog query semantics
+
+- Companion records now read generated `sourceText`, `sourceType`, `descriptionZhCN`, journal visibility, actionability, and random eligibility. The fixed account/source placeholder text was removed.
+- PETS favorites resolve exclusively from internal type 17 when collected; uncollected records are always non-favorites.
+- The mount presentation comparator was generalized and is shared by MOUNTS/PETS: favorite-collected, collected, uncollected, localized name, then stable collection ID. The mount rank and tie-break behavior is unchanged.
+- PETS source filtering reads only `filters.pets.hiddenSources`; mount filters remain isolated.
+- The generated companion source admits only active journal-visible records, so QueryAll and GetProgress share the same visible universe.
+- Production-connected UI no longer mutates demo PETS preferences. The legacy toggle is reachable only in explicit offline demo mode.
+- Focused checks: the new companion query contract passed; all 14 companion catalog checks passed with 1 optional evidence-pack check skipped; `git diff --check` passed.
+- The plan's full `test_addon_contract.py` run remains red on numerous pre-existing DragonUI/NewEra assertions outside Task 9 (layout, presenter, TOC, wardrobe and toy expectations). These are retained for Tasks 10-15 integration cleanup rather than masking them here.
+- AddOn commit: `a20aea5 feat(addon): align companion catalog query semantics`.

@@ -581,13 +581,13 @@ foreach ($pattern in $testPatterns) {
 
 **Steps:**
 
-1. [ ] 删除小宠物固定“账号收藏”和固定服务端描述，读取生成目录的 `sourceText`/`descriptionZhCN`。
-2. [ ] `PETS` 偏好读取 type 17；未收集记录强制 `favorite=false`。
-3. [ ] 将 mount-only comparator 泛化为 collection presentation comparator，MOUNTS/PETS 共用且保持坐骑结果不变。
-4. [ ] 按“偏好已收集 → 已收集 → 未收集 → 中文名 → collectionId”排序。
-5. [ ] 在筛选逻辑中加入 `filters.pets.hiddenSources`，只对 PETS 生效。
-6. [ ] `journalVisible=false` 条目在 QueryAll/GetProgress 均不出现；总数与列表一致。
-7. [ ] 将旧 `ToggleDemoFavorite("PETS")` 路径移出生产 UI；demo mode 仅在明确离线演示时使用。
+1. [x] 删除小宠物固定“账号收藏”和固定服务端描述，读取生成目录的 `sourceText`/`descriptionZhCN`。
+2. [x] `PETS` 偏好读取 type 17；未收集记录强制 `favorite=false`。
+3. [x] 将 mount-only comparator 泛化为 collection presentation comparator，MOUNTS/PETS 共用且保持坐骑结果不变。
+4. [x] 按“偏好已收集 → 已收集 → 未收集 → 中文名 → collectionId”排序。
+5. [x] 在筛选逻辑中加入 `filters.pets.hiddenSources`，只对 PETS 生效。
+6. [x] `journalVisible=false` 条目在 QueryAll/GetProgress 均不出现；总数与列表一致。
+7. [x] 将旧 `ToggleDemoFavorite("PETS")` 路径移出生产 UI；demo mode 仅在明确离线演示时使用。
 
 **Commands:**
 
