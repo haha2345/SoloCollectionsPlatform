@@ -15,6 +15,7 @@ Data\Generated\Catalog.lua
 Data\Generated\IdentityRegistry.lua
 Data\Generated\PolicyRegistry.lua
 Data\Generated\CameraProfiles.lua
+Data\EzCollectionsCamera.lua
 Data\Mounts.lua
 Data\Pets.lua
 Data\Toys.lua

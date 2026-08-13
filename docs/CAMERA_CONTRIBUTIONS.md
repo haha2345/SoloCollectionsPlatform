@@ -3,6 +3,11 @@
 The item-page camera is intentionally open for community calibration.
 物品页镜头仍欢迎社区提供可复现的参数和截图。
 
+> 当前物品卡已切换为 ezCollections Classic/武器镜头，旧 SoloCam 镜头工作台
+> 暂不驱动物品卡。下文工作台流程保留为历史资料；新的卡片修正应以
+> `addon/SoloCollections/Data/EzCollectionsCamera.lua` 为基线，并附真实
+> 3.3.5a 客户端截图后再进入适配层。
+
 ## 中文
 
 ### 为什么仍需要贡献

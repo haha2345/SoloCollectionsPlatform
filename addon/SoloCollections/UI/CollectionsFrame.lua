@@ -230,7 +230,7 @@ local function clampFrame(frame)
 end
 
 local function applyJournalSize(frame, key)
-    local width = key == "MOUNTS" and MOUNT_JOURNAL_WIDTH or
+    local width = (key == "MOUNTS" or key == "WARDROBE") and MOUNT_JOURNAL_WIDTH or
         (key == "TRANSMOG_LAB" and TRANSMOG_WIDTH or COLLECTION_WIDTH)
     frame:SetWidth(width)
     frame:SetHeight(JOURNAL_HEIGHT)

@@ -11,6 +11,7 @@ This file is a publication checklist, not a completed grant of rights.
 | StormLib | MPQ tooling dynamically loads the separately supplied x64 StormLib library; upstream uses the MIT license | Link to upstream, preserve its license when redistributing the DLL, and do not commit local binaries |
 | AzerothCore/ALE API | Server bridge targets the AzerothCore ALE environment | Document compatibility; do not imply AzerothCore endorsement |
 | DragonUI integrated UI | Not vendored by the public SoloCollections source release | The optional integrated archive is assembled from SoloClientSuite; pinned commits, patch state, hashes, and license review state are recorded in its `upstream/suite-lock.json` |
+| ezCollections wardrobe cards and Classic cameras | `addon/SoloCollections/UI/EzCollections/Templates.lua` adapts the 78x104 wardrobe card chrome; `addon/SoloCollections/Data/EzCollectionsCamera.lua` preserves the Classic and weapon camera tuples from `Data/Camera.lua` SHA-256 `364310ecb57da13a410f98638499d0db31267170fcd7a230f23b1b8430333fe3` | Preserve this provenance record, audit the upstream grant/license before public redistribution, and keep proprietary game art in the separately assembled client asset package |
 
 Game names and marks belong to their respective owners. This project must not
 distribute proprietary game executables or archives.
