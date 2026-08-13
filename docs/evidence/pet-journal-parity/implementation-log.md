@@ -67,3 +67,14 @@ Task 1 direct checks passed. No cleanup command was used.
 - Added golden packets for type 17 snapshot/delta, companion favorite on/off, random summon, not-owned rejection and invalid random control ID.
 - Existing mount packets remain present and unchanged.
 - Direct checks: 8 SC2 protocol tests and 9 client contract tests passed; `git diff --check` passed.
+
+## Task 6 - Server-side companion favorite persistence
+
+- Added internal companion-favorite projection type 17 with an explicit 17 -> 11 persistence mapping; the existing mount mapping remains 16 -> 10.
+- Account loads now project stored type 10/11 preference rows into SC2 type 16/17 state.
+- Preference mutations reject every internal type outside the two explicit mappings and require ownership of the corresponding type 10/11 collection before writing.
+- Registered the dependency-only `companion-favorite` provider; navigation, totals, and progress remain controlled by the canonical SC2 schema, where type 17 is internal.
+- Type 11 `SET_FAVORITE` uses the existing asynchronous database commit, account revision, cache delta, and connected-session notification route.
+- The existing append-only `2026_08_12_00_mount_preferences.sql` already creates the generic table required by upgraded installations. The clean-install schema snapshot lacked it, so the same generic table definition was added there; no new SQL update was created and no executed migration semantics were changed.
+- Direct checks: required source searches and `git diff --check` passed. Full AzerothCore compilation remains deferred to the plan's build gate.
+- Module commit: `ca6abfe feat(companions): persist account favorites`.

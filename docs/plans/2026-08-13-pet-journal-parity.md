@@ -467,13 +467,13 @@ foreach ($pattern in $testPatterns) {
 
 **Steps:**
 
-1. [ ] 定义 `CompanionFavoriteCollectionTypeId {17}`，标记为 internal projection。
-2. [ ] 将 AccountStore 偏好读取从 mount-only 泛化为底层 type 10/11，并映射到 16/17。
-3. [ ] 将 preference mutation 映射写成显式函数，拒绝其他内部类型。
-4. [ ] 写入偏好前校验对应 type 11 collectionId 已拥有。
-5. [ ] 注册 `companion-favorite` provider，但不加入导航和完成度。
-6. [ ] 在 type 11 协议分支处理 `SET_FAVORITE`，沿用异步提交、revision 和 delta 语义。
-7. [ ] 审核现有 `solo_collection_preference` 是否已覆盖干净安装；只有确有缺口时新增幂等 SQL。
+1. [x] 定义 `CompanionFavoriteCollectionTypeId {17}`，标记为 internal projection。
+2. [x] 将 AccountStore 偏好读取从 mount-only 泛化为底层 type 10/11，并映射到 16/17。
+3. [x] 将 preference mutation 映射写成显式函数，拒绝其他内部类型。
+4. [x] 写入偏好前校验对应 type 11 collectionId 已拥有。
+5. [x] 注册 `companion-favorite` provider，但不加入导航和完成度。
+6. [x] 在 type 11 协议分支处理 `SET_FAVORITE`，沿用异步提交、revision 和 delta 语义。
+7. [x] 审核现有 `solo_collection_preference` 是否已覆盖干净安装；只有确有缺口时新增幂等 SQL。
 
 **Direct checks:**
 
