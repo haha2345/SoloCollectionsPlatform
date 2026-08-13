@@ -11,6 +11,8 @@ local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
+local TWO_PI = math.pi * 2
+local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -77,12 +79,21 @@ function UI.CreatePetsPage(parent)
     model.scZoom = DEFAULT_MODEL_SCALE
     model.scBaseScale = nil
     local presenter = SC.ModelProvider and SC.ModelProvider.Create("CREATURE", model, {
-        controls = true,
+        controls = false,
         panelCheck = function() return page:IsShown() end,
     }) or nil
+    local function applyModelFacing(rotation)
+        if model.SetFacing then
+            model:SetFacing(rotation)
+        elseif model.SetRotation then
+            model:SetRotation(rotation, false)
+        end
+    end
     local function rotateModel(delta)
         model.rotation = (model.rotation or DEFAULT_ROTATION) + delta
-        if model.SetRotation then model:SetRotation(model.rotation) end
+        if model.rotation < 0 then model.rotation = model.rotation + TWO_PI end
+        if model.rotation > TWO_PI then model.rotation = model.rotation - TWO_PI end
+        applyModelFacing(model.rotation)
     end
     local rotateLeft, rotateRight = UI.EzCollections:CreateRotationButtons(model, function()
         rotateModel(-0.18)
@@ -237,6 +248,23 @@ function UI.CreatePetsPage(parent)
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
+        model:SetScript("OnUpdate", nil)
+    end
+
+    local function updateModelDrag(self)
+        if not self.scDragging or not IsMouseButtonDown("LeftButton") then
+            clearDragState()
+            return
+        end
+        local cursorX = GetCursorPosition()
+        local previousX = self.scLastCursorX or cursorX
+        self.scLastCursorX = cursorX
+        local delta = (cursorX - previousX) * DRAG_ROTATION_CONSTANT
+        if delta == 0 then return end
+        self.rotation = (self.rotation or DEFAULT_ROTATION) + delta
+        if self.rotation < 0 then self.rotation = self.rotation + TWO_PI end
+        if self.rotation > TWO_PI then self.rotation = self.rotation - TWO_PI end
+        applyModelFacing(self.rotation)
     end
 
     local function getNativeModelScale()
@@ -351,13 +379,32 @@ function UI.CreatePetsPage(parent)
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
 
-    local function requestModel(record)
+    local function requestModel(record, force)
         page.scModelGeneration = (page.scModelGeneration or 0) + 1
         local generation = page.scModelGeneration
+        local selectedId = record and record.id
         clearModelInteraction()
         resetModelState()
         model:ClearModel()
         unavailable:Hide()
+
+        local bridgeState = SC.Bridge and SC.Bridge.GetCategoryState
+            and SC.Bridge.GetCategoryState(11)
+            or "Disconnected"
+        if not force and bridgeState ~= "Ready" then
+            page.scPendingModelId = selectedId
+            if bridgeState == "Loading" or bridgeState == "Disconnected" then
+                unavailable:SetText("正在连接收藏服务…")
+            elseif bridgeState == "Mismatch" then
+                unavailable:SetText("小宠物目录版本不匹配")
+            else
+                unavailable:SetText("小宠物模型服务不可用")
+            end
+            unavailable:Show()
+            rotateHint:Hide()
+            return
+        end
+        page.scPendingModelId = nil
 
         if not presenter or not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
             unavailable:SetText("模型预览暂不可用")
@@ -370,20 +417,28 @@ function UI.CreatePetsPage(parent)
             rotation = DEFAULT_ROTATION,
             preview = function(done)
                 SC.Bridge.RequestCreaturePreview(11, record.id, function(ok, reason)
-                    if page.scModelGeneration == generation then done(ok, reason) end
+                    if page.scModelGeneration == generation and page.scSelectedId == selectedId then
+                        done(ok, reason)
+                    end
                 end)
             end,
             onReady = function()
-                if page.scModelGeneration ~= generation then return end
+                if page.scModelGeneration ~= generation or page.scSelectedId ~= selectedId then return end
+                page.scPendingModelId = nil
                 model.scBaseScale = getNativeModelScale()
                 model.scZoom = DEFAULT_MODEL_SCALE
                 page.scModelReady = true
                 unavailable:Hide(); rotateHint:Show()
             end,
             onUnavailable = function(reason)
-                if page.scModelGeneration ~= generation then return end
+                if page.scModelGeneration ~= generation or page.scSelectedId ~= selectedId then return end
                 model.scUnavailableReason = reason
-                unavailable:SetText("模型预览暂不可用")
+                if reason == "BRIDGE_UNAVAILABLE" or reason == "TIMEOUT" then
+                    page.scPendingModelId = selectedId
+                    unavailable:SetText("正在连接收藏服务…")
+                else
+                    unavailable:SetText("模型预览暂不可用")
+                end
                 unavailable:Show(); rotateHint:Hide()
             end,
         })
@@ -394,6 +449,7 @@ function UI.CreatePetsPage(parent)
             page:ClearSelection()
             return
         end
+        local modelChanged = page.scSelectedId ~= record.id or not page.scModelReady
         page.scSelectedId = record.id
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
@@ -424,7 +480,7 @@ function UI.CreatePetsPage(parent)
         for _, row in ipairs(page.scRows) do
             row:SetSelected(row.scRecord and row.scRecord.id == record.id)
         end
-        requestModel(record)
+        if modelChanged then requestModel(record) end
     end
 
     local function refreshRows()
@@ -477,6 +533,7 @@ function UI.CreatePetsPage(parent)
         self.scSelectedId = nil
         self.scSelectedRecord = nil
         self.scModelGeneration = (self.scModelGeneration or 0) + 1
+        self.scPendingModelId = nil
         name:SetText("")
         source:SetText("")
         description:SetText("")
@@ -573,6 +630,21 @@ function UI.CreatePetsPage(parent)
         elseif page.scSelectedRecord then requestModel(page.scSelectedRecord) end
     end)
 
+    if SC.Bridge and type(SC.Bridge.RegisterStateListener) == "function" then
+        page.scBridgeStateListener = SC.Bridge.RegisterStateListener(function(_, typeId)
+            if typeId ~= nil and tonumber(typeId) ~= 11 then return end
+            local record = page.scSelectedRecord
+            if not page:IsShown() or not record then return end
+            local state = SC.Bridge.GetCategoryState and SC.Bridge.GetCategoryState(11)
+            if state == "Ready" and page.scPendingModelId == record.id then
+                requestModel(record, true)
+            elseif state == "Mismatch" and page.scPendingModelId == record.id then
+                unavailable:SetText("小宠物目录版本不匹配")
+                unavailable:Show(); rotateHint:Hide()
+            end
+        end)
+    end
+
     infoButton:SetScript("OnClick", function(self, button)
         local record = page.scSelectedRecord
         if button == "RightButton" then
@@ -582,13 +654,11 @@ function UI.CreatePetsPage(parent)
         end
     end)
 
-    if not SC.ModelProvider or SC.ModelProvider.GetMode("CREATURE") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
-            local cursorX = GetCursorPosition()
-            local scale = UIParent:GetEffectiveScale()
-            self.scLastCursorX = cursorX / scale
+            self.scLastCursorX = GetCursorPosition()
+            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
 
@@ -596,25 +666,11 @@ function UI.CreatePetsPage(parent)
         clearDragState()
     end)
 
-    model:SetScript("OnUpdate", function(self)
-        if not self.scDragging then
-            return
-        end
-        if not IsMouseButtonDown("LeftButton") then
-            clearDragState()
-            return
-        end
-        local cursorX = GetCursorPosition()
-        local scale = UIParent:GetEffectiveScale()
-        cursorX = cursorX / scale
-        local previousX = self.scLastCursorX or cursorX
-        self.scLastCursorX = cursorX
-        self.rotation = (self.rotation or DEFAULT_ROTATION) + ((cursorX - previousX) * 0.012)
-        self:SetRotation(self.rotation)
-    end)
-
     model:SetScript("OnMouseWheel", function(self, delta)
-        if not page.scModelReady or not self.SetModelScale or not self.scBaseScale then
+        if not page.scModelReady or not self.SetModelScale or not self.GetModelScale then
+            return
+        end
+        if not self.scBaseScale then
             return
         end
         local zoom = (self.scZoom or DEFAULT_MODEL_SCALE) + (delta * 0.10)
@@ -622,7 +678,6 @@ function UI.CreatePetsPage(parent)
         self.scZoom = zoom
         self:SetModelScale(self.scBaseScale * zoom)
     end)
-    end
 
     page:SetScript("OnHide", function(self)
         self:ClearSelection()

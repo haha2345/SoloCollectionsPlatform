@@ -1444,6 +1444,21 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn("canonicalActionSpellId = collection.canonicalActionSpellId", companion_source)
         self.assertNotIn('description:SetText(record.description or "暂无说明。")', pets)
 
+    def test_companion_model_rotation_and_callbacks_match_mount_safety(self):
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        self.assertIn("local function applyModelFacing(rotation)", pets)
+        self.assertIn("model:SetFacing(rotation)", pets)
+        self.assertIn("model:SetRotation(rotation, false)", pets)
+        self.assertNotIn("self:SetRotation(self.rotation)", pets)
+        self.assertIn('self:SetScript("OnUpdate", updateModelDrag)', pets)
+        self.assertIn('model:SetScript("OnUpdate", nil)', pets)
+        self.assertIn("page.scSelectedId == selectedId", pets)
+        self.assertIn("page.scSelectedId ~= selectedId", pets)
+        self.assertIn("page.scPendingModelId = selectedId", pets)
+        self.assertIn("SC.Bridge.GetCategoryState(11)", pets)
+        self.assertIn("SC.Bridge.RegisterStateListener", pets)
+        self.assertIn("requestModel(record, true)", pets)
+
 
 if __name__ == "__main__":
     unittest.main()
