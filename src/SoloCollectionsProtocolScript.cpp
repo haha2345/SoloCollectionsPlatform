@@ -272,6 +272,53 @@ bool Sc2ProtocolCanUsePrivateChat(
             }
             if (request.TypeId == CompanionCollectionTypeId.Value())
             {
+                if (request.ActionId == "SET_FAVORITE")
+                {
+                    if (request.Target != "0" && request.Target != "1")
+                        return finish("companion_favorite", "INVALID_REQUEST");
+                    CompanionCollectionDefinition const* definition =
+                        GetCompanionCatalog().Find(CollectionId(request.CollectionId));
+                    if (!definition || definition->Lifecycle != CatalogLifecycle::Active ||
+                        !definition->JournalVisible || !definition->Actionable)
+                        return finish("companion_favorite", "UNSUPPORTED");
+
+                    std::optional<AccountCacheSnapshot> snapshot =
+                        GetAccountCollectionCache().Snapshot(accountId);
+                    if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
+                        return finish("companion_favorite", "LOADING");
+                    CollectionKey companionKey { CompanionCollectionTypeId, CollectionId(request.CollectionId) };
+                    if (!GetAccountCollectionCache().IsOwned(accountId, companionKey))
+                        return finish("companion_favorite", "FAVORITE_NOT_OWNED");
+
+                    AccountCollectionMutation mutation;
+                    mutation.Account = accountId;
+                    mutation.Generation = snapshot->Generation;
+                    mutation.Key = { CompanionFavoriteCollectionTypeId, CollectionId(request.CollectionId) };
+                    mutation.Kind = request.Target == "1" ?
+                        CollectionMutationKind::Grant : CollectionMutationKind::Revoke;
+                    mutation.SourceKind = CollectionSourceKind::Gameplay;
+                    mutation.CharacterGuid = player->GetGUID().GetCounter();
+                    mutation.ActorAccountId = accountId.Value();
+                    mutation.ActorGuid = player->GetGUID().GetCounter();
+                    MutationStartResult started =
+                        GetAccountCollectionStore().BeginPreferenceMutation(std::move(mutation));
+                    if (started.Accepted)
+                        return finish("companion_favorite", "ACCEPTED");
+                    switch (started.Reason)
+                    {
+                        case CollectionReasonCode::NotOwned:
+                            return finish("companion_favorite", "FAVORITE_NOT_OWNED");
+                        case CollectionReasonCode::NotReady:
+                            return finish("companion_favorite", "LOADING");
+                        case CollectionReasonCode::DatabaseError:
+                        case CollectionReasonCode::ReadOnly:
+                            return finish("companion_favorite", "DB_UNAVAILABLE");
+                        case CollectionReasonCode::PendingOperation:
+                            return finish("companion_favorite", "RATE_LIMITED");
+                        default:
+                            return finish("companion_favorite", "INVALID_REQUEST");
+                    }
+                }
                 if (request.ActionId == "PREVIEW")
                 {
                     if (request.Target != "-")

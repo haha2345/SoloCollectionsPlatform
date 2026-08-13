@@ -23,6 +23,11 @@ Never run ALE/SC1 and C++/SC2 as parallel writers or success responders.
 file export. `Preview.Enabled` controls read-only mount/companion model priming
 and does not enable a legacy backend.
 
+Mount and companion favorites are account-scoped server preferences. The
+database stores their authoritative category IDs (10 and 11); SC2 exposes
+internal projection IDs 16 and 17. Those projections synchronize state only
+and must not be counted as journal pages, collection totals, or progress.
+
 ## Transmogrification
 
 The same template contains inherited, adapted transmogrification settings:
@@ -44,6 +49,8 @@ authorization, not merely UI appearance.
 或向客户端返回动作成功。
 
 `SoloCollections.Preview.Enabled` 只控制坐骑/宠物只读模型预热，不会切换后端。
+坐骑与小宠物偏好由服务端按账号持久化：数据库保存底层 type 10/11，SC2 使用内部
+投影 type 16/17 同步状态；内部投影不参与页面导航、收藏总数或完成度。
 幻化配置会影响费用、物品品质、护甲/武器类型和玩家权限；修改前应备份运行配置，
 逐项确认，不要把视觉兼容改动误当作无风险 UI 设置。
 

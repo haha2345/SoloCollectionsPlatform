@@ -40,6 +40,10 @@ The runtime `.solocollections status` and startup log expose the exact values.
 - Database commit precedes cache and connected-session updates.
 - Duplicate, rejected, or failed mutations do not create cache-only state.
 - Set ownership is derived from its appearance dependencies.
+- Preference mutations accept only the explicit 16-to-10 and 17-to-11 mappings,
+  require ownership of the underlying collection, and commit before emitting a delta.
+- Favorite projection providers are internal SC2 state and are excluded from journal
+  navigation, totals, and completion semantics by the canonical protocol schema.
 - Unknown identity, catalog mismatch, or protocol mismatch fails closed.
 
 ## Cross-repository changes

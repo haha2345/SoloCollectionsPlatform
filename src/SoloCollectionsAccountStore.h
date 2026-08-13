@@ -128,6 +128,7 @@ public:
     [[nodiscard]] bool RetryLoad(AccountId accountId, std::uint32_t playerGuid);
     [[nodiscard]] bool ReloadAccount(AccountId accountId, std::uint32_t playerGuid);
     [[nodiscard]] MutationStartResult BeginMutation(AccountCollectionMutation mutation);
+    // Accepts only registered internal preference projections (mount 16, companion 17).
     [[nodiscard]] MutationStartResult BeginPreferenceMutation(AccountCollectionMutation mutation);
     [[nodiscard]] bool RecordRejectedMutation(
         AccountCollectionMutation const& mutation, CollectionReasonCode reason);

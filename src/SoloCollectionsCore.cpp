@@ -185,6 +185,34 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class CompanionFavoriteCollectionProvider final : public CollectionProvider
+{
+public:
+    CompanionFavoriteCollectionProvider()
+    {
+        _descriptor.TypeId = CompanionFavoriteCollectionTypeId;
+        _descriptor.TypeKey = "companion-favorite";
+        _descriptor.Dependencies = { CompanionCollectionTypeId };
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        CompanionCollectionDefinition const* definition = GetCompanionCatalog().Find(collectionId);
+        bool known = definition && definition->Lifecycle == CatalogLifecycle::Active &&
+            definition->JournalVisible && definition->Actionable;
+        result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        return result;
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class ToyCollectionProvider final : public CollectionProvider
 {
 public:
@@ -345,6 +373,7 @@ public:
         registerProvider("mount", std::make_unique<MountCollectionProvider>());
         registerProvider("mount-favorite", std::make_unique<MountFavoriteCollectionProvider>());
         registerProvider("companion", std::make_unique<CompanionCollectionProvider>());
+        registerProvider("companion-favorite", std::make_unique<CompanionFavoriteCollectionProvider>());
         registerProvider("toy", std::make_unique<ToyCollectionProvider>());
         registerProvider("appearance", std::make_unique<AppearanceCollectionProvider>());
         registerProvider("set", std::make_unique<SetCollectionProvider>());

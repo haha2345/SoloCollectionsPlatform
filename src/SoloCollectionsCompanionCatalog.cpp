@@ -20,6 +20,11 @@ CompanionCatalog::CompanionCatalog(std::vector<CompanionCollectionDefinition> co
             definition.UnlockSpellIds.empty() || definition.PreviewCreatureEntry == 0 ||
             !_byCollection.emplace(definition.Id, index).second)
             throw std::runtime_error("invalid or duplicate SoloCollections companion catalog entry");
+        if ((definition.Actionable && !definition.JournalVisible) ||
+            (definition.RandomEligible && (!definition.JournalVisible || !definition.Actionable)) ||
+            (definition.Actionable && definition.CanonicalActionSpellId != definition.CanonicalSpellId) ||
+            (!definition.Actionable && definition.CanonicalActionSpellId != 0))
+            throw std::runtime_error("invalid generated companion journal/action contract");
 
         bool hasCanonical = false;
         for (std::uint32_t spellId : definition.UnlockSpellIds)

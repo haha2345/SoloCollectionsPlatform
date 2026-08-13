@@ -1,4 +1,5 @@
 #include "SoloCollectionsAccountStore.h"
+#include "SoloCollectionsCompanionCatalog.h"
 #include "SoloCollectionsMountCatalog.h"
 
 #include "AsyncCallbackProcessor.h"
@@ -26,6 +27,22 @@ struct DeferredLoad
     std::uint32_t PlayerGuid = 0;
     LoginGeneration Generation;
 };
+
+struct PreferenceTypeMapping
+{
+    CollectionTypeId ProjectionType;
+    CollectionTypeId OwnedType;
+};
+
+[[nodiscard]] std::optional<PreferenceTypeMapping> PreferenceMappingForProjection(
+    CollectionTypeId projectionType)
+{
+    if (projectionType == MountFavoriteCollectionTypeId)
+        return PreferenceTypeMapping { MountFavoriteCollectionTypeId, MountCollectionTypeId };
+    if (projectionType == CompanionFavoriteCollectionTypeId)
+        return PreferenceTypeMapping { CompanionFavoriteCollectionTypeId, CompanionCollectionTypeId };
+    return std::nullopt;
+}
 
 [[nodiscard]] std::uint16_t StableMutationKind(CollectionMutationKind kind)
 {
@@ -127,10 +144,11 @@ public:
             "SELECT 1 AS row_kind, u.revision, u.type_id, u.collection_id "
             "FROM sc_collection_unlock u WHERE u.account_id = {} "
             "UNION ALL "
-            "SELECT 2 AS row_kind, COALESCE(s.revision, 0) AS revision, 16 AS type_id, p.collection_id "
+            "SELECT 2 AS row_kind, COALESCE(s.revision, 0) AS revision, "
+            "CASE p.type_id WHEN 10 THEN 16 WHEN 11 THEN 17 END AS type_id, p.collection_id "
             "FROM solo_collection_preference p "
             "LEFT JOIN sc_account_state s ON s.account_id = p.account_id "
-            "WHERE p.account_id = {} AND p.type_id = 10 AND p.favorite = 1 "
+            "WHERE p.account_id = {} AND p.type_id IN (10, 11) AND p.favorite = 1 "
             "ORDER BY row_kind, type_id, collection_id",
             load.Account.Value(), load.Account.Value(), load.Account.Value());
 
@@ -178,7 +196,8 @@ public:
                             typeId > std::numeric_limits<std::uint16_t>::max() ||
                             collectionId == 0 || collectionId > std::numeric_limits<std::uint32_t>::max() ||
                             rowRevision > revision.Value() ||
-                            (rowKind == 2 && typeId != MountFavoriteCollectionTypeId.Value()))
+                            (rowKind == 2 && !PreferenceMappingForProjection(CollectionTypeId(
+                                static_cast<std::uint16_t>(typeId))).has_value()))
                         {
                             valid = false;
                             break;
@@ -339,9 +358,10 @@ public:
     {
         if (!_writesEnabled)
             return { false, CollectionReasonCode::ReadOnly, {} };
+        std::optional<PreferenceTypeMapping> mapping = PreferenceMappingForProjection(mutation.Key.TypeId);
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid() ||
-            !mutation.Generation.IsValid() || mutation.Key.TypeId != MountFavoriteCollectionTypeId ||
-            !mutation.Key.Id.IsValid() || StableSourceKind(mutation.SourceKind) == 0)
+            !mutation.Generation.IsValid() || !mapping || !mutation.Key.Id.IsValid() ||
+            StableSourceKind(mutation.SourceKind) == 0)
             return { false, _diagnostics.SchemaState == AccountStoreSchemaState::Ready ?
                 CollectionReasonCode::InvalidArgument : CollectionReasonCode::DatabaseError, {} };
 
@@ -351,8 +371,8 @@ public:
         if (_pendingMutations.contains(mutation.Account))
             return { false, CollectionReasonCode::PendingOperation, {} };
 
-        CollectionKey mountKey { MountCollectionTypeId, mutation.Key.Id };
-        if (!GetAccountCollectionCache().IsOwned(mutation.Account, mountKey))
+        CollectionKey ownedKey { mapping->OwnedType, mutation.Key.Id };
+        if (!GetAccountCollectionCache().IsOwned(mutation.Account, ownedKey))
             return { false, CollectionReasonCode::NotOwned, snapshot->Revision };
 
         bool favorite = GetAccountCollectionCache().IsOwned(mutation.Account, mutation.Key);
@@ -372,23 +392,23 @@ public:
         bool requireExisting = mutation.Kind == CollectionMutationKind::Revoke;
         transaction->Append(
             "UPDATE sc_account_state SET revision = IF(revision = {} AND {}EXISTS("
-            "SELECT 1 FROM solo_collection_preference p WHERE p.account_id = {} AND p.type_id = 10 "
+            "SELECT 1 FROM solo_collection_preference p WHERE p.account_id = {} AND p.type_id = {} "
             "AND p.collection_id = {} AND p.favorite = 1), {}, NULL) WHERE account_id = {}",
             snapshot->Revision.Value(), requireExisting ? "" : "NOT ", mutation.Account.Value(),
-            mutation.Key.Id.Value(), nextRevision.Value(), mutation.Account.Value());
+            mapping->OwnedType.Value(), mutation.Key.Id.Value(), nextRevision.Value(), mutation.Account.Value());
 
         if (mutation.Kind == CollectionMutationKind::Grant)
         {
             transaction->Append(
                 "INSERT INTO solo_collection_preference(account_id, type_id, collection_id, favorite) "
-                "VALUES ({}, 10, {}, 1)",
-                mutation.Account.Value(), mutation.Key.Id.Value());
+                "VALUES ({}, {}, {}, 1)",
+                mutation.Account.Value(), mapping->OwnedType.Value(), mutation.Key.Id.Value());
         }
         else
         {
             transaction->Append(
-                "DELETE FROM solo_collection_preference WHERE account_id = {} AND type_id = 10 AND collection_id = {}",
-                mutation.Account.Value(), mutation.Key.Id.Value());
+                "DELETE FROM solo_collection_preference WHERE account_id = {} AND type_id = {} AND collection_id = {}",
+                mutation.Account.Value(), mapping->OwnedType.Value(), mutation.Key.Id.Value());
         }
 
         transaction->Append(
