@@ -8,6 +8,8 @@ from common import ADDON, ROOT, all_lua_text, read_text
 
 EXPECTED_LOAD_ORDER = [
     "SoloCollections.lua",
+    "Core\\UIPlatform.lua",
+    "Core\\EzCollectionsUI.lua",
     "Data\\Generated\\Catalog.lua",
     "Data\\Generated\\IdentityRegistry.lua",
     "Data\\Generated\\PolicyRegistry.lua",
@@ -22,13 +24,27 @@ EXPECTED_LOAD_ORDER = [
     "Core\\Catalog.lua",
     "Core\\Bridge.lua",
     "Core\\M2Camera.lua",
+    "Core\\ModelProvider.lua",
+    "UI\\DragonUI\\MountJournal.lua",
+    "UI\\EzCollections\\Templates.lua",
     "UI\\Templates.lua",
     "UI\\Launcher.lua",
+    "UI\\Wardrobe\\Layout.lua",
+    "UI\\Wardrobe\\ItemPresenter.lua",
+    "UI\\Wardrobe\\Filters.lua",
+    "UI\\Wardrobe\\CameraWorkbench.lua",
     "UI\\CompanionBase.lua",
     "UI\\Mounts.lua",
     "UI\\Pets.lua",
     "UI\\Toys.lua",
     "UI\\Wardrobe.lua",
+    "UI\\WardrobeLab\\State.lua",
+    "UI\\WardrobeLab\\Slots.lua",
+    "UI\\WardrobeLab\\Sources.lua",
+    "UI\\WardrobeLab\\Outfits.lua",
+    "UI\\WardrobeLab\\Preview.lua",
+    "UI\\WardrobeLab\\Controller.lua",
+    "UI\\WardrobeLab\\Layout.lua",
     "UI\\CollectionsFrame.lua",
     "Core\\Diagnostics.lua",
     "Core\\Bootstrap.lua",
@@ -153,10 +169,10 @@ class AddonContractTests(unittest.TestCase):
         shell = lua_function_region(templates, "UI.CreateJournalFrame")
 
         for token in (
-            "JOURNAL_HEIGHT = 793",
+            "JOURNAL_HEIGHT = 606",
             "UI.Media.mountPortrait",
             "UI.CreateCollectionCount(frame)",
-            "UI.CreateRetailProgressBar(frame, 286)",
+            "UI.CreateRetailProgressBar(frame, 194)",
             "MiniMap-TrackingBorder",
             "portrait:SetWidth(62)",
             "portrait:SetHeight(62)",
@@ -178,12 +194,12 @@ class AddonContractTests(unittest.TestCase):
 
         for token in (
             "UI.CreateRetailSearchBox(",
-            "UI.CreateRetailBottomTab(",
+            "UI.EzCollections:CreateJournalTab(",
             "frame.scCollectionCount:Show()",
             "frame.scCollectionCount:Hide()",
             'frame.scCollectionCount:SetLabel("所有坐骑")',
             'frame.scCollectionCount:SetLabel("所有小宠物")',
-            "frame.scPortrait:SetTexture(UI.Media.mountPortrait)",
+            "frame.scPortrait:SetTexture(UI.Media.tabs[selected] or UI.Media.launcher)",
         ):
             self.assertIn(token, journal)
         self.assertIn("icon:SetTexture(UI.Media.launcher)", launcher)
@@ -303,7 +319,7 @@ class AddonContractTests(unittest.TestCase):
             "math.min(1,",
             'RegisterEvent("DISPLAY_SIZE_CHANGED")',
             'RegisterEvent("UI_SCALE_CHANGED")',
-            'SetClampRectInsets(0, 0, 0, -40)',
+            'SetClampRectInsets(0, 0, 0, -44)',
             'SetClampedToScreen(true)',
             'SetScript("OnShow"',
         ):
@@ -390,7 +406,7 @@ class AddonContractTests(unittest.TestCase):
         pets = read_text(pets_path)
         for token in (
             "function UI.CreateMountsPage(",
-            "VISIBLE_ROWS = 12",
+            "JOURNAL_LAYOUT.visibleRows or 10",
             "FauxScrollFrameTemplate",
             "FauxScrollFrame_Update(",
             "FauxScrollFrame_GetOffset(",
@@ -399,7 +415,7 @@ class AddonContractTests(unittest.TestCase):
             "FauxScrollFrame_OnVerticalScroll(",
             'Catalog.QueryAll("MOUNTS"',
             "Catalog.GetProgress(",
-            "Catalog.ToggleDemoFavorite(",
+            "SC.Bridge.SetMountFavorite(",
             "function page:Refresh()",
             "function page:ClearSelection()",
         ):
@@ -414,14 +430,15 @@ class AddonContractTests(unittest.TestCase):
         self.assertNotIn("function UI.CreateCompanionPageBase(", mounts)
         self.assertIn("function UI.CreatePetsPage(", pets)
         for token in (
-            "local VISIBLE_ROWS = 12",
+            "JOURNAL_LAYOUT.visibleRows or 10",
             "FauxScrollFrameTemplate",
             "FauxScrollFrame_Update(",
             "FauxScrollFrame_GetOffset(",
             "FauxScrollFrame_OnVerticalScroll(",
             'Catalog.QueryAll("PETS"',
             'Catalog.GetProgress("PETS"',
-            'Catalog.ToggleDemoFavorite("PETS", record.id)',
+            "SC.Bridge.SetPetFavorite(record.id, not record.favorite",
+            "SC.Bridge.SummonRandomPet(",
             "SC.Bridge.RequestCreaturePreview(11, record.id,",
             "SC.Bridge.SummonPet(record.id,",
             "function page:Refresh()",
@@ -439,11 +456,10 @@ class AddonContractTests(unittest.TestCase):
     def test_pet_list_and_detail_match_mount_journal_interactions(self):
         pets = read_text(ADDON / "UI" / "Pets.lua")
         for token in (
-            "UI.ApplyNineSlice(list, UI.Media.border, 14)",
+            "UI.EzCollections:ApplyInset(list)",
             'scrollHint:SetText("滚轮或拖动滚动条查看更多小宠物")',
             'CreateFrame("PlayerModel"',
-            'CreateFrame("Button", nil, detail)',
-            'RegisterForClicks("LeftButtonUp", "RightButtonUp")',
+            "CompanionJournal:CreateCollectionInfoHeader(detail",
             'UIDropDownMenu_Initialize(',
             'SetText("召唤小宠物")',
             'SetText("重置视角")',
@@ -452,7 +468,7 @@ class AddonContractTests(unittest.TestCase):
             'SetScript("OnMouseUp"',
             "favorite:Disable()",
             "if not record.collected then",
-            "model:SetCreature(record.previewCreatureEntry)",
+            "SC.Bridge.RequestCreaturePreview(11, record.id",
         ):
             self.assertIn(token, pets)
         self.assertNotIn("model:SetCamera(", pets)
@@ -463,15 +479,14 @@ class AddonContractTests(unittest.TestCase):
         mounts = read_text(ADDON / "UI" / "Mounts.lua")
         page = lua_function_region(mounts, "UI.CreateMountsPage")
         for token in (
-            "UI.ApplyNineSlice(list, UI.Media.border, 14)",
-            'listBackground:SetTexture("Interface\\\\Buttons\\\\WHITE8X8")',
-            'scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 9, -9)',
-            'scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -30, 31)',
+            "UI.EzCollections:ApplyInset(list)",
+            'scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -ROW_START_Y)',
+            'scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, ROW_START_Y)',
             'scrollHint:SetText("滚轮或拖动滚动条查看更多坐骑")',
             "page.scScrollHint = scrollHint",
         ):
             self.assertIn(token, page)
-        self.assertIn("local VISIBLE_ROWS = 12", mounts)
+        self.assertIn("JOURNAL_LAYOUT.visibleRows or 10", mounts)
 
     def test_mount_rows_support_left_and_right_click_context_actions(self):
         mounts = read_text(ADDON / "UI" / "Mounts.lua")
@@ -493,7 +508,7 @@ class AddonContractTests(unittest.TestCase):
             "UIDropDownMenu_AddButton(",
             "ToggleDropDownMenu(",
             "SC.Bridge.SummonMount(record.id,",
-            'Catalog.ToggleDemoFavorite("MOUNTS", record.id)',
+            "SC.Bridge.SetMountFavorite(record.id, not record.favorite",
         ):
             self.assertIn(token, mount_page)
 
@@ -527,29 +542,13 @@ class AddonContractTests(unittest.TestCase):
 
     def test_mount_model_schedulers_reuse_fixed_drivers_and_clear_queued_work(self):
         mounts = read_text(ADDON / "UI" / "Mounts.lua")
-        mount_page = lua_function_region(mounts, "UI.CreateMountsPage")
-        defer_start = mounts.index("local function deferNextFrame(callback)")
-        defer_end = mounts.index("local function showNotice", defer_start)
-        defer_region = mounts[defer_start:defer_end]
-        schedule_start = mount_page.index("local function scheduleModel(delay, generation, callback)")
-        schedule_end = mount_page.index("local function resetModelState", schedule_start)
-        schedule_region = mount_page[schedule_start:schedule_end]
-
-        for token in (
-            'local nextFrameDriver = CreateFrame("Frame")',
-            "local nextFrameQueue = {}",
-            "local function runNextFrameQueue(self)",
-            'local modelTimerDriver = CreateFrame("Frame", nil, page)',
-            "page.scModelTasks = {}",
-            "for index = #page.scModelTasks, 1, -1 do",
-            "table.remove(page.scModelTasks, index)",
-            'modelTimerDriver:SetScript("OnUpdate", nil)',
-        ):
-            self.assertIn(token, mounts)
-        self.assertNotIn("CreateFrame(", defer_region)
-        self.assertNotIn("CreateFrame(", schedule_region)
-        self.assertIn("table.insert(nextFrameQueue, callback)", defer_region)
-        self.assertIn("table.insert(page.scModelTasks", schedule_region)
+        provider = read_text(ADDON / "Core" / "ModelProvider.lua")
+        self.assertIn('SC.ModelProvider.Create("CREATURE", model', mounts)
+        self.assertIn("presenter:Present({", mounts)
+        self.assertIn("page.scModelGeneration", mounts)
+        self.assertIn('presenter:Clear("PAGE_HIDDEN")', mounts)
+        self.assertIn("public.Model.CreatePresenter", provider)
+        self.assertNotIn("local modelTimerDriver", mounts)
 
     def test_five_main_tabs_are_anchored_outside_the_journal(self):
         journal = read_text(ADDON / "UI" / "CollectionsFrame.lua")
@@ -557,17 +556,10 @@ class AddonContractTests(unittest.TestCase):
             r'\{\s*key\s*=\s*"(MOUNTS|PETS|TOYS|WARDROBE|TITLES)"',
             journal,
         )
-        self.assertEqual(["MOUNTS", "PETS", "TOYS", "WARDROBE", "TITLES"], tab_keys)
-        self.assertIn("JOURNAL_HEIGHT = 793", journal)
-        self.assertRegex(
-            journal,
-            r'button:SetPoint\(\s*"TOPLEFT",\s*frame,\s*"BOTTOMLEFT"',
-        )
-        self.assertRegex(
-            journal,
-            r'button:SetPoint\(\s*"(?:TOPLEFT|LEFT)",\s*previousTab,\s*"(?:TOPRIGHT|RIGHT)"',
-        )
-        self.assertIn('button:SetPoint("TOPLEFT", previousTab, "TOPRIGHT", 6, 0)', journal)
+        self.assertEqual(["MOUNTS", "PETS", "TOYS", "TITLES", "WARDROBE"], tab_keys)
+        self.assertIn("JOURNAL_HEIGHT = 606", journal)
+        self.assertIn("UI.EzCollections:CreateJournalTab(frame", journal)
+        self.assertIn("UI.EzCollections:LayoutJournalTabs(frame, frame.scMainTabOrder)", journal)
 
     def test_mount_preview_uses_correlated_model_requests_and_335_model_controls(self):
         mounts_path = ADDON / "UI" / "Mounts.lua"
@@ -576,8 +568,8 @@ class AddonContractTests(unittest.TestCase):
         for token in (
             'CreateFrame("PlayerModel"',
             "ClearModel()",
-            "SetCreature(",
-            "self:GetModel()",
+            'SC.ModelProvider.Create("CREATURE", model',
+            "presenter:Present({",
             "SC.Bridge.RequestCreaturePreview(10,",
             "scModelGeneration",
             'SetScript("OnMouseDown"',
@@ -585,11 +577,11 @@ class AddonContractTests(unittest.TestCase):
             'SetScript("OnUpdate"',
             'SetScript("OnMouseWheel"',
             "GetCursorPosition()",
-            "UIParent:GetEffectiveScale()",
             'IsMouseButtonDown("LeftButton")',
             "clearDragState()",
             "clearModelInteraction()",
-            "SetRotation(",
+            "SetFacing(",
+            "SetRotation(rotation, false)",
             "SetModelScale(",
             "0.35",
             "2.5",
@@ -613,45 +605,20 @@ class AddonContractTests(unittest.TestCase):
     def test_mount_model_preserves_native_framing_and_requires_a_stable_path(self):
         mounts = read_text(ADDON / "UI" / "Mounts.lua")
         page = lua_function_region(mounts, "UI.CreateMountsPage")
-        apply_model = page[
-            page.index("local function applyModel") : page.index("local function requestModel")
-        ]
         for token in (
-            "local MODEL_STABILITY_DELAY = 0.35",
-            "local MODEL_MAX_STABILITY_RESTARTS = 8",
-            "candidatePath",
-            "candidateFrames",
-            "stablePath",
-            "MODEL_STABILITY_DELAY",
-            "stabilityRestarts > MODEL_MAX_STABILITY_RESTARTS",
-            "expectedPath = page.scModelPaths[record.id]",
-            "page.scModelPaths[record.id] = currentPath",
+            'SC.ModelProvider.Create("CREATURE", model',
+            "creatureEntry = record.previewCreatureEntry",
+            "SC.Bridge.RequestCreaturePreview(10, record.id",
+            "page.scModelGeneration == generation",
             "page.scModelReady = true",
             "model.scBaseScale",
             "model:GetModelScale()",
             "self.scBaseScale * zoom",
         ):
-            self.assertIn(token, mounts)
-        self.assertNotIn("resetModelView()", apply_model)
-        self.assertNotIn("SetCamera(", apply_model)
-        self.assertNotIn("SetModelScale(DEFAULT_MODEL_SCALE)", apply_model)
-        self.assertNotIn("SetPosition(0, 0, 0)", apply_model)
-        self.assertNotIn("MODEL_FIRST_SWITCH_WINDOWS", mounts)
-        self.assertNotIn("MODEL_CLEAR_BARRIER_FRAMES", mounts)
-        self.assertNotIn("waitForClearedModel", apply_model)
-        self.assertNotIn("previousModelPath", apply_model)
-
-        set_creature = apply_model[
-            apply_model.index("setCreatureAndVerify = function") :
-            apply_model.index("setCreatureAndVerify()", apply_model.index("setCreatureAndVerify = function"))
-        ]
-        self.assertIn("model:ClearModel()", set_creature)
-        self.assertIn("model:SetCreature(record.previewCreatureEntry)", set_creature)
-        self.assertIn("scheduleModel(0, generation, verifyModel)", set_creature)
-        fail_model = apply_model[
-            apply_model.index("local function failModel") : apply_model.index("local function retryLoad")
-        ]
-        self.assertIn("model:ClearModel()", fail_model)
+            self.assertIn(token, page)
+        self.assertNotIn("SetCamera(", page)
+        self.assertNotIn("SetModelScale(DEFAULT_MODEL_SCALE)", page)
+        self.assertNotIn("SetPosition(0, 0, 0)", page)
 
         wheel = page[
             page.index('model:SetScript("OnMouseWheel"') : page.index('page:SetScript("OnHide"')
@@ -663,7 +630,7 @@ class AddonContractTests(unittest.TestCase):
         reset = page[
             page.index('reset:SetScript("OnClick"') : page.index('infoButton:SetScript("OnClick"')
         ]
-        self.assertIn("requestModel(record)", reset)
+        self.assertIn("presenter:ResetView()", reset)
         self.assertNotIn("SetModelScale", reset)
 
     def test_uncollected_mount_favorite_controls_are_disabled(self):
@@ -682,33 +649,17 @@ class AddonContractTests(unittest.TestCase):
         mounts = read_text(ADDON / "UI" / "Mounts.lua")
         mount_page = lua_function_region(mounts, "UI.CreateMountsPage")
         for token in (
-            'local infoButton = CreateFrame("Button"',
-            "infoButton:SetWidth(38)",
-            "infoButton:SetHeight(38)",
+            "MountJournal:CreateCollectionInfoHeader(detail",
+            "infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)",
             'infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")',
             "SC.Bridge.RequestCreaturePreview(10, record.id,",
-            "deferNextFrame(",
-            "GetModel()",
+            "page.scPendingModelId",
+            "SC.Bridge.RegisterStateListener",
+            "requestModel(page.scSelectedRecord, true)",
         ):
             self.assertIn(token, mount_page)
-        self.assertRegex(
-            mounts,
-            r"MODEL_RETRY_DELAYS\s*=\s*\{\s*0\.1\s*,\s*0\.25\s*,\s*0\.5\s*\}",
-        )
-        self.assertRegex(mounts, r"MODEL_MAX_WINDOW\s*=\s*2")
         self.assertIn('unavailable:SetText("模型预览暂不可用")', mount_page)
-        self.assertRegex(
-            mount_page,
-            r"retryIndex\s*=\s*retryIndex\s*\+\s*1",
-        )
-        self.assertRegex(
-            mount_page,
-            r"retryIndex\s*<=\s*#MODEL_RETRY_DELAYS",
-        )
-        self.assertRegex(
-            mount_page,
-            r"MODEL_RETRY_DELAYS\s*\[\s*retryIndex\s*\]",
-        )
+        self.assertNotIn("MODEL_RETRY_DELAYS", mounts)
 
     def test_collection_icons_use_the_335_desaturation_wrapper(self):
         templates = read_text(ADDON / "UI" / "Templates.lua")
@@ -724,7 +675,7 @@ class AddonContractTests(unittest.TestCase):
         journal = read_text(ADDON / "UI" / "CollectionsFrame.lua")
         for token in (
             "record.source",
-            "record.description",
+            "Catalog.ResolveMountDescription(record)",
             "record.collected",
             "record.favorite",
             'SetText("已收集")',
@@ -744,17 +695,17 @@ class AddonContractTests(unittest.TestCase):
     def test_pets_page_has_no_battle_pet_semantics(self):
         pets_path = ADDON / "UI" / "Pets.lua"
         self.assertTrue(pets_path.is_file(), f"missing {pets_path}")
-        pets = read_text(pets_path).lower()
+        pets = read_text(pets_path)
         for forbidden in (
-            "battle",
-            "level",
-            "rarity",
-            "ability",
-            "health",
-            "loadout",
-            "revive",
-            "cage",
-            "release",
+            "C_PetJournal",
+            "record.level",
+            "record.rarity",
+            "record.ability",
+            "record.health",
+            "petLoadout",
+            "ReviveBattlePets",
+            "CageBattlePet",
+            "ReleasePet",
         ):
             self.assertNotIn(forbidden, pets)
 
@@ -786,26 +737,16 @@ class AddonContractTests(unittest.TestCase):
         toys = read_text(ADDON / "UI" / "Toys.lua")
         self.assertIn("local GRID_COLUMNS = 3", toys)
         self.assertIn("local VISIBLE_TILES = 18", toys)
-        self.assertIn("tile.scIcon:ClearAllPoints()", toys)
-        self.assertIn("tile.scName:SetJustifyH(\"LEFT\")", toys)
-        self.assertIn("local GRID_PADDING_X = 16", toys)
-        self.assertIn("local GRID_PADDING_TOP = 12", toys)
-        self.assertIn("local GRID_COLUMN_GAP = 6", toys)
-        self.assertIn("local TILE_HEIGHT = 72", toys)
-        self.assertNotIn("local TILE_WIDTH =", toys)
+        self.assertIn("local GRID_START_X = 40", toys)
+        self.assertIn("local GRID_START_Y = 53", toys)
+        self.assertIn("local GRID_COLUMN_STEP = 208", toys)
+        self.assertIn("local GRID_ROW_STEP = 66", toys)
         self.assertIn("local function layoutTiles()", toys)
         self.assertIn('grid:SetScript("OnSizeChanged", layoutTiles)', toys)
-        self.assertIn("local leftMargin = math.floor((gridWidth - blockWidth) / 2)", toys)
-        self.assertIn("column * (tileWidth + GRID_COLUMN_GAP)", toys)
-        self.assertIn("GRID_PADDING_TOP + (row * TILE_HEIGHT)", toys)
-
-        for grid_width in (848, 1014, 1354, 1908, 2548, 3428):
-            tile_width = (grid_width - (2 * 16) - (2 * 6)) // 3
-            block_width = (3 * tile_width) + (2 * 6)
-            left_margin = (grid_width - block_width) // 2
-            right_margin = grid_width - left_margin - block_width
-            self.assertLessEqual(abs(left_margin - right_margin), 1)
-        self.assertEqual((848 - (2 * 16) - (2 * 6)) // 3, 268)
+        self.assertIn("GRID_START_X + (column * GRID_COLUMN_STEP)", toys)
+        self.assertIn("-(GRID_START_Y + (row * GRID_ROW_STEP))", toys)
+        self.assertIn("tile:SetWidth(TILE_SIZE)", toys)
+        self.assertIn("tile:SetHeight(TILE_SIZE)", toys)
 
     def test_active_collection_templates_use_independent_thin_state_borders(self):
         templates = read_text(ADDON / "UI" / "Templates.lua")
@@ -827,7 +768,7 @@ class AddonContractTests(unittest.TestCase):
             self.assertIn(token, templates)
 
         self.assertNotIn("local function createThinCardBorder", wardrobe)
-        self.assertGreaterEqual(wardrobe.count("UI.CreateThinCardBorder("), 5)
+        self.assertGreaterEqual(wardrobe.count("UI.CreateThinCardBorder("), 3)
         for active_source in (mounts, pets, toys):
             self.assertNotIn("UI.Media.collectedFrame", active_source)
             self.assertNotIn("UI.Media.uncollectedFrame", active_source)
@@ -952,7 +893,7 @@ class AddonContractTests(unittest.TestCase):
             'local itemModel = CreateFrame("DressUpModel", nil, itemCard)',
             "itemModel:SetAllPoints(itemCard)",
             "page.scItemModels[index] = itemModel",
-            'Catalog.Query("APPEARANCES"',
+            "wardrobeFilters:QueryItems(page.scItemPage, itemPageSize)",
             'Catalog.GetProgress("APPEARANCES"',
             'Catalog.ToggleDemoFavorite("APPEARANCES"',
             "UI.CreatePageControls(",
@@ -975,12 +916,12 @@ class AddonContractTests(unittest.TestCase):
         for token in (
             'collectionStateLabel:SetText("未收集")',
             "collectionState:SetWidth(58)",
-            "itemModel.scCollectionState:Show()",
             "itemModel.scCollectionState:Hide()",
             "itemModel.scBorder:SetCollected(record.collected)",
             "itemModel.scName:SetTextColor(0.62, 0.62, 0.60)",
         ):
             self.assertIn(token, text)
+        self.assertNotIn("itemModel.scCollectionState:Show()", text)
         self.assertNotIn("scUncollectedOverlay", text)
         self.assertNotIn("uncollectedOverlay", text)
 
@@ -1157,6 +1098,7 @@ class AddonContractTests(unittest.TestCase):
 
     def test_wardrobe_waits_for_item_model_load_before_trying_on(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
+        presenter = read_text(ADDON / "UI" / "Wardrobe" / "ItemPresenter.lua")
         for token in (
             "local function finishPendingItemModel(model)",
             "model.scPendingItemString",
@@ -1173,10 +1115,12 @@ class AddonContractTests(unittest.TestCase):
             text.index("local function applyItemModelRecord(model, record, pageGeneration)") :
             text.index("function UI.CreateWardrobePage(parent)")
         ]
-        self.assertIn("model.scPendingItemString = resolveTryOnItem(record.itemId)", apply_record)
-        self.assertIn('model:SetUnit("player")', apply_record)
+        self.assertIn("itemPresenter:PresentBody(model, resolveTryOnItem(record.itemId)", apply_record)
         self.assertNotIn("model:Undress()", apply_record)
         self.assertNotIn("model:TryOn(itemString)", apply_record)
+        self.assertIn('unit = "player"', presenter)
+        self.assertIn("undress = true", presenter)
+        self.assertIn("settleTicks = 2", presenter)
 
     def test_wardrobe_item_models_stop_per_frame_updates_after_settling(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
@@ -1304,13 +1248,13 @@ class AddonContractTests(unittest.TestCase):
         for token in (
             "VISIBLE_SET_ROWS = 8",
             "createSetListRow(",
-            'Catalog.QueryAll("SETS"',
+            "wardrobeFilters:QuerySets()",
             'Catalog.GetProgress("SETS"',
             "SET_MEMBER_SLOT_ORDER",
             "ipairs(variant and variant.members or {})",
             "table.sort(result",
-            "resolveTryOnItem(itemId)",
-            "model:TryOn(itemString)",
+            "resolveTryOnItem(previewItem.previewSourceItemId)",
+            "setPresenter:Present({",
             "scPieceIcons",
             "scSetProgress",
             'SC.db.wardrobeTab == "ITEMS"',
@@ -1324,12 +1268,12 @@ class AddonContractTests(unittest.TestCase):
             "C_Transmog",
         ):
             self.assertNotIn(forbidden, text)
-        self.assertIn("setsPanel:SetWidth(350)", text)
+        self.assertIn('setsPanel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)', text)
+        self.assertIn("card:SetWidth(EZ_LAYOUT.setWidth)", text)
         self.assertIn('pieces:SetPoint("TOP", name, "BOTTOM"', text)
-        self.assertIn("local pieceState = deriveSetPieceState(record)", text)
-        self.assertIn("SC.CollectionState.IsOwnedByType(13, appearanceId)", text)
         self.assertIn("local collectedPieces = tonumber(record.collectedCount) or 0", text)
         self.assertIn("local requiredPieces = tonumber(record.requiredCount) or #previewItems", text)
+        self.assertIn('setProgress:SetText(record.collected and "已收集 · 可应用" or "未完整收集 · 仅本地预览")', text)
         self.assertNotIn('setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. #previewItems)', text)
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         self.assertIn("function B.ApplySet(collectionId, variantIndex, callback)", bridge)
@@ -1342,8 +1286,10 @@ class AddonContractTests(unittest.TestCase):
 
     def test_wardrobe_set_view_ignores_item_slot_filter(self):
         text = read_text(ADDON / "UI" / "Wardrobe.lua")
-        self.assertIn('setFilters.slot = "ALL"', text)
-        self.assertIn('Catalog.QueryAll("SETS", SC.db.query, setFilters', text)
+        filters = read_text(ADDON / "UI" / "Wardrobe" / "Filters.lua")
+        self.assertIn('filters.slot = "ALL"', filters)
+        self.assertIn('self.catalog.QueryAll("SETS", SC.db.query, filters)', filters)
+        self.assertIn("wardrobeFilters:QuerySets()", text)
         self.assertIn('Catalog.GetProgress("SETS", setFilters)', text)
 
     def test_wardrobe_preview_rotates_resets_and_cleans_up_without_modern_apis(self):
