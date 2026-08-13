@@ -196,14 +196,14 @@ function Components:CreateJournalFilterButton(parent, spec)
     return button
 end
 
-function Components:CreateRandomMountButton(parent, spec)
+function Components:CreateRandomCollectionButton(parent, spec)
     spec = spec or {}
     local button = CreateFrame("Button", spec.name, parent)
     button:SetSize(spec.width or 30, spec.height or 30)
     local icon = button:CreateTexture(nil, "ARTWORK")
     icon:SetAllPoints(button)
     icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
-    icon:SetTexture(spec.icon or "Interface\\AddOns\\DragonUI_NewEra\\Textures\\Collections\\MountUpFavourites.blp")
+    icon:SetTexture(spec.icon or spec.fallbackIcon or "Interface\\Icons\\INV_Misc_QuestionMark")
     local border = button:CreateTexture(nil, "OVERLAY")
     border:SetTexture(spec.frameTexture or "Interface\\AddOns\\DragonUI\\Textures\\ActionBars\\uiactionbariconframe_white.tga")
     local scale = (spec.width or 30) / 37
@@ -213,17 +213,46 @@ function Components:CreateRandomMountButton(parent, spec)
     border:SetPoint("TOPRIGHT", button, "TOPRIGHT", frameX, frameTop)
     border:SetPoint("BOTTOMLEFT", button, "BOTTOMLEFT", -frameX, -frameX)
     button._neIcon = icon
+    button._tex = icon
     button._neBorder = border
     button:SetPushedTexture("Interface\\Buttons\\UI-Quickslot-Depress")
     button:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square", "ADD")
     if spec.onClick then button:SetScript("OnClick", spec.onClick) end
-    if spec.onEnter then button:SetScript("OnEnter", spec.onEnter) end
-    if spec.onLeave then button:SetScript("OnLeave", spec.onLeave) end
+    if spec.label then
+        local label = parent:CreateFontString(nil, "OVERLAY", spec.labelFont or "GameFontHighlight")
+        label:SetPoint("RIGHT", button, "LEFT", spec.labelX or -6, spec.labelY or 0)
+        label:SetWidth(spec.labelWidth or 150)
+        label:SetJustifyH("RIGHT")
+        label:SetText(spec.label)
+        button._neLabel = label
+    end
+    if spec.onEnter then
+        button:SetScript("OnEnter", spec.onEnter)
+    elseif spec.tooltip then
+        button:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, spec.tooltipAnchor or "ANCHOR_LEFT")
+            GameTooltip:SetText(spec.tooltip, 1, 1, 1, true)
+            GameTooltip:Show()
+        end)
+    end
+    if spec.onLeave then
+        button:SetScript("OnLeave", spec.onLeave)
+    elseif spec.tooltip then
+        button:SetScript("OnLeave", function() GameTooltip:Hide() end)
+    end
     if spec.onDragStart then
         button:RegisterForDrag("LeftButton")
         button:SetScript("OnDragStart", spec.onDragStart)
     end
     return button
+end
+
+function Components:CreateRandomMountButton(parent, spec)
+    spec = spec or {}
+    if not spec.icon and not spec.fallbackIcon then
+        spec.fallbackIcon = "Interface\\AddOns\\DragonUI_NewEra\\Textures\\Collections\\MountUpFavourites.blp"
+    end
+    return self:CreateRandomCollectionButton(parent, spec)
 end
 
 function Components:SkinRedActionButton(button, options)
@@ -321,6 +350,7 @@ Public._SetCapability("components.scrollbar", NE.scrollbar and type(NE.scrollbar
 Public._SetCapability("components.progress", true)
 Public._SetCapability("components.collection-header", type(Components.CreateCollectionInfoHeader) == "function")
 Public._SetCapability("components.journal-filter", type(Components.CreateJournalFilterButton) == "function")
+Public._SetCapability("components.random-collection", type(Components.CreateRandomCollectionButton) == "function")
 Public._SetCapability("components.random-mount", type(Components.CreateRandomMountButton) == "function")
 Public._SetCapability("components.red-action", type(Components.SkinRedActionButton) == "function")
 Public._SetCapability("components.journal-tabs", type(Components.CreateJournalTab) == "function" and type(Components.LayoutJournalTabs) == "function")
