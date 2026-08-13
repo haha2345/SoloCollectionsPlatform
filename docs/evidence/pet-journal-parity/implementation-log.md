@@ -134,3 +134,14 @@ Task 1 direct checks passed. No cleanup command was used.
 - Existing DragonUI journal tabs remain the only bottom-tab implementation.
 - Focused shell contract and `git diff --check` passed. The required full AddOn contract command ran 63 tests but remains at 21 failures/1 error from the previously recorded stale cross-feature expectations; no new Task 11 focused assertion failed.
 - AddOn commit: `210ed9d feat(ui): align pet journal shell with mounts`.
+
+## Task 12 - Reviewed companion detail presentation
+
+- Replaced the manual pet icon/name/source/description group with the same `CreateCollectionInfoHeader` component and geometry used by the mount journal.
+- Companion icons use the shared 0.08-0.92 crop and gold ornament. The generated zhCN `sourceText` is rendered directly, including font-height inline currency textures.
+- Companion descriptions use generated `descriptionZhCN`; an empty value now shows the explicit `暂无可核验的中文描述` gap marker and never invents fallback prose.
+- The favorite/reset controls remain anchored inside the detail inset; the summon control is now the centered 180 x 26 shared red action in the bottom band.
+- Generated companion projections now retain spell action identity so the UI can compare the current native CRITTER companion and switch between summon/dismiss labels.
+- Clearing selection or hiding the page clears header, model, selection border, and button state. `COMPANION_UPDATE` refreshes the current summon label.
+- Focused detail contract and `git diff --check` passed. The direct placeholder search now finds only the known demo-only PETS toggle and unrelated TOYS/APPEARANCES placeholder records; the generated companion source contains neither old placeholder.
+- AddOn commit: `971d224 feat(ui): add reviewed companion detail presentation`.

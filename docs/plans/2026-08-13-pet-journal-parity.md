@@ -679,14 +679,14 @@ python -m unittest discover -s .\tools\collections\tests -p "test_addon_contract
 
 **Steps:**
 
-1. [ ] 用 `CreateCollectionInfoHeader` 替换当前手工 icon/name/source/description 布局。
-2. [ ] 图标裁切、金色边框、选中状态、名称起点和文本宽度与坐骑详情一致。
-3. [ ] 显示目录中的国服中文来源；金币图标使用内联纹理并与数字同行垂直居中。
-4. [ ] 优先显示 `descriptionZhCN`；空值显示“暂无可核验的中文描述”，不回退 AI/模板句。
-5. [ ] `favorite` 按钮放在详情右下，与模型说明/重置按钮不重叠；未收集时禁用。
-6. [ ] 创建底部居中的 180 × 26 红色按钮，使用 `SkinRedActionButton`。
-7. [ ] 根据当前选择和当前召唤状态显示“召唤小宠物”或“解散小宠物”。
-8. [ ] 切换页面/无选择时清空头部、模型和按钮状态。
+1. [x] 用 `CreateCollectionInfoHeader` 替换当前手工 icon/name/source/description 布局。
+2. [x] 图标裁切、金色边框、选中状态、名称起点和文本宽度与坐骑详情一致。
+3. [x] 显示目录中的国服中文来源；金币图标使用内联纹理并与数字同行垂直居中。
+4. [x] 优先显示 `descriptionZhCN`；空值显示“暂无可核验的中文描述”，不回退 AI/模板句。
+5. [x] `favorite` 按钮放在详情右下，与模型说明/重置按钮不重叠；未收集时禁用。
+6. [x] 创建底部居中的 180 × 26 红色按钮，使用 `SkinRedActionButton`。
+7. [x] 根据当前选择和当前召唤状态显示“召唤小宠物”或“解散小宠物”。
+8. [x] 切换页面/无选择时清空头部、模型和按钮状态。
 
 **Direct checks:**
 
