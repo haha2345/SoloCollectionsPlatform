@@ -1,0 +1,30 @@
+{
+  "candidateHash": "98900e63c77dcfdc1fdc0931182dfacbd638c45b6c6fd8ccf41e13f228a6c933",
+  "canonicalIdentity": "summonCreatureEntry",
+  "groupCount": 2,
+  "groups": [
+    {
+      "canonicalSpellId": 10712,
+      "collectionId": 100339,
+      "decision": "MERGED_CANONICAL_IDENTITY",
+      "identityKey": "creature:7559",
+      "mergedUnlockSpellIds": [
+        10712,
+        35157
+      ],
+      "previewCreatureEntry": 7559
+    },
+    {
+      "canonicalSpellId": 25018,
+      "collectionId": 100373,
+      "decision": "MERGED_CANONICAL_IDENTITY",
+      "identityKey": "creature:15361",
+      "mergedUnlockSpellIds": [
+        24987,
+        25018
+      ],
+      "previewCreatureEntry": 15361
+    }
+  ],
+  "schemaVersion": 1
+}

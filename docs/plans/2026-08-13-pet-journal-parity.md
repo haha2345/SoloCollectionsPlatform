@@ -269,10 +269,10 @@ AddOn 至少映射：
 
 **Steps:**
 
-1. [ ] 在三个实际仓库分别运行 `git status --short`、`git branch --show-current`、`git rev-parse HEAD`。
-2. [ ] 记录现有未提交文件，确认它们与小宠物功能无重叠；有重叠时停止并先处理所有权。
-3. [ ] 从第 0.1 节所列祖先创建或确认三个 `feat/pet-journal-parity` 功能分支；不清理现有 worktree。
-4. [ ] 在实施日志记录三个起点 commit 与当前目录生成 hash。
+1. [x] 在三个实际仓库分别运行 `git status --short`、`git branch --show-current`、`git rev-parse HEAD`。
+2. [x] 记录现有未提交文件，确认它们与小宠物功能无重叠；有重叠时停止并先处理所有权。
+3. [x] 从第 0.1 节所列祖先创建或确认三个 `feat/pet-journal-parity` 功能分支；不清理现有 worktree。
+4. [x] 在实施日志记录三个起点 commit 与当前目录生成 hash。
 
 **Direct check:**
 
@@ -301,14 +301,14 @@ git status --short
 
 **Steps:**
 
-1. [ ] 扩展 evidence 提取，输出 item、quest、vendor、loot、achievement、profession/event 等来源关系以及国服名称键。
-2. [ ] 将 DragonUI/EZ `PetData` 解析为只读交叉参考，不让它覆盖国服数据库中更高优先级的身份和中文字段。
-3. [ ] 为每个候选计算 canonical summon spell、unlock aliases、preview creature、来源类型、可见性分类和重复组。
-4. [ ] 明确排除交通/飞行点、任务临时实体、职业临时召唤、内部/测试/占位法术。
-5. [ ] 保留合法绝版、促销、活动、TCG 小宠物为可见目录项。
-6. [ ] 生成重复审计；同一 canonical identity 只能分配一个 collectionId。
-7. [ ] 生成汇总审计并列出每个中文来源/描述缺口，禁止用默认句子填满缺口。
-8. [ ] 更新已有 companion catalog 直接检查，覆盖飞行点排除、重复合并、促销/绝版可见和无 AI 占位文案。
+1. [x] 扩展 evidence 提取，输出 item、quest、vendor、loot、achievement、profession/event 等来源关系以及国服名称键。
+2. [x] 将 DragonUI/EZ `PetData` 解析为只读交叉参考，不让它覆盖国服数据库中更高优先级的身份和中文字段。
+3. [x] 为每个候选计算 canonical summon spell、unlock aliases、preview creature、来源类型、可见性分类和重复组。
+4. [x] 明确排除交通/飞行点、任务临时实体、职业临时召唤、内部/测试/占位法术。
+5. [x] 保留合法绝版、促销、活动、TCG 小宠物为可见目录项。
+6. [x] 生成重复审计；同一 canonical identity 只能分配一个 collectionId。
+7. [x] 生成汇总审计并列出每个中文来源/描述缺口，禁止用默认句子填满缺口。
+8. [x] 更新已有 companion catalog 直接检查，覆盖飞行点排除、重复合并、促销/绝版可见和无 AI 占位文案。
 
 **Commands:**
 

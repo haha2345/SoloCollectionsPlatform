@@ -23,6 +23,9 @@ ACTIONS = ROOT / "catalog/source/companion_actions.json"
 COLLECTIONS = ROOT / "catalog/source/collections/companions.csv"
 IDS = ROOT / "catalog/ids.json"
 PRESENTATIONS = ROOT / "catalog/source/creature_presentations.json"
+VISIBILITY = ROOT / "catalog/review/companions/journal-visibility-policy.json"
+DUPLICATES = ROOT / "catalog/review/companions/duplicate-audit.json"
+JOURNAL_AUDIT = ROOT / "catalog/generated/companion-journal-audit.json"
 EVIDENCE_ROOT = Path(os.environ["SOLOCOLLECTIONS_EVIDENCE_ROOT"]) if os.environ.get("SOLOCOLLECTIONS_EVIDENCE_ROOT") else None
 
 
@@ -36,6 +39,9 @@ class CompanionCatalogTests(unittest.TestCase):
         cls.evidence = read_json(EVIDENCE)
         cls.policy = read_json(POLICY)
         cls.actions = read_json(ACTIONS)
+        cls.visibility = read_json(VISIBILITY)
+        cls.duplicates = read_json(DUPLICATES)
+        cls.journal_audit = read_json(JOURNAL_AUDIT)
         with COLLECTIONS.open(encoding="utf-8-sig", newline="") as handle:
             cls.collections = list(csv.DictReader(handle))
 
@@ -71,6 +77,55 @@ class CompanionCatalogTests(unittest.TestCase):
         )
         self.assertEqual({"accepted"}, {row["decision"] for row in decisions})
         self.assertTrue(all(row["reasonCode"] for row in decisions))
+
+    def test_evidence_records_world_relations_and_read_only_petdata_cross_references(self):
+        spells = [spell for candidate in self.evidence["candidates"] for spell in candidate["spells"]]
+        for key in (
+            "itemSources", "questSources", "vendorSources", "lootSources", "achievementSources",
+            "professionSources", "eventSources", "nameKeys", "referenceMatches",
+        ):
+            self.assertTrue(all(key in spell for spell in spells), key)
+        self.assertGreater(sum(len(row["questSources"]) for row in spells), 0)
+        self.assertGreater(sum(len(row["vendorSources"]) for row in spells), 0)
+        self.assertGreater(sum(len(row["lootSources"]) for row in spells), 0)
+        self.assertGreater(sum(len(row["achievementSources"]) for row in spells), 0)
+        self.assertGreater(sum(len(row["professionSources"]) for row in spells), 0)
+        self.assertGreater(sum(len(row["eventSources"]) for row in spells), 0)
+        self.assertEqual(2, len(self.evidence["sources"]["petDataReferences"]))
+        for candidate in self.evidence["candidates"]:
+            for spell in candidate["spells"]:
+                for reference in spell["referenceMatches"]:
+                    self.assertEqual(candidate["creatureEntry"], reference["creatureEntry"])
+
+    def test_visibility_audit_excludes_non_journal_classes_and_keeps_legacy_promotions(self):
+        self.assertEqual(self.evidence["candidateHash"], self.visibility["candidateHash"])
+        excluded = set(self.visibility["excludedClasses"])
+        self.assertIn("TRANSPORT_OR_FLIGHT_POINT", excluded)
+        self.assertIn("TEMPORARY_QUEST_FOLLOWER", excluded)
+        self.assertIn("CLASS_GUARDIAN", excluded)
+        visible = [row for row in self.visibility["entries"] if row["journalVisible"]]
+        hidden = [row for row in self.visibility["entries"] if not row["journalVisible"]]
+        self.assertEqual(201, len(visible))
+        self.assertEqual({17468, 17469}, {row["spellId"] for row in hidden})
+        self.assertTrue(all(row["actionable"] and row["randomEligible"] for row in visible))
+        self.assertTrue(all(row["exclusionReason"] for row in hidden))
+        promoted = [row for row in visible if row["sourceType"] in {6, 7, 8, 9}]
+        self.assertTrue(promoted)
+        self.assertTrue(all(row["acquisitionClass"] != "STANDARD" for row in promoted))
+
+    def test_duplicate_audit_merges_unlock_aliases_into_one_collection_identity(self):
+        self.assertEqual(2, self.duplicates["groupCount"])
+        self.assertEqual(
+            [([10712, 35157], 10712), ([24987, 25018], 25018)],
+            [(row["mergedUnlockSpellIds"], row["canonicalSpellId"]) for row in self.duplicates["groups"]],
+        )
+        self.assertEqual(2, self.journal_audit["counts"]["duplicateMergedCount"])
+        self.assertEqual(201, self.journal_audit["counts"]["visibleCount"])
+        serialized = json.dumps(
+            {"visibility": self.visibility, "audit": self.journal_audit}, ensure_ascii=False,
+        )
+        for forbidden in ("账号收藏", "服务端权威目录提供", "AI generated", "AI 生成"):
+            self.assertNotIn(forbidden, serialized)
 
     def test_schema_v2_preserves_old_ids_and_indexes_all_unlock_variants(self):
         self.assertEqual(2, self.actions["schemaVersion"])

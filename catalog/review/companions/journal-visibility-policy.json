@@ -1,0 +1,3633 @@
+{
+  "candidateHash": "98900e63c77dcfdc1fdc0931182dfacbd638c45b6c6fd8ccf41e13f228a6c933",
+  "entries": [
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 4055,
+      "collectionId": 100309,
+      "creatureEntry": 2671,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        4055
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10677,
+      "collectionId": 100310,
+      "creatureEntry": 7380,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10677
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10678,
+      "collectionId": 100311,
+      "creatureEntry": 7381,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10678
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10676,
+      "collectionId": 100312,
+      "creatureEntry": 7382,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10676
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10675,
+      "collectionId": 100313,
+      "creatureEntry": 7383,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10675
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10674,
+      "collectionId": 100314,
+      "creatureEntry": 7384,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10674
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10673,
+      "collectionId": 100315,
+      "creatureEntry": 7385,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10673
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10679,
+      "collectionId": 100316,
+      "creatureEntry": 7386,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10679
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10683,
+      "collectionId": 100317,
+      "creatureEntry": 7387,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10683
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10681,
+      "collectionId": 100318,
+      "creatureEntry": 7388,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10681
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10684,
+      "collectionId": 100319,
+      "creatureEntry": 7389,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10684
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10680,
+      "collectionId": 100320,
+      "creatureEntry": 7390,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10680
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10682,
+      "collectionId": 100291,
+      "creatureEntry": 7391,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10682
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10686,
+      "collectionId": 100321,
+      "creatureEntry": 7392,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10686
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10687,
+      "collectionId": 100322,
+      "creatureEntry": 7393,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10687
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10685,
+      "collectionId": 100323,
+      "creatureEntry": 7394,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10685
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10688,
+      "collectionId": 100324,
+      "creatureEntry": 7395,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10688
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10695,
+      "collectionId": 100325,
+      "creatureEntry": 7543,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10695
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10697,
+      "collectionId": 100326,
+      "creatureEntry": 7544,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10697
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10698,
+      "collectionId": 100283,
+      "creatureEntry": 7545,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10698
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10699,
+      "collectionId": 100327,
+      "creatureEntry": 7546,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10699
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10696,
+      "collectionId": 100328,
+      "creatureEntry": 7547,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        10696
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10700,
+      "collectionId": 100329,
+      "creatureEntry": 7548,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10700
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10704,
+      "collectionId": 100330,
+      "creatureEntry": 7549,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10704
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10703,
+      "collectionId": 100331,
+      "creatureEntry": 7550,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10703
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10701,
+      "collectionId": 100332,
+      "creatureEntry": 7551,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10701
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10702,
+      "collectionId": 100333,
+      "creatureEntry": 7552,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10702
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10707,
+      "collectionId": 100334,
+      "creatureEntry": 7553,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10707
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10708,
+      "collectionId": 100335,
+      "creatureEntry": 7554,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        11
+      ],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10708
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10706,
+      "collectionId": 100336,
+      "creatureEntry": 7555,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10706
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10705,
+      "collectionId": 100337,
+      "creatureEntry": 7556,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10705
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10710,
+      "collectionId": 100338,
+      "creatureEntry": 7558,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10710
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10712,
+      "collectionId": 100339,
+      "creatureEntry": 7559,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10712,
+        35157
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10711,
+      "collectionId": 100340,
+      "creatureEntry": 7560,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10711
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10713,
+      "collectionId": 100341,
+      "creatureEntry": 7561,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10713
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10716,
+      "collectionId": 100342,
+      "creatureEntry": 7562,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10716
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10715,
+      "collectionId": 100343,
+      "creatureEntry": 7563,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10715
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10714,
+      "collectionId": 100344,
+      "creatureEntry": 7565,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10714
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10720,
+      "collectionId": 100345,
+      "creatureEntry": 7566,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10720
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10717,
+      "collectionId": 100346,
+      "creatureEntry": 7567,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10717
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10719,
+      "collectionId": 100347,
+      "creatureEntry": 7568,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10719
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10718,
+      "collectionId": 100348,
+      "creatureEntry": 7569,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10718
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10721,
+      "collectionId": 100349,
+      "creatureEntry": 7570,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        10721
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 12243,
+      "collectionId": 100350,
+      "creatureEntry": 8376,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        12243
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 15048,
+      "collectionId": 100351,
+      "creatureEntry": 9656,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        15048
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 15049,
+      "collectionId": 100352,
+      "creatureEntry": 9657,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        15049
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 15067,
+      "collectionId": 100353,
+      "creatureEntry": 9662,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        15067
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 15648,
+      "collectionId": 100354,
+      "creatureEntry": 9936,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        15648
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 15999,
+      "collectionId": 100281,
+      "creatureEntry": 10259,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        15999
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 16450,
+      "collectionId": 100282,
+      "creatureEntry": 10598,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        16450
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 17567,
+      "collectionId": 100355,
+      "creatureEntry": 11236,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        17567
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 17707,
+      "collectionId": 100298,
+      "creatureEntry": 11325,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        17707
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 17708,
+      "collectionId": 100356,
+      "creatureEntry": 11326,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        17708
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 17709,
+      "collectionId": 100297,
+      "creatureEntry": 11327,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        17709
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 19363,
+      "collectionId": 100357,
+      "creatureEntry": 12257,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        19363
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 19772,
+      "collectionId": 100294,
+      "creatureEntry": 12419,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        19772
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 10709,
+      "collectionId": 100358,
+      "creatureEntry": 14421,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        10709
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23429,
+      "collectionId": 100359,
+      "creatureEntry": 14629,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        23429
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23431,
+      "collectionId": 100360,
+      "creatureEntry": 14630,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        23431
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23430,
+      "collectionId": 100361,
+      "creatureEntry": 14631,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        23430
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23432,
+      "collectionId": 100362,
+      "creatureEntry": 14632,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        23432
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23428,
+      "collectionId": 100363,
+      "creatureEntry": 14633,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        23428
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23531,
+      "collectionId": 100364,
+      "creatureEntry": 14755,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        23531
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 23530,
+      "collectionId": 100365,
+      "creatureEntry": 14756,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        23530
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 23811,
+      "collectionId": 100366,
+      "creatureEntry": 14878,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        23811
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 24696,
+      "collectionId": 100367,
+      "creatureEntry": 15186,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        24696
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 24985,
+      "collectionId": 100368,
+      "creatureEntry": 15356,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        24985
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 24990,
+      "collectionId": 100369,
+      "creatureEntry": 15357,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        24990
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 24988,
+      "collectionId": 100370,
+      "creatureEntry": 15358,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        24988
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 24989,
+      "collectionId": 100371,
+      "creatureEntry": 15359,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        24989
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 24986,
+      "collectionId": 100372,
+      "creatureEntry": 15360,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        24986
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 25018,
+      "collectionId": 100373,
+      "creatureEntry": 15361,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        24987,
+        25018
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 25162,
+      "collectionId": 100292,
+      "creatureEntry": 15429,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        25162
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 25849,
+      "collectionId": 100374,
+      "creatureEntry": 15661,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        25849
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 26533,
+      "collectionId": 100375,
+      "creatureEntry": 15698,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        26533
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 26010,
+      "collectionId": 100376,
+      "creatureEntry": 15699,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        26010
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 26541,
+      "collectionId": 100377,
+      "creatureEntry": 15705,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        26541
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 26529,
+      "collectionId": 100378,
+      "creatureEntry": 15706,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        26529
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 26045,
+      "collectionId": 100379,
+      "creatureEntry": 15710,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        26045
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 26067,
+      "collectionId": 100380,
+      "creatureEntry": 15721,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        26067
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 26391,
+      "collectionId": 100381,
+      "creatureEntry": 15901,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        26391
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 27241,
+      "collectionId": 100382,
+      "creatureEntry": 16069,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        27241
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 27570,
+      "collectionId": 100383,
+      "creatureEntry": 16085,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        27570
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 28487,
+      "collectionId": 100384,
+      "creatureEntry": 16445,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        28487
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 28505,
+      "collectionId": 100385,
+      "creatureEntry": 16456,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        28505
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 28738,
+      "collectionId": 100288,
+      "creatureEntry": 16547,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        28738
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 28739,
+      "collectionId": 100293,
+      "creatureEntry": 16548,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        28739
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 28740,
+      "collectionId": 100386,
+      "creatureEntry": 16549,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        28740
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 28871,
+      "collectionId": 100387,
+      "creatureEntry": 16701,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        28871
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 30152,
+      "collectionId": 100388,
+      "creatureEntry": 17254,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        30152
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 30156,
+      "collectionId": 100389,
+      "creatureEntry": 17255,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        30156
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 32298,
+      "collectionId": 100390,
+      "creatureEntry": 18381,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        32298
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 33050,
+      "collectionId": 100391,
+      "creatureEntry": 18839,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        33050
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 33057,
+      "collectionId": 100392,
+      "creatureEntry": 18845,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        33057
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 35156,
+      "collectionId": 100393,
+      "creatureEntry": 20408,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        35156
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 35239,
+      "collectionId": 100394,
+      "creatureEntry": 20472,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        35239
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 35910,
+      "collectionId": 100395,
+      "creatureEntry": 21008,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        35910
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 35909,
+      "collectionId": 100396,
+      "creatureEntry": 21009,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        35909
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 35907,
+      "collectionId": 100397,
+      "creatureEntry": 21010,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        35907
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 35911,
+      "collectionId": 100398,
+      "creatureEntry": 21018,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        35911
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 36027,
+      "collectionId": 100399,
+      "creatureEntry": 21055,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        36027
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 36031,
+      "collectionId": 100400,
+      "creatureEntry": 21056,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        36031
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 36029,
+      "collectionId": 100401,
+      "creatureEntry": 21063,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        36029
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 36028,
+      "collectionId": 100402,
+      "creatureEntry": 21064,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        36028
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 36034,
+      "collectionId": 100296,
+      "creatureEntry": 21076,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        36034
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 39181,
+      "collectionId": 100403,
+      "creatureEntry": 22445,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        39181
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 39709,
+      "collectionId": 100404,
+      "creatureEntry": 22943,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        39709
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 40319,
+      "collectionId": 100405,
+      "creatureEntry": 23114,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        40319
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 40405,
+      "collectionId": 100406,
+      "creatureEntry": 23198,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        40405
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 40613,
+      "collectionId": 100407,
+      "creatureEntry": 23231,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        40613
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 40549,
+      "collectionId": 100300,
+      "creatureEntry": 23234,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        40549
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 40614,
+      "collectionId": 100408,
+      "creatureEntry": 23258,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        40614
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 40634,
+      "collectionId": 100409,
+      "creatureEntry": 23266,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        40634
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 40990,
+      "collectionId": 100285,
+      "creatureEntry": 23274,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        40990
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 42609,
+      "collectionId": 100286,
+      "creatureEntry": 23909,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        42609
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 43697,
+      "collectionId": 100410,
+      "creatureEntry": 24388,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        43697
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 43698,
+      "collectionId": 100411,
+      "creatureEntry": 24389,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        43698
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 43918,
+      "collectionId": 100412,
+      "creatureEntry": 24480,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        43918
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 44369,
+      "collectionId": 100413,
+      "creatureEntry": 24753,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        44369
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 54187,
+      "collectionId": 100414,
+      "creatureEntry": 24968,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        54187
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 45082,
+      "collectionId": 100287,
+      "creatureEntry": 25062,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        45082
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 45125,
+      "collectionId": 100415,
+      "creatureEntry": 25109,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        45125
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 45127,
+      "collectionId": 100295,
+      "creatureEntry": 25110,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        45127
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 45174,
+      "collectionId": 100416,
+      "creatureEntry": 25146,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        45174
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 45175,
+      "collectionId": 100417,
+      "creatureEntry": 25147,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        45175
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 45890,
+      "collectionId": 100418,
+      "creatureEntry": 25706,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        11
+      ],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        45890
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 46425,
+      "collectionId": 100419,
+      "creatureEntry": 26050,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        46425
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 46426,
+      "collectionId": 100420,
+      "creatureEntry": 26056,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        46426
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 46599,
+      "collectionId": 100289,
+      "creatureEntry": 26119,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        46599
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 48406,
+      "collectionId": 100421,
+      "creatureEntry": 27217,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        48406
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 48408,
+      "collectionId": 100422,
+      "creatureEntry": 27346,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        48408
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 49964,
+      "collectionId": 100423,
+      "creatureEntry": 27914,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        49964
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 51716,
+      "collectionId": 100424,
+      "creatureEntry": 28470,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        51716
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 51851,
+      "collectionId": 100284,
+      "creatureEntry": 28513,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        51851
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 52615,
+      "collectionId": 100299,
+      "creatureEntry": 28883,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        52615
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 53082,
+      "collectionId": 100425,
+      "creatureEntry": 29089,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        53082
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 53316,
+      "collectionId": 100290,
+      "creatureEntry": 29147,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        53316
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 53768,
+      "collectionId": 100426,
+      "creatureEntry": 29238,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        53768
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 55068,
+      "collectionId": 100301,
+      "creatureEntry": 29726,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        55068
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 13548,
+      "collectionId": 100427,
+      "creatureEntry": 30379,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        13548
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 59250,
+      "collectionId": 100302,
+      "creatureEntry": 31575,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        59250
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61348,
+      "collectionId": 100428,
+      "creatureEntry": 32589,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        61348
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61349,
+      "collectionId": 100429,
+      "creatureEntry": 32590,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        61349
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61351,
+      "collectionId": 100430,
+      "creatureEntry": 32591,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        61351
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61350,
+      "collectionId": 100431,
+      "creatureEntry": 32592,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        61350
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61357,
+      "collectionId": 100432,
+      "creatureEntry": 32595,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        61357
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61472,
+      "collectionId": 100433,
+      "creatureEntry": 32643,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        61472
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 61725,
+      "collectionId": 100303,
+      "creatureEntry": 32791,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        61725
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 61773,
+      "collectionId": 100434,
+      "creatureEntry": 32818,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        61773
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61855,
+      "collectionId": 100435,
+      "creatureEntry": 32841,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        61855
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 61991,
+      "collectionId": 100436,
+      "creatureEntry": 32939,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        61991
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62491,
+      "collectionId": 100437,
+      "creatureEntry": 33188,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62491
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62508,
+      "collectionId": 100438,
+      "creatureEntry": 33194,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62508
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62510,
+      "collectionId": 100439,
+      "creatureEntry": 33197,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62510
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62513,
+      "collectionId": 100440,
+      "creatureEntry": 33198,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62513
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 62514,
+      "collectionId": 100441,
+      "creatureEntry": 33199,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        62514
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62516,
+      "collectionId": 100442,
+      "creatureEntry": 33200,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62516
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62562,
+      "collectionId": 100443,
+      "creatureEntry": 33205,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62562
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62542,
+      "collectionId": 100444,
+      "creatureEntry": 33219,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62542
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62561,
+      "collectionId": 100445,
+      "creatureEntry": 33226,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        3
+      ],
+      "sourceType": 3,
+      "unlockSpellIds": [
+        62561
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62564,
+      "collectionId": 100446,
+      "creatureEntry": 33227,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62564
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62609,
+      "collectionId": 100447,
+      "creatureEntry": 33238,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        62609
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62746,
+      "collectionId": 100448,
+      "creatureEntry": 33239,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        1
+      ],
+      "sourceType": 1,
+      "unlockSpellIds": [
+        62746
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 62674,
+      "collectionId": 100449,
+      "creatureEntry": 33274,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        62674
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 65382,
+      "collectionId": 100450,
+      "creatureEntry": 33529,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        65382
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 65381,
+      "collectionId": 100451,
+      "creatureEntry": 33530,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        65381
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 63318,
+      "collectionId": 100452,
+      "creatureEntry": 33578,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        63318
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 63712,
+      "collectionId": 100453,
+      "creatureEntry": 33810,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        63712
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 64351,
+      "collectionId": 100454,
+      "creatureEntry": 34031,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        64351
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 65358,
+      "collectionId": 100455,
+      "creatureEntry": 34364,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        65358
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 65682,
+      "collectionId": 100456,
+      "creatureEntry": 34587,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        65682
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 66030,
+      "collectionId": 100457,
+      "creatureEntry": 34694,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        66030
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 66096,
+      "collectionId": 100458,
+      "creatureEntry": 34724,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        66096
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 66175,
+      "collectionId": 100459,
+      "creatureEntry": 34770,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        66175
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 66520,
+      "collectionId": 100460,
+      "creatureEntry": 34930,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        66520
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67416,
+      "collectionId": 100461,
+      "creatureEntry": 35387,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67416
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67420,
+      "collectionId": 100462,
+      "creatureEntry": 35394,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67420
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67414,
+      "collectionId": 100463,
+      "creatureEntry": 35395,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67414
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67413,
+      "collectionId": 100464,
+      "creatureEntry": 35396,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67413
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67418,
+      "collectionId": 100465,
+      "creatureEntry": 35397,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67418
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67419,
+      "collectionId": 100466,
+      "creatureEntry": 35398,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67419
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67417,
+      "collectionId": 100467,
+      "creatureEntry": 35399,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        67417
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 67415,
+      "collectionId": 100468,
+      "creatureEntry": 35400,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        0
+      ],
+      "sourceType": 0,
+      "unlockSpellIds": [
+        67415
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 67527,
+      "collectionId": 100469,
+      "creatureEntry": 35468,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        67527
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 68767,
+      "collectionId": 100470,
+      "creatureEntry": 36482,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        68767
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 68810,
+      "collectionId": 100471,
+      "creatureEntry": 36511,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        8
+      ],
+      "sourceType": 8,
+      "unlockSpellIds": [
+        68810
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 69002,
+      "collectionId": 100304,
+      "creatureEntry": 36607,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        69002
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 69452,
+      "collectionId": 100472,
+      "creatureEntry": 36871,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        69452
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 69535,
+      "collectionId": 100473,
+      "creatureEntry": 36908,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        69535
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 69536,
+      "collectionId": 100474,
+      "creatureEntry": 36909,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        69536
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 69539,
+      "collectionId": 100475,
+      "creatureEntry": 36910,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        69539
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 69541,
+      "collectionId": 100476,
+      "creatureEntry": 36911,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        69541
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 69677,
+      "collectionId": 100477,
+      "creatureEntry": 36979,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        69677
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 70613,
+      "collectionId": 100478,
+      "creatureEntry": 37865,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        70613
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 71840,
+      "collectionId": 100479,
+      "creatureEntry": 38374,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        71840
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "LIMITED_EVENT",
+      "actionable": true,
+      "canonicalSpellId": 74932,
+      "collectionId": 100480,
+      "creatureEntry": 40198,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        6
+      ],
+      "sourceType": 6,
+      "unlockSpellIds": [
+        74932
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 75134,
+      "collectionId": 100481,
+      "creatureEntry": 40295,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        2
+      ],
+      "sourceType": 2,
+      "unlockSpellIds": [
+        75134
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 75613,
+      "collectionId": 100482,
+      "creatureEntry": 40624,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        5
+      ],
+      "sourceType": 5,
+      "unlockSpellIds": [
+        75613
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 75906,
+      "collectionId": 100483,
+      "creatureEntry": 40703,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        9
+      ],
+      "sourceType": 9,
+      "unlockSpellIds": [
+        75906
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "STANDARD",
+      "actionable": true,
+      "canonicalSpellId": 75936,
+      "collectionId": 100484,
+      "creatureEntry": 40721,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        11
+      ],
+      "sourceType": 11,
+      "unlockSpellIds": [
+        75936
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "acquisitionClass": "PROMOTION_OR_LEGACY",
+      "actionable": true,
+      "canonicalSpellId": 78381,
+      "collectionId": 100485,
+      "creatureEntry": 42078,
+      "exclusionReason": null,
+      "journalVisible": true,
+      "randomEligible": true,
+      "referenceSourceTypes": [
+        7
+      ],
+      "sourceType": 7,
+      "unlockSpellIds": [
+        78381
+      ],
+      "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION"
+    },
+    {
+      "actionable": false,
+      "canonicalSpellId": null,
+      "collectionId": null,
+      "exclusionReason": "NO_POSITIVE_CREATURE_SUMMON",
+      "journalVisible": false,
+      "randomEligible": false,
+      "spellId": 17468,
+      "visibilityReason": "NO_POSITIVE_CREATURE_SUMMON"
+    },
+    {
+      "actionable": false,
+      "canonicalSpellId": null,
+      "collectionId": null,
+      "exclusionReason": "NO_POSITIVE_CREATURE_SUMMON",
+      "journalVisible": false,
+      "randomEligible": false,
+      "spellId": 17469,
+      "visibilityReason": "NO_POSITIVE_CREATURE_SUMMON"
+    }
+  ],
+  "excludedClasses": [
+    "TRANSPORT_OR_FLIGHT_POINT",
+    "TEMPORARY_QUEST_FOLLOWER",
+    "CLASS_GUARDIAN",
+    "GM_OR_TEST",
+    "PLACEHOLDER_SPELL",
+    "DUPLICATE_NON_CANONICAL_IDENTITY"
+  ],
+  "identityRule": "SKILLLINE_778_POSITIVE_SUMMON_CANONICAL_CREATURE",
+  "schemaVersion": 1,
+  "sourceCategoryOrder": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
+  "sourceTypeKeys": {
+    "0": "DROP",
+    "1": "QUEST",
+    "10": "EXPLORATION",
+    "11": "OTHER",
+    "2": "VENDOR",
+    "3": "PROFESSION",
+    "4": "PET_BATTLE",
+    "5": "ACHIEVEMENT",
+    "6": "WORLD_EVENT",
+    "7": "PROMOTION",
+    "8": "TCG",
+    "9": "STORE"
+  }
+}
