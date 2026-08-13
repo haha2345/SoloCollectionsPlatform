@@ -151,15 +151,25 @@ class CompanionCatalogTests(unittest.TestCase):
             self.assertTrue(row["actionable"])
             self.assertTrue(row["randomEligible"])
 
-    def test_missing_descriptions_remain_explicit_and_are_never_fabricated(self):
+    def test_reviewed_descriptions_are_traceable_and_gaps_remain_explicit(self):
         metadata = self.journal_metadata["entries"]
         provenance = {row["collectionId"]: row for row in self.text_provenance["entries"]}
         self.assertEqual(201, len(metadata))
-        self.assertEqual(201, self.journal_audit["counts"]["zhCNDescriptionGapCount"])
+        self.assertEqual(34, self.journal_audit["counts"]["zhCNDescriptionGapCount"])
+        reviewed = [row for row in metadata if row["descriptionStatus"] == "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"]
+        missing = [row for row in metadata if row["descriptionStatus"] == "MISSING"]
+        self.assertEqual(167, len(reviewed))
+        self.assertEqual(34, len(missing))
         for row in metadata:
-            self.assertEqual("", row["descriptionZhCN"])
-            self.assertEqual("MISSING", row["descriptionStatus"])
-            self.assertEqual("MISSING", provenance[row["collectionId"]]["description"]["status"])
+            description_provenance = provenance[row["collectionId"]]["description"]
+            self.assertEqual(row["descriptionStatus"], description_provenance["status"])
+            if row["descriptionStatus"] == "MISSING":
+                self.assertEqual("", row["descriptionZhCN"])
+                self.assertIsNone(description_provenance["reference"])
+            else:
+                self.assertTrue(row["descriptionZhCN"])
+                self.assertEqual("BattlePetSpecies", description_provenance["reference"]["table"])
+                self.assertEqual("7.3.5.26972", description_provenance["reference"]["build"])
         serialized = json.dumps(metadata, ensure_ascii=False)
         for forbidden in ("账号收藏", "服务端权威目录提供", "AI generated", "AI 生成"):
             self.assertNotIn(forbidden, serialized)

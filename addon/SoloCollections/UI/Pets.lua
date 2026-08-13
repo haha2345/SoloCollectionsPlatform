@@ -588,10 +588,9 @@ function UI.CreatePetsPage(parent)
         if infoSelectedBorder then infoSelectedBorder:Show() end
         name:SetText(record.name or "未知小宠物")
         source:SetText(record.source or "来源未知")
-        local descriptionText = record.description and record.description ~= "" and record.description
-            or "暂无可核验的中文描述"
-        description:SetText(descriptionText)
-        description:Show()
+        local descriptionText = record.description and record.description ~= "" and record.description or nil
+        description:SetText(descriptionText or "")
+        if descriptionText then description:Show() else description:Hide() end
         refreshSummonButton(record)
         if record.collected then
             collectionState:SetText("已收集")

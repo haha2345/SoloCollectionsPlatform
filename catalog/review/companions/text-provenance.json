@@ -10,8 +10,14 @@
           "journalNameZhCN": "座狼幼崽",
           "spellId": 15999
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 89,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -45,8 +51,14 @@
           "journalNameZhCN": "烟网小蜘蛛",
           "spellId": 16450
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 90,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -80,8 +92,14 @@
           "journalNameZhCN": "绿色翼手龙",
           "spellId": 10698
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 59,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -114,8 +132,14 @@
           "journalNameZhCN": "吸血鬼小蝶",
           "spellId": 51851
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 187,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -147,8 +171,14 @@
           "journalNameZhCN": "臭臭",
           "spellId": 40990
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 160,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -182,8 +212,14 @@
           "journalNameZhCN": "邪恶的南瓜娃娃",
           "spellId": 42609
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 162,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -214,8 +250,14 @@
           "journalNameZhCN": "迷你孢子蝙",
           "spellId": 45082
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 167,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -247,8 +289,14 @@
           "journalNameZhCN": "跳跳",
           "spellId": 28738
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 125,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -283,8 +331,14 @@
           "journalNameZhCN": "凤凰宝宝",
           "spellId": 46599
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 175,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -317,8 +371,14 @@
           "journalNameZhCN": "幽灵颅骨",
           "spellId": 53316
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 190,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -350,8 +410,14 @@
           "journalNameZhCN": "花羽鹦鹉",
           "spellId": 10682
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 49,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -392,8 +458,14 @@
           "journalNameZhCN": "恶心的软泥怪",
           "spellId": 25162
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 114,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -425,8 +497,14 @@
           "journalNameZhCN": "哼哼先生",
           "spellId": 28739
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 126,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -461,8 +539,14 @@
           "journalNameZhCN": "仿真机械蛙",
           "spellId": 19772
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 95,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -493,8 +577,14 @@
           "journalNameZhCN": "龙鹰风筝",
           "spellId": 45127
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 169,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -526,8 +616,14 @@
           "journalNameZhCN": "火蝇",
           "spellId": 36034
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 146,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -559,8 +655,14 @@
           "journalNameZhCN": "跳虫",
           "spellId": 17709
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 94,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -610,8 +712,14 @@
           "journalNameZhCN": "熊猫幼崽",
           "spellId": 17707
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 92,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -661,8 +769,14 @@
           "journalNameZhCN": "冰霜幼龙",
           "spellId": 52615
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 188,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -693,8 +807,14 @@
           "journalNameZhCN": "香蕉爱好者",
           "spellId": 40549
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 156,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -726,8 +846,14 @@
           "journalNameZhCN": "寒冰先生",
           "spellId": 55068
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 192,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -758,8 +884,14 @@
           "journalNameZhCN": "巨型下水道老鼠",
           "spellId": 59250
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 193,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -790,8 +922,14 @@
           "journalNameZhCN": "春季兔",
           "spellId": 61725
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 200,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -822,8 +960,14 @@
           "journalNameZhCN": "奥妮克希亚幼龙",
           "spellId": 69002
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 243,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -854,8 +998,14 @@
           "journalNameZhCN": "机械松鼠",
           "spellId": 4055
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 39,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -886,8 +1036,14 @@
           "journalNameZhCN": "黑尾白猫",
           "spellId": 10677
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 44,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -919,8 +1075,14 @@
           "journalNameZhCN": "黑斑白猫",
           "spellId": 10678
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 45,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -952,8 +1114,14 @@
           "journalNameZhCN": "虎皮猫",
           "spellId": 10676
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 43,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -985,8 +1153,14 @@
           "journalNameZhCN": "黑纹灰猫",
           "spellId": 10675
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 42,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1021,8 +1195,14 @@
           "journalNameZhCN": "黄猫",
           "spellId": 10674
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 41,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1054,8 +1234,14 @@
           "journalNameZhCN": "灰猫",
           "spellId": 10673
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 40,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1087,8 +1273,14 @@
           "journalNameZhCN": "白猫",
           "spellId": 10679
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 46,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1120,8 +1312,14 @@
           "journalNameZhCN": "绿翼鹦鹉",
           "spellId": 10683
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 50,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1153,7 +1351,8 @@
           "journalNameZhCN": "美冠鹦鹉",
           "spellId": 10681
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1180,8 +1379,14 @@
           "journalNameZhCN": "金翼鹦鹉",
           "spellId": 10684
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 51,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1214,8 +1419,14 @@
           "journalNameZhCN": "红尾鹦鹉",
           "spellId": 10680
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 47,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1247,7 +1458,8 @@
           "journalNameZhCN": "农场小鸡",
           "spellId": 10686
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1274,7 +1486,8 @@
           "journalNameZhCN": "白色小鸡",
           "spellId": 10687
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1301,8 +1514,14 @@
           "journalNameZhCN": "灰色小鸡",
           "spellId": 10685
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 52,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1334,8 +1553,14 @@
           "journalNameZhCN": "蟑螂",
           "spellId": 10688
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 55,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1368,8 +1593,14 @@
           "journalNameZhCN": "黑龙宝宝",
           "spellId": 10695
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 56,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1402,8 +1633,14 @@
           "journalNameZhCN": "红龙宝宝",
           "spellId": 10697
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 58,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1437,8 +1674,14 @@
           "journalNameZhCN": "青铜龙宝宝",
           "spellId": 10699
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 1563,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1467,8 +1710,14 @@
           "journalNameZhCN": "蓝龙宝宝",
           "spellId": 10696
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 57,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1503,7 +1752,8 @@
           "journalNameZhCN": "精灵龙宝宝",
           "spellId": 10700
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1530,8 +1780,14 @@
           "journalNameZhCN": "树蛙",
           "spellId": 10704
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 65,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1563,8 +1819,14 @@
           "journalNameZhCN": "林蛙",
           "spellId": 10703
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 64,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1596,7 +1858,8 @@
           "journalNameZhCN": "蓝蛙",
           "spellId": 10701
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1623,7 +1886,8 @@
           "journalNameZhCN": "岛蛙",
           "spellId": 10702
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1650,8 +1914,14 @@
           "journalNameZhCN": "棕色猫头鹰",
           "spellId": 10707
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 68,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1683,8 +1953,14 @@
           "journalNameZhCN": "白色猫头鹰",
           "spellId": 10708
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 69,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1713,8 +1989,14 @@
           "journalNameZhCN": "黑色猫头鹰",
           "spellId": 10706
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 67,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1746,7 +2028,8 @@
           "journalNameZhCN": "黄色猫头鹰",
           "spellId": 10705
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1773,7 +2056,8 @@
           "journalNameZhCN": "黄毛兔",
           "spellId": 10710
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1800,7 +2084,8 @@
           "journalNameZhCN": "斑点兔",
           "spellId": 10712
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1827,8 +2112,14 @@
           "journalNameZhCN": "雪兔",
           "spellId": 10711
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 72,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1860,8 +2151,14 @@
           "journalNameZhCN": "白鳞蛇",
           "spellId": 10713
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 74,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1893,8 +2190,14 @@
           "journalNameZhCN": "棕色蟒蛇",
           "spellId": 10716
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 77,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1926,7 +2229,8 @@
           "journalNameZhCN": "蓝鳞蛇",
           "spellId": 10715
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -1953,8 +2257,14 @@
           "journalNameZhCN": "黑色王蛇",
           "spellId": 10714
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 75,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -1986,7 +2296,8 @@
           "journalNameZhCN": "血纹蛇",
           "spellId": 10720
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2013,8 +2324,14 @@
           "journalNameZhCN": "赤练蛇",
           "spellId": 10717
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 78,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2047,7 +2364,8 @@
           "journalNameZhCN": "赤环蛇",
           "spellId": 10719
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2074,7 +2392,8 @@
           "journalNameZhCN": "绿色水蛇",
           "spellId": 10718
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2101,7 +2420,8 @@
           "journalNameZhCN": "小精灵",
           "spellId": 10721
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2128,8 +2448,14 @@
           "journalNameZhCN": "机械小鸡",
           "spellId": 12243
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 83,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2163,8 +2489,14 @@
           "journalNameZhCN": "步行炸弹",
           "spellId": 15048
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 85,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2195,8 +2527,14 @@
           "journalNameZhCN": "发条机器人",
           "spellId": 15049
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 86,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2227,8 +2565,14 @@
           "journalNameZhCN": "精龙宝宝",
           "spellId": 15067
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 87,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2262,7 +2606,8 @@
           "journalNameZhCN": "腐化猫",
           "spellId": 15648
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2293,7 +2638,8 @@
           "journalNameZhCN": "红鹦鹉",
           "spellId": 17567
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2326,8 +2672,14 @@
           "journalNameZhCN": "迷你破坏神",
           "spellId": 17708
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 93,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2377,7 +2729,8 @@
           "journalNameZhCN": "机械雪人",
           "spellId": 19363
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2410,8 +2763,14 @@
           "journalNameZhCN": "棕色土拨鼠",
           "spellId": 10709
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 70,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2443,7 +2802,8 @@
           "journalNameZhCN": "圆头钳嘴龟",
           "spellId": 23429
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2474,7 +2834,8 @@
           "journalNameZhCN": "硬皮钳嘴龟",
           "spellId": 23431
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2503,7 +2864,8 @@
           "journalNameZhCN": "绿色钳嘴龟",
           "spellId": 23430
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2532,7 +2894,8 @@
           "journalNameZhCN": "鹰喙钳嘴龟",
           "spellId": 23432
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2561,7 +2924,8 @@
           "journalNameZhCN": "白色钳嘴龟",
           "spellId": 23428
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2590,8 +2954,14 @@
           "journalNameZhCN": "绿色小神龙",
           "spellId": 23531
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 757,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2622,8 +2992,14 @@
           "journalNameZhCN": "红色小神龙",
           "spellId": 23530
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 758,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2654,8 +3030,14 @@
           "journalNameZhCN": "加布林",
           "spellId": 23811
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 106,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2686,8 +3068,14 @@
           "journalNameZhCN": "奔波尔霸",
           "spellId": 24696
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 107,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2721,7 +3109,8 @@
           "journalNameZhCN": "蓝色小鱼人",
           "spellId": 24985
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2748,7 +3137,8 @@
           "journalNameZhCN": "紫色小鱼人",
           "spellId": 24990
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2775,8 +3165,14 @@
           "journalNameZhCN": "乐奇",
           "spellId": 24988
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 111,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2807,7 +3203,8 @@
           "journalNameZhCN": "粉色小鱼人",
           "spellId": 24989
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2834,7 +3231,8 @@
           "journalNameZhCN": "绿色小鱼人",
           "spellId": 24986
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2861,8 +3259,14 @@
           "journalNameZhCN": "霸波尔奔",
           "spellId": 25018
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 1168,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2896,7 +3300,8 @@
           "journalNameZhCN": "鲨鱼宝宝",
           "spellId": 25849
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -2927,8 +3332,14 @@
           "journalNameZhCN": "冬天爷爷的助手",
           "spellId": 26533
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 119,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2959,8 +3370,14 @@
           "journalNameZhCN": "安静的机械雪人",
           "spellId": 26010
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 116,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -2991,8 +3408,14 @@
           "journalNameZhCN": "冬天爷爷的小助手",
           "spellId": 26541
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 120,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3023,8 +3446,14 @@
           "journalNameZhCN": "冬季驯鹿",
           "spellId": 26529
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 118,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3055,8 +3484,14 @@
           "journalNameZhCN": "雪孩子",
           "spellId": 26045
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 117,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3087,7 +3522,8 @@
           "journalNameZhCN": "机械格林奇",
           "spellId": 26067
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -3118,7 +3554,8 @@
           "journalNameZhCN": "被砍下来的触须",
           "spellId": 26391
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -3149,8 +3586,14 @@
           "journalNameZhCN": "咕唧",
           "spellId": 27241
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 121,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3184,8 +3627,14 @@
           "journalNameZhCN": "小匹德菲特",
           "spellId": 27570
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 122,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3216,8 +3665,14 @@
           "journalNameZhCN": "塔吉",
           "spellId": 28487
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 1073,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3263,8 +3718,14 @@
           "journalNameZhCN": "波利",
           "spellId": 28505
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 124,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3298,8 +3759,14 @@
           "journalNameZhCN": "小老鼠吱吱",
           "spellId": 28740
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 127,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3334,8 +3801,14 @@
           "journalNameZhCN": "仲夏之魂",
           "spellId": 28871
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 128,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3368,8 +3841,14 @@
           "journalNameZhCN": "白色虎崽",
           "spellId": 30152
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 1927,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3400,8 +3879,14 @@
           "journalNameZhCN": "角鹰兽宝宝",
           "spellId": 30156
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 130,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3432,8 +3917,14 @@
           "journalNameZhCN": "虚空龙宝宝",
           "spellId": 32298
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 131,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3464,8 +3955,14 @@
           "journalNameZhCN": "魔法龙虾",
           "spellId": 33050
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 132,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3496,7 +3993,8 @@
           "journalNameZhCN": "善良的钳子先生",
           "spellId": 33057
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -3523,8 +4021,14 @@
           "journalNameZhCN": "法力龙宝宝",
           "spellId": 35156
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 136,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3556,8 +4060,14 @@
           "journalNameZhCN": "棕兔",
           "spellId": 35239
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 137,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3591,8 +4101,14 @@
           "journalNameZhCN": "黄色飞蛾",
           "spellId": 35910
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 140,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3624,8 +4140,14 @@
           "journalNameZhCN": "红色飞蛾",
           "spellId": 35909
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 139,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3657,8 +4179,14 @@
           "journalNameZhCN": "蓝色飞蛾",
           "spellId": 35907
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 138,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3690,8 +4218,14 @@
           "journalNameZhCN": "白色飞蛾",
           "spellId": 35911
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 141,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3723,8 +4257,14 @@
           "journalNameZhCN": "金色龙鹰幼崽",
           "spellId": 36027
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 142,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3756,8 +4296,14 @@
           "journalNameZhCN": "蓝色龙鹰幼崽",
           "spellId": 36031
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 145,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3789,8 +4335,14 @@
           "journalNameZhCN": "银色龙鹰幼崽",
           "spellId": 36029
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 144,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3822,8 +4374,14 @@
           "journalNameZhCN": "红色龙鹰幼崽",
           "spellId": 36028
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 143,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3855,8 +4413,14 @@
           "journalNameZhCN": "迷你鹦鹉",
           "spellId": 39181
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 149,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3890,8 +4454,14 @@
           "journalNameZhCN": "鹿角小飞兔",
           "spellId": 39709
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 153,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3925,7 +4495,8 @@
           "journalNameZhCN": "金猪",
           "spellId": 40319
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -3954,8 +4525,14 @@
           "journalNameZhCN": "金猪",
           "spellId": 40405
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 155,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -3986,8 +4563,14 @@
           "journalNameZhCN": "威利",
           "spellId": 40613
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 157,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4022,8 +4605,14 @@
           "journalNameZhCN": "蛋蛋",
           "spellId": 40614
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 158,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4058,8 +4647,14 @@
           "journalNameZhCN": "小新",
           "spellId": 40634
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 159,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4094,8 +4689,14 @@
           "journalNameZhCN": "牙牙",
           "spellId": 43697
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 163,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4126,8 +4727,14 @@
           "journalNameZhCN": "毒皮",
           "spellId": 43698
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 164,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4158,8 +4765,14 @@
           "journalNameZhCN": "魔汁",
           "spellId": 43918
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 165,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4190,8 +4803,14 @@
           "journalNameZhCN": "粉色小雷象",
           "spellId": 44369
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 166,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4222,8 +4841,14 @@
           "journalNameZhCN": "发条战士",
           "spellId": 54187
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 191,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4254,8 +4879,14 @@
           "journalNameZhCN": "火箭鸡",
           "spellId": 45125
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 168,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4286,8 +4917,14 @@
           "journalNameZhCN": "金猪",
           "spellId": 45174
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 170,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4318,8 +4955,14 @@
           "journalNameZhCN": "银猪",
           "spellId": 45175
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 171,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4350,8 +4993,14 @@
           "journalNameZhCN": "灼烧元素",
           "spellId": 45890
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 172,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4382,8 +5031,14 @@
           "journalNameZhCN": "尼尼",
           "spellId": 46425
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 173,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4414,8 +5069,14 @@
           "journalNameZhCN": "莫莫",
           "spellId": 46426
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 174,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4446,8 +5107,14 @@
           "journalNameZhCN": "竞争之魂",
           "spellId": 48406
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 179,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4478,8 +5145,14 @@
           "journalNameZhCN": "竞争之精华",
           "spellId": 48408
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 180,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4510,8 +5183,14 @@
           "journalNameZhCN": "灵魂商人",
           "spellId": 49964
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 183,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4543,8 +5222,14 @@
           "journalNameZhCN": "小虚空鳐",
           "spellId": 51716
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 186,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4576,8 +5261,14 @@
           "journalNameZhCN": "迷你泰瑞尔",
           "spellId": 53082
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 189,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4608,7 +5299,8 @@
           "journalNameZhCN": "天灾幽灵",
           "spellId": 53768
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -4642,8 +5334,14 @@
           "journalNameZhCN": "西部荒野小鸡",
           "spellId": 13548
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 84,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4675,8 +5373,14 @@
           "journalNameZhCN": "小食虱鸟",
           "spellId": 61348
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 194,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4708,8 +5412,14 @@
           "journalNameZhCN": "白色小食虱鸟",
           "spellId": 61349
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 195,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4741,8 +5451,14 @@
           "journalNameZhCN": "小眼镜蛇",
           "spellId": 61351
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 197,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4774,8 +5490,14 @@
           "journalNameZhCN": "始祖龙宝宝",
           "spellId": 61350
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 196,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4807,8 +5529,14 @@
           "journalNameZhCN": "小潘",
           "spellId": 61357
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 198,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4842,8 +5570,14 @@
           "journalNameZhCN": "肯瑞托魔仆",
           "spellId": 61472
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 199,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4874,8 +5608,14 @@
           "journalNameZhCN": "肥胖的火鸡",
           "spellId": 61773
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 201,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4909,8 +5649,14 @@
           "journalNameZhCN": "暴雪熊宝宝",
           "spellId": 61855
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 202,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4941,8 +5687,14 @@
           "journalNameZhCN": "小鹿",
           "spellId": 61991
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 203,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -4976,8 +5728,14 @@
           "journalNameZhCN": "泰达希尔树苗",
           "spellId": 62491
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 204,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5009,8 +5767,14 @@
           "journalNameZhCN": "丹莫罗熊宝宝",
           "spellId": 62508
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 205,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5042,8 +5806,14 @@
           "journalNameZhCN": "提瑞斯法蝙蝠宝宝",
           "spellId": 62510
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 206,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5075,8 +5845,14 @@
           "journalNameZhCN": "杜隆塔尔蝎子",
           "spellId": 62513
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 207,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5108,7 +5884,8 @@
           "journalNameZhCN": "报警发条机器人",
           "spellId": 62514
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -5139,8 +5916,14 @@
           "journalNameZhCN": "艾尔文小羊羔",
           "spellId": 62516
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 209,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5172,8 +5955,14 @@
           "journalNameZhCN": "埃门谷花苗",
           "spellId": 62562
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 212,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5205,8 +5994,14 @@
           "journalNameZhCN": "莫高雷小陆行鸟",
           "spellId": 62542
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 210,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5238,8 +6033,14 @@
           "journalNameZhCN": "沙滩蟹",
           "spellId": 62561
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 211,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5270,8 +6071,14 @@
           "journalNameZhCN": "魔法扫帚",
           "spellId": 62564
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 213,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5303,8 +6110,14 @@
           "journalNameZhCN": "银色侍从",
           "spellId": 62609
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 214,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5346,8 +6159,14 @@
           "journalNameZhCN": "银色小步兵",
           "spellId": 62746
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 216,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5389,8 +6208,14 @@
           "journalNameZhCN": "机械鸟",
           "spellId": 62674
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 215,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5422,8 +6247,14 @@
           "journalNameZhCN": "好奇的小狼獾人",
           "spellId": 65382
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 226,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5454,8 +6285,14 @@
           "journalNameZhCN": "好奇的小神谕者",
           "spellId": 65381
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 225,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5486,8 +6323,14 @@
           "journalNameZhCN": "角斗士莫叽姆斯",
           "spellId": 63318
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 217,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5519,8 +6362,14 @@
           "journalNameZhCN": "森金神像",
           "spellId": 63712
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 218,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5552,7 +6401,8 @@
           "journalNameZhCN": "XS-001建筑机器人",
           "spellId": 64351
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+        "reason": "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+        "reference": null,
         "status": "MISSING"
       },
       "name": {
@@ -5583,8 +6433,14 @@
           "journalNameZhCN": "玳瑁猫",
           "spellId": 65358
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 224,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5616,8 +6472,14 @@
           "journalNameZhCN": "战斗机器人",
           "spellId": 65682
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 227,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5648,8 +6510,14 @@
           "journalNameZhCN": "玛润",
           "spellId": 66030
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 228,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5680,8 +6548,14 @@
           "journalNameZhCN": "幽光雏龙",
           "spellId": 66096
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 229,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5715,8 +6589,14 @@
           "journalNameZhCN": "死亡木偶",
           "spellId": 66175
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 1351,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5761,8 +6641,14 @@
           "journalNameZhCN": "碧玉虎",
           "spellId": 66520
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 231,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5791,8 +6677,14 @@
           "journalNameZhCN": "小塔克",
           "spellId": 67416
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 235,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5824,8 +6716,14 @@
           "journalNameZhCN": "拉扎什幼龙",
           "spellId": 67420
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 239,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5857,8 +6755,14 @@
           "journalNameZhCN": "变异幼龙",
           "spellId": 67414
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 233,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5891,8 +6795,14 @@
           "journalNameZhCN": "小达尔特",
           "spellId": 67413
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 232,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5924,8 +6834,14 @@
           "journalNameZhCN": "暴掠幼龙",
           "spellId": 67418
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 237,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5957,8 +6873,14 @@
           "journalNameZhCN": "刺喉幼龙",
           "spellId": 67419
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 238,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -5990,8 +6912,14 @@
           "journalNameZhCN": "黑曜石幼龙",
           "spellId": 67417
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 236,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6023,8 +6951,14 @@
           "journalNameZhCN": "古达克幼龙",
           "spellId": 67415
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 234,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6056,8 +6990,14 @@
           "journalNameZhCN": "墨玉猎豹",
           "spellId": 67527
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 240,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6088,8 +7028,14 @@
           "journalNameZhCN": "海象人风筝",
           "spellId": 68767
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 241,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6120,8 +7066,14 @@
           "journalNameZhCN": "幽灵虎幼崽",
           "spellId": 68810
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 242,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6152,8 +7104,14 @@
           "journalNameZhCN": "熔火恶犬宝宝",
           "spellId": 69452
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 244,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6184,8 +7142,14 @@
           "journalNameZhCN": "狮鹫宝宝",
           "spellId": 69535
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 245,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6216,8 +7180,14 @@
           "journalNameZhCN": "驭风者宝宝",
           "spellId": 69536
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 246,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6248,8 +7218,14 @@
           "journalNameZhCN": "紫袍玉虎",
           "spellId": 69539
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 247,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6278,8 +7254,14 @@
           "journalNameZhCN": "熊猫人僧侣",
           "spellId": 69541
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 248,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6310,8 +7292,14 @@
           "journalNameZhCN": "小克",
           "spellId": 69677
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 249,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6342,8 +7330,14 @@
           "journalNameZhCN": "溜溜",
           "spellId": 70613
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 250,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6377,8 +7371,14 @@
           "journalNameZhCN": "毒毒",
           "spellId": 71840
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 251,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6409,8 +7409,14 @@
           "journalNameZhCN": "雪孩子",
           "spellId": 74932
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 253,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6441,8 +7447,14 @@
           "journalNameZhCN": "发条战士",
           "spellId": 75134
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 254,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6475,8 +7487,14 @@
           "journalNameZhCN": "星界灵龙",
           "spellId": 75613
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 255,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6507,8 +7525,14 @@
           "journalNameZhCN": "小拆",
           "spellId": 75906
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 256,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6539,8 +7563,14 @@
           "journalNameZhCN": "角斗士莫叽姆斯",
           "spellId": 75936
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 257,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {
@@ -6571,8 +7601,14 @@
           "journalNameZhCN": "迷你雷神",
           "spellId": 78381
         },
-        "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
-        "status": "MISSING"
+        "reason": null,
+        "reference": {
+          "build": "7.3.5.26972",
+          "payloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+          "rowId": 258,
+          "table": "BattlePetSpecies"
+        },
+        "status": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES"
       },
       "name": {
         "keys": {

@@ -748,10 +748,12 @@ def build_journal_metadata(
     policy: dict[str, Any],
     action_entries: list[dict[str, Any]],
     visibility: dict[str, Any],
+    description_catalog: dict[str, Any],
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
     candidates = {int(row["creatureEntry"]): row for row in evidence["candidates"]}
     decisions = {int(row["creatureEntry"]): row for row in policy["decisions"]}
     visible = {int(row["collectionId"]): row for row in visibility["entries"] if row["journalVisible"]}
+    descriptions = {int(row["collectionId"]): row for row in description_catalog["entries"]}
     metadata_entries: list[dict[str, Any]] = []
     source_entries: list[dict[str, Any]] = []
     provenance_entries: list[dict[str, Any]] = []
@@ -767,15 +769,22 @@ def build_journal_metadata(
         source_text, source_status, source_refs = companion_source_text(source_type, spell)
         name = str(decision["name_zhCN"]).strip()
         require(name, f"visible companion lacks zhCN journal name: {collection_id}")
+        description_row = descriptions.get(collection_id)
+        description = str(description_row["descriptionZhCN"]).strip() if description_row else ""
+        description_status = str(description_row["descriptionStatus"]) if description_row else "MISSING"
+        if description_row:
+            require(int(description_row["creatureEntry"]) == creature_entry, f"description creature drift: {collection_id}")
+            require(int(description_row["spellId"]) == canonical_spell, f"description spell drift: {collection_id}")
+            require(description, f"empty reviewed description: {collection_id}")
         metadata_entries.append({
             "collectionId": collection_id,
             "spellId": canonical_spell,
             "journalNameZhCN": name,
             "sourceType": source_type,
             "source": source_text,
-            "descriptionZhCN": "",
+            "descriptionZhCN": description,
             "descriptionKey": canonical_spell,
-            "descriptionStatus": "MISSING",
+            "descriptionStatus": description_status,
             "acquisitionClass": visibility_row["acquisitionClass"],
             "journalVisible": True,
             "actionable": True,
@@ -793,11 +802,17 @@ def build_journal_metadata(
             "name": {"status": "REVIEWED_ZHCN_CLIENT_AND_WORLD", "keys": spell["nameKeys"]},
             "source": {"status": source_status, "references": source_refs},
             "description": {
-                "status": "MISSING", "descriptionKey": canonical_spell,
+                "status": description_status, "descriptionKey": canonical_spell,
                 "lookupKeys": {
                     "spellId": canonical_spell, "creatureEntry": creature_entry, "journalNameZhCN": name,
                 },
-                "reason": "NO_VERIFIED_ZHCN_CLIENT_OR_DATABASE_DESCRIPTION",
+                "reason": None if description_row else "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+                "reference": ({
+                    "table": description_catalog["sourceTable"],
+                    "build": description_row["sourceBuild"],
+                    "rowId": int(description_row["sourceRowId"]),
+                    "payloadSha256": description_catalog["sourcePayloadSha256"],
+                } if description_row else None),
             },
         })
     require(len(metadata_entries) == len(action_entries), "journal metadata coverage drift")
@@ -922,6 +937,7 @@ def render(repo_root: Path, evidence: dict[str, Any]) -> dict[Path, str]:
     visibility_audit, duplicate_audit, journal_audit = build_journal_audits(evidence, policy, action_entries)
     journal_metadata, source_zhcn, text_provenance = build_journal_metadata(
         evidence, policy, action_entries, visibility_audit,
+        read_json(repo_root / "catalog/source/companion_descriptions_zhCN.json"),
     )
     source_gaps = [row["collectionId"] for row in journal_metadata["entries"] if not row["source"]]
     description_gaps = [row["collectionId"] for row in journal_metadata["entries"] if row["descriptionStatus"] == "MISSING"]
