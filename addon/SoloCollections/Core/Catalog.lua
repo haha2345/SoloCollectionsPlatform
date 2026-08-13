@@ -27,6 +27,9 @@ local DEFAULT_FILTERS = {
         aquatic = true,
         hiddenSources = {},
     },
+    pets = {
+        hiddenSources = {},
+    },
 }
 
 local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
@@ -146,7 +149,9 @@ local function getGeneratedCompanionSource()
     generatedCompanionSource = {}
     local generated = SC.GeneratedCatalog or {}
     for _, collection in ipairs(generated.collections or {}) do
-        if collection.typeKey == "companion" and collection.lifecycle == "active" then
+        local journalVisible = collection.journalVisible
+        if journalVisible == nil then journalVisible = collection.uiCollectible ~= false end
+        if collection.typeKey == "companion" and collection.lifecycle == "active" and journalVisible then
             local names = collection.name or {}
             table.insert(generatedCompanionSource, {
                 id = collection.collectionId,
@@ -154,8 +159,13 @@ local function getGeneratedCompanionSource()
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = collection.iconTexture,
                 presentationStatus = collection.presentationStatus,
-                source = "账号收藏",
-                description = "由 SoloCollections 服务端权威目录提供。",
+                sourceType = collection.sourceType,
+                source = collection.sourceText and collection.sourceText ~= "" and
+                    collection.sourceText or "来源未知",
+                description = collection.descriptionZhCN or "",
+                journalVisible = true,
+                actionable = collection.actionable and true or false,
+                randomEligible = collection.randomEligible and true or false,
                 collected = false,
                 favorite = false,
             })
@@ -425,13 +435,14 @@ local function getFavorite(category, record)
     if isCollectibleCompanion(category) and not record.collected then
         return false
     end
-    -- Mount favorites are a server projection (SC2 type 16).  Never let the
+    -- Companion favorites are server projections (mount 16, pet 17). Never let the
     -- legacy SavedVariables table affect production ordering, even while the
     -- preference snapshot is still loading.
-    if category == "MOUNTS" then
+    if category == "MOUNTS" or category == "PETS" then
         local collectionState = SC.CollectionState
+        local projectionType = category == "MOUNTS" and 16 or 17
         return collectionState and collectionState.IsOwnedByType
-            and collectionState.IsOwnedByType(16, record.id) or false
+            and collectionState.IsOwnedByType(projectionType, record.id) or false
     end
     local database = SoloCollectionsDB
     if type(database) ~= "table" then
@@ -643,6 +654,13 @@ local function mountFilterMatches(record, filters)
     return true
 end
 
+local function petFilterMatches(record, filters)
+    local petFilters = filters.pets or DEFAULT_FILTERS.pets
+    local hiddenSources = petFilters.hiddenSources
+    local sourceType = tonumber(record.sourceType)
+    return not (type(hiddenSources) == "table" and sourceType ~= nil and hiddenSources[sourceType])
+end
+
 local function metadataMatches(record, query)
     query = string.lower(tostring(query or ""))
     query = string.gsub(query, "^%s+", "")
@@ -720,6 +738,8 @@ local function filterMatches(category, record, query, filters, includeCollection
         if not mountFilterMatches(record, filters) then
             return false
         end
+    elseif category == "PETS" and not petFilterMatches(record, filters) then
+        return false
     end
     if includeCollectionState and not stateMatches(record, filters) then
         return false
@@ -773,7 +793,7 @@ local function setPresentationLess(left, right)
     return (tonumber(left and left.id) or 0) < (tonumber(right and right.id) or 0)
 end
 
-local function mountPresentationLess(left, right)
+local function collectionPresentationLess(left, right)
     local leftRank = left.collected and (left.favorite and 0 or 1) or 2
     local rightRank = right.collected and (right.favorite and 0 or 1) or 2
     if leftRank ~= rightRank then
@@ -815,8 +835,8 @@ function Catalog.QueryAll(category, query, filters)
             table.insert(matches, record)
         end
     end
-    if category == "MOUNTS" then
-        table.sort(matches, mountPresentationLess)
+    if category == "MOUNTS" or category == "PETS" then
+        table.sort(matches, collectionPresentationLess)
     elseif category == "SETS" then
         table.sort(matches, setPresentationLess)
     end
@@ -974,6 +994,12 @@ function Catalog.GetProgress(category, filters)
 end
 
 function Catalog.ToggleDemoFavorite(category, id)
+    if category == "MOUNTS" or category == "PETS" then
+        local bridge = SC.Bridge
+        if not bridge or bridge.sc2Connected or bridge.demoMode ~= true then
+            return nil
+        end
+    end
     if category == "MOUNTS" then
         return nil
     end

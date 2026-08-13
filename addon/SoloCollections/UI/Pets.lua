@@ -255,8 +255,10 @@ function UI.CreatePetsPage(parent)
         favoriteInfo.text = record.favorite and "取消偏好" or "设为偏好"
         favoriteInfo.notCheckable = 1
         favoriteInfo.func = function()
-            Catalog.ToggleDemoFavorite("PETS", record.id)
-            page:Refresh()
+            if SC.Bridge and SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected then
+                Catalog.ToggleDemoFavorite("PETS", record.id)
+                page:Refresh()
+            end
         end
         if not record.collected then
             favoriteInfo.disabled = 1
@@ -475,8 +477,10 @@ function UI.CreatePetsPage(parent)
         if not record or not record.collected then
             return
         end
-        Catalog.ToggleDemoFavorite("PETS", record.id)
-        page:Refresh()
+        if SC.Bridge and SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected then
+            Catalog.ToggleDemoFavorite("PETS", record.id)
+            page:Refresh()
+        end
     end)
 
     summon:SetScript("OnClick", function()

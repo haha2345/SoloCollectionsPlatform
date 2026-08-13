@@ -236,6 +236,17 @@ class CompanionCatalogTests(unittest.TestCase):
             companion.generate(ROOT, EVIDENCE, True),
         )
 
+    def test_addon_projection_exposes_reviewed_companion_journal_fields(self):
+        generated = (ROOT / "addon/SoloCollections/Data/Generated/Catalog.lua").read_text(encoding="utf-8")
+        core = (ROOT / "addon/SoloCollections/Core/Catalog.lua").read_text(encoding="utf-8")
+        self.assertGreaterEqual(generated.count('typeKey = "companion"'), 202)
+        for field in ("journalVisible = true", "sourceText =", "sourceType =", "descriptionZhCN ="):
+            self.assertIn(field, generated)
+        companion_source = core[core.index("local function getGeneratedCompanionSource"):
+                                core.index("local function getGeneratedToySource")]
+        for forbidden in ("账号收藏", "服务端权威目录提供"):
+            self.assertNotIn(forbidden, companion_source)
+
     @unittest.skipUnless(EVIDENCE_ROOT and EVIDENCE_ROOT.exists(), "named companion evidence pack is not configured")
     def test_named_evidence_pack_pins_review_outputs_and_dbc_hashes(self):
         self.assertRegex(companion.verify_review_pack(ROOT, EVIDENCE_ROOT), r"^[0-9a-f]{64}$")

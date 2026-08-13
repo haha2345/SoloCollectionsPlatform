@@ -1392,6 +1392,21 @@ class AddonContractTests(unittest.TestCase):
         text = all_lua_text()
         self.assertNotIn("math.mod", text)
 
+    def test_companion_query_uses_generated_presentation_and_authoritative_favorites(self):
+        catalog = read_text(ADDON / "Core" / "Catalog.lua")
+        pets = read_text(ADDON / "UI" / "Pets.lua")
+        companion_source = catalog[catalog.index("local function getGeneratedCompanionSource"):
+                                   catalog.index("local function getGeneratedToySource")]
+        self.assertIn("collection.sourceText", companion_source)
+        self.assertIn("collection.descriptionZhCN", companion_source)
+        self.assertIn("collection.journalVisible", companion_source)
+        self.assertNotIn('source = "账号收藏"', companion_source)
+        self.assertNotIn("服务端权威目录提供", companion_source)
+        self.assertIn('local projectionType = category == "MOUNTS" and 16 or 17', catalog)
+        self.assertIn('if category == "MOUNTS" or category == "PETS" then\n        table.sort(matches, collectionPresentationLess)', catalog)
+        self.assertIn('local petFilters = filters.pets or DEFAULT_FILTERS.pets', catalog)
+        self.assertIn("SC.Bridge.demoMode == true and not SC.Bridge.sc2Connected", pets)
+
 
 if __name__ == "__main__":
     unittest.main()
