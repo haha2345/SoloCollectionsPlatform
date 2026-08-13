@@ -742,14 +742,14 @@ rg -n "SetFacing|SetRotation\(rotation, false\)|generation" .\addon\SoloCollecti
 
 **Steps:**
 
-1. [ ] `OpenFilterMenu` 构造收集状态、偏好和实际来源类别，改变状态后立即刷新。
-2. [ ] 点击“设为偏好”调用 `Bridge.SetPetFavorite`；等待 type 17 delta 后更新排序和按钮文案。
-3. [ ] 未收集记录的偏好按钮禁用，右键菜单也不能绕过该限制。
-4. [ ] 顶部随机按钮调用 `Bridge.SummonRandomPet`，显示中文失败原因并在成功后刷新当前召唤状态。
-5. [ ] 随机图标按“偏好已收集 → 已收集 eligible → fallback”更新，不使用未收集图标作为首选。
-6. [ ] 底部按钮调用 `Bridge.SummonPet`，当前已召唤同一宠物时显示并执行解散。
-7. [ ] 列表选择、筛选和偏好变更后保持选择可见；被过滤掉时选择排序后的第一条。
-8. [ ] 刷新时进度总数只统计 journalVisible；筛选不改变全目录总数显示。
+1. [x] `OpenFilterMenu` 构造收集状态、偏好和实际来源类别，改变状态后立即刷新。
+2. [x] 点击“设为偏好”调用 `Bridge.SetPetFavorite`；等待 type 17 delta 后更新排序和按钮文案。
+3. [x] 未收集记录的偏好按钮禁用，右键菜单也不能绕过该限制。
+4. [x] 顶部随机按钮调用 `Bridge.SummonRandomPet`，显示中文失败原因并在成功后刷新当前召唤状态。
+5. [x] 随机图标按“偏好已收集 → 已收集 eligible → fallback”更新，不使用未收集图标作为首选。
+6. [x] 底部按钮调用 `Bridge.SummonPet`，当前已召唤同一宠物时显示并执行解散。
+7. [x] 列表选择、筛选和偏好变更后保持选择可见；被过滤掉时选择排序后的第一条。
+8. [x] 刷新时进度总数只统计 journalVisible；筛选不改变全目录总数显示。
 
 **Direct checks:**
 

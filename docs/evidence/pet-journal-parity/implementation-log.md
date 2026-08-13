@@ -156,3 +156,15 @@ Task 1 direct checks passed. No cleanup command was used.
 - Refreshing an unchanged ready selection no longer reloads the model. Hidden/filtered selections invalidate pending callbacks and clear the old model.
 - Focused rotation/recovery contract and `git diff --check` passed. The required full AddOn contract run executed 65 tests and remains at the same 21 stale cross-feature failures plus 1 stale scheduler error; both new Task 12/13 contracts passed.
 - AddOn commit: `b905b72 fix(ui): keep companion model animation continuous while rotating`.
+
+## Task 14 - Authoritative companion journal interactions
+
+- The PETS filter menu now exposes collected, uncollected, favorites, and a second-level source menu derived only from source types present in the generated companion catalog.
+- Favorite clicks and context actions call `Bridge.SetPetFavorite`; the selected row is disabled while pending and UI sorting/text changes only after the authoritative type 17 delta is observed.
+- Uncollected favorites remain disabled in both the detail button and context menu. The production PETS UI no longer calls `ToggleDemoFavorite`.
+- Added the generic top-band random companion button. It sends only `Bridge.SummonRandomPet`; all selection remains server-side and failures use the stable zhCN bridge messages.
+- The random control's presentation icon prefers a collected favorite eligible record, then any collected eligible record, then the question-mark fallback. This is display-only and never selects the summoned collection.
+- The bottom and context summon actions call `Bridge.SummonPet`; native CRITTER state switches their label between summon and dismiss while the server retains toggle authority.
+- Refresh keeps the selected row scrolled into view, falls back to the first sorted record when filtered out, and uses the unfiltered journal-visible universe for progress/count totals.
+- Checks: 4 focused companion AddOn contracts, all 30 bridge contracts, all 16 catalog contracts, direct authority/source searches, and `git diff --check` passed.
+- AddOn commit: `4bf1347 feat(ui): complete companion journal interactions`.
