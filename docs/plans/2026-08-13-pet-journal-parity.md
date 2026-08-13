@@ -774,12 +774,12 @@ git diff --check
 
 **Steps:**
 
-1. [ ] SoloCollections 运行 companion catalog、catalog generator、SC2、bridge、AddOn contract 的直接检查。
-2. [ ] mod-solo-collections 在用户授权后生成 matching build metadata 并编译 worldserver。
-3. [ ] SoloClientSuite 更新 SoloCollections sibling commit 与 DragonUI_NewEra hash 锁。
-4. [ ] 运行 suite layout inspection。
-5. [ ] 构建到仓库内 ignored `build/`；不直接覆盖真实客户端。
-6. [ ] 检查构建 manifest 中的 AddOn commit、module build、mapping hash、metadataVersion、assetPackVersion 相互一致。
+1. [x] SoloCollections 运行 companion catalog、catalog generator、SC2、bridge、AddOn contract 的直接检查。
+2. [x] mod-solo-collections 在用户授权后生成 matching build metadata 并编译 worldserver。
+3. [x] SoloClientSuite 更新 SoloCollections sibling commit 与 DragonUI_NewEra hash 锁。
+4. [x] 运行 suite layout inspection。
+5. [x] 构建到仓库内 ignored `build/`；不直接覆盖真实客户端。
+6. [x] 检查构建 manifest 中的 AddOn commit、module build、mapping hash、metadataVersion、assetPackVersion 相互一致。
 
 **Commands:**
 

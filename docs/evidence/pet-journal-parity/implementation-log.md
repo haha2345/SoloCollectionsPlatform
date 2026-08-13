@@ -168,3 +168,13 @@ Task 1 direct checks passed. No cleanup command was used.
 - Refresh keeps the selected row scrolled into view, falls back to the first sorted record when filtered out, and uses the unfiltered journal-visible universe for progress/count totals.
 - Checks: 4 focused companion AddOn contracts, all 30 bridge contracts, all 16 catalog contracts, direct authority/source searches, and `git diff --check` passed.
 - AddOn commit: `4bf1347 feat(ui): complete companion journal interactions`.
+
+## Task 15 - Cross-repository checks and local suite build
+
+- Reconciled the AddOn contract suite with the current provider-based DragonUI/NewEra architecture and committed the contract-only cleanup as `52e29fa test(addon): align contracts with provider architecture`.
+- Companion catalog review and generation checks passed with 201 accepted records, mapping hash `ea9c46e76154da493c64a0b2f79c1399a83f3852ea3ad6c228edc9494f1a8d42`, and companion type hash `15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7`.
+- All required focused checks passed: companion catalog 14 (1 optional skip), generator 19 (1 external-evidence skip), SC2 protocol 8, SC2 client 10, bridge 30, and AddOn contract 66.
+- Generated build metadata for AddOn `52e29fa`, module `b03ccd1`, and Core `28463899`, then compiled the RelWithDebInfo `worldserver.exe` successfully. Final binary SHA-256: `16167910ea15c552a54685be0c01885e7db2410b8267b4ded8da286f84912b51`.
+- Updated the Suite lock to the AddOn sibling commit, current SoloCollections/WardrobeData hashes, and the DragonUI_NewEra generic random-collection component hash. Suite commit: `6fddc51 chore(suite): lock pet journal parity build`.
+- Suite layout inspection passed before and after the ignored local build. The build contains the 17 locked roots plus the authorized generated `SoloCollections_EzUI` projection (222 assets); no real client directory was modified.
+- Cross-artifact comparison passed for AddOn commit, module commit, mapping hash, companion mapping hash, metadataVersion `2026.07.23.2`, and assetPackVersion `round-two-stage8-weapon-presentation-v2`.
