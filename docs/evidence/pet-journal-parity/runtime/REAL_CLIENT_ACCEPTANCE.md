@@ -40,3 +40,14 @@
 ## Cleanup note
 
 The temporary vehicle experiment did not create a persistent `creature` row. The test character was returned to an alive database state (`health=574`, `death_expire_time=0`, ghost flag cleared) before the final login.
+
+## 2026-08-13 zhCN description completion acceptance
+
+- User verdict: `REAL_CLIENT_ACCEPTED` / 验收合格，可以提交。
+- 167 of 201 companion records now use verified zhCN `BattlePetSpecies.Description_lang` text, mapped by creature identity and retained with per-record provenance.
+- The other 34 verified client rows have an empty official description. The detail view hides that empty line and no longer displays `暂无可核验的中文描述`; no generated or template prose is substituted.
+- SoloCollections: `35354284c7e5dca82960fae1e13f79936e400143`.
+- SoloClientSuite lock: `328074c9ad0f233d8ca17eb76c4aa7d8f198ca97`.
+- Deployed AddOn tree SHA-256: `d8088a8c724d2488f15a5e438acdf25c66c555c0597be42c8fd451d5bb1a06a2`.
+- Client package SHA-256: `66242346b75a33b5f244a6692984eebd57660bd13717f2e0595fe64af71237b1`.
+- Rollback evidence: `CLIENT-20260813-pet-description-zhcn/20260813-113608`.

@@ -958,14 +958,14 @@ git status --short
 - STATIC_VALIDATED: YES
 - SERVER_VALIDATED: YES
 - REAL_CLIENT_ACCEPTED: YES
-- SoloCollections commit: `6ff5e4c6f4da86ffdf55a4a87bc15074c5eb6a2f`
+- SoloCollections commit: `35354284c7e5dca82960fae1e13f79936e400143`
 - mod-solo-collections commit: `f15574295af614652948c777c58e8b997104a1db`
-- SoloClientSuite commit: `973983a097248a46e04e1adfabdb7ce3649ff7db`
+- SoloClientSuite commit: `328074c9ad0f233d8ca17eb76c4aa7d8f198ca97`
 - AzerothCore commit/build: `28463899f4857bffdc1af59a78c1d359f7e7784a` / RelWithDebInfo 2026-08-13
 - Catalog mapping hash: `15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7`
 - Module binary SHA-256: `d91c99bdcf2fb1a04da6fefb208dccd78a321a94703a872ce221b65fe02d77b4`
-- Client package SHA-256: `1d8cb337b796eefb82732c1d2c49c8e72c3a8aa0d958e2f6395c4d009be477ab`
+- Client package SHA-256: `66242346b75a33b5f244a6692984eebd57660bd13717f2e0595fe64af71237b1`
 - Database migration applied: none; schema version 2 already present
-- Rollback backup: `CLIENT-20260813-pet-journal-parity-redeploy/20260813-100353`
+- Rollback backup: `CLIENT-20260813-pet-description-zhcn/20260813-113608`
 - Real-client evidence: `docs/evidence/pet-journal-parity/runtime/REAL_CLIENT_ACCEPTANCE.md`
-- Remaining known issues: none in the implemented pet-journal parity scope
+- Remaining known issues: 34 records have no zhCN description in the verified `BattlePetSpecies` client data; their empty description line is intentionally hidden rather than replaced with fabricated prose.

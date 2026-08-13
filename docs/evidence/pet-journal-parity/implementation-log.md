@@ -193,3 +193,20 @@ Task 1 direct checks passed. No cleanup command was used.
 - `STATIC_VALIDATED`: achieved by Task 15.
 - `SERVER_VALIDATED`: pending Task 16 deployment and runtime evidence.
 - `REAL_CLIENT_ACCEPTED`: pending Task 17 real-client interaction and visual evidence.
+
+## Task 18 - Verified zhCN companion descriptions
+
+- Imported official zhCN `Description_lang` values from the client `BattlePetSpecies` table and mapped them to the 201 accepted companion records by creature identity.
+- 167 records contain verified official descriptions. The remaining 34 client rows have no description across the checked exports; their detail description line is hidden instead of showing a gap marker or invented prose.
+- Added source payload provenance and SHA-256 `024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd` to the generated catalog review artifacts.
+- Focused catalog, generator, and AddOn contract checks passed. SoloCollections commit: `35354284c7e5dca82960fae1e13f79936e400143`.
+- Suite lock validation passed at commit `328074c9ad0f233d8ca17eb76c4aa7d8f198ca97`; package SHA-256 is `66242346b75a33b5f244a6692984eebd57660bd13717f2e0595fe64af71237b1`.
+- Deployment source and target tree hashes matched at `d8088a8c724d2488f15a5e438acdf25c66c555c0597be42c8fd451d5bb1a06a2`; rollback evidence is `CLIENT-20260813-pet-description-zhcn/20260813-113608`.
+- User reported the deployed result as accepted on 2026-08-13. Final state remains `REAL_CLIENT_ACCEPTED`.
+
+## Final evidence state
+
+- `SOURCE_COMPLETE`: YES.
+- `STATIC_VALIDATED`: YES.
+- `SERVER_VALIDATED`: YES.
+- `REAL_CLIENT_ACCEPTED`: YES, including the Task 18 zhCN description completion.
