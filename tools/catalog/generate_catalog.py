@@ -923,6 +923,15 @@ def build_model(source_root: Path) -> dict[str, Any]:
             }
         elif entry["typeKey"] == "companion":
             basis = {"collections": basis, "actions": mapping_basis["companionActions"]}
+        elif entry["typeKey"] == "companion-favorite":
+            # Internal type 17 projects preference membership over the exact
+            # same stable IDs as the companion catalog; it has no navigation rows.
+            basis = {
+                "collections": [
+                    row for row in mapping_basis["collections"] if row["typeKey"] == "companion"
+                ],
+                "actions": mapping_basis["companionActions"],
+            }
         elif entry["typeKey"] == "toy":
             basis = {"collections": basis, "actions": mapping_basis["toyActions"]}
         model["typeMappingHashes"][entry["typeKey"]] = (

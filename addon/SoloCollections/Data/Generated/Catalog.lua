@@ -160,6 +160,22 @@ SoloCollections.GeneratedCatalog = {
             providerKey = "mount-favorite",
             typeId = 16,
             typeKey = "mount-favorite"
+        },
+        {
+            catalogMode = "INTERNAL",
+            dependencies = {
+                "companion"
+            },
+            features = {},
+            lifecycle = "active",
+            name = {
+                enUS = "Companion Favorites",
+                zhCN = "小宠物偏好"
+            },
+            ordinal = 8,
+            providerKey = "companion-favorite",
+            typeId = 17,
+            typeKey = "companion-favorite"
         }
     },
     collections = {
@@ -21541,7 +21557,7 @@ SoloCollections.GeneratedCatalog = {
     deprecatedAliases = {
         displayCreatureId = "previewCreatureEntry"
     },
-    mappingHash = "ea9c46e76154da493c64a0b2f79c1399a83f3852ea3ad6c228edc9494f1a8d42",
+    mappingHash = "514fd0680dfc7f5ec43f0b5351ca7fd3d5e7f46694dbc358085b739f240bacbc",
     metadataVersion = "2026.07.23.2",
     presentationEvidenceHash = "2bdb261203a9377c14fdde676c5a1307a28fa96bd4a440712289b10fab003d91",
     presentationEvidenceId = "round2-20260722-stage6-companions",
@@ -21551,6 +21567,7 @@ SoloCollections.GeneratedCatalog = {
     typeMappingHashes = {
         appearance = "7d49a257465ebca7c4231d97e7916cf48ba4dc8429eb1c7f9d0edfd0982b0a16",
         companion = "15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7",
+        ["companion-favorite"] = "15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7",
         mount = "711c6a4210629565086337626244abe7767a28f51f408dc0bb5047b9bc9b26f3",
         ["mount-favorite"] = "711c6a4210629565086337626244abe7767a28f51f408dc0bb5047b9bc9b26f3",
         set = "2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf",

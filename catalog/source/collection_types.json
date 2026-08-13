@@ -88,6 +88,17 @@
       "dependencies": ["mount"],
       "features": [],
       "name": {"enUS": "Mount Favorites", "zhCN": "坐骑偏好"}
+    },
+    {
+      "typeId": 17,
+      "typeKey": "companion-favorite",
+      "ordinal": 8,
+      "lifecycle": "active",
+      "catalogMode": "INTERNAL",
+      "providerKey": "companion-favorite",
+      "dependencies": ["companion"],
+      "features": [],
+      "name": {"enUS": "Companion Favorites", "zhCN": "小宠物偏好"}
     }
   ]
 }
