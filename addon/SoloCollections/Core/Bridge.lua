@@ -117,10 +117,13 @@ local function newClientNonce()
     return string.format("%08x%08x", high, low)
 end
 
-local function notifyStateListeners(state, typeId)
+local function notifyStateListeners(state, typeId, change)
+    local handled = false
     for listener in pairs(B.stateListeners) do
-        pcall(listener, state, typeId)
+        local ok, result = pcall(listener, state, typeId, change)
+        handled = handled or (ok and result == true)
     end
+    return handled
 end
 
 function B.RegisterStateListener(callback)
@@ -150,11 +153,12 @@ if CS then
             SendAddonMessage(B.sc2Prefix, body, "WHISPER", playerName)
         end
     end)
-    CS.SetChangedCallback(function(state, typeId)
+    CS.SetChangedCallback(function(state, typeId, change)
         B.sc2Connected = CS.HasAuthority and CS.HasAuthority() and state ~= "Failed"
         saveSC2State(state == "Ready" and "connected" or string.lower(state or "failed"))
-        notifyStateListeners(state, typeId)
+        local handled = notifyStateListeners(state, typeId, change)
         if scheduleFavoriteMigration then scheduleFavoriteMigration() end
+        return handled
     end)
 end
 

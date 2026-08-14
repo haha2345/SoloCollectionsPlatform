@@ -58,11 +58,13 @@ end
 
 rebuildTypeDefinitions()
 
-local function notifyChanged(typeId)
+local function notifyChanged(typeId, change)
+    local handled = false
     if type(changedCallback) == "function" then
-        pcall(changedCallback, CS.state, typeId)
+        local ok, result = pcall(changedCallback, CS.state, typeId, change)
+        handled = ok and result == true
     end
-    if SC.UI and SC.UI.RefreshActivePage then
+    if not handled and SC.UI and SC.UI.RefreshActivePage then
         SC.UI.RefreshActivePage()
     end
 end
@@ -275,7 +277,12 @@ local function applyDelta(delta)
         category.owned[delta.collectionId] = nil
     end
     CS.accountRevision = delta.revision
-    notifyChanged(delta.typeId)
+    notifyChanged(delta.typeId, {
+        kind = "DELTA",
+        collectionId = delta.collectionId,
+        operation = delta.operation,
+        revision = delta.revision,
+    })
     return true
 end
 
@@ -663,6 +670,11 @@ function CS.GetCategoryState(category)
     local typeId = typeIdByKey[typeKey]
     local state = typeId and CS.categories[typeId] or nil
     return state and state.state or (CS.authoritative and "Disabled" or "Demo")
+end
+
+function CS.GetTypeId(category)
+    local typeKey = CATEGORY_TYPE_KEYS[category] or category
+    return typeIdByKey[typeKey]
 end
 
 function CS.ResolveOwned(category, collectionId, fallback)
