@@ -814,36 +814,77 @@ local function ensureWeaponTypeForSlot(filters, slot)
     return filters.weaponType
 end
 
+local function itemQualityColor(quality)
+    quality = tonumber(quality) or 1
+    if GetItemQualityColor then
+        local red, green, blue = GetItemQualityColor(quality)
+        return red or 1.00, green or 1.00, blue or 1.00
+    end
+    return 1.00, 1.00, 1.00
+end
+
+local function weaponTypeLabelFromKey(weaponType)
+    if not weaponType then return nil end
+    weaponType = tostring(weaponType)
+    if weaponType == "" or weaponType == "AUTO" then return nil end
+    for _, option in ipairs(WEAPON_FILTERS) do
+        if option.key == weaponType then return option.label end
+    end
+    return weaponType
+end
+
+local function armorTypeLabelFromKey(armorType)
+    if not armorType then return nil end
+    armorType = tostring(armorType)
+    if armorType == "" or armorType == "AUTO" then return nil end
+    if armorType == "ALL" then return "通用" end
+    for _, option in ipairs(ARMOR_TYPE_FILTERS) do
+        if option.key == armorType then return option.label end
+    end
+    return armorType
+end
+
+local function meaningfulAppearanceSource(source)
+    if type(source) ~= "string" or source == "" or source == "账号收藏" then
+        return nil
+    end
+    return source
+end
+
 local function showItemTooltip(owner, record)
     if not record or not record.itemId then
         return
     end
-    local itemName, itemLink = GetItemInfo(record.itemId)
+    local itemName, _, quality = GetItemInfo(record.itemId)
+    local red, green, blue = itemQualityColor(quality or record.quality)
+    local title = itemName or record.name or "未知外观"
+
     GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
-    if itemLink then
-        GameTooltip:SetHyperlink(itemLink)
-    else
-        GameTooltip:SetText(itemName or record.name or "未知外观", 1, 0.82, 0.18)
+    GameTooltip:SetText(title, red, green, blue)
+
+    local equipmentSourceText = meaningfulAppearanceSource(record.source) or "获取方式未记录"
+    if equipmentSourceText then
+        GameTooltip:AddLine("装备来源：" .. equipmentSourceText, red, green, blue, true)
     end
-    if record.source then
-        GameTooltip:AddLine("来源：" .. record.source, 0.94, 0.82, 0.58, true)
+
+    local slotLabel = slotLabelFromKey(record.slot)
+    if slotLabel and slotLabel ~= "" then
+        GameTooltip:AddLine("部位：" .. slotLabel, 0.82, 0.78, 0.70)
     end
-    if record.weaponTypeLabel then
-        GameTooltip:AddLine("武器类型：" .. record.weaponTypeLabel, 0.52, 0.82, 1.00, true)
+    local armorTypeLabel = armorTypeLabelFromKey(record.armorType)
+    if armorTypeLabel then
+        GameTooltip:AddLine("护甲类型：" .. armorTypeLabel, 0.82, 0.78, 0.70)
     end
+    local weaponTypeLabel = record.weaponTypeLabel or weaponTypeLabelFromKey(record.weaponCategory or record.weaponType)
+    if weaponTypeLabel then
+        GameTooltip:AddLine("武器类型：" .. weaponTypeLabel, 0.52, 0.82, 1.00, true)
+    end
+
     GameTooltip:AddLine(record.collected and "已收集" or "未收集 · 仍可预览", record.collected and 0.38 or 0.62, record.collected and 0.90 or 0.58, 0.32)
     if record.collected then
         GameTooltip:AddLine("Shift + 左键：应用到当前装备", 1.00, 0.82, 0.18)
     end
     GameTooltip:Show()
-end
-
-local function itemQualityColor(quality)
-    if quality and GetItemQualityColor then
-        local red, green, blue = GetItemQualityColor(quality)
-        return red or 1.00, green or 0.82, blue or 0.18
-    end
-    return 1.00, 0.82, 0.18
 end
 
 local function setRecordQuality(record)

@@ -218,6 +218,18 @@ local function getGeneratedAppearanceSource()
             if #itemIds == 0 and tonumber(collection.displayItemId) then
                 itemIds[1] = tonumber(collection.displayItemId)
             end
+            local acquisitionSources = SC.GeneratedWardrobeAcquisitionSources and
+                SC.GeneratedWardrobeAcquisitionSources.itemSources or nil
+            local acquisitionSource
+            if acquisitionSources then
+                for _, sourceItemId in ipairs(itemIds) do
+                    local sourceRecord = acquisitionSources[tonumber(sourceItemId)]
+                    if sourceRecord and sourceRecord.text and sourceRecord.text ~= "" then
+                        acquisitionSource = sourceRecord.text
+                        break
+                    end
+                end
+            end
             table.insert(generatedAppearanceSource, {
                 id = collection.collectionId,
                 itemId = tonumber(collection.displayItemId) or itemIds[1],
@@ -249,7 +261,7 @@ local function getGeneratedAppearanceSource()
                 registryTombstoneReason = collection.registryTombstoneReason,
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = nil,
-                source = "账号收藏",
+                source = acquisitionSource or "获取方式未记录",
                 description = "canonical 外观；来源物品可追溯。",
                 collected = false,
                 favorite = false,
