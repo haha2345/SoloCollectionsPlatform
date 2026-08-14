@@ -958,9 +958,36 @@ local function showPieceTooltip(owner, itemId, setRecord, previewItem, displayRe
     GameTooltip:Show()
 end
 
+local function currentUiTime()
+    return GetTime and GetTime() or 0
+end
+
+local function ensureItemNotFoundSuppressor()
+    if not (UIErrorsFrame and UIErrorsFrame.AddMessage) then return end
+    if UIErrorsFrame.scSoloCollectionsItemNotFoundFilter then return end
+
+    local originalAddMessage = UIErrorsFrame.AddMessage
+    UIErrorsFrame.scSoloCollectionsItemNotFoundFilter = originalAddMessage
+    UIErrorsFrame.AddMessage = function(frame, message, ...)
+        local untilTime = SC.WardrobeUI and SC.WardrobeUI.suppressSetPreviewItemNotFoundUntil
+        if message == ERR_ITEM_NOT_FOUND and untilTime and untilTime > currentUiTime() then
+            return
+        end
+        return originalAddMessage(frame, message, ...)
+    end
+end
+
+local function suppressSetPreviewItemNotFound(seconds)
+    ensureItemNotFoundSuppressor()
+    SC.WardrobeUI = SC.WardrobeUI or {}
+    SC.WardrobeUI.suppressSetPreviewItemNotFoundUntil = currentUiTime() + (tonumber(seconds) or 1.5)
+end
+
 local function resolveTryOnItem(itemId)
+    itemId = tonumber(itemId)
+    if not itemId or itemId <= 0 then return nil, "INVALID_ITEM_QUERY" end
     local _, itemLink = GetItemInfo(itemId)
-    return itemLink or ("item:" .. itemId)
+    return itemLink or ("item:" .. itemId), itemLink and "READY" or "ITEM_NOT_CACHED"
 end
 
 -- Keep the Sets tab in its original list/detail shape. The item tab can use
@@ -1625,18 +1652,26 @@ function UI.CreateWardrobePage(parent)
         return result
     end
 
+    local function clearSetPresenter(reason)
+        if setPresenter and type(setPresenter.Clear) == "function" then
+            pcall(setPresenter.Clear, setPresenter, reason)
+        elseif model and model.ClearModel then
+            pcall(model.ClearModel, model)
+        end
+    end
+
     local function cancelSetPreview()
         page.scSetPreviewGeneration = (page.scSetPreviewGeneration or 0) + 1
         page.scSetPreviewPending = nil
         page.scAdvanceSetPreview = nil
         model.scSetPreviewGeneration = page.scSetPreviewGeneration
         model.scSetPreviewPending = nil
-        if setPresenter then setPresenter:Clear("SET_PREVIEW_INVALIDATED") end
+        clearSetPresenter("SET_PREVIEW_INVALIDATED")
     end
 
-    local function queueSetPreview(record)
+    local function queueSetPreview(record, previewItems)
         local generation = (page.scSetPreviewGeneration or 0) + 1
-        local previewItems = getSelectedVariantPreviewItems(record)
+        previewItems = previewItems or getSelectedVariantPreviewItems(record)
         local pending = {
             generation = generation,
             recordId = record and record.id,
@@ -1649,9 +1684,24 @@ function UI.CreateWardrobePage(parent)
         model.scSetPreviewPending = pending
         local itemStrings = {}
         for _, previewItem in ipairs(previewItems) do
-            itemStrings[#itemStrings + 1] = resolveTryOnItem(previewItem.previewSourceItemId)
+            local itemString, itemReason = resolveTryOnItem(previewItem.previewSourceItemId)
+            if itemString then
+                previewItem.previewUnavailableReason = nil
+                itemStrings[#itemStrings + 1] = itemString
+            else
+                previewItem.previewUnavailableReason = itemReason
+            end
         end
-        setPresenter:Present({
+
+        if #itemStrings == 0 or not (setPresenter and type(setPresenter.Present) == "function") then
+            page.scSetPreviewPending = nil
+            model.scSetPreviewPending = nil
+            clearSetPresenter("SET_PREVIEW_NO_ITEMS")
+            return previewItems
+        end
+
+        suppressSetPreviewItemNotFound(1.5)
+        local ok = pcall(setPresenter.Present, setPresenter, {
             unit = "player",
             undress = true,
             settleTicks = 2,
@@ -1663,6 +1713,11 @@ function UI.CreateWardrobePage(parent)
                 end
             end,
         })
+        if not ok then
+            page.scSetPreviewPending = nil
+            model.scSetPreviewPending = nil
+            clearSetPresenter("SET_PREVIEW_PRESENT_FAILED")
+        end
         return previewItems
     end
 
@@ -1687,12 +1742,12 @@ function UI.CreateWardrobePage(parent)
         page.scSetSelectedDisplayRecord = displayRecord
         page.scSetSelectedRecord = record
         if record.collected then applySet:Enable() else applySet:Disable() end
+        local previewItems = getSelectedVariantPreviewItems(record)
         model:ClearAllPoints()
         model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
         model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
         model:Show()
         syncSetVariantDropdown(displayRecord, record)
-        local previewItems = queueSetPreview(record)
         local setName = setDisplayName(displayRecord or record)
         name:SetText(setName)
         longName:SetText(setName)
@@ -1768,6 +1823,7 @@ function UI.CreateWardrobePage(parent)
         local requiredPieces = tonumber(record.requiredCount) or #previewItems
         setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. requiredPieces)
         setProgress:Show()
+        queueSetPreview(record, previewItems)
     end
 
     selectSetDisplayRecord = function(record)
@@ -1779,13 +1835,13 @@ function UI.CreateWardrobePage(parent)
         if record and record.scIsSetGroup and page.scSelectedSetVariantByGroup then
             page.scSelectedSetVariantByGroup[record.scSetGroupKey] = concreteRecord.id
         end
-        previewSet(record)
         for _, setRow in ipairs(page.scSetRows) do
             if setRow.scRecord == record then
                 setRow:SetRecord(record)
             end
             setRow:SetSelected(setRecordSelectionKey(setRow.scRecord) == selectionKey)
         end
+        previewSet(record)
     end
 
     model:SetScript("OnMouseDown", function(self, button)

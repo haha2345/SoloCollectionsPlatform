@@ -367,7 +367,9 @@ local function setUnavailable(lifecycle, reason)
             CAPABILITY_MISSING = "SoloCam 武器预览未就绪",
             PREVIEW_PROTOCOL_MISMATCH = "SoloCam 武器协议不匹配",
             INVALID_ITEM_ID = "物品无效",
+            ITEM_NOT_CACHED = "物品数据未缓存",
             ITEM_QUERY_FAILED = "物品数据未就绪",
+            ITEM_QUERY_TIMEOUT = "物品数据未响应",
             ARMOR_SLOT_UNAVAILABLE = "护甲部位未映射",
             WEAPON_SUBCLASS_UNAVAILABLE = "武器分类未就绪",
             TRANSMORPHER_SETUP_UNAVAILABLE = "物品构图未就绪",
@@ -572,7 +574,7 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
     self.pendingItemRender = nil
     safeCall(self.frame, "ClearModel")
     local expectedGeneration = self.generation
-    local function onItemReady(itemId, success)
+    local function onItemReady(itemId, success, reason)
         if self.generation ~= expectedGeneration
             or self.activeGeneration ~= expectedGeneration
             or not self.record
@@ -580,13 +582,15 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
             return
         end
         if not success then
-            setUnavailable(self, "ITEM_QUERY_FAILED")
+            setUnavailable(self, reason or "ITEM_QUERY_FAILED")
             return
         end
         queueItemRender(self, self.record, expectedGeneration)
     end
     if ItemQuery and type(ItemQuery.Query) == "function" then
-        local requested, queryReason = ItemQuery:Query(record.itemId, onItemReady)
+        local requested, queryReason = ItemQuery:Query(record.itemId, onItemReady, {
+            force = false,
+        })
         if not requested then return setUnavailable(self, queryReason or "ITEM_QUERY_FAILED") end
         return true, queryReason or "QUERYING"
     end
