@@ -190,9 +190,14 @@ client-extracted assets. Read the
 | SoloCam x86 DLL | `client-extension/SoloCam/scripts/build.ps1` |
 | Catalog generation | `tools/catalog/generate_catalog.py`, with legally obtained external evidence inputs |
 | Unified source package | `tools/release/build_unified_release.py` |
+| Optional integrated client UI | Add `--client-suite-root <AddOns> --suite-lock <suite-lock.json>`; emitted separately from public source |
 
 See [BUILDING.en.md](docs/BUILDING.en.md) for dependencies, environment
 variables, output locations, and catalog-generation boundaries.
+
+### Two deliverables
+
+The public SoloCollections AddOn/server source bundle continues to contain only project-owned source and reviewed media; it does not vendor DragonUI BLP files. A local one-install UI build may separately produce an `integrated-client-ui.zip` and per-file SHA-256 manifest from the SoloClientSuite's exact five AddOn roots. `suite-lock.json` records third-party origins, pinned commits, project patch state, and directory hashes. The integrated archive is not a default public-source attachment, and no build command writes to a real client.
 
 ## Documentation
 

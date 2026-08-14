@@ -47,6 +47,42 @@ class SC2ProtocolTests(unittest.TestCase):
             with self.subTest(vector=vector["name"]):
                 self.assertEqual(vector["adler32"], codec.adler32_hex(vector["payload"]))
 
+    def test_companion_owned_and_favorite_projection_contract(self):
+        self.assertEqual(
+            {
+                "10": "authoritative account-owned mount collection IDs",
+                "11": "authoritative account-owned companion collection IDs",
+                "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress",
+                "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress",
+            },
+            self.schema["projectionTypes"],
+        )
+        favorite = self.schema["actionSemantics"]["SET_FAVORITE"]
+        random_summon = self.schema["actionSemantics"]["RANDOM_SUMMON"]
+        self.assertEqual([10, 11], favorite["typeIds"])
+        self.assertEqual({"10": 16, "11": 17}, favorite["projectionTypeByOwnedType"])
+        self.assertEqual([10, 11], random_summon["typeIds"])
+        self.assertEqual(1, random_summon["collectionId"])
+        self.assertIn("NO_COMPANIONS", self.schema["actionStatuses"])
+        self.assertIn("NO_USABLE_COMPANIONS", self.schema["actionStatuses"])
+
+    def test_companion_favorite_and_random_golden_vectors_are_complete(self):
+        names = {row["name"] for row in self.vectors["packets"]}
+        expected = {
+            "companion_favorite_snapshot_begin", "companion_favorite_snapshot_chunk",
+            "companion_favorite_snapshot_end", "companion_favorite_delta_add",
+            "companion_favorite_delta_remove", "companion_set_favorite_on_request",
+            "companion_set_favorite_off_request", "companion_random_summon_request",
+            "companion_favorite_not_owned_result", "companion_invalid_random_control_id_result",
+        }
+        self.assertTrue(expected <= names)
+        original_mount_vectors = {
+            "mount_favorite_snapshot_begin", "mount_favorite_snapshot_chunk",
+            "mount_favorite_snapshot_end", "mount_favorite_delta_add",
+            "mount_set_favorite_request", "mount_random_summon_request",
+        }
+        self.assertTrue(original_mount_vectors <= names)
+
     def test_chunking_is_deterministic_and_bounded(self):
         payload = ",".join(codec.to_base36(value) for value in range(1, 401))
         chunks = codec.chunk_payload(payload)

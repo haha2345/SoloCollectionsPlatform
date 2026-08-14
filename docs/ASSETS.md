@@ -66,3 +66,28 @@ Missing optional media must not change the base UI or leave a default control
 blank. Missing MPQs must degrade to AddOn-only previews rather than modifying
 unrelated client archives. A release is rejected when any default production
 media reference lacks a tracked, hash-verified base file.
+
+## Integrated DragonUI client UI bundle
+
+`tools/release/build_unified_release.py` accepts the optional paired arguments `--client-suite-root` and `--suite-lock`. This produces a separate full `Interface/AddOns` archive that may contain the pinned DragonUI BLP resources already present in the authorized local SoloClientSuite. It does not change the public AddOn ZIP's `project-authored-files-only` media contract. Treat this integrated output as a distinct delivery with its own provenance review; do not attach it to a public release unless every upstream license and redistribution right has been cleared.
+
+## Local ezCollections UI master
+
+The corrective DragonUI migration may use a generated optional AddOn named
+`SoloCollections_EzUI`. SoloClientSuite creates it only when the operator passes
+an ezCollections 2.2 source root to `Import-EzCollectionsUI.ps1`. The generated
+AddOn contains the user-authorized snapshot's complete BLP, TGA, and WAV media
+projection plus a TOC, hash marker, and provenance JSON. It contains no copied
+Lua, XML, `C_Transmog*`, server logic, or message protocol.
+
+`Core/EzCollectionsUI.lua` validates the generated schema, source version,
+source-tree hash, media-projection hash, and AddOn root before returning any
+path. A missing or mismatched pack must place an opaque explanatory overlay
+over the dependent page and intercept interaction. It must never leave an
+empty texture, active invisible button, or UI that appears accepted.
+
+These media files remain in SoloClientSuite's ignored local `build/` tree. They
+are not part of the SoloCollections public source/release boundary, and no
+public redistribution is allowed until an explicit licence and provenance
+review grants it. A build that depends on this local visual capability must be
+labelled local integration rather than public base-UI acceptance.

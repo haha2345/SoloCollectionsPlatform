@@ -4,10 +4,11 @@ local Catalog = SC.Catalog
 
 local VISIBLE_TILES = 18
 local GRID_COLUMNS = 3
-local GRID_PADDING_X = 16
-local GRID_PADDING_TOP = 12
-local GRID_COLUMN_GAP = 6
-local TILE_HEIGHT = 72
+local GRID_START_X = 40
+local GRID_START_Y = 53
+local GRID_COLUMN_STEP = 208
+local GRID_ROW_STEP = 66
+local TILE_SIZE = 50
 local COLLECTED_NAME_COLOR = { 1.00, 0.82, 0.18 }
 local UNCOLLECTED_NAME_COLOR = { 0.46, 0.43, 0.39 }
 local MACRO_PREFIX = "SCT"
@@ -188,15 +189,12 @@ function UI.CreateToysPage(parent)
     page.scSelectedId = nil
 
     local grid = CreateFrame("Frame", nil, page)
-    grid:SetPoint("TOPLEFT", page, "TOPLEFT", 5, -8)
-    grid:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -5, 46)
-    UI.ApplyNineSlice(grid, UI.Media.border, 18)
-
-    local gridBackground = grid:CreateTexture(nil, "BACKGROUND")
-    gridBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-    gridBackground:SetPoint("TOPLEFT", grid, "TOPLEFT", 5, -5)
-    gridBackground:SetPoint("BOTTOMRIGHT", grid, "BOTTOMRIGHT", -5, 5)
-    gridBackground:SetVertexColor(0.025, 0.019, 0.013, 0.94)
+    grid:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+    grid:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    local gridInset = UI.EzCollections:ApplyInset(grid)
+    local gridBackground = gridInset.background
+    UI.EzCollections:AddShadowOverlay(grid)
+    SC.WardrobeUI.Layout:StylePanel(grid, gridBackground)
 
     local empty = UI.CreateEmptyState(grid, "没有符合条件的玩具")
     empty:SetPoint("CENTER", grid, "CENTER", 0, 10)
@@ -255,17 +253,7 @@ function UI.CreateToysPage(parent)
     end, "MENU")
 
     for index = 1, VISIBLE_TILES do
-        local tile = UI.CreateIconTile(grid, 1, TILE_HEIGHT, selectRecord)
-        tile.scIcon:ClearAllPoints()
-        tile.scIcon:SetWidth(52)
-        tile.scIcon:SetHeight(52)
-        tile.scIcon:SetPoint("LEFT", tile, "LEFT", 9, 0)
-        tile.scName:ClearAllPoints()
-        tile.scName:SetPoint("LEFT", tile.scIcon, "RIGHT", 11, 0)
-        tile.scName:SetPoint("RIGHT", tile, "RIGHT", -10, 0)
-        tile.scName:SetHeight(48)
-        tile.scName:SetJustifyH("LEFT")
-        tile.scName:SetJustifyV("MIDDLE")
+        local tile = UI.CreateIconTile(grid, TILE_SIZE, TILE_SIZE, selectRecord)
 
         tile:RegisterForClicks("LeftButtonUp", "RightButtonUp")
         tile:RegisterForDrag("LeftButton")
@@ -297,36 +285,27 @@ function UI.CreateToysPage(parent)
         tile:HookScript("OnLeave", function()
             GameTooltip:Hide()
         end)
+        SC.WardrobeUI.Layout:StyleCard(tile, tile.scHover, tile.scBorder)
         page.scTiles[index] = tile
     end
 
     local function layoutTiles()
-        local gridWidth = math.floor((grid:GetWidth() or 0) + 0.5)
-        if gridWidth <= (2 * GRID_PADDING_X) then
-            return
-        end
-        local tileWidth = math.floor(
-            (gridWidth - (2 * GRID_PADDING_X) - ((GRID_COLUMNS - 1) * GRID_COLUMN_GAP))
-                / GRID_COLUMNS
-        )
-        local blockWidth = (GRID_COLUMNS * tileWidth) + ((GRID_COLUMNS - 1) * GRID_COLUMN_GAP)
-        local leftMargin = math.floor((gridWidth - blockWidth) / 2)
         for index, tile in ipairs(page.scTiles) do
             local column = (index - 1) % GRID_COLUMNS
             local row = math.floor((index - 1) / GRID_COLUMNS)
             tile:ClearAllPoints()
-            tile:SetWidth(tileWidth)
+            tile:SetWidth(TILE_SIZE)
+            tile:SetHeight(TILE_SIZE)
             tile:SetPoint(
                 "TOPLEFT",
                 grid,
                 "TOPLEFT",
-                leftMargin + (column * (tileWidth + GRID_COLUMN_GAP)),
-                -(GRID_PADDING_TOP + (row * TILE_HEIGHT))
+                GRID_START_X + (column * GRID_COLUMN_STEP),
+                -(GRID_START_Y + (row * GRID_ROW_STEP))
             )
         end
-        page.scTileWidth = tileWidth
-        page.scGridLeftMargin = leftMargin
-        page.scGridRightMargin = gridWidth - leftMargin - blockWidth
+        page.scTileWidth = TILE_SIZE
+        page.scGridLeftMargin = GRID_START_X
     end
 
     grid:SetScript("OnSizeChanged", layoutTiles)
@@ -345,6 +324,7 @@ function UI.CreateToysPage(parent)
     interactionHint:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 12, 14)
     interactionHint:SetText("左键使用 · 拖动到动作栏 · 右键更多操作")
     interactionHint:SetTextColor(0.62, 0.56, 0.46)
+    interactionHint:Hide()
 
     function page:ClearSelection()
         self.scSelectedId = nil
@@ -392,7 +372,7 @@ function UI.CreateToysPage(parent)
                 local cachedIcon = GetItemIcon(record.itemId)
                 if cachedIcon then
                     UI.SetIconTexture(tile.scIcon, cachedIcon)
-                    UI.SetCollectedVisual(tile.scIcon, record.collected, 0.52)
+                    UI.SetCollectedVisual(tile.scIcon, record.collected, 0.18)
                 end
                 if record.collected then
                     tile.scName:SetTextColor(unpack(COLLECTED_NAME_COLOR))
@@ -424,6 +404,7 @@ function UI.CreateToysPage(parent)
     end
 
     page:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+    page:EnableMouseWheel(true)
     page:SetScript("OnEvent", function(self)
         if self:IsShown() then
             self:Refresh()
@@ -432,6 +413,14 @@ function UI.CreateToysPage(parent)
     page:SetScript("OnHide", function(self)
         self:ClearSelection()
         self.scPage = 1
+    end)
+    page:SetScript("OnMouseWheel", function(self, delta)
+        if delta > 0 then
+            self.scPage = math.max(1, self.scPage - 1)
+        else
+            self.scPage = math.min(self.scTotalPages or 1, self.scPage + 1)
+        end
+        self:Refresh()
     end)
 
     page.scGrid = grid

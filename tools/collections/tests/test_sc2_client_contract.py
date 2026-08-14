@@ -67,7 +67,8 @@ class SC2ClientContractTests(unittest.TestCase):
         self.assertNotIn('"SUMMON|" .. requestId', bridge)
         self.assertIn("getGeneratedMountSource", catalog)
         self.assertIn("displayCreatureId", generated)
-        self.assertNotIn("spellId =", generated)
+        self.assertIn("spellId =", generated)
+        self.assertIn("faction =", generated)
         self.assertNotIn("actionId =", generated)
 
     def test_companion_and_toy_actions_submit_only_logical_collection_id(self):
@@ -90,6 +91,23 @@ class SC2ClientContractTests(unittest.TestCase):
         text = harness.read_text(encoding="utf-8")
         for token in ("out of order", "conflicting duplicate", "old nonce", "revision gap"):
             self.assertIn(token, text)
+
+    def test_schema_reserves_companion_favorite_as_an_internal_projection(self):
+        schema = (ROOT / "protocol/sc2/schema.json").read_text(encoding="utf-8")
+        docs = (ROOT / "docs/protocol/sc2-wire-v1.md").read_text(encoding="utf-8")
+        self.assertIn('"17": "internal companion-favorite membership', schema)
+        self.assertIn('"typeIds": [10, 11]', schema)
+        self.assertIn("Types 16 and", docs)
+        self.assertIn("17 are internal projections", docs)
+        self.assertIn("never", docs)
+        self.assertIn("collection totals or progress", docs)
+
+    def test_collection_state_recognizes_companion_favorites_without_page_progress(self):
+        state = (ADDON / "Core/CollectionState.lua").read_text(encoding="utf-8")
+        self.assertIn('[17] = { typeId = 17, typeKey = "companion-favorite"', state)
+        self.assertIn('mappingSourceKey = "companion"', state)
+        category_keys = state[state.index("local CATEGORY_TYPE_KEYS"):state.index("local INTERNAL_PROJECTION_TYPES")]
+        self.assertNotIn("companion-favorite", category_keys)
 
 
 if __name__ == "__main__":

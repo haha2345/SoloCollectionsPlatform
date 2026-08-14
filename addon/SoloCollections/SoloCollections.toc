@@ -3,9 +3,14 @@
 ## Notes: Server-authoritative collection journal for WoW 3.3.5a.
 ## Author: SoloCollections contributors
 ## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## OptionalDeps: SoloCollections_EzUI
+## X-SoloCollections-BuildChannel: development
 ## SavedVariables: SoloCollectionsDB
 
 SoloCollections.lua
+Core\UIPlatform.lua
+Core\EzCollectionsUI.lua
 Data\Generated\Catalog.lua
 Data\Generated\IdentityRegistry.lua
 Data\Generated\PolicyRegistry.lua
@@ -20,13 +25,27 @@ Core\CollectionState.lua
 Core\Catalog.lua
 Core\Bridge.lua
 Core\M2Camera.lua
+Core\ModelProvider.lua
+UI\DragonUI\MountJournal.lua
+UI\EzCollections\Templates.lua
 UI\Templates.lua
 UI\Launcher.lua
+UI\Wardrobe\Layout.lua
+UI\Wardrobe\ItemPresenter.lua
+UI\Wardrobe\Filters.lua
+UI\Wardrobe\CameraWorkbench.lua
 UI\CompanionBase.lua
 UI\Mounts.lua
 UI\Pets.lua
 UI\Toys.lua
 UI\Wardrobe.lua
+UI\WardrobeLab\State.lua
+UI\WardrobeLab\Slots.lua
+UI\WardrobeLab\Sources.lua
+UI\WardrobeLab\Outfits.lua
+UI\WardrobeLab\Preview.lua
+UI\WardrobeLab\Controller.lua
+UI\WardrobeLab\Layout.lua
 UI\CollectionsFrame.lua
 Core\Diagnostics.lua
 Core\Bootstrap.lua

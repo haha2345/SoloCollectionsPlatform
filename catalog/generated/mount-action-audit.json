@@ -1,0 +1,154 @@
+{
+  "actionable": 258,
+  "capabilityCounts": {
+    "AQUATIC": 2,
+    "FLYING": 77,
+    "GROUND": 202,
+    "SPECIAL": 0
+  },
+  "changeId": "CLIENT-20260812-089",
+  "draggable": 258,
+  "excluded": [
+    {
+      "collectionId": 100000,
+      "reason": "CLASS_FORM",
+      "spellId": 48778
+    },
+    {
+      "collectionId": 100051,
+      "reason": "TEST",
+      "spellId": 50869
+    },
+    {
+      "collectionId": 100058,
+      "reason": "TEST",
+      "spellId": 59573
+    },
+    {
+      "collectionId": 100065,
+      "reason": "CLASS_FORM",
+      "spellId": 23214
+    },
+    {
+      "collectionId": 100079,
+      "reason": "CLASS_FORM",
+      "spellId": 23161
+    },
+    {
+      "collectionId": 100083,
+      "reason": "CLASS_FORM",
+      "spellId": 5784
+    },
+    {
+      "collectionId": 100085,
+      "reason": "TEST",
+      "spellId": 17458
+    },
+    {
+      "collectionId": 100095,
+      "reason": "TEST",
+      "spellId": 16060
+    },
+    {
+      "collectionId": 100098,
+      "reason": "DUPLICATE",
+      "spellId": 60136
+    },
+    {
+      "collectionId": 100099,
+      "reason": "DUPLICATE",
+      "spellId": 60140
+    },
+    {
+      "collectionId": 100109,
+      "reason": "TEST",
+      "spellId": 34407
+    },
+    {
+      "collectionId": 100139,
+      "reason": "TEST",
+      "spellId": 29059
+    },
+    {
+      "collectionId": 100140,
+      "reason": "TEST",
+      "spellId": 10798
+    },
+    {
+      "collectionId": 100148,
+      "reason": "TEST",
+      "spellId": 16058
+    },
+    {
+      "collectionId": 100151,
+      "reason": "TEST",
+      "spellId": 17455
+    },
+    {
+      "collectionId": 100157,
+      "reason": "TEST",
+      "spellId": 17456
+    },
+    {
+      "collectionId": 100187,
+      "reason": "CLASS_FORM",
+      "spellId": 34767
+    },
+    {
+      "collectionId": 100188,
+      "reason": "CLASS_FORM",
+      "spellId": 34769
+    },
+    {
+      "collectionId": 100199,
+      "reason": "TEST",
+      "spellId": 23220
+    },
+    {
+      "collectionId": 100210,
+      "reason": "TEST",
+      "spellId": 61442
+    },
+    {
+      "collectionId": 100226,
+      "reason": "TEST",
+      "spellId": 61446
+    },
+    {
+      "collectionId": 100242,
+      "reason": "TEST",
+      "spellId": 16059
+    },
+    {
+      "collectionId": 100261,
+      "reason": "CLASS_FORM",
+      "spellId": 13819
+    }
+  ],
+  "excludedCanonical": 23,
+  "exclusionReasonCounts": {
+    "CLASS_FORM": 7,
+    "DUPLICATE": 2,
+    "TEST": 14
+  },
+  "journalVisible": 258,
+  "preCanonicalExclusions": {
+    "CLASS_FORM": [],
+    "QUEST_TEMPORARY": [],
+    "TAXI": [
+      60120,
+      64681,
+      64761
+    ],
+    "TEST": [
+      32345,
+      43810,
+      51960
+    ]
+  },
+  "randomEligible": 258,
+  "schemaVersion": 1,
+  "taxiSpellIdsInCanonicalCatalog": [],
+  "totalCanonical": 281,
+  "uniqueCanonicalActionSpellCount": 258
+}

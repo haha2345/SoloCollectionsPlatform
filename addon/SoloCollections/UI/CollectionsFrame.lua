@@ -1,22 +1,33 @@
 local SC = SoloCollections
 local UI = SC.UI
 local CS = SC.CollectionState
+local MountJournal = UI.DragonUI and UI.DragonUI.MountJournal
 
 local DESIGN_SCREEN_WIDTH = 1920
 local DESIGN_SCREEN_HEIGHT = 1080
-local JOURNAL_WIDTH = 920
-local JOURNAL_HEIGHT = 793
+local COLLECTION_WIDTH = 703
+local COMPANION_JOURNAL_WIDTH = 768
+local TRANSMOG_WIDTH = 965
+local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
-local TITLE_VISIBLE_ROWS = 16
-local TITLE_ROW_HEIGHT = 35
+local TITLE_VISIBLE_ROWS = 10
+local TITLE_ROW_HEIGHT = 46
 
 local TAB_DEFINITIONS = {
-    { key = "MOUNTS", label = "坐骑", title = "坐骑" },
-    { key = "PETS", label = "小宠物", title = "小宠物" },
+    { key = "MOUNTS", label = "坐骑", title = "坐骑", cutoff = true },
+    { key = "PETS", label = "小宠物", title = "小宠物", cutoff = true },
     { key = "TOYS", label = "玩具箱", title = "玩具箱" },
-    { key = "WARDROBE", label = "外观", title = "外观" },
     { key = "TITLES", label = "头衔", title = "头衔（只读）" },
+    { key = "WARDROBE", label = "外观", title = "外观" },
+    { key = "TRANSMOG_LAB", label = "幻化", title = "幻化", cutoff = true },
 }
+
+local function isTabAvailable(key)
+    if key == "TRANSMOG_LAB" then
+        return SC.db and SC.db.experimental and SC.db.experimental.transmogLabEnabled == true
+    end
+    return true
+end
 
 local function titleRecords()
     local records = {}
@@ -51,60 +62,70 @@ function UI.CreateTitlesPage(parent)
     local page = CreateFrame("Frame", nil, parent)
     page:SetAllPoints(parent)
     page:Hide()
-    page.scOffset = 0
     page.scRows = {}
-    page:EnableMouseWheel(true)
 
     local panel = CreateFrame("Frame", nil, page)
-    panel:SetPoint("TOPLEFT", page, "TOPLEFT", 5, -8)
-    panel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -5, 10)
-    UI.ApplyNineSlice(panel, UI.Media.border, 18)
-
-    local background = panel:CreateTexture(nil, "BACKGROUND")
-    background:SetTexture("Interface\\Buttons\\WHITE8X8")
-    background:SetPoint("TOPLEFT", panel, "TOPLEFT", 5, -5)
-    background:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -5, 5)
-    background:SetVertexColor(0.025, 0.019, 0.013, 0.94)
+    panel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+    panel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    local panelInset = UI.EzCollections:ApplyInset(panel)
+    UI.EzCollections:AddShadowOverlay(panel)
+    SC.WardrobeUI.Layout:StylePanel(panel, panelInset.background)
 
     local note = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    note:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 11)
+    note:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 12)
     note:SetText("只读视图：头衔拥有状态来自服务端角色数据；本页不会授予或切换头衔。")
     note:SetTextColor(0.72, 0.68, 0.60)
 
+    local scrollFrame = CreateFrame(
+        "ScrollFrame",
+        "SoloCollectionsTitleScrollFrame",
+        panel,
+        "FauxScrollFrameTemplate"
+    )
+    scrollFrame:SetPoint("TOPLEFT", panel, "TOPLEFT", 3, -36)
+    scrollFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -2, 29)
+    scrollFrame:EnableMouseWheel(true)
+    UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
+
+    local listTexture = UI.EzCollections:MediaPath(
+        "Buttons",
+        "ListButtons.tga",
+        "Interface\\Buttons\\WHITE8X8"
+    )
     for index = 1, TITLE_VISIBLE_ROWS do
-        local row = CreateFrame("Frame", nil, panel)
+        local row = CreateFrame("Button", nil, panel)
         row:SetHeight(TITLE_ROW_HEIGHT)
-        row:SetPoint("TOPLEFT", panel, "TOPLEFT", 12, -12 - (index - 1) * TITLE_ROW_HEIGHT)
-        row:SetPoint("RIGHT", panel, "RIGHT", -12, 0)
-        local stripe = row:CreateTexture(nil, "BACKGROUND")
-        stripe:SetAllPoints(row)
-        stripe:SetTexture("Interface\\Buttons\\WHITE8X8")
-        stripe:SetVertexColor(index % 2 == 0 and 0.10 or 0.06, 0.055, 0.04, 0.65)
+        row:SetPoint("TOPLEFT", panel, "TOPLEFT", 7, -(36 + (index - 1) * TITLE_ROW_HEIGHT))
+        row:SetPoint("RIGHT", panel, "RIGHT", -22, 0)
+        local background = row:CreateTexture(nil, "BACKGROUND")
+        background:SetAllPoints(row)
+        background:SetTexture(listTexture)
+        background:SetTexCoord(0.00390625, 0.8203125, 0.00390625, 0.18359375)
+        local highlight = row:CreateTexture(nil, "HIGHLIGHT")
+        highlight:SetAllPoints(row)
+        highlight:SetTexture(listTexture)
+        highlight:SetTexCoord(0.00390625, 0.8203125, 0.19140625, 0.37109375)
         local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        name:SetPoint("LEFT", row, "LEFT", 10, 0)
+        name:SetPoint("LEFT", row, "LEFT", 12, 0)
+        name:SetJustifyH("LEFT")
         local status = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        status:SetPoint("RIGHT", row, "RIGHT", -10, 0)
+        status:SetWidth(370)
+        status:SetPoint("RIGHT", row, "RIGHT", -12, 0)
+        status:SetJustifyH("RIGHT")
+        name:SetPoint("RIGHT", status, "LEFT", -10, 0)
         row.scName = name
         row.scStatus = status
+        row.scBackground = background
         page.scRows[index] = row
     end
 
-    function page:Refresh()
-        local records, total = titleRecords()
-        local maximumOffset = math.max(0, #records - TITLE_VISIBLE_ROWS)
-        self.scOffset = math.max(0, math.min(self.scOffset, maximumOffset))
-        local ownedCount = 0
-        for titleIndex = 1, total do
-            local owned = CS.ResolveOwned("TITLES", titleIndex, false)
-            if owned then ownedCount = ownedCount + 1 end
-        end
-        if UI.CollectionsFrame then
-            UI.CollectionsFrame.scCollectionCount:SetCount(ownedCount, total)
-            UI.CollectionsFrame.scProgress:SetProgress(ownedCount, total)
-        end
+    local function refreshRows()
+        local records = page.scRecords or {}
+        FauxScrollFrame_Update(scrollFrame, #records, TITLE_VISIBLE_ROWS, TITLE_ROW_HEIGHT)
+        local offset = FauxScrollFrame_GetOffset(scrollFrame)
         local current = type(GetCurrentTitle) == "function" and tonumber(GetCurrentTitle()) or 0
-        for index, row in ipairs(self.scRows) do
-            local record = records[self.scOffset + index]
+        for index, row in ipairs(page.scRows) do
+            local record = records[offset + index]
             if record then
                 row.scName:SetText(record.name)
                 row.scName:SetTextColor(record.owned and 1.00 or 0.50, record.owned and 0.82 or 0.47, 0.24)
@@ -124,10 +145,74 @@ function UI.CreateTitlesPage(parent)
         end
     end
 
-    page:SetScript("OnMouseWheel", function(self, delta)
-        self.scOffset = math.max(0, self.scOffset - delta * 3)
-        self:Refresh()
+    local function scrollByWheel(self, delta)
+        local currentOffset = FauxScrollFrame_GetOffset(self) or 0
+        local maximumOffset = math.max(0, #(page.scRecords or {}) - TITLE_VISIBLE_ROWS)
+        local newOffset = math.max(0, math.min(maximumOffset, currentOffset - delta))
+        FauxScrollFrame_OnVerticalScroll(
+            self,
+            newOffset * TITLE_ROW_HEIGHT,
+            TITLE_ROW_HEIGHT,
+            refreshRows
+        )
+    end
+
+    for _, row in ipairs(page.scRows) do
+        row:EnableMouseWheel(true)
+        row:SetScript("OnMouseWheel", function(_, delta)
+            scrollByWheel(scrollFrame, delta)
+        end)
+    end
+    scrollFrame:SetScript("OnVerticalScroll", function(self, offset)
+        FauxScrollFrame_OnVerticalScroll(self, offset, TITLE_ROW_HEIGHT, refreshRows)
     end)
+    scrollFrame:SetScript("OnMouseWheel", function(self, delta)
+        scrollByWheel(self, delta)
+    end)
+
+    function page:SyncFilters()
+        local frame = UI.CollectionsFrame
+        if not (frame and frame.scFilterPopup and SC.db and SC.db.filters) then return end
+        frame.scFilterPopup:SetOptions({
+            {
+                label = "已收集",
+                checked = SC.db.filters.collected ~= false,
+                onClick = function()
+                    SC.db.filters.collected = not (SC.db.filters.collected ~= false)
+                    page:Refresh()
+                end,
+            },
+            {
+                label = "未收集",
+                checked = SC.db.filters.uncollected ~= false,
+                onClick = function()
+                    SC.db.filters.uncollected = not (SC.db.filters.uncollected ~= false)
+                    page:Refresh()
+                end,
+            },
+        })
+    end
+
+    function page:Refresh()
+        local records, total = titleRecords()
+        self.scRecords = records
+        local ownedCount = 0
+        for titleIndex = 1, total do
+            local owned = CS.ResolveOwned("TITLES", titleIndex, false)
+            if owned then ownedCount = ownedCount + 1 end
+        end
+        if UI.CollectionsFrame then
+            UI.CollectionsFrame.scCollectionCount:SetCount(ownedCount, total)
+            UI.CollectionsFrame.scProgress:SetProgress(ownedCount, total)
+        end
+        refreshRows()
+        self:SyncFilters()
+    end
+
+    page.scPanel = panel
+    page.scPanelBackground = panelInset.background
+    page.scScrollFrame = scrollFrame
+    page.scNote = note
     return page
 end
 
@@ -139,12 +224,68 @@ end
 
 local function clampFrame(frame)
     frame:SetScale(getResponsiveScale())
-    frame:SetClampRectInsets(0, 0, 0, -40)
+    frame:SetClampRectInsets(0, 0, 0, -44)
     frame:SetClampedToScreen(false)
     frame:SetClampedToScreen(true)
 end
 
+local function applyJournalSize(frame, key)
+    local width = (key == "MOUNTS" or key == "PETS") and COMPANION_JOURNAL_WIDTH or
+        (key == "TRANSMOG_LAB" and TRANSMOG_WIDTH or COLLECTION_WIDTH)
+    frame:SetWidth(width)
+    frame:SetHeight(JOURNAL_HEIGHT)
+    frame.scJournalWidth = width
+    if UI.EzCollections then
+        UI.EzCollections:UpdateBodyCanvas(frame)
+        UI.EzCollections:LayoutJournalTabs(frame, frame.scMainTabOrder)
+    end
+    clampFrame(frame)
+end
+
+local function applyJournalControlLayout(frame, key)
+    local host = frame.scSearchFilterHost
+    local search = frame.scSearchBox
+    local filter = frame.scFilterButton
+    local companionFilter = frame.scCompanionFilterButton
+    if not (host and search and filter) then return end
+    host:ClearAllPoints()
+    search:ClearAllPoints()
+    filter:ClearAllPoints()
+    if (key == "MOUNTS" or key == "PETS") and companionFilter then
+        filter:Hide()
+        if frame.scFilterPopup then frame.scFilterPopup:Hide() end
+        companionFilter:Show()
+        host:SetWidth(276)
+        host:SetHeight(20)
+        host:SetPoint("TOPLEFT", frame, "TOPLEFT", 14, -68)
+        search:SetWidth(194)
+        search:SetPoint("LEFT", host, "LEFT", 0, 0)
+        companionFilter:ClearAllPoints()
+        companionFilter:SetSize(76, 20)
+        companionFilter:SetPoint("LEFT", search, "RIGHT", 4, 0)
+    else
+        if companionFilter then companionFilter:Hide() end
+        filter:Show()
+        if key == "TOYS" or key == "TITLES" or key == "WARDROBE" or key == "TRANSMOG_LAB" then
+            host:SetWidth(210)
+            host:SetHeight(22)
+            host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
+            search:SetWidth(115)
+            search:SetPoint("LEFT", host, "LEFT", 0, -1)
+            filter:SetPoint("LEFT", search, "RIGHT", 2, 1)
+        else
+            host:SetWidth(240)
+            host:SetHeight(22)
+            host:SetPoint("TOPLEFT", frame, "TOPLEFT", 19, -69)
+            search:SetWidth(145)
+            search:SetPoint("LEFT", host, "LEFT", 0, 0)
+            filter:SetPoint("LEFT", search, "RIGHT", 2, 0)
+        end
+    end
+end
+
 local function saveFramePosition(frame)
+    if SC.UIPlatform and SC.UIPlatform:IsDragonUIShell() then return end
     if not SC.db then
         return
     end
@@ -158,6 +299,11 @@ local function saveFramePosition(frame)
 end
 
 local function restoreFramePosition(frame)
+    if SC.UIPlatform and SC.UIPlatform:IsDragonUIShell() then
+        SC.UIPlatform:RestoreWindow(frame)
+        clampFrame(frame)
+        return
+    end
     local saved = SC.db and SC.db.frame
     frame:ClearAllPoints()
     frame:SetPoint(
@@ -193,6 +339,8 @@ function UI.RefreshActivePage()
         activeKey = "TOYS"
     elseif SC.db.mainTab == "WARDROBE" then
         activeKey = "WARDROBE"
+    elseif SC.db.mainTab == "TRANSMOG_LAB" then
+        activeKey = "TRANSMOG_LAB"
     elseif SC.db.mainTab == "TITLES" then
         activeKey = "TITLES"
     end
@@ -216,7 +364,8 @@ function UI.SyncJournalFromDatabase()
 
     UI.scSuppressRefresh = true
     frame.scSearchBox:SetText(SC.db.query or "")
-    frame.scFilterPopup:Hide()
+    if frame.scFilterPopup then frame.scFilterPopup:Hide() end
+    if CloseDropDownMenus then CloseDropDownMenus() end
     if frame.scFilterButton.scArrow then
         frame.scFilterButton.scArrow:SetTexCoord(0, 1, 0, 1)
     end
@@ -246,7 +395,7 @@ end
 function UI.SetMainTab(key)
     local selected = "MOUNTS"
     for _, definition in ipairs(TAB_DEFINITIONS) do
-        if definition.key == key then
+        if definition.key == key and isTabAvailable(key) then
             selected = key
             break
         end
@@ -257,11 +406,15 @@ function UI.SetMainTab(key)
     if not frame then
         return
     end
+    applyJournalSize(frame, selected)
+    applyJournalControlLayout(frame, selected)
     for tabKey, button in pairs(frame.scMainTabs) do
         button:SetSelected(tabKey == selected)
     end
     frame.scPageTitle:SetText(frame.scTabTitles[selected])
-    if selected == "MOUNTS" then
+    if UI.EzCollections then
+        UI.EzCollections:SetPortraitForTab(frame, selected)
+    elseif selected == "MOUNTS" then
         frame.scPortrait:SetTexture(UI.Media.mountPortrait)
         frame.scPortrait:SetTexCoord(0, 1, 0, 1)
     else
@@ -299,82 +452,137 @@ function UI.CreateCollectionsFrame()
         return UI.CollectionsFrame
     end
 
-    local frame = UI.CreateJournalFrame(UIParent, "SoloCollectionsJournal", JOURNAL_WIDTH, JOURNAL_HEIGHT)
+    if SC.UIPlatform and not SC.UIPlatform:CanCreateUI() then return nil end
+    local frame = UI.CreateJournalFrame(UIParent, "SoloCollectionsJournal", COLLECTION_WIDTH, JOURNAL_HEIGHT)
+    local dragonShell = UI.IsDragonUIShell and UI.IsDragonUIShell()
     frame:SetMovable(true)
     frame:EnableMouse(true)
     frame:RegisterForDrag("LeftButton")
     frame:SetClampedToScreen(true)
     frame:Hide()
 
-    frame:SetScript("OnDragStart", function(self)
-        self:StartMoving()
-    end)
-    frame:SetScript("OnDragStop", function(self)
-        self:StopMovingOrSizing()
-        clampFrame(self)
-        saveFramePosition(self)
-    end)
+    if not dragonShell then
+        frame:SetScript("OnDragStart", function(self)
+            self:StartMoving()
+        end)
+        frame:SetScript("OnDragStop", function(self)
+            self:StopMovingOrSizing()
+            clampFrame(self)
+            saveFramePosition(self)
+        end)
+    end
     frame:SetScript("OnShow", function(self)
         clampFrame(self)
         UI.RefreshActivePage()
     end)
 
-    local closeButton = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
-    closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -9)
+    if dragonShell and SC.UIPlatform then SC.UIPlatform:PersistWindow(frame, frame) end
 
-    local progress = UI.CreateRetailProgressBar(frame, 286)
-    progress:SetPoint("TOP", frame, "TOP", 0, -51)
+    local closeButton = dragonShell and frame.CloseButton or CreateFrame("Button", nil, frame, "UIPanelCloseButton")
+    if not dragonShell then closeButton:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -10, -9) end
+    closeButton:SetScript("OnClick", function() frame:Hide() end)
 
-    local pageTitle = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    pageTitle:SetPoint("TOP", frame, "TOP", 0, -17)
+    local progress = UI.CreateRetailProgressBar(frame, 194)
+    progress:SetWidth(210)
+    progress:SetHeight(20)
+    progress:SetPoint("TOP", frame, "TOP", 0, -35)
+    progress.scStatusBar:SetWidth(194)
+    progress.scStatusBar:SetHeight(10)
+    progress.scBorder:Hide()
+    UI.EzCollections:ApplyInputBorder(progress)
+
+    local pageTitle = dragonShell and frame.Title or frame:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    if not dragonShell then pageTitle:SetPoint("TOP", frame, "TOP", 0, -17) end
     pageTitle:SetTextColor(1, 0.82, 0.18)
 
-    local portraitFrame = CreateFrame("Frame", nil, frame)
-    portraitFrame:SetWidth(80)
-    portraitFrame:SetHeight(80)
-    portraitFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -7, 5)
-    portraitFrame:SetFrameLevel(frame:GetFrameLevel() + 4)
+    local portraitFrame
+    local portrait
+    local portraitRing
+    if dragonShell and frame.portrait then
+        portraitFrame = frame
+        portrait = frame.portrait
+        portraitRing = frame.portraitRing or frame.PortraitFrame
+        if SetPortraitToTexture then
+            SetPortraitToTexture(portrait, UI.Media.mountPortrait)
+        else
+            portrait:SetTexture(UI.Media.mountPortrait)
+            portrait:SetTexCoord(0, 1, 0, 1)
+        end
+    else
+        portraitFrame = CreateFrame("Frame", nil, frame)
+        portraitFrame:SetWidth(80)
+        portraitFrame:SetHeight(80)
+        portraitFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", -7, 5)
+        portraitFrame:SetFrameLevel(frame:GetFrameLevel() + 4)
 
-    local portrait = portraitFrame:CreateTexture(nil, "ARTWORK")
-    portrait:SetWidth(62)
-    portrait:SetHeight(62)
-    portrait:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
-    portrait:SetTexture(UI.Media.mountPortrait)
-    portrait:SetTexCoord(0, 1, 0, 1)
+        portrait = portraitFrame:CreateTexture(nil, "ARTWORK")
+        portrait:SetWidth(62)
+        portrait:SetHeight(62)
+        portrait:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
+        if SetPortraitToTexture then
+            SetPortraitToTexture(portrait, UI.Media.mountPortrait)
+        else
+            portrait:SetTexture(UI.Media.mountPortrait)
+            portrait:SetTexCoord(0, 1, 0, 1)
+        end
 
-    local portraitRing = portraitFrame:CreateTexture(nil, "OVERLAY")
-    portraitRing:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
-    portraitRing:SetWidth(80)
-    portraitRing:SetHeight(80)
-    portraitRing:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
-    -- MiniMap-TrackingBorder stores its complete ring in the top-left 40px
-    -- of a 64px texture. Crop that region before stretching so the ring is
-    -- centered and fully encloses the pre-masked 62px circular portrait.
-    portraitRing:SetTexCoord(0, 0.625, 0, 0.625)
+        portraitRing = portraitFrame:CreateTexture(nil, "OVERLAY")
+        portraitRing:SetTexture("Interface\\Minimap\\MiniMap-TrackingBorder")
+        portraitRing:SetWidth(80)
+        portraitRing:SetHeight(80)
+        portraitRing:SetPoint("CENTER", portraitFrame, "CENTER", 0, 0)
+        portraitRing:SetTexCoord(0, 0.625, 0, 0.625)
+    end
 
     local collectionCount = UI.CreateCollectionCount(frame)
-    collectionCount:SetPoint("TOPLEFT", frame, "TOPLEFT", 70, -42)
+    collectionCount:SetWidth(130)
+    collectionCount:SetHeight(20)
+    collectionCount:SetPoint("TOPLEFT", frame, "TOPLEFT", 70, -35)
+    UI.EzCollections:ApplyInputBorder(collectionCount)
 
     local searchFilterHost = CreateFrame("Frame", nil, frame)
-    searchFilterHost:SetHeight(32)
-    searchFilterHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 31, -84)
-    searchFilterHost:SetWidth(338)
+    searchFilterHost:SetHeight(22)
+    searchFilterHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 19, -69)
+    searchFilterHost:SetWidth(240)
+    searchFilterHost:SetFrameLevel(frame:GetFrameLevel() + 20)
 
-    local search = UI.CreateRetailSearchBox(searchFilterHost, 210, function(value)
+    local search = UI.CreateRetailSearchBox(searchFilterHost, 145, function(value)
         if SC.db then
             SC.db.query = value or ""
         end
         refreshPage()
     end)
     search:SetPoint("LEFT", searchFilterHost, "LEFT", 0, 0)
+    UI.EzCollections:SkinSearchBox(search)
 
-    local filterButton, filterPopup = UI.CreateFilterPopup(searchFilterHost, 116)
-    filterButton:SetPoint("LEFT", search, "RIGHT", 7, 0)
+    local filterButton, filterPopup = UI.CreateFilterPopup(searchFilterHost, 93)
+    filterButton:SetHeight(22)
+    filterButton:SetPoint("LEFT", search, "RIGHT", 2, 0)
+    UI.EzCollections:SkinSilverMenuButton(filterButton)
+
+    local companionFilterButton = MountJournal and MountJournal:CreateJournalFilterButton(searchFilterHost, {
+        label = "筛选",
+        width = 76,
+        height = 20,
+    })
+    if not companionFilterButton then
+        companionFilterButton = CreateFrame("Button", nil, searchFilterHost, "UIPanelButtonTemplate")
+        companionFilterButton:SetText("筛选")
+        UI.EzCollections:SkinSilverMenuButton(companionFilterButton)
+    end
+    companionFilterButton:SetSize(76, 20)
+    companionFilterButton:SetScript("OnClick", function(self)
+        local key = SC.db and SC.db.mainTab
+        local page = UI.CollectionsFrame and UI.CollectionsFrame.scPages and UI.CollectionsFrame.scPages[key]
+        if page and page.OpenFilterMenu then page:OpenFilterMenu(self) end
+    end)
+    companionFilterButton:Hide()
 
     local wardrobeTabs = CreateFrame("Frame", nil, frame)
-    wardrobeTabs:SetWidth(240)
-    wardrobeTabs:SetHeight(32)
-    wardrobeTabs:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -31, -84)
+    wardrobeTabs:SetWidth(150)
+    wardrobeTabs:SetHeight(24)
+    wardrobeTabs:SetPoint("TOPLEFT", frame, "TOPLEFT", 58, -28)
+    wardrobeTabs:SetFrameLevel(frame:GetFrameLevel() + 20)
     local itemTab = UI.CreateTopSubTab(wardrobeTabs, "物品", function()
         UI.SetWardrobeTab("ITEMS")
     end)
@@ -382,30 +590,32 @@ function UI.CreateCollectionsFrame()
     local setTab = UI.CreateTopSubTab(wardrobeTabs, "套装", function()
         UI.SetWardrobeTab("SETS")
     end)
-    setTab:SetPoint("LEFT", itemTab, "RIGHT", 6, 0)
+    setTab:SetPoint("LEFT", itemTab, "RIGHT", 0, 0)
     wardrobeTabs:Hide()
 
     local contentHost = CreateFrame("Frame", nil, frame)
-    contentHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 31, -122)
-    contentHost:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -31, 24)
+    contentHost:SetAllPoints(frame)
+    local legacyContentHost = CreateFrame("Frame", nil, contentHost)
+    legacyContentHost:SetPoint("TOPLEFT", frame, "TOPLEFT", 31, -122)
+    legacyContentHost:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -31, 24)
 
     frame.scMainTabs = {}
+    frame.scMainTabOrder = {}
     frame.scTabTitles = {}
-    local previousTab
+    local tabIndex = 0
     for _, definition in ipairs(TAB_DEFINITIONS) do
-        local tabKey = definition.key
-        local button = UI.CreateRetailBottomTab(frame, definition.label, function()
-            UI.SetMainTab(tabKey)
-        end)
-        if previousTab then
-            button:SetPoint("TOPLEFT", previousTab, "TOPRIGHT", 6, 0)
-        else
-            button:SetPoint("TOPLEFT", frame, "BOTTOMLEFT", 11, 2)
+        if isTabAvailable(definition.key) then
+            tabIndex = tabIndex + 1
+            local tabKey = definition.key
+            local button = UI.EzCollections:CreateJournalTab(frame, tabIndex, definition.label, function()
+                UI.SetMainTab(tabKey)
+            end, definition.cutoff)
+            frame.scMainTabs[tabKey] = button
+            frame.scMainTabOrder[#frame.scMainTabOrder + 1] = button
+            frame.scTabTitles[tabKey] = definition.title
         end
-        frame.scMainTabs[tabKey] = button
-        frame.scTabTitles[tabKey] = definition.title
-        previousTab = button
     end
+    UI.EzCollections:LayoutJournalTabs(frame, frame.scMainTabOrder)
 
     frame.scTitle = pageTitle
     frame.scPortraitFrame = portraitFrame
@@ -420,10 +630,13 @@ function UI.CreateCollectionsFrame()
     frame.scSearchBox = search
     frame.scFilterButton = filterButton
     frame.scFilterPopup = filterPopup
+    frame.scCompanionFilterButton = companionFilterButton
+    frame.scMountFilterButton = companionFilterButton
     frame.scWardrobeTabs = wardrobeTabs
     frame.scWardrobeItemTab = itemTab
     frame.scWardrobeSetTab = setTab
     frame.scContentHost = contentHost
+    frame.scLegacyContentHost = legacyContentHost
     frame.scPages = {
         MOUNTS = UI.CreateMountsPage(contentHost),
         PETS = UI.CreatePetsPage(contentHost),
@@ -431,6 +644,10 @@ function UI.CreateCollectionsFrame()
         WARDROBE = UI.CreateWardrobePage(contentHost),
         TITLES = UI.CreateTitlesPage(contentHost),
     }
+    if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
+        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(contentHost)
+    end
+    UI.EzCollections:Guard(contentHost, "收藏日志内页已锁定到 ezCollections 2.2 素材")
 
     UI.CollectionsFrame = frame
     search:SetText((SC.db and SC.db.query) or "")
@@ -445,12 +662,17 @@ end
 
 function UI.ToggleJournal()
     local frame = UI.CreateCollectionsFrame()
+    if not frame then return end
     if frame:IsShown() then
         frame:Hide()
     else
         restoreFramePosition(frame)
         frame:Show()
     end
+end
+
+function UI.HideJournal()
+    if UI.CollectionsFrame then UI.CollectionsFrame:Hide() end
 end
 
 local displayWatcher = CreateFrame("Frame")

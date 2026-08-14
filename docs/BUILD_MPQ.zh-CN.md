@@ -161,3 +161,17 @@ _work/weapon-models/build_<timestamp>/weapon-model-verification.csv
 关闭客户端，恢复 `_work/weapon-models/backups/<timestamp>` 中的旧文件；如果安装
 前不存在同名文件，则删除新建的两个补丁。不要触碰 `common.MPQ`、
 `common-2.MPQ`、`lichking.MPQ` 等原始档案。
+
+### CLIENT-20260812-089 坐骑动作变更集回滚
+
+坐骑偏好、随机技能与能力解析必须作为同一版本恢复，不能只回退客户端或只回退服务端：
+
+1. 停止 WoW 客户端和 worldserver。
+2. 若 schema/data 需要降级，先导出 `solo_collection_preference`；追加表可在兼容回滚中保留，但旧 worldserver 不得把它当作另一套生产权威。
+3. 恢复同一 manifest 中的 worldserver、模块配置与匹配核心钩子。
+4. 恢复该 worldserver 对应的服务端 `Spell.dbc`、`SkillLineAbility.dbc`。
+5. 恢复部署前的 `SoloCollections` AddOn 备份，包括匹配的 catalog、SC2 schema 和 build metadata。
+6. 恢复部署前的客户端语言 MPQ；使用 StormLib 从最终 MPQ 回读 DBC 并核对备份/manifest SHA-256。
+7. 重启后确认技能 `150544`、mount mapping hash、type 10/type 16 schema 与 worldserver build 属于同一版本；若旧版本不含 `150544`，仅通过受控角色迁移清理未知动作栏槽。
+
+上述 Spell/SkillLineAbility DBC 和客户端 MPQ 是本地私有变更，不进入公共源码仓库或 Release，也不得作为可再分发客户端资源发布。

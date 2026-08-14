@@ -381,6 +381,23 @@ class BridgeContractTests(unittest.TestCase):
             "server error reasons must be a single safe protocol token",
         )
 
+    def test_companion_favorite_random_and_migration_use_authoritative_sc2_types(self):
+        bridge = read_text(ADDON / "Core" / "Bridge.lua")
+        self.assertIn('B.RequestSC2Action(11, collectionId, "SET_FAVORITE", favorite and 1 or 0, callback)', bridge)
+        self.assertIn('B.RequestSC2Action(11, 1, "RANDOM_SUMMON", nil, callback)', bridge)
+        self.assertIn('newFavoriteMigration("petFavoritesToServer", "PETS", 11, 17, B.SetPetFavorite)', bridge)
+        self.assertIn("CS.IsOwnedByType(migration.ownedType, collectionId)", bridge)
+        self.assertIn("CS.IsOwnedByType(migration.projectionType, migration.awaitingId)", bridge)
+        self.assertIn('NO_COMPANIONS = "尚未获得可召唤的小宠物。"', bridge)
+        self.assertIn('NO_USABLE_COMPANIONS = "当前没有可在此处召唤的小宠物。"', bridge)
+
+    def test_pet_filter_schema_repair_preserves_nested_filter_table(self):
+        bootstrap = read_text(ADDON / "Core" / "Bootstrap.lua")
+        self.assertIn("schemaVersion = 7", bootstrap)
+        self.assertIn('repairScalar(db.filters, "pets", "table", {})', bootstrap)
+        self.assertIn('repairScalar(db.filters.pets, "hiddenSources", "table", {})', bootstrap)
+        self.assertNotIn("db.filters = DEFAULTS.filters", bootstrap)
+
     def test_cpp_creature_preview_uses_only_sc2_and_has_no_sc1_pending_path(self):
         bridge = read_text(ADDON / "Core" / "Bridge.lua")
         preview = function_region(bridge, "B.RequestCreaturePreview")
@@ -397,16 +414,20 @@ class BridgeContractTests(unittest.TestCase):
     def test_failed_creature_preview_callback_cannot_reach_set_creature(self):
         for name in ("Mounts.lua", "Pets.lua"):
             page = read_text(ADDON / "UI" / name)
-            start = page.index("    local function requestModel(record)")
+            start = page.index("    local function requestModel(record")
             end = page.index("    local function selectRecord(record)", start)
             request = page[start:end]
             self.assertIn("function(ok, reason)", request)
-            self.assertIn("if not ok then", request)
             self.assertIn('unavailable:SetText("模型预览暂不可用")', request)
             self.assertNotIn("model:SetCreature", request)
-            self.assertLess(request.index("if not ok then"), request.index("applyModel(record, generation)"))
-            failed = request[request.index("if not ok then") : request.index("applyModel(record, generation)")]
-            self.assertIn("return", failed)
+            if "presenter:Present" in request:
+                self.assertIn("onUnavailable = function(reason)", request)
+                self.assertIn("done(ok, reason)", request)
+            else:
+                self.assertIn("if not ok then", request)
+                self.assertLess(request.index("if not ok then"), request.index("applyModel(record, generation)"))
+                failed = request[request.index("if not ok then") : request.index("applyModel(record, generation)")]
+                self.assertIn("return", failed)
 
     def test_server_bridge_has_no_database_or_inventory_mutations(self):
         self.assertTrue(SERVER_LUA.is_file(), f"missing {SERVER_LUA}")

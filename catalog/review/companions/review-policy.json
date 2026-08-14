@@ -1,5 +1,5 @@
 {
-  "candidateHash": "a6eed7c0c62af9c34b509b6e663c8423b4bf093240c5f6a7c7943f77d49c61af",
+  "candidateHash": "de5468f5047f6b8afbe9fdceadd5b3124b7854cd91f5104bd619aac175a15e55",
   "decisions": [
     {
       "canonicalSpellId": 4055,
@@ -1811,6 +1811,18 @@
       "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
     }
   ],
+  "journalReview": {
+    "canonicalIdentity": "summonCreatureEntry",
+    "crossReferenceAuthority": "read-only; never overrides zhCN client or world database evidence",
+    "excludedClasses": [
+      "TRANSPORT_OR_FLIGHT_POINT",
+      "TEMPORARY_QUEST_FOLLOWER",
+      "CLASS_GUARDIAN",
+      "GM_OR_TEST",
+      "PLACEHOLDER_SPELL"
+    ],
+    "legacyPromotionPolicy": "visible when canonical identity is unique and executable"
+  },
   "reviewMethod": "SKILLLINE_778_EXACT_CREATURE_ENTRY",
-  "schemaVersion": 1
+  "schemaVersion": 2
 }

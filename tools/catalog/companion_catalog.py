@@ -23,6 +23,12 @@ SPELL_EFFECT_SUMMON = 28
 SOURCE_BUILD = "3.3.5.12340"
 COLLECTION_ID_MIN = 100000
 COLLECTION_ID_MAX = 199999
+SOURCE_TYPE_ORDER = tuple(range(12))
+SOURCE_TYPE_KEYS = {
+    0: "DROP", 1: "QUEST", 2: "VENDOR", 3: "PROFESSION", 4: "PET_BATTLE",
+    5: "ACHIEVEMENT", 6: "WORLD_EVENT", 7: "PROMOTION", 8: "TCG",
+    9: "STORE", 10: "EXPLORATION", 11: "OTHER",
+}
 
 
 class CompanionCatalogError(ValueError):
@@ -82,6 +88,60 @@ def dbc_string(block: bytes, offset: int) -> str:
 
 def signed(value: int) -> int:
     return struct.unpack("<i", struct.pack("<I", int(value)))[0]
+
+
+def split_lua_fields(payload: str) -> list[str]:
+    """Split one flat Lua table row without executing third-party Lua."""
+    fields: list[str] = []
+    start = 0
+    quote = ""
+    escaped = False
+    for index, character in enumerate(payload):
+        if quote:
+            if escaped:
+                escaped = False
+            elif character == "\\":
+                escaped = True
+            elif character == quote:
+                quote = ""
+        elif character in {'"', "'"}:
+            quote = character
+        elif character == ",":
+            fields.append(payload[start:index].strip())
+            start = index + 1
+    fields.append(payload[start:].strip())
+    return fields
+
+
+def parse_pet_data_reference(path: Path) -> dict[int, dict[str, Any]]:
+    """Read only stable identity/source metadata from EZ/NewEra PetData rows."""
+    text = path.read_text(encoding="utf-8-sig", errors="replace")
+    marker = re.search(r"(?:PetData|Pets)\s*=\s*\{", text)
+    require(marker is not None, f"PetData table missing from reference: {path}")
+    rows: dict[int, dict[str, Any]] = {}
+    row_pattern = re.compile(r"^\s*\[(\d+)\]\s*=\s*\{(.*)\}\s*,?\s*$")
+    for line in text[marker.end():].splitlines():
+        if re.match(r"^\s*}\s*;?\s*$", line):
+            break
+        match = row_pattern.match(line)
+        if not match:
+            continue
+        fields = split_lua_fields(match.group(2))
+        require(len(fields) >= 3, f"malformed PetData row in {path}: {line[:120]}")
+        spell_id = int(match.group(1))
+        creature_entry = int(fields[0])
+        source_type = int(fields[5]) if len(fields) > 5 and fields[5].isdigit() else 11
+        require(source_type in SOURCE_TYPE_ORDER, f"invalid PetData source type {source_type}: {spell_id}")
+        rows[spell_id] = {
+            "spellId": spell_id,
+            "creatureEntry": creature_entry,
+            "sourceType": source_type,
+            "hasDescription": len(fields) > 4 and fields[4] not in {"", "nil", '""', "''"},
+            "hasSourceText": len(fields) > 6 and fields[6] not in {"", "nil", '""', "''"},
+            "rowHash": hashlib.sha256(line.strip().encode("utf-8")).hexdigest(),
+        }
+    require(rows, f"PetData reference has no rows: {path}")
+    return rows
 
 
 def verify_evidence_root(root: Path) -> tuple[dict[str, Any], dict[str, dict[str, Any]]]:
@@ -184,7 +244,13 @@ def localized_spell_name(row: tuple[int, ...], strings: bytes) -> str:
     return f"Companion Spell {int(row[0])}"
 
 
-def extract(evidence_root: Path, output: Path, mysql: Path, worldserver_config: Path) -> dict[str, Any]:
+def extract(
+    evidence_root: Path,
+    output: Path,
+    mysql: Path,
+    worldserver_config: Path,
+    pet_data_references: Iterable[Path] = (),
+) -> dict[str, Any]:
     root = evidence_root.resolve()
     manifest, files = verify_evidence_root(root)
     spell_path = evidence_member(root, files, "dbc/Spell.dbc")
@@ -203,6 +269,15 @@ def extract(evidence_root: Path, output: Path, mysql: Path, worldserver_config: 
     spells = {int(row[0]): row for row in spell_rows}
     icons = {int(row[0]): dbc_string(icon_strings, int(row[1])) for row in icon_rows}
     display_ids = {int(row[0]) for row in display_rows}
+    reference_sources: list[dict[str, Any]] = []
+    references_by_spell: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    for reference_path in pet_data_references:
+        reference_path = reference_path.resolve()
+        rows = parse_pet_data_reference(reference_path)
+        source = {"name": reference_path.name, "sha256": sha256(reference_path), "rowCount": len(rows)}
+        reference_sources.append(source)
+        for spell_id, row in rows.items():
+            references_by_spell[spell_id].append({"sourceSha256": source["sha256"], **row})
     by_creature: dict[int, list[dict[str, Any]]] = defaultdict(list)
     rejected_spells: list[dict[str, Any]] = []
     for spell_id in skill_spell_ids:
@@ -243,14 +318,16 @@ def extract(evidence_root: Path, output: Path, mysql: Path, worldserver_config: 
     summon_spell_ids = sorted({row["spellId"] for rows in by_creature.values() for row in rows})
     ids = sql_ids(summon_spell_ids)
     item_query = (
-        "SELECT entry,COALESCE(name,''),spellid_1,spellid_2,spellid_3,spellid_4,spellid_5 FROM item_template WHERE "
+        "SELECT entry,COALESCE(name,''),BuyPrice,spellid_1,spellid_2,spellid_3,spellid_4,spellid_5 FROM item_template WHERE "
         + " OR ".join(f"spellid_{index} IN ({ids})" for index in range(1, 6))
     )
     items_by_spell: dict[int, list[dict[str, Any]]] = defaultdict(list)
     for row in mysql_rows(mysql, worldserver_config, item_query):
-        for value in row[2:7]:
+        for value in row[3:8]:
             if value not in {"", "0", "NULL"} and int(value) in summon_spell_ids:
-                items_by_spell[int(value)].append({"itemId": int(row[0]), "name_zhCN": row[1]})
+                items_by_spell[int(value)].append({
+                    "itemId": int(row[0]), "name_zhCN": row[1], "buyPriceCopper": int(row[2]),
+                })
     quest_query = (
         "SELECT ID,COALESCE(LogTitle,''),RewardDisplaySpell,RewardSpell FROM quest_template "
         f"WHERE RewardDisplaySpell IN ({ids}) OR RewardSpell IN ({ids})"
@@ -261,12 +338,125 @@ def extract(evidence_root: Path, output: Path, mysql: Path, worldserver_config: 
             if value not in {"", "0", "NULL"} and int(value) in summon_spell_ids:
                 quests_by_spell[int(value)].append({"questId": int(row[0]), "title_zhCN": row[1]})
 
+    item_ids = sorted({row["itemId"] for rows in items_by_spell.values() for row in rows})
+    spells_by_item: dict[int, set[int]] = defaultdict(set)
+    for spell_id, rows in items_by_spell.items():
+        for row in rows:
+            spells_by_item[int(row["itemId"])].add(spell_id)
+    vendors_by_spell: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    loot_by_spell: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    achievements_by_spell: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    events_by_spell: dict[int, list[dict[str, Any]]] = defaultdict(list)
+    if item_ids:
+        item_sql = sql_ids(item_ids)
+        reward_columns = [f"RewardItem{index}" for index in range(1, 5)] + [f"RewardChoiceItemID{index}" for index in range(1, 7)]
+        quest_item_query = (
+            "SELECT ID,COALESCE(LogTitle,'')," + ",".join(reward_columns) + " FROM quest_template WHERE "
+            + " OR ".join(f"{column} IN ({item_sql})" for column in reward_columns)
+        )
+        for row in mysql_rows(mysql, worldserver_config, quest_item_query):
+            for value in row[2:]:
+                if value in {"", "0", "NULL"} or int(value) not in spells_by_item:
+                    continue
+                item_id = int(value)
+                for spell_id in spells_by_item[item_id]:
+                    relation = {"questId": int(row[0]), "title_zhCN": row[1], "itemId": item_id, "rewardKind": "ITEM"}
+                    if relation not in quests_by_spell[spell_id]:
+                        quests_by_spell[spell_id].append(relation)
+        vendor_query = (
+            "SELECT nv.entry,COALESCE(ct.name,''),nv.item,nv.maxcount,nv.ExtendedCost "
+            "FROM npc_vendor nv LEFT JOIN creature_template ct ON ct.entry=nv.entry "
+            f"WHERE nv.item IN ({item_sql})"
+        )
+        for row in mysql_rows(mysql, worldserver_config, vendor_query):
+            relation = {
+                "vendorEntry": int(row[0]), "vendorName_zhCN": row[1], "itemId": int(row[2]),
+                "maxCount": int(row[3]), "extendedCostId": int(row[4]),
+            }
+            for spell_id in spells_by_item[relation["itemId"]]:
+                vendors_by_spell[spell_id].append(relation)
+
+        loot_tables = (
+            "creature_loot_template", "gameobject_loot_template", "item_loot_template",
+            "mail_loot_template", "fishing_loot_template", "pickpocketing_loot_template",
+            "skinning_loot_template", "spell_loot_template", "reference_loot_template",
+        )
+        loot_query = " UNION ALL ".join(
+            f"SELECT '{table}',Entry,Item,Chance FROM {table} WHERE Item IN ({item_sql})"
+            for table in loot_tables
+        )
+        for row in mysql_rows(mysql, worldserver_config, loot_query):
+            relation = {"lootTable": row[0], "entry": int(row[1]), "itemId": int(row[2]), "chance": float(row[3])}
+            for spell_id in spells_by_item[relation["itemId"]]:
+                loot_by_spell[spell_id].append(relation)
+
+        achievement_query = (
+            "SELECT ar.ID,COALESCE(ad.Title_Lang_zhCN,''),ar.ItemID "
+            "FROM achievement_reward ar LEFT JOIN achievement_dbc ad ON ad.ID=ar.ID "
+            f"WHERE ar.ItemID IN ({item_sql})"
+        )
+        for row in mysql_rows(mysql, worldserver_config, achievement_query):
+            relation = {"achievementId": int(row[0]), "title_zhCN": row[1], "itemId": int(row[2])}
+            for spell_id in spells_by_item[relation["itemId"]]:
+                achievements_by_spell[spell_id].append(relation)
+
+        event_query = (
+            "SELECT genv.eventEntry,COALESCE(ge.description,''),genv.guid,genv.item "
+            "FROM game_event_npc_vendor genv LEFT JOIN game_event ge ON ge.eventEntry=genv.eventEntry "
+            f"WHERE genv.item IN ({item_sql})"
+        )
+        for row in mysql_rows(mysql, worldserver_config, event_query):
+            relation = {"eventId": int(row[0]), "eventName": row[1], "vendorGuid": int(row[2]), "itemId": int(row[3])}
+            for spell_id in spells_by_item[relation["itemId"]]:
+                events_by_spell[spell_id].append(relation)
+
+        quest_ids = sorted({row["questId"] for rows in quests_by_spell.values() for row in rows})
+        if quest_ids:
+            quest_sql = sql_ids(quest_ids)
+            event_quest_query = (
+                "SELECT x.eventEntry,COALESCE(ge.description,''),x.quest FROM ("
+                f"SELECT eventEntry,quest FROM game_event_creature_quest WHERE quest IN ({quest_sql}) UNION ALL "
+                f"SELECT eventEntry,quest FROM game_event_gameobject_quest WHERE quest IN ({quest_sql})"
+                ") x LEFT JOIN game_event ge ON ge.eventEntry=x.eventEntry"
+            )
+            events_by_quest: dict[int, list[dict[str, Any]]] = defaultdict(list)
+            for row in mysql_rows(mysql, worldserver_config, event_quest_query):
+                events_by_quest[int(row[2])].append({"eventId": int(row[0]), "eventName": row[1], "questId": int(row[2])})
+            for spell_id, quest_rows in quests_by_spell.items():
+                for quest_row in quest_rows:
+                    events_by_spell[spell_id].extend(events_by_quest.get(int(quest_row["questId"]), []))
+
     candidates: list[dict[str, Any]] = []
     for creature_entry in creature_ids:
         spell_entries = sorted(by_creature[creature_entry], key=lambda row: row["spellId"])
         for spell in spell_entries:
             spell["itemSources"] = sorted(items_by_spell[spell["spellId"]], key=lambda row: row["itemId"])
             spell["questSources"] = sorted(quests_by_spell[spell["spellId"]], key=lambda row: row["questId"])
+            spell["vendorSources"] = sorted(vendors_by_spell[spell["spellId"]], key=lambda row: (row["vendorEntry"], row["itemId"]))
+            spell["lootSources"] = sorted(loot_by_spell[spell["spellId"]], key=lambda row: (row["lootTable"], row["entry"], row["itemId"]))
+            spell["achievementSources"] = sorted(achievements_by_spell[spell["spellId"]], key=lambda row: row["achievementId"])
+            reference_types = sorted({int(row["sourceType"]) for row in references_by_spell.get(spell["spellId"], [])})
+            if 5 in reference_types and not spell["achievementSources"]:
+                spell["achievementSources"] = [{"relation": "PET_DATA_REFERENCE", "sourceType": 5}]
+            spell["professionSources"] = ([{"relation": "PET_DATA_REFERENCE", "sourceType": 3}]
+                                            if 3 in reference_types else [])
+            spell["eventSources"] = sorted(
+                events_by_spell[spell["spellId"]],
+                key=lambda row: (row["eventId"], row.get("itemId", 0), row.get("questId", 0)),
+            )
+            if 6 in reference_types and not spell["eventSources"]:
+                spell["eventSources"] = [{"relation": "PET_DATA_REFERENCE", "sourceType": 6}]
+            spell["nameKeys"] = {
+                "spellId": spell["spellId"],
+                "creatureEntry": creature_entry,
+                "itemIds": [row["itemId"] for row in spell["itemSources"]],
+                "questIds": [row["questId"] for row in spell["questSources"]],
+                "achievementIds": [row["achievementId"] for row in spell["achievementSources"] if "achievementId" in row],
+            }
+            spell["referenceMatches"] = sorted(
+                references_by_spell.get(spell["spellId"], []),
+                key=lambda row: (row["sourceSha256"], row["creatureEntry"]),
+            )
         creature = creatures.get(creature_entry)
         reason = ""
         if creature is None:
@@ -285,7 +475,7 @@ def extract(evidence_root: Path, output: Path, mysql: Path, worldserver_config: 
         })
     basis = {"rejectedSkillLineSpells": rejected_spells, "candidates": candidates}
     evidence = {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "sourceBuild": SOURCE_BUILD,
         "reviewMethod": "SKILLLINE_778_EXACT_CREATURE_ENTRY",
         "sourceEvidenceId": manifest.get("evidenceId"),
@@ -293,6 +483,7 @@ def extract(evidence_root: Path, output: Path, mysql: Path, worldserver_config: 
             "Spell.dbc": sha256(spell_path), "SkillLineAbility.dbc": sha256(skill_path),
             "SpellIcon.dbc": sha256(icon_path), "CreatureDisplayInfo.dbc": sha256(display_path),
             "worldDatabase": "runtime World DB (credentials omitted)",
+            "petDataReferences": reference_sources,
         },
         "counts": {
             "skillLineSpells": len(skill_spell_ids), "positiveSummonSpells": len(summon_spell_ids),
@@ -342,7 +533,7 @@ def write_exclusion_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 
 def load_policy(repo_root: Path, evidence: dict[str, Any]) -> dict[str, Any]:
     policy = read_json(repo_root / "catalog/review/companions/review-policy.json")
-    require(policy.get("schemaVersion") == 1, "unsupported companion review policy schema")
+    require(policy.get("schemaVersion") in {1, 2}, "unsupported companion review policy schema")
     require(policy.get("candidateHash") == evidence.get("candidateHash"), "companion candidate hash changed; explicit review required")
     decisions = policy.get("decisions")
     require(isinstance(decisions, list), "companion review policy decisions are missing")
@@ -359,6 +550,280 @@ def load_policy(repo_root: Path, evidence: dict[str, Any]) -> dict[str, Any]:
             require(entry.get("collectionKey"), f"accepted companion lacks collection key: {entry}")
             require(entry.get("name_zhCN") and entry.get("name_enUS"), f"accepted companion lacks localized names: {entry}")
     return policy
+
+
+def canonical_reference_type(candidate: dict[str, Any], canonical_spell: int) -> tuple[int, list[int]]:
+    spell = next(row for row in candidate["spells"] if int(row["spellId"]) == canonical_spell)
+    values = sorted({int(row["sourceType"]) for row in spell.get("referenceMatches", [])})
+    relation_types = []
+    for key, source_type in (
+        ("questSources", 1), ("achievementSources", 5), ("vendorSources", 2),
+        ("lootSources", 0), ("professionSources", 3), ("eventSources", 6),
+    ):
+        if spell.get(key):
+            relation_types.append(source_type)
+    relation_types = list(dict.fromkeys(relation_types))
+    if len(values) == 1 and (not relation_types or values[0] in relation_types):
+        return values[0], values
+    if relation_types:
+        return relation_types[0], values
+    return (values[0] if len(values) == 1 else 11, values)
+
+
+def build_journal_audits(
+    evidence: dict[str, Any],
+    policy: dict[str, Any],
+    action_entries: list[dict[str, Any]],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    candidates = {int(row["creatureEntry"]): row for row in evidence["candidates"]}
+    actions = {int(row["previewCreatureEntry"]): row for row in action_entries}
+    visibility_entries: list[dict[str, Any]] = []
+    duplicate_groups: list[dict[str, Any]] = []
+    source_type_counts: dict[str, int] = defaultdict(int)
+    source_gap_ids: list[int] = []
+    for decision in sorted(policy["decisions"], key=lambda row: int(row["creatureEntry"])):
+        creature_entry = int(decision["creatureEntry"])
+        candidate = candidates[creature_entry]
+        if decision["decision"] != "accepted":
+            visibility_entries.append({
+                "creatureEntry": creature_entry, "collectionId": None, "canonicalSpellId": None,
+                "journalVisible": False, "actionable": False, "randomEligible": False,
+                "visibilityReason": decision["reasonCode"], "exclusionReason": decision["reasonCode"],
+            })
+            continue
+        action = actions[creature_entry]
+        canonical_spell = int(action["canonicalSpellId"])
+        source_type, reference_types = canonical_reference_type(candidate, canonical_spell)
+        source_type_counts[str(source_type)] += 1
+        acquisition_class = "STANDARD"
+        if source_type in {6}:
+            acquisition_class = "LIMITED_EVENT"
+        elif source_type in {7, 8, 9}:
+            acquisition_class = "PROMOTION_OR_LEGACY"
+        canonical_row = next(row for row in candidate["spells"] if int(row["spellId"]) == canonical_spell)
+        has_traceable_source = any(canonical_row.get(key) for key in (
+            "itemSources", "questSources", "vendorSources", "lootSources",
+            "achievementSources", "professionSources", "eventSources",
+        )) or any(row.get("hasSourceText") for row in canonical_row.get("referenceMatches", []))
+        if not has_traceable_source:
+            source_gap_ids.append(int(action["collectionId"]))
+        visibility_entries.append({
+            "creatureEntry": creature_entry,
+            "collectionId": int(action["collectionId"]),
+            "canonicalSpellId": canonical_spell,
+            "unlockSpellIds": action["unlockSpellIds"],
+            "sourceType": source_type,
+            "referenceSourceTypes": reference_types,
+            "acquisitionClass": acquisition_class,
+            "journalVisible": True,
+            "actionable": True,
+            "randomEligible": True,
+            "visibilityReason": "CANONICAL_SKILLLINE_778_COMPANION",
+            "exclusionReason": None,
+        })
+        if len(action["unlockSpellIds"]) > 1:
+            duplicate_groups.append({
+                "identityKey": candidate["identityKey"],
+                "collectionId": int(action["collectionId"]),
+                "canonicalSpellId": canonical_spell,
+                "mergedUnlockSpellIds": action["unlockSpellIds"],
+                "previewCreatureEntry": creature_entry,
+                "decision": "MERGED_CANONICAL_IDENTITY",
+            })
+
+    for rejected in evidence.get("rejectedSkillLineSpells", []):
+        visibility_entries.append({
+            "spellId": int(rejected["spellId"]), "collectionId": None, "canonicalSpellId": None,
+            "journalVisible": False, "actionable": False, "randomEligible": False,
+            "visibilityReason": rejected["reasonCode"], "exclusionReason": rejected["reasonCode"],
+        })
+
+    visibility = {
+        "schemaVersion": 1,
+        "candidateHash": evidence["candidateHash"],
+        "sourceCategoryOrder": list(SOURCE_TYPE_ORDER),
+        "sourceTypeKeys": {str(key): value for key, value in SOURCE_TYPE_KEYS.items()},
+        "identityRule": "SKILLLINE_778_POSITIVE_SUMMON_CANONICAL_CREATURE",
+        "excludedClasses": [
+            "TRANSPORT_OR_FLIGHT_POINT", "TEMPORARY_QUEST_FOLLOWER", "CLASS_GUARDIAN",
+            "GM_OR_TEST", "PLACEHOLDER_SPELL", "DUPLICATE_NON_CANONICAL_IDENTITY",
+        ],
+        "entries": visibility_entries,
+    }
+    duplicates = {
+        "schemaVersion": 1,
+        "candidateHash": evidence["candidateHash"],
+        "canonicalIdentity": "summonCreatureEntry",
+        "groupCount": len(duplicate_groups),
+        "groups": duplicate_groups,
+    }
+    hidden_reasons: dict[str, int] = defaultdict(int)
+    for row in visibility_entries:
+        if not row["journalVisible"]:
+            hidden_reasons[str(row["exclusionReason"])] += 1
+    audit = {
+        "schemaVersion": 1,
+        "candidateHash": evidence["candidateHash"],
+        "counts": {
+            "candidateCount": len(evidence["candidates"]),
+            "visibleCount": sum(row["journalVisible"] for row in visibility_entries),
+            "actionableCount": sum(row["actionable"] for row in visibility_entries),
+            "randomEligibleCount": sum(row["randomEligible"] for row in visibility_entries),
+            "hiddenCount": sum(not row["journalVisible"] for row in visibility_entries),
+            "duplicateMergedCount": len(duplicate_groups),
+            "zhCNNameGapCount": sum(not (row.get("creature") or {}).get("name_zhCN") for row in evidence["candidates"]),
+            "zhCNSourceGapCount": len(source_gap_ids),
+            "zhCNDescriptionGapCount": len(action_entries),
+        },
+        "sourceTypeCounts": dict(sorted(source_type_counts.items(), key=lambda item: int(item[0]))),
+        "hiddenReasonCounts": dict(sorted(hidden_reasons.items())),
+        "sourceGapCollectionIds": source_gap_ids,
+        "descriptionGapCollectionIds": sorted(int(row["collectionId"]) for row in action_entries),
+    }
+    return visibility, duplicates, audit
+
+
+def unique_nonempty(values: Iterable[str]) -> list[str]:
+    return list(dict.fromkeys(value.strip() for value in values if value and value.strip()))
+
+
+def gold_cost_text(copper: int) -> str:
+    gold = int(copper) / 10000
+    value = f"{gold:.2f}".rstrip("0").rstrip(".")
+    return value + "|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t"
+
+
+def companion_source_text(source_type: int, spell: dict[str, Any]) -> tuple[str, str, list[str]]:
+    relation_refs: list[str] = []
+    lines: list[str] = []
+    if source_type == 1:
+        names = unique_nonempty(row.get("title_zhCN", "") for row in spell.get("questSources", []))
+        if names:
+            lines.append("|cFFFFD200任务：|r" + "、".join(names))
+            relation_refs.extend(f"world.quest:{row['questId']}" for row in spell["questSources"])
+    elif source_type == 2:
+        names = unique_nonempty(row.get("vendorName_zhCN", "") for row in spell.get("vendorSources", []))
+        if names:
+            lines.append("|cFFFFD200商人：|r" + "、".join(names))
+            relation_refs.extend(f"world.vendor:{row['vendorEntry']}" for row in spell["vendorSources"])
+        prices = sorted({int(row.get("buyPriceCopper", 0)) for row in spell.get("itemSources", []) if int(row.get("buyPriceCopper", 0)) > 0})
+        if prices:
+            lines.append("|cFFFFD200费用：|r" + " / ".join(gold_cost_text(value) for value in prices))
+    elif source_type == 0:
+        names = unique_nonempty(row.get("name_zhCN", "") for row in spell.get("itemSources", []))
+        lines.append("|cFFFFD200掉落：|r" + ("、".join(names) if names else "游戏内掉落"))
+        relation_refs.extend(f"world.loot:{row['lootTable']}:{row['entry']}" for row in spell.get("lootSources", []))
+    elif source_type == 5:
+        names = unique_nonempty(row.get("title_zhCN", "") for row in spell.get("achievementSources", []))
+        lines.append("|cFFFFD200成就：|r" + ("、".join(names) if names else "成就奖励"))
+        relation_refs.extend(f"world.achievement:{row['achievementId']}" for row in spell.get("achievementSources", []) if "achievementId" in row)
+    elif source_type == 3:
+        lines.append("|cFFFFD200专业：|r专业技能制作或获取")
+    elif source_type == 6:
+        names = unique_nonempty(row.get("eventName", "") for row in spell.get("eventSources", []))
+        lines.append("|cFFFFD200世界事件：|r" + ("、".join(names) if names else "节日或世界事件奖励"))
+        relation_refs.extend(f"world.event:{row['eventId']}" for row in spell.get("eventSources", []) if "eventId" in row)
+    elif source_type == 7:
+        lines.append("|cFFFFD200促销：|r历史促销或典藏奖励")
+    elif source_type == 8:
+        lines.append("|cFFFFD200集换式卡牌：|rTCG 奖励")
+    elif source_type == 9:
+        lines.append("|cFFFFD200游戏商城：|r商城奖励")
+    elif source_type == 10:
+        lines.append("|cFFFFD200探索：|r探索获得")
+    else:
+        names = unique_nonempty(row.get("name_zhCN", "") for row in spell.get("itemSources", []))
+        if names:
+            lines.append("|cFFFFD200其他：|r" + "、".join(names))
+    for reference in spell.get("referenceMatches", []):
+        relation_refs.append("petdata:" + reference["sourceSha256"] + ":" + str(reference["spellId"]))
+    status = "REVIEWED_ZHCN_WORLD" if any(ref.startswith("world.") for ref in relation_refs) else (
+        "REVIEWED_CATEGORY_CROSS_REFERENCE" if lines else "MISSING"
+    )
+    return "|n".join(lines), status, sorted(set(relation_refs))
+
+
+def build_journal_metadata(
+    evidence: dict[str, Any],
+    policy: dict[str, Any],
+    action_entries: list[dict[str, Any]],
+    visibility: dict[str, Any],
+    description_catalog: dict[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    candidates = {int(row["creatureEntry"]): row for row in evidence["candidates"]}
+    decisions = {int(row["creatureEntry"]): row for row in policy["decisions"]}
+    visible = {int(row["collectionId"]): row for row in visibility["entries"] if row["journalVisible"]}
+    descriptions = {int(row["collectionId"]): row for row in description_catalog["entries"]}
+    metadata_entries: list[dict[str, Any]] = []
+    source_entries: list[dict[str, Any]] = []
+    provenance_entries: list[dict[str, Any]] = []
+    for action in sorted(action_entries, key=lambda row: int(row["collectionId"])):
+        collection_id = int(action["collectionId"])
+        creature_entry = int(action["previewCreatureEntry"])
+        canonical_spell = int(action["canonicalSpellId"])
+        candidate = candidates[creature_entry]
+        decision = decisions[creature_entry]
+        spell = next(row for row in candidate["spells"] if int(row["spellId"]) == canonical_spell)
+        visibility_row = visible[collection_id]
+        source_type = int(visibility_row["sourceType"])
+        source_text, source_status, source_refs = companion_source_text(source_type, spell)
+        name = str(decision["name_zhCN"]).strip()
+        require(name, f"visible companion lacks zhCN journal name: {collection_id}")
+        description_row = descriptions.get(collection_id)
+        description = str(description_row["descriptionZhCN"]).strip() if description_row else ""
+        description_status = str(description_row["descriptionStatus"]) if description_row else "MISSING"
+        if description_row:
+            require(int(description_row["creatureEntry"]) == creature_entry, f"description creature drift: {collection_id}")
+            require(int(description_row["spellId"]) == canonical_spell, f"description spell drift: {collection_id}")
+            require(description, f"empty reviewed description: {collection_id}")
+        metadata_entries.append({
+            "collectionId": collection_id,
+            "spellId": canonical_spell,
+            "journalNameZhCN": name,
+            "sourceType": source_type,
+            "source": source_text,
+            "descriptionZhCN": description,
+            "descriptionKey": canonical_spell,
+            "descriptionStatus": description_status,
+            "acquisitionClass": visibility_row["acquisitionClass"],
+            "journalVisible": True,
+            "actionable": True,
+            "randomEligible": True,
+            "canonicalActionSpellId": canonical_spell,
+            "visibilityReason": visibility_row["visibilityReason"],
+            "exclusionReason": None,
+        })
+        source_entries.append({
+            "collectionId": collection_id, "spellId": canonical_spell, "sourceType": source_type,
+            "source": source_text, "sourceStatus": source_status, "provenanceRefs": source_refs,
+        })
+        provenance_entries.append({
+            "collectionId": collection_id,
+            "name": {"status": "REVIEWED_ZHCN_CLIENT_AND_WORLD", "keys": spell["nameKeys"]},
+            "source": {"status": source_status, "references": source_refs},
+            "description": {
+                "status": description_status, "descriptionKey": canonical_spell,
+                "lookupKeys": {
+                    "spellId": canonical_spell, "creatureEntry": creature_entry, "journalNameZhCN": name,
+                },
+                "reason": None if description_row else "NO_OFFICIAL_ZHCN_BATTLE_PET_SPECIES_DESCRIPTION",
+                "reference": ({
+                    "table": description_catalog["sourceTable"],
+                    "build": description_row["sourceBuild"],
+                    "rowId": int(description_row["sourceRowId"]),
+                    "payloadSha256": description_catalog["sourcePayloadSha256"],
+                } if description_row else None),
+            },
+        })
+    require(len(metadata_entries) == len(action_entries), "journal metadata coverage drift")
+    return (
+        {"schemaVersion": 1, "candidateHash": evidence["candidateHash"], "entries": metadata_entries},
+        {"schemaVersion": 1, "candidateHash": evidence["candidateHash"], "entries": source_entries},
+        {
+            "schemaVersion": 1, "candidateHash": evidence["candidateHash"],
+            "sourceBuild": evidence["sourceBuild"], "entries": provenance_entries,
+        },
+    )
 
 
 def render(repo_root: Path, evidence: dict[str, Any]) -> dict[Path, str]:
@@ -469,12 +934,29 @@ def render(repo_root: Path, evidence: dict[str, Any]) -> dict[Path, str]:
     presentation_value["presentationHash"] = hashlib.sha256(
         json.dumps(presentation_value["entries"], ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
     ).hexdigest()
+    visibility_audit, duplicate_audit, journal_audit = build_journal_audits(evidence, policy, action_entries)
+    journal_metadata, source_zhcn, text_provenance = build_journal_metadata(
+        evidence, policy, action_entries, visibility_audit,
+        read_json(repo_root / "catalog/source/companion_descriptions_zhCN.json"),
+    )
+    source_gaps = [row["collectionId"] for row in journal_metadata["entries"] if not row["source"]]
+    description_gaps = [row["collectionId"] for row in journal_metadata["entries"] if row["descriptionStatus"] == "MISSING"]
+    journal_audit["sourceGapCollectionIds"] = source_gaps
+    journal_audit["descriptionGapCollectionIds"] = description_gaps
+    journal_audit["counts"]["zhCNSourceGapCount"] = len(source_gaps)
+    journal_audit["counts"]["zhCNDescriptionGapCount"] = len(description_gaps)
     return {
         ids_path: pretty_json(ids),
         old_csv_path: csv_text(csv_fields, accepted_rows),
         repo_root / "catalog/source/companion_actions.json": pretty_json({"schemaVersion": 2, "entries": action_entries}),
         presentation_path: pretty_json(presentation_value),
         repo_root / "catalog/review/companions/evidence.json": evidence_copy,
+        repo_root / "catalog/review/companions/journal-visibility-policy.json": pretty_json(visibility_audit),
+        repo_root / "catalog/review/companions/duplicate-audit.json": pretty_json(duplicate_audit),
+        repo_root / "catalog/review/companions/text-provenance.json": pretty_json(text_provenance),
+        repo_root / "catalog/generated/companion-journal-audit.json": pretty_json(journal_audit),
+        repo_root / "catalog/source/companion_journal_metadata.json": pretty_json(journal_metadata),
+        repo_root / "catalog/source/companion_source_zhCN.json": pretty_json(source_zhcn),
         repo_root / "catalog/generated/companion-candidates.csv": csv_text(
             ["creatureEntry", "name_zhCN", "spellIds", "spellNames_zhCN", "displayIds", "itemSourceCount", "questSourceCount", "resourceStatus", "resourceReasonCode"],
             [{
@@ -494,7 +976,7 @@ def render(repo_root: Path, evidence: dict[str, Any]) -> dict[Path, str]:
 
 def generate(repo_root: Path, evidence_path: Path, check: bool) -> dict[str, Any]:
     evidence = read_json(evidence_path)
-    require(evidence.get("schemaVersion") == 1, "unsupported companion evidence schema")
+    require(evidence.get("schemaVersion") in {1, 2}, "unsupported companion evidence schema")
     basis = {"rejectedSkillLineSpells": evidence.get("rejectedSkillLineSpells"), "candidates": evidence.get("candidates")}
     require(evidence.get("candidateHash") == canonical_hash(basis), "companion evidence hash drift")
     outputs = render(repo_root, evidence)
@@ -526,12 +1008,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=Path)
     parser.add_argument("--mysql", type=Path)
     parser.add_argument("--worldserver-config", type=Path)
+    parser.add_argument("--pet-data-reference", type=Path, action="append", default=[])
     args = parser.parse_args(argv)
     try:
         if args.command == "extract":
             require(args.evidence_root and args.out and args.mysql and args.worldserver_config,
                     "extract requires --evidence-root, --out, --mysql and --worldserver-config")
-            evidence = extract(args.evidence_root, args.out.resolve(), args.mysql, args.worldserver_config)
+            evidence = extract(
+                args.evidence_root, args.out.resolve(), args.mysql, args.worldserver_config,
+                args.pet_data_reference,
+            )
             print(f"companion candidates: {evidence['counts']}")
             print(f"candidate hash: {evidence['candidateHash']}")
         else:

@@ -7,6 +7,24 @@ local MEDIA_ROOT = "Interface\\AddOns\\SoloCollections\\Media\\"
 local WHITE_TEXTURE = "Interface\\Buttons\\WHITE8X8"
 local FALLBACK_TEXTURE = "Interface\\Icons\\INV_Misc_QuestionMark"
 
+local function platformPublic()
+    local platform = SC.UIPlatform
+    if platform and platform:IsDragonUIShell() then return platform:GetPublic() end
+    return nil
+end
+
+function UI.IsDragonUIShell()
+    return platformPublic() ~= nil
+end
+
+function UI.CreateInset(parent, options)
+    local inset = CreateFrame("Frame", nil, parent)
+    inset:SetPoint("TOPLEFT", parent, "TOPLEFT", (options and options.left) or 0, -((options and options.top) or 0))
+    inset:SetPoint("BOTTOMRIGHT", parent, "BOTTOMRIGHT", -((options and options.right) or 0), (options and options.bottom) or 0)
+    UI.ApplyNineSlice(inset, UI.Media.border, 16)
+    return inset
+end
+
 UI.Media = {
     background = MEDIA_ROOT .. "Backgrounds\\collection-bg.tga",
     border = MEDIA_ROOT .. "Borders\\collection-border.tga",
@@ -256,6 +274,27 @@ function UI.CreateJournalFrame(parent, name, width, height)
     frame:SetToplevel(true)
     frame:SetClampedToScreen(true)
 
+    local public = platformPublic()
+    if public then
+        public.Chrome:Apply(frame, {
+            layout = "PortraitFrameTemplate",
+            title = "收藏",
+            portrait = UI.Media.mountPortrait,
+            portraitOpts = {
+                -- Match ezCollections' PortraitFrameTemplate geometry. The
+                -- native SetPortraitToTexture call supplies the round crop.
+                size = 60,
+                anchor = { "TOPLEFT", -5, 8 },
+                mask = false,
+            },
+        })
+        if frame.Bg and frame.Bg.Hide then frame.Bg:Hide() end
+        frame.scBackground = UI.EzCollections and UI.EzCollections:CreateBodyCanvas(frame) or frame.Bg
+        frame.scHeaderBackground = frame.TitleContainer or frame.TitleBand
+        frame.scPlatformShell = "DRAGONUI"
+        return frame
+    end
+
     frame:SetBackdrop({
         bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background-Dark",
         edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
@@ -295,6 +334,10 @@ function UI.CreateJournalFrame(parent, name, width, height)
     frame.scInnerShade = innerShade
     frame.scHeaderBackground = header
     frame.scHeaderLine = headerLine
+    if UI.EzCollections then
+        background:Hide()
+        frame.scBackground = UI.EzCollections:CreateBodyCanvas(frame)
+    end
     return frame
 end
 
@@ -481,47 +524,36 @@ function UI.CreateBottomTab(parent, labelText, iconPath, onClick)
 end
 
 function UI.CreateTopSubTab(parent, labelText, onClick)
-    local button = CreateFrame("Button", nil, parent)
-    button:SetWidth(104)
-    button:SetHeight(28)
-    local base = createSolidTexture(button, "BACKGROUND", 0.055, 0.052, 0.045, 0.95)
-    setAllPoints(base, button, 1)
-    local label = createLabel(button, "GameFontNormalSmall", labelText or "", COLORS.cream)
-    label:SetPoint("CENTER", button, "CENTER", 0, 0)
-    local selected = createSolidTexture(button, "ARTWORK", 0.53, 0.32, 0.045, 0.45)
-    setAllPoints(selected, button, 2)
-    selected:Hide()
-    local highlight = createSolidTexture(button, "HIGHLIGHT", 0.65, 0.48, 0.16, 0.16)
-    setAllPoints(highlight, button, 2)
+    UI.scWardrobeTabSerial = (UI.scWardrobeTabSerial or 0) + 1
+    local name = "SoloCollectionsWardrobeTab" .. UI.scWardrobeTabSerial
+    local button = CreateFrame("Button", name, parent, "OptionsFrameTabButtonTemplate")
+    button:SetWidth(70)
+    button:SetHeight(24)
+    button:SetText(labelText or "")
+    if PanelTemplates_TabResize then PanelTemplates_TabResize(button, 0, nil, 57) end
     button:SetScript("OnClick", function(self)
-        if onClick then
-            onClick(self)
-        end
+        if onClick then onClick(self) end
+        if PlaySound then PlaySound("igCharacterInfoTab") end
     end)
     function button:SetSelected(value)
         self.scSelected = value and true or false
         if self.scSelected then
-            selected:Show()
-            self:LockHighlight()
-            label:SetTextColor(1, 0.84, 0.24)
+            if PanelTemplates_SelectTab then PanelTemplates_SelectTab(self) else self:Disable() end
         else
-            selected:Hide()
-            self:UnlockHighlight()
-            label:SetTextColor(0.82, 0.72, 0.54)
+            if PanelTemplates_DeselectTab then PanelTemplates_DeselectTab(self) else self:Enable() end
         end
     end
-    button.scLabel = label
-    button.scSelectedTexture = selected
+    button.scLabel = button.Text or _G[name .. "Text"]
     return button
 end
 
 function UI.CreateRetailSearchBox(parent, width, onTextChanged)
     local editBox = CreateFrame("EditBox", nil, parent)
     editBox:SetWidth(width or 220)
-    editBox:SetHeight(28)
+    editBox:SetHeight(20)
     editBox:SetAutoFocus(false)
     editBox:SetFontObject(GameFontHighlightSmall)
-    editBox:SetTextInsets(30, 24, 0, 0)
+    editBox:SetTextInsets(24, 21, 0, 0)
     editBox:SetMaxLetters(60)
 
     local chrome = UI.CreateThreeSlice(
@@ -529,24 +561,24 @@ function UI.CreateRetailSearchBox(parent, width, onTextChanged)
         UI.Media.stock.searchLeft,
         UI.Media.stock.searchMiddle,
         UI.Media.stock.searchRight,
-        28,
+        20,
         13,
         13
     )
 
     local icon = editBox:CreateTexture(nil, "ARTWORK")
     icon:SetTexture(UI.Media.stock.searchIcon)
-    icon:SetWidth(18)
-    icon:SetHeight(18)
-    icon:SetPoint("LEFT", editBox, "LEFT", 7, 0)
+    icon:SetWidth(14)
+    icon:SetHeight(14)
+    icon:SetPoint("LEFT", editBox, "LEFT", 6, 0)
 
     local placeholder = createLabel(editBox, "GameFontDisableSmall", "搜索")
-    placeholder:SetPoint("LEFT", editBox, "LEFT", 31, 0)
+    placeholder:SetPoint("LEFT", editBox, "LEFT", 24, 0)
 
     local clear = CreateFrame("Button", nil, editBox)
-    clear:SetWidth(18)
-    clear:SetHeight(18)
-    clear:SetPoint("RIGHT", editBox, "RIGHT", -5, 0)
+    clear:SetWidth(17)
+    clear:SetHeight(17)
+    clear:SetPoint("RIGHT", editBox, "RIGHT", -3, 0)
     clear:SetNormalTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Up")
     clear:SetHighlightTexture("Interface\\Buttons\\UI-Panel-MinimizeButton-Highlight")
     clear:SetScript("OnClick", function()
@@ -694,6 +726,9 @@ function UI.CreateFilterPopup(parent, width)
     button.scPopup = popup
     button.scLabel = buttonLabel
     button.scArrow = arrow
+    button.scBackground = buttonBackground
+    button.scBorder = buttonBorder
+    button.scInner = buttonInner
     return button, popup
 end
 
@@ -806,39 +841,97 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     row:SetWidth(width or 208)
     row:SetHeight(height or 46)
     row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    if row.SetHitRectInsets then row:SetHitRectInsets(-44, 0, 0, 0) end
 
-    local background = createSolidTexture(row, "BACKGROUND", 0.026, 0.021, 0.016, 0.92)
-    setAllPoints(background, row, 1)
-    local collectedTint = createSolidTexture(row, "BORDER", 0.19, 0.10, 0.035, 0.44)
-    setAllPoints(collectedTint, row, 1)
+    local listTexture = UI.EzCollections and UI.EzCollections:MediaPath("Buttons", "ListButtons.tga", WHITE_TEXTURE)
+        or WHITE_TEXTURE
+    local background = row:CreateTexture(nil, "BACKGROUND")
+    background:SetAllPoints(row)
+    background:SetTexture(listTexture)
+    background:SetTexCoord(0.00390625, 0.8203125, 0.00390625, 0.18359375)
+    local collectedTint = createSolidTexture(row, "BORDER", 1, 1, 1, 0)
+    collectedTint:SetAllPoints(row)
     collectedTint:Hide()
-    local selected = createSolidTexture(row, "ARTWORK", 0.66, 0.34, 0.045, 0.62)
-    setAllPoints(selected, row, 1)
+    local selected = row:CreateTexture(nil, "ARTWORK")
+    selected:SetAllPoints(row)
+    selected:SetTexture(listTexture)
+    selected:SetTexCoord(0.00390625, 0.8203125, 0.37890625, 0.55859375)
     selected:Hide()
+
+    local faction = row:CreateTexture(nil, "BORDER")
+    faction:SetTexture(UI.EzCollections and UI.EzCollections:AssetPath(
+        "Interface\\PetBattles\\MountJournalIcons.blp",
+        "Interface\\Buttons\\WHITE8X8"
+    ) or "Interface\\Buttons\\WHITE8X8")
+    faction:SetWidth(46)
+    faction:SetHeight(44)
+    faction:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -1, 1)
+    faction:SetAlpha(0.42)
+    faction:Hide()
+
+    local highlight = row:CreateTexture(nil, "HIGHLIGHT")
+    highlight:SetAllPoints(row)
+    highlight:SetTexture(listTexture)
+    highlight:SetTexCoord(0.00390625, 0.8203125, 0.19140625, 0.37109375)
 
     local iconHolder = CreateFrame("Frame", nil, row)
     iconHolder:SetWidth(38)
     iconHolder:SetHeight(38)
-    iconHolder:SetPoint("LEFT", row, "LEFT", 4, 0)
+    iconHolder:SetPoint("LEFT", row, "LEFT", -42, 0)
     local icon = iconHolder:CreateTexture(nil, "ARTWORK")
-    icon:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 1, -1)
-    icon:SetPoint("BOTTOMRIGHT", iconHolder, "BOTTOMRIGHT", -1, 1)
+    icon:SetAllPoints(iconHolder)
     UI.SetFallbackTexture(icon)
-    local collectionBorder, selectedBorder = UI.CreateCollectionCardBorders(iconHolder)
+    local dragButton = CreateFrame("Button", nil, row)
+    dragButton:SetWidth(38)
+    dragButton:SetHeight(38)
+    dragButton:SetPoint("CENTER", iconHolder, "CENTER", 0, 0)
+    dragButton:SetFrameLevel(row:GetFrameLevel() + 4)
+    dragButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    dragButton:RegisterForDrag("LeftButton")
 
-    local name = createLabel(row, "GameFontNormal", "", COLORS.gold)
-    name:SetPoint("TOPLEFT", icon, "TOPRIGHT", 9, -4)
-    name:SetPoint("RIGHT", row, "RIGHT", -25, 0)
+    local collectionBorder = CreateFrame("Frame", nil, iconHolder)
+    collectionBorder:SetAllPoints(iconHolder)
+    local iconFrame = collectionBorder:CreateTexture(nil, "OVERLAY")
+    iconFrame:SetAllPoints(collectionBorder)
+    iconFrame:SetTexture(UI.EzCollections and UI.EzCollections:MediaPath("Common", "WhiteIconFrame.blp", WHITE_TEXTURE)
+        or WHITE_TEXTURE)
+    function collectionBorder:SetCollected(value)
+        self.scCollected = value and true or false
+        if self.scCollected then
+            iconFrame:SetVertexColor(1.00, 0.82, 0.24, 0.92)
+        else
+            iconFrame:SetVertexColor(0.46, 0.46, 0.46, 0.72)
+        end
+    end
+    local selectedBorder = CreateFrame("Frame", nil, iconHolder)
+    selectedBorder:SetAllPoints(iconHolder)
+    local selectedIconFrame = selectedBorder:CreateTexture(nil, "OVERLAY")
+    selectedIconFrame:SetAllPoints(selectedBorder)
+    selectedIconFrame:SetTexture(UI.EzCollections and UI.EzCollections:MediaPath("Common", "WhiteIconFrame.blp", WHITE_TEXTURE)
+        or WHITE_TEXTURE)
+    selectedIconFrame:SetVertexColor(1.00, 0.90, 0.30, 1)
+    selectedIconFrame:SetBlendMode("ADD")
+    selectedBorder:Hide()
+
+    local name = createLabel(row, "GameFontNormal", "", { 1, 1, 1 })
+    name:SetPoint("TOPLEFT", icon, "TOPRIGHT", 10, -5)
+    name:SetPoint("RIGHT", row, "RIGHT", -12, 0)
+    name:SetHeight(25)
     name:SetJustifyH("LEFT")
     local source = createLabel(row, "GameFontDisableSmall", "", COLORS.muted)
-    source:SetPoint("BOTTOMLEFT", icon, "BOTTOMRIGHT", 9, 5)
-    source:SetPoint("RIGHT", row, "RIGHT", -25, 0)
+    source:SetPoint("BOTTOMLEFT", icon, "BOTTOMRIGHT", 10, 5)
+    source:SetPoint("RIGHT", row, "RIGHT", -12, 0)
     source:SetJustifyH("LEFT")
-    local star = createLabel(row, "GameFontNormalLarge", "★", COLORS.gold)
-    star:SetPoint("TOPRIGHT", row, "TOPRIGHT", -5, -3)
+    source:Hide()
+    local star = row:CreateTexture(nil, "OVERLAY")
+    star:SetTexture(UI.EzCollections and UI.EzCollections:MediaPath("Common", "FavoritesIcon.tga", WHITE_TEXTURE)
+        or WHITE_TEXTURE)
+    star:SetWidth(25)
+    star:SetHeight(25)
+    star:SetTexCoord(0.03125, 0.8125, 0.03125, 0.8125)
+    star:SetPoint("TOPLEFT", icon, "TOPLEFT", -8, 8)
     star:Hide()
 
-    row:SetHighlightTexture("Interface\\QuestFrame\\UI-QuestTitleHighlight")
     row:SetScript("OnClick", function(self, button)
         local record = self.scRecord
         if button == "RightButton" then
@@ -857,6 +950,7 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
             self.scSelected = nil
             selected:Hide()
             star:Hide()
+            faction:Hide()
             collectedTint:Hide()
             name:SetText("")
             source:SetText("")
@@ -868,8 +962,17 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
         name:SetText(record.name or "未知坐骑")
         source:SetText(record.source or record.description or "")
         collectionBorder:SetCollected(record.collected)
-        if record.collected then collectedTint:Show() else collectedTint:Hide() end
+        collectedTint:Hide()
         if record.favorite then star:Show() else star:Hide() end
+        if record.faction == "ALLIANCE" then
+            faction:SetTexCoord(1 / 128, 47 / 128, 1 / 64, 45 / 64)
+            faction:Show()
+        elseif record.faction == "HORDE" then
+            faction:SetTexCoord(49 / 128, 95 / 128, 1 / 64, 45 / 64)
+            faction:Show()
+        else
+            faction:Hide()
+        end
         self:Show()
     end
 
@@ -888,12 +991,14 @@ function UI.CreateMountListRow(parent, width, height, onSelect, onContext)
     row.scCollectedTint = collectedTint
     row.scSelectedTexture = selected
     row.scIcon = icon
+    row.scDragButton = dragButton
     row.scIconFrame = collectionBorder
     row.scCollectionBorder = collectionBorder
     row.scSelectionBorder = selectedBorder
     row.scName = name
     row.scDetail = source
     row.scStar = star
+    row.scFaction = faction
     return row
 end
 
@@ -967,31 +1072,36 @@ end
 
 function UI.CreateIconTile(parent, width, height, onClick)
     local tile = CreateFrame("Button", nil, parent)
-    tile:SetWidth(width or 104)
-    tile:SetHeight(height or 116)
+    tile:SetWidth(width or 50)
+    tile:SetHeight(height or 50)
     tile:RegisterForClicks("LeftButtonUp")
 
-    local hover = createSolidTexture(tile, "BACKGROUND", 0.76, 0.48, 0.10, 0.18)
-    setAllPoints(hover, tile, 1)
-    hover:Hide()
+    local hover = tile:CreateTexture(nil, "HIGHLIGHT")
+    hover:SetTexture("Interface\\Buttons\\ButtonHilight-Square")
+    hover:SetWidth(48)
+    hover:SetHeight(48)
+    hover:SetPoint("CENTER", tile, "CENTER", 0, 2)
+    hover:SetBlendMode("ADD")
     local icon = tile:CreateTexture(nil, "ARTWORK")
-    icon:SetWidth(68)
-    icon:SetHeight(68)
-    icon:SetPoint("TOP", tile, "TOP", 0, -5)
+    icon:SetWidth(42)
+    icon:SetHeight(42)
+    icon:SetPoint("CENTER", tile, "CENTER", 0, 1)
+    icon:SetTexCoord(0.04347826, 0.95652173, 0.04347826, 0.95652173)
     UI.SetFallbackTexture(icon)
-    local border, selectedBorder = UI.CreateCollectionCardBorders(tile)
-    local name = createLabel(tile, "GameFontHighlightSmall", "", COLORS.cream)
-    name:SetPoint("TOPLEFT", icon, "BOTTOMLEFT", -10, -6)
-    name:SetPoint("TOPRIGHT", icon, "BOTTOMRIGHT", 10, -6)
-    name:SetHeight(34)
-    name:SetJustifyH("CENTER")
-    name:SetJustifyV("TOP")
-    local star = createLabel(tile, "GameFontNormal", "★", COLORS.gold)
-    star:SetPoint("TOPLEFT", icon, "TOPLEFT", -5, 6)
+    local border, selectedBorder = UI.EzCollections:CreateCollectionIconFrames(tile)
+    local name = createLabel(tile, "GameFontNormal", "", COLORS.cream)
+    name:SetPoint("LEFT", tile, "RIGHT", 9, 3)
+    name:SetWidth(135)
+    name:SetJustifyH("LEFT")
+    name:SetJustifyV("MIDDLE")
+    local star = tile:CreateTexture(nil, "OVERLAY")
+    star:SetTexture(UI.EzCollections:MediaPath("Collections", "Collections.tga", WHITE_TEXTURE))
+    star:SetWidth(31)
+    star:SetHeight(33)
+    star:SetTexCoord(0.181640625, 0.2421875, 0.013671875, 0.078125)
+    star:SetPoint("TOPLEFT", tile, "TOPLEFT", -12, 13)
     star:Hide()
 
-    tile:SetScript("OnEnter", function() hover:Show() end)
-    tile:SetScript("OnLeave", function() hover:Hide() end)
     tile:SetScript("OnClick", function(self)
         if onClick then onClick(self, self.scRecord) end
     end)
@@ -1001,7 +1111,7 @@ function UI.CreateIconTile(parent, width, height, onClick)
         UI.SetIconTexture(icon, record.icon)
         name:SetText(record.name or "未知收藏")
         border:SetCollected(record.collected)
-        UI.SetCollectedVisual(icon, record.collected, 0.52)
+        UI.SetCollectedVisual(icon, record.collected, 0.18)
         if record.favorite then star:Show() else star:Hide() end
         self:Show()
     end
@@ -1025,10 +1135,10 @@ end
 function UI.CreatePageControls(parent, onPrevious, onNext)
     local controls = CreateFrame("Frame", nil, parent)
     controls:SetWidth(170)
-    controls:SetHeight(30)
+    controls:SetHeight(32)
     local previous = CreateFrame("Button", nil, controls)
-    previous:SetWidth(28)
-    previous:SetHeight(28)
+    previous:SetWidth(32)
+    previous:SetHeight(32)
     previous:SetNormalTexture(BUTTON_TEXTURES.previous.normal)
     previous:SetPushedTexture(BUTTON_TEXTURES.previous.pushed)
     previous:SetDisabledTexture(BUTTON_TEXTURES.previous.disabled)
@@ -1036,8 +1146,8 @@ function UI.CreatePageControls(parent, onPrevious, onNext)
     previous:SetPoint("LEFT", controls, "LEFT", 0, 0)
     previous:SetScript("OnClick", function() if onPrevious then onPrevious() end end)
     local nextButton = CreateFrame("Button", nil, controls)
-    nextButton:SetWidth(28)
-    nextButton:SetHeight(28)
+    nextButton:SetWidth(32)
+    nextButton:SetHeight(32)
     nextButton:SetNormalTexture(BUTTON_TEXTURES.next.normal)
     nextButton:SetPushedTexture(BUTTON_TEXTURES.next.pushed)
     nextButton:SetDisabledTexture(BUTTON_TEXTURES.next.disabled)

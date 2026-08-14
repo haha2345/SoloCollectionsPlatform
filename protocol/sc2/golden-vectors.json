@@ -166,6 +166,203 @@
       "wire": "R|0123456789abcdef|100|DISMISSED|11|100281|43"
     },
     {
+      "name": "mount_favorite_snapshot_begin",
+      "message": {
+        "kind": "SNAPSHOT_BEGIN",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 18,
+        "typeId": 16,
+        "total": 1,
+        "baseRevision": 44,
+        "checksum": "0a870238",
+        "payloadBytes": 9
+      },
+      "wire": "B|0123456789abcdef|18|16|1|44|0a870238|9"
+    },
+    {
+      "name": "mount_favorite_snapshot_chunk",
+      "message": {
+        "kind": "SNAPSHOT_CHUNK",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 18,
+        "seq": 1,
+        "payload": "256k,259c"
+      },
+      "wire": "C|0123456789abcdef|18|1|256k,259c"
+    },
+    {
+      "name": "mount_favorite_snapshot_end",
+      "message": {
+        "kind": "SNAPSHOT_END",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 18,
+        "checksum": "0a870238"
+      },
+      "wire": "E|0123456789abcdef|18|0a870238"
+    },
+    {
+      "name": "mount_favorite_delta_add",
+      "message": {
+        "kind": "DELTA",
+        "sessionNonce": "0123456789abcdef",
+        "typeId": 16,
+        "revision": 45,
+        "operation": "A",
+        "collectionId": 100128
+      },
+      "wire": "D|0123456789abcdef|16|45|A|100128"
+    },
+    {
+      "name": "mount_set_favorite_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 104,
+        "typeId": 10,
+        "collectionId": 100128,
+        "actionId": "SET_FAVORITE",
+        "target": 1
+      },
+      "wire": "Q|0123456789abcdef|104|10|100128|SET_FAVORITE|1"
+    },
+    {
+      "name": "mount_random_summon_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 105,
+        "typeId": 10,
+        "collectionId": 1,
+        "actionId": "RANDOM_SUMMON",
+        "target": "-"
+      },
+      "wire": "Q|0123456789abcdef|105|10|1|RANDOM_SUMMON|-"
+    },
+    {
+      "name": "companion_favorite_snapshot_begin",
+      "message": {
+        "kind": "SNAPSHOT_BEGIN",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 19,
+        "typeId": 17,
+        "total": 1,
+        "baseRevision": 46,
+        "checksum": "02a70140",
+        "payloadBytes": 4
+      },
+      "wire": "B|0123456789abcdef|19|17|1|46|02a70140|4"
+    },
+    {
+      "name": "companion_favorite_snapshot_chunk",
+      "message": {
+        "kind": "SNAPSHOT_CHUNK",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 19,
+        "seq": 1,
+        "payload": "25dt"
+      },
+      "wire": "C|0123456789abcdef|19|1|25dt"
+    },
+    {
+      "name": "companion_favorite_snapshot_end",
+      "message": {
+        "kind": "SNAPSHOT_END",
+        "sessionNonce": "0123456789abcdef",
+        "transferId": 19,
+        "checksum": "02a70140"
+      },
+      "wire": "E|0123456789abcdef|19|02a70140"
+    },
+    {
+      "name": "companion_favorite_delta_add",
+      "message": {
+        "kind": "DELTA",
+        "sessionNonce": "0123456789abcdef",
+        "typeId": 17,
+        "revision": 47,
+        "operation": "A",
+        "collectionId": 100281
+      },
+      "wire": "D|0123456789abcdef|17|47|A|100281"
+    },
+    {
+      "name": "companion_favorite_delta_remove",
+      "message": {
+        "kind": "DELTA",
+        "sessionNonce": "0123456789abcdef",
+        "typeId": 17,
+        "revision": 48,
+        "operation": "R",
+        "collectionId": 100281
+      },
+      "wire": "D|0123456789abcdef|17|48|R|100281"
+    },
+    {
+      "name": "companion_set_favorite_on_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 106,
+        "typeId": 11,
+        "collectionId": 100281,
+        "actionId": "SET_FAVORITE",
+        "target": 1
+      },
+      "wire": "Q|0123456789abcdef|106|11|100281|SET_FAVORITE|1"
+    },
+    {
+      "name": "companion_set_favorite_off_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 107,
+        "typeId": 11,
+        "collectionId": 100281,
+        "actionId": "SET_FAVORITE",
+        "target": 0
+      },
+      "wire": "Q|0123456789abcdef|107|11|100281|SET_FAVORITE|0"
+    },
+    {
+      "name": "companion_random_summon_request",
+      "message": {
+        "kind": "ACTION_REQUEST",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 108,
+        "typeId": 11,
+        "collectionId": 1,
+        "actionId": "RANDOM_SUMMON",
+        "target": "-"
+      },
+      "wire": "Q|0123456789abcdef|108|11|1|RANDOM_SUMMON|-"
+    },
+    {
+      "name": "companion_favorite_not_owned_result",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 109,
+        "status": "FAVORITE_NOT_OWNED",
+        "typeId": 11,
+        "collectionId": 100485,
+        "revision": 48
+      },
+      "wire": "R|0123456789abcdef|109|FAVORITE_NOT_OWNED|11|100485|48"
+    },
+    {
+      "name": "companion_invalid_random_control_id_result",
+      "message": {
+        "kind": "ACTION_RESULT",
+        "sessionNonce": "0123456789abcdef",
+        "requestId": 110,
+        "status": "INVALID_REQUEST",
+        "typeId": 11,
+        "collectionId": 2,
+        "revision": 48
+      },
+      "wire": "R|0123456789abcdef|110|INVALID_REQUEST|11|2|48"
+    },
+    {
       "name": "creature_preview_accepted",
       "message": {
         "kind": "ACTION_RESULT",

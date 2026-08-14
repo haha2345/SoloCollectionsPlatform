@@ -57,6 +57,30 @@ bounded uint32 selected by the action schema. An action request identifies only
 stable collection/action IDs; spell, item, display, handler, and arbitrary
 script identifiers are never accepted from the client.
 
+Type `10` is the authoritative set of account-owned mount collection IDs, and
+type `11` is the corresponding authoritative companion set. Internal types
+`16` (`mount-favorite`) and `17` (`companion-favorite`) carry favorite
+membership using the stable IDs of types 10 and 11 respectively. Types 16 and
+17 are internal projections: they are not navigation categories and never
+contribute to collection totals or progress.
+
+`Q ...|10|collectionId|SET_FAVORITE|1` and
+`Q ...|11|collectionId|SET_FAVORITE|1` set favorites; target `0` removes them.
+The server validates ownership and the active, visible, actionable catalog
+before persisting, then emits an `A` or `R` delta for type 16 or 17. The AddOn
+must not update its star optimistically.
+
+`Q ...|10|1|RANDOM_SUMMON|-` and `Q ...|11|1|RANDOM_SUMMON|-` use reserved
+control collection ID `1`. The server alone builds the owned, favorite and
+currently usable pool; ID `1` is forbidden in both generated catalogs. A
+different control ID is `INVALID_REQUEST`.
+
+Client spell `150544` is the persistent native action-bar representation of
+the same random-mount operation. Its server SpellScript invokes the same
+authoritative random service, carries no client-selected mount identity, and
+does not add a new SC2 wire shape. Recasting it while mounted returns the same
+successful `DISMISSED` toggle result as the SC2 action.
+
 ## Snapshot state machine
 
 1. After `A` and all expected `M` packets, the server emits one `B/C.../E`
@@ -88,6 +112,8 @@ without repeating an action. Outbound snapshot packets are queued across world
 ticks rather than emitted in a single burst.
 
 The stable action status set includes `ACCEPTED`, `DISMISSED`, `LOADING`, `NOT_OWNED`,
+`FAVORITE_NOT_OWNED`, `NO_MOUNTS`, `NO_USABLE_MOUNTS`, `NO_COMPANIONS`,
+`NO_USABLE_COMPANIONS`,
 `CATALOG_MISMATCH`, `ASSET_MISMATCH`, `UNKNOWN_IDENTITY`, class/race/skill
 restrictions, `INVALID_TARGET_SLOT`, `DB_UNAVAILABLE`, `RATE_LIMITED`,
 `INVALID_REQUEST`, and `UNSUPPORTED`. `DISMISSED` is a successful idempotent

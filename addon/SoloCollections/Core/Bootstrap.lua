@@ -1,11 +1,20 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 4,
+    schemaVersion = 7,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
     mainTab = "MOUNTS",
     wardrobeTab = "ITEMS",
+    uiPlatform = {
+        uiShell = SC.DEFAULT_UI_SHELL or "DRAGONUI",
+        positionMigrated = false,
+    },
+    experimental = {
+        transmogLabEnabled = SC.BUILD_CHANNEL == "development",
+        modelProvider = "newera",
+        modelProviderByKind = { CREATURE = "newera", DRESSUP = "newera", DISPLAY = "newera" },
+    },
     query = "",
     filters = {
         collected = true,
@@ -15,6 +24,16 @@ local DEFAULTS = {
         armorType = "AUTO",
         slot = "HEAD",
         weaponType = "AUTO",
+        mounts = {
+            unusable = true,
+            ground = true,
+            flying = true,
+            aquatic = true,
+            hiddenSources = {},
+        },
+        pets = {
+            hiddenSources = {},
+        },
     },
     favorites = {},
     debug = false,
@@ -39,7 +58,10 @@ local VALID_POINTS = {
     BOTTOMLEFT = true, BOTTOM = true, BOTTOMRIGHT = true,
 }
 
-local VALID_MAIN_TABS = { MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true, TITLES = true }
+local VALID_MAIN_TABS = {
+    MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true,
+    TRANSMOG_LAB = true, TITLES = true,
+}
 local VALID_WARDROBE_TABS = { ITEMS = true, SETS = true }
 local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()
 local VALID_SLOTS = {
@@ -385,8 +407,30 @@ local function normalizeDatabase(db)
     end
 
     normalizePosition(db, "launcher", DEFAULTS.launcher)
-    normalizePosition(db, "frame", DEFAULTS.frame)
+    repairScalar(db, "uiPlatform", "table", {})
+    repairEnum(db.uiPlatform, "uiShell", { LEGACY = true, DRAGONUI = true }, DEFAULTS.uiPlatform.uiShell)
+    repairScalar(db.uiPlatform, "positionMigrated", "boolean", DEFAULTS.uiPlatform.positionMigrated)
+    if db.uiPlatform.positionMigrated then
+        db.frame = nil
+    else
+        normalizePosition(db, "frame", DEFAULTS.frame)
+    end
+    repairScalar(db, "experimental", "table", {})
+    repairScalar(
+        db.experimental,
+        "transmogLabEnabled",
+        "boolean",
+        DEFAULTS.experimental.transmogLabEnabled
+    )
+    repairEnum(db.experimental, "modelProvider", { legacy = true, newera = true }, DEFAULTS.experimental.modelProvider)
+    repairScalar(db.experimental, "modelProviderByKind", "table", {})
+    for kind, fallback in pairs(DEFAULTS.experimental.modelProviderByKind) do
+        repairEnum(db.experimental.modelProviderByKind, kind, { legacy = true, newera = true }, fallback)
+    end
     repairEnum(db, "mainTab", VALID_MAIN_TABS, DEFAULTS.mainTab)
+    if db.mainTab == "TRANSMOG_LAB" and not db.experimental.transmogLabEnabled then
+        db.mainTab = DEFAULTS.mainTab
+    end
     repairEnum(db, "wardrobeTab", VALID_WARDROBE_TABS, DEFAULTS.wardrobeTab)
     repairScalar(db, "query", "string", DEFAULTS.query)
 
@@ -398,6 +442,24 @@ local function normalizeDatabase(db)
     repairEnum(db.filters, "armorType", VALID_ARMOR_TYPES, DEFAULTS.filters.armorType)
     repairEnum(db.filters, "slot", VALID_SLOTS, DEFAULTS.filters.slot)
     repairEnum(db.filters, "weaponType", VALID_WEAPON_TYPES, DEFAULTS.filters.weaponType)
+    repairScalar(db.filters, "mounts", "table", {})
+    repairScalar(db.filters.mounts, "unusable", "boolean", DEFAULTS.filters.mounts.unusable)
+    repairScalar(db.filters.mounts, "ground", "boolean", DEFAULTS.filters.mounts.ground)
+    repairScalar(db.filters.mounts, "flying", "boolean", DEFAULTS.filters.mounts.flying)
+    repairScalar(db.filters.mounts, "aquatic", "boolean", DEFAULTS.filters.mounts.aquatic)
+    repairScalar(db.filters.mounts, "hiddenSources", "table", {})
+    for sourceType, hidden in pairs(db.filters.mounts.hiddenSources) do
+        if type(sourceType) ~= "number" or type(hidden) ~= "boolean" then
+            db.filters.mounts.hiddenSources[sourceType] = nil
+        end
+    end
+    repairScalar(db.filters, "pets", "table", {})
+    repairScalar(db.filters.pets, "hiddenSources", "table", {})
+    for sourceType, hidden in pairs(db.filters.pets.hiddenSources) do
+        if type(sourceType) ~= "number" or type(hidden) ~= "boolean" then
+            db.filters.pets.hiddenSources[sourceType] = nil
+        end
+    end
 
     repairScalar(db, "favorites", "table", {})
     normalizeCameraTuning(db)
@@ -434,6 +496,9 @@ function SC:ResetLayoutAndFilters()
     if type(SoloCollectionsDB) ~= "table" then
         SoloCollectionsDB = {}
     end
+    if self.UIPlatform and self.UIPlatform.ResetWindowPosition then
+        self.UIPlatform:ResetWindowPosition()
+    end
     SoloCollectionsDB.launcher = nil
     SoloCollectionsDB.frame = nil
     SoloCollectionsDB.mainTab = nil
@@ -448,6 +513,7 @@ function SC:ResetLayoutAndFilters()
 end
 
 function SC:ToggleJournal()
+    if self.UIPlatform and not self.UIPlatform:CanCreateUI() then return end
     if self.UI.ToggleJournal then
         self.UI.ToggleJournal()
     end
@@ -466,9 +532,10 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
             return
         end
         SC:InitializeDatabase()
-        if SC.UI.CreateLauncher then
+        if SC.UIPlatform and SC.UIPlatform:CanCreateUI() and SC.UI.CreateLauncher then
             SC.UI.CreateLauncher()
         end
+        if SC.UIPlatform then SC.UIPlatform:RegisterFeature() end
     elseif event == "PLAYER_LOGIN" then
         if SC.Bridge and SC.Bridge.OnLogin then
             SC.Bridge.OnLogin()
@@ -503,6 +570,35 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         if SC.Bridge.ConnectSC2 then
             SC.Bridge.ConnectSC2(true)
         end
+    elseif command == "assets" and SC.EzCollectionsUI then
+        local status = SC.EzCollectionsUI.GetStatus()
+        local message = status.available and "ready" or (status.reason or "unavailable")
+        DEFAULT_CHAT_FRAME:AddMessage(
+            "SoloCollections ezCollections UI assets: " .. message
+                .. " | asset=" .. tostring(status.assetTreeHash or "unknown")
+        )
+    elseif string.match(command, "^shell%s+") then
+        local mode = string.match(command, "^shell%s+(%S+)$")
+        if SC.UIPlatform and SC.UIPlatform:SetShellMode(mode) then
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections UI shell: " .. string.upper(mode) .. "（/reload 后生效）")
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("用法：/sc shell dragonui 或 /sc shell legacy")
+        end
+    elseif string.match(command, "^model%s+") then
+        local first, second = string.match(command, "^model%s+(%S+)%s*(%S*)$")
+        local kind = string.upper(first or "")
+        local mode = string.lower(second ~= "" and second or first or "")
+        if second == "" then kind = "ALL" end
+        if SC.db and (mode == "legacy" or mode == "newera") and
+            (kind == "ALL" or kind == "CREATURE" or kind == "DRESSUP" or kind == "DISPLAY") then
+            if kind == "ALL" then
+                SC.db.experimental.modelProvider = mode
+                for providerKind in pairs(SC.db.experimental.modelProviderByKind) do
+                    SC.db.experimental.modelProviderByKind[providerKind] = mode
+                end
+            else SC.db.experimental.modelProviderByKind[kind] = mode end
+            DEFAULT_CHAT_FRAME:AddMessage("SoloCollections model provider " .. kind .. ": " .. mode .. "（/reload 后生效）")
+        else DEFAULT_CHAT_FRAME:AddMessage("用法：/sc model [creature|dressup|display] newera|legacy") end
     else
         SC:ToggleJournal()
     end

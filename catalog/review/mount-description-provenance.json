@@ -1,0 +1,2540 @@
+{
+  "descriptionSourcePolicy": "Locked zhCN WoW 3.3.5a Spell.dbc Description field 170; no tooltip scraping or generated prose.",
+  "entries": [
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100000,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 48778,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100001,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60025,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0c1230d12cd7e4d5c86c451467b803ca48bca8e44c114c7d4da09dd03573e544"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100002,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 43688,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "7607bca9cf9d5ff413139b292ea939084825de18e9d86572b4285f533e95473c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100003,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16056,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "98476ce8319da4f1d3e2282c597ca6a2b2d905809190d587c068bb32a8ea428c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100004,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66906,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9e04ce3f7ae218c7af6d6194549dbc001ac5b7e7fd71818f1e5927f3d314600d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100005,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63844,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "562eafb09df813fac483c52bfa3024fa1110812c5bddd6c01672036a3af70f74"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100006,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 67466,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "51c5349c9846f5f9549b4e8183a083ad1d3d9c89d6cdeffbd2ae37f02e1eba14"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100007,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61230,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b9175c7d5187c67ebea7646805ed01b997519127d8ea5e2be633fd229f1de073"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100008,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60114,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f60df1a97eacf5bd11d706457b316151a48a792dd5cdeb1801c2a4463bce8136"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100009,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60116,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f60df1a97eacf5bd11d706457b316151a48a792dd5cdeb1801c2a4463bce8136"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100010,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61229,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4c51e7ee75dd1ca6b039d96673405ebeb990b8ca3fa7115ff46aeec701eb671c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100011,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 40192,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "caf7c612e3281e99bd8eabe4bf6640cb7991c9ae7d4d323a29f7ff7a14de1c01"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100012,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59567,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c36cdd57025374b8cb1e5a3698a90c718a7e53009331ee48739a3af6934f233a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100013,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41514,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "18c4975472d5f3c51a1db824d337ab06356532cf6b47abcce90c120238ef1b82"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100014,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 51412,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "709147b0ae7d152e9e9edaca37ec3622cd1f143301fbe7b5069e310e4fded0e6"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100015,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 58983,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "72c749109cef56218c7282e7d69d1e05e6f9ab0be46ea83fbf8593f492a1f2ca"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100016,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 71342,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f5c8db6d477e1c4f43d7b3995750d818f05659cad6f0b49460fa3d72d8ed4268"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100017,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22719,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4e2f977f49dda0f571b28287137e8f20a754fc270621c48ad7129cef120ff216"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100018,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 62048,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "322fc9d4da06d384518dab16a92afc6573858e354276add882db2217bd247ff6"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100019,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59650,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b64fb4db496ab98191ce063f2b25b412466247ca6284e81b4d992915579c4451"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100020,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35022,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "7878444c712fdbb58bbd84420207b574272502120893b544989611fb4b0b169b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100021,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16055,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f058281851fb107309cf81ddcde09ea3b130a7896f6473f2f088a5762d44c20a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100022,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59572,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9fff57dfc50fcfd01fe06b14f0730815900b530f69e1c13b8393b26e6fac858b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100023,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59976,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "00c4d7f7a75c911846a90d3d19a11a48d59b76df7e3e3e90dbbeb79313b17077"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100024,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 26656,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "359767b82a134c17253eacb3475d8541b1d761faf11903a4d3825fe0b1fe711a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100025,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17461,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8c8f96462e312142e646e1dbef46ff65252d752be691a86e015eab69632f3253"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100026,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 64977,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d66522f09dd7f8a292b9f91e48a9c3495de9007e59571ef43568e7959b207d41"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100027,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 470,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8b5cbb86f5b42e69d8acc54a6f4c273bd7d3ec4a36b8ca1691b5c3c6605010dd"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100028,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60118,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b0d3f32f43a14ed3d57f112be21c1f81a8c89b0d1a79f4a7b66e64d73c74b8f3"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100029,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60119,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b0d3f32f43a14ed3d57f112be21c1f81a8c89b0d1a79f4a7b66e64d73c74b8f3"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100030,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 48027,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "75ff0c192d10968ae4129ba4eabc8f3c0e58712ad810e74cee4618a1fe5d4d79"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100031,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22718,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "2866c6a53b7aa873081e84ff5bc85543d46a50349454ea9e7589187ab8438ebd"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100032,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59785,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b4645fd5d42345069e7599af501a4048cbeb7cd213a145b6a3f4a25810f107f2"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100033,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59788,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b4645fd5d42345069e7599af501a4048cbeb7cd213a145b6a3f4a25810f107f2"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100034,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22720,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0a6fe513f55805bfa4b87ad7994b44d6d6d769ccf365d9aaf70ba08901a65140"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100035,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22721,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "fdd70f750a67f123b1c0f5fea790c9724fadf6a7f2f0415c1630498a4e6b2fc0"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100036,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22717,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "74e23e15c0f24851c725ebbe48de49b7bd5a173b75b40ec1628cc93cdd78a27e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100037,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22723,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6f46575d5eb806b9ed011ac6c67e9127ba09791c1d3dd7619217df121e59f79d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100038,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22724,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "751df16b8c5cbeb0675d2d5a4e9abd5bbc315ee1424b46e447dbf5211d1ba692"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100039,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 64658,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d6887a94356c188a8ea51447cce2478103dced9d59d2d9a12098b343c6616539"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100040,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 74856,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "56c5e4c21d8dab89f86b2db1e529258a9acd5fa36cc4e33e6a3c3e375e33d5d2"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100041,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 72808,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f0a13815a9ff1b9d265ae3e6ad231d933b832f3b422a57255171f26685af52ab"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100042,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61996,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "219506fbb1686d1983429c36e3bd6b1e7613f2475f81ae115777a697f45eff95"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100043,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59568,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "11e5d59700dffbb5d5e86789835fcc3a025bbdbd829ac087d7c202ace3234270"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100044,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35020,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5c2062eda37b6fb74a7f294c4d8cc1e8551c8213d20ffdbcb0c525bee058530c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100045,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10969,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0e435bc1088281abe848feac64f20426bd3ebed6f117135f3557744513114f54"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100046,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59996,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "864bef561c10b00968269435763d4df48abf08974129b34d11930e414ceb0e58"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100047,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 25953,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "375b9406d352c833571a0f956949a4e5636d4d16c9476ccafc09dd28d905c04f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100048,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39803,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "eed15c8872f7345288972270f067215dbe5bea71942faae08121d61f98c5ec3c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100049,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17463,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6604378b1fbe76c29fda7d354031bff59388a2fe2c840fe4eebb87df35bee261"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100050,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32244,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "960e10875c74e4c0d915220c06e8e8b261b47e11f3782b8fcc99f1c045137ddc"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100051,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 50869,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100052,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 43899,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4b28d9c8cc53b1c234002093ae527fc3dccb89430b67196db186c6f41d97cd06"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100053,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 49378,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "422151dc48b3aef609c02ed57069b3b25699058b91ec62b86814572eefdff22e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100054,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59569,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "be6d4bdbb7e4a6012b7593b4ad5a67ba23f504c021e85881414e02d934ac39dd"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100055,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34406,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e935ad4efed3975a231a2c95240a3f35652113fb349e583f69ff6a5a7a72e8c8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100056,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 458,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c6a9392f05886fdc9be3f7f5646f2a42be941c054c5fb6c2d61cafa7e8b51c1e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100057,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 18990,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c4d00471fd476c5603a7888947296a8a246393fe7cb6683818f859178bf5f67d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100058,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59573,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100059,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 6899,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "78e48a0617845f51075acf95d7add6c736f3634ec7411e40c057258cb3101c6b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100060,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17464,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0c61aede93c19bd2b9b77f4445a175709bc5ddd249b3393c91c047979d7a09ef"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100061,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 6654,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c2498f4e73f7c25c33a57668bf0ad6ffa0f3dee17bc4cc565dbb18160bfb331f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100062,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 58615,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "2d9d0a1acd3a196769b8fdfa3cd3d88e522a4967ed2ebb11f8d9d818267a4a2d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100063,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 75614,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8f3cada744532b3d32b053d67661c600d3667b30e1a5ec7319eb690ffdcb33dd"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100064,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 43927,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "2b909d56be1833ceb48d8129e322a9d69b23ccd41592b21a2df961fcff562e3b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100065,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23214,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100066,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 6648,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e0ed1377c0899141c66953cd71064e00fa88e636d907934f6f807c4041607fe2"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100067,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41515,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c0e31a003ce7a444a7298c8595b13d470772608827dccab43d7f8172ddd42532"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100068,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39315,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "90fb900aaabd32de87ef90cd8c17219adb638b2a31b973b286093308a566114e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100069,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34896,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "18828dd76588dee00d33116965afe11ff5470f3fc272b1a7271c04364167eb3b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100070,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 73313,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "7528060ae6dca4d5bdf05834ab663e62bf1e5c145581188ca1ec09b512c0096e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100071,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 68188,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b8e6a3cf801a35bef36677f810df222cc89042d84d587952d175ad697289f773"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100072,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 68187,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "489f55cff91bb6d050abe5bdf27b9db031804cd37ffa9b39a82698d19bf82208"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100073,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39316,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "22d51a57cdccb89877ac97e4cc65d4e49b2867020176b35eb38206cf7018b5d4"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100074,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34790,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6be5ae0aaee9c10d5f6563926bbc58f4d217d38a01eb5513454894811db3126d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100075,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63635,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "77a5eaf20cd6883702746aae9e649ffceccb31edd50112d0b44d4383dbcb7c23"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100076,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63637,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0245a64598059976484119707c514bc6aaaf4df087bb02dd2b3570cf9bd648e0"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100077,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 64927,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5d918d2b17ff46fa87f658883201f396c88d20322a00ca5d95fcb53c84895b8e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100078,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 6653,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5cfff057298d04b7db5be89d051a7c6368c9abffc51603f116240506971e7394"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100079,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23161,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100080,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32239,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "93c5767f693b45bde5ac948a6567258f968d7b738dea7b8dc94f24f5b3906e3c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100081,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 8395,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c38b3adedb0591afe639f1642faadfb4df6600ca4cdf565173a47a594d3ca3fe"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100082,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63639,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0cba3bbaa96826d6069ef8bc94638c2930b2b9269c9be6027c710f70c9ee9018"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100083,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 5784,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100084,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 36702,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "2417359f6e8bf274cc728165fd3944b98486a521ca506281800d7bcc20101d92"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100085,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17458,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100086,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61451,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f2bf15c11c02575593ad4766a21f07d3d93f67b65204b98667ee8bb51e3119fe"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100087,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 44153,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "74531dd6de52645355401c5266c129a75b4c8b0fbdcf8d82536af0b7fbce55cf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100088,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63643,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "83912dd67c291188c7f12a821b4a6987474d9d032b17ec751b0696b3a10b24b1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100089,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17460,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e877dfefe8e436b60ab9d03a2dfc3f3daf60f35e98d896ad0b8c597162145269"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100090,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23509,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a30d67ac9d9bffadb316b26ba9370fdb3c5cea65aa8836753377a0af717d9ca4"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100091,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 75596,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "3673ac806fa0d3fca661a3f883a5e16d1188a88f3762bae41c5a32d968b82abf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100092,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65439,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6b95c38f00d1acb49cd0630272cadedb992cf1c6c1fd2d4deec0c357622d8f79"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100093,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63638,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f0c80d221ef65efa6eea721f8cf8c47a08870f4537d895c1412d48c74db1e03d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100094,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32235,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8ef189d033bc6a0db33218edbba97d0fc0f97667187d319b8d12272ebd8bcb79"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100095,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16060,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100096,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61467,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c8161355477f2188aee3611ee3e01198a3769d85e03a9cd0d9e4b214b1eb985d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100097,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61465,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c8161355477f2188aee3611ee3e01198a3769d85e03a9cd0d9e4b214b1eb985d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100098,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60136,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100099,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60140,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100100,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61469,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "43c0957ae4215c0e65b41e9c1c983f6963650ae63f912b42c53c96317e1ad2a0"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100101,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61470,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "43c0957ae4215c0e65b41e9c1c983f6963650ae63f912b42c53c96317e1ad2a0"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100102,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35710,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "ce3faf2c82692121ff01850343c339017827b6e4e87d56ec75b2da20d5820bc7"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100103,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 18989,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8f340957394f92a2482097af3fc0e335d350a9b016822ded176a869812dfc2fb"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100104,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 6777,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0ae02c6e8edc8a888f0076e96884a9593f9105e3ef3dacf2162a87147c519aca"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100105,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 459,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9135d528f921fc8e9b0cdd2c09926bcc4108f4caf31abb291fb97848fa667612"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100106,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35713,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "abc3d292a6939f3a43af4f667481063f67446848d7bfd4db81bed8c620c56ca1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100107,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 49379,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "801ee0d0fbd022b3a567db8ad93943a7ffc37e53ac6ee82363690c738f1dcd98"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100108,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23249,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e61eca15f4fdeb57ce71359c17400f1851e5e980cdeaed8c89d2cf174de53e84"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100109,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34407,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100110,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65641,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "316c2046ce505794a16c39ade322e8135b52ab88e3ad3f5c17bfc0613d44971f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100111,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23248,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "73249b7978f415895837d857eb02486e50929712dba594d816efb053b42b9f8c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100112,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35712,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "16565fd02db5089659a19cd1c7ce65bd909ca6f514e0febf32bd2815fa07d6d9"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100113,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35714,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "17151af2ed2e37dd2ea8522fd9529c7bf6719ec049008a336cfeb1cb296316f4"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100114,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65637,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a2d582e3dba02c1042b00f2e1bac7536c321ba54b780ba690e96579ab72e4261"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100115,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23247,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1b7ec0a73090dbe6ce8b2e12ad5075f29f71c87076173af27893bb8bfd4bd357"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100116,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 18991,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "affd85152aa7ebfae20713085f0c525c32b6ecb8ea40ad0ab28980a947a60aa8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100117,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17453,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "de8406d30192d201d865e939d46313303d4ddcee2d697ad269dab1dd62aca93c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100118,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61294,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "36137f16b6aa92dbb284d918fd54e5e853c8e9b645e4102e583b70923a91bb14"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100119,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 26056,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "375b9406d352c833571a0f956949a4e5636d4d16c9476ccafc09dd28d905c04f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100120,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39798,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "3c9eb9ebb2715fc834d1933939e8cf4461a5e78c590bbaeac786ea974168c424"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100121,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17465,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "252da3f7b8adb4c0ad88e3c5463b95629c4a58f761736c1d9b5848be72c5bd32"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100122,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32245,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6acf773c7c2393d2083b01e1f037000ec6c0c000e6041c7041fbc21177e29325"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100123,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 48025,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4e091b78914a5ebfe76a6acfde66fa503dfa6d6306352dcc672a1640c3ea21f5"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100124,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59797,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d871316f8fdad6107495ee4f0b648a4e64d683eef0f7c39d539a3a00523971d1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100125,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59799,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d871316f8fdad6107495ee4f0b648a4e64d683eef0f7c39d539a3a00523971d1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100126,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 72807,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "97c289999968d96b8b62627d8cc6bffae9672824f3ed97b05ceff85aac0e3c7b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100127,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17459,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "59b388696cce167497e2447c2455dbde1e819ca6ad0466af6eae67892ffb5ea7"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100128,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 72286,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a0188d7c35e08b95f04471e199a5fe4a318921a11bfca598c7a5489581393634"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100129,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63956,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "be09ac4dd70a8ba36ef01e617864c7fc3c2b15f7e8f7630a89386c241a6f8c14"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100130,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63636,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b142d7c3a2739fb73d1230411efb0459feb3ab091a507bfd7af12145dae441d1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100131,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17450,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "efc4149320fe5032caf37eb1882f8176af4b66c38896a1a379820150ab8382ea"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100132,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65917,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b95ce829adf187b89d498ccf1155a65aa198b9961a40c27c1f5b7e152628d5f2"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100133,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61309,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "31f6c315b2ea010d53dfb415bf4a43d1cc75806ce4d392c473ee58b811b314ac"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100134,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 55531,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "bd01ef6d93d28e5c49e2dd0510e47f6a84107b5e84a39cb3c6efca54a2894215"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100135,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60424,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "475da6613c879d33a2d2a2867d1ba532cd42d3ee290c95c49df1af728fea3410"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100136,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 44744,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "85e6c4027423e9a21cf3df3fd1fd86b6ffa96382643cce86bc944e7d3056578e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100137,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63796,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e11c4336ed384414ad7e2d79333c14a94cb878348a1814f6d64378acb38016c7"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100138,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16084,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4a775a6478ddf7ca262d30974b8eab16d00f934c5b540f31b4b2cfbe6cae34cf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100139,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 29059,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100140,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10798,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100141,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66846,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "80bb963828d1011a07e5847abd643e1ce4cfde8f3f1df431c7bbb745106797f9"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100142,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41513,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d83adf1f30b334b4eedbf5244659031a6c2adf595275521cb7695168bbed39dc"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100143,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 69395,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "55563e3c5bb208cc626da91fa9f6f9834a31e9678803a33a611c93c5d217b1ff"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100144,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63640,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "869aabee2237060bafe76c54a34cd00b87921530bc971f4b8ae856216403cf45"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100145,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16082,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9df4ae8231a144ca4d19d1f9bb6b4b19e693a4732ab3820c97baf23b3d7f5af1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100146,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 472,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4497021eb6f222e905f84f654175969f1278b032c85702ac11b2c835f1c5c276"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100147,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60021,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8a288eb3d22528efc9aec1ece247b36a28dddb5fdf0bdf254e66ab4338f24b19"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100148,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16058,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100149,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35711,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4139cfddf9fd9f4675861a51e59f48beaddf8e388a5f0d79ff5cc757360e9d2f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100150,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35018,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "12be6cad82cc0a44c06a44cbbb57f904210c0535095790d7c6fc46698b253255"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100151,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17455,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100152,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41516,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "26367fbc6e2b4ca9470583f3a947a920ab6c0e02bcbea61ad7d60da16391d5d7"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100153,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39801,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "deeb19b5f01e6a21a8e11c99d5925ae7518a88f2aa3b0ec158d023aa8f889f34"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100154,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23246,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "005034ba9534775cc932f408fa3b8163c81bc6d8076f45610d0b1fa1e14cfe34"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100155,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66090,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c0af8ae713ea0eb76a974e7af89819d31a06776ef5647026d99531db0022c348"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100156,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41252,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5cacf364a30132af797ee4cd96ac0bc50485877ac1d6edc7616fab93b55cb880"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100157,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17456,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100158,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61997,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "756cb0ab4319cd61b98f52512aa4d856215cb64540d866d2187a6ac039cfa08b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100159,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59570,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "970dec01788c608c710f2a1827900e4bed3a2d1bca1685e7086a78d389f17162"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100160,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34795,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d91af02e6d433db6ba177033fb1682e66f5ccf44acd5f5c4b80e450e0205014e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100161,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10873,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d0f79b23fb37d9544ef87fbd81ed57c42c369197718c4e1b16409d1e18dc9ea1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100162,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59961,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d1c0ce12cb2cb2c9b8d0b58ea7818b4805c20b84d747422479d66563f9f49f83"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100163,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 26054,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "375b9406d352c833571a0f956949a4e5636d4d16c9476ccafc09dd28d905c04f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100164,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39800,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "7d02f09d9b208d0ffe19444cb7a229347acd964dd146a58c64bd332230112da7"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100165,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17462,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f694d07762fe7e5bc9a0822285f1c528ced0c842594cfea8f0635e2e2f4b97ff"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100166,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 22722,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a8ec82adc63223b47b00b10baf5c0c5e325799d3ceea0ea301d70010fdb1876d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100167,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16080,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9768f48a789dcec3fdb13f3618f8c11979f44ddf99b857eef2616491995b2c67"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100168,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 67336,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "ba3a8db936d50062356cab55a756fc0a73f536184b7cf60cb7e31fd1f4d12a41"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100169,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 30174,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0169a547639701226c532c1dcf9b0a435b308b8f703553ca0b8690ff4d138aa6"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100170,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17481,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0a753d063cb07605edc95732e15f2872e2d466906830009a9e9e2f420a19a5dd"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100171,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63963,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "caac81f4e73bb82860b9a65cd96a160ef23d5cfba2615daea93ad694b4dd76f6"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100172,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 64731,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e6cd07c2e8cfb0acf53bb71591eaea1be394375ed69622b811051512b38e59ad"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100173,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66087,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "35cd2c565cc9a8fdaca309da779902bbf00d1d1862086a3a006768dae4d2b96d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100174,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39802,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5e4c6bb19b85596632d8ea7e7d63c511f1f22ef2b9b2377298a1b9ba2e5d90c8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100175,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39317,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "02d0f5235911bf5711992eb58a11170f39a2208e5d3c5ee6b77f6cb08cc51561"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100176,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34898,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6b76b1330128ad153628b212d2ead7cb8456054685cbfb6bb37548f1079e4b23"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100177,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63642,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1d450515d49bb96442106af98a364bfad420730f1a35d3cce27d0e6acac3b46f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100178,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 8980,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "08a90b9ceeeca3617ca9e570c23f7396cf32c0f6ddc7950ffc10ec994364c09e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100179,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32240,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0d9d5972ba2a8222e29048b63e12b6c54a0cd16e4449d89bf86cfb1ed6db2ed1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100180,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 42776,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "7356e3505d42a246df48ecf0088b2ccf60dff3c436b31df5041a1e96ee43e1c1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100181,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10789,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0793aba4407d06d969a946cd46dbaf23868a3d44b9a16860ffdc30f6b357bc9e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100182,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23510,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "96b6cb195a6b5746758718a6cbf033c6b8f15941c92c0b1a5c4089ea54504068"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100183,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63232,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "62cbf753c7c8d0d453cf2452f01dc9f8956f036d14ded8368a3bd0b7521a204e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100184,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66847,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "217a9eeaf541490f0e1cfbfcd2738b54f671e8ae7611974c08224204c2dba44e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100185,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 8394,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "cfc5fa576aeb2052057c1ed9bc826a6c39928ca36e8025f499697762562be800"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100186,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10793,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "bab11f1d274d1b5e361103c62a636af7ae5d4705c43292ef6439f7cbadf41182"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100187,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34767,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100188,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34769,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100189,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66088,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "fba89c8d4f00809e2f158d93ec17c9dff021f6e9f8780d95021cc065dae6847d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100190,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 66091,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "b04d15e07102785c698ce5f90b56fbd675b9cc9e359da8ff9f14dbad2cfe716d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100191,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 68057,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "65cdd5374751a3de0edfc9fb9c3075a2b8f7109043071ab3493154ed6963edd1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100192,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32242,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c40f43b64bd2dc4c16727979cd9843aab0c8bb56d16870be68324ec6e39e9108"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100193,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23241,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e5135ba198fe17f14c05c5a64420d4d24d6a8cff83e6ea771b53253fcee92cf9"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100194,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 43900,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5b5f020620e438b0eb7a482d86b2dc946131eab9682e7e99de50e4183565353f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100195,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23238,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "218e27500bbedae278efe2d8533671c5a3c848fd137eb7ab80b2b81bc2bbd680"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100196,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23229,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6575614f6e2a4d6a28610d1c451a7710eabd3bef21fc8a411149963a6221f3bb"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100197,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23250,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "dd1e0942bf4cb6991726f1cbadb11b35e3fa2980e204878fb45c9f31d8abb55e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100198,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65646,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "3e12743f4f67f2ba52617bdca5b134219fa6db6cc3db68da190bd5140cb3b4a6"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100199,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23220,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100200,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23221,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c376661f49a889712abd78d826900e9f89f587a59ecb753c3994269cd2dd6709"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100201,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23239,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5c8ed77cb1201691c546962535d8e0d63001dd8c8c7a70b1ed64c86ed3bbd176"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100202,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65640,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8bcb695bb22019db1d167dcba5c3e4021376f1b0378fd5efb61206fe48592d61"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100203,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23252,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1bc61e0b9800af3828f772d46d944ed4bf9ab3fae363d89891346bcf640b7eab"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100204,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32290,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c82640a3c8d01bd95c42ecaa9ad2c2779ffb12f7cd2a42ffd2712c7b657cca4f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100205,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35025,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a12227a3d53cb6e1be12812b43ba61e4804c65e1050fcd839c12b448adb1bf9d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100206,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23225,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "bf6d130ccab2241fe85fe0732ccd8623820d8fe13c5e423430ad0b6979b34f22"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100207,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32295,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d242968c13e98353ef4f7a3d2c34323ab51908b93b6d49ac69a544605feace90"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100208,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 68056,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "0d8009c156723e57668e43f85ef4ad73ab0c36ffc807cfe61d894ed88fcd8e49"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100209,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23219,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1243e45045ca50a7999f73489bfc95d67a435e4f43ebfe4dce6561862ada45cf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100210,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61442,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100211,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65638,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "cce43190112b9722726ae0642f535fe01771159da4d44b4d1a5350b5d99fc82f"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100212,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 37015,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e111f7803041829757984b112a56e73754bcfbd46cecfe45b8227527aba8b1d5"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100213,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23242,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "991ed295f5c89f7fcab4d4540810f645c63dada7eea856af8d20073f718d7d2b"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100214,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23243,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6ebb242aac6c1fac5c46b66bdace8d3c80b6d08c8c2149daf23ad27d0f45880d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100215,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23227,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "80a8f8dadae238dfaa4c380a915e9093fb0d41f51c5569f4259e7390b925e76d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100216,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 33660,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "ad96c35b6f50c1ad1b5f437bfab4f089967edf6a17ebd411097595ea932e119d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100217,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32292,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6dac370ec5e503aa00d110dd616df3e141c5101c06eb578fc37ce5658f8ac09e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100218,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35027,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c89322deb371899796d2b9d0186f66bb256219b8f706f01ee7d0e5a3ae2b5ce5"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100219,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65644,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "78a4d254d200b5a8341b31df3b84c7346cbf99cea879255f3f26c6ac69ca6bad"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100220,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32297,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "3dfafb72895eec637cc8d6e901815fbe1517c88ba8dbb98b24d4dc8e4d25f9de"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100221,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 24242,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "cb1c18c18b2e246daa81dcc612fa30eac5a99c44bf1adaab86d0c910a2229279"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100222,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32289,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "2593f256ec8e45c8251690048c91a9bc7d5d81cef18a7048c82b66f659f2e8a8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100223,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65639,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1b668ca5c5741de2aba60016648aa73679006a5519ee5dfb6de5a3805dd6f9fc"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100224,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32246,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "2755589ccce941341e1a8ac21cfef1f8815d68fbdc44d4fc49d745478b6b7e92"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100225,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 42777,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6e92ba33a99bb244f98ecbd4837777051e42633afd778288e4fbe3aed95f0317"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100226,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61446,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100227,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23338,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "41fb0b14edf7daeea0fdae03bf1527fad9e522a303fd82f8ea46fbd58a4dad97"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100228,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23251,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "bdef8e59d959167018b58498fc35378b69394cc208a91ea0721b2a8f80e9ec2a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100229,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65643,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a97614b1af300aa704ac94aec5f215a88dc93224072ee04d51842d838a7560d9"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100230,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 35028,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e7fd182beb72cb46644d555000a906ac69d84d499b3dc1cdd9cbc23043064e46"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100231,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 46628,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "eb55b97f869dcb049890441d3bbafdf005cedab598fc5284973fb831d23091c1"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100232,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23223,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9e4e48989ba29fa2573f5aa15ba47760b6405b43e9e3109b3f33744ce3021b0e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100233,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23240,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "5f3b858f14e12c82fbbf2fa3d7e751db454ae738ecd8d60df887e8de8e8e2b48"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100234,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23228,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c752590ed6dafa79bf3378177f1d060636e65e3bca279b3e624d595b58a5dbae"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100235,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 23222,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d3c7d06fd4630ff35e663568ab85b145cbccda8e99836f0880cefc0ebe06c6f8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100236,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32296,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "57e30d551b4c9264ed4e5c5dfa8457ca6b2134d30dbea3973283f0b624e3109a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100237,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 48954,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4a7617571c45d4542e51f71633eecfcbb4de7b6f0d64542c441446cf7ad32fbf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100238,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 49322,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "88b83f03b6f2c95825403d5c4095a063da1c2625f696ea855b71a1455b8e5e3c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100239,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 24252,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "943ef14fbcea48b46fda26238167bbb31aa4a6cbfd9e08cd63916a7fdf7ffcdf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100240,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39318,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "50582a30b6d4da8eae158e94f6b2edb4103610adb65f551bbb7e97dcd27381cc"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100241,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34899,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4dad51dc95862f00929c2d584cd5471613488bf3407ad258b18bcfcb143d65d4"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100242,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16059,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100243,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 32243,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "80c4d7cba9086518bc27e04696f7f9937ce66baec0519fe249b3f7ad3d0846cc"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100244,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 18992,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8c84805aa4c5a446a87aa7e567d679f430161ddbf4bf8cf531cf90440a683ffb"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100245,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 63641,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c9e45a3286e2ed0812b44dab76d2d60beb1700596b9a4579b5de3af6f2eda405"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100246,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 580,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "053d11240cea0ebedfe9016d9aab1afa58d13197595b2609d2276dfc0567f6ec"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100247,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60002,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "039399ecb046821d4d3d35a6c053e75a10dbb7581c5f0eefde476ebdda35d950"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100248,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61425,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4869a2d3c885cfd2bd04189b38798d50c4fc77849a3af34ddb1e5ca63445e333"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100249,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 61447,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4869a2d3c885cfd2bd04189b38798d50c4fc77849a3af34ddb1e5ca63445e333"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100250,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 44151,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "32ec4277e8d153175f10f0db1b6076a2987fa65ad146330a06a0d700dd577c99"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100251,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65642,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "03adccfea80a595b0e3ea51e5c518e73b5c53b3df550404809caee65a8ac15bb"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100252,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10796,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "16dbddaf3c8a064db71eff732f60e783f8b84fef871e06c8a692d9289c952bf8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100253,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59571,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "fee6f8f5227f9e32dade10ea1634b172b42de75092a34d85be1c8211ac24e1c8"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100254,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17454,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "4870e116f2967412c73476fdf35f533ff283770a581d5f34a1a0d0471034cdbf"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100255,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 49193,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "e476c5fa17a37afa8506e3148b87dd104680685832b460bd55fe1fe45780494a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100256,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 64659,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "82df59b1d7a0247c1043b9df311ee0daa1dbf723952b6e4ccc7c94e2a8401760"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100257,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41517,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "cb0756da60af0202c924d20c4cdb80cc2541bac6a6181a1b23e01493cf322690"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100258,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 41518,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "26367fbc6e2b4ca9470583f3a947a920ab6c0e02bcbea61ad7d60da16391d5d7"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100259,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 60024,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "62d74858a1863abb6160a1a785ddba96549fafee2d89c4957dee88bf93e59828"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100260,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 10799,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "6c3f720ee4133ae96322b39746c10fc0d3d55aaff6c1bae8c926be3456a919d0"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100261,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 13819,
+      "status": "NOT_INTEGRATED",
+      "textHash": null
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100262,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 64657,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "9dc3ed5545746334abd83a60345b078cb97962d04e441b915b1edce95e72b1e2"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100263,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 15779,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "12bd066abc037e27ef54c3763c6246d3792a59d81fe3b0f6f6650ea40cb93743"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100264,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 54753,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "bb32dc93fac41a46864332b963d51f49f9110bfca4725a07f73dab64bb7333af"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100265,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 6898,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1a28e70d41b162de8a3c1a8a43e06a2187bb3e476e7847e19b007075d9a4244e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100266,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 39319,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "09869ee958533946d4bc030b5f916d90cdeec5c6627e0bdcfa60c65d956780a5"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100267,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 65645,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "be7bcc4bc6aecb38e8d93959794c0f9ed69393e0a1a9951ccb2bff50b3a96876"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100268,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16083,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "1a800a9ce306b9f5ff7c68c213fe6b542219a00c466a554a659d79bd8bcf0240"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100269,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 34897,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8a5f04a0e687fe79e6db9c3f8112ac5d7724f655585714a3e1c2d2a85e4ace27"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100270,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 54729,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "28dfa901933e06780154a9127db7554953ade6785f5e97a9936fc8de9493a704"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100271,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 16081,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "d13950e750adefe47b484566b2951e6cc78494eb493ba511207a4b2561aa8c04"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100272,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 17229,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "71c8eae41c2b7912d28beb1227e6b3b7d50a2297dac3ab8ff614caf4cb23007e"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100273,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59791,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f2a0cdf390d442167023ece61546d6f8ff364a7fc309bfc8f3c38f65374d1160"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100274,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 59793,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f2a0cdf390d442167023ece61546d6f8ff364a7fc309bfc8f3c38f65374d1160"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100275,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 74918,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "a004fff0365cf92e9f6118fe23f30df65b331af5b023241c5ba4627850d1d63d"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100276,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 71810,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c6933518d0501ac894373915832d81c8957e5dbe236eb9099de175c0ab60516a"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100277,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 46197,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "8659d1998b2493907ea9aa3430ecb8fbda2c944067d09f9b55cd93fabf3a4d1c"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100278,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 46199,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "c28514fe34b849c70067a48d491b389fe2ca270d4f9d7f569b586722a2158f70"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100279,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 75973,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "f5b17a6ac523f85282ea348e42333c0b9f8b38c7bca7fb8ed0689d9078827603"
+    },
+    {
+      "clientBuild": "3.3.5.12340",
+      "collectionId": 100280,
+      "locale": "zhCN",
+      "sourceType": "SPELL_DBC_DESCRIPTION_170",
+      "spellId": 26055,
+      "status": "OFFICIAL_335_SPELL_DBC",
+      "textHash": "375b9406d352c833571a0f956949a4e5636d4d16c9476ccafc09dd28d905c04f"
+    }
+  ],
+  "schemaVersion": 2,
+  "spellDbcSha256": "9d4bcf6b0990b2fd1afaeeba09bc1c5bc800336f15e7c10b8edc12a99d3df5c1",
+  "visibleCoverage": {
+    "covered": 258,
+    "expected": 258
+  }
+}

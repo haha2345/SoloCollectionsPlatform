@@ -77,6 +77,28 @@
       "dependencies": [],
       "features": ["VIEW"],
       "name": {"enUS": "Titles", "zhCN": "头衔"}
+    },
+    {
+      "typeId": 16,
+      "typeKey": "mount-favorite",
+      "ordinal": 7,
+      "lifecycle": "active",
+      "catalogMode": "INTERNAL",
+      "providerKey": "mount-favorite",
+      "dependencies": ["mount"],
+      "features": [],
+      "name": {"enUS": "Mount Favorites", "zhCN": "坐骑偏好"}
+    },
+    {
+      "typeId": 17,
+      "typeKey": "companion-favorite",
+      "ordinal": 8,
+      "lifecycle": "active",
+      "catalogMode": "INTERNAL",
+      "providerKey": "companion-favorite",
+      "dependencies": ["companion"],
+      "features": [],
+      "name": {"enUS": "Companion Favorites", "zhCN": "小宠物偏好"}
     }
   ]
 }
