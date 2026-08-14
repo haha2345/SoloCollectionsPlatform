@@ -270,7 +270,7 @@
 - `Wow-CQM-SoloCam.exe` 已重新启动到登录界面；运行中的 `Wow-SoloCam-PoC.exe` 只加载客户端根目录这一份 `SoloCam.dll`，磁盘 SHA-256 为 `86715FD9E476A9361883B751F1796EE20D2B524D63340404474256EB20D5ED20`。
 - 用户在该版本实机复测后确认“武器部分可以了”；SoloCam v11 武器路径由 `VALIDATED_LOCAL + DEPLOYED` 提升为 `REAL_CLIENT_ACCEPTED`。迭代 9 的失败记录继续保留，不回写成成功证据。
 
-## 迭代 11：按 Transmorpher 路径重做护甲显示（已部署，待用户验收）
+## 迭代 11：按 Transmorpher 路径重做护甲显示（已完成）
 
 > 本迭代取代迭代 1、3、7 中与 ezCollections Classic 护甲镜头、scale 10、
 > 静态逐帧冻结和护甲镜头保持有关的实现结论；旧记录只作为历史证据保留。
@@ -285,7 +285,7 @@
 - [x] 保留 18 张卡片池、78×104 外层卡片、筛选、分页、收藏状态、SC2 权限和应用动作。
 - [x] 更新架构、来源声明与静态合同，并完成 Lua 5.1、TOC 和差异格式检查。
 - [x] 备份并部署 AddOn，使用项目登录脚本启动客户端并提交登录。
-- [ ] 用户在真实客户端完成九个护甲部位、翻页、武器往返、关闭重开和
+- [x] 用户在真实客户端完成九个护甲部位、翻页、武器往返、关闭重开和
   `/reload` 的视觉验收。
 
 **完成条件：** 护甲卡只存在 Transmorpher 玩家模型路径；九个护甲部位按
@@ -293,7 +293,7 @@ Transmorpher Classic 构图显示，翻页和武器往返不再进入 ezCollecti
 或逐帧冻结路径。源码与部署完成只标记 `VALIDATED_LOCAL + DEPLOYED`，用户确认前
 不得标记 `REAL_CLIENT_ACCEPTED`。
 
-### 迭代 11 实施记录（源码与部署阶段）
+### 迭代 11 实施记录（源码、部署与实机验收）
 
 - `EzWardrobe.Model` 将 `HEAD/SHOULDER/BACK/CHEST/WRIST/HANDS/WAIST/LEGS/FEET`
   映射到 Transmorpher `Armor` setup；护甲改为原生
@@ -311,8 +311,10 @@ Transmorpher Classic 构图显示，翻页和武器往返不再进入 ezCollecti
 - SoloCam v11 DLL 未修改，SHA-256 仍为
   `86715FD9E476A9361883B751F1796EE20D2B524D63340404474256EB20D5ED20`。项目登录
   脚本已启动 `Wow-SoloCam-PoC.exe` 并提交登录，运行进程只加载一份该 DLL。
-  当前状态为 `VALIDATED_LOCAL + DEPLOYED`；九个护甲部位的真实视觉验收仍由用户
-  完成，尚未标记 `REAL_CLIENT_ACCEPTED`。
+- 2026-08-14 用户实机确认“护甲卡片和武器卡片都验收通过”。迭代 11 由
+  `VALIDATED_LOCAL + DEPLOYED` 提升为 `REAL_CLIENT_ACCEPTED`；武器路径继续沿用
+  迭代 10 已通过的 SoloCam v11 实现，护甲路径采用本迭代的 Transmorpher 原生
+  TryOn 实现。
 
 ## 实施顺序
 
