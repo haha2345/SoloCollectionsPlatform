@@ -2433,10 +2433,12 @@ function UI.CreateWardrobePage(parent)
         for _, itemModel in ipairs(self.scItemModels) do
             if itemModel.scCard and itemModel.scCard:IsShown()
                 and itemModel.scRecord and itemModel.scRecord.itemId == itemId then
-                -- TransmorpherItemQuery owns weapon readiness and its
-                -- generation-safe render queue.  Replaying all cached shields
-                -- here would collapse 18 TryOn calls back into one frame.
-                if itemModel.scRenderKind ~= "TRANSMORPHER_WEAPON" then
+                -- TransmorpherItemQuery owns readiness for every item card and
+                -- feeds the shared generation-safe render queue. Replaying a
+                -- cached armor or weapon page here would collapse 18 exact
+                -- Reset/Undress/TryOn lifecycles back into one frame.
+                if itemModel.scRenderKind ~= "TRANSMORPHER_ARMOR"
+                    and itemModel.scRenderKind ~= "TRANSMORPHER_WEAPON" then
                     applyItemModelRecord(itemModel, itemModel.scRecord, self.scItemGeneration, true)
                 end
                 if itemModel.scHitFrame and GameTooltip:IsOwned(itemModel.scHitFrame) then

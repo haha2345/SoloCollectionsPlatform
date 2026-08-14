@@ -4,7 +4,6 @@ SC.EzWardrobe = SC.EzWardrobe or {}
 SC.EzWardrobe.Model = SC.EzWardrobe.Model or {}
 
 local Model = SC.EzWardrobe.Model
-local Camera = SC.EzCollectionsCamera
 local NativePreview = SC.NativePreview
 local ItemQuery = SC.TransmorpherItemQuery
 local PreviewSetup = SC.TransmorpherPreviewSetup
@@ -20,10 +19,21 @@ local VALID_TYPES = {
     ranged = true,
 }
 local TYPE_SCALE = {
-    player = 10,
+    player = 1,
     main = 1,
     off = 1,
     ranged = 1,
+}
+local ARMOR_SLOT_NAME = {
+    HEAD = "Head",
+    SHOULDER = "Shoulder",
+    BACK = "Back",
+    CHEST = "Chest",
+    WRIST = "Wrist",
+    HANDS = "Hands",
+    WAIST = "Waist",
+    LEGS = "Legs",
+    FEET = "Feet",
 }
 local WEAPON_SLOT_NAME = {
     [TYPE_MAIN] = "Main Hand",
@@ -127,8 +137,8 @@ Model.lifecycles = Model.lifecycles or setmetatable({}, { __mode = "k" })
 
 local TransmogModelMixin = Model.TransmogModelMixin
 local WardrobeItemsModelMixin = Model.WardrobeItemsModelMixin
-local weaponRenderQueue = {}
-local weaponRenderDriver = CreateFrame("Frame")
+local itemRenderQueue = {}
+local itemRenderDriver = CreateFrame("Frame")
 
 local function safeCall(object, method, ...)
     if not object or type(object[method]) ~= "function" then return false end
@@ -146,40 +156,34 @@ local function recordKey(record)
     }, ":")
 end
 
-local function queueWeaponRender(lifecycle, record, expectedGeneration)
-    lifecycle.pendingWeaponRender = {
+local function queueItemRender(lifecycle, record, expectedGeneration)
+    lifecycle.pendingItemRender = {
         generation = expectedGeneration,
         key = recordKey(record),
     }
-    weaponRenderQueue[#weaponRenderQueue + 1] = {
+    itemRenderQueue[#itemRenderQueue + 1] = {
         lifecycle = lifecycle,
         generation = expectedGeneration,
         key = recordKey(record),
     }
-    if not weaponRenderDriver:GetScript("OnUpdate") then
-        weaponRenderDriver:SetScript("OnUpdate", function(self)
-            while #weaponRenderQueue > 0 do
-                local pending = table.remove(weaponRenderQueue, 1)
+    if not itemRenderDriver:GetScript("OnUpdate") then
+        itemRenderDriver:SetScript("OnUpdate", function(self)
+            while #itemRenderQueue > 0 do
+                local pending = table.remove(itemRenderQueue, 1)
                 local target = pending.lifecycle
                 if target and target.record
                     and target.generation == pending.generation
                     and target.activeGeneration == pending.generation
                     and recordKey(target.record) == pending.key
                     and target.frame:IsShown() then
-                    target.pendingWeaponRender = nil
-                    target:RenderTransmorpherWeapon(target.record)
+                    target.pendingItemRender = nil
+                    target:RenderTransmorpherItem(target.record)
                     break
                 end
             end
-            if #weaponRenderQueue == 0 then self:SetScript("OnUpdate", nil) end
+            if #itemRenderQueue == 0 then self:SetScript("OnUpdate", nil) end
         end)
     end
-end
-
-local function itemString(record)
-    local itemId = record and tonumber(record.itemId)
-    if not itemId then return nil end
-    return "item:" .. tostring(itemId)
 end
 
 local function getItemDescriptor(record)
@@ -258,15 +262,24 @@ local function startsWith(value, prefix)
     return string.sub(value, 1, string.len(prefix)) == prefix
 end
 
--- Namespaced copy of Transmorpher PreviewSetupAPI.GetPreviewSetup. The lookup
--- order is kept intact: actual render slot, full subclass, similar type, any
--- camera from that render slot, then Main Hand.
+-- Namespaced copy of Transmorpher PreviewSetupAPI.GetPreviewSetup. Armor is
+-- resolved from race/sex/Armor/slot. Weapon lookup keeps the upstream order:
+-- actual render slot, full subclass, similar type, any camera from that render
+-- slot, then Main Hand.
 local function getTransmorpherSetup(slotName, subclass)
     local classic = PreviewSetup and PreviewSetup.classic
     local _, raceFileName = UnitRace("player")
     local sex = UnitSex("player")
     local raceData = classic and classic[raceFileName] and classic[raceFileName][sex]
-    if not raceData or not raceData[slotName] then
+    if not raceData then
+        return nil, nil, "TRANSMORPHER_SETUP_UNAVAILABLE"
+    end
+
+    local armorData = raceData["Armor"]
+    if armorData and armorData[slotName] then
+        return armorData[slotName], slotName, "READY"
+    end
+    if not raceData[slotName] or type(subclass) ~= "string" or subclass == "" then
         return nil, nil, "TRANSMORPHER_SETUP_UNAVAILABLE"
     end
 
@@ -333,17 +346,7 @@ local function getTransmorpherSetup(slotName, subclass)
     return nil, renderSlot, "TRANSMORPHER_SETUP_UNAVAILABLE"
 end
 
-local function resetCameraState(frame)
-    frame.scEzCameraID = nil
-    frame.scEzCameraReason = nil
-    frame.scEzCameraTuple = nil
-    frame.scEzCameraSlot = nil
-    frame.scEzExpectedScale = nil
-    frame.scEzExpectedX = nil
-    frame.scEzExpectedY = nil
-    frame.scEzExpectedZ = nil
-    frame.scEzExpectedFacing = nil
-    frame.scEzRetentionReason = nil
+local function resetPreviewState(frame)
     frame.scTransmorpherSetup = nil
     frame.scTransmorpherSlot = nil
     frame.scTransmorpherSubclass = nil
@@ -363,22 +366,18 @@ local function setUnavailable(lifecycle, reason)
             PLAYER_MODEL_LOAD_FAILED = "装备预览未就绪",
             CAPABILITY_MISSING = "SoloCam 武器预览未就绪",
             PREVIEW_PROTOCOL_MISMATCH = "SoloCam 武器协议不匹配",
-            INVALID_ITEM_ID = "武器物品无效",
-            ITEM_QUERY_FAILED = "武器物品数据未就绪",
+            INVALID_ITEM_ID = "物品无效",
+            ITEM_QUERY_FAILED = "物品数据未就绪",
+            ARMOR_SLOT_UNAVAILABLE = "护甲部位未映射",
             WEAPON_SUBCLASS_UNAVAILABLE = "武器分类未就绪",
-            TRANSMORPHER_SETUP_UNAVAILABLE = "武器镜头未就绪",
-            MODEL_UNAVAILABLE = "武器模型未就绪",
-            TRYON_FAILED = "武器试穿失败",
-            CAMERA_UNAVAILABLE = "物品镜头未就绪",
+            TRANSMORPHER_SETUP_UNAVAILABLE = "物品构图未就绪",
+            MODEL_UNAVAILABLE = "物品模型未就绪",
+            TRYON_FAILED = "物品试穿失败",
         }
         frame.scUnavailableText:SetText(labels[reason] or "物品预览不可用")
     end
     if frame.scUnavailable then frame.scUnavailable:Show() end
     return false, reason
-end
-
-local function applyEzCollectionsLight(frame)
-    safeCall(frame, "SetLight", 1, 0, -1, 1, -1, 1.05, 1, 1, 1, 0, 1, 1, 1)
 end
 
 local function applyTransmorpherLight(frame)
@@ -391,7 +390,7 @@ function TransmogModelMixin:SetType(modelType, force)
     if self.type == modelType and not force then return false, "UNCHANGED" end
 
     self.type = modelType
-    resetCameraState(self.frame)
+    resetPreviewState(self.frame)
     safeCall(self.frame, "SetPosition", 0, 0, 0)
     safeCall(self.frame, "SetFacing", 0)
     safeCall(self.frame, "ClearModel")
@@ -405,42 +404,38 @@ function TransmogModelMixin:RefreshType()
     return self:SetType(self.type or TYPE_PLAYER, true)
 end
 
-function WardrobeItemsModelMixin:ApplyArmorCamera()
-    if not Camera or type(Camera.ApplyRecordCamera) ~= "function" then
-        return false, "CAMERA_UNAVAILABLE"
-    end
-    local applied, reason, cameraID = Camera:ApplyRecordCamera(self.frame, self.record)
-    self.frame.scEzCameraID = cameraID
-    self.frame.scEzCameraReason = reason
-    self.frame.scEzCameraSlot = self.record and self.record.slot or nil
-    return applied, reason
-end
-
 function WardrobeItemsModelMixin:OnModelLoaded()
     if self.suppressModelEvent or not self.record
         or self.generation ~= self.activeGeneration then
         return
     end
-    if self.type == TYPE_PLAYER then
-        self:ApplyArmorCamera()
-    elseif self.weaponSetup then
-        -- Exact Transmorpher PreviewList OnUpdateModel behavior: only restore
-        -- the selected sequence after a model load.
-        safeCall(self.frame, "SetSequence", self.weaponSetup.sequence)
+    if self.transmorpherSetup then
+        -- Exact Transmorpher PreviewList OnUpdateModel behavior for both armor
+        -- and weapons: only restore the selected setup sequence.
+        safeCall(self.frame, "SetSequence", self.transmorpherSetup.sequence)
     end
 end
 
-function WardrobeItemsModelMixin:OnArmorUpdate()
-    if not self.record or self.generation ~= self.activeGeneration
-        or not self.frame:IsShown() or self.type ~= TYPE_PLAYER then
-        self.frame:SetScript("OnUpdate", nil)
-        return
-    end
-    if type(self.frame.SetSequenceTime) == "function" then
-        self.suppressModelEvent = true
-        pcall(function() self.frame:SetSequenceTime(15, 0) end)
+function WardrobeItemsModelMixin:PrepareTransmorpherFrame()
+    self.frame:SetScript("OnUpdate", nil)
+    safeCall(self.frame, "SetAutoDress", true)
+    safeCall(self.frame, "SetDoBlend", true)
+    safeCall(self.frame, "SetKeepModelOnHide", false)
+    safeCall(self.frame, "SetAlpha", 1)
+    safeCall(self.frame, "SetModelScale", 1)
+
+    -- Transmorpher DressingRoom:Reset resets model-space state, clears the
+    -- previous actor and rebuilds the player's race/sex model every render.
+    self.suppressModelEvent = true
+    safeCall(self.frame, "SetPosition", 0, 0, 0)
+    safeCall(self.frame, "SetFacing", 0)
+    safeCall(self.frame, "ClearModel")
+    if not safeCall(self.frame, "SetUnit", "player") then
         self.suppressModelEvent = nil
+        return false, "PLAYER_MODEL_LOAD_FAILED"
     end
+    applyTransmorpherLight(self.frame)
+    return true, "READY"
 end
 
 function WardrobeItemsModelMixin:RenderTransmorpherWeapon(record)
@@ -462,32 +457,16 @@ function WardrobeItemsModelMixin:RenderTransmorpherWeapon(record)
     local equipmentSlotId = EQUIPMENT_SLOT_ID[renderSlot]
     if not equipmentSlotId then return setUnavailable(self, "TRANSMORPHER_SETUP_UNAVAILABLE") end
 
-    self.weaponSetup = setup
+    self.transmorpherSetup = setup
     self.weaponDescriptor = descriptor
     self.frame.scTransmorpherSetup = setup
     self.frame.scTransmorpherSlot = renderSlot
     self.frame.scTransmorpherSubclass = descriptor.subclass
-    self.frame.scEzFreeze = nil
-    self.frame.scEzAnimID = nil
-    self.frame:SetScript("OnUpdate", nil)
-    -- These are the defaults used by a fresh Transmorpher DressUpModel.  They
-    -- also undo ezCollections armour flags when a pooled card changes type.
-    safeCall(self.frame, "SetAutoDress", true)
-    safeCall(self.frame, "SetDoBlend", true)
-    safeCall(self.frame, "SetKeepModelOnHide", false)
-    safeCall(self.frame, "SetAlpha", 1)
 
     -- Transmorpher PreviewList_RenderItem order:
     -- Reset -> Undress -> SetPosition -> SetFacing -> TryOn -> SetSequence.
-    self.suppressModelEvent = true
-    safeCall(self.frame, "SetPosition", 0, 0, 0)
-    safeCall(self.frame, "SetFacing", 0)
-    safeCall(self.frame, "ClearModel")
-    if not safeCall(self.frame, "SetUnit", "player") then
-        self.suppressModelEvent = nil
-        return setUnavailable(self, "PLAYER_MODEL_LOAD_FAILED")
-    end
-    applyTransmorpherLight(self.frame)
+    local prepared, prepareReason = self:PrepareTransmorpherFrame()
+    if not prepared then return setUnavailable(self, prepareReason) end
 
     local undressed, undressReason = NativePreview:Undress(self.frame)
     if not undressed then
@@ -507,29 +486,44 @@ function WardrobeItemsModelMixin:RenderTransmorpherWeapon(record)
     return true, setupReason
 end
 
-function WardrobeItemsModelMixin:RenderArmor(record)
-    self.weaponSetup = nil
-    self.weaponDescriptor = nil
-    self.pendingWeaponRender = nil
-    self.frame.scEzFreeze = true
-    self.frame.scEzAnimID = 15
-    safeCall(self.frame, "SetAutoDress", false)
-    safeCall(self.frame, "SetDoBlend", false)
-    safeCall(self.frame, "SetKeepModelOnHide", true)
-    applyEzCollectionsLight(self.frame)
+function WardrobeItemsModelMixin:RenderTransmorpherArmor(record)
+    local itemId = record and tonumber(record.itemId)
+    if not itemId or itemId <= 0 then return setUnavailable(self, "INVALID_ITEM_ID") end
+    local slotName = ARMOR_SLOT_NAME[record.slot]
+    if not slotName then return setUnavailable(self, "ARMOR_SLOT_UNAVAILABLE") end
+    local setup, _, setupReason = getTransmorpherSetup(slotName)
+    if not setup then return setUnavailable(self, setupReason) end
 
-    local cameraApplied, cameraReason = self:ApplyArmorCamera()
-    if not cameraApplied then
-        return setUnavailable(self, cameraReason or "CAMERA_UNAVAILABLE")
+    self.transmorpherSetup = setup
+    self.weaponDescriptor = nil
+    self.frame.scTransmorpherSetup = setup
+    self.frame.scTransmorpherSlot = slotName
+    self.frame.scTransmorpherSubclass = "Armor"
+
+    -- Direct projection of Transmorpher PreviewList_RenderItem for armor.
+    -- Armor uses the stock Lua Undress/TryOn methods and never needs SoloCam.
+    local prepared, prepareReason = self:PrepareTransmorpherFrame()
+    if not prepared then return setUnavailable(self, prepareReason) end
+    if not safeCall(self.frame, "Undress") then
+        self.suppressModelEvent = nil
+        return setUnavailable(self, "MODEL_UNAVAILABLE")
     end
-    local tryOnItem = itemString(record)
-    if not tryOnItem then return setUnavailable(self, "TRYON_FAILED") end
-    safeCall(self.frame, "Undress")
-    if not safeCall(self.frame, "TryOn", tryOnItem) then
+    safeCall(self.frame, "SetPosition", setup.x, setup.y, setup.z)
+    safeCall(self.frame, "SetFacing", setup.facing)
+    local triedOn = safeCall(self.frame, "TryOn", itemId)
+    self.suppressModelEvent = nil
+    if not triedOn then
         return setUnavailable(self, "TRYON_FAILED")
     end
-    self.frame:SetScript("OnUpdate", function() self:OnArmorUpdate() end)
-    return true, "READY"
+    safeCall(self.frame, "SetSequence", setup.sequence)
+    return true, setupReason
+end
+
+function WardrobeItemsModelMixin:RenderTransmorpherItem(record)
+    if modelTypeForRecord(record) == TYPE_PLAYER then
+        return self:RenderTransmorpherArmor(record)
+    end
+    return self:RenderTransmorpherWeapon(record)
 end
 
 function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
@@ -553,7 +547,8 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
     self.frame.scRuntimeUnavailableReason = nil
 
     local nextType = modelTypeForRecord(record)
-    self.frame.scRenderKind = nextType == TYPE_PLAYER and "EZ_ARMOR" or "TRANSMORPHER_WEAPON"
+    self.frame.scRenderKind = nextType == TYPE_PLAYER
+        and "TRANSMORPHER_ARMOR" or "TRANSMORPHER_WEAPON"
     if self.frame.scCard then self.frame.scCard:Show() end
     if self.frame.scUnavailable then self.frame.scUnavailable:Hide() end
     if self.objectModel then
@@ -568,18 +563,13 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
         return setUnavailable(self, typeReason)
     end
 
-    if nextType == TYPE_PLAYER then
-        local ok, reason = self:RenderArmor(record)
-        return ok, ok and (typeChanged and "TYPE_CHANGED" or "RELOADED") or reason
-    end
-
     -- Transmorpher clears each recycled model before QueryItem and only calls
     -- Reset/Undress/TryOn after item data is ready.  The global queue submits
-    -- at most one cached weapon TryOn per UI frame, preventing 18 replaceable
-    -- shield textures from being rebound in one frame when paging backwards.
-    self.weaponSetup = nil
+    -- at most one cached item TryOn per UI frame. This preserves its renderer
+    -- order without issuing 18 armor or shield rebuilds in the same frame.
+    self.transmorpherSetup = nil
     self.weaponDescriptor = nil
-    self.pendingWeaponRender = nil
+    self.pendingItemRender = nil
     safeCall(self.frame, "ClearModel")
     local expectedGeneration = self.generation
     local function onItemReady(itemId, success)
@@ -593,14 +583,14 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
             setUnavailable(self, "ITEM_QUERY_FAILED")
             return
         end
-        queueWeaponRender(self, self.record, expectedGeneration)
+        queueItemRender(self, self.record, expectedGeneration)
     end
     if ItemQuery and type(ItemQuery.Query) == "function" then
         local requested, queryReason = ItemQuery:Query(record.itemId, onItemReady)
         if not requested then return setUnavailable(self, queryReason or "ITEM_QUERY_FAILED") end
         return true, queryReason or "QUERYING"
     end
-    queueWeaponRender(self, record, expectedGeneration)
+    queueItemRender(self, record, expectedGeneration)
     return true, typeChanged and "TYPE_CHANGED" or "QUEUED"
 end
 
@@ -610,16 +600,15 @@ function WardrobeItemsModelMixin:Clear()
     self.record = nil
     self.recordKey = nil
     self.type = nil
-    self.weaponSetup = nil
+    self.transmorpherSetup = nil
     self.weaponDescriptor = nil
-    self.pendingWeaponRender = nil
+    self.pendingItemRender = nil
     self.frame:SetScript("OnUpdate", nil)
     self.frame.scRecord = nil
     self.frame.scRecordId = nil
     self.frame.scRenderKind = nil
     self.frame.scRuntimeUnavailableReason = nil
-    self.frame.scEzFreeze = nil
-    resetCameraState(self.frame)
+    resetPreviewState(self.frame)
     safeCall(self.frame, "SetPosition", 0, 0, 0)
     safeCall(self.frame, "SetFacing", 0)
     safeCall(self.frame, "ClearModel")
@@ -652,7 +641,7 @@ function Model:Attach(frame, objectModel)
         lifecycle:OnModelLoaded()
     end)
     safeCall(frame, "SetModelScale", TYPE_SCALE[TYPE_PLAYER])
-    applyEzCollectionsLight(frame)
+    applyTransmorpherLight(frame)
     lifecycle:SetType(TYPE_PLAYER, false)
     self.lifecycles[frame] = lifecycle
     return lifecycle
