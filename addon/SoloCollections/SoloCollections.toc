@@ -16,6 +16,7 @@ Data\Generated\IdentityRegistry.lua
 Data\Generated\PolicyRegistry.lua
 Data\Generated\CameraProfiles.lua
 Data\EzCollectionsCamera.lua
+Data\TransmorpherPreviewSetup.lua
 Data\Mounts.lua
 Data\Pets.lua
 Data\Toys.lua
@@ -26,6 +27,8 @@ Core\CollectionState.lua
 Core\Catalog.lua
 Core\Bridge.lua
 Core\M2Camera.lua
+Core\NativePreview.lua
+Core\TransmorpherItemQuery.lua
 Core\ModelProvider.lua
 UI\DragonUI\MountJournal.lua
 UI\EzCollections\Templates.lua
@@ -33,8 +36,12 @@ UI\Templates.lua
 UI\Launcher.lua
 UI\Wardrobe\Layout.lua
 UI\Wardrobe\ItemPresenter.lua
+UI\EzWardrobe\DataProvider.lua
+UI\EzWardrobe\Assets.lua
+UI\EzWardrobe\Model.lua
+UI\EzWardrobe\Items.xml
+UI\EzWardrobe\Items.lua
 UI\Wardrobe\Filters.lua
-UI\Wardrobe\CameraWorkbench.lua
 UI\CompanionBase.lua
 UI\Mounts.lua
 UI\Pets.lua

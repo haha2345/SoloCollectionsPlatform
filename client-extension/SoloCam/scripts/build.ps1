@@ -128,7 +128,7 @@ if ($LASTEXITCODE -ne 0) {
 $DllCommand = @(
     "call `"$VcVars`" x86 >nul",
     "cd /d `"$ObjectRoot`"",
-    "cl.exe /nologo /std:c++17 /LD /O2 /EHsc /MT /W4 /WX /DWIN32 /D_WINDOWS `"$ProjectRoot\src\SoloCam.cpp`" `"$ProjectRoot\src\InlineHook.cpp`" `"$ProjectRoot\src\CameraProfile.cpp`" `"$ProjectRoot\src\BodyCameraBridge.cpp`" `"$ProjectRoot\src\DisplayInfoBridge.cpp`" `"$ProjectRoot\src\ItemCameraBridge.cpp`" /I`"$ProjectRoot\src`" /link /OUT:`"$SoloCamDll`" /PDB:`"$SoloCamPdb`""
+    "cl.exe /nologo /std:c++17 /LD /O2 /EHsc /MT /W4 /WX /DWIN32 /D_WINDOWS `"$ProjectRoot\src\SoloCam.cpp`" `"$ProjectRoot\src\InlineHook.cpp`" `"$ProjectRoot\src\CameraProfile.cpp`" `"$ProjectRoot\src\BodyCameraBridge.cpp`" `"$ProjectRoot\src\DisplayInfoBridge.cpp`" `"$ProjectRoot\src\ItemCameraBridge.cpp`" `"$ProjectRoot\src\PreviewItemBridge.cpp`" /I`"$ProjectRoot\src`" /link user32.lib /OUT:`"$SoloCamDll`" /PDB:`"$SoloCamPdb`""
 ) -join ' && '
 
 & cmd.exe /d /s /c $DllCommand

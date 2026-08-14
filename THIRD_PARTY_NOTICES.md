@@ -12,6 +12,7 @@ This file is a publication checklist, not a completed grant of rights.
 | AzerothCore/ALE API | Server bridge targets the AzerothCore ALE environment | Document compatibility; do not imply AzerothCore endorsement |
 | DragonUI integrated UI | Not vendored by the public SoloCollections source release | The optional integrated archive is assembled from SoloClientSuite; pinned commits, patch state, hashes, and license review state are recorded in its `upstream/suite-lock.json` |
 | ezCollections wardrobe cards and Classic cameras | `addon/SoloCollections/UI/EzCollections/Templates.lua` adapts the 78x104 wardrobe card chrome; `addon/SoloCollections/Data/EzCollectionsCamera.lua` preserves the Classic and weapon camera tuples from `Data/Camera.lua` SHA-256 `364310ecb57da13a410f98638499d0db31267170fcd7a230f23b1b8430333fe3` | Preserve this provenance record, audit the upstream grant/license before public redistribution, and keep proprietary game art in the separately assembled client asset package |
+| Transmorpher weapon preview | The namespaced preview setup and lifecycle projection is pinned to upstream commit `8a8140fa54e424699da00d3a21359b43b79efddc`; `PreviewSetupDB.lua` SHA-256 is `B550F596C7FE94D5B3844D9ECD2D5A0B44BAD2E6E2B2525C3A6A92FCD3D039B4` | Upstream currently has no explicit license file in the audited snapshot; obtain permission or replace the projection before public redistribution |
 
 Game names and marks belong to their respective owners. This project must not
 distribute proprietary game executables or archives.

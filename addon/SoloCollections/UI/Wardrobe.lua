@@ -2,22 +2,19 @@ local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
 local Identity = SC.IdentityRegistry
-local EzCamera = SC.EzCollectionsCamera
+local EzModel = SC.EzWardrobe.Model
+local EzItems = SC.EzWardrobe.Items
 
-local ITEM_ROWS = 3
-local ITEM_COLUMNS = 6
-local ITEM_PAGE_SIZE = ITEM_ROWS * ITEM_COLUMNS
-local WORKBENCH_ITEM_COLUMNS = 4
-local WORKBENCH_ITEM_PAGE_SIZE = ITEM_ROWS * WORKBENCH_ITEM_COLUMNS
+local ITEM_PAGE_SIZE = EzItems.PAGE_SIZE
 local EZ_LAYOUT = {
-    itemWidth = 78,
-    itemHeight = 104,
-    itemGapX = 16,
-    itemGapY = 24,
+    itemWidth = EzItems.LAYOUT.itemWidth,
+    itemHeight = EzItems.LAYOUT.itemHeight,
+    itemGapX = EzItems.LAYOUT.itemGapX,
+    itemGapY = EzItems.LAYOUT.itemGapY,
     -- The ezCollections grid is 548px wide. Wardrobe now uses the same 768px
     -- journal width as mounts, so keep the copied six-column grid centered.
-    itemStartX = 102,
-    itemStartY = 85,
+    itemStartX = EzItems.LAYOUT.itemStartX,
+    itemStartY = EzItems.LAYOUT.itemStartY,
     setColumns = 4,
     setWidth = 129,
     setHeight = 186,
@@ -34,24 +31,6 @@ local SET_PIECE_SPACING = 5
 local SET_PIECE_COLUMNS = 8
 local SET_PIECE_POOL_LIMIT = 12
 local DEFAULT_ROTATION = 0.18
--- SoloCam v4's direct CreatureDisplayInfo range is now owned by ModelProvider;
--- this page passes display identity through the presenter contract only.
-local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
-    HEAD = 0,
-    SHOULDER = 2,
-    SHIRT = 3,
-    CHEST = 4,
-    WAIST = 5,
-    LEGS = 6,
-    FEET = 7,
-    WRIST = 8,
-    HANDS = 9,
-    BACK = 14,
-    MAINHAND = 15,
-    OFFHAND = 16,
-    TABARD = 18,
-}
-
 local function showAppearanceActionResult(ok, reason)
     local message
     if ok then
@@ -100,8 +79,9 @@ local function showSetActionResult(ok, reason)
     end
 end
 
--- Legacy SoloCam/workbench profiles are retained below for historical tuning
--- data only. Active item cards use Data/EzCollectionsCamera.lua instead.
+--[=[ Reference-only legacy SoloCam/workbench profiles. This long-commented
+-- block is deliberately excluded from the active runtime chunk; item cards
+-- have no callable fallback to it.
 --
 -- WotLK player models expose only camera 0 (portrait) and camera 1
 -- (dressing-room). Adding a third camera to the player M2 crashes the client,
@@ -121,15 +101,11 @@ local WARDROBE_MODEL_PROFILES = {
     LEGS = { camera = 1, scaleMultiplier = 1.00, depthOffset = 0.00, horizontalOffset = 0.00, verticalOffset = 0.00, rotation = 0.08 },
     FEET = { camera = 1, scaleMultiplier = 1.00, depthOffset = 0.00, horizontalOffset = 0.00, verticalOffset = 0.00, rotation = 0.08 },
 }
+--]=]
 
 local CLASS_FILTERS = Identity.GetClassFilterOptions()
 
-local ARMOR_TYPE_FILTERS = {
-    { key = "PLATE", label = "板甲" },
-    { key = "MAIL", label = "锁甲" },
-    { key = "LEATHER", label = "皮甲" },
-    { key = "CLOTH", label = "布甲" },
-}
+local ARMOR_TYPE_FILTERS = SC.EzWardrobe.DataProvider.ARMOR_OPTIONS
 
 local SLOT_FILTERS = {
     { key = "HEAD", label = "头部", atlas = "head" },
@@ -257,10 +233,6 @@ local function getPlayerClassToken()
     return classIdentity.known and classIdentity.filterToken or nil
 end
 
-local function getDefaultArmorType()
-    return Identity.GetDefaultArmorType() or "AUTO"
-end
-
 local function weaponOptionSupportsSlot(option, slot)
     return (slot == "MAINHAND" and option.main) or (slot == "OFFHAND" and option.off)
 end
@@ -328,1072 +300,10 @@ local function resolveTryOnItem(itemId)
     return itemLink or ("item:" .. itemId)
 end
 
-local function hasAssetPackVersionMismatch(record)
-    local generated = SC.GeneratedCatalog or {}
-    local state = SC.CollectionState or {}
-    if state.assetMismatch then
-        return true
-    end
-    local generatedAssetPackVersion = generated.assetPackVersion
-    return record
-        and type(record.assetPackVersion) == "string"
-        and record.assetPackVersion ~= ""
-        and type(generatedAssetPackVersion) == "string"
-        and generatedAssetPackVersion ~= ""
-        and record.assetPackVersion ~= generatedAssetPackVersion
-end
 
-local function isStandaloneItemRecord(record)
-    local generated = SC.GeneratedCatalog or {}
-    return record
-        and record.renderMode == "STANDALONE"
-        and record.presentationStatus == "READY"
-        and record.presentationCapability == "DIRECT_DISPLAY_V1"
-        and STANDALONE_ITEM_SLOTS[record.slot]
-        and type(record.syntheticDisplayId) == "number"
-        and record.syntheticDisplayId == math.floor(record.syntheticDisplayId)
-        and record.syntheticDisplayId > 0
-        and record.syntheticDisplayId <= 0x00FFFFFF
-        and type(record.modelPath) == "string" and record.modelPath ~= ""
-        and type(record.assetPackVersion) == "string"
-        and record.assetPackVersion ~= ""
-        and record.assetPackVersion == generated.assetPackVersion
-        and not hasAssetPackVersionMismatch(record)
-end
-
-local function resolveItemIcon(record)
-    if not record then return nil end
-    if record.icon then return record.icon end
-    local itemId = tonumber(record.iconItemId) or tonumber(record.itemId)
-    if itemId and GetItemIcon then
-        return GetItemIcon(itemId)
-    end
-    return nil
-end
-
-local UNAVAILABLE_ITEM_REASON_LABELS = {
-    CLIENT_MODEL_READY_TIMEOUT = "预览加载超时",
-    CLIENT_RUNTIME_CRASH_132 = "客户端安全隔离",
-    INVALID_OR_MISSING_DISPLAY_TEXTURE = "显示纹理无效",
-    MISSING_TEXTURE_ASSET = "缺少纹理资源",
-    UNRESOLVED_M2_TEXTURE_REFERENCE = "模型纹理未解析",
-}
-
-local function unavailableItemReasonText(record, runtimeReason)
-    if hasAssetPackVersionMismatch(record) then
-        return "资源包版本不匹配"
-    end
-    local reasonCode = runtimeReason or (record and record.presentationReasonCode) or ""
-    local labels = {}
-    for code in string.gmatch(reasonCode, "[^;]+") do
-        table.insert(labels, UNAVAILABLE_ITEM_REASON_LABELS[code] or code)
-    end
-    if #labels == 0 then
-        return "该外观暂不可用"
-    end
-    return table.concat(labels, "；")
-end
-
--- A stable weapon-family key lets one in-game adjustment apply to every
--- matching sample. A record may supply a more specific family key when two
--- visual classes are mirrored (for example the two Azzinoth glaives).
-local function getWeaponFamilyCameraKey(record)
-    if record and type(record.cameraTuningKey) == "string" and record.cameraTuningKey ~= "" then
-        return record.cameraTuningKey
-    end
-    if record and type(record.weaponType) == "string" and record.weaponType ~= "" then
-        return record.weaponType
-    end
-    return record and record.id
-end
-
-local function getAppearanceCameraKey(record)
-    if record and tonumber(record.id) then
-        return "appearance:" .. tostring(math.floor(tonumber(record.id)))
-    end
-    return nil
-end
-
-local function getModelCameraKey(record)
-    if record and type(record.modelSignature) == "string"
-        and record.modelSignature:match("^m2:[a-f0-9][a-f0-9]+$") then
-        return record.modelSignature
-    end
-    return nil
-end
-
-local function getCameraTuningScopePose(scope, key)
-    if not key or not SC.CameraTuning or not SC.CameraTuning.Get then return nil end
-    return SC.CameraTuning.Get(scope, key)
-end
-
-local function isCameraTuningScopeSkipped(skippedScopes, scope)
-    return skippedScopes == scope
-        or (type(skippedScopes) == "table" and skippedScopes[scope])
-end
-
-local function getAutoM2CameraPose(record)
-    local autoCamera = record and (record.autoCamera or record.m2Camera)
-    if autoCamera and SC.M2Camera and SC.M2Camera.NormalizePose then
-        return SC.M2Camera.NormalizePose(autoCamera), "auto"
-    end
-    return nil, "auto"
-end
-
--- Generated model defaults are promoted from reviewed workbench evidence, not
--- read from SavedVariables. They therefore sit beneath a player's explicit
--- model/appearance adjustment but above the broad weapon-family fallback.
-local function getGeneratedModelM2CameraPose(record)
-    local override = record and record.generatedModelCameraOverride
-    local modelKey = getModelCameraKey(record)
-    if type(override) ~= "table" or not modelKey
-        or override.scope ~= "model"
-        or override.key ~= modelKey
-        or override.modelSignature ~= modelKey
-        or type(override.pose) ~= "table" then
-        return nil, "generatedModel"
-    end
-    if SC.M2Camera and SC.M2Camera.NormalizePose then
-        return SC.M2Camera.NormalizePose(override.pose), "generatedModel"
-    end
-    return nil, "generatedModel"
-end
-
-local function resolveM2CameraPose(record, skippedScopes)
-    if not record then return nil, "auto" end
-
-    local appearance = isCameraTuningScopeSkipped(skippedScopes, "appearance") and nil
-        or getCameraTuningScopePose("appearance", getAppearanceCameraKey(record))
-    if appearance then return appearance, "appearance" end
-
-    local model = isCameraTuningScopeSkipped(skippedScopes, "model") and nil
-        or getCameraTuningScopePose("model", getModelCameraKey(record))
-    if model then return model, "model" end
-
-    local generatedModel = isCameraTuningScopeSkipped(skippedScopes, "generatedModel") and nil
-        or select(1, getGeneratedModelM2CameraPose(record))
-    if generatedModel then return generatedModel, "generatedModel" end
-
-    local weaponFamily = isCameraTuningScopeSkipped(skippedScopes, "weaponFamily") and nil
-        or getCameraTuningScopePose("weaponFamily", getWeaponFamilyCameraKey(record))
-    if weaponFamily then return weaponFamily, "weaponFamily" end
-
-    return getAutoM2CameraPose(record)
-end
-
--- Editing a lower-priority scope must not inherit a higher-priority override.
--- Otherwise changing the model value beneath an appearance override would
--- silently save a duplicate appearance pose and could never be reasoned about
--- or reset independently. Use the scope's own value first, then only scopes
--- lower in the effective precedence chain.
-local function resolveM2CameraScopePose(record, scope)
-    if not record then return nil, "auto" end
-    local scopeKey = scope == "appearance" and getAppearanceCameraKey(record)
-        or scope == "model" and getModelCameraKey(record)
-        or getWeaponFamilyCameraKey(record)
-    local scopedPose = getCameraTuningScopePose(scope, scopeKey)
-    if scopedPose then return scopedPose, scope end
-    if scope == "appearance" then
-        return resolveM2CameraPose(record, { appearance = true })
-    elseif scope == "model" then
-        return resolveM2CameraPose(record, { appearance = true, model = true })
-    elseif scope == "weaponFamily" then
-        return getAutoM2CameraPose(record)
-    end
-    return resolveM2CameraPose(record)
-end
-
-local function getEffectiveM2CameraPose(model)
-    if not model or not model.scRecord then
-        return nil
-    end
-    local record = model.scRecord
-    -- Only the active pooled cards resolve a pose.  Cache the precedence
-    -- result by the generated presentation revision and in-session tuning
-    -- revision so frame callbacks never scan the full catalog.
-    local revision = table.concat({
-        tostring((SC.GeneratedCatalog or {}).appearancePresentationHash or ""),
-        tostring((SC.CameraTuning or {}).revision or 0),
-        tostring(record.assetPackVersion or ""),
-        tostring(record.id or ""),
-    }, ":")
-    if model.scEffectiveM2CameraPoseRevision == revision then
-        return model.scEffectiveM2CameraPose, model.scEffectiveM2CameraPoseSource
-    end
-
-    local pose, source
-    local appearance = getCameraTuningScopePose("appearance", getAppearanceCameraKey(record))
-    if appearance then
-        pose, source = appearance, "appearance"
-    else
-        local modelPose = getCameraTuningScopePose("model", getModelCameraKey(record))
-        if modelPose then
-            pose, source = modelPose, "model"
-        else
-            local generatedModel = select(1, getGeneratedModelM2CameraPose(record))
-            if generatedModel then
-                pose, source = generatedModel, "generatedModel"
-            else
-                local weaponFamily = getCameraTuningScopePose("weaponFamily", getWeaponFamilyCameraKey(record))
-                if weaponFamily then
-                    pose, source = weaponFamily, "weaponFamily"
-                else
-                    local autoCamera = record.autoCamera or record.m2Camera
-                    if autoCamera and SC.M2Camera and SC.M2Camera.NormalizePose then
-                        pose = SC.M2Camera.NormalizePose(autoCamera)
-                    end
-                    source = "auto"
-                end
-            end
-        end
-    end
-    model.scEffectiveM2CameraPoseRevision = revision
-    model.scEffectiveM2CameraPose = pose
-    model.scEffectiveM2CameraPoseSource = source
-    return pose, source
-end
-
-local function isM2CameraTunableRecord(record)
-    return isStandaloneItemRecord(record)
-        and type(record.autoCamera or record.m2Camera) == "table"
-        and SC.M2Camera
-        and SC.M2Camera.NormalizePose
-end
-
--- Retail set-list icons use a restrained glass rim rather than the broad
--- yellow collected-frame texture used by the original prototype. Keeping this
--- row local to Wardrobe avoids changing the visual language of mount/pet rows.
-local function createSetListRow(parent, width, onClick)
-    local row = CreateFrame("Button", nil, parent)
-    row:SetWidth(width or 330)
-    row:SetHeight(SET_ROW_HEIGHT)
-    row:RegisterForClicks("LeftButtonUp")
-
-    local background = row:CreateTexture(nil, "BACKGROUND")
-    background:SetTexture("Interface\\Buttons\\WHITE8X8")
-    background:SetAllPoints(row)
-    background:SetVertexColor(0.018, 0.016, 0.014, 0.78)
-
-    local selected = row:CreateTexture(nil, "BORDER")
-    selected:SetTexture("Interface\\Buttons\\WHITE8X8")
-    selected:SetPoint("TOPLEFT", row, "TOPLEFT", 1, -1)
-    selected:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -1, 1)
-    selected:SetGradientAlpha("HORIZONTAL", 0.46, 0.22, 0.045, 0.72, 0.17, 0.075, 0.02, 0.34)
-    selected:Hide()
-
-    local hover = row:CreateTexture(nil, "HIGHLIGHT")
-    hover:SetTexture("Interface\\Buttons\\WHITE8X8")
-    hover:SetPoint("TOPLEFT", row, "TOPLEFT", 1, -1)
-    hover:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -1, 1)
-    hover:SetGradientAlpha("HORIZONTAL", 0.72, 0.48, 0.13, 0.24, 0.42, 0.24, 0.06, 0.08)
-    row:SetHighlightTexture(hover)
-
-    local separator = row:CreateTexture(nil, "BORDER")
-    separator:SetTexture("Interface\\Buttons\\WHITE8X8")
-    separator:SetPoint("BOTTOMLEFT", row, "BOTTOMLEFT", 2, 0)
-    separator:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -2, 0)
-    separator:SetHeight(1)
-    separator:SetVertexColor(0.34, 0.29, 0.22, 0.34)
-
-    local iconHolder = CreateFrame("Frame", nil, row)
-    iconHolder:SetWidth(42)
-    iconHolder:SetHeight(42)
-    iconHolder:SetPoint("LEFT", row, "LEFT", 5, 0)
-    iconHolder:SetFrameLevel(row:GetFrameLevel() + 1)
-
-    local iconBackground = iconHolder:CreateTexture(nil, "BACKGROUND")
-    iconBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-    iconBackground:SetAllPoints(iconHolder)
-    iconBackground:SetVertexColor(0.018, 0.021, 0.024, 0.92)
-
-    local icon = iconHolder:CreateTexture(nil, "ARTWORK")
-    icon:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 2, -2)
-    icon:SetPoint("BOTTOMRIGHT", iconHolder, "BOTTOMRIGHT", -2, 2)
-    UI.SetFallbackTexture(icon)
-
-    local glass = iconHolder:CreateTexture(nil, "OVERLAY")
-    glass:SetTexture("Interface\\Buttons\\WHITE8X8")
-    glass:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 2, -2)
-    glass:SetPoint("TOPRIGHT", iconHolder, "TOPRIGHT", -2, -2)
-    glass:SetHeight(17)
-    glass:SetGradientAlpha("VERTICAL", 0.80, 0.88, 0.94, 0.02, 0.92, 0.96, 1.00, 0.18)
-
-    local iconBorder = UI.CreateThinCardBorder(iconHolder, 1)
-    iconBorder:SetBorderColor(0.44, 0.46, 0.48, 0.92)
-
-    local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    name:SetPoint("TOPLEFT", iconHolder, "TOPRIGHT", 10, -5)
-    name:SetPoint("RIGHT", row, "RIGHT", -28, 0)
-    name:SetJustifyH("LEFT")
-    name:SetTextColor(0.93, 0.77, 0.26)
-
-    local detail = row:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-    detail:SetPoint("BOTTOMLEFT", iconHolder, "BOTTOMRIGHT", 10, 5)
-    detail:SetPoint("RIGHT", row, "RIGHT", -28, 0)
-    detail:SetJustifyH("LEFT")
-    detail:SetTextColor(0.49, 0.48, 0.46)
-
-    local star = row:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    star:SetPoint("RIGHT", row, "RIGHT", -6, 0)
-    star:SetText("★")
-    star:SetTextColor(1.00, 0.82, 0.18)
-    star:Hide()
-
-    row:SetScript("OnClick", function(self)
-        if onClick and self.scRecord then
-            onClick(self, self.scRecord)
-        end
-    end)
-
-    function row:SetRecord(record)
-        self.scRecord = record
-        if not record then
-            selected:Hide()
-            star:Hide()
-            name:SetText("")
-            detail:SetText("")
-            self:Hide()
-            return
-        end
-
-        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)))
-        UI.SetCollectedVisual(icon, record.collected, 0.52)
-        name:SetText(record.name or "未知套装")
-        name:SetTextColor(record.collected and 0.96 or 0.59, record.collected and 0.79 or 0.59, record.collected and 0.28 or 0.57)
-        local owned = tonumber(record.collectedCount) or 0
-        local required = tonumber(record.requiredCount) or #(record.itemIds or {})
-        detail:SetText(setClassLabel(record) .. "  ·  " .. owned .. "/" .. required .. " 外观")
-        if record.collected then
-            iconBorder:SetBorderColor(0.66, 0.52, 0.24, 0.96)
-        else
-            iconBorder:SetBorderColor(0.39, 0.41, 0.43, 0.86)
-        end
-        if record.favorite then star:Show() else star:Hide() end
-        self:Show()
-    end
-
-    function row:SetSelected(value)
-        self.scSelected = value and true or false
-        if self.scSelected then selected:Show() else selected:Hide() end
-    end
-
-    row.scIcon = icon
-    row.scIconBorder = iconBorder
-    row.scName = name
-    row.scDetail = detail
-    row.scStar = star
-    SC.WardrobeUI.Layout:StyleListRow(row, background, selected)
-    return row
-end
-
-local function applyStandaloneItemTransform(model)
-    local record = model and model.scRecord
-    if not record then return false end
-    if model.SetModelScale then
-        pcall(function() model:SetModelScale(record.modelScale or 1.00) end)
-    end
-    if model.SetPosition then
-        local position = record.modelPosition or { 0, 0, 0 }
-        pcall(function() model:SetPosition(position[1] or 0, position[2] or 0, position[3] or 0) end)
-    end
-    -- When a record owns M2 camera 0 through SoloCam, orientation belongs to
-    -- the camera pose. Keep the actor unrotated so SetRotation cannot mask or
-    -- double the camera adjustment. Legacy records still retain their old
-    -- modelRotation/modelFacing fallback.
-    local rotation = 0
-    if not record.m2Camera then
-        rotation = record.modelRotation or record.modelFacing or 0
-    end
-    -- Standalone cards use PlayerModel through the DISPLAY presenter. In
-    -- 3.3.5 its visible actor is rotated by
-    -- CharacterModelBase:SetRotation; generic Model:SetFacing does not rotate
-    -- that SetCreature result even though the inherited method is present.
-    if model.SetRotation then
-        pcall(function() model:SetRotation(rotation) end)
-    elseif model.SetFacing then
-        pcall(function() model:SetFacing(rotation) end)
-    end
-    return true
-end
-
-local function applyStandaloneItemLighting(model)
-    if not model or not model.SetLight then return false end
-    -- A plain 3.3.5 Model widget does not inherit the lit dressing-room
-    -- environment used by DressUpModel. Without an explicit ambient/diffuse
-    -- light, opaque weapon passes render as a black silhouette while additive
-    -- effects remain visible. This is the legacy Model:SetLight signature:
-    -- enabled, omni, direction xyz, ambient intensity/rgb, diffuse intensity/rgb.
-    return pcall(function()
-        model:SetLight(
-            true, false,
-            -1.0, -0.7, -0.5,
-            0.82, 1.0, 1.0, 1.0,
-            0.72, 1.0, 0.95, 0.88
-        )
-    end)
-end
-
-local function applyStandaloneItemView(model)
-    applyStandaloneItemLighting(model)
-    local appliedM2Camera = false
-    local cameraPose, poseSource = getEffectiveM2CameraPose(model)
-    if model then model.scPoseSource = poseSource end
-    if model and cameraPose
-        and SC.M2Camera and SC.M2Camera.Apply then
-        appliedM2Camera = SC.M2Camera.Apply(model, cameraPose)
-    end
-    if not appliedM2Camera and model and model.SetCamera then
-        pcall(function() model:SetCamera(0) end)
-    end
-    return applyStandaloneItemTransform(model)
-end
-
-local STANDALONE_TRANSFORM_SETTLE_FRAMES = 6
-local STANDALONE_MODEL_READY_FRAMES = 120
-
-local function cancelStandaloneItemTransformQueue(model, expectedGeneration)
-    if not model then return end
-    if expectedGeneration and model.scStandaloneGeneration ~= expectedGeneration then return end
-    model.scStandaloneTransformQueued = nil
-    model.scStandaloneTransformFrames = nil
-    model:SetScript("OnUpdate", nil)
-end
-
-local function isStandaloneItemGenerationCurrent(model, expectedGeneration, expectedPageGeneration)
-    if not model or not model.scRecord
-        or model.scStandaloneGeneration ~= expectedGeneration
-        or model.scPageGeneration ~= expectedPageGeneration then
-        return false
-    end
-    local host = model.scHostModel
-    return not host or host.scItemGeneration == expectedPageGeneration
-end
-
-local function showStandaloneItemUnavailable(model, expectedGeneration, expectedPageGeneration, runtimeReason)
-    if expectedGeneration
-        and not isStandaloneItemGenerationCurrent(model, expectedGeneration, expectedPageGeneration) then
-        return
-    end
-    local host = model and model.scHostModel
-    local record = model and model.scRecord
-    cancelStandaloneItemTransformQueue(model, expectedGeneration)
-    if model then
-        model:ClearModel()
-        model:Hide()
-    end
-    if not host then return end
-    host:SetScript("OnUpdate", nil)
-    host:ClearModel()
-    host:Hide()
-    host.scRenderKind = "UNAVAILABLE"
-    host.scRuntimeUnavailableReason = runtimeReason or "CLIENT_MODEL_READY_TIMEOUT"
-    if host.scUnavailableIcon then
-        UI.SetIconTexture(host.scUnavailableIcon, resolveItemIcon(record))
-    end
-    if host.scUnavailableText then
-        host.scUnavailableText:SetText(unavailableItemReasonText(record, host.scRuntimeUnavailableReason))
-    end
-    if host.scUnavailable then host.scUnavailable:Show() end
-end
-
-local function queueStandaloneItemTransform(model, expectedGeneration, expectedPageGeneration)
-    if not model or not model.scRecord then return end
-    expectedGeneration = expectedGeneration or model.scStandaloneGeneration
-    expectedPageGeneration = expectedPageGeneration or model.scPageGeneration
-    if not isStandaloneItemGenerationCurrent(model, expectedGeneration, expectedPageGeneration) then return end
-    model.scStandaloneTransformQueued = true
-    model.scStandaloneTransformFrames = 0
-    model:SetScript("OnUpdate", function(self)
-        if not self.scStandaloneTransformQueued
-            or not isStandaloneItemGenerationCurrent(self, expectedGeneration, expectedPageGeneration) then
-            cancelStandaloneItemTransformQueue(self, expectedGeneration)
-            return
-        end
-
-        self.scStandaloneTransformFrames = self.scStandaloneTransformFrames + 1
-        -- SetCreature and SetCamera rebuild the legacy model asynchronously.
-        -- Reapply the item transform for several frames so the late camera
-        -- rebuild cannot restore the default diagonal.
-        if self.scStandaloneTransformFrames >= 2 then
-            applyStandaloneItemLighting(self)
-            applyStandaloneItemTransform(self)
-        end
-        if self.scStandaloneTransformFrames >= STANDALONE_TRANSFORM_SETTLE_FRAMES then
-            local actualModel = self.GetModel and self:GetModel() or nil
-            local expectedModel = self.scRecord and self.scRecord.modelPath or nil
-            if type(actualModel) == "string" and type(expectedModel) == "string"
-                and string.lower(actualModel) == string.lower(expectedModel) then
-                cancelStandaloneItemTransformQueue(self, expectedGeneration)
-            elseif self.scStandaloneTransformFrames >= STANDALONE_MODEL_READY_FRAMES then
-                showStandaloneItemUnavailable(
-                    self,
-                    expectedGeneration,
-                    expectedPageGeneration,
-                    "CLIENT_MODEL_READY_TIMEOUT"
-                )
-            end
-        end
-    end)
-end
-
-local function applyStandaloneItemRecord(model, record, pageGeneration)
-    if not model then return end
-    cancelStandaloneItemTransformQueue(model)
-    model.scStandaloneGeneration = (model.scStandaloneGeneration or 0) + 1
-    local generation = model.scStandaloneGeneration
-    model.scPageGeneration = pageGeneration or generation
-    if not record then
-        if model.scPresenter then model.scPresenter:Clear("NO_RECORD") end
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecord = nil
-        model.scRecordId = nil
-        model.scCameraPoseOverride = nil
-        model.scEffectiveM2CameraPoseRevision = nil
-        model.scEffectiveM2CameraPose = nil
-        model.scEffectiveM2CameraPoseSource = nil
-        model.scPoseSource = nil
-        model:ClearModel()
-        model:Hide()
-        return
-    end
-
-    local unchanged = model.scRecordId == record.id
-        and model.scRecord
-        and model.scRecord.syntheticDisplayId == record.syntheticDisplayId
-        and model.scRecord.modelPath == record.modelPath
-    model.scRecord = record
-    -- A pooled PlayerModel may have shown another record on the previous page.
-    -- The persisted pose is looked up by record ID in getEffectiveM2CameraPose;
-    -- clear the transient slider reference before assigning this new record.
-    model.scCameraPoseOverride = nil
-    model.scEffectiveM2CameraPoseRevision = nil
-    model.scRuntimeUnavailableReason = nil
-    model:Show()
-    if not unchanged then
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecordId = record.id
-        model:ClearModel()
-        if record.syntheticDisplayId and SC.ModelProvider then
-            model.scPresenter = model.scPresenter or SC.ModelProvider.Create("DISPLAY", model)
-            model.scPresenter:Present({
-                displayId = record.syntheticDisplayId,
-                cameraPose = select(1, resolveM2CameraPose(record)),
-                applyCamera = SC.M2Camera and SC.M2Camera.ApplyPresenterPose,
-                onUnavailable = function(reason)
-                    showStandaloneItemUnavailable(model, generation, model.scPageGeneration, reason)
-                end,
-            })
-        end
-    end
-    applyStandaloneItemView(model)
-    queueStandaloneItemTransform(model, generation, model.scPageGeneration)
-end
-
-local function getCharacterCameraProfileForSlot(slot)
-    if not slot then
-        return nil
-    end
-    local cameraProfiles = SC.CameraProfiles
-    if not cameraProfiles or type(cameraProfiles.GetProfile) ~= "function" then
-        return nil
-    end
-    local _, raceToken = UnitRace("player")
-    local clientAssetProfile = nil
-    if SC.IdentityRegistry and SC.IdentityRegistry.ResolveCameraProfile then
-        clientAssetProfile = SC.IdentityRegistry.ResolveCameraProfile()
-    end
-    return cameraProfiles.GetProfile(
-        raceToken,
-        UnitSex("player"),
-        slot,
-        clientAssetProfile
-    )
-end
-
-local function getCharacterCameraProfile(model)
-    return model and model.scRecord and getCharacterCameraProfileForSlot(model.scRecord.slot) or nil
-end
-
-local function getCharacterCameraSentinel(model)
-    local profile = getCharacterCameraProfile(model)
-    return profile and profile.sentinel or nil
-end
-
-local function getBodyCameraDelta(profile)
-    if not profile or not profile.profileKey or not SC.BodyCameraTuning
-        or not SC.BodyCameraTuning.Get then
-        return nil
-    end
-    return SC.BodyCameraTuning.Get(profile.profileKey)
-end
-
-local function isBodyCameraTunableRecord(record)
-    return record and record.renderMode == "BODY"
-        and getCharacterCameraProfileForSlot(record.slot) ~= nil
-        and SC.M2Camera and SC.M2Camera.NormalizeBodyDelta
-end
-
-local function getNativeBodyFacing(record, camera)
-    -- SoloCam's body camera looks toward the opposite side of stock camera 1.
-    -- The ezCollections BACK sentinel (pi) therefore exposes the character's
-    -- front and hides the cloak. Facing zero restores ez's intended rear view.
-    if record and record.slot == "BACK" then return 0 end
-    return camera and camera[4]
-end
-
-local function selectItemModelCamera(model)
-    local record = model and model.scRecord
-    local isWeapon = EzCamera and EzCamera:IsWeaponRecord(record)
-    local camera, cameraID, cameraReason
-    if EzCamera and type(EzCamera.GetRecordCamera) == "function" then
-        camera, cameraID, cameraReason = EzCamera:GetRecordCamera(record)
-    else
-        cameraReason = "EZ_CAMERA_ADAPTER_UNAVAILABLE"
-    end
-    model.scEzCameraID = cameraID
-    model.scEzCameraReason = cameraReason
-    model.scEzCameraTuple = camera
-    model.scEzAnimID = EzCamera and EzCamera:GetRecordAnimation(record, camera) or model.scEzAnimID
-
-    if isWeapon then
-        model.scClientCameraSentinel = nil
-        model.scUsesClientCamera = false
-        model.scBodyCameraProfile = nil
-        if EzCamera and type(EzCamera.ActivateRecordCamera) == "function" then
-            local activated, reason = EzCamera:ActivateRecordCamera(model)
-            model.scBodyCameraReason = reason
-            return activated, reason
-        end
-        model.scBodyCameraReason = "EZ_CAMERA_ACTIVATOR_UNAVAILABLE"
-        return false, model.scBodyCameraReason
-    end
-
-    -- Armor cards follow ezCollections verbatim.  Its
-    -- WardrobeItemsModelTemplate never selects a custom body camera: the
-    -- race/sex/inventory tuple is applied directly to the player
-    -- DressUpModel.  In particular, do not send the older SoloCollections
-    -- generated-profile sentinel here; that creates a second camera owner and
-    -- makes pooled cards depend on whether they were first used on page one or
-    -- on a later page.
-    model.scClientCameraSentinel = nil
-    model.scUsesClientCamera = false
-    model.scBodyCameraProfile = nil
-    model.scBodyCameraReason = camera and "EZ_COLLECTIONS_DIRECT" or cameraReason
-    return camera ~= nil, model.scBodyCameraReason
-end
-
-local function captureItemModelBaseline(model)
-    if model.scBaselineGeneration == model.scAppearanceGeneration
-        and type(model.scNativeScale) == "number"
-        and type(model.scNativeHorizontal) == "number"
-        and type(model.scNativeVertical) == "number"
-        and type(model.scNativeDepth) == "number" then
-        return true
-    end
-    if not model.GetModelScale or not model.GetPosition then
-        return false
-    end
-
-    local scaleOk, nativeScale = pcall(function() return model:GetModelScale() end)
-    local positionOk, nativeHorizontal, nativeVertical, nativeDepth = pcall(function() return model:GetPosition() end)
-    if not scaleOk or type(nativeScale) ~= "number" or nativeScale <= 0
-        or not positionOk or type(nativeHorizontal) ~= "number"
-        or type(nativeVertical) ~= "number" or type(nativeDepth) ~= "number" then
-        return false
-    end
-
-    model.scNativeScale = nativeScale
-    model.scNativeHorizontal = nativeHorizontal
-    model.scNativeVertical = nativeVertical
-    model.scNativeDepth = nativeDepth
-    model.scBaselineGeneration = model.scAppearanceGeneration
-    return true
-end
-
-local function applyItemModelTransform(model)
-    if not EzCamera or type(EzCamera.ApplyRecordCamera) ~= "function" then
-        model.scEzCameraID = nil
-        model.scEzCameraReason = "EZ_CAMERA_ADAPTER_UNAVAILABLE"
-        model.scBodyCameraReason = model.scEzCameraReason
-        return false, model.scEzCameraReason
-    end
-    local applied, reason, cameraID = EzCamera:ApplyRecordCamera(model, model.scRecord)
-    model.scEzCameraID = cameraID
-    model.scEzCameraReason = reason or (applied and "READY" or "CAMERA_APPLY_FAILED")
-    model.scBodyCameraReason = model.scEzCameraReason
-    return applied, model.scEzCameraReason
-end
-
-local reportedEzCameraFailures = {}
-
-local function reportEzCameraFailure(model)
-    if not model or not model.scRecord or not model.scEzCameraReason then return end
-    local record = model.scRecord
-    local key = table.concat({
-        tostring(record.slot or "UNKNOWN"),
-        tostring(model.scEzCameraReason),
-        tostring(model.scEzCameraID or "NONE"),
-    }, ":")
-    if reportedEzCameraFailures[key] then return end
-    reportedEzCameraFailures[key] = true
-    if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
-        DEFAULT_CHAT_FRAME:AddMessage(string.format(
-            "|cffff6060[SoloCollections]|r ezCollections镜头应用失败：slot=%s reason=%s camera=%s",
-            tostring(record.slot or "UNKNOWN"),
-            tostring(model.scEzCameraReason),
-            tostring(model.scEzCameraID or "NONE")
-        ))
-    end
-end
-
-local function queueItemModelView(model, force)
-    if not model.scRecord or model.scApplyingAppearance or model.scApplyingView then
-        return false
-    end
-    if not force then
-        if model.scViewStage then
-            return false
-        end
-        if model.scViewAppliedGeneration == model.scAppearanceGeneration then
-            return false
-        end
-    end
-    model.scViewStage = "SETTLE"
-    model.scViewFrames = 0
-    model.scViewRetryCount = 0
-    if model.scUpdateHandler then
-        model:SetScript("OnUpdate", model.scUpdateHandler)
-    end
-    return true
-end
-
--- ezCollections applies its UI camera during the item refresh and again from
--- OnModelLoaded.  The 3.3.5 frame exposes OnUpdateModel instead, so this short
--- settle queue repeats the same tuple after late SetUnit/TryOn rebuilds.
-local function finishPendingItemModelView(model)
-    if not model.scViewStage or model.scPendingItemString or model.scApplyingAppearance or model.scApplyingView then
-        return false
-    end
-
-    if model.scViewStage == "SETTLE" then
-        model.scViewFrames = model.scViewFrames + 1
-        if model.scViewFrames < 2 then
-            return true
-        end
-        model.scViewStage = "TRANSFORM"
-        return true
-    end
-
-    if model.scViewStage == "TRANSFORM" then
-        model.scApplyingView = true
-        local selected = selectItemModelCamera(model)
-        local applied = selected and applyItemModelTransform(model)
-        model.scApplyingView = nil
-        if applied then
-            model.scViewStage = nil
-            model.scViewFrames = nil
-            model.scViewRetryCount = nil
-            model.scViewAppliedGeneration = model.scAppearanceGeneration
-        else
-            model.scViewRetryCount = (model.scViewRetryCount or 0) + 1
-            if model.scViewRetryCount < 8 then
-                model.scViewStage = "SETTLE"
-                model.scViewFrames = 0
-            else
-                -- Do not lie about success. Preserve the failure reason on the
-                -- model for runtime inspection and wait for the next refresh.
-                model.scViewStage = nil
-                model.scViewFrames = nil
-                model.scViewAppliedGeneration = nil
-                reportEzCameraFailure(model)
-            end
-        end
-        return true
-    end
-
-    model.scViewStage = nil
-    model.scViewFrames = nil
-    return false
-end
-
-local showEzCardUnavailable
-
-local function finishPendingItemModel(model, elapsed)
-    if not model.scPendingItemString or model.scApplyingAppearance then
-        return false
-    end
-
-    if model.GetModel then
-        local loaded, modelPath = pcall(function() return model:GetModel() end)
-        if not loaded or type(modelPath) ~= "string" or modelPath == "" then
-            model.scModelReadyFrames = 0
-            model.scModelWaitElapsed = (model.scModelWaitElapsed or 0) + (elapsed or 0)
-            if model.scModelWaitElapsed >= 5 and showEzCardUnavailable then
-                showEzCardUnavailable(
-                    model,
-                    model.scRecord,
-                    model.scRenderKind == "EZ_WEAPON" and "PREVIEW_CREATURE_LOAD_TIMEOUT"
-                        or "PLAYER_MODEL_LOAD_FAILED"
-                )
-                return true
-            end
-            return false
-        end
-    end
-
-    model.scModelReadyFrames = (model.scModelReadyFrames or 0) + 1
-    if model.scModelReadyFrames < 2 then
-        return false
-    end
-
-    local itemString = model.scPendingItemString
-    model.scPendingItemString = nil
-    model.scModelReadyFrames = nil
-    model.scModelWaitElapsed = nil
-    model.scApplyingAppearance = true
-    -- Exact ezCollections UpdateItems order for armor: apply the camera tuple
-    -- before changing the displayed item.  TryOn does not rebuild the player
-    -- DressUpModel, so there is no second camera selection afterward.
-    local cameraApplied = false
-    if model.scRenderKind == "EZ_ARMOR" then
-        local selected = selectItemModelCamera(model)
-        cameraApplied = selected and applyItemModelTransform(model) or false
-    end
-    if model.Undress then
-        pcall(function() model:Undress() end)
-    end
-    pcall(function() model:TryOn(itemString) end)
-    model.scApplyingAppearance = nil
-    if model.scRenderKind == "EZ_ARMOR" and cameraApplied then
-        model.scViewStage = nil
-        model.scViewAppliedGeneration = model.scAppearanceGeneration
-    else
-        queueItemModelView(model, true)
-    end
-    return true
-end
-
--- ezCollections intentionally pins every card to animation frame zero. Keep
--- the updater attached to visible cards for that exact static presentation;
--- the same callback also completes the asynchronous SetUnit/SetCreature/TryOn
--- and camera stages.
-local function updatePendingItemModel(self, elapsed)
-    local appearanceApplied = finishPendingItemModel(self, elapsed)
-    if not appearanceApplied then
-        finishPendingItemModelView(self)
-    end
-    if self.scEzFreeze and self.SetSequenceTime and self.scEzAnimID then
-        pcall(function() self:SetSequenceTime(self.scEzAnimID, 0) end)
-    end
-    if not self.scPendingItemString and not self.scViewStage and not self.scEzFreeze then
-        self:SetScript("OnUpdate", nil)
-    end
-end
-
-local function clearEzItemModelState(model)
-    model.scRecord = nil
-    model.scRecordId = nil
-    model.scProfile = nil
-    model.scClientCameraSentinel = nil
-    model.scUsesClientCamera = nil
-    model.scBodyCameraProfile = nil
-    model.scBodyCameraReason = nil
-    model.scEzCameraTuple = nil
-    model.scPendingItemString = nil
-    model.scModelReadyFrames = nil
-    model.scModelWaitElapsed = nil
-    model.scApplyingAppearance = nil
-    model.scAppearanceGeneration = nil
-    model.scViewAppliedGeneration = nil
-    model.scViewStage = nil
-    model.scViewFrames = nil
-    model.scViewRetryCount = nil
-    model.scApplyingView = nil
-    model.scNativeScale = nil
-    model.scNativeHorizontal = nil
-    model.scNativeVertical = nil
-    model.scNativeDepth = nil
-    model.scBaselineGeneration = nil
-    model.scRenderKind = nil
-    model.scEzFreeze = nil
-    model.scEzAnimID = nil
-    model.scEzCameraID = nil
-    model.scEzCameraReason = nil
-    model.scEzExpectedScale = nil
-    model.scEzExpectedX = nil
-    model.scEzExpectedY = nil
-    model.scEzExpectedZ = nil
-    model.scEzExpectedFacing = nil
-    model.scEzVerifyElapsed = nil
-    model.scEzRetentionReason = nil
-    model.scEzRetentionRepairs = nil
-    model:SetScript("OnUpdate", nil)
-end
-
-local function applyEzCollectionsCardLight(model)
-    if not model or not model.SetLight then return end
-    -- Exact WardrobeItemsModelMixin light from ezCollections.
-    pcall(function()
-        model:SetLight(1, 0, -1, 1, -1, 1.05, 1, 1, 1, 0, 1, 1, 1)
-    end)
-end
-
-showEzCardUnavailable = function(model, record, reason)
-    model.scRuntimeUnavailableReason = reason or "PREVIEW_CREATURE_UNAVAILABLE"
-    model.scPendingItemString = nil
-    model.scViewStage = nil
-    model.scEzFreeze = nil
-    model:SetScript("OnUpdate", nil)
-    model:ClearModel()
-    model:Hide()
-    if model.scUnavailableIcon then UI.SetIconTexture(model.scUnavailableIcon, resolveItemIcon(record)) end
-    if model.scUnavailableText then
-        model.scUnavailableText:SetText(
-            reason == "PLAYER_MODEL_LOAD_FAILED" and "装备预览未就绪" or "武器预览骨架未就绪"
-        )
-    end
-    if model.scUnavailable then model.scUnavailable:Show() end
-end
-
-local function applyItemModelRecord(model, record, pageGeneration)
-    local objectModel = model.scObjectModel
-    local itemPresenter = SC.WardrobeUI and SC.WardrobeUI.ItemPresenter
+local function applyItemModelRecord(model, record, pageGeneration, force)
     pageGeneration = pageGeneration or ((model.scItemGeneration or 0) + 1)
-    model.scItemGeneration = pageGeneration
-
-    if not record then
-        if itemPresenter then itemPresenter:ClearBody(model, "NO_ITEM") end
-        clearEzItemModelState(model)
-        if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
-        if model.SetFacing then pcall(function() model:SetFacing(0) end) end
-        model:ClearModel()
-        model:Hide()
-        applyStandaloneItemRecord(objectModel, nil, pageGeneration)
-        if model.scCard then model.scCard:Hide() end
-        if model.scUnavailable then model.scUnavailable:Hide() end
-        return
-    end
-
-    local previousRecord = model.scRecord
-    local previousRenderKind = model.scRenderKind
-    local previousRuntimeUnavailable = model.scRuntimeUnavailableReason
-    local isWeapon = EzCamera and EzCamera:IsWeaponRecord(record)
-    local renderKind = isWeapon and "EZ_WEAPON" or "EZ_ARMOR"
-    local unchanged = model.scRecordId == record.id
-        and model.scRenderKind == renderKind
-        and not model.scRuntimeUnavailableReason
-
-    model.scRecord = record
-    model.scRecordId = record.id
-    model.scProfile = nil
-    model.scRenderKind = renderKind
-    model.scRuntimeUnavailableReason = nil
-    model.scEzFreeze = true
-    model.scEzAnimID = EzCamera and EzCamera:GetRecordAnimation(record) or (isWeapon and 51 or 15)
-    if model.scCard then model.scCard:Show() end
-    if model.scUnavailable then model.scUnavailable:Hide() end
-
-    -- The copied ezCollections route uses the DressUpModel for both armor and
-    -- weapons. Retire the old synthetic standalone PlayerModel for this page.
-    applyStandaloneItemRecord(objectModel, nil, pageGeneration)
-    model:Show()
-    applyEzCollectionsCardLight(model)
-
-    if unchanged then
-        if not isWeapon then
-            selectItemModelCamera(model)
-            applyItemModelTransform(model)
-        else
-            queueItemModelView(model, true)
-        end
-        return
-    end
-
-    if itemPresenter then itemPresenter:ClearBody(model, isWeapon and "EZ_WEAPON" or "EZ_ARMOR") end
-    model.scPendingItemString = nil
-    model.scModelReadyFrames = nil
-    model.scModelWaitElapsed = nil
-    model.scAppearanceGeneration = (model.scAppearanceGeneration or 0) + 1
-    model.scViewAppliedGeneration = nil
-    model.scViewStage = nil
-    model.scViewFrames = nil
-    model.scViewRetryCount = nil
-    model.scApplyingAppearance = nil
-    model.scApplyingView = nil
-    model.scNativeScale = nil
-    model.scNativeHorizontal = nil
-    model.scNativeVertical = nil
-    model.scNativeDepth = nil
-    model.scBaselineGeneration = nil
-
-    -- ezCollections keeps the same 18 player DressUpModels alive while the
-    -- user changes pages.  Rebuild only when the equipment slot (or renderer
-    -- kind) changes; page changes merely redress the existing player model.
-    local reuseArmorModel = not isWeapon
-        and previousRenderKind == "EZ_ARMOR"
-        and previousRecord and previousRecord.slot == record.slot
-        and not previousRuntimeUnavailable
-    if reuseArmorModel then
-        local selected = selectItemModelCamera(model)
-        local cameraApplied = selected and applyItemModelTransform(model) or false
-        model.scApplyingAppearance = true
-        if model.Undress then pcall(function() model:Undress() end) end
-        pcall(function() model:TryOn(resolveTryOnItem(record.itemId)) end)
-        model.scApplyingAppearance = nil
-        if cameraApplied then
-            model.scViewAppliedGeneration = model.scAppearanceGeneration
-        else
-            queueItemModelView(model, true)
-        end
-        model:SetScript("OnUpdate", model.scUpdateHandler)
-        return
-    end
-
-    model:ClearModel()
-
-    if isWeapon then
-        local previewEntry = EzCamera and tonumber(EzCamera.weaponPreviewCreatureEntry)
-        if not previewEntry or not model.SetCreature then
-            showEzCardUnavailable(model, record, "PREVIEW_CREATURE_UNAVAILABLE")
-            return
-        end
-        if model.SetModelScale then pcall(function() model:SetModelScale(1) end) end
-        if model.SetRotation then pcall(function() model:SetRotation(0) end) end
-        local loaded = pcall(function() model:SetCreature(previewEntry) end)
-        if not loaded then
-            showEzCardUnavailable(model, record, "PREVIEW_CREATURE_LOAD_FAILED")
-            return
-        end
-        model.scPendingItemString = resolveTryOnItem(record.itemId)
-        model.scModelReadyFrames = 0
-        model.scModelWaitElapsed = 0
-        model:SetScript("OnUpdate", model.scUpdateHandler)
-        return
-    end
-
-    if not model.SetUnit then
-        showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
-        return
-    end
-    -- WardrobeItemsModelMixin:SetType("player") uses scale 10 and resets
-    -- position/facing before SetUnit.  Keep that exact initialization.
-    if model.SetModelScale then pcall(function() model:SetModelScale(10) end) end
-    if model.SetPosition then pcall(function() model:SetPosition(0, 0, 0) end) end
-    if model.SetFacing then pcall(function() model:SetFacing(0) end) end
-    local loaded = pcall(function() model:SetUnit("player") end)
-    if not loaded then
-        showEzCardUnavailable(model, record, "PLAYER_MODEL_LOAD_FAILED")
-        return
-    end
-    -- ezCollections assumes the stock dressing-room camera.  Select that
-    -- native camera once after rebuilding the player model so a DLL that
-    -- survived /reload cannot retain an older SoloCollections sentinel for a
-    -- recycled frame address.  Page changes never repeat this call.
-    if model.SetCamera then pcall(function() model:SetCamera(1) end) end
-    model.scPendingItemString = resolveTryOnItem(record.itemId)
-    model.scModelReadyFrames = 0
-    model.scModelWaitElapsed = 0
-    model:SetScript("OnUpdate", model.scUpdateHandler)
+    return EzModel:Present(model, record, pageGeneration, force)
 end
 
 SC.WardrobeUI.ItemCardRenderer = SC.WardrobeUI.ItemCardRenderer or {}
@@ -1402,18 +312,7 @@ local ItemCardRenderer = SC.WardrobeUI.ItemCardRenderer
 function ItemCardRenderer:Attach(model, objectModel)
     if model.scWardrobeItemCardRenderer then return end
     model.scWardrobeItemCardRenderer = true
-    model.scObjectModel = objectModel
-    objectModel.scHostModel = model
-    -- SetSequenceTime fires OnUpdateModel on this 3.3.5 client. Attaching a
-    -- camera replay there keeps resetting the settle queue every render frame,
-    -- so the final SoloCam transaction can never run. The pending TryOn state
-    -- machine below already supplies the required delayed application.
-    model:SetScript("OnUpdateModel", nil)
-    model.scUpdateHandler = updatePendingItemModel
-    objectModel:SetScript("OnUpdateModel", function(self)
-        applyStandaloneItemView(self)
-        queueStandaloneItemTransform(self)
-    end)
+    EzModel:Attach(model, objectModel)
 end
 
 function ItemCardRenderer:Present(model, record, generation)
@@ -1440,9 +339,8 @@ function UI.CreateWardrobePage(parent)
     page.scSetCards = {}
     page.scPieceIcons = {}
     local setSetOffset
-    local wardrobeFilters = SC.WardrobeUI.Filters:Create(page, Catalog)
-    SC.WardrobeUI.CameraWorkbench:Attach(page)
-
+    local itemDataProvider = SC.EzWardrobe.DataProvider:Create(page)
+    local wardrobeFilters = SC.WardrobeUI.Filters:Create(page, Catalog, itemDataProvider)
     local filterBar = CreateFrame("Frame", nil, page)
     filterBar:SetHeight(78)
     filterBar:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
@@ -1590,32 +488,7 @@ function UI.CreateWardrobePage(parent)
         xOffset = xOffset + 33 + (slotOption.gapAfter or 0)
     end
 
-    local itemsPanel = CreateFrame("Frame", nil, page)
-    itemsPanel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    itemsPanel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
-    local itemsInset = UI.EzCollections:ApplyInset(itemsPanel)
-    UI.EzCollections:AddShadowOverlay(itemsPanel)
-    SC.WardrobeUI.Layout:StylePanel(itemsPanel, itemsInset.background)
-
-    -- ezCollections keeps its invisman weapon skeleton resident; otherwise the
-    -- model may be evicted and weapon cards intermittently lose their actor.
-    local weaponPreloader = CreateFrame("DressUpModel", nil, UIParent)
-    weaponPreloader:SetWidth(1)
-    weaponPreloader:SetHeight(1)
-    weaponPreloader:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 0, 0)
-    weaponPreloader:EnableMouse(false)
-    function weaponPreloader:Refresh()
-        if not (EzCamera and EzCamera.weaponPreviewCreatureEntry and self.SetCreature) then return end
-        self:Hide()
-        self:Show()
-        pcall(function() self:SetCreature(EzCamera.weaponPreviewCreatureEntry) end)
-    end
-    weaponPreloader:RegisterEvent("UNIT_PORTRAIT_UPDATE")
-    weaponPreloader:SetScript("OnEvent", function(self, _, unit)
-        if unit == "player" then self:Refresh() end
-    end)
-    weaponPreloader:Refresh()
-    page.scWeaponPreloader = weaponPreloader
+    local itemsPanel, itemsInset = EzItems:CreatePanel(page)
 
     local setsPanel = CreateFrame("Frame", nil, page)
     setsPanel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
@@ -1966,11 +839,10 @@ function UI.CreateWardrobePage(parent)
                 itemModel.scSelected:Hide()
             end
         end
-        if page.SyncCameraTuningPanel then
-            page:SyncCameraTuningPanel(record)
-        end
     end
 
+--[=[ Reference-only in-game M2 camera tuner. The active item page neither
+-- creates these frames nor exposes a toggle/fallback path.
     -- In-game M2 camera tuner -------------------------------------------------
     -- This intentionally lives on the item page rather than in the ordinary
     -- options UI: a pose only makes sense while its exact weapon card is
@@ -2491,7 +1363,7 @@ function UI.CreateWardrobePage(parent)
 
     local function navigateCameraTuning(step, onlyUncalibrated)
         if not SC.db or not cameraTuningPanel.scRecord then return false end
-        local records = Catalog.QueryAll("APPEARANCES", SC.db.query, SC.db.filters)
+        local records = itemDataProvider:QueryAllItems()
         if #records == 0 then return false end
         local currentIndex = 1
         for index, record in ipairs(records) do
@@ -2992,6 +1864,7 @@ function UI.CreateWardrobePage(parent)
     cameraTuningButton:SetPoint("RIGHT", weaponDropdown, "LEFT", -4, 0)
     cameraTuningButton:SetText("镜头工作台")
     cameraTuningButton:SetScript("OnClick", function() page:ToggleCameraTuning() end)
+--]=]
 
     local function scrollItemPage(delta)
         if not delta or delta == 0 then return end
@@ -3004,185 +1877,26 @@ function UI.CreateWardrobePage(parent)
         page:Refresh()
     end
 
-    itemsPanel:EnableMouseWheel(true)
     itemsPanel:SetScript("OnMouseWheel", function(_, delta) scrollItemPage(delta) end)
 
-    for index = 1, ITEM_PAGE_SIZE do
-        local column = (index - 1) % ITEM_COLUMNS
-        local row = math.floor((index - 1) / ITEM_COLUMNS)
-        local itemCard = CreateFrame("Frame", nil, itemsPanel)
-        itemCard:SetWidth(EZ_LAYOUT.itemWidth)
-        itemCard:SetHeight(EZ_LAYOUT.itemHeight)
-        itemCard:SetPoint(
-            "TOPLEFT",
-            itemsPanel,
-            "TOPLEFT",
-            EZ_LAYOUT.itemStartX + column * (EZ_LAYOUT.itemWidth + EZ_LAYOUT.itemGapX),
-            -EZ_LAYOUT.itemStartY - row * (EZ_LAYOUT.itemHeight + EZ_LAYOUT.itemGapY)
-        )
-
-        local itemModel = CreateFrame("DressUpModel", nil, itemCard)
-        itemModel:SetAllPoints(itemCard)
-        itemModel.scCard = itemCard
-        if itemModel.SetAutoDress then pcall(function() itemModel:SetAutoDress(false) end) end
-        if itemModel.SetDoBlend then pcall(function() itemModel:SetDoBlend(false) end) end
-        if itemModel.SetKeepModelOnHide then pcall(function() itemModel:SetKeepModelOnHide(true) end) end
-
-        -- Retained as a hidden compatibility object for older presenter calls.
-        -- The active card path now uses the copied ezCollections DressUpModel
-        -- route for armor and the fixed preview Creature for weapons.
-        local itemObjectModel = CreateFrame("PlayerModel", nil, itemCard)
-        itemObjectModel:SetAllPoints(itemCard)
-        itemObjectModel:Hide()
-
-        local unavailable = CreateFrame("Frame", nil, itemCard)
-        unavailable:SetAllPoints(itemCard)
-        unavailable:SetFrameLevel(itemModel:GetFrameLevel() + 1)
-        local unavailableIcon = unavailable:CreateTexture(nil, "ARTWORK")
-        unavailableIcon:SetWidth(32)
-        unavailableIcon:SetHeight(32)
-        unavailableIcon:SetPoint("CENTER", unavailable, "CENTER", 0, 9)
-        local unavailableText = unavailable:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-        unavailableText:SetPoint("TOPLEFT", unavailable, "TOPLEFT", 4, -68)
-        unavailableText:SetPoint("TOPRIGHT", unavailable, "TOPRIGHT", -4, -68)
-        unavailableText:SetJustifyH("CENTER")
-        unavailableText:SetText("资源未就绪")
-        unavailable:Hide()
-
-        local itemHitFrame = CreateFrame("Button", nil, itemCard)
-        itemHitFrame:SetAllPoints(itemCard)
-        itemHitFrame:SetFrameLevel(itemModel:GetFrameLevel() + 2)
-        itemHitFrame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-        itemHitFrame:EnableMouseWheel(true)
-
-        local cardBackground = itemCard:CreateTexture(nil, "BACKGROUND")
-        cardBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-        cardBackground:SetAllPoints(itemCard)
-        cardBackground:SetVertexColor(0, 0, 0, 1)
-
-        local border, selected, favorite, hover = UI.EzCollections:CreateWardrobeItemChrome(itemHitFrame)
-
-        local itemName = itemHitFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        itemName:SetPoint("BOTTOMLEFT", itemHitFrame, "BOTTOMLEFT", 5, 5)
-        itemName:SetPoint("BOTTOMRIGHT", itemHitFrame, "BOTTOMRIGHT", -5, 5)
-        itemName:SetHeight(18)
-        itemName:SetJustifyH("CENTER")
-        itemName:SetJustifyV("MIDDLE")
-        itemName:Hide()
-
-        -- An explicit but unobtrusive state badge supplements the cool-gray
-        -- uncollected border. It remains outside the model's focal area and
-        -- avoids the muddy translucent rectangles used by the first version.
-        local collectionState = CreateFrame("Frame", nil, itemHitFrame)
-        collectionState:SetWidth(58)
-        collectionState:SetHeight(15)
-        collectionState:SetPoint("TOPRIGHT", itemHitFrame, "TOPRIGHT", -4, -4)
-        collectionState:SetFrameLevel(itemHitFrame:GetFrameLevel() + 3)
-        local collectionStateBackground = collectionState:CreateTexture(nil, "BACKGROUND")
-        collectionStateBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-        collectionStateBackground:SetAllPoints(collectionState)
-        collectionStateBackground:SetVertexColor(0.02, 0.02, 0.02, 0.78)
-        local collectionStateLabel = collectionState:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        collectionStateLabel:SetAllPoints(collectionState)
-        collectionStateLabel:SetJustifyH("CENTER")
-        collectionStateLabel:SetText("未收集")
-        collectionStateLabel:SetTextColor(0.72, 0.73, 0.74)
-        collectionState:Hide()
-
-        itemModel:SetScript("OnUpdateModel", nil)
-        itemModel.scUpdateHandler = updatePendingItemModel
-        itemObjectModel:SetScript("OnUpdateModel", function(self)
-            applyStandaloneItemView(self)
-            queueStandaloneItemTransform(self)
-        end)
-        itemHitFrame:SetScript("OnClick", function(_, button)
+    page.scItemModels = EzItems:CreateCardPool(itemsPanel, {
+        onClick = function(itemModel, button)
             if not itemModel.scRecord then return end
             if button == "RightButton" then
-                Catalog.ToggleDemoFavorite("APPEARANCES", itemModel.scRecord.id)
+                itemDataProvider:ToggleFavorite(itemModel.scRecord.collectionId)
                 page:Refresh()
             elseif IsShiftKeyDown() then
-                local record = itemModel.scRecord
-                local equipmentSlot = EQUIPMENT_SLOT_BY_APPEARANCE_SLOT[record.slot]
-                if not record.collected then
-                    showAppearanceActionResult(false, "NOT_OWNED")
-                elseif not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
-                    showAppearanceActionResult(false, "BRIDGE_UNAVAILABLE")
-                elseif equipmentSlot == nil then
-                    showAppearanceActionResult(false, "INVALID_TARGET_SLOT")
-                else
-                    SC.Bridge.ApplyAppearance(record.id, equipmentSlot, showAppearanceActionResult)
-                end
+                itemDataProvider:ApplyAppearance(itemModel.scRecord, showAppearanceActionResult)
             else
                 selectItem(itemModel.scRecord)
             end
-        end)
-        itemHitFrame:SetScript("OnEnter", function(self) showItemTooltip(self, itemModel.scRecord) end)
-        itemHitFrame:SetScript("OnLeave", function() GameTooltip:Hide() end)
-        itemHitFrame:SetScript("OnMouseWheel", function(_, delta) scrollItemPage(delta) end)
-        itemModel.scCard = itemCard
-        itemModel.scObjectModel = itemObjectModel
-        itemObjectModel.scHostModel = itemModel
-        itemModel.scUnavailable = unavailable
-        itemModel.scUnavailableIcon = unavailableIcon
-        itemModel.scUnavailableText = unavailableText
-        itemModel.scHitFrame = itemHitFrame
-        itemModel.scBorder = border
-        itemModel.scSelected = selected
-        itemModel.scName = itemName
-        itemModel.scFavorite = favorite
-        itemModel.scCollectionState = collectionState
-        SC.WardrobeUI.Layout:StyleCard(itemCard, cardBackground, border)
-        itemCard:Hide()
-        itemModel:Hide()
-        page.scItemModels[index] = itemModel
-    end
-
-    -- The workbench is an in-window inspector, not a dialog. It owns the
-    -- rightmost two card columns while open, then restores the original
-    -- six-by-three pool and its pagination when closed. Preserve the selected
-    -- appearance whenever it still belongs to the active query so toggling
-    -- the inspector never unexpectedly switches the artist's subject.
-    function page:UpdateCameraWorkbenchLayout()
-        local previousPageSize = self.scItemPageSize or ITEM_PAGE_SIZE
-        local workbenchOpen = cameraTuningPanel.scRequested and true or false
-        local nextPageSize = workbenchOpen and WORKBENCH_ITEM_PAGE_SIZE or ITEM_PAGE_SIZE
-        local nextColumns = workbenchOpen and WORKBENCH_ITEM_COLUMNS or ITEM_COLUMNS
-        if previousPageSize ~= nextPageSize then
-            local selectedIndex = nil
-            if self.scItemSelectedId and SC.db and Catalog.QueryAll then
-                local allRecords = Catalog.QueryAll("APPEARANCES", SC.db.query, SC.db.filters)
-                for index, record in ipairs(allRecords) do
-                    if record.id == self.scItemSelectedId then
-                        selectedIndex = index
-                        break
-                    end
-                end
-            end
-            if selectedIndex then
-                self.scItemPage = math.floor((selectedIndex - 1) / nextPageSize) + 1
-            else
-                local oldFirstIndex = ((self.scItemPage or 1) - 1) * previousPageSize
-                self.scItemPage = math.floor(oldFirstIndex / nextPageSize) + 1
-            end
-            self.scItemPageSize = nextPageSize
-        end
-        local layoutStartX = workbenchOpen and 12 or EZ_LAYOUT.itemStartX
-        for index, itemModel in ipairs(self.scItemModels) do
-            local itemCard = itemModel.scCard
-            if itemCard then
-                local column = (index - 1) % nextColumns
-                local row = math.floor((index - 1) / nextColumns)
-                itemCard:ClearAllPoints()
-                itemCard:SetPoint(
-                    "TOPLEFT",
-                    itemsPanel,
-                    "TOPLEFT",
-                    layoutStartX + column * (EZ_LAYOUT.itemWidth + EZ_LAYOUT.itemGapX),
-                    -EZ_LAYOUT.itemStartY - row * (EZ_LAYOUT.itemHeight + EZ_LAYOUT.itemGapY)
-                )
-            end
-        end
-        return previousPageSize ~= nextPageSize
+        end,
+        onEnter = function(owner, itemModel) showItemTooltip(owner, itemModel.scRecord) end,
+        onLeave = function() GameTooltip:Hide() end,
+        onMouseWheel = scrollItemPage,
+    })
+    for _, itemModel in ipairs(page.scItemModels) do
+        ItemCardRenderer:Attach(itemModel, itemModel.scObjectModel)
     end
 
     local function getMaxSetOffset()
@@ -3435,15 +2149,14 @@ function UI.CreateWardrobePage(parent)
             end
         end
 
-        if filters.armorType == "AUTO" or not hasFilterValue(ARMOR_TYPE_FILTERS, filters.armorType) then
-            filters.armorType = getDefaultArmorType()
-        end
+        local storedArmorType, effectiveArmorType = itemDataProvider:GetArmorState()
+        if filters.armorType ~= storedArmorType then filters.armorType = storedArmorType end
         if filters.slot == "ALL" or not page.scSlotButtons[filters.slot] then
             filters.slot = "HEAD"
         end
 
-        UIDropDownMenu_SetSelectedValue(armorDropdown, filters.armorType)
-        UIDropDownMenu_SetText(armorDropdown, filterLabel(ARMOR_TYPE_FILTERS, filters.armorType))
+        UIDropDownMenu_SetSelectedValue(armorDropdown, effectiveArmorType)
+        UIDropDownMenu_SetText(armorDropdown, filterLabel(ARMOR_TYPE_FILTERS, effectiveArmorType))
         UIDropDownMenu_SetSelectedValue(classDropdown, filters.classToken)
         UIDropDownMenu_SetText(classDropdown, filterLabel(CLASS_FILTERS, filters.classToken))
 
@@ -3464,16 +2177,8 @@ function UI.CreateWardrobePage(parent)
                 UIDropDownMenu_SetSelectedValue(weaponDropdown, filters.weaponType)
                 UIDropDownMenu_SetText(weaponDropdown, filterLabel(getAvailableWeaponFilters(filters.slot), filters.weaponType))
                 weaponDropdown:Show()
-                if cameraTuningButton then
-                    cameraTuningButton:ClearAllPoints()
-                    cameraTuningButton:SetPoint("RIGHT", weaponDropdown, "LEFT", -4, 0)
-                end
             else
                 weaponDropdown:Hide()
-                if cameraTuningButton then
-                    cameraTuningButton:ClearAllPoints()
-                    cameraTuningButton:SetPoint("TOPRIGHT", filterBar, "TOPRIGHT", -4, -46)
-                end
             end
         else
             armorDropdown:Hide()
@@ -3511,6 +2216,7 @@ function UI.CreateWardrobePage(parent)
     end
 
     local function refreshItems()
+        EzItems:ApplyJournalChrome()
         cancelSetPreview()
         page.scRuntimeAuditActive = nil
         page.scItemGeneration = (page.scItemGeneration or 0) + 1
@@ -3518,12 +2224,6 @@ function UI.CreateWardrobePage(parent)
         itemsPanel:Show()
         setsPanel:Hide()
         preview:Hide()
-        -- The old SoloCam workbench no longer participates in item cards;
-        -- ezCollections Classic tuples are now the only wardrobe-card camera.
-        cameraTuningButton:Hide()
-        cameraTuningPanel.scRequested = nil
-        cameraTuningPanel:Hide()
-        page:UpdateCameraWorkbenchLayout()
         local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
         local records, currentPage, totalPages = wardrobeFilters:QueryItems(page.scItemPage, itemPageSize)
         page.scItemPage = currentPage
@@ -3533,34 +2233,16 @@ function UI.CreateWardrobePage(parent)
         for index, itemModel in ipairs(page.scItemModels) do
             local record = records[index]
             applyItemModelRecord(itemModel, record, pageGeneration)
-            if record then
-                itemModel.scName:SetText(record.name or "未知外观")
-                if record.collected then
-                    itemModel.scName:SetTextColor(1.00, 0.82, 0.18)
-                    itemModel.scCollectionState:Hide()
-                else
-                    itemModel.scName:SetTextColor(0.62, 0.62, 0.60)
-                    itemModel.scCollectionState:Hide()
-                end
-                itemModel.scBorder:SetCollected(record.collected)
-                if record.favorite then itemModel.scFavorite:Show() else itemModel.scFavorite:Hide() end
-                if record.id == page.scItemSelectedId then selected = record end
-            else
-                itemModel.scName:SetText("")
-                itemModel.scFavorite:Hide()
-                itemModel.scCollectionState:Hide()
-            end
-            if record and record.id == page.scItemSelectedId then
-                itemModel.scSelected:Show()
-            else
-                itemModel.scSelected:Hide()
-            end
+            EzItems:UpdateCardState(itemModel, page.scItemSelectedId)
+            if record and record.id == page.scItemSelectedId then selected = record end
         end
-        local collected, total = Catalog.GetProgress("APPEARANCES", SC.db.filters)
+        local collected, total = itemDataProvider:GetProgress()
+        page.scItemCollected = collected
+        page.scItemTotal = total
+        page.scItemRevision = itemDataProvider:GetRevision()
         if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(collected, total) end
         if #records == 0 then
             UI.ShowEmptyState(itemEmpty, page, "没有符合条件的外观", "调整搜索、护甲类型、部位或武器类型后再试。")
-            if cameraTuningPanel.scRequested then page:SyncCameraTuningPanel(nil) end
         else
             UI.HideEmptyState(itemEmpty)
             selectItem(selected or records[1])
@@ -3588,12 +2270,6 @@ function UI.CreateWardrobePage(parent)
         itemsPanel:Show()
         setsPanel:Hide()
         preview:Hide()
-        if cameraTuningPanel.scRequested then
-            cameraTuningPanel.scRequested = nil
-            self:UpdateCameraWorkbenchLayout()
-        end
-        cameraTuningPanel:Hide()
-        cameraTuningButton:Hide()
         itemControls:SetPage(1, 1)
 
         local visible = 0
@@ -3602,22 +2278,8 @@ function UI.CreateWardrobePage(parent)
             applyItemModelRecord(itemModel, record, pageGeneration)
             if record then
                 visible = visible + 1
-                itemModel.scName:SetText(record.name or "未知外观")
-                if record.collected then
-                    itemModel.scName:SetTextColor(1.00, 0.82, 0.18)
-                    itemModel.scCollectionState:Hide()
-                else
-                    itemModel.scName:SetTextColor(0.62, 0.62, 0.60)
-                    itemModel.scCollectionState:Hide()
-                end
-                itemModel.scBorder:SetCollected(record.collected)
-                if record.favorite then itemModel.scFavorite:Show() else itemModel.scFavorite:Hide() end
-            else
-                itemModel.scName:SetText("")
-                itemModel.scFavorite:Hide()
-                itemModel.scCollectionState:Hide()
             end
-            itemModel.scSelected:Hide()
+            EzItems:UpdateCardState(itemModel, nil)
         end
 
         if visible == 0 then
@@ -3630,20 +2292,11 @@ function UI.CreateWardrobePage(parent)
 
     local function refreshSets()
         itemsPanel:Hide()
-        -- The tuner applies only to standalone weapon PlayerModels. Do not
-        -- leave its overlay or toggle visible above a DressUpModel set view.
-        if cameraTuningPanel.scRequested then
-            cameraTuningPanel.scRequested = nil
-            page:UpdateCameraWorkbenchLayout()
-        end
-        cameraTuningPanel:Hide()
-        cameraTuningButton:Hide()
-        -- A hidden DressUpModel can discard its temporary TryOn state while
-        -- keeping our Lua-side record cache. Invalidate that cache whenever
-        -- the set page takes over so returning to items always Undresses and
-        -- reapplies the appearance instead of showing the player's gear.
+        -- Release the pooled ez model lifecycle when the set page takes over.
+        -- Returning to items will rebuild the correct player/weapon actor,
+        -- redress the record, and then reapply its camera tuple.
         for _, itemModel in ipairs(page.scItemModels) do
-            itemModel.scRecordId = nil
+            ItemCardRenderer:Clear(itemModel)
         end
         setsPanel:Show()
         preview:Show()
@@ -3711,6 +2364,45 @@ function UI.CreateWardrobePage(parent)
         self:SyncFilters()
     end
 
+    function page:ApplyAppearanceCollectionChange(change)
+        if not change or change.kind ~= "DELTA" or not change.collectionId then return false end
+        if self.scRuntimeAuditActive then return true end
+        if self:IsShown() and SC.db and SC.db.wardrobeTab == "SETS" then
+            -- Set completeness is derived from appearance ownership; let the
+            -- existing active-page refresh update the unchanged Sets view.
+            return false
+        end
+
+        local collected = itemDataProvider:IsOwned(change.collectionId, change.operation == "A")
+        local filters = SC.db and SC.db.filters or nil
+        local ownershipChangesMembership = filters and not (filters.collected and filters.uncollected)
+        if self:IsShown() and SC.db and SC.db.wardrobeTab == "ITEMS" then
+            if ownershipChangesMembership then
+                -- Rebind the same 18-frame pool because an exclusive ownership
+                -- filter can add/remove a row; unchanged records skip Reload.
+                refreshItems()
+            else
+                EzItems:ApplyCollectionDelta(self.scItemModels, change.collectionId, collected, self.scItemSelectedId)
+                local owned, total = itemDataProvider:GetProgress()
+                self.scItemCollected = owned
+                self.scItemTotal = total
+                self.scItemRevision = change.revision
+                if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(owned, total) end
+            end
+        end
+        return true
+    end
+
+    if SC.Bridge and type(SC.Bridge.RegisterStateListener) == "function" then
+        page.scBridgeStateListener = SC.Bridge.RegisterStateListener(function(_, typeId, change)
+            local appearanceTypeId = itemDataProvider:GetAppearanceTypeId()
+            if appearanceTypeId and tonumber(typeId) == tonumber(appearanceTypeId) and change and change.kind == "DELTA" then
+                return page:ApplyAppearanceCollectionChange(change)
+            end
+            return false
+        end)
+    end
+
     page:RegisterEvent("GET_ITEM_INFO_RECEIVED")
     page:RegisterEvent("PLAYER_ENTERING_WORLD")
     page:RegisterEvent("UNIT_MODEL_CHANGED")
@@ -3741,8 +2433,12 @@ function UI.CreateWardrobePage(parent)
         for _, itemModel in ipairs(self.scItemModels) do
             if itemModel.scCard and itemModel.scCard:IsShown()
                 and itemModel.scRecord and itemModel.scRecord.itemId == itemId then
-                itemModel.scRecordId = nil
-                applyItemModelRecord(itemModel, itemModel.scRecord)
+                -- TransmorpherItemQuery owns weapon readiness and its
+                -- generation-safe render queue.  Replaying all cached shields
+                -- here would collapse 18 TryOn calls back into one frame.
+                if itemModel.scRenderKind ~= "TRANSMORPHER_WEAPON" then
+                    applyItemModelRecord(itemModel, itemModel.scRecord, self.scItemGeneration, true)
+                end
                 if itemModel.scHitFrame and GameTooltip:IsOwned(itemModel.scHitFrame) then
                     showItemTooltip(itemModel.scHitFrame, itemModel.scRecord)
                 end
@@ -3761,24 +2457,11 @@ function UI.CreateWardrobePage(parent)
     page:SetScript("OnHide", function(self)
         self.scRuntimeAuditActive = nil
         self:ClearSelection()
-        if cameraTuningPanel.scRequested then
-            cameraTuningPanel.scRequested = nil
-            self:UpdateCameraWorkbenchLayout()
-        end
-        cameraTuningPanel:Hide()
-        if cameraTuningButton then cameraTuningButton:SetText("镜头工作台") end
         self.scItemPage = 1
         setSetOffset(0, true)
         self.scSetRecordCount = 0
         for _, itemModel in ipairs(self.scItemModels) do
-            clearEzItemModelState(itemModel)
-            if itemModel.SetPosition then pcall(function() itemModel:SetPosition(0, 0, 0) end) end
-            if itemModel.SetFacing then pcall(function() itemModel:SetFacing(0) end) end
-            itemModel:ClearModel()
-            itemModel:Hide()
-            applyStandaloneItemRecord(itemModel.scObjectModel, nil)
-            if itemModel.scUnavailable then itemModel.scUnavailable:Hide() end
-            if itemModel.scCard then itemModel.scCard:Hide() end
+            ItemCardRenderer:Clear(itemModel)
         end
         model:ClearModel()
         GameTooltip:Hide()

@@ -4,9 +4,12 @@ SC.WardrobeUI = SC.WardrobeUI or {}
 local Filters = {}
 SC.WardrobeUI.Filters = Filters
 
-function Filters:Create(page, catalog)
-    local controller = { page = page, catalog = catalog }
+function Filters:Create(page, catalog, dataProvider)
+    local controller = { page = page, catalog = catalog, dataProvider = dataProvider }
     function controller:Set(key, value)
+        if self.dataProvider then
+            return self.dataProvider:SetFilter(key, value)
+        end
         if not (SC.db and SC.db.filters) then return false end
         SC.db.filters[key] = value
         self.page.scItemSelectedId = nil
@@ -15,6 +18,9 @@ function Filters:Create(page, catalog)
         return true
     end
     function controller:QueryItems(pageNumber, pageSize)
+        if self.dataProvider then
+            return self.dataProvider:QueryItems(pageNumber, pageSize)
+        end
         return self.catalog.Query("APPEARANCES", SC.db.query, SC.db.filters, pageNumber, pageSize)
     end
     function controller:QuerySets()
@@ -25,4 +31,3 @@ function Filters:Create(page, catalog)
     end
     return controller
 end
-

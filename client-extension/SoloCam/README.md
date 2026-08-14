@@ -4,9 +4,10 @@
 
 ## 中文
 
-SoloCam 是 SoloCollections 的可选 32 位客户端扩展。它为物品页的九个身体部位
-提供局部镜头，并为独立武器/副手模型提供受限的 display 和 camera bridge。
-收藏状态、授权和服务端动作不依赖 SoloCam。
+SoloCam 是 SoloCollections 的可选 32 位客户端扩展。v11 在同一个 DLL 中保留
+身体镜头和 direct-display 能力，并合并 Transmorpher 的本地预览桥：武器卡仍是
+玩家 `DressUpModel`，DLL 只把保留的 `SetCreature` 请求转成客户端原生
+`Undress/TryOn`。收藏状态、授权和服务端动作不依赖 SoloCam。
 
 ### 严格支持边界
 
@@ -21,6 +22,9 @@ AA63A5750D60EF16746C686B3D5E26876D98953EAB08B1C026CD0FAF78E88CB8
 - 不覆盖原始 `Wow.exe`；
 - 补丁点原字节或哈希不一致立即停止；
 - DLL 只在目标模型绘制期间应用镜头，结束后恢复原状态；
+- `PlayerModel:SetCreature` 只能由这一份 SoloCam Hook 拥有，不能同时加载
+  Transmorpher 的完整 Hook DLL；
+- 武器预览只允许调用当前卡片模型的原生 `Undress/TryOn`，不能修改真实角色装备；
 - 未知 sentinel/profile/model 必须回退或显示明确不可用。
 
 源码仓库不包含 `Wow.exe`、补丁 EXE、编译 DLL、MPQ 或客户端提取资源。
@@ -56,37 +60,43 @@ SoloCam.dll
 
 普通 `Wow.exe` 保持回退入口。任何同名文件都要先识别来源和备份。
 
-### 武器资源
+### 武器预览
 
-3.3.5 的普通 `Model` 控件不会自动完成所有 `ItemDisplayInfo` 贴图绑定。资源
-构建脚本可以从用户自己的客户端只读提取所需结构，生成本地专用模型副本和
-locale DBC patch：
+外观物品页不再使用固定 Creature、独立武器 M2、NPC 占位或 ezCollections
+武器镜头。AddOn 复用 Transmorpher 3.0.0 的 Classic 预览配置，顺序固定为：
 
-```powershell
-& .\client-extension\SoloCam\scripts\build-weapon-models.ps1 `
-  -ClientDirectory '<WoW-3.3.5a>' `
-  -Locale zhCN `
-  -LocalePatchNumber 6
+```text
+Reset → Undress → SetPosition → SetFacing → TryOn → SetSequence
 ```
 
-先不使用 `-Deploy`，检查回读 hash 后再决定是否安装。非 zhCN 客户端必须使用
-自己的 locale。StormLib 不属于本仓库，路径必须显式提供。
-
-详细资源边界见 `docs/BUILD_MPQ.zh-CN.md` 和 `docs/ASSETS.md`。
+主手、副手、远程继续接受 Transmorpher 打包的 Lua 装备栏 16、17、18，但它们
+不是底层模型槽位。v11 按 build 12340 的实际 `0x005980D0` 分发器转换为主手
+模型槽 15、副手模型槽 16；远程交回原生 InventoryType 自动判槽。这个转换
+避免盾牌几何体挂上后，替换纹理却被送到不存在的模型槽 17。SoloCam 每秒从 WoW UI
+线程重新发布一次能力，因此 `/reload` 不需要手工 `/run`。旧
+`build-weapon-models.ps1` 等资源工具仅供历史独立模型
+实验，不是现行物品卡依赖。
 
 ### 镜头贡献
 
-当前 profile 已覆盖基础 20 个 race/sex 页面和九部位，但 HD/自定义模型与极端
-武器仍可能不理想。不要直接在 C++ 写个人特例；先使用 AddOn 镜头工作台导出
-稳定身份 JSONL，按
+当前身体 profile 已覆盖基础 20 个 race/sex 页面和九部位；武器构图来自
+Transmorpher Classic 的 race/sex/render-slot/subclass 数据。不要在 C++ 写物品
+特例；身体镜头贡献按
 [`docs/CAMERA_CONTRIBUTIONS.md`](../../docs/CAMERA_CONTRIBUTIONS.md)
 提交参数、截图和客户端信息。
 
 ## English
 
-SoloCam is an optional 32-bit extension for local body framing and constrained
-standalone weapon/off-hand display on the SoloCollections item page. It does
-not own collection state, authorization, or server actions.
+SoloCam is an optional 32-bit extension for local body framing, direct-display
+compatibility, and the merged Transmorpher preview bridge. Weapon cards remain
+player DressUpModels; v11 converts a reserved SetCreature request into the
+client's native Undress/TryOn call on that exact widget. It does not own
+collection state, authorization, or server actions.
+
+The packed Transmorpher values 16/17/18 are Lua equipment slots, not the
+zero-based slots consumed by the native model method. v11 maps main hand to
+model slot 15, off-hand to model slot 16, and lets the stock InventoryType
+dispatcher resolve ranged items.
 
 It supports only x86 WoW 3.3.5a build 12340 with the exact executable SHA-256
 shown above. The patch path creates `Wow-SoloCam-PoC.exe` and keeps the
@@ -98,9 +108,10 @@ Build with Visual Studio 2022 Desktop C++, the MSVC v143 x86 toolchain, and a
 Windows SDK by running `client-extension/SoloCam/scripts/build.ps1`.
 Generated DLL/test output remains ignored.
 
-Optional weapon-resource tooling reads only client files supplied by the user
-and must be run without deployment first. The repository does not distribute
-game executables, MPQs, or extracted model/DBC content.
+The full Transmorpher hook DLL must not be loaded alongside SoloCam because both
+would own PlayerModel:SetCreature. Legacy weapon-resource tooling is not part
+of the active wardrobe path. The repository does not distribute game
+executables, MPQs, or extracted model/DBC content.
 
 Camera contributions should use the in-game workbench and follow
 [`docs/CAMERA_CONTRIBUTIONS.md`](../../docs/CAMERA_CONTRIBUTIONS.md).

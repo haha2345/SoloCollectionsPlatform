@@ -4,6 +4,7 @@
 #include "DisplayInfoBridge.hpp"
 #include "ItemCameraBridge.hpp"
 #include "InlineHook.hpp"
+#include "PreviewItemBridge.hpp"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -16,11 +17,17 @@ namespace
 using SetCameraByIndexFn = void(__thiscall*)(void* simpleModel, std::uint32_t index);
 using RenderSimpleModelFn = void(__cdecl*)(void* simpleModel);
 using PlayerModelSetCreatureLuaFn = int(__cdecl*)(void* luaState);
-using ResolveScriptObjectFn = void*(__cdecl*)(std::uint32_t typeToken);
 using LuaIsNumberFn = int(__cdecl*)(void* luaState, int index);
 using LuaToIntegerFn = std::uint32_t(__cdecl*)(void* luaState, int index);
+using LuaRawGetIFn = void(__cdecl*)(void* luaState, int index, int key);
+using LuaToUserDataFn = void*(__cdecl*)(void* luaState, int index);
+using LuaSetTopFn = void(__cdecl*)(void* luaState, int index);
 using PlayerModelSetCreatureRecordFn =
     void(__thiscall*)(void* playerModel, SyntheticCreatureRecord* creatureRecord);
+using PlayerModelTryOnFn =
+    void(__thiscall*)(void* playerModel, int itemId, int unknown, int slotId);
+using PlayerModelUndressFn = void(__thiscall*)(void* playerModel);
+using FrameScriptExecuteFn = int(__cdecl*)(const char* script, const char* source, int unknown);
 using DataMgrGetCoordFn = void(__cdecl*)(void* camera, std::uint32_t slot, CameraVector* value);
 using DataMgrSetCoordFn = void(__cdecl*)(
     void* camera,
@@ -38,6 +45,12 @@ using DataMgrSetScalarFn = void(__cdecl*)(
 SetCameraByIndexFn g_originalSetCameraByIndex = nullptr;
 RenderSimpleModelFn g_originalRenderSimpleModel = nullptr;
 PlayerModelSetCreatureLuaFn g_originalPlayerModelSetCreature = nullptr;
+HWND g_wowWindow = nullptr;
+UINT_PTR g_capabilityTimer = 0;
+
+constexpr UINT_PTR kCapabilityTimerId = 0x53434E50;
+constexpr UINT kCapabilityTimerIntervalMs = 1000;
+constexpr std::uint32_t kSoloCamVersion = 11;
 
 constexpr std::size_t kMaximumTrackedModels = 64;
 
@@ -436,18 +449,28 @@ void __cdecl HookRenderSimpleModel(void* simpleModel)
     dataMgrSetCoord(camera, Client12340::CameraTargetSlot, &nativeTarget, 0);
 }
 
-std::uint32_t EnsurePlayerModelTypeToken()
+void* ResolveLuaWidgetObject(void* luaState, int index)
 {
-    auto* token = reinterpret_cast<std::uint32_t*>(Client12340::PlayerModelTypeToken);
-    if (*token == 0)
+    if (!luaState)
     {
-        auto* nextToken = reinterpret_cast<std::uint32_t*>(
-            Client12340::NextScriptObjectTypeToken
-        );
-        ++(*nextToken);
-        *token = *nextToken;
+        return nullptr;
     }
-    return *token;
+
+    const auto rawGetI = reinterpret_cast<LuaRawGetIFn>(Client12340::LuaRawGetI);
+    const auto toUserData = reinterpret_cast<LuaToUserDataFn>(Client12340::LuaToUserData);
+    const auto setTop = reinterpret_cast<LuaSetTopFn>(Client12340::LuaSetTop);
+    void* object = nullptr;
+    __try
+    {
+        rawGetI(luaState, index, 0);
+        object = toUserData(luaState, -1);
+        setTop(luaState, -2);
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {
+        return nullptr;
+    }
+    return reinterpret_cast<std::uintptr_t>(object) >= 0x10000 ? object : nullptr;
 }
 
 int __cdecl HookPlayerModelSetCreature(void* luaState)
@@ -458,13 +481,57 @@ int __cdecl HookPlayerModelSetCreature(void* luaState)
     if (luaIsNumber(luaState, 2))
     {
         const std::uint32_t request = luaToInteger(luaState, 2);
+        const PreviewItemRequest preview = DecodePreviewItemRequest(request);
+        if (preview.command != PreviewItemCommand::None)
+        {
+            void* playerModel = ResolveLuaWidgetObject(luaState, 1);
+            if (playerModel)
+            {
+                // A card may have been an armour model on its previous page.
+                // Drop SoloCam's old M2-camera state before following the
+                // Transmorpher DressUpModel path on this same widget.
+                DeactivateCustomCamera(playerModel);
+                __try
+                {
+                    if (preview.command == PreviewItemCommand::Undress)
+                    {
+                        reinterpret_cast<PlayerModelUndressFn>(
+                            Client12340::PlayerModelUndress
+                        )(playerModel);
+                    }
+                    else if (preview.command == PreviewItemCommand::TryOnAuto)
+                    {
+                        reinterpret_cast<PlayerModelTryOnFn>(Client12340::PlayerModelTryOn)(
+                            playerModel,
+                            static_cast<int>(preview.itemId),
+                            0,
+                            -1
+                        );
+                    }
+                    else if (preview.command == PreviewItemCommand::TryOnSlot)
+                    {
+                        reinterpret_cast<PlayerModelTryOnFn>(Client12340::PlayerModelTryOn)(
+                            playerModel,
+                            static_cast<int>(preview.itemId),
+                            0,
+                            ResolvePreviewModelSlotId(preview.equipmentSlotId)
+                        );
+                    }
+                }
+                __except (EXCEPTION_EXECUTE_HANDLER)
+                {
+                    OutputDebugStringA("SoloCam: preview item request failed closed.\n");
+                }
+            }
+            // Invalid values inside the reserved preview family are consumed
+            // and never forwarded to the stock creature-cache lookup.
+            return 0;
+        }
+
         std::uint32_t displayId = 0;
         if (TryDecodeDisplayInfoRequest(request, displayId))
         {
-            const auto resolveScriptObject = reinterpret_cast<ResolveScriptObjectFn>(
-                Client12340::ResolveScriptObject
-            );
-            void* playerModel = resolveScriptObject(EnsurePlayerModelTypeToken());
+            void* playerModel = ResolveLuaWidgetObject(luaState, 1);
             if (playerModel)
             {
                 // A PlayerModel frame is reused for many cards. Do not let a
@@ -487,6 +554,75 @@ int __cdecl HookPlayerModelSetCreature(void* luaState)
     }
 
     return g_originalPlayerModelSetCreature(luaState);
+}
+
+bool IsWindowOwnedByCurrentProcess(HWND window)
+{
+    DWORD processId = 0;
+    GetWindowThreadProcessId(window, &processId);
+    return processId == GetCurrentProcessId();
+}
+
+HWND FindOwnedWowWindow()
+{
+    constexpr const char* classes[] = {"GxWindowClass", "GxWindowClassD3d"};
+    for (const char* className : classes)
+    {
+        HWND candidate = nullptr;
+        while ((candidate = FindWindowExA(nullptr, candidate, className, nullptr)) != nullptr)
+        {
+            if (IsWindowOwnedByCurrentProcess(candidate))
+            {
+                return candidate;
+            }
+        }
+    }
+    return nullptr;
+}
+
+void CALLBACK CapabilityTimerProc(HWND, UINT, UINT_PTR, DWORD)
+{
+    constexpr const char* script =
+        "if SoloCollections and SoloCollections.NativePreview then "
+        "SoloCollections.NativePreview:SetRuntimeCapability({"
+        "soloCamVersion=11,previewProtocolVersion=1,features={"
+        "directDisplayV1=true,previewTryOnV1=true}}) end";
+    __try
+    {
+        reinterpret_cast<FrameScriptExecuteFn>(Client12340::FrameScriptExecute)(
+            script,
+            "SoloCam",
+            0
+        );
+    }
+    __except (EXCEPTION_EXECUTE_HANDLER)
+    {
+        OutputDebugStringA("SoloCam: capability announcement failed closed.\n");
+    }
+}
+
+bool InstallCapabilityTimer()
+{
+    constexpr DWORD maximumWaitMs = 60000;
+    constexpr DWORD pollMs = 250;
+    DWORD waited = 0;
+    while (waited < maximumWaitMs)
+    {
+        g_wowWindow = FindOwnedWowWindow();
+        if (g_wowWindow)
+        {
+            g_capabilityTimer = SetTimer(
+                g_wowWindow,
+                kCapabilityTimerId,
+                kCapabilityTimerIntervalMs,
+                &CapabilityTimerProc
+            );
+            return g_capabilityTimer != 0;
+        }
+        Sleep(pollMs);
+        waited += pollMs;
+    }
+    return false;
 }
 
 bool ValidateSupportedClient()
@@ -514,7 +650,31 @@ bool ValidateSupportedClient()
         && ValidateCodeBytes(
                Client12340::PlayerModelSetCreatureRecord,
                Client12340::PlayerModelSetCreatureRecordBytes,
-               Client12340::PlayerModelSetCreatureRecordLength);
+               Client12340::PlayerModelSetCreatureRecordLength)
+        && ValidateCodeBytes(
+               Client12340::PlayerModelTryOn,
+               Client12340::PlayerModelTryOnBytes,
+               Client12340::PlayerModelTryOnLength)
+        && ValidateCodeBytes(
+               Client12340::PlayerModelUndress,
+               Client12340::PlayerModelUndressBytes,
+               Client12340::PlayerModelUndressLength)
+        && ValidateCodeBytes(
+               Client12340::LuaRawGetI,
+               Client12340::LuaRawGetIBytes,
+               Client12340::LuaRawGetILength)
+        && ValidateCodeBytes(
+               Client12340::LuaToUserData,
+               Client12340::LuaToUserDataBytes,
+               Client12340::LuaToUserDataLength)
+        && ValidateCodeBytes(
+               Client12340::LuaSetTop,
+               Client12340::LuaSetTopBytes,
+               Client12340::LuaSetTopLength)
+        && ValidateCodeBytes(
+               Client12340::FrameScriptExecute,
+               Client12340::FrameScriptExecuteBytes,
+               Client12340::FrameScriptExecuteLength);
 }
 
 DWORD WINAPI InstallHooks(void*)
@@ -569,8 +729,14 @@ DWORD WINAPI InstallHooks(void*)
         setCreatureGateway
     );
 
+    if (!InstallCapabilityTimer())
+    {
+        OutputDebugStringA("SoloCam: preview hook enabled, capability timer unavailable.\n");
+        return 5;
+    }
+
     OutputDebugStringA(
-        "SoloCam: body-profile, multi-axis M2 camera and direct display-info bridge enabled.\n"
+        "SoloCam: v11 corrected Transmorpher slot mapping, camera and direct display bridges enabled.\n"
     );
     return 0;
 }
@@ -578,7 +744,7 @@ DWORD WINAPI InstallHooks(void*)
 
 extern "C" __declspec(dllexport) std::uint32_t SoloCamPocVersion()
 {
-    return 7;
+    return kSoloCamVersion;
 }
 
 BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
@@ -591,6 +757,12 @@ BOOL APIENTRY DllMain(HMODULE module, DWORD reason, LPVOID)
         {
             CloseHandle(thread);
         }
+    }
+    else if (reason == DLL_PROCESS_DETACH && g_capabilityTimer && g_wowWindow)
+    {
+        KillTimer(g_wowWindow, g_capabilityTimer);
+        g_capabilityTimer = 0;
+        g_wowWindow = nullptr;
     }
     return TRUE;
 }
