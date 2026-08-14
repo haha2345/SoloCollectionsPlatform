@@ -252,11 +252,115 @@ local function setMetadataLine(record)
     return classLabel
 end
 
+local SET_SOURCE_BY_LABEL = {
+    ["T0"] = "经典地下城套装",
+    ["T0.5"] = "经典地下城套装升级任务",
+    ["T1"] = "熔火之心",
+    ["T2"] = "黑翼之巢 / 奥妮克希亚的巢穴",
+    ["T2.5"] = "安其拉神殿",
+    ["T3"] = "纳克萨玛斯（60级）",
+    ["D3"] = "外域地下城套装",
+    ["T4"] = "卡拉赞 / 格鲁尔的巢穴 / 玛瑟里顿的巢穴",
+    ["T5"] = "毒蛇神殿 / 风暴要塞",
+    ["T6"] = "海加尔山之战 / 黑暗神殿 / 太阳之井高地",
+}
 local SET_SOURCE_T7 = "纳克萨玛斯 / 黑曜石圣殿 / 阿尔卡冯的宝库"
 local SET_SOURCE_T8 = "奥杜尔 / 阿尔卡冯的宝库"
 local SET_SOURCE_T9 = "十字军的试炼 / 银色锦标赛套装商人"
 local SET_SOURCE_T10 = "冰冠堡垒 / 达拉然套装商人"
 local SET_SOURCE_PVP = "PvP 商人 / 竞技场赛季奖励"
+
+local NON_CLASS_SET_DETAILS = {
+    [1] = { category = "地下城", source = "黑石深渊竞技场" },
+    [41] = { category = "武器", source = "黑石塔上层" },
+    [65] = { category = "武器", source = "纳克萨玛斯（60级）" },
+    [81] = { category = "地下城", source = "斯坦索姆邮差" },
+    [121] = { category = "地下城", source = "通灵学院" },
+    [122] = { category = "地下城", source = "通灵学院" },
+    [123] = { category = "地下城", source = "通灵学院" },
+    [124] = { category = "地下城", source = "通灵学院" },
+    [141] = { category = "制造", source = "经典旧世制皮" },
+    [142] = { category = "制造", source = "经典旧世制皮" },
+    [143] = { category = "制造", source = "经典旧世制皮" },
+    [144] = { category = "制造", source = "经典旧世制皮" },
+    [161] = { category = "地下城", source = "死亡矿井" },
+    [162] = { category = "地下城", source = "哀嚎洞穴" },
+    [163] = { category = "地下城", source = "血色修道院" },
+    [261] = { category = "武器", source = "经典旧世团队首领" },
+    [321] = { category = "制造", source = "经典旧世锻造" },
+    [421] = { category = "制造", source = "祖尔格拉布声望 / 裁缝" },
+    [441] = { category = "制造", source = "祖尔格拉布声望 / 制皮" },
+    [442] = { category = "制造", source = "祖尔格拉布声望 / 制皮" },
+    [443] = { category = "制造", source = "祖尔格拉布声望 / 锻造" },
+    [444] = { category = "制造", source = "祖尔格拉布声望 / 锻造" },
+    [461] = { category = "武器", source = "祖尔格拉布" },
+    [463] = { category = "武器", source = "祖尔格拉布" },
+    [489] = { category = "制造", source = "经典旧世制皮" },
+    [490] = { category = "制造", source = "经典旧世制皮" },
+    [491] = { category = "制造", source = "经典旧世制皮" },
+    [492] = { category = "声望", source = "希利苏斯暮光信徒" },
+    [533] = { category = "事件", source = "天灾入侵事件" },
+    [534] = { category = "事件", source = "天灾入侵事件" },
+    [535] = { category = "事件", source = "天灾入侵事件" },
+    [536] = { category = "事件", source = "天灾入侵事件" },
+    [552] = { category = "制造", source = "外域裁缝" },
+    [553] = { category = "制造", source = "外域裁缝" },
+    [554] = { category = "制造", source = "外域裁缝" },
+    [555] = { category = "制造", source = "外域裁缝" },
+    [556] = { category = "制造", source = "外域裁缝" },
+    [557] = { category = "制造", source = "外域裁缝" },
+    [558] = { category = "制造", source = "外域裁缝" },
+    [559] = { category = "制造", source = "外域裁缝" },
+    [560] = { category = "制造", source = "外域锻造" },
+    [561] = { category = "制造", source = "外域锻造" },
+    [562] = { category = "制造", source = "外域锻造" },
+    [563] = { category = "制造", source = "外域锻造" },
+    [564] = { category = "制造", source = "外域锻造" },
+    [565] = { category = "制造", source = "外域锻造" },
+    [566] = { category = "制造", source = "外域锻造" },
+    [569] = { category = "制造", source = "外域锻造" },
+    [570] = { category = "制造", source = "外域锻造" },
+    [571] = { category = "制造", source = "外域裁缝" },
+    [572] = { category = "制造", source = "外域裁缝" },
+    [573] = { category = "制造", source = "外域制皮" },
+    [574] = { category = "制造", source = "外域制皮" },
+    [575] = { category = "制造", source = "外域制皮" },
+    [576] = { category = "制造", source = "外域制皮" },
+    [611] = { category = "制造", source = "外域制皮" },
+    [612] = { category = "制造", source = "外域制皮" },
+    [613] = { category = "制造", source = "外域制皮" },
+    [614] = { category = "制造", source = "外域制皮" },
+    [616] = { category = "制造", source = "外域制皮" },
+    [617] = { category = "制造", source = "外域制皮" },
+    [618] = { category = "制造", source = "外域制皮" },
+    [619] = { category = "地下城", source = "外域地下城套装" },
+    [658] = { category = "地下城", source = "外域地下城套装" },
+    [659] = { category = "地下城", source = "外域地下城套装" },
+    [660] = { category = "地下城", source = "外域地下城套装" },
+    [661] = { category = "地下城", source = "外域地下城套装" },
+    [719] = { category = "PvP", source = "外域 PvP 声望" },
+    [754] = { category = "制造", source = "诺森德制皮" },
+    [755] = { category = "制造", source = "诺森德制皮" },
+    [756] = { category = "制造", source = "诺森德制皮" },
+    [757] = { category = "制造", source = "诺森德制皮" },
+    [761] = { category = "节日", source = "冬幕节" },
+    [762] = { category = "节日", source = "美酒节" },
+    [763] = { category = "制造", source = "诺森德裁缝" },
+    [764] = { category = "制造", source = "诺森德裁缝" },
+    [781] = { category = "事件", source = "天灾入侵事件" },
+    [782] = { category = "事件", source = "天灾入侵事件" },
+    [783] = { category = "事件", source = "天灾入侵事件" },
+    [784] = { category = "事件", source = "天灾入侵事件" },
+    [785] = { category = "节日", source = "仲夏火焰节" },
+    [812] = { category = "节日", source = "复活节 / 春季礼服" },
+    [813] = { category = "制造", source = "诺森德制皮 PvP 套装" },
+    [814] = { category = "制造", source = "诺森德锻造 PvP 套装" },
+    [815] = { category = "制造", source = "诺森德裁缝 PvP 套装" },
+    [816] = { category = "制造", source = "诺森德锻造 PvP 套装" },
+    [817] = { category = "制造", source = "诺森德制皮 PvP 套装" },
+    [818] = { category = "制造", source = "诺森德制皮 PvP 套装" },
+    [819] = { category = "制造", source = "诺森德裁缝 PvP 套装" },
+}
 
 -- Retail transmog sets are presented as a base set plus variant sets.  Our
 -- generated 3.3.5 ItemSet catalogue is intentionally flat, so this reviewed
@@ -352,6 +456,32 @@ local function reviewedSetInfo(record)
     return REVIEWED_SET_DETAILS[tonumber(record and record.itemSetId) or 0]
 end
 
+local function nonClassSetInfo(record)
+    record = concreteSetRecord(record)
+    return NON_CLASS_SET_DETAILS[tonumber(record and record.itemSetId) or 0]
+end
+
+local function setRecordIsClassSpecific(record)
+    record = concreteSetRecord(record)
+    local policy = effectiveSetClassPolicy(record)
+    return policy and policy.mode == "ALLOW_LIST" and #(policy.allowedClassKeys or {}) > 0
+end
+
+local function setRecordCategoryLabel(record)
+    local info = nonClassSetInfo(record)
+    if info and info.category and info.category ~= "" then
+        return info.category
+    end
+
+    local presentation = record and record.presentation
+    local displayLabel = presentation and presentation.displayLabel
+    if displayLabel == "D3" then return "地下城" end
+    if displayLabel and string.find(displayLabel, "PvP", 1, true) then return "PvP" end
+    if presentation and presentation.acquisition == "PVP" then return "PvP" end
+    if not setRecordIsClassSpecific(record) then return "通用" end
+    return nil
+end
+
 local function setDisplayName(record)
     if not record then return "未知套装" end
     if record.scIsSetGroup and record.scGroupName and record.scGroupName ~= "" then
@@ -377,12 +507,106 @@ local function setVariantLabel(record)
     return tostring(record and record.name or "未知版本")
 end
 
-local function setRecordSpecLabel(record)
-    local info = reviewedSetInfo(record)
-    if info and info.specLabel and info.specLabel ~= "" then
-        return info.specLabel
+local SPEC_SPLIT_CLASSES = {
+    death_knight = true,
+    druid = true,
+    paladin = true,
+    priest = true,
+    shaman = true,
+    warrior = true,
+}
+
+local function setRecordPrimaryClassKey(record)
+    record = concreteSetRecord(record)
+    local policy = effectiveSetClassPolicy(record)
+    if policy and policy.mode == "ALLOW_LIST" and #(policy.allowedClassKeys or {}) == 1 then
+        return policy.allowedClassKeys[1]
+    end
+    return record and record.classToken
+end
+
+local function recordNameHas(recordName, token)
+    return recordName and token and token ~= "" and string.find(recordName, token, 1, true)
+end
+
+local function inferredSetSpecLabel(record)
+    record = concreteSetRecord(record)
+    local classKey = setRecordPrimaryClassKey(record)
+    if not SPEC_SPLIT_CLASSES[classKey or ""] then
+        return nil
+    end
+
+    local name = record and record.name or ""
+    if classKey == "death_knight" then
+        if recordNameHas(name, "铠甲") or recordNameHas(name, "战铠") or recordNameHas(name, "板甲") then
+            return "鲜血"
+        end
+        if recordNameHas(name, "战甲") then
+            return "冰霜/邪恶"
+        end
+    elseif classKey == "warrior" then
+        if recordNameHas(name, "铠甲") or recordNameHas(name, "战铠") or recordNameHas(name, "板甲") or
+            recordNameHas(name, "护甲") or recordNameHas(name, "保护") or recordNameHas(name, "壁垒") then
+            return "防护"
+        end
+        if recordNameHas(name, "战甲") then
+            return "武器/狂怒"
+        end
+    elseif classKey == "paladin" then
+        if recordNameHas(name, "圣装") or recordNameHas(name, "圣服") or recordNameHas(name, "圣甲") or
+            recordNameHas(name, "救赎") or recordNameHas(name, "魔装") or recordNameHas(name, "雕饰") then
+            return "神圣"
+        end
+        if recordNameHas(name, "铠甲") or recordNameHas(name, "战铠") or recordNameHas(name, "板甲") or
+            recordNameHas(name, "护甲") or recordNameHas(name, "保护") or recordNameHas(name, "壁垒") then
+            return "防护"
+        end
+        if recordNameHas(name, "战甲") or recordNameHas(name, "辩护") or recordNameHas(name, "板鳞甲") then
+            return "惩戒"
+        end
+    elseif classKey == "priest" then
+        if recordNameHas(name, "法衣") or recordNameHas(name, "战衣") then
+            return "暗影"
+        end
+        if recordNameHas(name, "圣装") or recordNameHas(name, "套装") or recordNameHas(name, "神服") or
+            recordNameHas(name, "魔装") or
+            recordNameHas(name, "月布") or recordNameHas(name, "绸缎") or recordNameHas(name, "天职") then
+            return "神圣/戒律"
+        end
+    elseif classKey == "druid" then
+        if recordNameHas(name, "法衣") or recordNameHas(name, "蟒皮") then
+            return "平衡"
+        end
+        if recordNameHas(name, "战甲") or recordNameHas(name, "甲胄") or recordNameHas(name, "野性之皮") or
+            recordNameHas(name, "野性") or recordNameHas(name, "龙皮") then
+            return "野性"
+        end
+        if recordNameHas(name, "圣装") or recordNameHas(name, "圣服") or recordNameHas(name, "套装") or
+            recordNameHas(name, "魔装") or recordNameHas(name, "庇护") or recordNameHas(name, "科多皮") then
+            return "恢复"
+        end
+    elseif classKey == "shaman" then
+        if recordNameHas(name, "法衣") or recordNameHas(name, "震撼") or
+            recordNameHas(name, "雷霆之拳") or recordNameHas(name, "环甲") then
+            return "元素"
+        end
+        if recordNameHas(name, "战甲") or recordNameHas(name, "甲胄") or recordNameHas(name, "锁甲") then
+            return "增强"
+        end
+        if recordNameHas(name, "圣装") or recordNameHas(name, "套装") or recordNameHas(name, "圣服") or
+            recordNameHas(name, "魔装") or recordNameHas(name, "战争之潮") or recordNameHas(name, "鳞甲") then
+            return "恢复"
+        end
     end
     return nil
+end
+
+local function setRecordSpecLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.specLabel and info.specLabel ~= "" and SPEC_SPLIT_CLASSES[setRecordPrimaryClassKey(record) or ""] then
+        return info.specLabel
+    end
+    return inferredSetSpecLabel(record)
 end
 
 local function setRecordFactionLabel(record)
@@ -398,14 +622,22 @@ local function setRecordSourceLabel(record)
     if info and info.sourceLabel and info.sourceLabel ~= "" then
         return info.sourceLabel
     end
+    local nonClassInfo = nonClassSetInfo(record)
+    if nonClassInfo and nonClassInfo.source and nonClassInfo.source ~= "" then
+        return nonClassInfo.source
+    end
     local presentation = record and record.presentation
     local tier = presentation and presentation.raidTier
     local season = presentation and presentation.pvpSeason
+    local displayLabel = presentation and presentation.displayLabel
     if tier == "T7" then return SET_SOURCE_T7 end
     if tier == "T8" then return SET_SOURCE_T8 end
     if tier == "T9" then return SET_SOURCE_T9 end
     if tier == "T10" then return SET_SOURCE_T10 end
+    if tier and SET_SOURCE_BY_LABEL[tier] then return SET_SOURCE_BY_LABEL[tier] end
+    if displayLabel and SET_SOURCE_BY_LABEL[displayLabel] then return SET_SOURCE_BY_LABEL[displayLabel] end
     if season and season ~= "" and season ~= "NONE" then return SET_SOURCE_PVP end
+    if displayLabel and string.find(displayLabel, "PvP", 1, true) then return SET_SOURCE_PVP end
     if presentation and presentation.acquisition == "PVP" then return SET_SOURCE_PVP end
     return "来源未整理：按套装出处继续补齐"
 end
@@ -629,7 +861,7 @@ end
 
 local function compactSetRowMetadata(record)
     record = concreteSetRecord(record)
-    local parts = { setClassLabel(record) }
+    local parts = { setRecordIsClassSpecific(record) and setClassLabel(record) or setRecordCategoryLabel(record) }
     local specLabel = setRecordSpecLabel(record)
     if specLabel and specLabel ~= "" then
         parts[#parts + 1] = specLabel
@@ -660,6 +892,11 @@ local function showPieceTooltip(owner, itemId, setRecord, previewItem, displayRe
     local factionLabel = setRecordFactionLabel(setRecord)
     if factionLabel then
         GameTooltip:AddLine("阵营：" .. factionLabel, 0.65, 0.78, 0.92)
+    end
+
+    local categoryLabel = setRecordCategoryLabel(setRecord)
+    if categoryLabel and not setRecordIsClassSpecific(setRecord) then
+        GameTooltip:AddLine("类型：" .. categoryLabel, 0.82, 0.78, 0.70)
     end
 
     local specLabel = setRecordSpecLabel(setRecord)
@@ -1430,7 +1667,12 @@ function UI.CreateWardrobePage(parent)
         if presentationLabel then
             detailParts[#detailParts + 1] = "分类：" .. presentationLabel
         end
-        detailParts[#detailParts + 1] = "职业：" .. setClassLabel(record)
+        local categoryLabel = setRecordCategoryLabel(record)
+        if categoryLabel and not setRecordIsClassSpecific(record) then
+            detailParts[#detailParts + 1] = "类型：" .. categoryLabel
+        else
+            detailParts[#detailParts + 1] = "职业：" .. setClassLabel(record)
+        end
         local specLabel = setRecordSpecLabel(record)
         if specLabel then
             detailParts[#detailParts + 1] = "专精：" .. specLabel
@@ -2703,7 +2945,12 @@ function UI.CreateWardrobePage(parent)
             if presentationLabel then
                 GameTooltip:AddLine("分类：" .. presentationLabel, 0.95, 0.82, 0.36)
             end
-            GameTooltip:AddLine("职业：" .. setClassLabel(concreteRecord), 0.82, 0.78, 0.70)
+            local categoryLabel = setRecordCategoryLabel(concreteRecord)
+            if categoryLabel and not setRecordIsClassSpecific(concreteRecord) then
+                GameTooltip:AddLine("类型：" .. categoryLabel, 0.82, 0.78, 0.70)
+            else
+                GameTooltip:AddLine("职业：" .. setClassLabel(concreteRecord), 0.82, 0.78, 0.70)
+            end
             local specLabel = setRecordSpecLabel(concreteRecord)
             if specLabel then
                 GameTooltip:AddLine("适用专精：" .. specLabel, 0.52, 0.82, 1.00, true)
