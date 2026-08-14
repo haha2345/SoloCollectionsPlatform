@@ -558,16 +558,20 @@ function Ez:CreateWardrobeItemChrome(parent)
     highlight:SetBlendMode("ADD")
     setAtlasPixels(highlight, transmog, 512, 512, 105, 189, 225, 335)
 
-    local favorite = parent:CreateTexture(nil, "OVERLAY")
+    local favorite = CreateFrame("Frame", nil, parent)
     favorite:SetWidth(31)
     favorite:SetHeight(33)
     favorite:SetPoint("TOPLEFT", parent, "TOPLEFT", -12, 13)
-    setAtlasPixels(favorite, collections, 512, 512, 93, 124, 7, 40)
+    favorite:SetFrameLevel(parent:GetFrameLevel() + 5)
+    local favoriteTexture = favorite:CreateTexture(nil, "OVERLAY")
+    favoriteTexture:SetAllPoints(favorite)
+    setAtlasPixels(favoriteTexture, collections, 512, 512, 93, 124, 7, 40)
     favorite:Hide()
 
     border:SetCollected(false)
     border.scTexture = borderTexture
     selected.scTexture = selectedTexture
+    favorite.scTexture = favoriteTexture
     return border, selected, favorite, highlight
 end
 
