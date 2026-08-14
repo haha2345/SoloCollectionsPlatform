@@ -65,7 +65,7 @@ class SetPresentationTests(unittest.TestCase):
         self.assertEqual("HIGH", by_item_set[801]["difficulty"])
         self.assertEqual("RAID", by_item_set[787]["difficulty"])
 
-        sort_keys = ("expansion", "acquisition", "tier", "difficulty", "medianItemLevel", "maxItemLevel")
+        sort_keys = ("expansion", "acquisition", "tier", "season", "difficulty", "medianItemLevel", "maxItemLevel")
         ordered = sorted(
             (by_item_set[820], by_item_set[821], by_item_set[822]),
             key=lambda row: tuple(-row["sortRank"][key] for key in sort_keys)
@@ -112,7 +112,7 @@ class SetPresentationTests(unittest.TestCase):
         catalog = (ROOT / "addon/SoloCollections/Core/Catalog.lua").read_text(encoding="utf-8")
         self.assertIn("local function setPresentationLess", catalog)
         self.assertIn("table.sort(matches, setPresentationLess)", catalog)
-        self.assertIn('"tier", "difficulty", "medianItemLevel", "maxItemLevel"', catalog)
+        self.assertIn('"tier", "season", "difficulty", "medianItemLevel", "maxItemLevel"', catalog)
         self.assertIn("leftItemSetId < rightItemSetId", catalog)
         self.assertNotIn("record.name <", catalog)
 

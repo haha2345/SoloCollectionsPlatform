@@ -24,8 +24,20 @@ class SetPresentationError(ValueError):
 
 EXPANSION_RANK = {"UNKNOWN": 0, "CLASSIC": 1, "TBC": 2, "WRATH": 3}
 ACQUISITION_RANK = {"UNKNOWN": 0, "PVP": 1, "PVE": 2}
-TIER_RANK = {"NONE": 0, "T7": 7, "T8": 8, "T9": 9, "T10": 10}
-DIFFICULTY_RANK = {"UNKNOWN": 0, "RAID": 1, "HIGH": 2, "HEROIC": 3}
+TIER_RANK = {
+    "NONE": 0, "T0": 0.1, "T0.5": 0.5, "T1": 1, "T2": 2, "T2.5": 2.5,
+    "D3": 3.1, "T3": 3, "T4": 4, "T5": 5, "T6": 6, "T7": 7, "T8": 8,
+    "T9": 9, "T10": 10,
+}
+SEASON_RANK = {
+    "NONE": 0, "S1": 1, "S2": 2, "S3": 3, "S4": 4,
+    "S5": 5, "S6": 6, "S7": 7, "S8": 8,
+}
+DIFFICULTY_RANK = {"UNKNOWN": 0, "DUNGEON": 1, "RAID": 2, "HIGH": 3, "HEROIC": 4}
+CLASS_KEYS = {
+    "warrior", "paladin", "hunter", "rogue", "priest", "death_knight",
+    "shaman", "mage", "warlock", "druid",
+}
 
 
 def require(condition: bool, message: str) -> None:
@@ -57,6 +69,36 @@ def csv_bytes(rows: list[dict[str, Any]], fields: list[str]) -> bytes:
     return stream.getvalue().encode("utf-8")
 
 
+def validate_class_policy(policy: Any, key: str) -> None:
+    if policy is None:
+        return
+    require(isinstance(policy, dict), f"classPolicy must be an object for {key}")
+    mode = policy.get("mode")
+    classes = policy.get("allowedClassKeys")
+    require(mode in {"ANY", "ALLOW_LIST"}, f"invalid classPolicy mode for {key}")
+    require(isinstance(classes, list), f"classPolicy allowedClassKeys must be a list for {key}")
+    require(len(classes) == len(set(classes)), f"duplicate classPolicy allowedClassKeys for {key}")
+    for class_key in classes:
+        require(class_key in CLASS_KEYS, f"invalid class key in {key}: {class_key}")
+    require((mode == "ALLOW_LIST") == bool(classes), f"invalid classPolicy payload for {key}")
+
+
+def rule_item_set_ids(rule: dict[str, Any], key: str) -> list[int]:
+    bounds = rule.get("itemSetIdRange")
+    explicit = rule.get("itemSetIds")
+    require((bounds is None) != (explicit is None), f"{key} needs exactly one ItemSet selector")
+    if explicit is not None:
+        require(isinstance(explicit, list) and explicit, f"invalid ItemSet list for {key}")
+        values = [int(value) for value in explicit]
+        require(all(value > 0 for value in values), f"invalid ItemSet ID in {key}")
+        require(len(values) == len(set(values)), f"duplicate ItemSet ID in {key}")
+        return values
+    require(isinstance(bounds, list) and len(bounds) == 2, f"invalid ItemSet range for {key}")
+    lower, upper = int(bounds[0]), int(bounds[1])
+    require(lower > 0 and lower <= upper, f"invalid ItemSet bounds for {key}")
+    return list(range(lower, upper + 1))
+
+
 def validate_policy(policy: dict[str, Any]) -> list[dict[str, Any]]:
     require(policy.get("schemaVersion") == 1, "unsupported set presentation policy schema")
     rules = policy.get("rules")
@@ -65,18 +107,23 @@ def validate_policy(policy: dict[str, Any]) -> list[dict[str, Any]]:
     covered_ids: set[int] = set()
     for rule in rules:
         key = str(rule.get("key", ""))
-        bounds = rule.get("itemSetIdRange")
         require(key and key not in seen_keys, f"duplicate or missing set presentation rule key: {key!r}")
-        require(isinstance(bounds, list) and len(bounds) == 2, f"invalid ItemSet range for {key}")
-        lower, upper = int(bounds[0]), int(bounds[1])
-        require(lower > 0 and lower <= upper, f"invalid ItemSet bounds for {key}")
-        for item_set_id in range(lower, upper + 1):
+        for item_set_id in rule_item_set_ids(rule, key):
             require(item_set_id not in covered_ids, f"overlapping presentation rule for ItemSet {item_set_id}")
             covered_ids.add(item_set_id)
         for field, options in (("expansion", EXPANSION_RANK), ("acquisition", ACQUISITION_RANK),
                                ("raidTier", TIER_RANK), ("difficulty", DIFFICULTY_RANK)):
             require(rule.get(field) in options, f"invalid {field} in {key}")
+        season = rule.get("pvpSeason", "NONE")
+        require(season in SEASON_RANK, f"invalid pvpSeason in {key}")
         require(bool(rule.get("reasonCode")), f"missing presentation reasonCode for {key}")
+        if rule.get("displayLabel") is not None:
+            require(isinstance(rule["displayLabel"], str) and rule["displayLabel"],
+                    f"displayLabel must be a non-empty string for {key}")
+        if rule.get("pvpSeries") is not None:
+            require(isinstance(rule["pvpSeries"], str) and rule["pvpSeries"],
+                    f"pvpSeries must be a non-empty string for {key}")
+        validate_class_policy(rule.get("classPolicyOverride"), key)
         difficulty_bands = rule.get("difficultyBands", [])
         require(isinstance(difficulty_bands, list), f"difficultyBands must be a list for {key}")
         previous_minimum: int | float | None = None
@@ -97,8 +144,7 @@ def validate_policy(policy: dict[str, Any]) -> list[dict[str, Any]]:
 
 def matching_rule(item_set_id: int, rules: list[dict[str, Any]]) -> dict[str, Any] | None:
     for rule in rules:
-        lower, upper = (int(value) for value in rule["itemSetIdRange"])
-        if lower <= item_set_id <= upper:
+        if item_set_id in rule_item_set_ids(rule, str(rule.get("key", ""))):
             return rule
     return None
 
@@ -134,20 +180,28 @@ def resolve_presentation(candidate: dict[str, Any], collection_id: int, rule: di
         expansion = "UNKNOWN"
         acquisition = "UNKNOWN"
         tier = "NONE"
+        season = "NONE"
         difficulty = "UNKNOWN"
         rule_key = "unclassified"
         reason_code = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE"
         status = "UNKNOWN"
+        display_label = ""
+        pvp_series = ""
+        class_policy_override = None
     else:
         expansion = str(rule["expansion"])
         acquisition = str(rule["acquisition"])
         tier = str(rule["raidTier"])
+        season = str(rule.get("pvpSeason", "NONE"))
         difficulty, reason_code = resolve_rule_difficulty(rule, candidate.get("itemLevel") or {})
         rule_key = str(rule["key"])
         status = "REVIEWED"
+        display_label = str(rule.get("displayLabel") or (season if season != "NONE" else tier if tier != "NONE" else ""))
+        pvp_series = str(rule.get("pvpSeries") or "")
+        class_policy_override = rule.get("classPolicyOverride")
     item_level = candidate.get("itemLevel") or {}
     quality = candidate.get("quality") or {}
-    return {
+    result = {
         "collectionId": collection_id,
         "itemSetId": item_set_id,
         "status": status,
@@ -156,6 +210,9 @@ def resolve_presentation(candidate: dict[str, Any], collection_id: int, rule: di
         "expansion": expansion,
         "acquisition": acquisition,
         "raidTier": tier,
+        "pvpSeason": season,
+        "pvpSeries": pvp_series,
+        "displayLabel": display_label,
         "difficulty": difficulty,
         "itemLevel": item_level,
         "quality": quality,
@@ -163,11 +220,15 @@ def resolve_presentation(candidate: dict[str, Any], collection_id: int, rule: di
             "expansion": EXPANSION_RANK[expansion],
             "acquisition": ACQUISITION_RANK[acquisition],
             "tier": TIER_RANK[tier],
+            "season": SEASON_RANK[season],
             "difficulty": DIFFICULTY_RANK[difficulty],
             "medianItemLevel": summary_value(item_level, "median"),
             "maxItemLevel": summary_value(item_level, "max"),
         },
     }
+    if class_policy_override is not None:
+        result["classPolicyOverride"] = class_policy_override
+    return result
 
 
 def build(repo_root: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
@@ -204,6 +265,8 @@ def build(repo_root: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
             "expansion": presentation["expansion"],
             "acquisition": presentation["acquisition"],
             "raidTier": presentation["raidTier"],
+            "pvpSeason": presentation["pvpSeason"],
+            "displayLabel": presentation["displayLabel"],
             "difficulty": presentation["difficulty"],
             "medianItemLevel": presentation["sortRank"]["medianItemLevel"],
             "ruleKey": presentation["ruleKey"],
@@ -228,7 +291,7 @@ def build(repo_root: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
 def outputs(repo_root: Path, output: dict[str, Any], review_rows: list[dict[str, Any]]) -> dict[Path, bytes]:
     fields = [
         "candidateKey", "itemSetId", "active", "presentationStatus", "expansion", "acquisition", "raidTier",
-        "difficulty", "medianItemLevel", "ruleKey", "reasonCode",
+        "pvpSeason", "displayLabel", "difficulty", "medianItemLevel", "ruleKey", "reasonCode",
     ]
     return {
         repo_root / "catalog/generated/set-presentations.json": pretty_json(output).encode("utf-8"),

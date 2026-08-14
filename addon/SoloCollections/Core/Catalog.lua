@@ -493,20 +493,39 @@ local function resolvedFilters(filters)
     return result
 end
 
+local function effectiveSetClassPolicy(record)
+    local presentation = record and record.presentation
+    if presentation and presentation.classPolicyOverride then
+        return presentation.classPolicyOverride
+    end
+    return record and record.classPolicy
+end
+
+local function canonicalClassKey(value)
+    if SC.IdentityRegistry and SC.IdentityRegistry.GetClassByKey then
+        local identity = SC.IdentityRegistry.GetClassByKey(value)
+        if identity and identity.known and identity.classKey then
+            return identity.classKey
+        end
+    end
+    return string.lower(tostring(value or ""))
+end
+
 local function classMatches(record, classToken)
     if not classToken or classToken == "ALL" then
         return true
     end
-    if record.classPolicy then
-        if record.classPolicy.mode == "ANY" then
+    local policy = effectiveSetClassPolicy(record)
+    if policy then
+        if policy.mode == "ANY" then
             return true
         end
-        if record.classPolicy.mode ~= "ALLOW_LIST" then
+        if policy.mode ~= "ALLOW_LIST" then
             return false
         end
-        local wanted = string.lower(tostring(classToken))
-        for _, allowed in ipairs(record.classPolicy.allowedClassKeys or {}) do
-            if allowed == wanted then return true end
+        local wanted = canonicalClassKey(classToken)
+        for _, allowed in ipairs(policy.allowedClassKeys or {}) do
+            if canonicalClassKey(allowed) == wanted then return true end
         end
         return false
     elseif record.classToken then
@@ -748,7 +767,7 @@ end
 -- by tools/catalog/set_presentations.py, so localized names never influence
 -- the default wardrobe order.
 local SET_PRESENTATION_SORT_KEYS = {
-    "expansion", "acquisition", "tier", "difficulty", "medianItemLevel", "maxItemLevel",
+    "expansion", "acquisition", "tier", "season", "difficulty", "medianItemLevel", "maxItemLevel",
 }
 
 local function setPresentationRank(record, key)

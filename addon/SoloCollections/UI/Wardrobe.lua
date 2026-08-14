@@ -6,30 +6,19 @@ local EzModel = SC.EzWardrobe.Model
 local EzItems = SC.EzWardrobe.Items
 
 local ITEM_PAGE_SIZE = EzItems.PAGE_SIZE
-local EZ_LAYOUT = {
-    itemWidth = EzItems.LAYOUT.itemWidth,
-    itemHeight = EzItems.LAYOUT.itemHeight,
-    itemGapX = EzItems.LAYOUT.itemGapX,
-    itemGapY = EzItems.LAYOUT.itemGapY,
-    -- The ezCollections grid is 548px wide. Wardrobe now uses the same 768px
-    -- journal width as mounts, so keep the copied six-column grid centered.
-    itemStartX = EzItems.LAYOUT.itemStartX,
-    itemStartY = EzItems.LAYOUT.itemStartY,
-    setColumns = 4,
-    setWidth = 129,
-    setHeight = 186,
-    setGapX = 13,
-    setGapY = 14,
-    setStartX = 50,
-    setStartY = 50,
-}
 local VISIBLE_SET_ROWS = 8
+local SET_LIST_TOP_OFFSET = 36
 local SET_ROW_HEIGHT = 52
 local SET_ROW_SPACING = 3
 local SET_PIECE_SIZE = 40
 local SET_PIECE_SPACING = 5
 local SET_PIECE_COLUMNS = 8
 local SET_PIECE_POOL_LIMIT = 12
+local SET_DETAILS_NAME_Y = -37
+local SET_DETAILS_LONG_NAME_Y = -30
+local SET_DETAILS_LABEL_Y = -63
+local SET_DETAILS_ICON_ROW_Y = -94
+local SET_DETAILS_MODEL_TOP_Y = -128
 local DEFAULT_ROTATION = 0.18
 local function showAppearanceActionResult(ok, reason)
     local message
@@ -195,18 +184,61 @@ local function filterLabel(options, current)
     return options[1].label
 end
 
+local function classLabelFromKey(classKey)
+    if classKey and classKey ~= "ALL" and Identity.GetClassByKey then
+        local classIdentity = Identity.GetClassByKey(classKey)
+        if classIdentity and classIdentity.known then
+            return (classIdentity.name and (classIdentity.name.zhCN or classIdentity.name.enUS))
+                or classIdentity.filterToken
+                or tostring(classKey)
+        end
+    end
+    return filterLabel(CLASS_FILTERS, classKey == "ALL" and "ALL" or string.upper(tostring(classKey or "")))
+end
+
+local function effectiveSetClassPolicy(record)
+    local presentation = record and record.presentation
+    if presentation and presentation.classPolicyOverride then
+        return presentation.classPolicyOverride
+    end
+    return record and record.classPolicy
+end
+
 local function setClassLabel(record)
-    local policy = record and record.classPolicy
+    local policy = effectiveSetClassPolicy(record)
     if not policy then
-        return filterLabel(CLASS_FILTERS, record and record.classToken)
+        return classLabelFromKey(record and record.classToken)
     end
     if policy.mode == "ANY" then return "全部职业" end
     if policy.mode ~= "ALLOW_LIST" then return "职业未解析" end
     local labels = {}
     for _, classKey in ipairs(policy.allowedClassKeys or {}) do
-        labels[#labels + 1] = filterLabel(CLASS_FILTERS, string.upper(classKey))
+        labels[#labels + 1] = classLabelFromKey(classKey)
     end
     return table.concat(labels, "/")
+end
+
+local function setPresentationLabel(record)
+    local presentation = record and record.presentation
+    if not presentation then return nil end
+    local label = presentation.displayLabel
+    if label and label ~= "" then return label end
+    if presentation.pvpSeason and presentation.pvpSeason ~= "NONE" then
+        return presentation.pvpSeason
+    end
+    if presentation.raidTier and presentation.raidTier ~= "NONE" then
+        return presentation.raidTier
+    end
+    return nil
+end
+
+local function setMetadataLine(record)
+    local classLabel = setClassLabel(record)
+    local presentationLabel = setPresentationLabel(record)
+    if presentationLabel then
+        return presentationLabel .. "  ·  " .. classLabel
+    end
+    return classLabel
 end
 
 local function hasFilterValue(options, current)
@@ -300,6 +332,131 @@ local function resolveTryOnItem(itemId)
     return itemLink or ("item:" .. itemId)
 end
 
+-- Keep the Sets tab in its original list/detail shape. The item tab can use
+-- ezCollections model cards, but sets read better as named rows with one large
+-- preview and the piece strip.
+local function createSetListRow(parent, width, onClick)
+    local row = CreateFrame("Button", nil, parent)
+    row:SetWidth(width or 330)
+    row:SetHeight(SET_ROW_HEIGHT)
+    row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+
+    local background = row:CreateTexture(nil, "BACKGROUND")
+    background:SetTexture("Interface\\Buttons\\WHITE8X8")
+    background:SetAllPoints(row)
+    background:SetVertexColor(0.018, 0.016, 0.014, 0.78)
+
+    local selected = row:CreateTexture(nil, "BORDER")
+    selected:SetTexture("Interface\\Buttons\\WHITE8X8")
+    selected:SetPoint("TOPLEFT", row, "TOPLEFT", 1, -1)
+    selected:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -1, 1)
+    selected:SetGradientAlpha("HORIZONTAL", 0.46, 0.22, 0.045, 0.72, 0.17, 0.075, 0.02, 0.34)
+    selected:Hide()
+
+    local hover = row:CreateTexture(nil, "HIGHLIGHT")
+    hover:SetTexture("Interface\\Buttons\\WHITE8X8")
+    hover:SetPoint("TOPLEFT", row, "TOPLEFT", 1, -1)
+    hover:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -1, 1)
+    hover:SetGradientAlpha("HORIZONTAL", 0.72, 0.48, 0.13, 0.24, 0.42, 0.24, 0.06, 0.08)
+    row:SetHighlightTexture(hover)
+
+    local separator = row:CreateTexture(nil, "BORDER")
+    separator:SetTexture("Interface\\Buttons\\WHITE8X8")
+    separator:SetPoint("BOTTOMLEFT", row, "BOTTOMLEFT", 2, 0)
+    separator:SetPoint("BOTTOMRIGHT", row, "BOTTOMRIGHT", -2, 0)
+    separator:SetHeight(1)
+    separator:SetVertexColor(0.34, 0.29, 0.22, 0.34)
+
+    local iconHolder = CreateFrame("Frame", nil, row)
+    iconHolder:SetWidth(42)
+    iconHolder:SetHeight(42)
+    iconHolder:SetPoint("LEFT", row, "LEFT", 5, 0)
+    iconHolder:SetFrameLevel(row:GetFrameLevel() + 1)
+
+    local iconBackground = iconHolder:CreateTexture(nil, "BACKGROUND")
+    iconBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
+    iconBackground:SetAllPoints(iconHolder)
+    iconBackground:SetVertexColor(0.018, 0.021, 0.024, 0.92)
+
+    local icon = iconHolder:CreateTexture(nil, "ARTWORK")
+    icon:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 2, -2)
+    icon:SetPoint("BOTTOMRIGHT", iconHolder, "BOTTOMRIGHT", -2, 2)
+    UI.SetFallbackTexture(icon)
+
+    local glass = iconHolder:CreateTexture(nil, "OVERLAY")
+    glass:SetTexture("Interface\\Buttons\\WHITE8X8")
+    glass:SetPoint("TOPLEFT", iconHolder, "TOPLEFT", 2, -2)
+    glass:SetPoint("TOPRIGHT", iconHolder, "TOPRIGHT", -2, -2)
+    glass:SetHeight(17)
+    glass:SetGradientAlpha("VERTICAL", 0.80, 0.88, 0.94, 0.02, 0.92, 0.96, 1.00, 0.18)
+
+    local iconBorder = UI.CreateThinCardBorder(iconHolder, 1)
+    iconBorder:SetBorderColor(0.44, 0.46, 0.48, 0.92)
+
+    local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    name:SetPoint("TOPLEFT", iconHolder, "TOPRIGHT", 10, -5)
+    name:SetPoint("RIGHT", row, "RIGHT", -28, 0)
+    name:SetJustifyH("LEFT")
+    name:SetTextColor(0.93, 0.77, 0.26)
+
+    local detail = row:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
+    detail:SetPoint("BOTTOMLEFT", iconHolder, "BOTTOMRIGHT", 10, 5)
+    detail:SetPoint("RIGHT", row, "RIGHT", -28, 0)
+    detail:SetJustifyH("LEFT")
+    detail:SetTextColor(0.49, 0.48, 0.46)
+
+    local star = row:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
+    star:SetPoint("RIGHT", row, "RIGHT", -6, 0)
+    star:SetText("★")
+    star:SetTextColor(1.00, 0.82, 0.18)
+    star:Hide()
+
+    row:SetScript("OnClick", function(self, button)
+        if onClick and self.scRecord then
+            onClick(self, self.scRecord, button)
+        end
+    end)
+
+    function row:SetRecord(record)
+        self.scRecord = record
+        if not record then
+            selected:Hide()
+            star:Hide()
+            name:SetText("")
+            detail:SetText("")
+            self:Hide()
+            return
+        end
+
+        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)))
+        UI.SetCollectedVisual(icon, record.collected, 0.52)
+        name:SetText(record.name or "未知套装")
+        name:SetTextColor(record.collected and 0.96 or 0.59, record.collected and 0.79 or 0.59, record.collected and 0.28 or 0.57)
+        local owned = tonumber(record.collectedCount) or 0
+        local required = tonumber(record.requiredCount) or #(record.itemIds or {})
+        detail:SetText(setMetadataLine(record) .. "  ·  " .. owned .. "/" .. required .. " 外观")
+        if record.collected then
+            iconBorder:SetBorderColor(0.66, 0.52, 0.24, 0.96)
+        else
+            iconBorder:SetBorderColor(0.39, 0.41, 0.43, 0.86)
+        end
+        if record.favorite then star:Show() else star:Hide() end
+        self:Show()
+    end
+
+    function row:SetSelected(value)
+        self.scSelected = value and true or false
+        if self.scSelected then selected:Show() else selected:Hide() end
+    end
+
+    row.scIcon = icon
+    row.scIconBorder = iconBorder
+    row.scName = name
+    row.scDetail = detail
+    row.scStar = star
+    return row
+end
+
 
 local function applyItemModelRecord(model, record, pageGeneration, force)
     pageGeneration = pageGeneration or ((model.scItemGeneration or 0) + 1)
@@ -336,7 +493,6 @@ function UI.CreateWardrobePage(parent)
     page.scItemModels = {}
     page.scItemPageSize = ITEM_PAGE_SIZE
     page.scSetRows = {}
-    page.scSetCards = {}
     page.scPieceIcons = {}
     local setSetOffset
     local itemDataProvider = SC.EzWardrobe.DataProvider:Create(page)
@@ -492,52 +648,52 @@ function UI.CreateWardrobePage(parent)
 
     local setsPanel = CreateFrame("Frame", nil, page)
     setsPanel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    setsPanel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    setsPanel:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 5)
+    setsPanel:SetWidth(350)
     local setsInset = UI.EzCollections:ApplyInset(setsPanel)
     UI.EzCollections:AddShadowOverlay(setsPanel)
     SC.WardrobeUI.Layout:StylePanel(setsPanel, setsInset.background)
     setsPanel:Hide()
 
-    local preview = CreateFrame("Frame", nil, setsPanel)
-    preview:SetAllPoints(setsPanel)
-    preview:SetFrameLevel(setsPanel:GetFrameLevel() + 5)
-    local previewBackground = preview:CreateTexture(nil, "BACKGROUND")
-    previewBackground:SetTexture(UI.EzCollections:MediaPath(
-        "Transmogrify",
-        "TransmogSets.tga",
-        "Interface\\Buttons\\WHITE8X8"
-    ))
-    previewBackground:SetWidth(418)
-    previewBackground:SetHeight(64)
-    previewBackground:SetPoint("BOTTOM", preview, "BOTTOM", 0, 3)
-    previewBackground:SetTexCoord(0.001953125, 0.818359375, 0.70703125, 0.95703125)
-    SC.WardrobeUI.Layout:StylePanel(preview, previewBackground)
+    local preview = CreateFrame("Frame", nil, page)
+    preview:SetPoint("TOPLEFT", setsPanel, "TOPRIGHT", 10, 0)
+    preview:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    preview:SetFrameLevel(setsPanel:GetFrameLevel() + 2)
+    local previewInset = UI.EzCollections:ApplyInset(preview)
+    UI.EzCollections:AddShadowOverlay(preview)
+    SC.WardrobeUI.Layout:StylePanel(preview, previewInset.background)
     preview:Hide()
 
     local model = CreateFrame("DressUpModel", nil, preview)
-    model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, -84)
+    model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
     model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
-    model:Hide()
     local setPresenter = SC.WardrobeUI.ItemPresenter:AttachSet(model, function()
         return page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
     end)
 
     local name = preview:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    name:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 43)
-    name:SetWidth(190)
-    name:SetJustifyH("LEFT")
+    name:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_NAME_Y)
+    name:SetWidth(380)
+    name:SetJustifyH("CENTER")
     name:SetTextColor(1, 0.82, 0.18)
 
+    local longName = preview:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    longName:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_LONG_NAME_Y)
+    longName:SetWidth(380)
+    longName:SetJustifyH("CENTER")
+    longName:SetTextColor(1, 0.82, 0.18)
+    longName:Hide()
+
     local detail = preview:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    detail:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 27)
-    detail:SetWidth(190)
-    detail:SetJustifyH("LEFT")
+    detail:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_LABEL_Y)
+    detail:SetWidth(380)
+    detail:SetJustifyH("CENTER")
     detail:SetTextColor(0.82, 0.75, 0.62)
 
     local setProgress = preview:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    setProgress:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 11)
+    setProgress:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 18)
     setProgress:SetTextColor(0.45, 0.90, 0.34)
     setProgress:Hide()
     page.scSetProgress = setProgress
@@ -547,17 +703,16 @@ function UI.CreateWardrobePage(parent)
     reset:SetHeight(25)
     reset:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -14, 13)
     reset:SetText("重置视角")
-    reset:Hide()
 
     local applySet = CreateFrame("Button", nil, preview, "UIPanelButtonTemplate")
     applySet:SetWidth(104)
     applySet:SetHeight(25)
-    applySet:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -14, 13)
+    applySet:SetPoint("RIGHT", reset, "LEFT", -8, 0)
     applySet:SetText("应用套装")
     applySet:Disable()
     page.scApplySet = applySet
     local pieces = CreateFrame("Frame", nil, preview)
-    pieces:SetPoint("TOP", name, "BOTTOM", 0, -8)
+    pieces:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_ICON_ROW_Y)
     -- The production catalogue currently tops out at eight pieces, but the
     -- preview contract must also cover nine-piece variants (and leave room for
     -- a reviewed future set) without rebuilding UI frames after the catalog
@@ -732,9 +887,6 @@ function UI.CreateWardrobePage(parent)
         model.scSetPreviewGeneration = page.scSetPreviewGeneration
         model.scSetPreviewPending = nil
         if setPresenter then setPresenter:Clear("SET_PREVIEW_INVALIDATED") end
-        for _, card in ipairs(page.scSetCards or {}) do
-            if card.scPresenter then card.scPresenter:Clear("SET_GRID_INVALIDATED") end
-        end
     end
 
     local function queueSetPreview(record)
@@ -773,18 +925,57 @@ function UI.CreateWardrobePage(parent)
         if not record then return end
         page.scSetSelectedRecord = record
         if record.collected then applySet:Enable() else applySet:Disable() end
-        model:Hide()
-        local previewItems = getSelectedVariantPreviewItems(record)
-        name:SetText(record.name or "未知套装")
+        model:ClearAllPoints()
+        model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
+        model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
+        model:Show()
+        local previewItems = queueSetPreview(record)
+        local setName = record.name or "未知套装"
+        name:SetText(setName)
+        longName:SetText(setName)
+        if name.GetStringWidth and name:GetStringWidth() > name:GetWidth() then
+            name:Hide()
+            longName:Show()
+        else
+            name:Show()
+            longName:Hide()
+        end
+        local presentationLabel = setPresentationLabel(record)
+        if presentationLabel then
+            detail:SetText("分类：" .. presentationLabel .. "  ·  职业：" .. setClassLabel(record))
+        else
+            detail:SetText("职业：" .. setClassLabel(record))
+        end
+        local pieceState = deriveSetPieceState(record)
+        local pieceCount = math.min(#previewItems, #page.scPieceIcons)
+        local firstRow = math.min(SET_PIECE_COLUMNS, pieceCount)
+        local piecesWidth = (firstRow * SET_PIECE_SIZE) + (math.max(0, firstRow - 1) * SET_PIECE_SPACING)
+        pieces:SetWidth(math.max(1, piecesWidth))
+        if pieceCount > 0 then pieces:Show() else pieces:Hide() end
+        for index, piece in ipairs(page.scPieceIcons) do
+            piece:ClearAllPoints()
+            if index == 1 then
+                piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
+            elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
+                piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_PIECE_SPACING)
+            else
+                piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
+            end
+
+            local previewItem = previewItems[index]
+            local itemId = previewItem and previewItem.previewSourceItemId
+            piece.scItemId = itemId
+            if itemId then
+                local collected = pieceState[itemId] and true or false
+                updateSetPieceVisual(piece, itemId, collected)
+                piece:Show()
+            else
+                piece:Hide()
+            end
+        end
         local collectedPieces = tonumber(record.collectedCount) or 0
         local requiredPieces = tonumber(record.requiredCount) or #previewItems
-        detail:SetText("职业：" .. setClassLabel(record) .. "  ·  " .. collectedPieces .. "/" .. requiredPieces .. " 外观")
-        pieces:Hide()
-        for index, piece in ipairs(page.scPieceIcons) do
-            piece.scItemId = nil
-            piece:Hide()
-        end
-        setProgress:SetText(record.collected and "已收集 · 可应用" or "未完整收集 · 仅本地预览")
+        setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. requiredPieces)
         setProgress:Show()
     end
 
@@ -1902,7 +2093,7 @@ function UI.CreateWardrobePage(parent)
     local function getMaxSetOffset()
         local count = page.scSetRecordCount or 0
         if count <= 0 then return 0 end
-        return math.max(0, math.floor((count - 1) / VISIBLE_SET_ROWS) * VISIBLE_SET_ROWS)
+        return math.max(0, count - VISIBLE_SET_ROWS)
     end
 
     setSetOffset = function(value, suppressRefresh)
@@ -1918,12 +2109,12 @@ function UI.CreateWardrobePage(parent)
 
     local function scrollSetList(delta)
         if not delta or delta == 0 then return end
-        setSetOffset((page.scSetOffset or 0) + (delta > 0 and -VISIBLE_SET_ROWS or VISIBLE_SET_ROWS))
+        setSetOffset((page.scSetOffset or 0) + (delta > 0 and -1 or 1))
     end
 
     local setScrollbar = CreateFrame("Slider", nil, setsPanel)
     setScrollbar:SetWidth(14)
-    setScrollbar:SetPoint("TOPRIGHT", setsPanel, "TOPRIGHT", -1, -3)
+    setScrollbar:SetPoint("TOPRIGHT", setsPanel, "TOPRIGHT", -1, -SET_LIST_TOP_OFFSET)
     setScrollbar:SetPoint("BOTTOMRIGHT", setsPanel, "BOTTOMRIGHT", -1, 37)
     setScrollbar:SetOrientation("VERTICAL")
     setScrollbar:SetMinMaxValues(0, 0)
@@ -1961,85 +2152,7 @@ function UI.CreateWardrobePage(parent)
     setsPanel:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
 
     for index = 1, VISIBLE_SET_ROWS do
-        local column = (index - 1) % EZ_LAYOUT.setColumns
-        local row = math.floor((index - 1) / EZ_LAYOUT.setColumns)
-        local card = CreateFrame("Frame", nil, setsPanel)
-        card:SetWidth(EZ_LAYOUT.setWidth)
-        card:SetHeight(EZ_LAYOUT.setHeight)
-        card:SetPoint(
-            "TOPLEFT",
-            setsPanel,
-            "TOPLEFT",
-            EZ_LAYOUT.setStartX + column * (EZ_LAYOUT.setWidth + EZ_LAYOUT.setGapX),
-            -EZ_LAYOUT.setStartY - row * (EZ_LAYOUT.setHeight + EZ_LAYOUT.setGapY)
-        )
-
-        local cardBackground = card:CreateTexture(nil, "BACKGROUND")
-        cardBackground:SetAllPoints(card)
-        cardBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-        cardBackground:SetVertexColor(0, 0, 0, 1)
-
-        local setModel = CreateFrame("DressUpModel", nil, card)
-        setModel:SetAllPoints(card)
-        setModel:EnableMouse(false)
-        local cardPresenter = SC.ModelProvider.Create("DRESSUP", setModel, {
-            panelCheck = function()
-                return card:IsShown() and page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
-            end,
-        })
-
-        local hit = CreateFrame("Button", nil, card)
-        hit:SetAllPoints(card)
-        hit:SetFrameLevel(setModel:GetFrameLevel() + 2)
-        hit:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-        hit:EnableMouseWheel(true)
-        local border, selected, favorite, hover = UI.EzCollections:CreateWardrobeSetChrome(hit)
-
-        function card:SetRecord(record)
-            self.scGeneration = (self.scGeneration or 0) + 1
-            self.scReadyGeneration = nil
-            self.scRecord = record
-            cardPresenter:Clear("SET_CARD_REPLACED")
-            if not record then
-                selected:Hide()
-                favorite:Hide()
-                setModel:ClearModel()
-                self:Hide()
-                return
-            end
-
-            local itemStrings = {}
-            for _, previewItem in ipairs(getSelectedVariantPreviewItems(record)) do
-                itemStrings[#itemStrings + 1] = resolveTryOnItem(previewItem.previewSourceItemId)
-            end
-            self:Show()
-            setModel:Show()
-            local expectedGeneration = self.scGeneration
-            local expectedRecordId = record.id
-            cardPresenter:Present({
-                unit = "player",
-                undress = true,
-                settleTicks = 2,
-                items = itemStrings,
-                onReady = function()
-                    if card.scGeneration == expectedGeneration and
-                        card.scRecord and card.scRecord.id == expectedRecordId then
-                        card.scReadyGeneration = expectedGeneration
-                    end
-                end,
-            })
-            border:SetCollected(record.collected)
-            setModel:SetAlpha(record.collected and 1 or 0.48)
-            if record.favorite then favorite:Show() else favorite:Hide() end
-        end
-
-        function card:SetSelected(value)
-            self.scSelected = value and true or false
-            if self.scSelected then selected:Show() else selected:Hide() end
-        end
-
-        hit:SetScript("OnClick", function(_, button)
-            local record = card.scRecord
+        local row = createSetListRow(setsPanel, 330, function(_, record, button)
             if not record then return end
             if button == "RightButton" then
                 Catalog.ToggleDemoFavorite("SETS", record.id)
@@ -2056,36 +2169,32 @@ function UI.CreateWardrobePage(parent)
             else
                 page.scSetSelectedId = record.id
                 previewSet(record)
-                for _, setCard in ipairs(page.scSetCards) do
-                    setCard:SetSelected(setCard.scRecord and setCard.scRecord.id == page.scSetSelectedId)
+                for _, setRow in ipairs(page.scSetRows) do
+                    setRow:SetSelected(setRow.scRecord and setRow.scRecord.id == page.scSetSelectedId)
                 end
             end
         end)
-        hit:SetScript("OnEnter", function(self)
-            local record = card.scRecord
+        row:SetPoint("TOPLEFT", setsPanel, "TOPLEFT", 3, -SET_LIST_TOP_OFFSET - ((index - 1) * (SET_ROW_HEIGHT + SET_ROW_SPACING)))
+        row:EnableMouseWheel(true)
+        row:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
+        row:SetScript("OnEnter", function(self)
+            local record = self.scRecord
             if not record then return end
             local owned = tonumber(record.collectedCount) or 0
             local required = tonumber(record.requiredCount) or #(record.itemIds or {})
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:SetText(record.name or "未知套装", 1, 0.82, 0.18)
+            local presentationLabel = setPresentationLabel(record)
+            if presentationLabel then
+                GameTooltip:AddLine("分类：" .. presentationLabel, 0.95, 0.82, 0.36)
+            end
             GameTooltip:AddLine("职业：" .. setClassLabel(record), 0.82, 0.78, 0.70)
             GameTooltip:AddLine("收集进度：" .. owned .. " / " .. required, 0.45, 0.90, 0.34)
             GameTooltip:AddLine("左键选择 · Shift+左键应用 · 右键偏好", 0.78, 0.74, 0.64)
             GameTooltip:Show()
         end)
-        hit:SetScript("OnLeave", function() GameTooltip:Hide() end)
-        hit:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
-
-        card.scModel = setModel
-        card.scPresenter = cardPresenter
-        card.scHitFrame = hit
-        card.scBorder = border
-        card.scSelected = selected
-        card.scFavorite = favorite
-        card.scHover = hover
-        SC.WardrobeUI.Layout:StyleCard(card, cardBackground, border)
-        card:Hide()
-        page.scSetCards[index] = card
+        row:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        page.scSetRows[index] = row
     end
 
     local itemControls = UI.CreatePageControls(itemsPanel, function()
@@ -2122,8 +2231,10 @@ function UI.CreateWardrobePage(parent)
             itemModel.scSelected:Hide()
         end
         for _, row in ipairs(self.scSetRows) do row:SetSelected(false) end
-        for _, card in ipairs(self.scSetCards) do card:SetSelected(false) end
         name:SetText("")
+        name:Show()
+        longName:SetText("")
+        longName:Hide()
         detail:SetText("")
         setProgress:Hide()
         pieces:Hide()
@@ -2312,7 +2423,7 @@ function UI.CreateWardrobePage(parent)
         local allRecords, setFilters = wardrobeFilters:QuerySets()
         page.scSetRecordCount = #allRecords
         local maxOffset = #allRecords > 0
-            and math.floor((#allRecords - 1) / VISIBLE_SET_ROWS) * VISIBLE_SET_ROWS or 0
+            and math.max(0, #allRecords - VISIBLE_SET_ROWS) or 0
         setSetOffset(page.scSetOffset, true)
 
         local records = {}
@@ -2335,16 +2446,16 @@ function UI.CreateWardrobePage(parent)
         page.scSyncingSetScrollbar = nil
 
         local selected
-        for _, record in ipairs(records) do
+        for _, record in ipairs(allRecords) do
             if record.id == page.scSetSelectedId then
                 selected = record
                 break
             end
         end
-        for index, card in ipairs(page.scSetCards) do
+        for index, row in ipairs(page.scSetRows) do
             local record = records[index]
-            card:SetRecord(record)
-            card:SetSelected(record and record.id == page.scSetSelectedId)
+            row:SetRecord(record)
+            row:SetSelected(record and record.id == page.scSetSelectedId)
         end
         local collected, total = Catalog.GetProgress("SETS", setFilters)
         if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(collected, total) end
@@ -2355,9 +2466,7 @@ function UI.CreateWardrobePage(parent)
             local record = selected or records[1] or allRecords[1]
             page.scSetSelectedId = record.id
             previewSet(record)
-            for _, card in ipairs(page.scSetCards) do
-                card:SetSelected(card.scRecord and card.scRecord.id == record.id)
-            end
+            for _, row in ipairs(page.scSetRows) do row:SetSelected(row.scRecord and row.scRecord.id == record.id) end
         end
     end
 

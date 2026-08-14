@@ -80,7 +80,7 @@ def validate_presentations(model: dict[str, Any], presentations: dict[str, Any])
                 f"invalid or duplicate set presentation collection ID: {collection_id}")
         ranks = row.get("sortRank")
         require(isinstance(ranks, dict), f"set presentation has no sort rank: {collection_id}")
-        for key in ("expansion", "acquisition", "tier", "difficulty", "medianItemLevel", "maxItemLevel"):
+        for key in ("expansion", "acquisition", "tier", "season", "difficulty", "medianItemLevel", "maxItemLevel"):
             require(isinstance(ranks.get(key), (int, float)),
                     f"set presentation rank is invalid: {collection_id}.{key}")
         require(bool(row.get("reasonCode")) and bool(row.get("status")),
