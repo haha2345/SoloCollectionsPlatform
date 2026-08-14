@@ -526,11 +526,29 @@ end
 function UI.CreateTopSubTab(parent, labelText, onClick)
     UI.scWardrobeTabSerial = (UI.scWardrobeTabSerial or 0) + 1
     local name = "SoloCollectionsWardrobeTab" .. UI.scWardrobeTabSerial
-    local button = CreateFrame("Button", name, parent, "OptionsFrameTabButtonTemplate")
-    button:SetWidth(70)
-    button:SetHeight(24)
+    local button = CreateFrame("Button", name, parent, "TabButtonTemplate")
+    button:SetID(UI.scWardrobeTabSerial)
     button:SetText(labelText or "")
-    if PanelTemplates_TabResize then PanelTemplates_TabResize(button, 0, nil, 57) end
+    button.minWidth = 57
+    if PanelTemplates_TabResize then PanelTemplates_TabResize(button, 0, nil) end
+
+    -- Blizzard_Wardrobe.xml keeps at least 57 pixels for the stretchable
+    -- middle piece after PanelTemplates_TabResize.  This is the exact
+    -- ezCollections item/set tab composition, not OptionsFrame chrome.
+    local left = button.Left or _G[name .. "Left"]
+    local middle = button.Middle or _G[name .. "Middle"]
+    local middleDisabled = button.MiddleDisabled or _G[name .. "MiddleDisabled"]
+    local sideWidth = left and (2 * left:GetWidth()) or 32
+    if button:GetWidth() - sideWidth < button.minWidth then
+        local tabWidth = button.minWidth + sideWidth
+        if middle then middle:SetWidth(button.minWidth) end
+        if middleDisabled then middleDisabled:SetWidth(button.minWidth) end
+        button:SetWidth(tabWidth)
+        local highlight = button.HighlightTexture or _G[name .. "HighlightTexture"]
+        if highlight then highlight:SetWidth(tabWidth) end
+    end
+
+    button:RegisterForClicks("LeftButtonUp")
     button:SetScript("OnClick", function(self)
         if onClick then onClick(self) end
         if PlaySound then PlaySound("igCharacterInfoTab") end
@@ -544,6 +562,7 @@ function UI.CreateTopSubTab(parent, labelText, onClick)
         end
     end
     button.scLabel = button.Text or _G[name .. "Text"]
+    button.scEzCollectionsWardrobeTab = true
     return button
 end
 
@@ -715,7 +734,15 @@ function UI.CreateFilterPopup(parent, width)
         self:SetHeight(math.max(48, 24 + count * 24))
     end
 
-    button:SetScript("OnClick", function()
+    button:SetScript("OnClick", function(self)
+        local wardrobeDropDown = self.scWardrobeDropDown
+        if wardrobeDropDown and SC.db and SC.db.mainTab == "WARDROBE" and ToggleDropDownMenu then
+            popup:Hide()
+            arrow:SetTexCoord(0, 1, 0, 1)
+            if PlaySound then PlaySound("igMainMenuOptionCheckBoxOn") end
+            ToggleDropDownMenu(1, nil, wardrobeDropDown, self, 74, 15)
+            return
+        end
         if popup:IsShown() then
             popup:Hide()
         else
@@ -729,6 +756,9 @@ function UI.CreateFilterPopup(parent, width)
     button.scBackground = buttonBackground
     button.scBorder = buttonBorder
     button.scInner = buttonInner
+    function button:SetWardrobeDropDown(dropDown)
+        self.scWardrobeDropDown = dropDown
+    end
     return button, popup
 end
 

@@ -30,9 +30,21 @@ local PORTRAITS = {
         texCoord = { 0.07, 0.93, 0.07, 0.93 },
     },
     WARDROBE = {
-        relative = "Interface\\Icons\\INV_Arcane_Orb.blp",
-        fallback = function() return UI.Media and UI.Media.tabs and UI.Media.tabs.WARDROBE end,
-        texCoord = { 0.07, 0.93, 0.07, 0.93 },
+        texture = function()
+            if SC.RetailUI and type(SC.RetailUI.GetWardrobePortraitPath) == "function" then
+                return SC.RetailUI.GetWardrobePortraitPath()
+            end
+            return "Interface\\Icons\\inv_chest_cloth_17"
+        end,
+        fallback = function()
+            if Assets and type(Assets.Path) == "function" then
+                return Assets.Path("Textures\\UI-MicroButton-Transmogrify-Up.tga")
+            end
+            return "Interface\\Icons\\INV_Misc_QuestionMark"
+        end,
+        texCoord = { 0, 1, 0, 1 },
+        precut = true,
+        dragonUI = true,
     },
     TRANSMOG_LAB = {
         relative = "Interface\\Icons\\INV_Arcane_Orb.blp",
@@ -171,21 +183,39 @@ function Ez:SetPortraitForTab(frame, key)
     local portrait = frame and frame.scPortrait
     if not portrait then return end
     local definition = PORTRAITS[key] or PORTRAITS.MOUNTS
-    local texture = definition.texture or (definition.relative and self:AssetPath(definition.relative, definition.fallback))
+    local texture = resolveFallback(definition.texture)
+        or (definition.relative and self:AssetPath(definition.relative, definition.fallback))
         or resolveFallback(definition.fallback)
     texture = texture or "Interface\\Icons\\INV_Misc_QuestionMark"
-    local nativeCrop = false
-    if definition.precut then
-        portrait:SetTexture(texture)
-        portrait:SetTexCoord(unpack(definition.texCoord))
-        nativeCrop = true
-    elseif SetPortraitToTexture then
-        nativeCrop = pcall(SetPortraitToTexture, portrait, texture)
+    local function apply(candidate)
+        if not candidate then return false end
+        if definition.precut then
+            portrait:SetTexture(candidate)
+            portrait:SetTexCoord(unpack(definition.texCoord))
+        elseif SetPortraitToTexture then
+            local ok = pcall(SetPortraitToTexture, portrait, candidate)
+            if not ok then
+                portrait:SetTexture(candidate)
+                portrait:SetTexCoord(unpack(definition.texCoord))
+            end
+        else
+            portrait:SetTexture(candidate)
+            portrait:SetTexCoord(unpack(definition.texCoord))
+        end
+        return not portrait.GetTexture or portrait:GetTexture() ~= nil
     end
-    if not nativeCrop then
-        portrait:SetTexture(texture)
-        portrait:SetTexCoord(unpack(definition.texCoord))
+    local applied = apply(texture)
+    local fallback = resolveFallback(definition.fallback)
+    if not applied and fallback ~= texture then
+        applied = apply(fallback)
     end
+    if not applied then
+        portrait:SetTexture(0.08, 0.07, 0.06, 1)
+        portrait:SetTexCoord(0, 1, 0, 1)
+    end
+    portrait:SetAlpha(1)
+    portrait:SetVertexColor(1, 1, 1, 1)
+    portrait:Show()
     portrait:ClearAllPoints()
     if definition.dragonUI then
         -- DragonUI collections/window.lua values measured against the opaque

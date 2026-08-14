@@ -316,6 +316,81 @@ Transmorpher Classic 构图显示，翻页和武器往返不再进入 ezCollecti
   迭代 10 已通过的 SoloCam v11 实现，护甲路径采用本迭代的 Transmorpher 原生
   TryOn 实现。
 
+## 迭代 12：物品页头部、过滤器与收集状态 UI 校正
+
+- [x] 从本机正式服 `12.0.7.68887` 按 FileDataID `132658` 提取
+  `interface/icons/inv_chest_cloth_17.blp`，转换为 3.3.5 可读取的 64×64
+  32-bit TGA，并通过可选本地素材 AddOn 接入；素材缺失或加载失败时回退
+  已验证可读的 ezCollections 幻化图标。
+- [x] 将“物品/套装”替换为 ezCollections 使用的 `TabButtonTemplate`、57 像素
+  最小中段宽度和原生选中/未选中状态。
+- [x] 将物品页过滤器展开层替换为 ezCollections 的 `UIDropDownMenuTemplate`
+  菜单，保留 SoloCollections 的已收集、未收集和仅显示偏好语义。
+- [x] 强化卡片收集状态：已收集保持完整亮度并显示明确对勾，未收集降低
+  模型亮度并显示“未收集”标签；选中紫光和偏好星标保持独立。
+- [x] 完成 Lua 5.1、TOC、菜单/模板静态检查，备份并部署后交由用户实机验收。
+- [x] 根据用户实机反馈复查空头像：运行时确认 marker 和路径均正确，但 `0x28`
+  TGA 被客户端拒绝；改为与可读 ezCollections TGA 一致的 `0x20` 描述字节，并让
+  `SetPortraitForTab` 以 `GetTexture()` 判断真实加载结果后执行回退。
+- [x] 根据第二次实机反馈修正方形四角：`0x20` 虽可加载但客户端忽略 alpha；改用
+  坐骑页相同的 bottom-left `0x08` TGA、8-bit alpha attribute、抗锯齿圆形预裁切、
+  58×58 尺寸、`-2, 6` 锚点和完整纹理坐标。
+
+**完成条件：** 左上角物品图标稳定显示，页签与过滤器展开效果采用 ezCollections
+原生结构，18 张卡片无需逐张辨认边框即可区分收集状态；不得改变已验收的
+Transmorpher 武器和护甲模型渲染路径。
+
+### 迭代 12 实施记录（进行中）
+
+- Retail 原始 BLP SHA-256 为
+  `2B4F665FCE0BC7FDE2086206AE22918DA5FC4EFB3BE1470307AF9E4D0EFCABB0`；
+  转换后 TGA SHA-256 为
+  `1125FB73500ED34826740046328AD4C495BB58FE738ECDDC5657DF4A3C5A2D4C`，
+  规格为 64×64 RGBA、32-bit pixels、TGA descriptor `0x08`、bottom-left origin、
+  8-bit alpha attribute，并复用坐骑页的圆形 alpha 轮廓。
+  原始与转换文件只保存在
+  `RetailAssetPipeline` 本地案例和可选 `SoloCollections_RetailUI` 集成包中，未加入
+  公共源码。
+- `Core/RetailUI.lua` 对本地素材 marker 的 schema、根路径、FileDataID、原始/转换
+  哈希、像素深度、解码 alpha、descriptor 和图像规格做固定校验；旧包、缺失包、
+  不匹配包或运行时纹理加载失败一律回退已验证可读的 ezCollections 幻化图标。
+  物品头像与坐骑头像共用 `dragonUI` 几何分支（58×58、`-2, 6`），四角由素材的
+  圆形 alpha 预裁切，不依赖 3.3.5 不可用的 MaskTexture。
+- “物品/套装”从 `OptionsFrameTabButtonTemplate` 改为 ezCollections 使用的
+  `TabButtonTemplate`；按其 XML 逻辑保留 57 像素最小中段宽度、原生三段纹理、
+  高亮和 `PanelTemplates_SelectTab/DeselectTab` 状态，位置仍为 `58, -28`。
+- 物品页过滤器按钮继续使用已移植的 `UIMenuButtonStretchTemplate` 银色九片素材，
+  展开层改为 `UIDropDownMenuTemplate` + `ToggleDropDownMenu(1, nil, ..., 74, 15)`；
+  三个原生复选框使用 `keepShownOnClick`，数据仍只写 SoloCollections filter。
+  宠物、玩具和头衔页继续使用原有弹层，不受本轮物品页改造影响。
+- 卡片状态层保留 ezCollections 已收集/未收集边框；已收集额外显示 3.3.5 原生
+  `ReadyCheck-Ready` 对勾，未收集显示既有 58×15 “未收集”标签并在 hit-frame
+  上叠加 43% 黑色暗层。暗层、标签和对勾均位于模型之上的 UI 状态层，不调用
+  `DressUpModel:SetAlpha`，不会被 Transmorpher 异步重载覆盖，也不改其 TryOn 路径。
+- 本轮 6 个改动 Lua 与本地 Retail marker 通过 Lua 5.1 解析；TOC 文件和加载顺序、
+  64×64 bottom-left 圆形 alpha TGA、marker JSON、素材 SHA-256 与
+  `git diff --check` 均通过。
+  客户端停止后部署：`SoloCollections` 源码/安装树 SHA-256 均为
+  `72926F8589BF881EC35E6F3B5897E478F36DD1A6AA6A3E39DB74403F32DA4E08`；
+  `SoloCollections_RetailUI` 源/安装树 SHA-256 均为
+  `313A8BC1889C0C9707001638364F7E047245D00011924481D7F48978CFC6EC17`。
+  部署前 AddOn 完整备份位于
+  `runtime-audit/iteration12-ui-deployment/stage8-presentation-addon-20260814-115530-945/backup/SoloCollections`。
+  部署后已使用 `tools/dev/Start-WowLogin.ps1` 启动 `Wow-CQM-SoloCam.exe` 并提交
+  登录，客户端已进入等待角色选择/登录完成的状态。
+  用户已确认页签、过滤器和收集状态视觉验收通过；三项标记
+  `REAL_CLIENT_ACCEPTED`。左上角图标因首版 `0x28` TGA 被 3.3.5 客户端拒绝而重新
+  打开，运行时探针已完成原因定位；随后用户确认 `0x20` 版本已显示但四角越界。
+- 圆形修复已在客户端停止后重新部署：`SoloCollections` 源码/安装树 SHA-256 均为
+  `D08D062DA6116A5DFDF2D8E768CB500CF70820C45E7A068D972B0CFF3BCC0E85`；
+  `SoloCollections_RetailUI` 源/安装树 SHA-256 均为
+  `22020013DC8D6D698CCC6CE2173244622D73C069E55DA7EDE55FBF9A7DC10D68`。
+  完整备份和部署清单位于
+  `runtime-audit/iteration12-ui-deployment/stage8-presentation-addon-20260814-123413-510/`。
+  已重新启动客户端并提交登录。用户于 2026-08-14 确认“外观-物品页验收通过”；
+  左上角圆形头像、物品/套装页签、过滤器、收集状态以及已通过的武器/护甲卡片
+  共同标记为 `REAL_CLIENT_ACCEPTED`，迭代 12 完成。
+
 ## 实施顺序
 
 ```text

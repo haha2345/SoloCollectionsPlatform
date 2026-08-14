@@ -86,6 +86,15 @@ local function createCard(parent, index, callbacks)
     background:SetAllPoints(itemCard)
     background:SetVertexColor(0, 0, 0, 1)
 
+    -- Keep ownership presentation on the higher hit-frame layer so the
+    -- accepted Transmorpher DressUpModel lifecycle never has its alpha,
+    -- actor, TryOn, camera or sequence modified by collection-state updates.
+    local uncollectedShade = hit:CreateTexture(nil, "BACKGROUND")
+    uncollectedShade:SetTexture("Interface\\Buttons\\WHITE8X8")
+    uncollectedShade:SetAllPoints(hit)
+    uncollectedShade:SetVertexColor(0, 0, 0, 0.43)
+    uncollectedShade:Hide()
+
     local border, selected, favorite, hover = UI.EzCollections:CreateWardrobeItemChrome(hit)
 
     local name = hit:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -112,6 +121,16 @@ local function createCard(parent, index, callbacks)
     stateLabel:SetTextColor(0.72, 0.73, 0.74)
     collectionState:Hide()
 
+    local collectedState = CreateFrame("Frame", nil, hit)
+    collectedState:SetWidth(20)
+    collectedState:SetHeight(20)
+    collectedState:SetPoint("TOPRIGHT", hit, "TOPRIGHT", -3, -3)
+    collectedState:SetFrameLevel(hit:GetFrameLevel() + 3)
+    local collectedIcon = collectedState:CreateTexture(nil, "OVERLAY")
+    collectedIcon:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
+    collectedIcon:SetAllPoints(collectedState)
+    collectedState:Hide()
+
     hit:SetScript("OnClick", function(_, button)
         if callbacks and callbacks.onClick then callbacks.onClick(itemModel, button) end
     end)
@@ -137,6 +156,8 @@ local function createCard(parent, index, callbacks)
     itemModel.scFavorite = favorite
     itemModel.scHover = hover
     itemModel.scCollectionState = collectionState
+    itemModel.scCollectedState = collectedState
+    itemModel.scUncollectedShade = uncollectedShade
     itemModel.scPoolIndex = index
     SC.WardrobeUI.Layout:StyleCard(itemCard, background, border)
     itemCard:Hide()
@@ -160,14 +181,24 @@ function Items:UpdateCardState(itemModel, selectedId)
             itemModel.scName:SetText("")
             itemModel.scFavorite:Hide()
             itemModel.scCollectionState:Hide()
+            itemModel.scCollectedState:Hide()
+            itemModel.scUncollectedShade:Hide()
             itemModel.scSelected:Hide()
         end
         return
     end
     itemModel.scName:SetText(record.name or "未知外观")
     itemModel.scName:SetTextColor(record.collected and 1.00 or 0.62, record.collected and 0.82 or 0.62, record.collected and 0.18 or 0.60)
-    itemModel.scCollectionState:Hide()
     itemModel.scBorder:SetCollected(record.collected)
+    if record.collected then
+        itemModel.scUncollectedShade:Hide()
+        itemModel.scCollectionState:Hide()
+        itemModel.scCollectedState:Show()
+    else
+        itemModel.scCollectedState:Hide()
+        itemModel.scUncollectedShade:Show()
+        itemModel.scCollectionState:Show()
+    end
     if record.favorite then itemModel.scFavorite:Show() else itemModel.scFavorite:Hide() end
     if record.collectionId == selectedId or record.id == selectedId then
         itemModel.scSelected:Show()

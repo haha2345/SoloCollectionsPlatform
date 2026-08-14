@@ -2190,29 +2190,38 @@ function UI.CreateWardrobePage(parent)
 
     function page:SyncFilters()
         local frame = UI.CollectionsFrame
-        if not frame or not frame.scFilterPopup or not SC.db or SC.db.mainTab ~= "WARDROBE" then return end
+        if not frame or not frame.scWardrobeFilterDropDown or not SC.db or SC.db.mainTab ~= "WARDROBE" then return end
         local filters = SC.db.filters
-        local options = {
-            { label = "已收集", checked = filters.collected, onClick = function()
-                filters.collected = not filters.collected
-                self.scItemPage = 1
-                setSetOffset(0, true)
-                self:Refresh()
-            end },
-            { label = "未收集", checked = filters.uncollected, onClick = function()
-                filters.uncollected = not filters.uncollected
-                self.scItemPage = 1
-                setSetOffset(0, true)
-                self:Refresh()
-            end },
-            { label = "仅显示偏好", checked = filters.favorites, onClick = function()
-                filters.favorites = not filters.favorites
-                self.scItemPage = 1
-                setSetOffset(0, true)
-                self:Refresh()
-            end },
-        }
-        frame.scFilterPopup:SetOptions(options)
+        local dropDown = frame.scWardrobeFilterDropDown
+        if frame.scFilterPopup then frame.scFilterPopup:Hide() end
+        if dropDown.scSoloCollectionsInitialized then return end
+
+        local function setFilter(key, value)
+            filters[key] = value and true or false
+            self.scItemPage = 1
+            setSetOffset(0, true)
+            self:Refresh()
+        end
+
+        UIDropDownMenu_Initialize(dropDown, function(_, level)
+            if level ~= 1 then return end
+            local options = {
+                { label = "已收集", key = "collected" },
+                { label = "未收集", key = "uncollected" },
+                { label = "仅显示偏好", key = "favorites" },
+            }
+            for _, option in ipairs(options) do
+                local optionKey = option.key
+                local info = UIDropDownMenu_CreateInfo()
+                info.text = option.label
+                info.keepShownOnClick = true
+                info.isNotRadio = true
+                info.checked = function() return filters[optionKey] and true or false end
+                info.func = function(_, _, _, checked) setFilter(optionKey, checked) end
+                UIDropDownMenu_AddButton(info, level)
+            end
+        end, "MENU")
+        dropDown.scSoloCollectionsInitialized = true
     end
 
     local function refreshItems()

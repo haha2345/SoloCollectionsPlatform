@@ -248,6 +248,8 @@ local function applyJournalControlLayout(frame, key)
     local filter = frame.scFilterButton
     local mountFilter = frame.scMountFilterButton
     if not (host and search and filter) then return end
+    if CloseDropDownMenus then CloseDropDownMenus() end
+    if frame.scFilterPopup then frame.scFilterPopup:Hide() end
     host:ClearAllPoints()
     search:ClearAllPoints()
     filter:ClearAllPoints()
@@ -556,6 +558,14 @@ function UI.CreateCollectionsFrame()
     UI.EzCollections:SkinSearchBox(search)
 
     local filterButton, filterPopup = UI.CreateFilterPopup(searchFilterHost, 93)
+    local wardrobeFilterDropDown = CreateFrame(
+        "Frame",
+        "SoloCollectionsWardrobeFilterDropDown",
+        searchFilterHost,
+        "UIDropDownMenuTemplate"
+    )
+    wardrobeFilterDropDown:Hide()
+    filterButton:SetWardrobeDropDown(wardrobeFilterDropDown)
     filterButton:SetHeight(22)
     filterButton:SetPoint("LEFT", search, "RIGHT", 2, 0)
     UI.EzCollections:SkinSilverMenuButton(filterButton)
@@ -579,13 +589,13 @@ function UI.CreateCollectionsFrame()
 
     local wardrobeTabs = CreateFrame("Frame", nil, frame)
     wardrobeTabs:SetWidth(150)
-    wardrobeTabs:SetHeight(24)
+    wardrobeTabs:SetHeight(32)
     wardrobeTabs:SetPoint("TOPLEFT", frame, "TOPLEFT", 58, -28)
     wardrobeTabs:SetFrameLevel(frame:GetFrameLevel() + 20)
     local itemTab = UI.CreateTopSubTab(wardrobeTabs, "物品", function()
         UI.SetWardrobeTab("ITEMS")
     end)
-    itemTab:SetPoint("LEFT", wardrobeTabs, "LEFT", 0, 0)
+    itemTab:SetPoint("TOPLEFT", wardrobeTabs, "TOPLEFT", 0, 0)
     local setTab = UI.CreateTopSubTab(wardrobeTabs, "套装", function()
         UI.SetWardrobeTab("SETS")
     end)
@@ -629,6 +639,7 @@ function UI.CreateCollectionsFrame()
     frame.scSearchBox = search
     frame.scFilterButton = filterButton
     frame.scFilterPopup = filterPopup
+    frame.scWardrobeFilterDropDown = wardrobeFilterDropDown
     frame.scMountFilterButton = mountFilterButton
     frame.scWardrobeTabs = wardrobeTabs
     frame.scWardrobeItemTab = itemTab
