@@ -20,6 +20,8 @@ local SET_DETAILS_LABEL_Y = -63
 local SET_DETAILS_ICON_ROW_Y = -94
 local SET_DETAILS_MODEL_TOP_Y = -128
 local DEFAULT_ROTATION = 0.18
+local TWO_PI = math.pi * 2
+local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
 local function showAppearanceActionResult(ok, reason)
     local message
     if ok then
@@ -175,6 +177,15 @@ local SET_MEMBER_SLOT_ORDER = {
     OFFHAND = 11,
 }
 
+local SLOT_LABEL_BY_KEY = {}
+for _, option in ipairs(SLOT_FILTERS) do
+    SLOT_LABEL_BY_KEY[option.key] = option.label
+end
+
+local function slotLabelFromKey(slotKey)
+    return SLOT_LABEL_BY_KEY[tostring(slotKey or "")] or tostring(slotKey or "未知部位")
+end
+
 local function filterLabel(options, current)
     for _, option in ipairs(options) do
         if option.key == current then
@@ -239,6 +250,286 @@ local function setMetadataLine(record)
         return presentationLabel .. "  ·  " .. classLabel
     end
     return classLabel
+end
+
+local SET_SOURCE_T7 = "纳克萨玛斯 / 黑曜石圣殿 / 阿尔卡冯的宝库"
+local SET_SOURCE_T8 = "奥杜尔 / 阿尔卡冯的宝库"
+local SET_SOURCE_T9 = "十字军的试炼 / 银色锦标赛套装商人"
+local SET_SOURCE_T10 = "冰冠堡垒 / 达拉然套装商人"
+local SET_SOURCE_PVP = "PvP 商人 / 竞技场赛季奖励"
+
+-- Retail transmog sets are presented as a base set plus variant sets.  Our
+-- generated 3.3.5 ItemSet catalogue is intentionally flat, so this reviewed
+-- UI-only table folds only the clear WotLK T9 Alliance/Horde counterparts.
+-- The names below follow the current Wowhead/Retail transmog naming while
+-- keeping the local zhCN ItemSet names visible to the player.
+-- Do not use this table for ApplySet authority; the selected concrete record
+-- remains the SC2 collection/action target.
+local REVIEWED_SET_GROUP_VARIANTS = {
+    [843] = { key = "wrath-t9-mage-regalia", groupName = "T9 · 卡德加/逐日者的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "法师", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [844] = { key = "wrath-t9-mage-regalia", groupName = "T9 · 卡德加/逐日者的法衣", variantLabel = "部落", faction = "部落", specLabel = "法师", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [845] = { key = "wrath-t9-warlock-regalia", groupName = "T9 · 克尔苏加德/古尔丹的法衣", variantLabel = "部落", faction = "部落", specLabel = "术士", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [846] = { key = "wrath-t9-warlock-regalia", groupName = "T9 · 克尔苏加德/古尔丹的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "术士", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [847] = { key = "wrath-t9-priest-healing", groupName = "T9 · 维伦/萨布拉的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "神圣/戒律", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [848] = { key = "wrath-t9-priest-healing", groupName = "T9 · 维伦/萨布拉的圣装", variantLabel = "部落", faction = "部落", specLabel = "神圣/戒律", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [849] = { key = "wrath-t9-priest-caster", groupName = "T9 · 维伦/萨布拉的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "暗影", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [850] = { key = "wrath-t9-priest-caster", groupName = "T9 · 维伦/萨布拉的法衣", variantLabel = "部落", faction = "部落", specLabel = "暗影", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [851] = { key = "wrath-t9-druid-healing", groupName = "T9 · 玛法里奥/伊哈缪尔的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "恢复", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [852] = { key = "wrath-t9-druid-healing", groupName = "T9 · 玛法里奥/伊哈缪尔的圣装", variantLabel = "部落", faction = "部落", specLabel = "恢复", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [853] = { key = "wrath-t9-druid-caster", groupName = "T9 · 玛法里奥/伊哈缪尔的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "平衡", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [854] = { key = "wrath-t9-druid-caster", groupName = "T9 · 玛法里奥/伊哈缪尔的法衣", variantLabel = "部落", faction = "部落", specLabel = "平衡", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [855] = { key = "wrath-t9-druid-feral", groupName = "T9 · 玛法里奥/伊哈缪尔的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "野性", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [856] = { key = "wrath-t9-druid-feral", groupName = "T9 · 玛法里奥/伊哈缪尔的战甲", variantLabel = "部落", faction = "部落", specLabel = "野性", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [857] = { key = "wrath-t9-rogue-battlegear", groupName = "T9 · 范克里夫/迦罗娜的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "潜行者", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [858] = { key = "wrath-t9-rogue-battlegear", groupName = "T9 · 范克里夫/迦罗娜的战甲", variantLabel = "部落", faction = "部落", specLabel = "潜行者", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [859] = { key = "wrath-t9-hunter-battlegear", groupName = "T9 · 风行者的战甲/猎装", variantLabel = "联盟", faction = "联盟", specLabel = "猎人", role = "猎装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [860] = { key = "wrath-t9-hunter-battlegear", groupName = "T9 · 风行者的战甲/猎装", variantLabel = "部落", faction = "部落", specLabel = "猎人", role = "猎装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [861] = { key = "wrath-t9-shaman-healing", groupName = "T9 · 努波顿/萨尔的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "恢复", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [862] = { key = "wrath-t9-shaman-healing", groupName = "T9 · 努波顿/萨尔的圣装", variantLabel = "部落", faction = "部落", specLabel = "恢复", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [863] = { key = "wrath-t9-shaman-caster", groupName = "T9 · 努波顿/萨尔的法衣", variantLabel = "部落", faction = "部落", specLabel = "元素", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [864] = { key = "wrath-t9-shaman-caster", groupName = "T9 · 努波顿/萨尔的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "元素", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [865] = { key = "wrath-t9-shaman-melee", groupName = "T9 · 努波顿/萨尔的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "增强", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [866] = { key = "wrath-t9-shaman-melee", groupName = "T9 · 努波顿/萨尔的战甲", variantLabel = "部落", faction = "部落", specLabel = "增强", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [867] = { key = "wrath-t9-warrior-dps", groupName = "T9 · 乌瑞恩/地狱咆哮的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "武器/狂怒", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [868] = { key = "wrath-t9-warrior-dps", groupName = "T9 · 乌瑞恩/地狱咆哮的战甲", variantLabel = "部落", faction = "部落", specLabel = "武器/狂怒", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [869] = { key = "wrath-t9-warrior-tank", groupName = "T9 · 乌瑞恩/地狱咆哮的铠甲", variantLabel = "联盟", faction = "联盟", specLabel = "防护", role = "铠甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [870] = { key = "wrath-t9-warrior-tank", groupName = "T9 · 乌瑞恩/地狱咆哮的铠甲", variantLabel = "部落", faction = "部落", specLabel = "防护", role = "铠甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [871] = { key = "wrath-t9-death-knight-dps", groupName = "T9 · 萨萨里安/库尔迪拉的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "冰霜/邪恶", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [872] = { key = "wrath-t9-death-knight-dps", groupName = "T9 · 萨萨里安/库尔迪拉的战甲", variantLabel = "部落", faction = "部落", specLabel = "冰霜/邪恶", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [873] = { key = "wrath-t9-death-knight-tank", groupName = "T9 · 萨萨里安/库尔迪拉的铠甲", variantLabel = "联盟", faction = "联盟", specLabel = "鲜血", role = "铠甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [874] = { key = "wrath-t9-death-knight-tank", groupName = "T9 · 萨萨里安/库尔迪拉的铠甲", variantLabel = "部落", faction = "部落", specLabel = "鲜血", role = "铠甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [875] = { key = "wrath-t9-paladin-healing", groupName = "T9 · 图拉扬/莉亚德琳的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "神圣", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [876] = { key = "wrath-t9-paladin-healing", groupName = "T9 · 图拉扬/莉亚德琳的圣装", variantLabel = "部落", faction = "部落", specLabel = "神圣", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [877] = { key = "wrath-t9-paladin-dps", groupName = "T9 · 图拉扬/莉亚德琳的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "惩戒", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [878] = { key = "wrath-t9-paladin-dps", groupName = "T9 · 图拉扬/莉亚德琳的战甲", variantLabel = "部落", faction = "部落", specLabel = "惩戒", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [879] = { key = "wrath-t9-paladin-tank", groupName = "T9 · 图拉扬/莉亚德琳的铠甲", variantLabel = "联盟", faction = "联盟", specLabel = "防护", role = "铠甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [880] = { key = "wrath-t9-paladin-tank", groupName = "T9 · 图拉扬/莉亚德琳的铠甲", variantLabel = "部落", faction = "部落", specLabel = "防护", role = "铠甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+}
+
+local REVIEWED_SET_DETAILS = {
+    [883] = { displayName = "T10 · 血法战衣", specLabel = "法师", sourceLabel = SET_SOURCE_T10 },
+    [884] = { displayName = "T10 · 黑巫法衣", specLabel = "术士", sourceLabel = SET_SOURCE_T10 },
+    [885] = { displayName = "T10 · 血色侍僧战衣", specLabel = "暗影", sourceLabel = SET_SOURCE_T10 },
+    [886] = { displayName = "T10 · 血色侍僧法衣", specLabel = "神圣/戒律", sourceLabel = SET_SOURCE_T10 },
+    [887] = { displayName = "T10 · 树纹套装", specLabel = "恢复", sourceLabel = SET_SOURCE_T10 },
+    [888] = { displayName = "T10 · 树纹法衣", specLabel = "平衡", sourceLabel = SET_SOURCE_T10 },
+    [889] = { displayName = "T10 · 树纹战甲", specLabel = "野性", sourceLabel = SET_SOURCE_T10 },
+    [890] = { displayName = "T10 · 影刃战甲", specLabel = "潜行者", sourceLabel = SET_SOURCE_T10 },
+    [891] = { displayName = "T10 · 安卡哈猎血战甲", specLabel = "猎人", sourceLabel = SET_SOURCE_T10 },
+    [892] = { displayName = "T10 · 霜巫套装", specLabel = "恢复", sourceLabel = SET_SOURCE_T10 },
+    [893] = { displayName = "T10 · 霜巫战衣", specLabel = "元素", sourceLabel = SET_SOURCE_T10 },
+    [894] = { displayName = "T10 · 霜巫战甲", specLabel = "增强", sourceLabel = SET_SOURCE_T10 },
+    [895] = { displayName = "T10 · 伊米亚之王战甲", specLabel = "武器/狂怒", sourceLabel = SET_SOURCE_T10 },
+    [896] = { displayName = "T10 · 伊米亚之王战铠", specLabel = "防护", sourceLabel = SET_SOURCE_T10 },
+    [897] = { displayName = "T10 · 天灾领主战甲", specLabel = "冰霜/邪恶", sourceLabel = SET_SOURCE_T10 },
+    [898] = { displayName = "T10 · 天灾领主战铠", specLabel = "鲜血", sourceLabel = SET_SOURCE_T10 },
+    [899] = { displayName = "T10 · 光誓套装", specLabel = "神圣", sourceLabel = SET_SOURCE_T10 },
+    [900] = { displayName = "T10 · 光誓战甲", specLabel = "惩戒", sourceLabel = SET_SOURCE_T10 },
+    [901] = { displayName = "T10 · 光誓战铠", specLabel = "防护", sourceLabel = SET_SOURCE_T10 },
+}
+
+for itemSetId, info in pairs(REVIEWED_SET_GROUP_VARIANTS) do
+    REVIEWED_SET_DETAILS[itemSetId] = info
+end
+
+local function setRecordSelectionKey(record)
+    if not record then return nil end
+    if record.scIsSetGroup and record.scSetGroupKey then
+        return record.scSetGroupKey
+    end
+    return "set:" .. tostring(record.id or record.itemSetId or "unknown")
+end
+
+local function concreteSetRecord(record)
+    if record and record.scIsSetGroup then
+        return record.scSelectedVariantRecord or (record.scVariants and record.scVariants[1])
+    end
+    return record
+end
+
+local function reviewedSetInfo(record)
+    record = concreteSetRecord(record)
+    return REVIEWED_SET_DETAILS[tonumber(record and record.itemSetId) or 0]
+end
+
+local function setDisplayName(record)
+    if not record then return "未知套装" end
+    if record.scIsSetGroup and record.scGroupName and record.scGroupName ~= "" then
+        return record.scGroupName
+    end
+    local info = reviewedSetInfo(record)
+    if info and info.displayName and info.displayName ~= "" then
+        return info.displayName
+    end
+    local name = record.name or "未知套装"
+    local presentationLabel = setPresentationLabel(record)
+    if presentationLabel and presentationLabel ~= "" and not string.find(name, presentationLabel, 1, true) then
+        return presentationLabel .. " · " .. name
+    end
+    return name
+end
+
+local function setVariantLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.variantLabel and info.variantLabel ~= "" then
+        return info.variantLabel
+    end
+    return tostring(record and record.name or "未知版本")
+end
+
+local function setRecordSpecLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.specLabel and info.specLabel ~= "" then
+        return info.specLabel
+    end
+    return nil
+end
+
+local function setRecordFactionLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.faction and info.faction ~= "" then
+        return info.faction
+    end
+    return nil
+end
+
+local function setRecordSourceLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.sourceLabel and info.sourceLabel ~= "" then
+        return info.sourceLabel
+    end
+    local presentation = record and record.presentation
+    local tier = presentation and presentation.raidTier
+    local season = presentation and presentation.pvpSeason
+    if tier == "T7" then return SET_SOURCE_T7 end
+    if tier == "T8" then return SET_SOURCE_T8 end
+    if tier == "T9" then return SET_SOURCE_T9 end
+    if tier == "T10" then return SET_SOURCE_T10 end
+    if season and season ~= "" and season ~= "NONE" then return SET_SOURCE_PVP end
+    if presentation and presentation.acquisition == "PVP" then return SET_SOURCE_PVP end
+    return "来源未整理：按套装出处继续补齐"
+end
+
+local function setRecordCompletionRank(record)
+    local owned = tonumber(record and record.collectedCount) or 0
+    local required = tonumber(record and record.requiredCount) or 0
+    if required <= 0 then return owned, required, 0 end
+    return owned, required, owned / required
+end
+
+local function chooseSetGroupVariant(group, rememberedId)
+    local variants = group and group.scVariants or {}
+    local remembered = tonumber(rememberedId)
+    if remembered then
+        for _, variant in ipairs(variants) do
+            if tonumber(variant.id) == remembered then
+                return variant
+            end
+        end
+    end
+    local best
+    local bestOwned, bestRequired, bestRatio = -1, 0, -1
+    for _, variant in ipairs(variants) do
+        local owned, required, ratio = setRecordCompletionRank(variant)
+        if not best or variant.collected or ratio > bestRatio or
+            (ratio == bestRatio and owned > bestOwned) or
+            (ratio == bestRatio and owned == bestOwned and required > bestRequired) then
+            best = variant
+            bestOwned = owned
+            bestRequired = required
+            bestRatio = ratio
+        end
+        if variant.collected then
+            break
+        end
+    end
+    return best or variants[1]
+end
+
+local function updateSetGroupSummary(group, selectedVariant)
+    local variants = group and group.scVariants or {}
+    if #variants == 0 then return group end
+    table.sort(variants, function(left, right)
+        local leftInfo = REVIEWED_SET_GROUP_VARIANTS[tonumber(left.itemSetId) or 0] or {}
+        local rightInfo = REVIEWED_SET_GROUP_VARIANTS[tonumber(right.itemSetId) or 0] or {}
+        if (leftInfo.order or 99) ~= (rightInfo.order or 99) then
+            return (leftInfo.order or 99) < (rightInfo.order or 99)
+        end
+        return (tonumber(left.itemSetId) or 0) < (tonumber(right.itemSetId) or 0)
+    end)
+
+    selectedVariant = selectedVariant or chooseSetGroupVariant(group)
+    group.scSelectedVariantRecord = selectedVariant
+    group.id = selectedVariant.id
+    group.itemSetId = selectedVariant.itemSetId
+    group.icon = selectedVariant.icon
+    group.iconItemId = selectedVariant.iconItemId
+    group.classPolicy = selectedVariant.classPolicy
+    group.presentation = selectedVariant.presentation
+    group.favorite = selectedVariant.favorite
+    local selectedInfo = reviewedSetInfo(selectedVariant)
+    group.scVariantLabel = selectedInfo and selectedInfo.variantLabel
+    group.scFactionLabel = selectedInfo and selectedInfo.faction
+    group.scSpecLabel = selectedInfo and selectedInfo.specLabel
+
+    local topOwned, topRequired, topRatio = 0, 0, -1
+    local anyCollected = false
+    for _, variant in ipairs(variants) do
+        local owned, required, ratio = setRecordCompletionRank(variant)
+        if variant.collected then anyCollected = true end
+        if ratio > topRatio or (ratio == topRatio and owned > topOwned) then
+            topOwned, topRequired, topRatio = owned, required, ratio
+        end
+    end
+    group.collectedCount = topOwned
+    group.requiredCount = topRequired
+    group.collected = anyCollected or (topRequired > 0 and topOwned == topRequired)
+
+    group.name = setDisplayName(group)
+    return group
+end
+
+local function buildSetDisplayRecords(records, rememberedVariants)
+    local displayRecords = {}
+    local groups = {}
+    for _, record in ipairs(records or {}) do
+        local groupInfo = REVIEWED_SET_GROUP_VARIANTS[tonumber(record.itemSetId) or 0]
+        if groupInfo then
+            local groupKey = "reviewed:" .. groupInfo.key
+            local group = groups[groupKey]
+            if not group then
+                group = {
+                    scIsSetGroup = true,
+                    scSetGroupKey = groupKey,
+                    scGroupName = groupInfo.groupName,
+                    scRoleLabel = groupInfo.role,
+                    scSourceLabel = groupInfo.sourceLabel,
+                    scVariants = {},
+                }
+                groups[groupKey] = group
+                displayRecords[#displayRecords + 1] = group
+            end
+            record.scSetGroupKey = groupKey
+            record.scVariantOrder = groupInfo.order
+            group.scVariants[#group.scVariants + 1] = record
+        else
+            record.scSetGroupKey = "set:" .. tostring(record.id or record.itemSetId or #displayRecords + 1)
+            displayRecords[#displayRecords + 1] = record
+        end
+    end
+    for _, record in ipairs(displayRecords) do
+        if record.scIsSetGroup then
+            local rememberedId = rememberedVariants and rememberedVariants[record.scSetGroupKey]
+            updateSetGroupSummary(record, chooseSetGroupVariant(record, rememberedId))
+        end
+    end
+    return displayRecords
+end
+
+local function setVariantDropdownText(record)
+    local owned = tonumber(record and record.collectedCount) or 0
+    local required = tonumber(record and record.requiredCount) or 0
+    return setVariantLabel(record) .. "  " .. owned .. "/" .. required
 end
 
 local function hasFilterValue(options, current)
@@ -315,14 +606,76 @@ local function showItemTooltip(owner, record)
     GameTooltip:Show()
 end
 
-local function showPieceTooltip(owner, itemId)
+local function itemQualityColor(quality)
+    if quality and GetItemQualityColor then
+        local red, green, blue = GetItemQualityColor(quality)
+        return red or 1.00, green or 0.82, blue or 0.18
+    end
+    return 1.00, 0.82, 0.18
+end
+
+local function setRecordQuality(record)
+    record = concreteSetRecord(record)
+    local quality = record and record.presentation and record.presentation.quality
+    local reviewed = tonumber(quality and (quality.median or quality.max or quality.min))
+    if reviewed then return reviewed end
+    local _, _, itemQuality = GetItemInfo(record and record.iconItemId)
+    return itemQuality
+end
+
+local function setRecordQualityColor(record)
+    return itemQualityColor(setRecordQuality(record) or 4)
+end
+
+local function compactSetRowMetadata(record)
+    record = concreteSetRecord(record)
+    local parts = { setClassLabel(record) }
+    local specLabel = setRecordSpecLabel(record)
+    if specLabel and specLabel ~= "" then
+        parts[#parts + 1] = specLabel
+    end
+    return table.concat(parts, "  ·  ")
+end
+
+local function showPieceTooltip(owner, itemId, setRecord, previewItem, displayRecord)
     if not itemId then return end
-    local itemName, itemLink = GetItemInfo(itemId)
+    local itemName, _, quality = GetItemInfo(itemId)
+    quality = quality or (owner and owner.scQuality) or 4
+    local red, green, blue = itemQualityColor(quality)
+    setRecord = setRecord or (owner and owner.scSetRecord)
+    displayRecord = displayRecord or (owner and owner.scSetDisplayRecord) or setRecord
+    previewItem = previewItem or (owner and owner.scPreviewItem)
+    local sourceItemIds = previewItem and previewItem.sourceItemIds or (owner and owner.scSourceItemIds)
+    local sourceCount = sourceItemIds and #sourceItemIds or 0
+
     GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
-    if itemLink then
-        GameTooltip:SetHyperlink(itemLink)
-    else
-        GameTooltip:SetText(itemName or "套装部件")
+    GameTooltip:SetText(itemName or ("套装部件 #" .. tostring(itemId)), red, green, blue)
+    GameTooltip:AddLine("套装：" .. setDisplayName(displayRecord), 0.95, 0.82, 0.36, true)
+
+    local slotLabel = slotLabelFromKey(previewItem and previewItem.slotKey or (owner and owner.scSlotKey))
+    if slotLabel and slotLabel ~= "" then
+        GameTooltip:AddLine("部位：" .. slotLabel, 0.82, 0.78, 0.70)
+    end
+
+    local factionLabel = setRecordFactionLabel(setRecord)
+    if factionLabel then
+        GameTooltip:AddLine("阵营：" .. factionLabel, 0.65, 0.78, 0.92)
+    end
+
+    local specLabel = setRecordSpecLabel(setRecord)
+    if specLabel then
+        GameTooltip:AddLine("适用专精：" .. specLabel, 0.52, 0.82, 1.00, true)
+    end
+
+    local sourceLabel = setRecordSourceLabel(setRecord)
+    if sourceLabel then
+        GameTooltip:AddLine("来源：" .. sourceLabel, 0.94, 0.82, 0.58, true)
+    end
+
+    local collected = owner and owner.scCollected
+    GameTooltip:AddLine(collected and "已收集外观" or "未收集 · 仍可预览", collected and 0.38 or 0.62, collected and 0.90 or 0.58, 0.32)
+    if sourceCount > 1 then
+        GameTooltip:AddLine("Alt + 左键：切换同部位来源（" .. tostring(sourceCount) .. " 个）", 1.00, 0.82, 0.18)
     end
     GameTooltip:Show()
 end
@@ -428,13 +781,20 @@ local function createSetListRow(parent, width, onClick)
             return
         end
 
-        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)))
+        local concreteRecord = concreteSetRecord(record)
+        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)) or
+            (concreteRecord and concreteRecord.iconItemId and GetItemIcon(concreteRecord.iconItemId)))
         UI.SetCollectedVisual(icon, record.collected, 0.52)
-        name:SetText(record.name or "未知套装")
+        name:SetText(setDisplayName(record))
         name:SetTextColor(record.collected and 0.96 or 0.59, record.collected and 0.79 or 0.59, record.collected and 0.28 or 0.57)
         local owned = tonumber(record.collectedCount) or 0
         local required = tonumber(record.requiredCount) or #(record.itemIds or {})
-        detail:SetText(setMetadataLine(record) .. "  ·  " .. owned .. "/" .. required .. " 外观")
+        if record.scIsSetGroup then
+            local variantCount = record.scVariants and #record.scVariants or 0
+            detail:SetText(compactSetRowMetadata(record) .. "  ·  " .. tostring(variantCount) .. " 阵营  ·  " .. owned .. "/" .. required)
+        else
+            detail:SetText(compactSetRowMetadata(record) .. "  ·  " .. owned .. "/" .. required)
+        end
         if record.collected then
             iconBorder:SetBorderColor(0.66, 0.52, 0.24, 0.96)
         else
@@ -494,7 +854,11 @@ function UI.CreateWardrobePage(parent)
     page.scItemPageSize = ITEM_PAGE_SIZE
     page.scSetRows = {}
     page.scPieceIcons = {}
+    page.scSelectedSetVariantByGroup = {}
+    page.scSetPieceAltSourceByMember = {}
     local setSetOffset
+    local selectSetDisplayRecord
+    local previewSet
     local itemDataProvider = SC.EzWardrobe.DataProvider:Create(page)
     local wardrobeFilters = SC.WardrobeUI.Filters:Create(page, Catalog, itemDataProvider)
     local filterBar = CreateFrame("Frame", nil, page)
@@ -533,6 +897,7 @@ function UI.CreateWardrobePage(parent)
         end
         page.scItemSelectedId = nil
         page.scSetSelectedId = nil
+        page.scSetSelectedGroupKey = nil
         page.scItemPage = 1
         setSetOffset(0, true)
         page:Refresh()
@@ -711,6 +1076,36 @@ function UI.CreateWardrobePage(parent)
     applySet:SetText("应用套装")
     applySet:Disable()
     page.scApplySet = applySet
+
+    local variantDropdown = CreateFrame("Frame", "SoloCollectionsWardrobeSetVariantDropdown", preview, "UIDropDownMenuTemplate")
+    variantDropdown:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", 12, 42)
+    UIDropDownMenu_SetWidth(variantDropdown, 72)
+    variantDropdown:Hide()
+    page.scSetVariantDropdown = variantDropdown
+
+    UIDropDownMenu_Initialize(variantDropdown, function()
+        local groupRecord = variantDropdown.scSetGroupRecord
+        if not (groupRecord and groupRecord.scVariants) then return end
+        for _, variantRecord in ipairs(groupRecord.scVariants) do
+            local optionRecord = variantRecord
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = setVariantDropdownText(optionRecord)
+            info.value = optionRecord.id
+            info.checked = groupRecord.scSelectedVariantRecord and groupRecord.scSelectedVariantRecord.id == optionRecord.id
+            info.func = function()
+                groupRecord.scSelectedVariantRecord = optionRecord
+                updateSetGroupSummary(groupRecord, optionRecord)
+                if page.scSelectedSetVariantByGroup then
+                    page.scSelectedSetVariantByGroup[groupRecord.scSetGroupKey] = optionRecord.id
+                end
+                if selectSetDisplayRecord then
+                    selectSetDisplayRecord(groupRecord)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+
     local pieces = CreateFrame("Frame", nil, preview)
     pieces:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_ICON_ROW_Y)
     -- The production catalogue currently tops out at eight pieces, but the
@@ -728,6 +1123,7 @@ function UI.CreateWardrobePage(parent)
         local piece = CreateFrame("Button", nil, pieces)
         piece:SetWidth(SET_PIECE_SIZE)
         piece:SetHeight(SET_PIECE_SIZE)
+        piece:RegisterForClicks("LeftButtonUp")
         if index == 1 then
             piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
         elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
@@ -765,7 +1161,28 @@ function UI.CreateWardrobePage(parent)
 
         piece:SetScript("OnEnter", function(self)
             if self.scItemId then
-                showPieceTooltip(self, self.scItemId)
+                showPieceTooltip(self, self.scItemId, self.scSetRecord, self.scPreviewItem, self.scSetDisplayRecord)
+            end
+        end)
+        piece:SetScript("OnClick", function(self, button)
+            local sourceItemIds = self.scSourceItemIds
+            if button ~= "LeftButton" or not IsAltKeyDown or not IsAltKeyDown() or
+                not sourceItemIds or #sourceItemIds <= 1 or not self.scAltSourceKey then
+                return
+            end
+
+            local currentItemId = tonumber(self.scItemId)
+            local nextIndex = 1
+            for sourceIndex, sourceItemId in ipairs(sourceItemIds) do
+                if tonumber(sourceItemId) == currentItemId then
+                    nextIndex = sourceIndex + 1
+                    if nextIndex > #sourceItemIds then nextIndex = 1 end
+                    break
+                end
+            end
+            page.scSetPieceAltSourceByMember[self.scAltSourceKey] = tonumber(sourceItemIds[nextIndex]) or sourceItemIds[nextIndex]
+            if previewSet and page.scSetSelectedDisplayRecord then
+                previewSet(page.scSetSelectedDisplayRecord)
             end
         end)
         piece:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -779,13 +1196,40 @@ function UI.CreateWardrobePage(parent)
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
+        model:SetScript("OnUpdate", nil)
+    end
+
+    local function applyModelFacing(rotation)
+        -- Keep the set preview aligned with the mount page: SetFacing changes
+        -- the actor heading without forcing the model animation to restart.
+        if model.SetFacing then
+            model:SetFacing(rotation)
+        elseif model.SetRotation then
+            model:SetRotation(rotation, false)
+        end
+    end
+
+    local function updateModelDrag(self)
+        if not self.scDragging or not IsMouseButtonDown("LeftButton") then
+            clearDragState()
+            return
+        end
+        local cursorX = GetCursorPosition()
+        local previousX = self.scLastCursorX or cursorX
+        self.scLastCursorX = cursorX
+        local delta = (cursorX - previousX) * DRAG_ROTATION_CONSTANT
+        if delta == 0 then return end
+        self.scRotation = (self.scRotation or DEFAULT_ROTATION) + delta
+        if self.scRotation < 0 then self.scRotation = self.scRotation + TWO_PI end
+        if self.scRotation > TWO_PI then self.scRotation = self.scRotation - TWO_PI end
+        applyModelFacing(self.scRotation)
     end
 
     local function resetModelView()
         clearDragState()
         model.scRotation = DEFAULT_ROTATION
         model.scZoom = 0
-        model:SetRotation(DEFAULT_ROTATION)
+        applyModelFacing(DEFAULT_ROTATION)
         if model.SetPosition then
             pcall(function() model:SetPosition(0, 0, 0) end)
         end
@@ -838,6 +1282,21 @@ function UI.CreateWardrobePage(parent)
     -- member. This is intentionally separate from the server-side owned
     -- alternative resolver used by APPLY: a local DressUpModel preview must
     -- not imply which source item the server would eventually choose.
+    local function setPieceAltSourceKey(record, uniqueSlot)
+        return tostring(record and (record.id or record.itemSetId) or "unknown") .. ":" .. tostring(uniqueSlot or "slot")
+    end
+
+    local function sourceListContains(sourceItemIds, itemId)
+        itemId = tonumber(itemId)
+        if not itemId then return false end
+        for _, sourceItemId in ipairs(sourceItemIds or {}) do
+            if tonumber(sourceItemId) == itemId then
+                return true
+            end
+        end
+        return false
+    end
+
     local function getSelectedVariantPreviewItems(record)
         local result = {}
         local seenSlots = {}
@@ -856,6 +1315,11 @@ function UI.CreateWardrobePage(parent)
                 end
                 local slotKey = tostring(member.slotKey or member.memberKey or "")
                 local uniqueSlot = slotKey ~= "" and slotKey or ("member:" .. memberIndex)
+                local altSourceKey = setPieceAltSourceKey(record, uniqueSlot)
+                local overrideSourceItemId = page.scSetPieceAltSourceByMember and page.scSetPieceAltSourceByMember[altSourceKey]
+                if sourceListContains(member.sourceItemIds, overrideSourceItemId) then
+                    previewSourceItemId = tonumber(overrideSourceItemId)
+                end
                 if previewSourceItemId and not seenSlots[uniqueSlot] then
                     seenSlots[uniqueSlot] = true
                     table.insert(result, {
@@ -863,6 +1327,9 @@ function UI.CreateWardrobePage(parent)
                         memberKey = tostring(member.memberKey or uniqueSlot),
                         slotKey = slotKey,
                         previewSourceItemId = previewSourceItemId,
+                        sourceItemIds = member.sourceItemIds or {},
+                        appearanceIds = member.appearanceIds or {},
+                        altSourceKey = altSourceKey,
                         order = SET_MEMBER_SLOT_ORDER[slotKey] or (100 + memberIndex),
                     })
                 end
@@ -921,16 +1388,34 @@ function UI.CreateWardrobePage(parent)
         return previewItems
     end
 
-    local function previewSet(record)
+    local function syncSetVariantDropdown(displayRecord, selectedRecord)
+        local variantCount = displayRecord and displayRecord.scVariants and #displayRecord.scVariants or 0
+        if displayRecord and displayRecord.scIsSetGroup and variantCount > 1 then
+            variantDropdown.scSetGroupRecord = displayRecord
+            UIDropDownMenu_SetSelectedValue(variantDropdown, selectedRecord and selectedRecord.id)
+            UIDropDownMenu_SetText(variantDropdown, selectedRecord and setVariantLabel(selectedRecord) or "版本")
+            variantDropdown:Show()
+        else
+            variantDropdown.scSetGroupRecord = nil
+            UIDropDownMenu_SetText(variantDropdown, "")
+            variantDropdown:Hide()
+        end
+    end
+
+    previewSet = function(record)
+        local displayRecord = record
+        record = concreteSetRecord(record)
         if not record then return end
+        page.scSetSelectedDisplayRecord = displayRecord
         page.scSetSelectedRecord = record
         if record.collected then applySet:Enable() else applySet:Disable() end
         model:ClearAllPoints()
         model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
         model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
         model:Show()
+        syncSetVariantDropdown(displayRecord, record)
         local previewItems = queueSetPreview(record)
-        local setName = record.name or "未知套装"
+        local setName = setDisplayName(displayRecord or record)
         name:SetText(setName)
         longName:SetText(setName)
         if name.GetStringWidth and name:GetStringWidth() > name:GetWidth() then
@@ -941,11 +1426,20 @@ function UI.CreateWardrobePage(parent)
             longName:Hide()
         end
         local presentationLabel = setPresentationLabel(record)
+        local detailParts = {}
         if presentationLabel then
-            detail:SetText("分类：" .. presentationLabel .. "  ·  职业：" .. setClassLabel(record))
-        else
-            detail:SetText("职业：" .. setClassLabel(record))
+            detailParts[#detailParts + 1] = "分类：" .. presentationLabel
         end
+        detailParts[#detailParts + 1] = "职业：" .. setClassLabel(record)
+        local specLabel = setRecordSpecLabel(record)
+        if specLabel then
+            detailParts[#detailParts + 1] = "专精：" .. specLabel
+        end
+        local factionLabel = setRecordFactionLabel(record)
+        if factionLabel then
+            detailParts[#detailParts + 1] = "阵营：" .. factionLabel
+        end
+        detail:SetText(table.concat(detailParts, "  ·  "))
         local pieceState = deriveSetPieceState(record)
         local pieceCount = math.min(#previewItems, #page.scPieceIcons)
         local firstRow = math.min(SET_PIECE_COLUMNS, pieceCount)
@@ -965,11 +1459,25 @@ function UI.CreateWardrobePage(parent)
             local previewItem = previewItems[index]
             local itemId = previewItem and previewItem.previewSourceItemId
             piece.scItemId = itemId
+            piece.scSetRecord = record
+            piece.scSetDisplayRecord = displayRecord
+            piece.scPreviewItem = previewItem
+            piece.scSlotKey = previewItem and previewItem.slotKey
+            piece.scSourceItemIds = previewItem and previewItem.sourceItemIds
+            piece.scAltSourceKey = previewItem and previewItem.altSourceKey
             if itemId then
                 local collected = pieceState[itemId] and true or false
                 updateSetPieceVisual(piece, itemId, collected)
                 piece:Show()
             else
+                piece.scSetRecord = nil
+                piece.scSetDisplayRecord = nil
+                piece.scPreviewItem = nil
+                piece.scSlotKey = nil
+                piece.scSourceItemIds = nil
+                piece.scAltSourceKey = nil
+                piece.scCollected = nil
+                piece.scQuality = nil
                 piece:Hide()
             end
         end
@@ -979,34 +1487,41 @@ function UI.CreateWardrobePage(parent)
         setProgress:Show()
     end
 
-    if SC.ModelProvider.GetMode("DRESSUP") == "legacy" then
+    selectSetDisplayRecord = function(record)
+        local concreteRecord = concreteSetRecord(record)
+        if not concreteRecord then return end
+        local selectionKey = setRecordSelectionKey(record)
+        page.scSetSelectedGroupKey = selectionKey
+        page.scSetSelectedId = concreteRecord.id
+        if record and record.scIsSetGroup and page.scSelectedSetVariantByGroup then
+            page.scSelectedSetVariantByGroup[record.scSetGroupKey] = concreteRecord.id
+        end
+        previewSet(record)
+        for _, setRow in ipairs(page.scSetRows) do
+            if setRow.scRecord == record then
+                setRow:SetRecord(record)
+            end
+            setRow:SetSelected(setRecordSelectionKey(setRow.scRecord) == selectionKey)
+        end
+    end
+
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
             self.scLastCursorX = GetCursorPosition()
+            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
     model:SetScript("OnMouseUp", function() clearDragState() end)
-    model:SetScript("OnUpdate", function(self)
-        if self.scDragging and IsMouseButtonDown("LeftButton") then
-            local cursorX = GetCursorPosition()
-            local delta = cursorX - (self.scLastCursorX or cursorX)
-            self.scRotation = (self.scRotation or DEFAULT_ROTATION) + delta * 0.012
-            self:SetRotation(self.scRotation)
-            self.scLastCursorX = cursorX
-        elseif self.scDragging then
-            clearDragState()
-        end
-    end)
     model:SetScript("OnMouseWheel", function(self, delta)
         if model.SetPosition then
             self.scZoom = math.max(-0.7, math.min(0.7, (self.scZoom or 0) + delta * 0.08))
             pcall(function() self:SetPosition(0, 0, self.scZoom) end)
         end
     end)
-    end
     reset:SetScript("OnClick", function()
-        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() else resetModelView() end
+        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() end
+        resetModelView()
     end)
     applySet:SetScript("OnClick", function()
         local record = page.scSetSelectedRecord
@@ -2154,24 +2669,22 @@ function UI.CreateWardrobePage(parent)
     for index = 1, VISIBLE_SET_ROWS do
         local row = createSetListRow(setsPanel, 330, function(_, record, button)
             if not record then return end
+            local concreteRecord = concreteSetRecord(record)
+            if not concreteRecord then return end
             if button == "RightButton" then
-                Catalog.ToggleDemoFavorite("SETS", record.id)
+                Catalog.ToggleDemoFavorite("SETS", concreteRecord.id)
                 page:Refresh()
             elseif IsShiftKeyDown() then
-                if not record.collected then
+                if not concreteRecord.collected then
                     showSetActionResult(false, "NOT_OWNED")
                 elseif not SC.Bridge or not SC.Bridge.ApplySet then
                     showSetActionResult(false, "BRIDGE_UNAVAILABLE")
                 else
-                    local variant = record.selectedVariant
-                    SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)
+                    local variant = concreteRecord.selectedVariant
+                    SC.Bridge.ApplySet(concreteRecord.id, variant and variant.variantOrdinal or nil, showSetActionResult)
                 end
             else
-                page.scSetSelectedId = record.id
-                previewSet(record)
-                for _, setRow in ipairs(page.scSetRows) do
-                    setRow:SetSelected(setRow.scRecord and setRow.scRecord.id == page.scSetSelectedId)
-                end
+                selectSetDisplayRecord(record)
             end
         end)
         row:SetPoint("TOPLEFT", setsPanel, "TOPLEFT", 3, -SET_LIST_TOP_OFFSET - ((index - 1) * (SET_ROW_HEIGHT + SET_ROW_SPACING)))
@@ -2183,14 +2696,28 @@ function UI.CreateWardrobePage(parent)
             local owned = tonumber(record.collectedCount) or 0
             local required = tonumber(record.requiredCount) or #(record.itemIds or {})
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(record.name or "未知套装", 1, 0.82, 0.18)
-            local presentationLabel = setPresentationLabel(record)
+            local concreteRecord = concreteSetRecord(record)
+            local red, green, blue = setRecordQualityColor(concreteRecord)
+            GameTooltip:SetText(setDisplayName(record), red, green, blue)
+            local presentationLabel = setPresentationLabel(concreteRecord)
             if presentationLabel then
                 GameTooltip:AddLine("分类：" .. presentationLabel, 0.95, 0.82, 0.36)
             end
-            GameTooltip:AddLine("职业：" .. setClassLabel(record), 0.82, 0.78, 0.70)
+            GameTooltip:AddLine("职业：" .. setClassLabel(concreteRecord), 0.82, 0.78, 0.70)
+            local specLabel = setRecordSpecLabel(concreteRecord)
+            if specLabel then
+                GameTooltip:AddLine("适用专精：" .. specLabel, 0.52, 0.82, 1.00, true)
+            end
+            GameTooltip:AddLine("来源：" .. setRecordSourceLabel(concreteRecord), 0.94, 0.82, 0.58, true)
+            if record.scIsSetGroup then
+                local variantCount = record.scVariants and #record.scVariants or 0
+                GameTooltip:AddLine("已折叠 " .. tostring(variantCount) .. " 个阵营版本；右下角下拉切换联盟/部落。", 0.78, 0.74, 0.64, true)
+                for _, variantRecord in ipairs(record.scVariants or {}) do
+                    GameTooltip:AddLine("· " .. setVariantLabel(variantRecord) .. "：" .. tostring(variantRecord.name or "未知版本"), 0.65, 0.78, 0.92, true)
+                end
+            end
             GameTooltip:AddLine("收集进度：" .. owned .. " / " .. required, 0.45, 0.90, 0.34)
-            GameTooltip:AddLine("左键选择 · Shift+左键应用 · 右键偏好", 0.78, 0.74, 0.64)
+            GameTooltip:AddLine("左键选择 · Shift+左键应用当前版本 · 右键偏好", 0.78, 0.74, 0.64)
             GameTooltip:Show()
         end)
         row:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -2225,7 +2752,9 @@ function UI.CreateWardrobePage(parent)
         cancelSetPreview()
         self.scItemSelectedId = nil
         self.scSetSelectedId = nil
+        self.scSetSelectedGroupKey = nil
         self.scSetSelectedRecord = nil
+        self.scSetSelectedDisplayRecord = nil
         applySet:Disable()
         for _, itemModel in ipairs(self.scItemModels) do
             itemModel.scSelected:Hide()
@@ -2238,6 +2767,7 @@ function UI.CreateWardrobePage(parent)
         detail:SetText("")
         setProgress:Hide()
         pieces:Hide()
+        syncSetVariantDropdown(nil, nil)
         clearDragState()
         model:ClearModel()
         GameTooltip:Hide()
@@ -2257,6 +2787,7 @@ function UI.CreateWardrobePage(parent)
                 filters.classToken = playerClass
                 setSetOffset(0, true)
                 self.scSetSelectedId = nil
+                self.scSetSelectedGroupKey = nil
             end
         end
 
@@ -2421,6 +2952,8 @@ function UI.CreateWardrobePage(parent)
         setsPanel:Show()
         preview:Show()
         local allRecords, setFilters = wardrobeFilters:QuerySets()
+        allRecords = allRecords or {}
+        page.scFlatSetRecordCount = #allRecords
         page.scSetRecordCount = #allRecords
         local maxOffset = #allRecords > 0
             and math.max(0, #allRecords - VISIBLE_SET_ROWS) or 0
@@ -2446,8 +2979,11 @@ function UI.CreateWardrobePage(parent)
         page.scSyncingSetScrollbar = nil
 
         local selected
+        local selectedKey = page.scSetSelectedGroupKey
         for _, record in ipairs(allRecords) do
-            if record.id == page.scSetSelectedId then
+            local concreteRecord = concreteSetRecord(record)
+            if setRecordSelectionKey(record) == selectedKey or
+                (concreteRecord and concreteRecord.id == page.scSetSelectedId) then
                 selected = record
                 break
             end
@@ -2455,18 +2991,25 @@ function UI.CreateWardrobePage(parent)
         for index, row in ipairs(page.scSetRows) do
             local record = records[index]
             row:SetRecord(record)
-            row:SetSelected(record and record.id == page.scSetSelectedId)
+            row:SetSelected(record and setRecordSelectionKey(record) == selectedKey)
         end
         local collected, total = Catalog.GetProgress("SETS", setFilters)
         if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(collected, total) end
         if #records == 0 then
+            page.scSetSelectedId = nil
+            page.scSetSelectedGroupKey = nil
+            page.scSetSelectedRecord = nil
+            page.scSetSelectedDisplayRecord = nil
+            applySet:Disable()
+            pieces:Hide()
+            setProgress:Hide()
+            syncSetVariantDropdown(nil, nil)
+            model:ClearModel()
             UI.ShowEmptyState(setEmpty, page, "没有符合条件的套装", "调整搜索或职业过滤后再试。")
         else
             UI.HideEmptyState(setEmpty)
             local record = selected or records[1] or allRecords[1]
-            page.scSetSelectedId = record.id
-            previewSet(record)
-            for _, row in ipairs(page.scSetRows) do row:SetSelected(row.scRecord and row.scRecord.id == record.id) end
+            selectSetDisplayRecord(record)
         end
     end
 
@@ -2569,7 +3112,7 @@ function UI.CreateWardrobePage(parent)
             if piece:IsShown() and piece.scItemId == itemId then
                 updateSetPieceVisual(piece, itemId, appearanceState[itemId] and true or false)
                 if GameTooltip:IsOwned(piece) then
-                    showPieceTooltip(piece, itemId)
+                    showPieceTooltip(piece, itemId, piece.scSetRecord, piece.scPreviewItem, piece.scSetDisplayRecord)
                 end
             end
         end
