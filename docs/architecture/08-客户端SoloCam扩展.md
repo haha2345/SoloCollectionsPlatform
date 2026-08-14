@@ -2,12 +2,14 @@
 
 ## 1. 作用与边界
 
-WoW 3.3.5a 的 AddOn API 可以创建 `PlayerModel`/`DressUpModel`，但不能稳定地
-为九个装备部位和各种独立武器提供正式服风格构图。SoloCam 因此在已验证的
-客户端渲染路径上增加两个受限 bridge：
+WoW 3.3.5a 的 AddOn API 可以创建 `PlayerModel`/`DressUpModel`，但外观页还需要
+身体镜头、direct-display 兼容和不受 Lua 类型检查影响的本地武器试穿。SoloCam
+v11 在同一个 DLL 中提供三个受限 bridge：
 
 - **BodyCameraBridge**：按 race、sex、slot 应用身体部位镜头；
 - **ItemCameraBridge**：为独立武器/副手模型绑定 display 和镜头参数。
+- **PreviewItemBridge**：把保留的 `SetCreature` 请求转成当前卡片模型上的原生
+  `Undress/TryOn`，供 Transmorpher 武器卡路径使用。
 
 SoloCam 只负责显示。收藏状态、账号授权、数据库和服务端动作均由
 `mod-solo-collections` 负责。
@@ -36,6 +38,7 @@ client-extension/SoloCam/
 │  ├─ CameraProfile.*
 │  ├─ DisplayInfoBridge.*
 │  ├─ ItemCameraBridge.*
+│  ├─ PreviewItemBridge.*
 │  └─ ClientAddresses.hpp
 ├─ tests/
 ├─ scripts/
@@ -72,26 +75,34 @@ sequenceDiagram
 当前生成数据覆盖 20 个基础 race/sex 页面、每页九个装备部位，共 180 个基础
 profile。HD/自定义模型、不同体型和少数部位仍需要社区实机校准。
 
-## 4. 独立武器与副手
+## 4. Transmorpher 武器预览桥
 
-普通 3.3.5 `Model:SetModel` 不能自动完成所有物品 display 的贴图绑定。
-ItemCameraBridge 使用稳定生命周期的 synthetic record，把已经由资源流水线
-准备好的 display/model/texture 组合交给客户端，并在模型绘制时应用：
-
-```text
-yaw / pitch / roll
-distanceScale
-targetOffsetX / targetOffsetY / targetOffsetZ
-```
-
-参数优先级为：
+外观物品页的武器卡是玩家 `DressUpModel`，不再创建固定 Creature 或独立武器
+actor。Lua 保留 Transmorpher 的装备栏打包值携带 itemId：
 
 ```text
-appearance override > model override > weapon-family default > auto camera
+16 = Lua Main Hand carrier → native model slot 15
+17 = Lua Off-hand carrier → native model slot 16
+18 = Lua Ranged carrier → native InventoryType auto slot
 ```
 
-不要把栈内临时对象地址交给客户端，不要用 NPC entry 充当武器容器，也不要把
-贴图错误形成的黑模误判成镜头问题。资源链路详见
+Transmorpher 3.0.0 把 Lua 装备栏 16/17/18 误称为底层引擎槽并原样传入
+`0x00597FC0`。对 build 12340 的 `DressUpModel:TryOn` 与 `0x005980D0`
+分发器反汇编确认：模型只使用零基武器槽 15/16，盾牌 `INVTYPE_SHIELD=14`
+必须进入模型槽 16。v11 只纠正这层语义映射，其余 sentinel、模型、构图和
+原生 TryOn 路径保持 Transmorpher 结构。
+
+Hook 先通过 `widgetTable[0]` 取得发出请求的真实模型对象，再调用 build 12340
+原生 `Undress`/`TryOn`。它不调用真实角色换装，不发送服务器动作，也不改变
+收藏状态。AddOn 端按 Transmorpher 顺序执行：
+
+```text
+Reset → Undress → SetPosition → SetFacing → TryOn → SetSequence
+```
+
+种族、性别、实际渲染槽位和武器子类参数来自 Transmorpher 3.0.0 Classic 数据。
+完整 Transmorpher DLL 与 SoloCam 都会 Hook `PlayerModel:SetCreature`，因此只能
+部署合并后的 SoloCam，不能让两个 DLL 并列加载。详细边界见
 [09-武器与副手独立模型.md](09-武器与副手独立模型.md)。
 
 ## 5. 构建
@@ -133,9 +144,8 @@ SoloCam.dll
 
 ## 7. 镜头参数贡献
 
-身体镜头 identity 是 `(raceId, sex, slot)`；武器参数可按 weapon family、
-model 或 appearance 覆盖。先用 AddOn 内镜头工作台调整并导出 JSONL，不要直接
-在 C++ 中堆叠个人特例。
+身体镜头 identity 是 `(raceId, sex, slot)`；武器参数由 Transmorpher Classic
+的 `(raceFileName, sex, renderSlot, subclass)` 决定。不要在 C++ 中堆叠物品特例。
 
 每份镜头贡献至少应包含：
 
@@ -154,7 +164,8 @@ model 或 appearance 覆盖。先用 AddOn 内镜头工作台调整并导出 JSO
 - Hook 只在目标模型绘制期间生效，结束后恢复 camera/render 状态；
 - 窗口位置不能参与镜头计算；
 - generation 变化后旧异步回调不能覆盖新卡片；
-- 未识别 sentinel/profile/display 必须安全回退；
+- 未识别 sentinel/profile/display/preview request 必须安全回退或明确不可用；
+- Transmorpher 完整 Hook DLL 不得与 SoloCam 同时加载；
 - 同一模型连续翻页不能闪烁、放大或泄漏到世界画面；
 - 构建/加载成功只证明技术链路，镜头是否正常必须由真实客户端截图确认。
 

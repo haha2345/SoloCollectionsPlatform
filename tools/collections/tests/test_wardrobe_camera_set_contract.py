@@ -10,6 +10,8 @@ from common import ADDON, ROOT, load_json, read_text
 MEDIA_MANIFEST = ADDON / "Media" / "assets.json"
 TEMPLATES = ADDON / "UI" / "Templates.lua"
 WARDROBE = ADDON / "UI" / "Wardrobe.lua"
+EZ_WARDROBE_MODEL = ADDON / "UI" / "EzWardrobe" / "Model.lua"
+TRANSMORPHER_SETUP = ADDON / "Data" / "TransmorpherPreviewSetup.lua"
 PRESENTATIONS = ROOT / "tools" / "catalog" / "appearance_presentations.py"
 NEW_BUNDLE = ROOT / "tools" / "release" / "New-RoundTwoBundle.ps1"
 TEST_BUNDLE = ROOT / "tools" / "release" / "Test-RoundTwoBundle.ps1"
@@ -17,6 +19,55 @@ RELEASE_COMMON = ROOT / "tools" / "release" / "RoundTwoRelease.Common.ps1"
 
 
 class WardrobeCameraSetContractTests(unittest.TestCase):
+    def test_armor_uses_transmorpher_setup_for_every_supported_wardrobe_slot(self):
+        model = read_text(EZ_WARDROBE_MODEL)
+        setup = read_text(TRANSMORPHER_SETUP)
+        slot_names = {
+            "HEAD": "Head",
+            "SHOULDER": "Shoulder",
+            "BACK": "Back",
+            "CHEST": "Chest",
+            "WRIST": "Wrist",
+            "HANDS": "Hands",
+            "WAIST": "Waist",
+            "LEGS": "Legs",
+            "FEET": "Feet",
+        }
+        for stable_slot, transmorpher_slot in slot_names.items():
+            self.assertIn(f'{stable_slot} = "{transmorpher_slot}"', model)
+            self.assertEqual(20, setup.count(f'["{transmorpher_slot}"] = {{'))
+        self.assertIn('local armorData = raceData["Armor"]', model)
+        self.assertIn('return armorData[slotName], slotName, "READY"', model)
+
+    def test_armor_follows_the_transmorpher_reset_and_render_order(self):
+        source = read_text(EZ_WARDROBE_MODEL)
+        block = source[
+            source.index("function WardrobeItemsModelMixin:RenderTransmorpherArmor") :
+            source.index("function WardrobeItemsModelMixin:RenderTransmorpherItem")
+        ]
+        expected_order = [
+            "PrepareTransmorpherFrame",
+            'safeCall(self.frame, "Undress")',
+            'safeCall(self.frame, "SetPosition"',
+            'safeCall(self.frame, "SetFacing"',
+            'safeCall(self.frame, "TryOn"',
+            'safeCall(self.frame, "SetSequence"',
+        ]
+        positions = [block.index(token) for token in expected_order]
+        self.assertEqual(positions, sorted(positions))
+        self.assertNotIn("NativePreview", block)
+        self.assertNotIn("SetSequenceTime", source)
+        self.assertNotIn("ApplyArmorCamera", source)
+        self.assertNotIn('SetModelScale", 10', source)
+
+    def test_all_item_cards_share_transmorpher_query_and_generation_queue(self):
+        source = read_text(EZ_WARDROBE_MODEL)
+        self.assertIn("local ItemQuery = SC.TransmorpherItemQuery", source)
+        self.assertIn("ItemQuery:Query(record.itemId, onItemReady)", source)
+        self.assertIn("queueItemRender(self, self.record, expectedGeneration)", source)
+        self.assertIn('and "TRANSMORPHER_ARMOR" or "TRANSMORPHER_WEAPON"', source)
+        self.assertIn("target:RenderTransmorpherItem(target.record)", source)
+
     def test_base_ui_media_is_explicitly_required_and_tracked(self):
         manifest = load_json(MEDIA_MANIFEST)
         required = manifest.get("requiredForBaseUI")

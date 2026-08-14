@@ -60,11 +60,58 @@ constexpr std::uint8_t PlayerModelSetCreatureRecordBytes[] = {
 constexpr std::size_t PlayerModelSetCreatureRecordLength =
     sizeof(PlayerModelSetCreatureRecordBytes);
 
-constexpr std::uintptr_t PlayerModelTypeToken = 0x00C0E4D4;
-constexpr std::uintptr_t NextScriptObjectTypeToken = 0x00D3F778;
-constexpr std::uintptr_t ResolveScriptObject = 0x004A81B0;
 constexpr std::uintptr_t LuaIsNumber = 0x0084DF20;
 constexpr std::uintptr_t LuaToInteger = 0x0084E070;
+
+// Transmorpher v3.0.0 preview route, locked to the same build-12340 code
+// image as SoloCam. The Lua SetCreature binding is only a carrier for the
+// reserved request range; these are the engine methods used by the native
+// DressUpModel TryOn/Undress bindings.
+constexpr std::uintptr_t PlayerModelTryOn = 0x00597FC0;
+constexpr std::uint8_t PlayerModelTryOnBytes[] = {
+    0x55, 0x8B, 0xEC, 0x83, 0xEC, 0x70, 0x53, 0x56,
+    0x57, 0x33, 0xDB, 0x53, 0x53, 0x53, 0x89, 0x4D,
+};
+constexpr std::size_t PlayerModelTryOnLength = sizeof(PlayerModelTryOnBytes);
+
+constexpr std::uintptr_t PlayerModelUndress = 0x00597BA0;
+constexpr std::uint8_t PlayerModelUndressBytes[] = {
+    0x56, 0x8B, 0xF1, 0x83, 0xBE, 0xA0, 0x02, 0x00,
+    0x00, 0x00, 0x0F, 0x84, 0x9B, 0x00, 0x00, 0x00,
+};
+constexpr std::size_t PlayerModelUndressLength = sizeof(PlayerModelUndressBytes);
+
+// Resolve widgetTable[0] exactly as the stock model Lua getter does. The old
+// ResolveScriptObject call depended on ESI and could resolve the wrong widget.
+constexpr std::uintptr_t LuaRawGetI = 0x0084E670;
+constexpr std::uint8_t LuaRawGetIBytes[] = {
+    0x55, 0x8B, 0xEC, 0x8B, 0x45, 0x0C, 0x56, 0x8B,
+    0x75, 0x08, 0x8B, 0xCE, 0xE8, 0x3F, 0xF3, 0xFF,
+};
+constexpr std::size_t LuaRawGetILength = sizeof(LuaRawGetIBytes);
+
+constexpr std::uintptr_t LuaToUserData = 0x0084E1C0;
+constexpr std::uint8_t LuaToUserDataBytes[] = {
+    0x55, 0x8B, 0xEC, 0x8B, 0x45, 0x0C, 0x8B, 0x4D,
+    0x08, 0xE8, 0xF2, 0xF7, 0xFF, 0xFF,
+};
+constexpr std::size_t LuaToUserDataLength = sizeof(LuaToUserDataBytes);
+
+constexpr std::uintptr_t LuaSetTop = 0x0084DBF0;
+constexpr std::uint8_t LuaSetTopBytes[] = {
+    0x55, 0x8B, 0xEC, 0x8B, 0x4D, 0x0C, 0x85, 0xC9,
+    0x8B, 0x45, 0x08, 0x7C, 0x41, 0xC1, 0xE1, 0x04,
+};
+constexpr std::size_t LuaSetTopLength = sizeof(LuaSetTopBytes);
+
+// Transmorpher uses this function from a window timer on WoW's UI thread.
+// SoloCam uses the same path to re-advertise capability after every /reload.
+constexpr std::uintptr_t FrameScriptExecute = 0x00819210;
+constexpr std::uint8_t FrameScriptExecuteBytes[] = {
+    0x55, 0x8B, 0xEC, 0x51, 0x83, 0x05, 0xA0, 0x13,
+    0xD4, 0x00, 0x01, 0xA1, 0x9C, 0x13, 0xD4, 0x00,
+};
+constexpr std::size_t FrameScriptExecuteLength = sizeof(FrameScriptExecuteBytes);
 
 constexpr std::uint32_t NativeDressingRoomCamera = 1;
 }

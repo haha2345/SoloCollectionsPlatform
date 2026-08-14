@@ -86,6 +86,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300008,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -94,6 +95,8 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 1,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -109,6 +112,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 57,
                 medianItemLevel = 57,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -166,6 +170,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300009,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -174,6 +179,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 41,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 3,
@@ -189,6 +196,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -236,6 +244,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300010,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -244,6 +253,8 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 65,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 3,
@@ -259,6 +270,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 60.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -345,6 +357,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300011,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -353,6 +366,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 81,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -368,6 +383,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 61,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -461,6 +477,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300012,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -469,6 +486,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 121,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -484,6 +503,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 61,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -577,6 +597,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300013,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -585,6 +606,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 122,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -600,6 +623,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 61,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -693,6 +717,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300014,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -701,6 +726,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 123,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -716,6 +743,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 61,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -809,6 +837,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300015,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -817,6 +846,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 124,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -832,6 +863,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 61,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -901,6 +933,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300016,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -909,6 +942,8 @@ SoloCollections.Data.Sets = {
                 min = 54
             },
             itemSetId = 141,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 2,
@@ -924,6 +959,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 57,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1005,6 +1041,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300017,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -1013,6 +1050,8 @@ SoloCollections.Data.Sets = {
                 min = 55
             },
             itemSetId = 142,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 3,
@@ -1028,6 +1067,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 59,
                 medianItemLevel = 56.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1085,6 +1125,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300018,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -1093,6 +1134,8 @@ SoloCollections.Data.Sets = {
                 min = 58
             },
             itemSetId = 143,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 3,
@@ -1108,6 +1151,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 60,
                 medianItemLevel = 59.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1165,6 +1209,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300019,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -1173,6 +1218,8 @@ SoloCollections.Data.Sets = {
                 min = 54
             },
             itemSetId = 144,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 3,
@@ -1188,6 +1235,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 58,
                 medianItemLevel = 56.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1281,6 +1329,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300020,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -1289,6 +1338,8 @@ SoloCollections.Data.Sets = {
                 min = 18
             },
             itemSetId = 161,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -1304,6 +1355,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 24,
                 medianItemLevel = 18,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1397,6 +1449,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300021,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -1405,6 +1458,8 @@ SoloCollections.Data.Sets = {
                 min = 19
             },
             itemSetId = 162,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -1420,6 +1475,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 23,
                 medianItemLevel = 23,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1525,6 +1581,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300022,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 6,
@@ -1533,6 +1590,8 @@ SoloCollections.Data.Sets = {
                 min = 35
             },
             itemSetId = 163,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -1548,6 +1607,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 43,
                 medianItemLevel = 37.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -1674,10 +1734,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "mage"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300023,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -1685,24 +1752,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 181,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-mage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1826,10 +1896,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "priest"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300024,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -1837,24 +1914,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 182,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-priest",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -1978,10 +2058,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warlock"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300025,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -1989,24 +2076,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 183,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-warlock",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2130,10 +2220,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "rogue"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300026,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -2141,24 +2238,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 184,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-rogue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2282,10 +2382,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "druid"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300027,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -2293,24 +2400,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 185,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-druid",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2434,10 +2544,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "hunter"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300028,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -2445,24 +2562,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 186,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-hunter",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2586,10 +2706,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "shaman"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300029,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -2597,24 +2724,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 187,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-shaman",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2738,10 +2868,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "paladin"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300030,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -2749,24 +2886,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 188,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-paladin",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -2890,10 +3030,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warrior"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300031,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 63,
@@ -2901,24 +3048,27 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 189,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
                 median = 3.0,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-warrior",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 59.5,
-                tier = 0
+                season = 0,
+                tier = 0.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3044,10 +3194,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300000,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3055,24 +3206,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 201,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3198,10 +3352,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300032,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3209,24 +3364,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 202,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3352,10 +3510,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300001,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3363,24 +3522,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 203,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3506,10 +3668,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300002,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3517,24 +3680,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 204,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3660,10 +3826,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300003,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3671,24 +3838,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 205,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3814,10 +3984,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300004,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3825,24 +3996,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 206,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -3968,10 +4142,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300005,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -3979,24 +4154,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 207,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4122,10 +4300,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300006,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -4133,24 +4312,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 208,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4276,10 +4458,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300007,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T1",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -4287,24 +4470,27 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 209,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T1",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE",
+            ruleKey = "classic-t1-molten-core",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
-                tier = 0
+                season = 0,
+                tier = 1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4430,10 +4616,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300033,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -4441,24 +4628,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 210,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4584,10 +4774,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300034,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -4595,24 +4786,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 211,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4738,10 +4932,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300035,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -4749,24 +4944,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 212,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -4892,10 +5090,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300036,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -4903,24 +5102,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 213,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5046,10 +5248,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300037,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -5057,24 +5260,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 214,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5200,10 +5406,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300038,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -5211,24 +5418,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 215,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5354,10 +5564,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300039,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -5365,24 +5576,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 216,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5508,10 +5722,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300040,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -5519,24 +5734,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 217,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5662,10 +5880,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300041,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 76,
@@ -5673,24 +5892,27 @@ SoloCollections.Data.Sets = {
                 min = 76
             },
             itemSetId = 218,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2",
+            reasonCode = "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR",
+            ruleKey = "classic-t2-blackwing-lair",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 76,
                 medianItemLevel = 76.0,
-                tier = 0
+                season = 0,
+                tier = 2
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -5795,6 +6017,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300042,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 1,
@@ -5803,6 +6026,8 @@ SoloCollections.Data.Sets = {
                 min = 42
             },
             itemSetId = 221,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 1,
                 max = 2,
@@ -5818,6 +6043,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 42,
                 medianItemLevel = 42,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -5875,6 +6101,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300043,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -5883,6 +6110,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 261,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -5898,6 +6127,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 66,
                 medianItemLevel = 66.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -6002,10 +6232,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300044,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6013,6 +6244,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 281,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6020,17 +6253,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6132,10 +6366,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300045,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6143,6 +6378,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 282,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6150,17 +6387,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6262,10 +6500,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300046,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6273,6 +6512,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 301,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6280,17 +6521,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6405,6 +6647,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300047,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 7,
@@ -6413,6 +6656,8 @@ SoloCollections.Data.Sets = {
                 min = 53
             },
             itemSetId = 321,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 7,
                 max = 2,
@@ -6428,6 +6673,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 59,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -6532,10 +6778,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300048,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6543,6 +6790,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 341,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6550,17 +6799,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6662,10 +6912,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300049,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6673,6 +6924,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 342,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6680,17 +6933,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6792,10 +7046,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300050,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6803,6 +7058,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 343,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6810,17 +7067,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -6922,10 +7180,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300051,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -6933,6 +7192,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 344,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -6940,17 +7201,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7052,10 +7314,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300052,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7063,6 +7326,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 345,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7070,17 +7335,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7182,10 +7448,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300053,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7193,6 +7460,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 346,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7200,17 +7469,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7312,10 +7582,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300054,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7323,6 +7594,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 347,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7330,17 +7603,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7442,10 +7716,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300055,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7453,6 +7728,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 348,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7460,17 +7737,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7572,10 +7850,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300056,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7583,6 +7862,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 361,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7590,17 +7871,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7702,10 +7984,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300057,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7713,6 +7996,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 362,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7720,17 +8005,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7832,10 +8118,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300058,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7843,6 +8130,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 381,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7850,17 +8139,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -7962,10 +8252,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300059,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -7973,6 +8264,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 382,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -7980,17 +8273,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8092,10 +8386,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300060,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8103,6 +8398,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 383,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8110,17 +8407,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8222,10 +8520,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300061,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8233,6 +8532,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 384,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8240,17 +8541,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8352,10 +8654,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300062,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8363,6 +8666,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 386,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8370,17 +8675,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8482,10 +8788,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300063,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8493,6 +8800,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 387,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8500,17 +8809,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8612,10 +8922,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300064,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8623,6 +8934,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 388,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8630,17 +8943,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8742,10 +9056,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300065,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8753,6 +9068,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 389,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8760,17 +9077,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -8872,10 +9190,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300066,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -8883,6 +9202,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 390,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -8890,17 +9211,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9002,10 +9324,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300067,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9013,6 +9336,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 391,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9020,17 +9345,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9132,10 +9458,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300068,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9143,6 +9470,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 392,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9150,17 +9479,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9262,10 +9592,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300069,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9273,6 +9604,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 393,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9280,17 +9613,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9392,10 +9726,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300070,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9403,6 +9738,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 394,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9410,17 +9747,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9522,10 +9860,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300071,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9533,6 +9872,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 395,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9540,17 +9881,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9652,10 +9994,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300072,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9663,6 +10006,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 396,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9670,17 +10015,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9782,10 +10128,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300073,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9793,6 +10140,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 397,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9800,17 +10149,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -9912,10 +10262,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300074,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -9923,6 +10274,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 398,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -9930,17 +10283,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10042,10 +10396,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300075,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 63,
@@ -10053,6 +10408,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 401,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -10060,17 +10417,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 63,
                 medianItemLevel = 63.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10172,10 +10530,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300076,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -10183,6 +10542,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 402,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -10190,17 +10551,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -10267,6 +10629,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300077,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -10275,6 +10638,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 421,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -10290,6 +10655,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10359,6 +10725,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300078,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -10367,6 +10734,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 441,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -10382,6 +10751,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10439,6 +10809,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300079,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -10447,6 +10818,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 442,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 3,
@@ -10462,6 +10835,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10531,6 +10905,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300080,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -10539,6 +10914,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 443,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -10554,6 +10931,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10623,6 +11001,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300081,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -10631,6 +11010,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 444,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -10646,6 +11027,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10703,6 +11085,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300082,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -10711,6 +11094,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 461,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -10726,6 +11111,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 68,
                 medianItemLevel = 67.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10783,6 +11169,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300083,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -10791,6 +11178,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 463,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -10806,6 +11195,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10878,6 +11268,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300084,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -10886,6 +11277,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 467,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -10901,6 +11294,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -10972,6 +11366,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300085,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -10980,6 +11375,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 468,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -10995,6 +11392,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11067,6 +11465,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300086,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -11075,6 +11474,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 469,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -11090,6 +11491,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11162,6 +11564,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300087,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -11170,6 +11573,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 470,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -11185,6 +11590,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11257,6 +11663,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300088,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -11265,6 +11672,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 471,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -11280,6 +11689,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11352,6 +11762,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300089,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -11360,6 +11771,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 472,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -11375,6 +11788,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11448,6 +11862,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300090,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -11456,6 +11871,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 473,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -11471,6 +11888,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11551,6 +11969,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300091,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -11559,6 +11978,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 474,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -11574,6 +11995,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11654,6 +12076,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300092,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -11662,6 +12085,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 475,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -11677,6 +12102,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11757,6 +12183,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300093,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -11765,6 +12192,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 476,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -11780,6 +12209,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11860,6 +12290,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300094,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -11868,6 +12299,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 477,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -11883,6 +12316,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 68,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -11963,6 +12397,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300095,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -11971,6 +12406,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 478,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -11986,6 +12423,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12066,6 +12504,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300096,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -12074,6 +12513,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 479,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -12089,6 +12530,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12169,6 +12611,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300097,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -12177,6 +12620,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 480,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -12192,6 +12637,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 68,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12272,6 +12718,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300098,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -12280,6 +12727,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 481,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -12295,6 +12744,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12375,6 +12825,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300099,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -12383,6 +12834,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 482,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -12398,6 +12851,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 65,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12470,6 +12924,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300100,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -12478,6 +12933,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 483,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -12493,6 +12950,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12565,6 +13023,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300101,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -12573,6 +13032,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 484,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -12588,6 +13049,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12661,6 +13123,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300102,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -12669,6 +13132,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 485,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -12684,6 +13149,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12756,6 +13222,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300103,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -12764,6 +13231,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 486,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -12779,6 +13248,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12851,6 +13321,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300104,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -12859,6 +13330,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 487,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -12874,6 +13347,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -12946,6 +13420,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300105,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -12954,6 +13429,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 488,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -12969,6 +13446,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 65,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13050,6 +13528,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300106,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -13058,6 +13537,8 @@ SoloCollections.Data.Sets = {
                 min = 58
             },
             itemSetId = 489,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 4,
@@ -13073,6 +13554,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 61,
                 medianItemLevel = 60.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13142,6 +13624,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300107,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -13150,6 +13633,8 @@ SoloCollections.Data.Sets = {
                 min = 52
             },
             itemSetId = 490,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -13165,6 +13650,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 54,
                 medianItemLevel = 54,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13234,6 +13720,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300108,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -13242,6 +13729,8 @@ SoloCollections.Data.Sets = {
                 min = 57
             },
             itemSetId = 491,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -13257,6 +13746,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 60,
                 medianItemLevel = 59,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13326,6 +13816,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300109,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -13334,6 +13825,8 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 492,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 2,
@@ -13349,6 +13842,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 60,
                 medianItemLevel = 60,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13441,10 +13935,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300110,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -13452,24 +13947,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 493,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13531,6 +14029,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300111,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -13539,6 +14038,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 494,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -13554,6 +14055,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13618,6 +14120,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300112,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -13626,6 +14129,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 495,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -13641,6 +14146,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -13733,10 +14239,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300113,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -13744,24 +14251,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 496,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13851,10 +14361,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300114,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -13862,24 +14373,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 497,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -13941,6 +14455,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300115,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -13949,6 +14464,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 498,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -13964,6 +14481,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -14056,10 +14574,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300116,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -14067,24 +14586,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 499,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14146,6 +14668,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300117,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -14154,6 +14677,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 500,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -14169,6 +14694,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -14261,10 +14787,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300118,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -14272,24 +14799,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 501,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14351,6 +14881,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300119,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -14359,6 +14890,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 502,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -14374,6 +14907,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -14466,10 +15000,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300120,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -14477,24 +15012,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 503,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14556,6 +15094,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300121,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -14564,6 +15103,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 504,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -14579,6 +15120,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -14671,10 +15213,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300122,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -14682,24 +15225,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 505,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14761,6 +15307,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300123,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -14769,6 +15316,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 506,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -14784,6 +15333,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -14876,10 +15426,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300124,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -14887,24 +15438,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 507,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -14966,6 +15520,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300125,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -14974,6 +15529,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 508,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -14989,6 +15546,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -15081,10 +15639,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300126,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T2.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 5,
                 max = 88,
@@ -15092,24 +15651,27 @@ SoloCollections.Data.Sets = {
                 min = 78
             },
             itemSetId = 509,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T2.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET",
+            ruleKey = "classic-aq40-t2-5",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 88,
                 medianItemLevel = 81,
-                tier = 0
+                season = 0,
+                tier = 2.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15171,6 +15733,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300127,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -15179,6 +15742,8 @@ SoloCollections.Data.Sets = {
                 min = 65
             },
             itemSetId = 510,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -15194,6 +15759,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 70,
                 medianItemLevel = 67,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -15320,10 +15886,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warrior"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300128,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -15331,24 +15904,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 511,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-warrior",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15472,10 +16048,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "rogue"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300129,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -15483,24 +16066,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 512,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-rogue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15624,10 +16210,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "druid"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300130,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -15635,24 +16228,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 513,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-druid",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15776,10 +16372,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "priest"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300131,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -15787,24 +16390,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 514,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-priest",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -15928,10 +16534,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "hunter"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300132,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -15939,24 +16552,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 515,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-hunter",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16080,10 +16696,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "paladin"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300133,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -16091,24 +16714,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 516,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-paladin",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16232,10 +16858,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "mage"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300134,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -16243,24 +16876,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 517,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-mage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16384,10 +17020,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warlock"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300135,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -16395,24 +17038,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 518,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-warlock",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16536,10 +17182,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "shaman"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300136,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "T0.5",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 8,
                 max = 66,
@@ -16547,24 +17200,27 @@ SoloCollections.Data.Sets = {
                 min = 60
             },
             itemSetId = 519,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 3.5,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T0.5",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET",
+            ruleKey = "classic-dungeon-t0-5-shaman",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 66,
                 medianItemLevel = 62.5,
-                tier = 0
+                season = 0,
+                tier = 0.5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16695,6 +17351,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300137,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -16703,6 +17360,8 @@ SoloCollections.Data.Sets = {
                 min = 61
             },
             itemSetId = 520,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -16718,6 +17377,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 63,
                 medianItemLevel = 61.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -16849,10 +17509,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "druid"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300138,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -16860,24 +17527,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 521,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-druid",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -16982,6 +17652,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300139,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 6,
@@ -16990,6 +17661,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 522,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -17005,6 +17678,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -17136,10 +17810,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warrior"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300140,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -17147,24 +17828,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 523,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-warrior",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17293,10 +17977,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "rogue"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300141,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -17304,24 +17995,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 524,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-rogue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17450,10 +18144,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "priest"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300142,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -17461,24 +18162,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 525,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-priest",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17607,10 +18311,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "mage"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300143,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -17618,24 +18329,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 526,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-mage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17764,10 +18478,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "shaman"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300144,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -17775,24 +18496,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 527,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-shaman",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -17921,10 +18645,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "paladin"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300145,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -17932,24 +18663,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 528,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-paladin",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18078,10 +18812,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warlock"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300146,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -18089,24 +18830,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 529,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-warlock",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18235,10 +18979,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "hunter"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300147,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T3",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 9,
                 max = 92,
@@ -18246,24 +18997,27 @@ SoloCollections.Data.Sets = {
                 min = 86
             },
             itemSetId = 530,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 9,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T3",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET",
+            ruleKey = "classic-t3-hunter",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 1,
                 maxItemLevel = 92,
                 medianItemLevel = 88,
-                tier = 0
+                season = 0,
+                tier = 3
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18330,6 +19084,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300148,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -18338,6 +19093,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 533,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -18353,6 +19110,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 63,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -18422,6 +19180,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300149,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -18430,6 +19189,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 534,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -18445,6 +19206,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 63,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -18514,6 +19276,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300150,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -18522,6 +19285,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 535,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -18537,6 +19302,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 63,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -18606,6 +19372,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300151,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -18614,6 +19381,8 @@ SoloCollections.Data.Sets = {
                 min = 63
             },
             itemSetId = 536,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -18629,6 +19398,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 63,
                 medianItemLevel = 63,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -18733,10 +19503,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300152,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -18744,6 +19515,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 537,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -18751,17 +19524,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18863,10 +19637,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300153,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -18874,6 +19649,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 538,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -18881,17 +19658,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -18993,10 +19771,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300154,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19004,6 +19783,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 539,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19011,17 +19792,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19123,10 +19905,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300155,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19134,6 +19917,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 540,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19141,17 +19926,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19253,10 +20039,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300156,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19264,6 +20051,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 541,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19271,17 +20060,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19383,10 +20173,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300157,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19394,6 +20185,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 542,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19401,17 +20194,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19513,10 +20307,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300158,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19524,6 +20319,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 543,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19531,17 +20328,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19643,10 +20441,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300159,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19654,6 +20453,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 544,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19661,17 +20462,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19773,10 +20575,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300160,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19784,6 +20587,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 545,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19791,17 +20596,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -19903,10 +20709,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300161,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -19914,6 +20721,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 546,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -19921,17 +20730,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20033,10 +20843,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300162,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -20044,6 +20855,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 547,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -20051,17 +20864,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20163,10 +20977,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300163,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -20174,6 +20989,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 548,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -20181,17 +20998,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20293,10 +21111,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300164,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -20304,6 +21123,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 549,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -20311,17 +21132,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20423,10 +21245,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300165,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -20434,6 +21257,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 550,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -20441,17 +21266,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20553,10 +21379,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300166,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "CLASSIC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -20564,6 +21391,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 551,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -20571,17 +21400,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA",
+            ruleKey = "classic-pvp-honor",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 1,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -20648,6 +21478,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300167,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -20656,6 +21487,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 552,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -20671,6 +21504,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 105,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -20740,6 +21574,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300168,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -20748,6 +21583,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 553,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -20763,6 +21600,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 105,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -20832,6 +21670,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300169,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -20840,6 +21679,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 554,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -20855,6 +21696,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 120,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -20962,6 +21804,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300170,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 7,
@@ -20970,6 +21813,8 @@ SoloCollections.Data.Sets = {
                 min = 93
             },
             itemSetId = 555,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 7,
                 max = 2,
@@ -20985,6 +21830,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 114,
                 medianItemLevel = 102,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21056,6 +21902,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300171,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -21064,6 +21911,8 @@ SoloCollections.Data.Sets = {
                 min = 106
             },
             itemSetId = 556,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 3,
@@ -21079,6 +21928,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 114,
                 medianItemLevel = 111.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21148,6 +21998,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300172,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -21156,6 +22007,8 @@ SoloCollections.Data.Sets = {
                 min = 100
             },
             itemSetId = 557,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -21171,6 +22024,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 100,
                 medianItemLevel = 100,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21240,6 +22094,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300173,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -21248,6 +22103,8 @@ SoloCollections.Data.Sets = {
                 min = 112
             },
             itemSetId = 558,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -21263,6 +22120,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 114,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21320,6 +22178,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300174,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -21328,6 +22187,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 559,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -21343,6 +22204,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 105.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21436,6 +22298,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300175,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -21444,6 +22307,8 @@ SoloCollections.Data.Sets = {
                 min = 90
             },
             itemSetId = 560,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 2,
@@ -21459,6 +22324,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 102,
                 medianItemLevel = 96,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21540,6 +22406,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300176,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -21548,6 +22415,8 @@ SoloCollections.Data.Sets = {
                 min = 90
             },
             itemSetId = 561,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 2,
@@ -21563,6 +22432,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 99,
                 medianItemLevel = 94.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21632,6 +22502,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300177,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -21640,6 +22511,8 @@ SoloCollections.Data.Sets = {
                 min = 103
             },
             itemSetId = 562,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -21655,6 +22528,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 106,
                 medianItemLevel = 103,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21736,6 +22610,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300178,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -21744,6 +22619,8 @@ SoloCollections.Data.Sets = {
                 min = 113
             },
             itemSetId = 563,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 3,
@@ -21759,6 +22636,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 113.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21840,6 +22718,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300179,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -21848,6 +22727,8 @@ SoloCollections.Data.Sets = {
                 min = 112
             },
             itemSetId = 564,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 3,
@@ -21863,6 +22744,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 113.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -21932,6 +22814,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300180,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -21940,6 +22823,8 @@ SoloCollections.Data.Sets = {
                 min = 114
             },
             itemSetId = 565,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -21955,6 +22840,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 114,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22036,6 +22922,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300181,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -22044,6 +22931,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 566,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 3,
@@ -22059,6 +22948,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22151,10 +23041,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300182,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -22162,6 +23053,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 567,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -22169,17 +23062,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22269,10 +23163,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300183,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -22280,6 +23175,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 568,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -22287,17 +23184,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -22364,6 +23262,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300184,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -22372,6 +23271,8 @@ SoloCollections.Data.Sets = {
                 min = 114
             },
             itemSetId = 569,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -22387,6 +23288,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 114,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22444,6 +23346,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300185,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -22452,6 +23355,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 570,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -22467,6 +23372,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 112,
                 medianItemLevel = 108.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22524,6 +23430,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300186,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -22532,6 +23439,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 571,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -22547,6 +23456,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 105.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22604,6 +23514,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300187,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -22612,6 +23523,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 572,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -22627,6 +23540,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 105.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22696,6 +23610,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300188,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -22704,6 +23619,8 @@ SoloCollections.Data.Sets = {
                 min = 106
             },
             itemSetId = 573,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -22719,6 +23636,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 112,
                 medianItemLevel = 112,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22788,6 +23706,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300189,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -22796,6 +23715,8 @@ SoloCollections.Data.Sets = {
                 min = 113
             },
             itemSetId = 574,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -22811,6 +23732,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 114,
                 medianItemLevel = 113,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22880,6 +23802,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300190,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -22888,6 +23811,8 @@ SoloCollections.Data.Sets = {
                 min = 112
             },
             itemSetId = 575,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -22903,6 +23828,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 114,
                 medianItemLevel = 114,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -22972,6 +23898,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300191,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -22980,6 +23907,8 @@ SoloCollections.Data.Sets = {
                 min = 100
             },
             itemSetId = 576,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 3,
@@ -22995,6 +23924,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 106,
                 medianItemLevel = 106,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -23087,10 +24017,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300192,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23098,6 +24029,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 577,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23105,17 +24038,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23205,10 +24139,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300193,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23216,6 +24151,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 578,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23223,17 +24160,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23323,10 +24261,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300194,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23334,6 +24273,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 579,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23341,17 +24282,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23441,10 +24383,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300195,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23452,6 +24395,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 580,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23459,17 +24404,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23559,10 +24505,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300196,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23570,6 +24517,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 581,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23577,17 +24526,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23677,10 +24627,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300197,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23688,6 +24639,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 582,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23695,17 +24648,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23795,10 +24749,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300198,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23806,6 +24761,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 583,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23813,17 +24770,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -23913,10 +24871,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300199,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -23924,6 +24883,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 584,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -23931,17 +24892,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24031,10 +24993,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300200,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -24042,6 +25005,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 585,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -24049,17 +25014,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24149,10 +25115,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300201,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -24160,6 +25127,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 586,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -24167,17 +25136,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24267,10 +25237,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300202,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24278,6 +25249,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 587,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24285,17 +25258,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24385,10 +25359,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300203,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24396,6 +25371,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 588,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24403,17 +25380,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24503,10 +25481,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300204,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24514,6 +25493,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 589,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24521,17 +25502,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24621,10 +25603,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300205,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24632,6 +25615,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 590,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24639,17 +25624,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24739,10 +25725,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300206,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24750,6 +25737,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 591,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24757,17 +25746,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24857,10 +25847,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300207,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24868,6 +25859,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 592,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24875,17 +25868,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -24975,10 +25969,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300208,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -24986,6 +25981,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 593,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -24993,17 +25990,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25093,10 +26091,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300209,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25104,6 +26103,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 594,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25111,17 +26112,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25211,10 +26213,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300210,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25222,6 +26225,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 595,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25229,17 +26234,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25329,10 +26335,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300211,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25340,6 +26347,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 596,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25347,17 +26356,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25447,10 +26457,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300212,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25458,6 +26469,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 597,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25465,17 +26478,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25565,10 +26579,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300213,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25576,6 +26591,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 598,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25583,17 +26600,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25683,10 +26701,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300214,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25694,6 +26713,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 599,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25701,17 +26722,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25801,10 +26823,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300215,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25812,6 +26835,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 600,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25819,17 +26844,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -25919,10 +26945,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300216,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -25930,6 +26957,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 601,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -25937,17 +26966,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26037,10 +27067,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300217,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26048,6 +27079,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 602,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26055,17 +27088,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26155,10 +27189,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300218,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26166,6 +27201,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 603,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26173,17 +27210,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26273,10 +27311,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300219,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26284,6 +27323,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 604,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26291,17 +27332,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26391,10 +27433,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300220,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26402,6 +27445,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 605,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26409,17 +27454,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26509,10 +27555,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300221,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26520,6 +27567,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 606,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26527,17 +27576,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26627,10 +27677,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300222,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26638,6 +27689,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 607,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26645,17 +27698,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26745,10 +27799,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300223,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26756,6 +27811,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 608,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26763,17 +27820,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26863,10 +27921,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300224,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26874,6 +27933,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 609,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26881,17 +27942,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -26981,10 +28043,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300225,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -26992,6 +28055,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 610,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -26999,17 +28064,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27088,6 +28154,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300226,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -27096,6 +28163,8 @@ SoloCollections.Data.Sets = {
                 min = 84
             },
             itemSetId = 611,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 2,
@@ -27111,6 +28180,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 108,
                 medianItemLevel = 96.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27192,6 +28262,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300227,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -27200,6 +28271,8 @@ SoloCollections.Data.Sets = {
                 min = 84
             },
             itemSetId = 612,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 2,
@@ -27215,6 +28288,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 108,
                 medianItemLevel = 97.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27296,6 +28370,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300228,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -27304,6 +28379,8 @@ SoloCollections.Data.Sets = {
                 min = 84
             },
             itemSetId = 613,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 2,
@@ -27319,6 +28396,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 97.5,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27400,6 +28478,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300229,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -27408,6 +28487,8 @@ SoloCollections.Data.Sets = {
                 min = 84
             },
             itemSetId = 614,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 2,
@@ -27423,6 +28504,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 105,
                 medianItemLevel = 96.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27515,10 +28597,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300230,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -27526,6 +28609,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 615,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -27533,17 +28618,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -27610,6 +28696,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300231,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -27618,6 +28705,8 @@ SoloCollections.Data.Sets = {
                 min = 105
             },
             itemSetId = 616,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -27633,6 +28722,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 120,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27702,6 +28792,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300232,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -27710,6 +28801,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 617,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -27725,6 +28818,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 120,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27794,6 +28888,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300233,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -27802,6 +28897,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 618,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -27817,6 +28914,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 120,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27886,6 +28984,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300234,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -27894,6 +28993,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 619,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 4,
@@ -27909,6 +29010,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 120,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -27999,10 +29101,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "rogue"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300235,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -28010,24 +29119,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 620,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-rogue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28117,10 +29229,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300236,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -28128,24 +29241,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 621,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28235,10 +29351,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300237,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -28246,24 +29363,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 622,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28351,10 +29471,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "paladin"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300238,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -28362,24 +29489,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 623,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-paladin",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28469,10 +29599,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300239,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -28480,24 +29611,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 624,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28587,10 +29721,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300240,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -28598,24 +29733,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 625,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28705,10 +29843,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300241,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -28716,24 +29855,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 626,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28823,10 +29965,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300242,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -28834,24 +29977,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 627,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -28941,10 +30087,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300243,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -28952,24 +30099,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 628,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29059,10 +30209,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300244,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -29070,24 +30221,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 629,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29175,10 +30329,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "shaman"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300245,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -29186,24 +30347,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 630,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-shaman",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29293,10 +30457,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300246,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -29304,24 +30469,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 631,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29411,10 +30579,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300247,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -29422,24 +30591,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 632,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29529,10 +30701,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300248,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -29540,24 +30713,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 633,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29647,10 +30823,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300249,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -29658,24 +30835,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 634,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29765,10 +30945,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300250,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -29776,24 +30957,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 635,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29883,10 +31067,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300251,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -29894,24 +31079,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 636,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -29999,10 +31187,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "druid"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300252,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -30010,24 +31205,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 637,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-druid",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30117,10 +31315,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300253,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -30128,24 +31327,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 638,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30235,10 +31437,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300254,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -30246,24 +31449,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 639,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30353,10 +31559,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300255,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -30364,24 +31571,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 640,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30471,10 +31681,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300256,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -30482,24 +31693,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 641,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30589,10 +31803,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300257,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -30600,24 +31815,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 642,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30707,10 +31925,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300258,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -30718,24 +31937,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 643,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30823,10 +32045,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warlock"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300259,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -30834,24 +32063,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 644,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-warlock",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -30941,10 +32173,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300260,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -30952,24 +32185,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 645,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31059,10 +32295,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300261,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -31070,24 +32307,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 646,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31175,10 +32415,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "mage"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300262,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -31186,24 +32433,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 647,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-mage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31293,10 +32543,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300263,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -31304,24 +32555,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 648,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31411,10 +32665,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300264,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -31422,24 +32677,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 649,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31527,10 +32785,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "hunter"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300265,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -31538,24 +32803,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 650,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-hunter",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31645,10 +32913,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300266,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -31656,24 +32925,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 651,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31763,10 +33035,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300267,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -31774,24 +33047,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 652,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31879,10 +33155,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "warrior"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300268,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -31890,24 +33173,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 653,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-warrior",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -31997,10 +33283,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300269,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -32008,24 +33295,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 654,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32115,10 +33405,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300270,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -32126,24 +33417,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 655,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32233,10 +33527,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300271,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -32244,24 +33539,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 656,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32351,10 +33649,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300272,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -32362,24 +33661,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 657,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -32470,6 +33772,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300273,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -32478,6 +33781,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 658,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -32493,6 +33798,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -32586,6 +33892,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300274,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -32594,6 +33901,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 659,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -32609,6 +33918,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -32702,6 +34012,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300275,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -32710,6 +34021,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 660,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -32725,6 +34038,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -32818,6 +34132,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300276,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -32826,6 +34141,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 661,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -32841,6 +34158,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -32931,10 +34249,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "priest"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300277,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "D3",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -32942,24 +34267,27 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 662,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
                 median = 3,
                 min = 3
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "D3",
+            reasonCode = "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET",
+            ruleKey = "tbc-dungeon-d3-priest",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
-                tier = 0
+                season = 0,
+                tier = 3.1
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33049,10 +34377,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300278,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -33060,24 +34389,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 663,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33167,10 +34499,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300279,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T4",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 120,
@@ -33178,24 +34511,27 @@ SoloCollections.Data.Sets = {
                 min = 120
             },
             itemSetId = 664,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T4",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON",
+            ruleKey = "tbc-t4-karazhan-gruul-magtheridon",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 120,
                 medianItemLevel = 120,
-                tier = 0
+                season = 0,
+                tier = 4
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33285,10 +34621,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300280,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -33296,24 +34633,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 665,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33403,10 +34743,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300281,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T5",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 133,
@@ -33414,24 +34755,27 @@ SoloCollections.Data.Sets = {
                 min = 133
             },
             itemSetId = 666,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
                 median = 4,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T5",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP",
+            ruleKey = "tbc-t5-ssc-tempest-keep",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 133,
                 medianItemLevel = 133,
-                tier = 0
+                season = 0,
+                tier = 5
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33557,10 +34901,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300282,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -33568,24 +34913,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 668,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33711,10 +35059,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300283,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -33722,24 +35071,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 669,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -33865,10 +35217,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300284,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -33876,24 +35229,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 670,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34019,10 +35375,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300285,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34030,24 +35387,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 671,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34173,10 +35533,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300286,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34184,24 +35545,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 672,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34327,10 +35691,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300287,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34338,24 +35703,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 673,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34481,10 +35849,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300288,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34492,24 +35861,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 674,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34635,10 +36007,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300289,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34646,24 +36019,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 675,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34789,10 +36165,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300290,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34800,24 +36177,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 676,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -34943,10 +36323,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300291,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -34954,24 +36335,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 677,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35097,10 +36481,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300292,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -35108,24 +36493,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 678,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35251,10 +36639,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300293,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -35262,24 +36651,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 679,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35405,10 +36797,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300294,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -35416,24 +36809,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 680,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35559,10 +36955,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300295,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -35570,24 +36967,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 681,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35713,10 +37113,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300296,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -35724,24 +37125,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 682,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -35867,10 +37271,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300297,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -35878,24 +37283,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 683,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36021,10 +37429,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVE",
             collectionId = 300298,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "T6",
+            expansion = "TBC",
             itemLevel = {
                 count = 8,
                 max = 154,
@@ -36032,24 +37441,27 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 684,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 4,
                 median = 4.0,
                 min = 4
             },
-            raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            raidTier = "T6",
+            reasonCode = "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL",
+            ruleKey = "tbc-t6-hyjal-black-temple-sunwell",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 2,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 154,
                 medianItemLevel = 146.0,
-                tier = 0
+                season = 0,
+                tier = 6
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36139,10 +37551,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300299,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -36150,6 +37563,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 685,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -36157,17 +37572,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36257,10 +37673,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300300,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -36268,6 +37685,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 686,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -36275,17 +37694,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36375,10 +37795,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300301,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -36386,6 +37807,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 687,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -36393,17 +37816,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36493,10 +37917,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300302,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -36504,6 +37929,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 688,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -36511,17 +37938,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36611,10 +38039,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300303,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -36622,6 +38051,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 689,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -36629,17 +38060,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36729,10 +38161,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300304,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "RAID",
+            displayLabel = "S1 · 角斗士",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -36740,6 +38173,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 690,
+            pvpSeason = "S1",
+            pvpSeries = "GLADIATOR",
             quality = {
                 count = 5,
                 max = 4,
@@ -36747,17 +38182,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR",
+            ruleKey = "tbc-pvp-s1-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 2,
+                expansion = 2,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 1,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36847,10 +38283,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300305,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -36858,6 +38295,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 691,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -36865,17 +38304,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -36965,10 +38405,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300306,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -36976,6 +38417,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 692,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -36983,17 +38426,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37083,10 +38527,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300307,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -37094,6 +38539,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 693,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -37101,17 +38548,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37201,10 +38649,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300308,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -37212,6 +38661,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 694,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -37219,17 +38670,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37319,10 +38771,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300309,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -37330,6 +38783,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 695,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -37337,17 +38792,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37437,10 +38893,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300310,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -37448,6 +38905,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 696,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -37455,17 +38914,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37567,10 +39027,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300311,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -37578,6 +39039,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 697,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -37585,17 +39048,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37697,10 +39161,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300312,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -37708,6 +39173,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 698,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -37715,17 +39182,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -37783,6 +39251,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300313,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -37791,6 +39260,8 @@ SoloCollections.Data.Sets = {
                 min = 156
             },
             itemSetId = 699,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 5,
@@ -37806,6 +39277,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 156,
                 medianItemLevel = 156.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -37910,10 +39382,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300314,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 6,
                 max = 74,
@@ -37921,6 +39394,8 @@ SoloCollections.Data.Sets = {
                 min = 71
             },
             itemSetId = 717,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 4,
@@ -37928,17 +39403,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 74,
                 medianItemLevel = 72.5,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38040,10 +39516,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300315,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 荣誉",
+            expansion = "TBC",
             itemLevel = {
                 count = 6,
                 max = 71,
@@ -38051,6 +39528,8 @@ SoloCollections.Data.Sets = {
                 min = 66
             },
             itemSetId = 718,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 6,
                 max = 3,
@@ -38058,17 +39537,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA",
+            ruleKey = "tbc-pvp-honor-non-arena",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 71,
                 medianItemLevel = 68.0,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38123,6 +39603,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300316,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -38131,6 +39612,8 @@ SoloCollections.Data.Sets = {
                 min = 141
             },
             itemSetId = 719,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 4,
@@ -38146,6 +39629,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 141,
                 medianItemLevel = 141.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -38238,10 +39722,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300317,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38249,6 +39734,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 738,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38256,17 +39743,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38356,10 +39844,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300318,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38367,6 +39856,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 739,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38374,17 +39865,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38474,10 +39966,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300319,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38485,6 +39978,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 740,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38492,17 +39987,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38592,10 +40088,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300320,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38603,6 +40100,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 741,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38610,17 +40109,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38710,10 +40210,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300321,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38721,6 +40222,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 742,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38728,17 +40231,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38828,10 +40332,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300322,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38839,6 +40344,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 743,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38846,17 +40353,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -38946,10 +40454,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300323,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -38957,6 +40466,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 744,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -38964,17 +40475,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39064,10 +40576,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300324,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39075,6 +40588,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 745,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39082,17 +40597,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39182,10 +40698,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300325,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39193,6 +40710,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 746,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39200,17 +40719,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39300,10 +40820,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300326,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39311,6 +40832,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 747,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39318,17 +40841,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39418,10 +40942,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300327,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39429,6 +40954,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 748,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39436,17 +40963,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39536,10 +41064,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300328,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39547,6 +41076,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 749,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39554,17 +41085,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39654,10 +41186,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300329,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39665,6 +41198,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 750,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39672,17 +41207,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39772,10 +41308,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300330,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39783,6 +41320,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 751,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39790,17 +41329,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -39890,10 +41430,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300331,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "PvP · 声望",
+            expansion = "TBC",
             itemLevel = {
                 count = 5,
                 max = 115,
@@ -39901,6 +41442,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 752,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 3,
@@ -39908,17 +41451,18 @@ SoloCollections.Data.Sets = {
                 min = 3
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA",
+            ruleKey = "tbc-pvp-reputation-blue",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 2,
                 maxItemLevel = 115,
                 medianItemLevel = 115,
+                season = 0,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40045,6 +41589,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300332,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -40053,6 +41598,8 @@ SoloCollections.Data.Sets = {
                 min = 142
             },
             itemSetId = 754,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 2,
@@ -40068,6 +41615,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 150,
                 medianItemLevel = 146.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -40197,6 +41745,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300333,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -40205,6 +41754,8 @@ SoloCollections.Data.Sets = {
                 min = 134
             },
             itemSetId = 755,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 2,
@@ -40220,6 +41771,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 150,
                 medianItemLevel = 140.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -40349,6 +41901,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300334,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -40357,6 +41910,8 @@ SoloCollections.Data.Sets = {
                 min = 138
             },
             itemSetId = 756,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 2,
@@ -40372,6 +41927,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 150,
                 medianItemLevel = 142.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -40501,6 +42057,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300335,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -40509,6 +42066,8 @@ SoloCollections.Data.Sets = {
                 min = 138
             },
             itemSetId = 757,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 2,
@@ -40524,6 +42083,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 150,
                 medianItemLevel = 142.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -40616,10 +42176,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300336,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 159,
@@ -40627,6 +42188,8 @@ SoloCollections.Data.Sets = {
                 min = 159
             },
             itemSetId = 760,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -40634,17 +42197,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 159,
                 medianItemLevel = 159,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -40715,6 +42279,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300337,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 5,
@@ -40723,6 +42288,8 @@ SoloCollections.Data.Sets = {
                 min = 1
             },
             itemSetId = 761,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 2,
@@ -40738,6 +42305,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 1,
                 medianItemLevel = 1,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -40817,6 +42385,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300338,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -40825,6 +42394,8 @@ SoloCollections.Data.Sets = {
                 min = 1
             },
             itemSetId = 762,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 1,
@@ -40840,6 +42411,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 1,
                 medianItemLevel = 1.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -40969,6 +42541,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300339,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -40977,6 +42550,8 @@ SoloCollections.Data.Sets = {
                 min = 134
             },
             itemSetId = 763,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 2,
@@ -40992,6 +42567,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 142,
                 medianItemLevel = 138.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -41121,6 +42697,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300340,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -41129,6 +42706,8 @@ SoloCollections.Data.Sets = {
                 min = 154
             },
             itemSetId = 764,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 2,
@@ -41144,6 +42723,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 162,
                 medianItemLevel = 158.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -41236,10 +42816,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300341,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 136,
@@ -41247,6 +42828,8 @@ SoloCollections.Data.Sets = {
                 min = 136
             },
             itemSetId = 765,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41254,17 +42837,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 136,
                 medianItemLevel = 136,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41354,10 +42938,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300342,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -41365,6 +42950,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 766,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41372,17 +42959,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41472,10 +43060,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300343,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -41483,6 +43072,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 767,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41490,17 +43081,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41590,10 +43182,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300344,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 200,
@@ -41601,6 +43194,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 768,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41608,17 +43203,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41708,10 +43304,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300345,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 136,
@@ -41719,6 +43316,8 @@ SoloCollections.Data.Sets = {
                 min = 136
             },
             itemSetId = 769,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41726,17 +43325,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 136,
                 medianItemLevel = 136,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41826,10 +43426,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300346,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -41837,6 +43438,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 770,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41844,17 +43447,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -41944,10 +43548,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300347,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 146,
@@ -41955,6 +43560,8 @@ SoloCollections.Data.Sets = {
                 min = 146
             },
             itemSetId = 771,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -41962,17 +43569,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 146,
                 medianItemLevel = 146,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42062,10 +43670,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300348,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -42073,6 +43682,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 772,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42080,17 +43691,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42180,10 +43792,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300349,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -42191,6 +43804,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 773,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42198,17 +43813,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42298,10 +43914,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300350,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -42309,6 +43926,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 774,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42316,17 +43935,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42416,10 +44036,17 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
+            classPolicyOverride = {
+                allowedClassKeys = {
+                    "druid"
+                },
+                mode = "ALLOW_LIST"
+            },
             collectionId = 300351,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 136,
@@ -42427,6 +44054,8 @@ SoloCollections.Data.Sets = {
                 min = 136
             },
             itemSetId = 775,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42434,17 +44063,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE_CLASS_FIX",
+            ruleKey = "wrath-pvp-s5-savage-druid-sanctuary",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 136,
                 medianItemLevel = 136,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42534,10 +44164,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300352,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 136,
@@ -42545,6 +44176,8 @@ SoloCollections.Data.Sets = {
                 min = 136
             },
             itemSetId = 776,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42552,17 +44185,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 136,
                 medianItemLevel = 136,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42652,10 +44286,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300353,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -42663,6 +44298,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 777,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42670,17 +44307,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42770,10 +44408,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300354,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -42781,6 +44420,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 778,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42788,17 +44429,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -42888,10 +44530,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300355,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -42899,6 +44542,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 779,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -42906,17 +44551,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -43006,10 +44652,11 @@ SoloCollections.Data.Sets = {
             }
         },
         presentation = {
-            acquisition = "UNKNOWN",
+            acquisition = "PVP",
             collectionId = 300356,
-            difficulty = "UNKNOWN",
-            expansion = "UNKNOWN",
+            difficulty = "DUNGEON",
+            displayLabel = "S5 · 凶残角斗士",
+            expansion = "WRATH",
             itemLevel = {
                 count = 5,
                 max = 123,
@@ -43017,6 +44664,8 @@ SoloCollections.Data.Sets = {
                 min = 123
             },
             itemSetId = 780,
+            pvpSeason = "S5",
+            pvpSeries = "SAVAGE",
             quality = {
                 count = 5,
                 max = 4,
@@ -43024,17 +44673,18 @@ SoloCollections.Data.Sets = {
                 min = 4
             },
             raidTier = "NONE",
-            reasonCode = "NO_REVIEWED_ITEMSET_PRESENTATION_RULE",
-            ruleKey = "unclassified",
+            reasonCode = "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE",
+            ruleKey = "wrath-pvp-s5-savage",
             sortRank = {
-                acquisition = 0,
-                difficulty = 0,
-                expansion = 0,
+                acquisition = 1,
+                difficulty = 1,
+                expansion = 3,
                 maxItemLevel = 123,
                 medianItemLevel = 123,
+                season = 5,
                 tier = 0
             },
-            status = "UNKNOWN"
+            status = "REVIEWED"
         },
         selectedVariantOrdinal = 1,
         favorite = false
@@ -43113,6 +44763,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300357,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -43121,6 +44772,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 781,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 4,
@@ -43136,6 +44789,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -43217,6 +44871,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300358,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -43225,6 +44880,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 782,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 4,
@@ -43240,6 +44897,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -43321,6 +44979,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300359,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -43329,6 +44988,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 783,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 4,
@@ -43344,6 +45005,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -43425,6 +45087,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300360,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 4,
@@ -43433,6 +45096,8 @@ SoloCollections.Data.Sets = {
                 min = 115
             },
             itemSetId = 784,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 4,
                 max = 4,
@@ -43448,6 +45113,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 115,
                 medianItemLevel = 115.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -43517,6 +45183,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300361,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 3,
@@ -43525,6 +45192,8 @@ SoloCollections.Data.Sets = {
                 min = 1
             },
             itemSetId = 785,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 3,
                 max = 1,
@@ -43540,6 +45209,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 1,
                 medianItemLevel = 1,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -43635,6 +45305,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300362,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -43643,6 +45314,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 787,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -43654,10 +45327,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -43753,6 +45427,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300363,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -43761,6 +45436,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 788,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -43772,10 +45449,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -43871,6 +45549,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300364,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -43879,6 +45558,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 789,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -43890,10 +45571,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -43989,6 +45671,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300365,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -43997,6 +45680,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 790,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44008,10 +45693,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44107,6 +45793,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300366,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44115,6 +45802,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 791,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44126,10 +45815,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44225,6 +45915,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300367,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44233,6 +45924,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 792,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44244,10 +45937,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44343,6 +46037,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300368,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44351,6 +46046,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 793,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44362,10 +46059,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44461,6 +46159,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300369,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44469,6 +46168,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 794,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44480,10 +46181,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44579,6 +46281,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300370,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44587,6 +46290,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 795,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44598,10 +46303,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44697,6 +46403,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300371,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44705,6 +46412,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 796,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44716,10 +46425,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44815,6 +46525,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300372,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44823,6 +46534,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 797,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44834,10 +46547,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -44933,6 +46647,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300373,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -44941,6 +46656,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 798,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -44952,10 +46669,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45051,6 +46769,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300374,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45059,6 +46778,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 799,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45070,10 +46791,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45169,6 +46891,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300375,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45177,6 +46900,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 800,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45188,10 +46913,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45287,6 +47013,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300376,
             difficulty = "HIGH",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45295,6 +47022,8 @@ SoloCollections.Data.Sets = {
                 min = 213
             },
             itemSetId = 801,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45306,10 +47035,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 213,
                 medianItemLevel = 213,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45405,6 +47135,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300377,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45413,6 +47144,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 802,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45424,10 +47157,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45523,6 +47257,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300378,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45531,6 +47266,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 803,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45542,10 +47279,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45641,6 +47379,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300379,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45649,6 +47388,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 804,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45660,10 +47401,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45759,6 +47501,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300380,
             difficulty = "RAID",
+            displayLabel = "T7",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -45767,6 +47510,8 @@ SoloCollections.Data.Sets = {
                 min = 200
             },
             itemSetId = 805,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -45778,10 +47523,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t7-naxx",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 200,
                 medianItemLevel = 200,
+                season = 0,
                 tier = 7
             },
             status = "REVIEWED"
@@ -45839,6 +47585,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300381,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 2,
@@ -45847,6 +47594,8 @@ SoloCollections.Data.Sets = {
                 min = 23
             },
             itemSetId = 812,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 2,
                 max = 1,
@@ -45862,6 +47611,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 25,
                 medianItemLevel = 24.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -45991,6 +47741,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300382,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -45999,6 +47750,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 813,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46014,6 +47767,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -46143,6 +47897,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300383,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -46151,6 +47906,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 814,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46166,6 +47923,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -46295,6 +48053,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300384,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -46303,6 +48062,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 815,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46318,6 +48079,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -46447,6 +48209,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300385,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -46455,6 +48218,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 816,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46470,6 +48235,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -46599,6 +48365,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300386,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -46607,6 +48374,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 817,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46622,6 +48391,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -46751,6 +48521,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300387,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -46759,6 +48530,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 818,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46774,6 +48547,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -46903,6 +48677,7 @@ SoloCollections.Data.Sets = {
             acquisition = "UNKNOWN",
             collectionId = 300388,
             difficulty = "UNKNOWN",
+            displayLabel = "",
             expansion = "UNKNOWN",
             itemLevel = {
                 count = 8,
@@ -46911,6 +48686,8 @@ SoloCollections.Data.Sets = {
                 min = 187
             },
             itemSetId = 819,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 8,
                 max = 3,
@@ -46926,6 +48703,7 @@ SoloCollections.Data.Sets = {
                 expansion = 0,
                 maxItemLevel = 187,
                 medianItemLevel = 187.0,
+                season = 0,
                 tier = 0
             },
             status = "UNKNOWN"
@@ -47021,6 +48799,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300389,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47029,6 +48808,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 820,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47040,10 +48821,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47139,6 +48921,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300390,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47147,6 +48930,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 821,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47158,10 +48943,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47257,6 +49043,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300391,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47265,6 +49052,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 822,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47276,10 +49065,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47375,6 +49165,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300392,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47383,6 +49174,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 823,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47394,10 +49187,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47493,6 +49287,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300393,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47501,6 +49296,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 824,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47512,10 +49309,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47611,6 +49409,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300394,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47619,6 +49418,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 825,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47630,10 +49431,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47729,6 +49531,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300395,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47737,6 +49540,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 826,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47748,10 +49553,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47847,6 +49653,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300396,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47855,6 +49662,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 827,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47866,10 +49675,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -47965,6 +49775,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300397,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -47973,6 +49784,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 828,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -47984,10 +49797,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48083,6 +49897,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300398,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48091,6 +49906,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 829,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48102,10 +49919,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48201,6 +50019,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300399,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48209,6 +50028,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 830,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48220,10 +50041,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48319,6 +50141,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300400,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48327,6 +50150,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 831,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48338,10 +50163,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48437,6 +50263,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300401,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48445,6 +50272,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 832,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48456,10 +50285,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48555,6 +50385,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300402,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48563,6 +50394,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 833,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48574,10 +50407,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48673,6 +50507,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300403,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48681,6 +50516,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 834,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48692,10 +50529,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48791,6 +50629,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300404,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48799,6 +50638,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 835,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48810,10 +50651,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -48909,6 +50751,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300405,
             difficulty = "RAID",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -48917,6 +50760,8 @@ SoloCollections.Data.Sets = {
                 min = 219
             },
             itemSetId = 836,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -48928,10 +50773,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 219,
                 medianItemLevel = 219,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -49027,6 +50873,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300406,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49035,6 +50882,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 837,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49046,10 +50895,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -49145,6 +50995,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300407,
             difficulty = "HIGH",
+            displayLabel = "T8",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49153,6 +51004,8 @@ SoloCollections.Data.Sets = {
                 min = 226
             },
             itemSetId = 838,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49164,10 +51017,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t8-ulduar",
             sortRank = {
                 acquisition = 2,
-                difficulty = 2,
+                difficulty = 3,
                 expansion = 3,
                 maxItemLevel = 226,
                 medianItemLevel = 226,
+                season = 0,
                 tier = 8
             },
             status = "REVIEWED"
@@ -49263,6 +51117,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300408,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49271,6 +51126,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 843,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49282,10 +51139,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -49381,6 +51239,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300409,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49389,6 +51248,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 844,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49400,10 +51261,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -49499,6 +51361,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300410,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49507,6 +51370,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 845,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49518,10 +51383,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -49617,6 +51483,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300411,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49625,6 +51492,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 846,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49636,10 +51505,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -49735,6 +51605,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300412,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49743,6 +51614,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 847,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49754,10 +51627,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -49853,6 +51727,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300413,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49861,6 +51736,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 848,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49872,10 +51749,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -49971,6 +51849,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300414,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -49979,6 +51858,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 849,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -49990,10 +51871,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50089,6 +51971,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300415,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50097,6 +51980,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 850,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50108,10 +51993,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50207,6 +52093,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300416,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50215,6 +52102,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 851,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50226,10 +52115,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50325,6 +52215,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300417,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50333,6 +52224,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 852,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50344,10 +52237,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50443,6 +52337,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300418,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50451,6 +52346,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 853,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50462,10 +52359,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50561,6 +52459,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300419,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50569,6 +52468,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 854,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50580,10 +52481,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50679,6 +52581,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300420,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50687,6 +52590,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 855,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50698,10 +52603,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50797,6 +52703,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300421,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50805,6 +52712,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 856,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50816,10 +52725,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -50915,6 +52825,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300422,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -50923,6 +52834,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 857,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -50934,10 +52847,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51033,6 +52947,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300423,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51041,6 +52956,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 858,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51052,10 +52969,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51151,6 +53069,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300424,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51159,6 +53078,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 859,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51170,10 +53091,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51269,6 +53191,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300425,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51277,6 +53200,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 860,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51288,10 +53213,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51387,6 +53313,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300426,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51395,6 +53322,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 861,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51406,10 +53335,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51505,6 +53435,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300427,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51513,6 +53444,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 862,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51524,10 +53457,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51623,6 +53557,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300428,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51631,6 +53566,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 863,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51642,10 +53579,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51741,6 +53679,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300429,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51749,6 +53688,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 864,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51760,10 +53701,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51859,6 +53801,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300430,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51867,6 +53810,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 865,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51878,10 +53823,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -51977,6 +53923,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300431,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -51985,6 +53932,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 866,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -51996,10 +53945,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52095,6 +54045,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300432,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52103,6 +54054,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 867,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52114,10 +54067,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52213,6 +54167,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300433,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52221,6 +54176,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 868,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52232,10 +54189,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52331,6 +54289,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300434,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52339,6 +54298,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 869,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52350,10 +54311,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52449,6 +54411,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300435,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52457,6 +54420,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 870,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52468,10 +54433,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52567,6 +54533,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300436,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52575,6 +54542,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 871,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52586,10 +54555,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52685,6 +54655,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300437,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52693,6 +54664,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 872,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52704,10 +54677,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52803,6 +54777,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300438,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52811,6 +54786,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 873,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52822,10 +54799,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -52921,6 +54899,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300439,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -52929,6 +54908,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 874,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -52940,10 +54921,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53039,6 +55021,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300440,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53047,6 +55030,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 875,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53058,10 +55043,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53157,6 +55143,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300441,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53165,6 +55152,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 876,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53176,10 +55165,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53275,6 +55265,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300442,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53283,6 +55274,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 877,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53294,10 +55287,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53393,6 +55387,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300443,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53401,6 +55396,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 878,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53412,10 +55409,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53511,6 +55509,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300444,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53519,6 +55518,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 879,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53530,10 +55531,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53629,6 +55631,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300445,
             difficulty = "RAID",
+            displayLabel = "T9",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53637,6 +55640,8 @@ SoloCollections.Data.Sets = {
                 min = 232
             },
             itemSetId = 880,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53648,10 +55653,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t9-toc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 232,
                 medianItemLevel = 232,
+                season = 0,
                 tier = 9
             },
             status = "REVIEWED"
@@ -53747,6 +55753,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300446,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53755,6 +55762,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 883,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53766,10 +55775,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -53865,6 +55875,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300447,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53873,6 +55884,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 884,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -53884,10 +55897,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -53983,6 +55997,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300448,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -53991,6 +56006,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 885,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54002,10 +56019,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54101,6 +56119,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300449,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54109,6 +56128,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 886,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54120,10 +56141,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54219,6 +56241,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300450,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54227,6 +56250,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 887,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54238,10 +56263,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54337,6 +56363,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300451,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54345,6 +56372,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 888,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54356,10 +56385,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54455,6 +56485,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300452,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54463,6 +56494,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 889,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54474,10 +56507,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54573,6 +56607,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300453,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54581,6 +56616,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 890,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54592,10 +56629,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54691,6 +56729,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300454,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54699,6 +56738,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 891,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54710,10 +56751,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54809,6 +56851,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300455,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54817,6 +56860,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 892,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54828,10 +56873,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -54927,6 +56973,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300456,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -54935,6 +56982,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 893,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -54946,10 +56995,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55045,6 +57095,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300457,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55053,6 +57104,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 894,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55064,10 +57117,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55163,6 +57217,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300458,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55171,6 +57226,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 895,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55182,10 +57239,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55281,6 +57339,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300459,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55289,6 +57348,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 896,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55300,10 +57361,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55399,6 +57461,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300460,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55407,6 +57470,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 897,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55418,10 +57483,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55517,6 +57583,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300461,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55525,6 +57592,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 898,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55536,10 +57605,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55635,6 +57705,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300462,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55643,6 +57714,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 899,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55654,10 +57727,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55753,6 +57827,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300463,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55761,6 +57836,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 900,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55772,10 +57849,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"
@@ -55871,6 +57949,7 @@ SoloCollections.Data.Sets = {
             acquisition = "PVE",
             collectionId = 300464,
             difficulty = "RAID",
+            displayLabel = "T10",
             expansion = "WRATH",
             itemLevel = {
                 count = 5,
@@ -55879,6 +57958,8 @@ SoloCollections.Data.Sets = {
                 min = 251
             },
             itemSetId = 901,
+            pvpSeason = "NONE",
+            pvpSeries = "",
             quality = {
                 count = 5,
                 max = 4,
@@ -55890,10 +57971,11 @@ SoloCollections.Data.Sets = {
             ruleKey = "wrath-t10-icc",
             sortRank = {
                 acquisition = 2,
-                difficulty = 1,
+                difficulty = 2,
                 expansion = 3,
                 maxItemLevel = 251,
                 medianItemLevel = 251,
+                season = 0,
                 tier = 10
             },
             status = "REVIEWED"

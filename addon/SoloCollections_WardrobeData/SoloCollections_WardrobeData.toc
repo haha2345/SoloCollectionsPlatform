@@ -7,3 +7,4 @@
 ## LoadOnDemand: 1
 
 Data\Generated\WardrobeCatalog.lua
+Data\Generated\WardrobeAcquisitionSources.lua

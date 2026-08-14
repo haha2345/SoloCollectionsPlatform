@@ -2,53 +2,26 @@ local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
 local Identity = SC.IdentityRegistry
+local EzModel = SC.EzWardrobe.Model
+local EzItems = SC.EzWardrobe.Items
 
-local ITEM_ROWS = 3
-local ITEM_COLUMNS = 6
-local ITEM_PAGE_SIZE = ITEM_ROWS * ITEM_COLUMNS
-local WORKBENCH_ITEM_COLUMNS = 4
-local WORKBENCH_ITEM_PAGE_SIZE = ITEM_ROWS * WORKBENCH_ITEM_COLUMNS
-local EZ_LAYOUT = {
-    itemWidth = 78,
-    itemHeight = 104,
-    itemGapX = 16,
-    itemGapY = 24,
-    itemStartX = 70,
-    itemStartY = 85,
-    setColumns = 4,
-    setWidth = 129,
-    setHeight = 186,
-    setGapX = 13,
-    setGapY = 14,
-    setStartX = 50,
-    setStartY = 50,
-}
+local ITEM_PAGE_SIZE = EzItems.PAGE_SIZE
 local VISIBLE_SET_ROWS = 8
+local SET_LIST_TOP_OFFSET = 36
 local SET_ROW_HEIGHT = 52
 local SET_ROW_SPACING = 3
 local SET_PIECE_SIZE = 40
 local SET_PIECE_SPACING = 5
 local SET_PIECE_COLUMNS = 8
 local SET_PIECE_POOL_LIMIT = 12
+local SET_DETAILS_NAME_Y = -37
+local SET_DETAILS_LONG_NAME_Y = -30
+local SET_DETAILS_LABEL_Y = -63
+local SET_DETAILS_ICON_ROW_Y = -94
+local SET_DETAILS_MODEL_TOP_Y = -128
 local DEFAULT_ROTATION = 0.18
--- SoloCam v4's direct CreatureDisplayInfo range is now owned by ModelProvider;
--- this page passes display identity through the presenter contract only.
-local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
-    HEAD = 0,
-    SHOULDER = 2,
-    SHIRT = 3,
-    CHEST = 4,
-    WAIST = 5,
-    LEGS = 6,
-    FEET = 7,
-    WRIST = 8,
-    HANDS = 9,
-    BACK = 14,
-    MAINHAND = 15,
-    OFFHAND = 16,
-    TABARD = 18,
-}
-
+local TWO_PI = math.pi * 2
+local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
 local function showAppearanceActionResult(ok, reason)
     local message
     if ok then
@@ -97,12 +70,9 @@ local function showSetActionResult(ok, reason)
     end
 end
 
--- Retail obtains an appearance-specific UI camera from client data. That API
--- does not exist in 3.3.5, so the same 18-model layout uses slot-specific
--- camera profiles built from the WotLK DressUpModel API. SetCamera establishes
--- the client's native framing first; scale and position below are then applied
--- relative to that native state instead of replacing it with guessed absolute
--- values.
+--[=[ Reference-only legacy SoloCam/workbench profiles. This long-commented
+-- block is deliberately excluded from the active runtime chunk; item cards
+-- have no callable fallback to it.
 --
 -- WotLK player models expose only camera 0 (portrait) and camera 1
 -- (dressing-room). Adding a third camera to the player M2 crashes the client,
@@ -122,15 +92,11 @@ local WARDROBE_MODEL_PROFILES = {
     LEGS = { camera = 1, scaleMultiplier = 1.00, depthOffset = 0.00, horizontalOffset = 0.00, verticalOffset = 0.00, rotation = 0.08 },
     FEET = { camera = 1, scaleMultiplier = 1.00, depthOffset = 0.00, horizontalOffset = 0.00, verticalOffset = 0.00, rotation = 0.08 },
 }
+--]=]
 
 local CLASS_FILTERS = Identity.GetClassFilterOptions()
 
-local ARMOR_TYPE_FILTERS = {
-    { key = "PLATE", label = "板甲" },
-    { key = "MAIL", label = "锁甲" },
-    { key = "LEATHER", label = "皮甲" },
-    { key = "CLOTH", label = "布甲" },
-}
+local ARMOR_TYPE_FILTERS = SC.EzWardrobe.DataProvider.ARMOR_OPTIONS
 
 local SLOT_FILTERS = {
     { key = "HEAD", label = "头部", atlas = "head" },
@@ -211,6 +177,15 @@ local SET_MEMBER_SLOT_ORDER = {
     OFFHAND = 11,
 }
 
+local SLOT_LABEL_BY_KEY = {}
+for _, option in ipairs(SLOT_FILTERS) do
+    SLOT_LABEL_BY_KEY[option.key] = option.label
+end
+
+local function slotLabelFromKey(slotKey)
+    return SLOT_LABEL_BY_KEY[tostring(slotKey or "")] or tostring(slotKey or "未知部位")
+end
+
 local function filterLabel(options, current)
     for _, option in ipairs(options) do
         if option.key == current then
@@ -220,18 +195,573 @@ local function filterLabel(options, current)
     return options[1].label
 end
 
+local function classLabelFromKey(classKey)
+    if classKey and classKey ~= "ALL" and Identity.GetClassByKey then
+        local classIdentity = Identity.GetClassByKey(classKey)
+        if classIdentity and classIdentity.known then
+            return (classIdentity.name and (classIdentity.name.zhCN or classIdentity.name.enUS))
+                or classIdentity.filterToken
+                or tostring(classKey)
+        end
+    end
+    return filterLabel(CLASS_FILTERS, classKey == "ALL" and "ALL" or string.upper(tostring(classKey or "")))
+end
+
+local function effectiveSetClassPolicy(record)
+    local presentation = record and record.presentation
+    if presentation and presentation.classPolicyOverride then
+        return presentation.classPolicyOverride
+    end
+    return record and record.classPolicy
+end
+
 local function setClassLabel(record)
-    local policy = record and record.classPolicy
+    local policy = effectiveSetClassPolicy(record)
     if not policy then
-        return filterLabel(CLASS_FILTERS, record and record.classToken)
+        return classLabelFromKey(record and record.classToken)
     end
     if policy.mode == "ANY" then return "全部职业" end
     if policy.mode ~= "ALLOW_LIST" then return "职业未解析" end
     local labels = {}
     for _, classKey in ipairs(policy.allowedClassKeys or {}) do
-        labels[#labels + 1] = filterLabel(CLASS_FILTERS, string.upper(classKey))
+        labels[#labels + 1] = classLabelFromKey(classKey)
     end
     return table.concat(labels, "/")
+end
+
+local function setPresentationLabel(record)
+    local presentation = record and record.presentation
+    if not presentation then return nil end
+    local label = presentation.displayLabel
+    if label and label ~= "" then return label end
+    if presentation.pvpSeason and presentation.pvpSeason ~= "NONE" then
+        return presentation.pvpSeason
+    end
+    if presentation.raidTier and presentation.raidTier ~= "NONE" then
+        return presentation.raidTier
+    end
+    return nil
+end
+
+local function setMetadataLine(record)
+    local classLabel = setClassLabel(record)
+    local presentationLabel = setPresentationLabel(record)
+    if presentationLabel then
+        return presentationLabel .. "  ·  " .. classLabel
+    end
+    return classLabel
+end
+
+local SET_SOURCE_BY_LABEL = {
+    ["T0"] = "经典地下城套装",
+    ["T0.5"] = "经典地下城套装升级任务",
+    ["T1"] = "熔火之心",
+    ["T2"] = "黑翼之巢 / 奥妮克希亚的巢穴",
+    ["T2.5"] = "安其拉神殿",
+    ["T3"] = "纳克萨玛斯（60级）",
+    ["D3"] = "外域地下城套装",
+    ["T4"] = "卡拉赞 / 格鲁尔的巢穴 / 玛瑟里顿的巢穴",
+    ["T5"] = "毒蛇神殿 / 风暴要塞",
+    ["T6"] = "海加尔山之战 / 黑暗神殿 / 太阳之井高地",
+}
+local SET_SOURCE_T7 = "纳克萨玛斯 / 黑曜石圣殿 / 阿尔卡冯的宝库"
+local SET_SOURCE_T8 = "奥杜尔 / 阿尔卡冯的宝库"
+local SET_SOURCE_T9 = "十字军的试炼 / 银色锦标赛套装商人"
+local SET_SOURCE_T10 = "冰冠堡垒 / 达拉然套装商人"
+local SET_SOURCE_PVP = "PvP 商人 / 竞技场赛季奖励"
+
+local NON_CLASS_SET_DETAILS = {
+    [1] = { category = "地下城", source = "黑石深渊竞技场" },
+    [41] = { category = "武器", source = "黑石塔上层" },
+    [65] = { category = "武器", source = "纳克萨玛斯（60级）" },
+    [81] = { category = "地下城", source = "斯坦索姆邮差" },
+    [121] = { category = "地下城", source = "通灵学院" },
+    [122] = { category = "地下城", source = "通灵学院" },
+    [123] = { category = "地下城", source = "通灵学院" },
+    [124] = { category = "地下城", source = "通灵学院" },
+    [141] = { category = "制造", source = "经典旧世制皮" },
+    [142] = { category = "制造", source = "经典旧世制皮" },
+    [143] = { category = "制造", source = "经典旧世制皮" },
+    [144] = { category = "制造", source = "经典旧世制皮" },
+    [161] = { category = "地下城", source = "死亡矿井" },
+    [162] = { category = "地下城", source = "哀嚎洞穴" },
+    [163] = { category = "地下城", source = "血色修道院" },
+    [261] = { category = "武器", source = "经典旧世团队首领" },
+    [321] = { category = "制造", source = "经典旧世锻造" },
+    [421] = { category = "制造", source = "祖尔格拉布声望 / 裁缝" },
+    [441] = { category = "制造", source = "祖尔格拉布声望 / 制皮" },
+    [442] = { category = "制造", source = "祖尔格拉布声望 / 制皮" },
+    [443] = { category = "制造", source = "祖尔格拉布声望 / 锻造" },
+    [444] = { category = "制造", source = "祖尔格拉布声望 / 锻造" },
+    [461] = { category = "武器", source = "祖尔格拉布" },
+    [463] = { category = "武器", source = "祖尔格拉布" },
+    [489] = { category = "制造", source = "经典旧世制皮" },
+    [490] = { category = "制造", source = "经典旧世制皮" },
+    [491] = { category = "制造", source = "经典旧世制皮" },
+    [492] = { category = "声望", source = "希利苏斯暮光信徒" },
+    [533] = { category = "事件", source = "天灾入侵事件" },
+    [534] = { category = "事件", source = "天灾入侵事件" },
+    [535] = { category = "事件", source = "天灾入侵事件" },
+    [536] = { category = "事件", source = "天灾入侵事件" },
+    [552] = { category = "制造", source = "外域裁缝" },
+    [553] = { category = "制造", source = "外域裁缝" },
+    [554] = { category = "制造", source = "外域裁缝" },
+    [555] = { category = "制造", source = "外域裁缝" },
+    [556] = { category = "制造", source = "外域裁缝" },
+    [557] = { category = "制造", source = "外域裁缝" },
+    [558] = { category = "制造", source = "外域裁缝" },
+    [559] = { category = "制造", source = "外域裁缝" },
+    [560] = { category = "制造", source = "外域锻造" },
+    [561] = { category = "制造", source = "外域锻造" },
+    [562] = { category = "制造", source = "外域锻造" },
+    [563] = { category = "制造", source = "外域锻造" },
+    [564] = { category = "制造", source = "外域锻造" },
+    [565] = { category = "制造", source = "外域锻造" },
+    [566] = { category = "制造", source = "外域锻造" },
+    [569] = { category = "制造", source = "外域锻造" },
+    [570] = { category = "制造", source = "外域锻造" },
+    [571] = { category = "制造", source = "外域裁缝" },
+    [572] = { category = "制造", source = "外域裁缝" },
+    [573] = { category = "制造", source = "外域制皮" },
+    [574] = { category = "制造", source = "外域制皮" },
+    [575] = { category = "制造", source = "外域制皮" },
+    [576] = { category = "制造", source = "外域制皮" },
+    [611] = { category = "制造", source = "外域制皮" },
+    [612] = { category = "制造", source = "外域制皮" },
+    [613] = { category = "制造", source = "外域制皮" },
+    [614] = { category = "制造", source = "外域制皮" },
+    [616] = { category = "制造", source = "外域制皮" },
+    [617] = { category = "制造", source = "外域制皮" },
+    [618] = { category = "制造", source = "外域制皮" },
+    [619] = { category = "地下城", source = "外域地下城套装" },
+    [658] = { category = "地下城", source = "外域地下城套装" },
+    [659] = { category = "地下城", source = "外域地下城套装" },
+    [660] = { category = "地下城", source = "外域地下城套装" },
+    [661] = { category = "地下城", source = "外域地下城套装" },
+    [719] = { category = "PvP", source = "外域 PvP 声望" },
+    [754] = { category = "制造", source = "诺森德制皮" },
+    [755] = { category = "制造", source = "诺森德制皮" },
+    [756] = { category = "制造", source = "诺森德制皮" },
+    [757] = { category = "制造", source = "诺森德制皮" },
+    [761] = { category = "节日", source = "冬幕节" },
+    [762] = { category = "节日", source = "美酒节" },
+    [763] = { category = "制造", source = "诺森德裁缝" },
+    [764] = { category = "制造", source = "诺森德裁缝" },
+    [781] = { category = "事件", source = "天灾入侵事件" },
+    [782] = { category = "事件", source = "天灾入侵事件" },
+    [783] = { category = "事件", source = "天灾入侵事件" },
+    [784] = { category = "事件", source = "天灾入侵事件" },
+    [785] = { category = "节日", source = "仲夏火焰节" },
+    [812] = { category = "节日", source = "复活节 / 春季礼服" },
+    [813] = { category = "制造", source = "诺森德制皮 PvP 套装" },
+    [814] = { category = "制造", source = "诺森德锻造 PvP 套装" },
+    [815] = { category = "制造", source = "诺森德裁缝 PvP 套装" },
+    [816] = { category = "制造", source = "诺森德锻造 PvP 套装" },
+    [817] = { category = "制造", source = "诺森德制皮 PvP 套装" },
+    [818] = { category = "制造", source = "诺森德制皮 PvP 套装" },
+    [819] = { category = "制造", source = "诺森德裁缝 PvP 套装" },
+}
+
+-- Retail transmog sets are presented as a base set plus variant sets.  Our
+-- generated 3.3.5 ItemSet catalogue is intentionally flat, so this reviewed
+-- UI-only table folds only the clear WotLK T9 Alliance/Horde counterparts.
+-- The names below follow the current Wowhead/Retail transmog naming while
+-- keeping the local zhCN ItemSet names visible to the player.
+-- Do not use this table for ApplySet authority; the selected concrete record
+-- remains the SC2 collection/action target.
+local REVIEWED_SET_GROUP_VARIANTS = {
+    [843] = { key = "wrath-t9-mage-regalia", groupName = "T9 · 卡德加/逐日者的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "法师", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [844] = { key = "wrath-t9-mage-regalia", groupName = "T9 · 卡德加/逐日者的法衣", variantLabel = "部落", faction = "部落", specLabel = "法师", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [845] = { key = "wrath-t9-warlock-regalia", groupName = "T9 · 克尔苏加德/古尔丹的法衣", variantLabel = "部落", faction = "部落", specLabel = "术士", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [846] = { key = "wrath-t9-warlock-regalia", groupName = "T9 · 克尔苏加德/古尔丹的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "术士", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [847] = { key = "wrath-t9-priest-healing", groupName = "T9 · 维伦/萨布拉的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "神圣/戒律", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [848] = { key = "wrath-t9-priest-healing", groupName = "T9 · 维伦/萨布拉的圣装", variantLabel = "部落", faction = "部落", specLabel = "神圣/戒律", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [849] = { key = "wrath-t9-priest-caster", groupName = "T9 · 维伦/萨布拉的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "暗影", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [850] = { key = "wrath-t9-priest-caster", groupName = "T9 · 维伦/萨布拉的法衣", variantLabel = "部落", faction = "部落", specLabel = "暗影", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [851] = { key = "wrath-t9-druid-healing", groupName = "T9 · 玛法里奥/伊哈缪尔的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "恢复", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [852] = { key = "wrath-t9-druid-healing", groupName = "T9 · 玛法里奥/伊哈缪尔的圣装", variantLabel = "部落", faction = "部落", specLabel = "恢复", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [853] = { key = "wrath-t9-druid-caster", groupName = "T9 · 玛法里奥/伊哈缪尔的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "平衡", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [854] = { key = "wrath-t9-druid-caster", groupName = "T9 · 玛法里奥/伊哈缪尔的法衣", variantLabel = "部落", faction = "部落", specLabel = "平衡", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [855] = { key = "wrath-t9-druid-feral", groupName = "T9 · 玛法里奥/伊哈缪尔的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "野性", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [856] = { key = "wrath-t9-druid-feral", groupName = "T9 · 玛法里奥/伊哈缪尔的战甲", variantLabel = "部落", faction = "部落", specLabel = "野性", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [857] = { key = "wrath-t9-rogue-battlegear", groupName = "T9 · 范克里夫/迦罗娜的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "潜行者", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [858] = { key = "wrath-t9-rogue-battlegear", groupName = "T9 · 范克里夫/迦罗娜的战甲", variantLabel = "部落", faction = "部落", specLabel = "潜行者", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [859] = { key = "wrath-t9-hunter-battlegear", groupName = "T9 · 风行者的战甲/猎装", variantLabel = "联盟", faction = "联盟", specLabel = "猎人", role = "猎装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [860] = { key = "wrath-t9-hunter-battlegear", groupName = "T9 · 风行者的战甲/猎装", variantLabel = "部落", faction = "部落", specLabel = "猎人", role = "猎装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [861] = { key = "wrath-t9-shaman-healing", groupName = "T9 · 努波顿/萨尔的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "恢复", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [862] = { key = "wrath-t9-shaman-healing", groupName = "T9 · 努波顿/萨尔的圣装", variantLabel = "部落", faction = "部落", specLabel = "恢复", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [863] = { key = "wrath-t9-shaman-caster", groupName = "T9 · 努波顿/萨尔的法衣", variantLabel = "部落", faction = "部落", specLabel = "元素", role = "法衣", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [864] = { key = "wrath-t9-shaman-caster", groupName = "T9 · 努波顿/萨尔的法衣", variantLabel = "联盟", faction = "联盟", specLabel = "元素", role = "法衣", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [865] = { key = "wrath-t9-shaman-melee", groupName = "T9 · 努波顿/萨尔的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "增强", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [866] = { key = "wrath-t9-shaman-melee", groupName = "T9 · 努波顿/萨尔的战甲", variantLabel = "部落", faction = "部落", specLabel = "增强", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [867] = { key = "wrath-t9-warrior-dps", groupName = "T9 · 乌瑞恩/地狱咆哮的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "武器/狂怒", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [868] = { key = "wrath-t9-warrior-dps", groupName = "T9 · 乌瑞恩/地狱咆哮的战甲", variantLabel = "部落", faction = "部落", specLabel = "武器/狂怒", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [869] = { key = "wrath-t9-warrior-tank", groupName = "T9 · 乌瑞恩/地狱咆哮的铠甲", variantLabel = "联盟", faction = "联盟", specLabel = "防护", role = "铠甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [870] = { key = "wrath-t9-warrior-tank", groupName = "T9 · 乌瑞恩/地狱咆哮的铠甲", variantLabel = "部落", faction = "部落", specLabel = "防护", role = "铠甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [871] = { key = "wrath-t9-death-knight-dps", groupName = "T9 · 萨萨里安/库尔迪拉的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "冰霜/邪恶", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [872] = { key = "wrath-t9-death-knight-dps", groupName = "T9 · 萨萨里安/库尔迪拉的战甲", variantLabel = "部落", faction = "部落", specLabel = "冰霜/邪恶", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [873] = { key = "wrath-t9-death-knight-tank", groupName = "T9 · 萨萨里安/库尔迪拉的铠甲", variantLabel = "联盟", faction = "联盟", specLabel = "鲜血", role = "铠甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [874] = { key = "wrath-t9-death-knight-tank", groupName = "T9 · 萨萨里安/库尔迪拉的铠甲", variantLabel = "部落", faction = "部落", specLabel = "鲜血", role = "铠甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [875] = { key = "wrath-t9-paladin-healing", groupName = "T9 · 图拉扬/莉亚德琳的圣装", variantLabel = "联盟", faction = "联盟", specLabel = "神圣", role = "圣装", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [876] = { key = "wrath-t9-paladin-healing", groupName = "T9 · 图拉扬/莉亚德琳的圣装", variantLabel = "部落", faction = "部落", specLabel = "神圣", role = "圣装", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [877] = { key = "wrath-t9-paladin-dps", groupName = "T9 · 图拉扬/莉亚德琳的战甲", variantLabel = "联盟", faction = "联盟", specLabel = "惩戒", role = "战甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [878] = { key = "wrath-t9-paladin-dps", groupName = "T9 · 图拉扬/莉亚德琳的战甲", variantLabel = "部落", faction = "部落", specLabel = "惩戒", role = "战甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+    [879] = { key = "wrath-t9-paladin-tank", groupName = "T9 · 图拉扬/莉亚德琳的铠甲", variantLabel = "联盟", faction = "联盟", specLabel = "防护", role = "铠甲", order = 1, sourceLabel = SET_SOURCE_T9 },
+    [880] = { key = "wrath-t9-paladin-tank", groupName = "T9 · 图拉扬/莉亚德琳的铠甲", variantLabel = "部落", faction = "部落", specLabel = "防护", role = "铠甲", order = 2, sourceLabel = SET_SOURCE_T9 },
+}
+
+local REVIEWED_SET_DETAILS = {
+    [883] = { displayName = "T10 · 血法战衣", specLabel = "法师", sourceLabel = SET_SOURCE_T10 },
+    [884] = { displayName = "T10 · 黑巫法衣", specLabel = "术士", sourceLabel = SET_SOURCE_T10 },
+    [885] = { displayName = "T10 · 血色侍僧战衣", specLabel = "暗影", sourceLabel = SET_SOURCE_T10 },
+    [886] = { displayName = "T10 · 血色侍僧法衣", specLabel = "神圣/戒律", sourceLabel = SET_SOURCE_T10 },
+    [887] = { displayName = "T10 · 树纹套装", specLabel = "恢复", sourceLabel = SET_SOURCE_T10 },
+    [888] = { displayName = "T10 · 树纹法衣", specLabel = "平衡", sourceLabel = SET_SOURCE_T10 },
+    [889] = { displayName = "T10 · 树纹战甲", specLabel = "野性", sourceLabel = SET_SOURCE_T10 },
+    [890] = { displayName = "T10 · 影刃战甲", specLabel = "潜行者", sourceLabel = SET_SOURCE_T10 },
+    [891] = { displayName = "T10 · 安卡哈猎血战甲", specLabel = "猎人", sourceLabel = SET_SOURCE_T10 },
+    [892] = { displayName = "T10 · 霜巫套装", specLabel = "恢复", sourceLabel = SET_SOURCE_T10 },
+    [893] = { displayName = "T10 · 霜巫战衣", specLabel = "元素", sourceLabel = SET_SOURCE_T10 },
+    [894] = { displayName = "T10 · 霜巫战甲", specLabel = "增强", sourceLabel = SET_SOURCE_T10 },
+    [895] = { displayName = "T10 · 伊米亚之王战甲", specLabel = "武器/狂怒", sourceLabel = SET_SOURCE_T10 },
+    [896] = { displayName = "T10 · 伊米亚之王战铠", specLabel = "防护", sourceLabel = SET_SOURCE_T10 },
+    [897] = { displayName = "T10 · 天灾领主战甲", specLabel = "冰霜/邪恶", sourceLabel = SET_SOURCE_T10 },
+    [898] = { displayName = "T10 · 天灾领主战铠", specLabel = "鲜血", sourceLabel = SET_SOURCE_T10 },
+    [899] = { displayName = "T10 · 光誓套装", specLabel = "神圣", sourceLabel = SET_SOURCE_T10 },
+    [900] = { displayName = "T10 · 光誓战甲", specLabel = "惩戒", sourceLabel = SET_SOURCE_T10 },
+    [901] = { displayName = "T10 · 光誓战铠", specLabel = "防护", sourceLabel = SET_SOURCE_T10 },
+}
+
+for itemSetId, info in pairs(REVIEWED_SET_GROUP_VARIANTS) do
+    REVIEWED_SET_DETAILS[itemSetId] = info
+end
+
+local function setRecordSelectionKey(record)
+    if not record then return nil end
+    if record.scIsSetGroup and record.scSetGroupKey then
+        return record.scSetGroupKey
+    end
+    return "set:" .. tostring(record.id or record.itemSetId or "unknown")
+end
+
+local function concreteSetRecord(record)
+    if record and record.scIsSetGroup then
+        return record.scSelectedVariantRecord or (record.scVariants and record.scVariants[1])
+    end
+    return record
+end
+
+local function reviewedSetInfo(record)
+    record = concreteSetRecord(record)
+    return REVIEWED_SET_DETAILS[tonumber(record and record.itemSetId) or 0]
+end
+
+local function nonClassSetInfo(record)
+    record = concreteSetRecord(record)
+    return NON_CLASS_SET_DETAILS[tonumber(record and record.itemSetId) or 0]
+end
+
+local function setRecordIsClassSpecific(record)
+    record = concreteSetRecord(record)
+    local policy = effectiveSetClassPolicy(record)
+    return policy and policy.mode == "ALLOW_LIST" and #(policy.allowedClassKeys or {}) > 0
+end
+
+local function setRecordCategoryLabel(record)
+    local info = nonClassSetInfo(record)
+    if info and info.category and info.category ~= "" then
+        return info.category
+    end
+
+    local presentation = record and record.presentation
+    local displayLabel = presentation and presentation.displayLabel
+    if displayLabel == "D3" then return "地下城" end
+    if displayLabel and string.find(displayLabel, "PvP", 1, true) then return "PvP" end
+    if presentation and presentation.acquisition == "PVP" then return "PvP" end
+    if not setRecordIsClassSpecific(record) then return "通用" end
+    return nil
+end
+
+local function setDisplayName(record)
+    if not record then return "未知套装" end
+    if record.scIsSetGroup and record.scGroupName and record.scGroupName ~= "" then
+        return record.scGroupName
+    end
+    local info = reviewedSetInfo(record)
+    if info and info.displayName and info.displayName ~= "" then
+        return info.displayName
+    end
+    local name = record.name or "未知套装"
+    local presentationLabel = setPresentationLabel(record)
+    if presentationLabel and presentationLabel ~= "" and not string.find(name, presentationLabel, 1, true) then
+        return presentationLabel .. " · " .. name
+    end
+    return name
+end
+
+local function setVariantLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.variantLabel and info.variantLabel ~= "" then
+        return info.variantLabel
+    end
+    return tostring(record and record.name or "未知版本")
+end
+
+local SPEC_SPLIT_CLASSES = {
+    death_knight = true,
+    druid = true,
+    paladin = true,
+    priest = true,
+    shaman = true,
+    warrior = true,
+}
+
+local function setRecordPrimaryClassKey(record)
+    record = concreteSetRecord(record)
+    local policy = effectiveSetClassPolicy(record)
+    if policy and policy.mode == "ALLOW_LIST" and #(policy.allowedClassKeys or {}) == 1 then
+        return policy.allowedClassKeys[1]
+    end
+    return record and record.classToken
+end
+
+local function recordNameHas(recordName, token)
+    return recordName and token and token ~= "" and string.find(recordName, token, 1, true)
+end
+
+local function inferredSetSpecLabel(record)
+    record = concreteSetRecord(record)
+    local classKey = setRecordPrimaryClassKey(record)
+    if not SPEC_SPLIT_CLASSES[classKey or ""] then
+        return nil
+    end
+
+    local name = record and record.name or ""
+    if classKey == "death_knight" then
+        if recordNameHas(name, "铠甲") or recordNameHas(name, "战铠") or recordNameHas(name, "板甲") then
+            return "鲜血"
+        end
+        if recordNameHas(name, "战甲") then
+            return "冰霜/邪恶"
+        end
+    elseif classKey == "warrior" then
+        if recordNameHas(name, "铠甲") or recordNameHas(name, "战铠") or recordNameHas(name, "板甲") or
+            recordNameHas(name, "护甲") or recordNameHas(name, "保护") or recordNameHas(name, "壁垒") then
+            return "防护"
+        end
+        if recordNameHas(name, "战甲") then
+            return "武器/狂怒"
+        end
+    elseif classKey == "paladin" then
+        if recordNameHas(name, "圣装") or recordNameHas(name, "圣服") or recordNameHas(name, "圣甲") or
+            recordNameHas(name, "救赎") or recordNameHas(name, "魔装") or recordNameHas(name, "雕饰") then
+            return "神圣"
+        end
+        if recordNameHas(name, "铠甲") or recordNameHas(name, "战铠") or recordNameHas(name, "板甲") or
+            recordNameHas(name, "护甲") or recordNameHas(name, "保护") or recordNameHas(name, "壁垒") then
+            return "防护"
+        end
+        if recordNameHas(name, "战甲") or recordNameHas(name, "辩护") or recordNameHas(name, "板鳞甲") then
+            return "惩戒"
+        end
+    elseif classKey == "priest" then
+        if recordNameHas(name, "法衣") or recordNameHas(name, "战衣") then
+            return "暗影"
+        end
+        if recordNameHas(name, "圣装") or recordNameHas(name, "套装") or recordNameHas(name, "神服") or
+            recordNameHas(name, "魔装") or
+            recordNameHas(name, "月布") or recordNameHas(name, "绸缎") or recordNameHas(name, "天职") then
+            return "神圣/戒律"
+        end
+    elseif classKey == "druid" then
+        if recordNameHas(name, "法衣") or recordNameHas(name, "蟒皮") then
+            return "平衡"
+        end
+        if recordNameHas(name, "战甲") or recordNameHas(name, "甲胄") or recordNameHas(name, "野性之皮") or
+            recordNameHas(name, "野性") or recordNameHas(name, "龙皮") then
+            return "野性"
+        end
+        if recordNameHas(name, "圣装") or recordNameHas(name, "圣服") or recordNameHas(name, "套装") or
+            recordNameHas(name, "魔装") or recordNameHas(name, "庇护") or recordNameHas(name, "科多皮") then
+            return "恢复"
+        end
+    elseif classKey == "shaman" then
+        if recordNameHas(name, "法衣") or recordNameHas(name, "震撼") or
+            recordNameHas(name, "雷霆之拳") or recordNameHas(name, "环甲") then
+            return "元素"
+        end
+        if recordNameHas(name, "战甲") or recordNameHas(name, "甲胄") or recordNameHas(name, "锁甲") then
+            return "增强"
+        end
+        if recordNameHas(name, "圣装") or recordNameHas(name, "套装") or recordNameHas(name, "圣服") or
+            recordNameHas(name, "魔装") or recordNameHas(name, "战争之潮") or recordNameHas(name, "鳞甲") then
+            return "恢复"
+        end
+    end
+    return nil
+end
+
+local function setRecordSpecLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.specLabel and info.specLabel ~= "" and SPEC_SPLIT_CLASSES[setRecordPrimaryClassKey(record) or ""] then
+        return info.specLabel
+    end
+    return inferredSetSpecLabel(record)
+end
+
+local function setRecordFactionLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.faction and info.faction ~= "" then
+        return info.faction
+    end
+    return nil
+end
+
+local function setRecordSourceLabel(record)
+    local info = reviewedSetInfo(record)
+    if info and info.sourceLabel and info.sourceLabel ~= "" then
+        return info.sourceLabel
+    end
+    local nonClassInfo = nonClassSetInfo(record)
+    if nonClassInfo and nonClassInfo.source and nonClassInfo.source ~= "" then
+        return nonClassInfo.source
+    end
+    local presentation = record and record.presentation
+    local tier = presentation and presentation.raidTier
+    local season = presentation and presentation.pvpSeason
+    local displayLabel = presentation and presentation.displayLabel
+    if tier == "T7" then return SET_SOURCE_T7 end
+    if tier == "T8" then return SET_SOURCE_T8 end
+    if tier == "T9" then return SET_SOURCE_T9 end
+    if tier == "T10" then return SET_SOURCE_T10 end
+    if tier and SET_SOURCE_BY_LABEL[tier] then return SET_SOURCE_BY_LABEL[tier] end
+    if displayLabel and SET_SOURCE_BY_LABEL[displayLabel] then return SET_SOURCE_BY_LABEL[displayLabel] end
+    if season and season ~= "" and season ~= "NONE" then return SET_SOURCE_PVP end
+    if displayLabel and string.find(displayLabel, "PvP", 1, true) then return SET_SOURCE_PVP end
+    if presentation and presentation.acquisition == "PVP" then return SET_SOURCE_PVP end
+    return "来源未整理：按套装出处继续补齐"
+end
+
+local function setRecordCompletionRank(record)
+    local owned = tonumber(record and record.collectedCount) or 0
+    local required = tonumber(record and record.requiredCount) or 0
+    if required <= 0 then return owned, required, 0 end
+    return owned, required, owned / required
+end
+
+local function chooseSetGroupVariant(group, rememberedId)
+    local variants = group and group.scVariants or {}
+    local remembered = tonumber(rememberedId)
+    if remembered then
+        for _, variant in ipairs(variants) do
+            if tonumber(variant.id) == remembered then
+                return variant
+            end
+        end
+    end
+    local best
+    local bestOwned, bestRequired, bestRatio = -1, 0, -1
+    for _, variant in ipairs(variants) do
+        local owned, required, ratio = setRecordCompletionRank(variant)
+        if not best or variant.collected or ratio > bestRatio or
+            (ratio == bestRatio and owned > bestOwned) or
+            (ratio == bestRatio and owned == bestOwned and required > bestRequired) then
+            best = variant
+            bestOwned = owned
+            bestRequired = required
+            bestRatio = ratio
+        end
+        if variant.collected then
+            break
+        end
+    end
+    return best or variants[1]
+end
+
+local function updateSetGroupSummary(group, selectedVariant)
+    local variants = group and group.scVariants or {}
+    if #variants == 0 then return group end
+    table.sort(variants, function(left, right)
+        local leftInfo = REVIEWED_SET_GROUP_VARIANTS[tonumber(left.itemSetId) or 0] or {}
+        local rightInfo = REVIEWED_SET_GROUP_VARIANTS[tonumber(right.itemSetId) or 0] or {}
+        if (leftInfo.order or 99) ~= (rightInfo.order or 99) then
+            return (leftInfo.order or 99) < (rightInfo.order or 99)
+        end
+        return (tonumber(left.itemSetId) or 0) < (tonumber(right.itemSetId) or 0)
+    end)
+
+    selectedVariant = selectedVariant or chooseSetGroupVariant(group)
+    group.scSelectedVariantRecord = selectedVariant
+    group.id = selectedVariant.id
+    group.itemSetId = selectedVariant.itemSetId
+    group.icon = selectedVariant.icon
+    group.iconItemId = selectedVariant.iconItemId
+    group.classPolicy = selectedVariant.classPolicy
+    group.presentation = selectedVariant.presentation
+    group.favorite = selectedVariant.favorite
+    local selectedInfo = reviewedSetInfo(selectedVariant)
+    group.scVariantLabel = selectedInfo and selectedInfo.variantLabel
+    group.scFactionLabel = selectedInfo and selectedInfo.faction
+    group.scSpecLabel = selectedInfo and selectedInfo.specLabel
+
+    local topOwned, topRequired, topRatio = 0, 0, -1
+    local anyCollected = false
+    for _, variant in ipairs(variants) do
+        local owned, required, ratio = setRecordCompletionRank(variant)
+        if variant.collected then anyCollected = true end
+        if ratio > topRatio or (ratio == topRatio and owned > topOwned) then
+            topOwned, topRequired, topRatio = owned, required, ratio
+        end
+    end
+    group.collectedCount = topOwned
+    group.requiredCount = topRequired
+    group.collected = anyCollected or (topRequired > 0 and topOwned == topRequired)
+
+    group.name = setDisplayName(group)
+    return group
+end
+
+local function buildSetDisplayRecords(records, rememberedVariants)
+    local displayRecords = {}
+    local groups = {}
+    for _, record in ipairs(records or {}) do
+        local groupInfo = REVIEWED_SET_GROUP_VARIANTS[tonumber(record.itemSetId) or 0]
+        if groupInfo then
+            local groupKey = "reviewed:" .. groupInfo.key
+            local group = groups[groupKey]
+            if not group then
+                group = {
+                    scIsSetGroup = true,
+                    scSetGroupKey = groupKey,
+                    scGroupName = groupInfo.groupName,
+                    scRoleLabel = groupInfo.role,
+                    scSourceLabel = groupInfo.sourceLabel,
+                    scVariants = {},
+                }
+                groups[groupKey] = group
+                displayRecords[#displayRecords + 1] = group
+            end
+            record.scSetGroupKey = groupKey
+            record.scVariantOrder = groupInfo.order
+            group.scVariants[#group.scVariants + 1] = record
+        else
+            record.scSetGroupKey = "set:" .. tostring(record.id or record.itemSetId or #displayRecords + 1)
+            displayRecords[#displayRecords + 1] = record
+        end
+    end
+    for _, record in ipairs(displayRecords) do
+        if record.scIsSetGroup then
+            local rememberedId = rememberedVariants and rememberedVariants[record.scSetGroupKey]
+            updateSetGroupSummary(record, chooseSetGroupVariant(record, rememberedId))
+        end
+    end
+    return displayRecords
+end
+
+local function setVariantDropdownText(record)
+    local owned = tonumber(record and record.collectedCount) or 0
+    local required = tonumber(record and record.requiredCount) or 0
+    return setVariantLabel(record) .. "  " .. owned .. "/" .. required
 end
 
 local function hasFilterValue(options, current)
@@ -256,10 +786,6 @@ end
 local function getPlayerClassToken()
     local classIdentity = Identity.GetPlayerClass()
     return classIdentity.known and classIdentity.filterToken or nil
-end
-
-local function getDefaultArmorType()
-    return Identity.GetDefaultArmorType() or "AUTO"
 end
 
 local function weaponOptionSupportsSlot(option, slot)
@@ -288,23 +814,72 @@ local function ensureWeaponTypeForSlot(filters, slot)
     return filters.weaponType
 end
 
+local function itemQualityColor(quality)
+    quality = tonumber(quality) or 1
+    if GetItemQualityColor then
+        local red, green, blue = GetItemQualityColor(quality)
+        return red or 1.00, green or 1.00, blue or 1.00
+    end
+    return 1.00, 1.00, 1.00
+end
+
+local function weaponTypeLabelFromKey(weaponType)
+    if not weaponType then return nil end
+    weaponType = tostring(weaponType)
+    if weaponType == "" or weaponType == "AUTO" then return nil end
+    for _, option in ipairs(WEAPON_FILTERS) do
+        if option.key == weaponType then return option.label end
+    end
+    return weaponType
+end
+
+local function armorTypeLabelFromKey(armorType)
+    if not armorType then return nil end
+    armorType = tostring(armorType)
+    if armorType == "" or armorType == "AUTO" then return nil end
+    if armorType == "ALL" then return "通用" end
+    for _, option in ipairs(ARMOR_TYPE_FILTERS) do
+        if option.key == armorType then return option.label end
+    end
+    return armorType
+end
+
+local function meaningfulAppearanceSource(source)
+    if type(source) ~= "string" or source == "" or source == "账号收藏" then
+        return nil
+    end
+    return source
+end
+
 local function showItemTooltip(owner, record)
     if not record or not record.itemId then
         return
     end
-    local itemName, itemLink = GetItemInfo(record.itemId)
+    local itemName, _, quality = GetItemInfo(record.itemId)
+    local red, green, blue = itemQualityColor(quality or record.quality)
+    local title = itemName or record.name or "未知外观"
+
     GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
-    if itemLink then
-        GameTooltip:SetHyperlink(itemLink)
-    else
-        GameTooltip:SetText(itemName or record.name or "未知外观", 1, 0.82, 0.18)
+    GameTooltip:SetText(title, red, green, blue)
+
+    local equipmentSourceText = meaningfulAppearanceSource(record.source) or "获取方式未记录"
+    if equipmentSourceText then
+        GameTooltip:AddLine("装备来源：" .. equipmentSourceText, red, green, blue, true)
     end
-    if record.source then
-        GameTooltip:AddLine("来源：" .. record.source, 0.94, 0.82, 0.58, true)
+
+    local slotLabel = slotLabelFromKey(record.slot)
+    if slotLabel and slotLabel ~= "" then
+        GameTooltip:AddLine("部位：" .. slotLabel, 0.82, 0.78, 0.70)
     end
-    if record.weaponTypeLabel then
-        GameTooltip:AddLine("武器类型：" .. record.weaponTypeLabel, 0.52, 0.82, 1.00, true)
+    local armorTypeLabel = armorTypeLabelFromKey(record.armorType)
+    if armorTypeLabel then
+        GameTooltip:AddLine("护甲类型：" .. armorTypeLabel, 0.82, 0.78, 0.70)
     end
+    local weaponTypeLabel = record.weaponTypeLabel or weaponTypeLabelFromKey(record.weaponCategory or record.weaponType)
+    if weaponTypeLabel then
+        GameTooltip:AddLine("武器类型：" .. weaponTypeLabel, 0.52, 0.82, 1.00, true)
+    end
+
     GameTooltip:AddLine(record.collected and "已收集" or "未收集 · 仍可预览", record.collected and 0.38 or 0.62, record.collected and 0.90 or 0.58, 0.32)
     if record.collected then
         GameTooltip:AddLine("Shift + 左键：应用到当前装备", 1.00, 0.82, 0.18)
@@ -312,14 +887,73 @@ local function showItemTooltip(owner, record)
     GameTooltip:Show()
 end
 
-local function showPieceTooltip(owner, itemId)
+local function setRecordQuality(record)
+    record = concreteSetRecord(record)
+    local quality = record and record.presentation and record.presentation.quality
+    local reviewed = tonumber(quality and (quality.median or quality.max or quality.min))
+    if reviewed then return reviewed end
+    local _, _, itemQuality = GetItemInfo(record and record.iconItemId)
+    return itemQuality
+end
+
+local function setRecordQualityColor(record)
+    return itemQualityColor(setRecordQuality(record) or 4)
+end
+
+local function compactSetRowMetadata(record)
+    record = concreteSetRecord(record)
+    local parts = { setRecordIsClassSpecific(record) and setClassLabel(record) or setRecordCategoryLabel(record) }
+    local specLabel = setRecordSpecLabel(record)
+    if specLabel and specLabel ~= "" then
+        parts[#parts + 1] = specLabel
+    end
+    return table.concat(parts, "  ·  ")
+end
+
+local function showPieceTooltip(owner, itemId, setRecord, previewItem, displayRecord)
     if not itemId then return end
-    local itemName, itemLink = GetItemInfo(itemId)
+    local itemName, _, quality = GetItemInfo(itemId)
+    quality = quality or (owner and owner.scQuality) or 4
+    local red, green, blue = itemQualityColor(quality)
+    setRecord = setRecord or (owner and owner.scSetRecord)
+    displayRecord = displayRecord or (owner and owner.scSetDisplayRecord) or setRecord
+    previewItem = previewItem or (owner and owner.scPreviewItem)
+    local sourceItemIds = previewItem and previewItem.sourceItemIds or (owner and owner.scSourceItemIds)
+    local sourceCount = sourceItemIds and #sourceItemIds or 0
+
     GameTooltip:SetOwner(owner, "ANCHOR_RIGHT")
-    if itemLink then
-        GameTooltip:SetHyperlink(itemLink)
-    else
-        GameTooltip:SetText(itemName or "套装部件")
+    GameTooltip:SetText(itemName or ("套装部件 #" .. tostring(itemId)), red, green, blue)
+    GameTooltip:AddLine("套装：" .. setDisplayName(displayRecord), 0.95, 0.82, 0.36, true)
+
+    local slotLabel = slotLabelFromKey(previewItem and previewItem.slotKey or (owner and owner.scSlotKey))
+    if slotLabel and slotLabel ~= "" then
+        GameTooltip:AddLine("部位：" .. slotLabel, 0.82, 0.78, 0.70)
+    end
+
+    local factionLabel = setRecordFactionLabel(setRecord)
+    if factionLabel then
+        GameTooltip:AddLine("阵营：" .. factionLabel, 0.65, 0.78, 0.92)
+    end
+
+    local categoryLabel = setRecordCategoryLabel(setRecord)
+    if categoryLabel and not setRecordIsClassSpecific(setRecord) then
+        GameTooltip:AddLine("类型：" .. categoryLabel, 0.82, 0.78, 0.70)
+    end
+
+    local specLabel = setRecordSpecLabel(setRecord)
+    if specLabel then
+        GameTooltip:AddLine("适用专精：" .. specLabel, 0.52, 0.82, 1.00, true)
+    end
+
+    local sourceLabel = setRecordSourceLabel(setRecord)
+    if sourceLabel then
+        GameTooltip:AddLine("来源：" .. sourceLabel, 0.94, 0.82, 0.58, true)
+    end
+
+    local collected = owner and owner.scCollected
+    GameTooltip:AddLine(collected and "已收集外观" or "未收集 · 仍可预览", collected and 0.38 or 0.62, collected and 0.90 or 0.58, 0.32)
+    if sourceCount > 1 then
+        GameTooltip:AddLine("Alt + 左键：切换同部位来源（" .. tostring(sourceCount) .. " 个）", 1.00, 0.82, 0.18)
     end
     GameTooltip:Show()
 end
@@ -329,246 +963,14 @@ local function resolveTryOnItem(itemId)
     return itemLink or ("item:" .. itemId)
 end
 
-local function hasAssetPackVersionMismatch(record)
-    local generated = SC.GeneratedCatalog or {}
-    local state = SC.CollectionState or {}
-    if state.assetMismatch then
-        return true
-    end
-    local generatedAssetPackVersion = generated.assetPackVersion
-    return record
-        and type(record.assetPackVersion) == "string"
-        and record.assetPackVersion ~= ""
-        and type(generatedAssetPackVersion) == "string"
-        and generatedAssetPackVersion ~= ""
-        and record.assetPackVersion ~= generatedAssetPackVersion
-end
-
-local function isStandaloneItemRecord(record)
-    local generated = SC.GeneratedCatalog or {}
-    return record
-        and record.renderMode == "STANDALONE"
-        and record.presentationStatus == "READY"
-        and record.presentationCapability == "DIRECT_DISPLAY_V1"
-        and STANDALONE_ITEM_SLOTS[record.slot]
-        and type(record.syntheticDisplayId) == "number"
-        and record.syntheticDisplayId == math.floor(record.syntheticDisplayId)
-        and record.syntheticDisplayId > 0
-        and record.syntheticDisplayId <= 0x00FFFFFF
-        and type(record.modelPath) == "string" and record.modelPath ~= ""
-        and type(record.assetPackVersion) == "string"
-        and record.assetPackVersion ~= ""
-        and record.assetPackVersion == generated.assetPackVersion
-        and not hasAssetPackVersionMismatch(record)
-end
-
-local function resolveItemIcon(record)
-    if not record then return nil end
-    if record.icon then return record.icon end
-    local itemId = tonumber(record.iconItemId) or tonumber(record.itemId)
-    if itemId and GetItemIcon then
-        return GetItemIcon(itemId)
-    end
-    return nil
-end
-
-local UNAVAILABLE_ITEM_REASON_LABELS = {
-    CLIENT_MODEL_READY_TIMEOUT = "预览加载超时",
-    CLIENT_RUNTIME_CRASH_132 = "客户端安全隔离",
-    INVALID_OR_MISSING_DISPLAY_TEXTURE = "显示纹理无效",
-    MISSING_TEXTURE_ASSET = "缺少纹理资源",
-    UNRESOLVED_M2_TEXTURE_REFERENCE = "模型纹理未解析",
-}
-
-local function unavailableItemReasonText(record, runtimeReason)
-    if hasAssetPackVersionMismatch(record) then
-        return "资源包版本不匹配"
-    end
-    local reasonCode = runtimeReason or (record and record.presentationReasonCode) or ""
-    local labels = {}
-    for code in string.gmatch(reasonCode, "[^;]+") do
-        table.insert(labels, UNAVAILABLE_ITEM_REASON_LABELS[code] or code)
-    end
-    if #labels == 0 then
-        return "该外观暂不可用"
-    end
-    return table.concat(labels, "；")
-end
-
--- A stable weapon-family key lets one in-game adjustment apply to every
--- matching sample. A record may supply a more specific family key when two
--- visual classes are mirrored (for example the two Azzinoth glaives).
-local function getWeaponFamilyCameraKey(record)
-    if record and type(record.cameraTuningKey) == "string" and record.cameraTuningKey ~= "" then
-        return record.cameraTuningKey
-    end
-    if record and type(record.weaponType) == "string" and record.weaponType ~= "" then
-        return record.weaponType
-    end
-    return record and record.id
-end
-
-local function getAppearanceCameraKey(record)
-    if record and tonumber(record.id) then
-        return "appearance:" .. tostring(math.floor(tonumber(record.id)))
-    end
-    return nil
-end
-
-local function getModelCameraKey(record)
-    if record and type(record.modelSignature) == "string"
-        and record.modelSignature:match("^m2:[a-f0-9][a-f0-9]+$") then
-        return record.modelSignature
-    end
-    return nil
-end
-
-local function getCameraTuningScopePose(scope, key)
-    if not key or not SC.CameraTuning or not SC.CameraTuning.Get then return nil end
-    return SC.CameraTuning.Get(scope, key)
-end
-
-local function isCameraTuningScopeSkipped(skippedScopes, scope)
-    return skippedScopes == scope
-        or (type(skippedScopes) == "table" and skippedScopes[scope])
-end
-
-local function getAutoM2CameraPose(record)
-    local autoCamera = record and (record.autoCamera or record.m2Camera)
-    if autoCamera and SC.M2Camera and SC.M2Camera.NormalizePose then
-        return SC.M2Camera.NormalizePose(autoCamera), "auto"
-    end
-    return nil, "auto"
-end
-
--- Generated model defaults are promoted from reviewed workbench evidence, not
--- read from SavedVariables. They therefore sit beneath a player's explicit
--- model/appearance adjustment but above the broad weapon-family fallback.
-local function getGeneratedModelM2CameraPose(record)
-    local override = record and record.generatedModelCameraOverride
-    local modelKey = getModelCameraKey(record)
-    if type(override) ~= "table" or not modelKey
-        or override.scope ~= "model"
-        or override.key ~= modelKey
-        or override.modelSignature ~= modelKey
-        or type(override.pose) ~= "table" then
-        return nil, "generatedModel"
-    end
-    if SC.M2Camera and SC.M2Camera.NormalizePose then
-        return SC.M2Camera.NormalizePose(override.pose), "generatedModel"
-    end
-    return nil, "generatedModel"
-end
-
-local function resolveM2CameraPose(record, skippedScopes)
-    if not record then return nil, "auto" end
-
-    local appearance = isCameraTuningScopeSkipped(skippedScopes, "appearance") and nil
-        or getCameraTuningScopePose("appearance", getAppearanceCameraKey(record))
-    if appearance then return appearance, "appearance" end
-
-    local model = isCameraTuningScopeSkipped(skippedScopes, "model") and nil
-        or getCameraTuningScopePose("model", getModelCameraKey(record))
-    if model then return model, "model" end
-
-    local generatedModel = isCameraTuningScopeSkipped(skippedScopes, "generatedModel") and nil
-        or select(1, getGeneratedModelM2CameraPose(record))
-    if generatedModel then return generatedModel, "generatedModel" end
-
-    local weaponFamily = isCameraTuningScopeSkipped(skippedScopes, "weaponFamily") and nil
-        or getCameraTuningScopePose("weaponFamily", getWeaponFamilyCameraKey(record))
-    if weaponFamily then return weaponFamily, "weaponFamily" end
-
-    return getAutoM2CameraPose(record)
-end
-
--- Editing a lower-priority scope must not inherit a higher-priority override.
--- Otherwise changing the model value beneath an appearance override would
--- silently save a duplicate appearance pose and could never be reasoned about
--- or reset independently. Use the scope's own value first, then only scopes
--- lower in the effective precedence chain.
-local function resolveM2CameraScopePose(record, scope)
-    if not record then return nil, "auto" end
-    local scopeKey = scope == "appearance" and getAppearanceCameraKey(record)
-        or scope == "model" and getModelCameraKey(record)
-        or getWeaponFamilyCameraKey(record)
-    local scopedPose = getCameraTuningScopePose(scope, scopeKey)
-    if scopedPose then return scopedPose, scope end
-    if scope == "appearance" then
-        return resolveM2CameraPose(record, { appearance = true })
-    elseif scope == "model" then
-        return resolveM2CameraPose(record, { appearance = true, model = true })
-    elseif scope == "weaponFamily" then
-        return getAutoM2CameraPose(record)
-    end
-    return resolveM2CameraPose(record)
-end
-
-local function getEffectiveM2CameraPose(model)
-    if not model or not model.scRecord then
-        return nil
-    end
-    local record = model.scRecord
-    -- Only the active pooled cards resolve a pose.  Cache the precedence
-    -- result by the generated presentation revision and in-session tuning
-    -- revision so frame callbacks never scan the full catalog.
-    local revision = table.concat({
-        tostring((SC.GeneratedCatalog or {}).appearancePresentationHash or ""),
-        tostring((SC.CameraTuning or {}).revision or 0),
-        tostring(record.assetPackVersion or ""),
-        tostring(record.id or ""),
-    }, ":")
-    if model.scEffectiveM2CameraPoseRevision == revision then
-        return model.scEffectiveM2CameraPose, model.scEffectiveM2CameraPoseSource
-    end
-
-    local pose, source
-    local appearance = getCameraTuningScopePose("appearance", getAppearanceCameraKey(record))
-    if appearance then
-        pose, source = appearance, "appearance"
-    else
-        local modelPose = getCameraTuningScopePose("model", getModelCameraKey(record))
-        if modelPose then
-            pose, source = modelPose, "model"
-        else
-            local generatedModel = select(1, getGeneratedModelM2CameraPose(record))
-            if generatedModel then
-                pose, source = generatedModel, "generatedModel"
-            else
-                local weaponFamily = getCameraTuningScopePose("weaponFamily", getWeaponFamilyCameraKey(record))
-                if weaponFamily then
-                    pose, source = weaponFamily, "weaponFamily"
-                else
-                    local autoCamera = record.autoCamera or record.m2Camera
-                    if autoCamera and SC.M2Camera and SC.M2Camera.NormalizePose then
-                        pose = SC.M2Camera.NormalizePose(autoCamera)
-                    end
-                    source = "auto"
-                end
-            end
-        end
-    end
-    model.scEffectiveM2CameraPoseRevision = revision
-    model.scEffectiveM2CameraPose = pose
-    model.scEffectiveM2CameraPoseSource = source
-    return pose, source
-end
-
-local function isM2CameraTunableRecord(record)
-    return isStandaloneItemRecord(record)
-        and type(record.autoCamera or record.m2Camera) == "table"
-        and SC.M2Camera
-        and SC.M2Camera.NormalizePose
-end
-
--- Retail set-list icons use a restrained glass rim rather than the broad
--- yellow collected-frame texture used by the original prototype. Keeping this
--- row local to Wardrobe avoids changing the visual language of mount/pet rows.
+-- Keep the Sets tab in its original list/detail shape. The item tab can use
+-- ezCollections model cards, but sets read better as named rows with one large
+-- preview and the piece strip.
 local function createSetListRow(parent, width, onClick)
     local row = CreateFrame("Button", nil, parent)
     row:SetWidth(width or 330)
     row:SetHeight(SET_ROW_HEIGHT)
-    row:RegisterForClicks("LeftButtonUp")
+    row:RegisterForClicks("LeftButtonUp", "RightButtonUp")
 
     local background = row:CreateTexture(nil, "BACKGROUND")
     background:SetTexture("Interface\\Buttons\\WHITE8X8")
@@ -640,9 +1042,9 @@ local function createSetListRow(parent, width, onClick)
     star:SetTextColor(1.00, 0.82, 0.18)
     star:Hide()
 
-    row:SetScript("OnClick", function(self)
+    row:SetScript("OnClick", function(self, button)
         if onClick and self.scRecord then
-            onClick(self, self.scRecord)
+            onClick(self, self.scRecord, button)
         end
     end)
 
@@ -657,13 +1059,20 @@ local function createSetListRow(parent, width, onClick)
             return
         end
 
-        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)))
+        local concreteRecord = concreteSetRecord(record)
+        UI.SetIconTexture(icon, record.icon or (record.iconItemId and GetItemIcon(record.iconItemId)) or
+            (concreteRecord and concreteRecord.iconItemId and GetItemIcon(concreteRecord.iconItemId)))
         UI.SetCollectedVisual(icon, record.collected, 0.52)
-        name:SetText(record.name or "未知套装")
+        name:SetText(setDisplayName(record))
         name:SetTextColor(record.collected and 0.96 or 0.59, record.collected and 0.79 or 0.59, record.collected and 0.28 or 0.57)
         local owned = tonumber(record.collectedCount) or 0
         local required = tonumber(record.requiredCount) or #(record.itemIds or {})
-        detail:SetText(setClassLabel(record) .. "  ·  " .. owned .. "/" .. required .. " 外观")
+        if record.scIsSetGroup then
+            local variantCount = record.scVariants and #record.scVariants or 0
+            detail:SetText(compactSetRowMetadata(record) .. "  ·  " .. tostring(variantCount) .. " 阵营  ·  " .. owned .. "/" .. required)
+        else
+            detail:SetText(compactSetRowMetadata(record) .. "  ·  " .. owned .. "/" .. required)
+        end
         if record.collected then
             iconBorder:SetBorderColor(0.66, 0.52, 0.24, 0.96)
         else
@@ -683,587 +1092,13 @@ local function createSetListRow(parent, width, onClick)
     row.scName = name
     row.scDetail = detail
     row.scStar = star
-    SC.WardrobeUI.Layout:StyleListRow(row, background, selected)
     return row
 end
 
-local function applyStandaloneItemTransform(model)
-    local record = model and model.scRecord
-    if not record then return false end
-    if model.SetModelScale then
-        pcall(function() model:SetModelScale(record.modelScale or 1.00) end)
-    end
-    if model.SetPosition then
-        local position = record.modelPosition or { 0, 0, 0 }
-        pcall(function() model:SetPosition(position[1] or 0, position[2] or 0, position[3] or 0) end)
-    end
-    -- When a record owns M2 camera 0 through SoloCam, orientation belongs to
-    -- the camera pose. Keep the actor unrotated so SetRotation cannot mask or
-    -- double the camera adjustment. Legacy records still retain their old
-    -- modelRotation/modelFacing fallback.
-    local rotation = 0
-    if not record.m2Camera then
-        rotation = record.modelRotation or record.modelFacing or 0
-    end
-    -- Standalone cards use PlayerModel through the DISPLAY presenter. In
-    -- 3.3.5 its visible actor is rotated by
-    -- CharacterModelBase:SetRotation; generic Model:SetFacing does not rotate
-    -- that SetCreature result even though the inherited method is present.
-    if model.SetRotation then
-        pcall(function() model:SetRotation(rotation) end)
-    elseif model.SetFacing then
-        pcall(function() model:SetFacing(rotation) end)
-    end
-    return true
-end
 
-local function applyStandaloneItemLighting(model)
-    if not model or not model.SetLight then return false end
-    -- A plain 3.3.5 Model widget does not inherit the lit dressing-room
-    -- environment used by DressUpModel. Without an explicit ambient/diffuse
-    -- light, opaque weapon passes render as a black silhouette while additive
-    -- effects remain visible. This is the legacy Model:SetLight signature:
-    -- enabled, omni, direction xyz, ambient intensity/rgb, diffuse intensity/rgb.
-    return pcall(function()
-        model:SetLight(
-            true, false,
-            -1.0, -0.7, -0.5,
-            0.82, 1.0, 1.0, 1.0,
-            0.72, 1.0, 0.95, 0.88
-        )
-    end)
-end
-
-local function applyStandaloneItemView(model)
-    applyStandaloneItemLighting(model)
-    local appliedM2Camera = false
-    local cameraPose, poseSource = getEffectiveM2CameraPose(model)
-    if model then model.scPoseSource = poseSource end
-    if model and cameraPose
-        and SC.M2Camera and SC.M2Camera.Apply then
-        appliedM2Camera = SC.M2Camera.Apply(model, cameraPose)
-    end
-    if not appliedM2Camera and model and model.SetCamera then
-        pcall(function() model:SetCamera(0) end)
-    end
-    return applyStandaloneItemTransform(model)
-end
-
-local STANDALONE_TRANSFORM_SETTLE_FRAMES = 6
-local STANDALONE_MODEL_READY_FRAMES = 120
-
-local function cancelStandaloneItemTransformQueue(model, expectedGeneration)
-    if not model then return end
-    if expectedGeneration and model.scStandaloneGeneration ~= expectedGeneration then return end
-    model.scStandaloneTransformQueued = nil
-    model.scStandaloneTransformFrames = nil
-    model:SetScript("OnUpdate", nil)
-end
-
-local function isStandaloneItemGenerationCurrent(model, expectedGeneration, expectedPageGeneration)
-    if not model or not model.scRecord
-        or model.scStandaloneGeneration ~= expectedGeneration
-        or model.scPageGeneration ~= expectedPageGeneration then
-        return false
-    end
-    local host = model.scHostModel
-    return not host or host.scItemGeneration == expectedPageGeneration
-end
-
-local function showStandaloneItemUnavailable(model, expectedGeneration, expectedPageGeneration, runtimeReason)
-    if expectedGeneration
-        and not isStandaloneItemGenerationCurrent(model, expectedGeneration, expectedPageGeneration) then
-        return
-    end
-    local host = model and model.scHostModel
-    local record = model and model.scRecord
-    cancelStandaloneItemTransformQueue(model, expectedGeneration)
-    if model then
-        model:ClearModel()
-        model:Hide()
-    end
-    if not host then return end
-    host:SetScript("OnUpdate", nil)
-    host:ClearModel()
-    host:Hide()
-    host.scRenderKind = "UNAVAILABLE"
-    host.scRuntimeUnavailableReason = runtimeReason or "CLIENT_MODEL_READY_TIMEOUT"
-    if host.scUnavailableIcon then
-        UI.SetIconTexture(host.scUnavailableIcon, resolveItemIcon(record))
-    end
-    if host.scUnavailableText then
-        host.scUnavailableText:SetText(unavailableItemReasonText(record, host.scRuntimeUnavailableReason))
-    end
-    if host.scUnavailable then host.scUnavailable:Show() end
-end
-
-local function queueStandaloneItemTransform(model, expectedGeneration, expectedPageGeneration)
-    if not model or not model.scRecord then return end
-    expectedGeneration = expectedGeneration or model.scStandaloneGeneration
-    expectedPageGeneration = expectedPageGeneration or model.scPageGeneration
-    if not isStandaloneItemGenerationCurrent(model, expectedGeneration, expectedPageGeneration) then return end
-    model.scStandaloneTransformQueued = true
-    model.scStandaloneTransformFrames = 0
-    model:SetScript("OnUpdate", function(self)
-        if not self.scStandaloneTransformQueued
-            or not isStandaloneItemGenerationCurrent(self, expectedGeneration, expectedPageGeneration) then
-            cancelStandaloneItemTransformQueue(self, expectedGeneration)
-            return
-        end
-
-        self.scStandaloneTransformFrames = self.scStandaloneTransformFrames + 1
-        -- SetCreature and SetCamera rebuild the legacy model asynchronously.
-        -- Reapply the item transform for several frames so the late camera
-        -- rebuild cannot restore the default diagonal.
-        if self.scStandaloneTransformFrames >= 2 then
-            applyStandaloneItemLighting(self)
-            applyStandaloneItemTransform(self)
-        end
-        if self.scStandaloneTransformFrames >= STANDALONE_TRANSFORM_SETTLE_FRAMES then
-            local actualModel = self.GetModel and self:GetModel() or nil
-            local expectedModel = self.scRecord and self.scRecord.modelPath or nil
-            if type(actualModel) == "string" and type(expectedModel) == "string"
-                and string.lower(actualModel) == string.lower(expectedModel) then
-                cancelStandaloneItemTransformQueue(self, expectedGeneration)
-            elseif self.scStandaloneTransformFrames >= STANDALONE_MODEL_READY_FRAMES then
-                showStandaloneItemUnavailable(
-                    self,
-                    expectedGeneration,
-                    expectedPageGeneration,
-                    "CLIENT_MODEL_READY_TIMEOUT"
-                )
-            end
-        end
-    end)
-end
-
-local function applyStandaloneItemRecord(model, record, pageGeneration)
-    if not model then return end
-    cancelStandaloneItemTransformQueue(model)
-    model.scStandaloneGeneration = (model.scStandaloneGeneration or 0) + 1
-    local generation = model.scStandaloneGeneration
-    model.scPageGeneration = pageGeneration or generation
-    if not record then
-        if model.scPresenter then model.scPresenter:Clear("NO_RECORD") end
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecord = nil
-        model.scRecordId = nil
-        model.scCameraPoseOverride = nil
-        model.scEffectiveM2CameraPoseRevision = nil
-        model.scEffectiveM2CameraPose = nil
-        model.scEffectiveM2CameraPoseSource = nil
-        model.scPoseSource = nil
-        model:ClearModel()
-        model:Hide()
-        return
-    end
-
-    local unchanged = model.scRecordId == record.id
-        and model.scRecord
-        and model.scRecord.syntheticDisplayId == record.syntheticDisplayId
-        and model.scRecord.modelPath == record.modelPath
-    model.scRecord = record
-    -- A pooled PlayerModel may have shown another record on the previous page.
-    -- The persisted pose is looked up by record ID in getEffectiveM2CameraPose;
-    -- clear the transient slider reference before assigning this new record.
-    model.scCameraPoseOverride = nil
-    model.scEffectiveM2CameraPoseRevision = nil
-    model.scRuntimeUnavailableReason = nil
-    model:Show()
-    if not unchanged then
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecordId = record.id
-        model:ClearModel()
-        if record.syntheticDisplayId and SC.ModelProvider then
-            model.scPresenter = model.scPresenter or SC.ModelProvider.Create("DISPLAY", model)
-            model.scPresenter:Present({
-                displayId = record.syntheticDisplayId,
-                cameraPose = select(1, resolveM2CameraPose(record)),
-                applyCamera = SC.M2Camera and SC.M2Camera.ApplyPresenterPose,
-                onUnavailable = function(reason)
-                    showStandaloneItemUnavailable(model, generation, model.scPageGeneration, reason)
-                end,
-            })
-        end
-    end
-    applyStandaloneItemView(model)
-    queueStandaloneItemTransform(model, generation, model.scPageGeneration)
-end
-
-local function getCharacterCameraProfileForSlot(slot)
-    if not slot then
-        return nil
-    end
-    local cameraProfiles = SC.CameraProfiles
-    if not cameraProfiles or type(cameraProfiles.GetProfile) ~= "function" then
-        return nil
-    end
-    local _, raceToken = UnitRace("player")
-    local clientAssetProfile = nil
-    if SC.IdentityRegistry and SC.IdentityRegistry.ResolveCameraProfile then
-        clientAssetProfile = SC.IdentityRegistry.ResolveCameraProfile()
-    end
-    return cameraProfiles.GetProfile(
-        raceToken,
-        UnitSex("player"),
-        slot,
-        clientAssetProfile
-    )
-end
-
-local function getCharacterCameraProfile(model)
-    return model and model.scRecord and getCharacterCameraProfileForSlot(model.scRecord.slot) or nil
-end
-
-local function getCharacterCameraSentinel(model)
-    local profile = getCharacterCameraProfile(model)
-    return profile and profile.sentinel or nil
-end
-
-local function getBodyCameraDelta(profile)
-    if not profile or not profile.profileKey or not SC.BodyCameraTuning
-        or not SC.BodyCameraTuning.Get then
-        return nil
-    end
-    return SC.BodyCameraTuning.Get(profile.profileKey)
-end
-
-local function isBodyCameraTunableRecord(record)
-    return record and record.renderMode == "BODY"
-        and getCharacterCameraProfileForSlot(record.slot) ~= nil
-        and SC.M2Camera and SC.M2Camera.NormalizeBodyDelta
-end
-
-local function selectItemModelCamera(model)
-    local profile = model.scProfile or WARDROBE_MODEL_PROFILES.DEFAULT
-    local bodyProfile = getCharacterCameraProfile(model)
-    model.scBodyCameraProfile = bodyProfile
-    if model.scCameraStrategy == "NEWERA_POSITION" then
-        model.scClientCameraSentinel = nil
-        model.scUsesClientCamera = false
-        model.scBodyCameraReason = "AB_NEWERA_POSITION"
-        if model.SetCamera then pcall(function() model:SetCamera(1) end) end
-        return
-    end
-    model.scClientCameraSentinel = bodyProfile and bodyProfile.sentinel or nil
-    model.scUsesClientCamera = model.scClientCameraSentinel ~= nil
-    if model.SetCamera then
-        local bodyDelta = getBodyCameraDelta(bodyProfile)
-        if bodyProfile and bodyDelta and SC.M2Camera and SC.M2Camera.ApplyBodyProfile then
-            local appliedBody, bodyReason = SC.M2Camera.ApplyBodyProfile(model, bodyProfile, bodyDelta)
-            model.scBodyCameraReason = bodyReason
-            if appliedBody then
-                return
-            end
-        else
-            model.scBodyCameraReason = bodyProfile and "NO_BODY_OVERRIDE" or "PROFILE_UNAVAILABLE"
-        end
-        if model.scUsesClientCamera then
-            pcall(function()
-                -- Safe capability handshake: an unextended stock client treats
-                -- the sentinel as invalid, then the second call restores its
-                -- native dressing-room camera in the same Lua tick.
-                model:SetCamera(model.scClientCameraSentinel)
-                model:SetCamera(1)
-            end)
-        else
-            -- Missing/unknown/mismatched generated profiles must use the
-            -- stock dressing-room camera, including HEAD.
-            pcall(function() model:SetCamera(1) end)
-        end
-    end
-end
-
-local function captureItemModelBaseline(model)
-    if model.scBaselineGeneration == model.scAppearanceGeneration
-        and type(model.scNativeScale) == "number"
-        and type(model.scNativeHorizontal) == "number"
-        and type(model.scNativeVertical) == "number"
-        and type(model.scNativeDepth) == "number" then
-        return true
-    end
-    if not model.GetModelScale or not model.GetPosition then
-        return false
-    end
-
-    local scaleOk, nativeScale = pcall(function() return model:GetModelScale() end)
-    local positionOk, nativeHorizontal, nativeVertical, nativeDepth = pcall(function() return model:GetPosition() end)
-    if not scaleOk or type(nativeScale) ~= "number" or nativeScale <= 0
-        or not positionOk or type(nativeHorizontal) ~= "number"
-        or type(nativeVertical) ~= "number" or type(nativeDepth) ~= "number" then
-        return false
-    end
-
-    model.scNativeScale = nativeScale
-    model.scNativeHorizontal = nativeHorizontal
-    model.scNativeVertical = nativeVertical
-    model.scNativeDepth = nativeDepth
-    model.scBaselineGeneration = model.scAppearanceGeneration
-    return true
-end
-
-local function applyItemModelTransform(model)
-    local profile = model.scProfile or WARDROBE_MODEL_PROFILES.DEFAULT
-    if not captureItemModelBaseline(model) then
-        return false
-    end
-    local nativeScale = model.scNativeScale
-    local nativeHorizontal = model.scNativeHorizontal
-    local nativeVertical = model.scNativeVertical
-    local nativeDepth = model.scNativeDepth
-    if model.scUsesClientCamera then
-        -- The DLL owns slot framing. Keep the model's native transform so the
-        -- legacy scale/translation does not double-zoom the custom camera.
-        if model.SetModelScale then
-            pcall(function() model:SetModelScale(nativeScale) end)
-        end
-        if model.SetPosition then
-            pcall(function() model:SetPosition(nativeHorizontal, nativeVertical, nativeDepth) end)
-        end
-    else
-        if model.SetModelScale then
-            pcall(function() model:SetModelScale(nativeScale * (profile.scaleMultiplier or 1.00)) end)
-        end
-        if model.SetPosition then
-            pcall(function() model:SetPosition(nativeHorizontal + (profile.horizontalOffset or 0), nativeVertical + (profile.verticalOffset or 0), nativeDepth + (profile.depthOffset or 0)) end)
-        end
-    end
-    if model.SetRotation then
-        pcall(function() model:SetRotation(profile.rotation) end)
-    end
-    return true
-end
-
-local function queueItemModelView(model, force)
-    if not model.scRecord or model.scApplyingAppearance or model.scApplyingView then
-        return false
-    end
-    if not force then
-        if model.scViewStage then
-            return false
-        end
-        if model.scViewAppliedGeneration == model.scAppearanceGeneration then
-            return false
-        end
-    end
-    model.scViewStage = "CAMERA"
-    model.scViewFrames = 0
-    if model.scUpdateHandler then
-        model:SetScript("OnUpdate", model.scUpdateHandler)
-    end
-    return true
-end
-
--- SetUnit and TryOn both rebuild the model asynchronously. Selecting camera 1
--- and translating the model in the same update lets the later camera rebuild
--- overwrite our transform. Keep camera selection and the final body-part
--- transform in separate render ticks so scale, position and rotation survive.
-local function finishPendingItemModelView(model)
-    if not model.scViewStage or model.scPendingItemString or model.scApplyingAppearance or model.scApplyingView then
-        return false
-    end
-
-    if model.scViewStage == "CAMERA" then
-        model.scApplyingView = true
-        selectItemModelCamera(model)
-        model.scApplyingView = nil
-        model.scViewStage = "SETTLE"
-        model.scViewFrames = 0
-        return true
-    end
-
-    if model.scViewStage == "SETTLE" then
-        model.scViewFrames = model.scViewFrames + 1
-        if model.scViewFrames < 2 then
-            return true
-        end
-        model.scViewStage = "TRANSFORM"
-        return true
-    end
-
-    if model.scViewStage == "TRANSFORM" then
-        model.scApplyingView = true
-        applyItemModelTransform(model)
-        model.scApplyingView = nil
-        model.scViewStage = nil
-        model.scViewFrames = nil
-        model.scViewAppliedGeneration = model.scAppearanceGeneration
-        return true
-    end
-
-    model.scViewStage = nil
-    model.scViewFrames = nil
-    return false
-end
-
-local function finishPendingItemModel(model)
-    if not model.scPendingItemString or model.scApplyingAppearance then
-        return false
-    end
-
-    if model.GetModel then
-        local loaded, modelPath = pcall(function() return model:GetModel() end)
-        if not loaded or type(modelPath) ~= "string" or modelPath == "" then
-            model.scModelReadyFrames = 0
-            return false
-        end
-    end
-
-    model.scModelReadyFrames = (model.scModelReadyFrames or 0) + 1
-    if model.scModelReadyFrames < 2 then
-        return false
-    end
-
-    local itemString = model.scPendingItemString
-    model.scPendingItemString = nil
-    model.scModelReadyFrames = nil
-    model.scApplyingAppearance = true
-    if model.Undress then
-        pcall(function() model:Undress() end)
-    end
-    pcall(function() model:TryOn(itemString) end)
-    model.scApplyingAppearance = nil
-    queueItemModelView(model, true)
-    return true
-end
-
--- The original grid left an OnUpdate callback attached to every visible
--- DressUpModel forever. A page can show 18 models, so even a no-op callback
--- multiplied into every frame adds avoidable Lua work. Keep the updater awake
--- only while SetUnit/TryOn or the camera handshake is still settling.
-local function updatePendingItemModel(self)
-    local appearanceApplied = finishPendingItemModel(self)
-    if not appearanceApplied then
-        finishPendingItemModelView(self)
-    end
-    if not self.scPendingItemString and not self.scViewStage then
-        self:SetScript("OnUpdate", nil)
-    end
-end
-
-local function applyItemModelRecord(model, record, pageGeneration)
-    local objectModel = model.scObjectModel
-    local itemPresenter = SC.WardrobeUI and SC.WardrobeUI.ItemPresenter
+local function applyItemModelRecord(model, record, pageGeneration, force)
     pageGeneration = pageGeneration or ((model.scItemGeneration or 0) + 1)
-    model.scItemGeneration = pageGeneration
-    if not record then
-        if itemPresenter then itemPresenter:ClearBody(model, "NO_ITEM") end
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecord = nil
-        model.scRecordId = nil
-        model.scProfile = nil
-        model.scClientCameraSentinel = nil
-        model.scUsesClientCamera = nil
-        model.scBodyCameraProfile = nil
-        model.scBodyCameraReason = nil
-        model.scPendingItemString = nil
-        model.scModelReadyFrames = nil
-        model.scApplyingAppearance = nil
-        model.scAppearanceGeneration = nil
-        model.scViewAppliedGeneration = nil
-        model.scViewStage = nil
-        model.scViewFrames = nil
-        model.scApplyingView = nil
-        model.scNativeScale = nil
-        model.scNativeHorizontal = nil
-        model.scNativeVertical = nil
-        model.scNativeDepth = nil
-        model.scBaselineGeneration = nil
-        model.scRenderKind = nil
-        model:SetScript("OnUpdate", nil)
-        model:ClearModel()
-        model:Hide()
-        applyStandaloneItemRecord(objectModel, nil, pageGeneration)
-        if model.scCard then model.scCard:Hide() end
-        if model.scUnavailable then model.scUnavailable:Hide() end
-        return
-    end
-
-    local profile = WARDROBE_MODEL_PROFILES[record.slot] or WARDROBE_MODEL_PROFILES.DEFAULT
-    local renderKind = record.renderMode
-    if renderKind ~= "BODY" and renderKind ~= "STANDALONE" and renderKind ~= "UNAVAILABLE" then
-        renderKind = STANDALONE_ITEM_SLOTS[record.slot] and "UNAVAILABLE" or "BODY"
-    end
-    if renderKind == "STANDALONE" and not isStandaloneItemRecord(record) then
-        renderKind = "UNAVAILABLE"
-    end
-    local unchanged = model.scRecordId == record.id
-        and model.scProfile == profile
-        and model.scRenderKind == renderKind
-    model.scRecord = record
-    model.scProfile = profile
-    model.scRuntimeUnavailableReason = nil
-    if model.scCard then model.scCard:Show() end
-    if model.scUnavailable then model.scUnavailable:Hide() end
-
-    if renderKind == "UNAVAILABLE" then
-        if itemPresenter then itemPresenter:ClearBody(model, "ITEM_UNAVAILABLE") end
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecordId = record.id
-        model.scRenderKind = renderKind
-        model:SetScript("OnUpdate", nil)
-        model:ClearModel()
-        model:Hide()
-        applyStandaloneItemRecord(objectModel, nil, pageGeneration)
-        if model.scUnavailableIcon then UI.SetIconTexture(model.scUnavailableIcon, resolveItemIcon(record)) end
-        if model.scUnavailableText then model.scUnavailableText:SetText(unavailableItemReasonText(record)) end
-        if model.scUnavailable then model.scUnavailable:Show() end
-        return
-    end
-
-    if renderKind == "STANDALONE" then
-        if itemPresenter then itemPresenter:ClearBody(model, "STANDALONE_ITEM") end
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecordId = record.id
-        model.scRenderKind = renderKind
-        model.scClientCameraSentinel = nil
-        model.scUsesClientCamera = nil
-        model.scBodyCameraProfile = nil
-        model.scBodyCameraReason = nil
-        model.scPendingItemString = nil
-        model.scModelReadyFrames = nil
-        model.scApplyingAppearance = nil
-        model.scViewAppliedGeneration = nil
-        model.scViewStage = nil
-        model.scViewFrames = nil
-        model.scApplyingView = nil
-        model.scNativeScale = nil
-        model.scNativeHorizontal = nil
-        model.scNativeVertical = nil
-        model.scNativeDepth = nil
-        model.scBaselineGeneration = nil
-        model:SetScript("OnUpdate", nil)
-        model:ClearModel()
-        model:Hide()
-        applyStandaloneItemRecord(objectModel, record, pageGeneration)
-        return
-    end
-
-    applyStandaloneItemRecord(objectModel, nil, pageGeneration)
-    model.scRenderKind = renderKind
-    model:Show()
-
-    if not unchanged then
-        if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(model) end
-        model.scRecordId = record.id
-        model.scPendingItemString = nil
-        model.scModelReadyFrames = nil
-        model.scAppearanceGeneration = (model.scAppearanceGeneration or 0) + 1
-        model.scViewAppliedGeneration = nil
-        model.scNativeScale = nil
-        model.scNativeHorizontal = nil
-        model.scNativeVertical = nil
-        model.scNativeDepth = nil
-        model.scBaselineGeneration = nil
-        model.scViewStage = nil
-        model.scViewFrames = nil
-        model.scApplyingAppearance = nil
-        itemPresenter:PresentBody(model, resolveTryOnItem(record.itemId), function()
-            if model.scItemGeneration == pageGeneration and model.scRecordId == record.id then
-                queueItemModelView(model, true)
-            end
-        end, function() return model.scCard and model.scCard:IsShown() end)
-    end
+    return EzModel:Present(model, record, pageGeneration, force)
 end
 
 SC.WardrobeUI.ItemCardRenderer = SC.WardrobeUI.ItemCardRenderer or {}
@@ -1272,16 +1107,7 @@ local ItemCardRenderer = SC.WardrobeUI.ItemCardRenderer
 function ItemCardRenderer:Attach(model, objectModel)
     if model.scWardrobeItemCardRenderer then return end
     model.scWardrobeItemCardRenderer = true
-    model.scObjectModel = objectModel
-    objectModel.scHostModel = model
-    model:SetScript("OnUpdateModel", function(self)
-        queueItemModelView(self, true)
-    end)
-    model.scUpdateHandler = updatePendingItemModel
-    objectModel:SetScript("OnUpdateModel", function(self)
-        applyStandaloneItemView(self)
-        queueStandaloneItemTransform(self)
-    end)
+    EzModel:Attach(model, objectModel)
 end
 
 function ItemCardRenderer:Present(model, record, generation)
@@ -1305,12 +1131,14 @@ function UI.CreateWardrobePage(parent)
     page.scItemModels = {}
     page.scItemPageSize = ITEM_PAGE_SIZE
     page.scSetRows = {}
-    page.scSetCards = {}
     page.scPieceIcons = {}
+    page.scSelectedSetVariantByGroup = {}
+    page.scSetPieceAltSourceByMember = {}
     local setSetOffset
-    local wardrobeFilters = SC.WardrobeUI.Filters:Create(page, Catalog)
-    SC.WardrobeUI.CameraWorkbench:Attach(page)
-
+    local selectSetDisplayRecord
+    local previewSet
+    local itemDataProvider = SC.EzWardrobe.DataProvider:Create(page)
+    local wardrobeFilters = SC.WardrobeUI.Filters:Create(page, Catalog, itemDataProvider)
     local filterBar = CreateFrame("Frame", nil, page)
     filterBar:SetHeight(78)
     filterBar:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
@@ -1347,6 +1175,7 @@ function UI.CreateWardrobePage(parent)
         end
         page.scItemSelectedId = nil
         page.scSetSelectedId = nil
+        page.scSetSelectedGroupKey = nil
         page.scItemPage = 1
         setSetOffset(0, true)
         page:Refresh()
@@ -1458,61 +1287,56 @@ function UI.CreateWardrobePage(parent)
         xOffset = xOffset + 33 + (slotOption.gapAfter or 0)
     end
 
-    local itemsPanel = CreateFrame("Frame", nil, page)
-    itemsPanel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    itemsPanel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
-    local itemsInset = UI.EzCollections:ApplyInset(itemsPanel)
-    UI.EzCollections:AddShadowOverlay(itemsPanel)
-    SC.WardrobeUI.Layout:StylePanel(itemsPanel, itemsInset.background)
+    local itemsPanel, itemsInset = EzItems:CreatePanel(page)
 
     local setsPanel = CreateFrame("Frame", nil, page)
     setsPanel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    setsPanel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    setsPanel:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 5)
+    setsPanel:SetWidth(350)
     local setsInset = UI.EzCollections:ApplyInset(setsPanel)
     UI.EzCollections:AddShadowOverlay(setsPanel)
     SC.WardrobeUI.Layout:StylePanel(setsPanel, setsInset.background)
     setsPanel:Hide()
 
-    local preview = CreateFrame("Frame", nil, setsPanel)
-    preview:SetAllPoints(setsPanel)
-    preview:SetFrameLevel(setsPanel:GetFrameLevel() + 5)
-    local previewBackground = preview:CreateTexture(nil, "BACKGROUND")
-    previewBackground:SetTexture(UI.EzCollections:MediaPath(
-        "Transmogrify",
-        "TransmogSets.tga",
-        "Interface\\Buttons\\WHITE8X8"
-    ))
-    previewBackground:SetWidth(418)
-    previewBackground:SetHeight(64)
-    previewBackground:SetPoint("BOTTOM", preview, "BOTTOM", 0, 3)
-    previewBackground:SetTexCoord(0.001953125, 0.818359375, 0.70703125, 0.95703125)
-    SC.WardrobeUI.Layout:StylePanel(preview, previewBackground)
+    local preview = CreateFrame("Frame", nil, page)
+    preview:SetPoint("TOPLEFT", setsPanel, "TOPRIGHT", 10, 0)
+    preview:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
+    preview:SetFrameLevel(setsPanel:GetFrameLevel() + 2)
+    local previewInset = UI.EzCollections:ApplyInset(preview)
+    UI.EzCollections:AddShadowOverlay(preview)
+    SC.WardrobeUI.Layout:StylePanel(preview, previewInset.background)
     preview:Hide()
 
     local model = CreateFrame("DressUpModel", nil, preview)
-    model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, -84)
+    model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
     model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
-    model:Hide()
     local setPresenter = SC.WardrobeUI.ItemPresenter:AttachSet(model, function()
         return page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
     end)
 
     local name = preview:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    name:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 43)
-    name:SetWidth(190)
-    name:SetJustifyH("LEFT")
+    name:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_NAME_Y)
+    name:SetWidth(380)
+    name:SetJustifyH("CENTER")
     name:SetTextColor(1, 0.82, 0.18)
 
+    local longName = preview:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+    longName:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_LONG_NAME_Y)
+    longName:SetWidth(380)
+    longName:SetJustifyH("CENTER")
+    longName:SetTextColor(1, 0.82, 0.18)
+    longName:Hide()
+
     local detail = preview:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    detail:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 27)
-    detail:SetWidth(190)
-    detail:SetJustifyH("LEFT")
+    detail:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_LABEL_Y)
+    detail:SetWidth(380)
+    detail:SetJustifyH("CENTER")
     detail:SetTextColor(0.82, 0.75, 0.62)
 
     local setProgress = preview:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    setProgress:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 11)
+    setProgress:SetPoint("BOTTOMLEFT", preview, "BOTTOMLEFT", 16, 18)
     setProgress:SetTextColor(0.45, 0.90, 0.34)
     setProgress:Hide()
     page.scSetProgress = setProgress
@@ -1522,17 +1346,46 @@ function UI.CreateWardrobePage(parent)
     reset:SetHeight(25)
     reset:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -14, 13)
     reset:SetText("重置视角")
-    reset:Hide()
 
     local applySet = CreateFrame("Button", nil, preview, "UIPanelButtonTemplate")
     applySet:SetWidth(104)
     applySet:SetHeight(25)
-    applySet:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -14, 13)
+    applySet:SetPoint("RIGHT", reset, "LEFT", -8, 0)
     applySet:SetText("应用套装")
     applySet:Disable()
     page.scApplySet = applySet
+
+    local variantDropdown = CreateFrame("Frame", "SoloCollectionsWardrobeSetVariantDropdown", preview, "UIDropDownMenuTemplate")
+    variantDropdown:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", 12, 42)
+    UIDropDownMenu_SetWidth(variantDropdown, 72)
+    variantDropdown:Hide()
+    page.scSetVariantDropdown = variantDropdown
+
+    UIDropDownMenu_Initialize(variantDropdown, function()
+        local groupRecord = variantDropdown.scSetGroupRecord
+        if not (groupRecord and groupRecord.scVariants) then return end
+        for _, variantRecord in ipairs(groupRecord.scVariants) do
+            local optionRecord = variantRecord
+            local info = UIDropDownMenu_CreateInfo()
+            info.text = setVariantDropdownText(optionRecord)
+            info.value = optionRecord.id
+            info.checked = groupRecord.scSelectedVariantRecord and groupRecord.scSelectedVariantRecord.id == optionRecord.id
+            info.func = function()
+                groupRecord.scSelectedVariantRecord = optionRecord
+                updateSetGroupSummary(groupRecord, optionRecord)
+                if page.scSelectedSetVariantByGroup then
+                    page.scSelectedSetVariantByGroup[groupRecord.scSetGroupKey] = optionRecord.id
+                end
+                if selectSetDisplayRecord then
+                    selectSetDisplayRecord(groupRecord)
+                end
+            end
+            UIDropDownMenu_AddButton(info)
+        end
+    end)
+
     local pieces = CreateFrame("Frame", nil, preview)
-    pieces:SetPoint("TOP", name, "BOTTOM", 0, -8)
+    pieces:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_ICON_ROW_Y)
     -- The production catalogue currently tops out at eight pieces, but the
     -- preview contract must also cover nine-piece variants (and leave room for
     -- a reviewed future set) without rebuilding UI frames after the catalog
@@ -1548,6 +1401,7 @@ function UI.CreateWardrobePage(parent)
         local piece = CreateFrame("Button", nil, pieces)
         piece:SetWidth(SET_PIECE_SIZE)
         piece:SetHeight(SET_PIECE_SIZE)
+        piece:RegisterForClicks("LeftButtonUp")
         if index == 1 then
             piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
         elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
@@ -1585,7 +1439,28 @@ function UI.CreateWardrobePage(parent)
 
         piece:SetScript("OnEnter", function(self)
             if self.scItemId then
-                showPieceTooltip(self, self.scItemId)
+                showPieceTooltip(self, self.scItemId, self.scSetRecord, self.scPreviewItem, self.scSetDisplayRecord)
+            end
+        end)
+        piece:SetScript("OnClick", function(self, button)
+            local sourceItemIds = self.scSourceItemIds
+            if button ~= "LeftButton" or not IsAltKeyDown or not IsAltKeyDown() or
+                not sourceItemIds or #sourceItemIds <= 1 or not self.scAltSourceKey then
+                return
+            end
+
+            local currentItemId = tonumber(self.scItemId)
+            local nextIndex = 1
+            for sourceIndex, sourceItemId in ipairs(sourceItemIds) do
+                if tonumber(sourceItemId) == currentItemId then
+                    nextIndex = sourceIndex + 1
+                    if nextIndex > #sourceItemIds then nextIndex = 1 end
+                    break
+                end
+            end
+            page.scSetPieceAltSourceByMember[self.scAltSourceKey] = tonumber(sourceItemIds[nextIndex]) or sourceItemIds[nextIndex]
+            if previewSet and page.scSetSelectedDisplayRecord then
+                previewSet(page.scSetSelectedDisplayRecord)
             end
         end)
         piece:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -1599,13 +1474,40 @@ function UI.CreateWardrobePage(parent)
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
+        model:SetScript("OnUpdate", nil)
+    end
+
+    local function applyModelFacing(rotation)
+        -- Keep the set preview aligned with the mount page: SetFacing changes
+        -- the actor heading without forcing the model animation to restart.
+        if model.SetFacing then
+            model:SetFacing(rotation)
+        elseif model.SetRotation then
+            model:SetRotation(rotation, false)
+        end
+    end
+
+    local function updateModelDrag(self)
+        if not self.scDragging or not IsMouseButtonDown("LeftButton") then
+            clearDragState()
+            return
+        end
+        local cursorX = GetCursorPosition()
+        local previousX = self.scLastCursorX or cursorX
+        self.scLastCursorX = cursorX
+        local delta = (cursorX - previousX) * DRAG_ROTATION_CONSTANT
+        if delta == 0 then return end
+        self.scRotation = (self.scRotation or DEFAULT_ROTATION) + delta
+        if self.scRotation < 0 then self.scRotation = self.scRotation + TWO_PI end
+        if self.scRotation > TWO_PI then self.scRotation = self.scRotation - TWO_PI end
+        applyModelFacing(self.scRotation)
     end
 
     local function resetModelView()
         clearDragState()
         model.scRotation = DEFAULT_ROTATION
         model.scZoom = 0
-        model:SetRotation(DEFAULT_ROTATION)
+        applyModelFacing(DEFAULT_ROTATION)
         if model.SetPosition then
             pcall(function() model:SetPosition(0, 0, 0) end)
         end
@@ -1658,6 +1560,21 @@ function UI.CreateWardrobePage(parent)
     -- member. This is intentionally separate from the server-side owned
     -- alternative resolver used by APPLY: a local DressUpModel preview must
     -- not imply which source item the server would eventually choose.
+    local function setPieceAltSourceKey(record, uniqueSlot)
+        return tostring(record and (record.id or record.itemSetId) or "unknown") .. ":" .. tostring(uniqueSlot or "slot")
+    end
+
+    local function sourceListContains(sourceItemIds, itemId)
+        itemId = tonumber(itemId)
+        if not itemId then return false end
+        for _, sourceItemId in ipairs(sourceItemIds or {}) do
+            if tonumber(sourceItemId) == itemId then
+                return true
+            end
+        end
+        return false
+    end
+
     local function getSelectedVariantPreviewItems(record)
         local result = {}
         local seenSlots = {}
@@ -1676,6 +1593,11 @@ function UI.CreateWardrobePage(parent)
                 end
                 local slotKey = tostring(member.slotKey or member.memberKey or "")
                 local uniqueSlot = slotKey ~= "" and slotKey or ("member:" .. memberIndex)
+                local altSourceKey = setPieceAltSourceKey(record, uniqueSlot)
+                local overrideSourceItemId = page.scSetPieceAltSourceByMember and page.scSetPieceAltSourceByMember[altSourceKey]
+                if sourceListContains(member.sourceItemIds, overrideSourceItemId) then
+                    previewSourceItemId = tonumber(overrideSourceItemId)
+                end
                 if previewSourceItemId and not seenSlots[uniqueSlot] then
                     seenSlots[uniqueSlot] = true
                     table.insert(result, {
@@ -1683,6 +1605,9 @@ function UI.CreateWardrobePage(parent)
                         memberKey = tostring(member.memberKey or uniqueSlot),
                         slotKey = slotKey,
                         previewSourceItemId = previewSourceItemId,
+                        sourceItemIds = member.sourceItemIds or {},
+                        appearanceIds = member.appearanceIds or {},
+                        altSourceKey = altSourceKey,
                         order = SET_MEMBER_SLOT_ORDER[slotKey] or (100 + memberIndex),
                     })
                 end
@@ -1707,9 +1632,6 @@ function UI.CreateWardrobePage(parent)
         model.scSetPreviewGeneration = page.scSetPreviewGeneration
         model.scSetPreviewPending = nil
         if setPresenter then setPresenter:Clear("SET_PREVIEW_INVALIDATED") end
-        for _, card in ipairs(page.scSetCards or {}) do
-            if card.scPresenter then card.scPresenter:Clear("SET_GRID_INVALIDATED") end
-        end
     end
 
     local function queueSetPreview(record)
@@ -1744,53 +1666,145 @@ function UI.CreateWardrobePage(parent)
         return previewItems
     end
 
-    local function previewSet(record)
+    local function syncSetVariantDropdown(displayRecord, selectedRecord)
+        local variantCount = displayRecord and displayRecord.scVariants and #displayRecord.scVariants or 0
+        if displayRecord and displayRecord.scIsSetGroup and variantCount > 1 then
+            variantDropdown.scSetGroupRecord = displayRecord
+            UIDropDownMenu_SetSelectedValue(variantDropdown, selectedRecord and selectedRecord.id)
+            UIDropDownMenu_SetText(variantDropdown, selectedRecord and setVariantLabel(selectedRecord) or "版本")
+            variantDropdown:Show()
+        else
+            variantDropdown.scSetGroupRecord = nil
+            UIDropDownMenu_SetText(variantDropdown, "")
+            variantDropdown:Hide()
+        end
+    end
+
+    previewSet = function(record)
+        local displayRecord = record
+        record = concreteSetRecord(record)
         if not record then return end
+        page.scSetSelectedDisplayRecord = displayRecord
         page.scSetSelectedRecord = record
         if record.collected then applySet:Enable() else applySet:Disable() end
-        model:Hide()
-        local previewItems = getSelectedVariantPreviewItems(record)
-        name:SetText(record.name or "未知套装")
+        model:ClearAllPoints()
+        model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
+        model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
+        model:Show()
+        syncSetVariantDropdown(displayRecord, record)
+        local previewItems = queueSetPreview(record)
+        local setName = setDisplayName(displayRecord or record)
+        name:SetText(setName)
+        longName:SetText(setName)
+        if name.GetStringWidth and name:GetStringWidth() > name:GetWidth() then
+            name:Hide()
+            longName:Show()
+        else
+            name:Show()
+            longName:Hide()
+        end
+        local presentationLabel = setPresentationLabel(record)
+        local detailParts = {}
+        if presentationLabel then
+            detailParts[#detailParts + 1] = "分类：" .. presentationLabel
+        end
+        local categoryLabel = setRecordCategoryLabel(record)
+        if categoryLabel and not setRecordIsClassSpecific(record) then
+            detailParts[#detailParts + 1] = "类型：" .. categoryLabel
+        else
+            detailParts[#detailParts + 1] = "职业：" .. setClassLabel(record)
+        end
+        local specLabel = setRecordSpecLabel(record)
+        if specLabel then
+            detailParts[#detailParts + 1] = "专精：" .. specLabel
+        end
+        local factionLabel = setRecordFactionLabel(record)
+        if factionLabel then
+            detailParts[#detailParts + 1] = "阵营：" .. factionLabel
+        end
+        detail:SetText(table.concat(detailParts, "  ·  "))
+        local pieceState = deriveSetPieceState(record)
+        local pieceCount = math.min(#previewItems, #page.scPieceIcons)
+        local firstRow = math.min(SET_PIECE_COLUMNS, pieceCount)
+        local piecesWidth = (firstRow * SET_PIECE_SIZE) + (math.max(0, firstRow - 1) * SET_PIECE_SPACING)
+        pieces:SetWidth(math.max(1, piecesWidth))
+        if pieceCount > 0 then pieces:Show() else pieces:Hide() end
+        for index, piece in ipairs(page.scPieceIcons) do
+            piece:ClearAllPoints()
+            if index == 1 then
+                piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
+            elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
+                piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_PIECE_SPACING)
+            else
+                piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
+            end
+
+            local previewItem = previewItems[index]
+            local itemId = previewItem and previewItem.previewSourceItemId
+            piece.scItemId = itemId
+            piece.scSetRecord = record
+            piece.scSetDisplayRecord = displayRecord
+            piece.scPreviewItem = previewItem
+            piece.scSlotKey = previewItem and previewItem.slotKey
+            piece.scSourceItemIds = previewItem and previewItem.sourceItemIds
+            piece.scAltSourceKey = previewItem and previewItem.altSourceKey
+            if itemId then
+                local collected = pieceState[itemId] and true or false
+                updateSetPieceVisual(piece, itemId, collected)
+                piece:Show()
+            else
+                piece.scSetRecord = nil
+                piece.scSetDisplayRecord = nil
+                piece.scPreviewItem = nil
+                piece.scSlotKey = nil
+                piece.scSourceItemIds = nil
+                piece.scAltSourceKey = nil
+                piece.scCollected = nil
+                piece.scQuality = nil
+                piece:Hide()
+            end
+        end
         local collectedPieces = tonumber(record.collectedCount) or 0
         local requiredPieces = tonumber(record.requiredCount) or #previewItems
-        detail:SetText("职业：" .. setClassLabel(record) .. "  ·  " .. collectedPieces .. "/" .. requiredPieces .. " 外观")
-        pieces:Hide()
-        for index, piece in ipairs(page.scPieceIcons) do
-            piece.scItemId = nil
-            piece:Hide()
-        end
-        setProgress:SetText(record.collected and "已收集 · 可应用" or "未完整收集 · 仅本地预览")
+        setProgress:SetText("套装收集进度：" .. collectedPieces .. " / " .. requiredPieces)
         setProgress:Show()
     end
 
-    if SC.ModelProvider.GetMode("DRESSUP") == "legacy" then
+    selectSetDisplayRecord = function(record)
+        local concreteRecord = concreteSetRecord(record)
+        if not concreteRecord then return end
+        local selectionKey = setRecordSelectionKey(record)
+        page.scSetSelectedGroupKey = selectionKey
+        page.scSetSelectedId = concreteRecord.id
+        if record and record.scIsSetGroup and page.scSelectedSetVariantByGroup then
+            page.scSelectedSetVariantByGroup[record.scSetGroupKey] = concreteRecord.id
+        end
+        previewSet(record)
+        for _, setRow in ipairs(page.scSetRows) do
+            if setRow.scRecord == record then
+                setRow:SetRecord(record)
+            end
+            setRow:SetSelected(setRecordSelectionKey(setRow.scRecord) == selectionKey)
+        end
+    end
+
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
             self.scLastCursorX = GetCursorPosition()
+            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
     model:SetScript("OnMouseUp", function() clearDragState() end)
-    model:SetScript("OnUpdate", function(self)
-        if self.scDragging and IsMouseButtonDown("LeftButton") then
-            local cursorX = GetCursorPosition()
-            local delta = cursorX - (self.scLastCursorX or cursorX)
-            self.scRotation = (self.scRotation or DEFAULT_ROTATION) + delta * 0.012
-            self:SetRotation(self.scRotation)
-            self.scLastCursorX = cursorX
-        elseif self.scDragging then
-            clearDragState()
-        end
-    end)
     model:SetScript("OnMouseWheel", function(self, delta)
         if model.SetPosition then
             self.scZoom = math.max(-0.7, math.min(0.7, (self.scZoom or 0) + delta * 0.08))
             pcall(function() self:SetPosition(0, 0, self.scZoom) end)
         end
     end)
-    end
     reset:SetScript("OnClick", function()
-        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() else resetModelView() end
+        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() end
+        resetModelView()
     end)
     applySet:SetScript("OnClick", function()
         local record = page.scSetSelectedRecord
@@ -1814,11 +1828,10 @@ function UI.CreateWardrobePage(parent)
                 itemModel.scSelected:Hide()
             end
         end
-        if page.SyncCameraTuningPanel then
-            page:SyncCameraTuningPanel(record)
-        end
     end
 
+--[=[ Reference-only in-game M2 camera tuner. The active item page neither
+-- creates these frames nor exposes a toggle/fallback path.
     -- In-game M2 camera tuner -------------------------------------------------
     -- This intentionally lives on the item page rather than in the ordinary
     -- options UI: a pose only makes sense while its exact weapon card is
@@ -2339,7 +2352,7 @@ function UI.CreateWardrobePage(parent)
 
     local function navigateCameraTuning(step, onlyUncalibrated)
         if not SC.db or not cameraTuningPanel.scRecord then return false end
-        local records = Catalog.QueryAll("APPEARANCES", SC.db.query, SC.db.filters)
+        local records = itemDataProvider:QueryAllItems()
         if #records == 0 then return false end
         local currentIndex = 1
         for index, record in ipairs(records) do
@@ -2840,6 +2853,7 @@ function UI.CreateWardrobePage(parent)
     cameraTuningButton:SetPoint("RIGHT", weaponDropdown, "LEFT", -4, 0)
     cameraTuningButton:SetText("镜头工作台")
     cameraTuningButton:SetScript("OnClick", function() page:ToggleCameraTuning() end)
+--]=]
 
     local function scrollItemPage(delta)
         if not delta or delta == 0 then return end
@@ -2852,194 +2866,32 @@ function UI.CreateWardrobePage(parent)
         page:Refresh()
     end
 
-    itemsPanel:EnableMouseWheel(true)
     itemsPanel:SetScript("OnMouseWheel", function(_, delta) scrollItemPage(delta) end)
 
-    for index = 1, ITEM_PAGE_SIZE do
-        local column = (index - 1) % ITEM_COLUMNS
-        local row = math.floor((index - 1) / ITEM_COLUMNS)
-        local itemCard = CreateFrame("Frame", nil, itemsPanel)
-        itemCard:SetWidth(EZ_LAYOUT.itemWidth)
-        itemCard:SetHeight(EZ_LAYOUT.itemHeight)
-        itemCard:SetPoint(
-            "TOPLEFT",
-            itemsPanel,
-            "TOPLEFT",
-            EZ_LAYOUT.itemStartX + column * (EZ_LAYOUT.itemWidth + EZ_LAYOUT.itemGapX),
-            -EZ_LAYOUT.itemStartY - row * (EZ_LAYOUT.itemHeight + EZ_LAYOUT.itemGapY)
-        )
-
-        local itemModel = CreateFrame("DressUpModel", nil, itemCard)
-        itemModel:SetAllPoints(itemCard)
-        itemModel.scCard = itemCard
-
-        -- A WotLK PlayerModel can resolve CreatureDisplayInfo replacement
-        -- skins. Generic Model cannot bind an equipment OBJECT_SKIN and turns
-        -- weapon surfaces black, so custom client-only creature display rows
-        -- provide the independent weapon renderer used by these cards.
-        local itemObjectModel = CreateFrame("PlayerModel", nil, itemCard)
-        itemObjectModel:SetAllPoints(itemCard)
-        itemObjectModel:Hide()
-
-        local unavailable = CreateFrame("Frame", nil, itemCard)
-        unavailable:SetAllPoints(itemCard)
-        unavailable:SetFrameLevel(itemModel:GetFrameLevel() + 1)
-        local unavailableIcon = unavailable:CreateTexture(nil, "ARTWORK")
-        unavailableIcon:SetWidth(32)
-        unavailableIcon:SetHeight(32)
-        unavailableIcon:SetPoint("CENTER", unavailable, "CENTER", 0, 9)
-        local unavailableText = unavailable:CreateFontString(nil, "OVERLAY", "GameFontDisableSmall")
-        unavailableText:SetPoint("TOPLEFT", unavailable, "TOPLEFT", 4, -68)
-        unavailableText:SetPoint("TOPRIGHT", unavailable, "TOPRIGHT", -4, -68)
-        unavailableText:SetJustifyH("CENTER")
-        unavailableText:SetText("资源未就绪")
-        unavailable:Hide()
-
-        local itemHitFrame = CreateFrame("Button", nil, itemCard)
-        itemHitFrame:SetAllPoints(itemCard)
-        itemHitFrame:SetFrameLevel(itemModel:GetFrameLevel() + 2)
-        itemHitFrame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-        itemHitFrame:EnableMouseWheel(true)
-
-        local cardBackground = itemCard:CreateTexture(nil, "BACKGROUND")
-        cardBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-        cardBackground:SetAllPoints(itemCard)
-        cardBackground:SetVertexColor(0, 0, 0, 1)
-
-        local border, selected, favorite, hover = UI.EzCollections:CreateWardrobeItemChrome(itemHitFrame)
-
-        local itemName = itemHitFrame:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        itemName:SetPoint("BOTTOMLEFT", itemHitFrame, "BOTTOMLEFT", 5, 5)
-        itemName:SetPoint("BOTTOMRIGHT", itemHitFrame, "BOTTOMRIGHT", -5, 5)
-        itemName:SetHeight(18)
-        itemName:SetJustifyH("CENTER")
-        itemName:SetJustifyV("MIDDLE")
-        itemName:Hide()
-
-        -- An explicit but unobtrusive state badge supplements the cool-gray
-        -- uncollected border. It remains outside the model's focal area and
-        -- avoids the muddy translucent rectangles used by the first version.
-        local collectionState = CreateFrame("Frame", nil, itemHitFrame)
-        collectionState:SetWidth(58)
-        collectionState:SetHeight(15)
-        collectionState:SetPoint("TOPRIGHT", itemHitFrame, "TOPRIGHT", -4, -4)
-        collectionState:SetFrameLevel(itemHitFrame:GetFrameLevel() + 3)
-        local collectionStateBackground = collectionState:CreateTexture(nil, "BACKGROUND")
-        collectionStateBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-        collectionStateBackground:SetAllPoints(collectionState)
-        collectionStateBackground:SetVertexColor(0.02, 0.02, 0.02, 0.78)
-        local collectionStateLabel = collectionState:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        collectionStateLabel:SetAllPoints(collectionState)
-        collectionStateLabel:SetJustifyH("CENTER")
-        collectionStateLabel:SetText("未收集")
-        collectionStateLabel:SetTextColor(0.72, 0.73, 0.74)
-        collectionState:Hide()
-
-        itemModel:SetScript("OnUpdateModel", function(self)
-            -- SetUnit/TryOn may finish after our first transform and silently
-            -- restore the native full-body view. Force the same generation's
-            -- relative framing to be applied again after every late rebuild.
-            queueItemModelView(self, true)
-        end)
-        itemModel.scUpdateHandler = updatePendingItemModel
-        itemObjectModel:SetScript("OnUpdateModel", function(self)
-            applyStandaloneItemView(self)
-            queueStandaloneItemTransform(self)
-        end)
-        itemHitFrame:SetScript("OnClick", function(_, button)
+    page.scItemModels = EzItems:CreateCardPool(itemsPanel, {
+        onClick = function(itemModel, button)
             if not itemModel.scRecord then return end
             if button == "RightButton" then
-                Catalog.ToggleDemoFavorite("APPEARANCES", itemModel.scRecord.id)
+                itemDataProvider:ToggleFavorite(itemModel.scRecord.collectionId)
                 page:Refresh()
             elseif IsShiftKeyDown() then
-                local record = itemModel.scRecord
-                local equipmentSlot = EQUIPMENT_SLOT_BY_APPEARANCE_SLOT[record.slot]
-                if not record.collected then
-                    showAppearanceActionResult(false, "NOT_OWNED")
-                elseif not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
-                    showAppearanceActionResult(false, "BRIDGE_UNAVAILABLE")
-                elseif equipmentSlot == nil then
-                    showAppearanceActionResult(false, "INVALID_TARGET_SLOT")
-                else
-                    SC.Bridge.ApplyAppearance(record.id, equipmentSlot, showAppearanceActionResult)
-                end
+                itemDataProvider:ApplyAppearance(itemModel.scRecord, showAppearanceActionResult)
             else
                 selectItem(itemModel.scRecord)
             end
-        end)
-        itemHitFrame:SetScript("OnEnter", function(self) showItemTooltip(self, itemModel.scRecord) end)
-        itemHitFrame:SetScript("OnLeave", function() GameTooltip:Hide() end)
-        itemHitFrame:SetScript("OnMouseWheel", function(_, delta) scrollItemPage(delta) end)
-        itemModel.scCard = itemCard
-        itemModel.scObjectModel = itemObjectModel
-        itemObjectModel.scHostModel = itemModel
-        itemModel.scUnavailable = unavailable
-        itemModel.scUnavailableIcon = unavailableIcon
-        itemModel.scUnavailableText = unavailableText
-        itemModel.scHitFrame = itemHitFrame
-        itemModel.scBorder = border
-        itemModel.scSelected = selected
-        itemModel.scName = itemName
-        itemModel.scFavorite = favorite
-        itemModel.scCollectionState = collectionState
-        SC.WardrobeUI.Layout:StyleCard(itemCard, cardBackground, border)
-        itemCard:Hide()
-        itemModel:Hide()
-        page.scItemModels[index] = itemModel
-    end
-
-    -- The workbench is an in-window inspector, not a dialog. It owns the
-    -- rightmost two card columns while open, then restores the original
-    -- six-by-three pool and its pagination when closed. Preserve the selected
-    -- appearance whenever it still belongs to the active query so toggling
-    -- the inspector never unexpectedly switches the artist's subject.
-    function page:UpdateCameraWorkbenchLayout()
-        local previousPageSize = self.scItemPageSize or ITEM_PAGE_SIZE
-        local workbenchOpen = cameraTuningPanel.scRequested and true or false
-        local nextPageSize = workbenchOpen and WORKBENCH_ITEM_PAGE_SIZE or ITEM_PAGE_SIZE
-        local nextColumns = workbenchOpen and WORKBENCH_ITEM_COLUMNS or ITEM_COLUMNS
-        if previousPageSize ~= nextPageSize then
-            local selectedIndex = nil
-            if self.scItemSelectedId and SC.db and Catalog.QueryAll then
-                local allRecords = Catalog.QueryAll("APPEARANCES", SC.db.query, SC.db.filters)
-                for index, record in ipairs(allRecords) do
-                    if record.id == self.scItemSelectedId then
-                        selectedIndex = index
-                        break
-                    end
-                end
-            end
-            if selectedIndex then
-                self.scItemPage = math.floor((selectedIndex - 1) / nextPageSize) + 1
-            else
-                local oldFirstIndex = ((self.scItemPage or 1) - 1) * previousPageSize
-                self.scItemPage = math.floor(oldFirstIndex / nextPageSize) + 1
-            end
-            self.scItemPageSize = nextPageSize
-        end
-        local layoutStartX = workbenchOpen and 12 or EZ_LAYOUT.itemStartX
-        for index, itemModel in ipairs(self.scItemModels) do
-            local itemCard = itemModel.scCard
-            if itemCard then
-                local column = (index - 1) % nextColumns
-                local row = math.floor((index - 1) / nextColumns)
-                itemCard:ClearAllPoints()
-                itemCard:SetPoint(
-                    "TOPLEFT",
-                    itemsPanel,
-                    "TOPLEFT",
-                    layoutStartX + column * (EZ_LAYOUT.itemWidth + EZ_LAYOUT.itemGapX),
-                    -EZ_LAYOUT.itemStartY - row * (EZ_LAYOUT.itemHeight + EZ_LAYOUT.itemGapY)
-                )
-            end
-        end
-        return previousPageSize ~= nextPageSize
+        end,
+        onEnter = function(owner, itemModel) showItemTooltip(owner, itemModel.scRecord) end,
+        onLeave = function() GameTooltip:Hide() end,
+        onMouseWheel = scrollItemPage,
+    })
+    for _, itemModel in ipairs(page.scItemModels) do
+        ItemCardRenderer:Attach(itemModel, itemModel.scObjectModel)
     end
 
     local function getMaxSetOffset()
         local count = page.scSetRecordCount or 0
         if count <= 0 then return 0 end
-        return math.max(0, math.floor((count - 1) / VISIBLE_SET_ROWS) * VISIBLE_SET_ROWS)
+        return math.max(0, count - VISIBLE_SET_ROWS)
     end
 
     setSetOffset = function(value, suppressRefresh)
@@ -3055,12 +2907,12 @@ function UI.CreateWardrobePage(parent)
 
     local function scrollSetList(delta)
         if not delta or delta == 0 then return end
-        setSetOffset((page.scSetOffset or 0) + (delta > 0 and -VISIBLE_SET_ROWS or VISIBLE_SET_ROWS))
+        setSetOffset((page.scSetOffset or 0) + (delta > 0 and -1 or 1))
     end
 
     local setScrollbar = CreateFrame("Slider", nil, setsPanel)
     setScrollbar:SetWidth(14)
-    setScrollbar:SetPoint("TOPRIGHT", setsPanel, "TOPRIGHT", -1, -3)
+    setScrollbar:SetPoint("TOPRIGHT", setsPanel, "TOPRIGHT", -1, -SET_LIST_TOP_OFFSET)
     setScrollbar:SetPoint("BOTTOMRIGHT", setsPanel, "BOTTOMRIGHT", -1, 37)
     setScrollbar:SetOrientation("VERTICAL")
     setScrollbar:SetMinMaxValues(0, 0)
@@ -3098,131 +2950,66 @@ function UI.CreateWardrobePage(parent)
     setsPanel:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
 
     for index = 1, VISIBLE_SET_ROWS do
-        local column = (index - 1) % EZ_LAYOUT.setColumns
-        local row = math.floor((index - 1) / EZ_LAYOUT.setColumns)
-        local card = CreateFrame("Frame", nil, setsPanel)
-        card:SetWidth(EZ_LAYOUT.setWidth)
-        card:SetHeight(EZ_LAYOUT.setHeight)
-        card:SetPoint(
-            "TOPLEFT",
-            setsPanel,
-            "TOPLEFT",
-            EZ_LAYOUT.setStartX + column * (EZ_LAYOUT.setWidth + EZ_LAYOUT.setGapX),
-            -EZ_LAYOUT.setStartY - row * (EZ_LAYOUT.setHeight + EZ_LAYOUT.setGapY)
-        )
-
-        local cardBackground = card:CreateTexture(nil, "BACKGROUND")
-        cardBackground:SetAllPoints(card)
-        cardBackground:SetTexture("Interface\\Buttons\\WHITE8X8")
-        cardBackground:SetVertexColor(0, 0, 0, 1)
-
-        local setModel = CreateFrame("DressUpModel", nil, card)
-        setModel:SetAllPoints(card)
-        setModel:EnableMouse(false)
-        local cardPresenter = SC.ModelProvider.Create("DRESSUP", setModel, {
-            panelCheck = function()
-                return card:IsShown() and page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
-            end,
-        })
-
-        local hit = CreateFrame("Button", nil, card)
-        hit:SetAllPoints(card)
-        hit:SetFrameLevel(setModel:GetFrameLevel() + 2)
-        hit:RegisterForClicks("LeftButtonUp", "RightButtonUp")
-        hit:EnableMouseWheel(true)
-        local border, selected, favorite, hover = UI.EzCollections:CreateWardrobeSetChrome(hit)
-
-        function card:SetRecord(record)
-            self.scGeneration = (self.scGeneration or 0) + 1
-            self.scReadyGeneration = nil
-            self.scRecord = record
-            cardPresenter:Clear("SET_CARD_REPLACED")
-            if not record then
-                selected:Hide()
-                favorite:Hide()
-                setModel:ClearModel()
-                self:Hide()
-                return
-            end
-
-            local itemStrings = {}
-            for _, previewItem in ipairs(getSelectedVariantPreviewItems(record)) do
-                itemStrings[#itemStrings + 1] = resolveTryOnItem(previewItem.previewSourceItemId)
-            end
-            self:Show()
-            setModel:Show()
-            local expectedGeneration = self.scGeneration
-            local expectedRecordId = record.id
-            cardPresenter:Present({
-                unit = "player",
-                undress = true,
-                settleTicks = 2,
-                items = itemStrings,
-                onReady = function()
-                    if card.scGeneration == expectedGeneration and
-                        card.scRecord and card.scRecord.id == expectedRecordId then
-                        card.scReadyGeneration = expectedGeneration
-                    end
-                end,
-            })
-            border:SetCollected(record.collected)
-            setModel:SetAlpha(record.collected and 1 or 0.48)
-            if record.favorite then favorite:Show() else favorite:Hide() end
-        end
-
-        function card:SetSelected(value)
-            self.scSelected = value and true or false
-            if self.scSelected then selected:Show() else selected:Hide() end
-        end
-
-        hit:SetScript("OnClick", function(_, button)
-            local record = card.scRecord
+        local row = createSetListRow(setsPanel, 330, function(_, record, button)
             if not record then return end
+            local concreteRecord = concreteSetRecord(record)
+            if not concreteRecord then return end
             if button == "RightButton" then
-                Catalog.ToggleDemoFavorite("SETS", record.id)
+                Catalog.ToggleDemoFavorite("SETS", concreteRecord.id)
                 page:Refresh()
             elseif IsShiftKeyDown() then
-                if not record.collected then
+                if not concreteRecord.collected then
                     showSetActionResult(false, "NOT_OWNED")
                 elseif not SC.Bridge or not SC.Bridge.ApplySet then
                     showSetActionResult(false, "BRIDGE_UNAVAILABLE")
                 else
-                    local variant = record.selectedVariant
-                    SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)
+                    local variant = concreteRecord.selectedVariant
+                    SC.Bridge.ApplySet(concreteRecord.id, variant and variant.variantOrdinal or nil, showSetActionResult)
                 end
             else
-                page.scSetSelectedId = record.id
-                previewSet(record)
-                for _, setCard in ipairs(page.scSetCards) do
-                    setCard:SetSelected(setCard.scRecord and setCard.scRecord.id == page.scSetSelectedId)
-                end
+                selectSetDisplayRecord(record)
             end
         end)
-        hit:SetScript("OnEnter", function(self)
-            local record = card.scRecord
+        row:SetPoint("TOPLEFT", setsPanel, "TOPLEFT", 3, -SET_LIST_TOP_OFFSET - ((index - 1) * (SET_ROW_HEIGHT + SET_ROW_SPACING)))
+        row:EnableMouseWheel(true)
+        row:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
+        row:SetScript("OnEnter", function(self)
+            local record = self.scRecord
             if not record then return end
             local owned = tonumber(record.collectedCount) or 0
             local required = tonumber(record.requiredCount) or #(record.itemIds or {})
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(record.name or "未知套装", 1, 0.82, 0.18)
-            GameTooltip:AddLine("职业：" .. setClassLabel(record), 0.82, 0.78, 0.70)
+            local concreteRecord = concreteSetRecord(record)
+            local red, green, blue = setRecordQualityColor(concreteRecord)
+            GameTooltip:SetText(setDisplayName(record), red, green, blue)
+            local presentationLabel = setPresentationLabel(concreteRecord)
+            if presentationLabel then
+                GameTooltip:AddLine("分类：" .. presentationLabel, 0.95, 0.82, 0.36)
+            end
+            local categoryLabel = setRecordCategoryLabel(concreteRecord)
+            if categoryLabel and not setRecordIsClassSpecific(concreteRecord) then
+                GameTooltip:AddLine("类型：" .. categoryLabel, 0.82, 0.78, 0.70)
+            else
+                GameTooltip:AddLine("职业：" .. setClassLabel(concreteRecord), 0.82, 0.78, 0.70)
+            end
+            local specLabel = setRecordSpecLabel(concreteRecord)
+            if specLabel then
+                GameTooltip:AddLine("适用专精：" .. specLabel, 0.52, 0.82, 1.00, true)
+            end
+            GameTooltip:AddLine("来源：" .. setRecordSourceLabel(concreteRecord), 0.94, 0.82, 0.58, true)
+            if record.scIsSetGroup then
+                local variantCount = record.scVariants and #record.scVariants or 0
+                GameTooltip:AddLine("已折叠 " .. tostring(variantCount) .. " 个阵营版本；右下角下拉切换联盟/部落。", 0.78, 0.74, 0.64, true)
+                for _, variantRecord in ipairs(record.scVariants or {}) do
+                    GameTooltip:AddLine("· " .. setVariantLabel(variantRecord) .. "：" .. tostring(variantRecord.name or "未知版本"), 0.65, 0.78, 0.92, true)
+                end
+            end
             GameTooltip:AddLine("收集进度：" .. owned .. " / " .. required, 0.45, 0.90, 0.34)
-            GameTooltip:AddLine("左键选择 · Shift+左键应用 · 右键偏好", 0.78, 0.74, 0.64)
+            GameTooltip:AddLine("左键选择 · Shift+左键应用当前版本 · 右键偏好", 0.78, 0.74, 0.64)
             GameTooltip:Show()
         end)
-        hit:SetScript("OnLeave", function() GameTooltip:Hide() end)
-        hit:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
-
-        card.scModel = setModel
-        card.scPresenter = cardPresenter
-        card.scHitFrame = hit
-        card.scBorder = border
-        card.scSelected = selected
-        card.scFavorite = favorite
-        card.scHover = hover
-        SC.WardrobeUI.Layout:StyleCard(card, cardBackground, border)
-        card:Hide()
-        page.scSetCards[index] = card
+        row:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        page.scSetRows[index] = row
     end
 
     local itemControls = UI.CreatePageControls(itemsPanel, function()
@@ -3253,17 +3040,22 @@ function UI.CreateWardrobePage(parent)
         cancelSetPreview()
         self.scItemSelectedId = nil
         self.scSetSelectedId = nil
+        self.scSetSelectedGroupKey = nil
         self.scSetSelectedRecord = nil
+        self.scSetSelectedDisplayRecord = nil
         applySet:Disable()
         for _, itemModel in ipairs(self.scItemModels) do
             itemModel.scSelected:Hide()
         end
         for _, row in ipairs(self.scSetRows) do row:SetSelected(false) end
-        for _, card in ipairs(self.scSetCards) do card:SetSelected(false) end
         name:SetText("")
+        name:Show()
+        longName:SetText("")
+        longName:Hide()
         detail:SetText("")
         setProgress:Hide()
         pieces:Hide()
+        syncSetVariantDropdown(nil, nil)
         clearDragState()
         model:ClearModel()
         GameTooltip:Hide()
@@ -3283,18 +3075,18 @@ function UI.CreateWardrobePage(parent)
                 filters.classToken = playerClass
                 setSetOffset(0, true)
                 self.scSetSelectedId = nil
+                self.scSetSelectedGroupKey = nil
             end
         end
 
-        if filters.armorType == "AUTO" or not hasFilterValue(ARMOR_TYPE_FILTERS, filters.armorType) then
-            filters.armorType = getDefaultArmorType()
-        end
+        local storedArmorType, effectiveArmorType = itemDataProvider:GetArmorState()
+        if filters.armorType ~= storedArmorType then filters.armorType = storedArmorType end
         if filters.slot == "ALL" or not page.scSlotButtons[filters.slot] then
             filters.slot = "HEAD"
         end
 
-        UIDropDownMenu_SetSelectedValue(armorDropdown, filters.armorType)
-        UIDropDownMenu_SetText(armorDropdown, filterLabel(ARMOR_TYPE_FILTERS, filters.armorType))
+        UIDropDownMenu_SetSelectedValue(armorDropdown, effectiveArmorType)
+        UIDropDownMenu_SetText(armorDropdown, filterLabel(ARMOR_TYPE_FILTERS, effectiveArmorType))
         UIDropDownMenu_SetSelectedValue(classDropdown, filters.classToken)
         UIDropDownMenu_SetText(classDropdown, filterLabel(CLASS_FILTERS, filters.classToken))
 
@@ -3315,16 +3107,8 @@ function UI.CreateWardrobePage(parent)
                 UIDropDownMenu_SetSelectedValue(weaponDropdown, filters.weaponType)
                 UIDropDownMenu_SetText(weaponDropdown, filterLabel(getAvailableWeaponFilters(filters.slot), filters.weaponType))
                 weaponDropdown:Show()
-                if cameraTuningButton then
-                    cameraTuningButton:ClearAllPoints()
-                    cameraTuningButton:SetPoint("RIGHT", weaponDropdown, "LEFT", -4, 0)
-                end
             else
                 weaponDropdown:Hide()
-                if cameraTuningButton then
-                    cameraTuningButton:ClearAllPoints()
-                    cameraTuningButton:SetPoint("TOPRIGHT", filterBar, "TOPRIGHT", -4, -46)
-                end
             end
         else
             armorDropdown:Hide()
@@ -3336,32 +3120,42 @@ function UI.CreateWardrobePage(parent)
 
     function page:SyncFilters()
         local frame = UI.CollectionsFrame
-        if not frame or not frame.scFilterPopup or not SC.db or SC.db.mainTab ~= "WARDROBE" then return end
+        if not frame or not frame.scWardrobeFilterDropDown or not SC.db or SC.db.mainTab ~= "WARDROBE" then return end
         local filters = SC.db.filters
-        local options = {
-            { label = "已收集", checked = filters.collected, onClick = function()
-                filters.collected = not filters.collected
-                self.scItemPage = 1
-                setSetOffset(0, true)
-                self:Refresh()
-            end },
-            { label = "未收集", checked = filters.uncollected, onClick = function()
-                filters.uncollected = not filters.uncollected
-                self.scItemPage = 1
-                setSetOffset(0, true)
-                self:Refresh()
-            end },
-            { label = "仅显示偏好", checked = filters.favorites, onClick = function()
-                filters.favorites = not filters.favorites
-                self.scItemPage = 1
-                setSetOffset(0, true)
-                self:Refresh()
-            end },
-        }
-        frame.scFilterPopup:SetOptions(options)
+        local dropDown = frame.scWardrobeFilterDropDown
+        if frame.scFilterPopup then frame.scFilterPopup:Hide() end
+        if dropDown.scSoloCollectionsInitialized then return end
+
+        local function setFilter(key, value)
+            filters[key] = value and true or false
+            self.scItemPage = 1
+            setSetOffset(0, true)
+            self:Refresh()
+        end
+
+        UIDropDownMenu_Initialize(dropDown, function(_, level)
+            if level ~= 1 then return end
+            local options = {
+                { label = "已收集", key = "collected" },
+                { label = "未收集", key = "uncollected" },
+                { label = "仅显示偏好", key = "favorites" },
+            }
+            for _, option in ipairs(options) do
+                local optionKey = option.key
+                local info = UIDropDownMenu_CreateInfo()
+                info.text = option.label
+                info.keepShownOnClick = true
+                info.isNotRadio = true
+                info.checked = function() return filters[optionKey] and true or false end
+                info.func = function(_, _, _, checked) setFilter(optionKey, checked) end
+                UIDropDownMenu_AddButton(info, level)
+            end
+        end, "MENU")
+        dropDown.scSoloCollectionsInitialized = true
     end
 
     local function refreshItems()
+        EzItems:ApplyJournalChrome()
         cancelSetPreview()
         page.scRuntimeAuditActive = nil
         page.scItemGeneration = (page.scItemGeneration or 0) + 1
@@ -3369,7 +3163,6 @@ function UI.CreateWardrobePage(parent)
         itemsPanel:Show()
         setsPanel:Hide()
         preview:Hide()
-        cameraTuningButton:Show()
         local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
         local records, currentPage, totalPages = wardrobeFilters:QueryItems(page.scItemPage, itemPageSize)
         page.scItemPage = currentPage
@@ -3379,34 +3172,16 @@ function UI.CreateWardrobePage(parent)
         for index, itemModel in ipairs(page.scItemModels) do
             local record = records[index]
             applyItemModelRecord(itemModel, record, pageGeneration)
-            if record then
-                itemModel.scName:SetText(record.name or "未知外观")
-                if record.collected then
-                    itemModel.scName:SetTextColor(1.00, 0.82, 0.18)
-                    itemModel.scCollectionState:Hide()
-                else
-                    itemModel.scName:SetTextColor(0.62, 0.62, 0.60)
-                    itemModel.scCollectionState:Hide()
-                end
-                itemModel.scBorder:SetCollected(record.collected)
-                if record.favorite then itemModel.scFavorite:Show() else itemModel.scFavorite:Hide() end
-                if record.id == page.scItemSelectedId then selected = record end
-            else
-                itemModel.scName:SetText("")
-                itemModel.scFavorite:Hide()
-                itemModel.scCollectionState:Hide()
-            end
-            if record and record.id == page.scItemSelectedId then
-                itemModel.scSelected:Show()
-            else
-                itemModel.scSelected:Hide()
-            end
+            EzItems:UpdateCardState(itemModel, page.scItemSelectedId)
+            if record and record.id == page.scItemSelectedId then selected = record end
         end
-        local collected, total = Catalog.GetProgress("APPEARANCES", SC.db.filters)
+        local collected, total = itemDataProvider:GetProgress()
+        page.scItemCollected = collected
+        page.scItemTotal = total
+        page.scItemRevision = itemDataProvider:GetRevision()
         if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(collected, total) end
         if #records == 0 then
             UI.ShowEmptyState(itemEmpty, page, "没有符合条件的外观", "调整搜索、护甲类型、部位或武器类型后再试。")
-            if cameraTuningPanel.scRequested then page:SyncCameraTuningPanel(nil) end
         else
             UI.HideEmptyState(itemEmpty)
             selectItem(selected or records[1])
@@ -3416,9 +3191,8 @@ function UI.CreateWardrobePage(parent)
     -- The temporary runtime-audit AddOn uses this narrow entry point to drive
     -- the production 18-card pool without changing filters, collection state,
     -- or any persisted UI setting.  It deliberately delegates to the same
-    -- applyItemModelRecord path as refreshItems, so the audit observes direct
-    -- PlayerModel creation, its bounded readiness queue, unavailable fallback,
-    -- icon, and reason text rather than a second test-only renderer.
+    -- applyItemModelRecord path as refreshItems, so the audit observes the same
+    -- DressUpModel/preview-Creature route rather than a second renderer.
     function page:LoadRuntimeAuditAppearanceRecords(records)
         records = records or {}
         if #records > #self.scItemModels then
@@ -3435,12 +3209,6 @@ function UI.CreateWardrobePage(parent)
         itemsPanel:Show()
         setsPanel:Hide()
         preview:Hide()
-        if cameraTuningPanel.scRequested then
-            cameraTuningPanel.scRequested = nil
-            self:UpdateCameraWorkbenchLayout()
-        end
-        cameraTuningPanel:Hide()
-        cameraTuningButton:Hide()
         itemControls:SetPage(1, 1)
 
         local visible = 0
@@ -3449,22 +3217,8 @@ function UI.CreateWardrobePage(parent)
             applyItemModelRecord(itemModel, record, pageGeneration)
             if record then
                 visible = visible + 1
-                itemModel.scName:SetText(record.name or "未知外观")
-                if record.collected then
-                    itemModel.scName:SetTextColor(1.00, 0.82, 0.18)
-                    itemModel.scCollectionState:Hide()
-                else
-                    itemModel.scName:SetTextColor(0.62, 0.62, 0.60)
-                    itemModel.scCollectionState:Hide()
-                end
-                itemModel.scBorder:SetCollected(record.collected)
-                if record.favorite then itemModel.scFavorite:Show() else itemModel.scFavorite:Hide() end
-            else
-                itemModel.scName:SetText("")
-                itemModel.scFavorite:Hide()
-                itemModel.scCollectionState:Hide()
             end
-            itemModel.scSelected:Hide()
+            EzItems:UpdateCardState(itemModel, nil)
         end
 
         if visible == 0 then
@@ -3477,27 +3231,20 @@ function UI.CreateWardrobePage(parent)
 
     local function refreshSets()
         itemsPanel:Hide()
-        -- The tuner applies only to standalone weapon PlayerModels. Do not
-        -- leave its overlay or toggle visible above a DressUpModel set view.
-        if cameraTuningPanel.scRequested then
-            cameraTuningPanel.scRequested = nil
-            page:UpdateCameraWorkbenchLayout()
-        end
-        cameraTuningPanel:Hide()
-        cameraTuningButton:Hide()
-        -- A hidden DressUpModel can discard its temporary TryOn state while
-        -- keeping our Lua-side record cache. Invalidate that cache whenever
-        -- the set page takes over so returning to items always Undresses and
-        -- reapplies the appearance instead of showing the player's gear.
+        -- Release the pooled ez model lifecycle when the set page takes over.
+        -- Returning to items will rebuild the correct player/weapon actor,
+        -- redress the record, and then reapply its camera tuple.
         for _, itemModel in ipairs(page.scItemModels) do
-            itemModel.scRecordId = nil
+            ItemCardRenderer:Clear(itemModel)
         end
         setsPanel:Show()
         preview:Show()
         local allRecords, setFilters = wardrobeFilters:QuerySets()
+        allRecords = allRecords or {}
+        page.scFlatSetRecordCount = #allRecords
         page.scSetRecordCount = #allRecords
         local maxOffset = #allRecords > 0
-            and math.floor((#allRecords - 1) / VISIBLE_SET_ROWS) * VISIBLE_SET_ROWS or 0
+            and math.max(0, #allRecords - VISIBLE_SET_ROWS) or 0
         setSetOffset(page.scSetOffset, true)
 
         local records = {}
@@ -3520,29 +3267,37 @@ function UI.CreateWardrobePage(parent)
         page.scSyncingSetScrollbar = nil
 
         local selected
-        for _, record in ipairs(records) do
-            if record.id == page.scSetSelectedId then
+        local selectedKey = page.scSetSelectedGroupKey
+        for _, record in ipairs(allRecords) do
+            local concreteRecord = concreteSetRecord(record)
+            if setRecordSelectionKey(record) == selectedKey or
+                (concreteRecord and concreteRecord.id == page.scSetSelectedId) then
                 selected = record
                 break
             end
         end
-        for index, card in ipairs(page.scSetCards) do
+        for index, row in ipairs(page.scSetRows) do
             local record = records[index]
-            card:SetRecord(record)
-            card:SetSelected(record and record.id == page.scSetSelectedId)
+            row:SetRecord(record)
+            row:SetSelected(record and setRecordSelectionKey(record) == selectedKey)
         end
         local collected, total = Catalog.GetProgress("SETS", setFilters)
         if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(collected, total) end
         if #records == 0 then
+            page.scSetSelectedId = nil
+            page.scSetSelectedGroupKey = nil
+            page.scSetSelectedRecord = nil
+            page.scSetSelectedDisplayRecord = nil
+            applySet:Disable()
+            pieces:Hide()
+            setProgress:Hide()
+            syncSetVariantDropdown(nil, nil)
+            model:ClearModel()
             UI.ShowEmptyState(setEmpty, page, "没有符合条件的套装", "调整搜索或职业过滤后再试。")
         else
             UI.HideEmptyState(setEmpty)
             local record = selected or records[1] or allRecords[1]
-            page.scSetSelectedId = record.id
-            previewSet(record)
-            for _, card in ipairs(page.scSetCards) do
-                card:SetSelected(card.scRecord and card.scRecord.id == record.id)
-            end
+            selectSetDisplayRecord(record)
         end
     end
 
@@ -3556,6 +3311,45 @@ function UI.CreateWardrobePage(parent)
             refreshSets()
         end
         self:SyncFilters()
+    end
+
+    function page:ApplyAppearanceCollectionChange(change)
+        if not change or change.kind ~= "DELTA" or not change.collectionId then return false end
+        if self.scRuntimeAuditActive then return true end
+        if self:IsShown() and SC.db and SC.db.wardrobeTab == "SETS" then
+            -- Set completeness is derived from appearance ownership; let the
+            -- existing active-page refresh update the unchanged Sets view.
+            return false
+        end
+
+        local collected = itemDataProvider:IsOwned(change.collectionId, change.operation == "A")
+        local filters = SC.db and SC.db.filters or nil
+        local ownershipChangesMembership = filters and not (filters.collected and filters.uncollected)
+        if self:IsShown() and SC.db and SC.db.wardrobeTab == "ITEMS" then
+            if ownershipChangesMembership then
+                -- Rebind the same 18-frame pool because an exclusive ownership
+                -- filter can add/remove a row; unchanged records skip Reload.
+                refreshItems()
+            else
+                EzItems:ApplyCollectionDelta(self.scItemModels, change.collectionId, collected, self.scItemSelectedId)
+                local owned, total = itemDataProvider:GetProgress()
+                self.scItemCollected = owned
+                self.scItemTotal = total
+                self.scItemRevision = change.revision
+                if UI.CollectionsFrame then UI.CollectionsFrame.scProgress:SetProgress(owned, total) end
+            end
+        end
+        return true
+    end
+
+    if SC.Bridge and type(SC.Bridge.RegisterStateListener) == "function" then
+        page.scBridgeStateListener = SC.Bridge.RegisterStateListener(function(_, typeId, change)
+            local appearanceTypeId = itemDataProvider:GetAppearanceTypeId()
+            if appearanceTypeId and tonumber(typeId) == tonumber(appearanceTypeId) and change and change.kind == "DELTA" then
+                return page:ApplyAppearanceCollectionChange(change)
+            end
+            return false
+        end)
     end
 
     page:RegisterEvent("GET_ITEM_INFO_RECEIVED")
@@ -3588,8 +3382,14 @@ function UI.CreateWardrobePage(parent)
         for _, itemModel in ipairs(self.scItemModels) do
             if itemModel.scCard and itemModel.scCard:IsShown()
                 and itemModel.scRecord and itemModel.scRecord.itemId == itemId then
-                itemModel.scRecordId = nil
-                applyItemModelRecord(itemModel, itemModel.scRecord)
+                -- TransmorpherItemQuery owns readiness for every item card and
+                -- feeds the shared generation-safe render queue. Replaying a
+                -- cached armor or weapon page here would collapse 18 exact
+                -- Reset/Undress/TryOn lifecycles back into one frame.
+                if itemModel.scRenderKind ~= "TRANSMORPHER_ARMOR"
+                    and itemModel.scRenderKind ~= "TRANSMORPHER_WEAPON" then
+                    applyItemModelRecord(itemModel, itemModel.scRecord, self.scItemGeneration, true)
+                end
                 if itemModel.scHitFrame and GameTooltip:IsOwned(itemModel.scHitFrame) then
                     showItemTooltip(itemModel.scHitFrame, itemModel.scRecord)
                 end
@@ -3600,7 +3400,7 @@ function UI.CreateWardrobePage(parent)
             if piece:IsShown() and piece.scItemId == itemId then
                 updateSetPieceVisual(piece, itemId, appearanceState[itemId] and true or false)
                 if GameTooltip:IsOwned(piece) then
-                    showPieceTooltip(piece, itemId)
+                    showPieceTooltip(piece, itemId, piece.scSetRecord, piece.scPreviewItem, piece.scSetDisplayRecord)
                 end
             end
         end
@@ -3608,44 +3408,11 @@ function UI.CreateWardrobePage(parent)
     page:SetScript("OnHide", function(self)
         self.scRuntimeAuditActive = nil
         self:ClearSelection()
-        if cameraTuningPanel.scRequested then
-            cameraTuningPanel.scRequested = nil
-            self:UpdateCameraWorkbenchLayout()
-        end
-        cameraTuningPanel:Hide()
-        if cameraTuningButton then cameraTuningButton:SetText("镜头工作台") end
         self.scItemPage = 1
         setSetOffset(0, true)
         self.scSetRecordCount = 0
         for _, itemModel in ipairs(self.scItemModels) do
-            if SC.M2Camera and SC.M2Camera.Reset then SC.M2Camera.Reset(itemModel) end
-            itemModel.scRecord = nil
-            itemModel.scRecordId = nil
-            itemModel.scProfile = nil
-            itemModel.scClientCameraSentinel = nil
-            itemModel.scUsesClientCamera = nil
-            itemModel.scBodyCameraProfile = nil
-            itemModel.scBodyCameraReason = nil
-            itemModel.scPendingItemString = nil
-            itemModel.scModelReadyFrames = nil
-            itemModel.scApplyingAppearance = nil
-            itemModel.scAppearanceGeneration = nil
-            itemModel.scViewAppliedGeneration = nil
-            itemModel.scViewStage = nil
-            itemModel.scViewFrames = nil
-            itemModel.scApplyingView = nil
-            itemModel.scNativeScale = nil
-            itemModel.scNativeHorizontal = nil
-            itemModel.scNativeVertical = nil
-            itemModel.scNativeDepth = nil
-            itemModel.scBaselineGeneration = nil
-            itemModel.scRenderKind = nil
-            itemModel:SetScript("OnUpdate", nil)
-            itemModel:ClearModel()
-            itemModel:Hide()
-            applyStandaloneItemRecord(itemModel.scObjectModel, nil)
-            if itemModel.scUnavailable then itemModel.scUnavailable:Hide() end
-            if itemModel.scCard then itemModel.scCard:Hide() end
+            ItemCardRenderer:Clear(itemModel)
         end
         model:ClearModel()
         GameTooltip:Hide()
