@@ -47,9 +47,16 @@ local PORTRAITS = {
         dragonUI = true,
     },
     TRANSMOG_LAB = {
-        relative = "Interface\\Icons\\INV_Arcane_Orb.blp",
-        fallback = function() return UI.Media and UI.Media.tabs and UI.Media.tabs.TRANSMOG_LAB end,
-        texCoord = { 0.07, 0.93, 0.07, 0.93 },
+        texture = function()
+            if Assets and type(Assets.Path) == "function" then
+                return Assets.Path("Textures\\UI-MicroButton-Transmogrify-Up.tga")
+            end
+            return nil
+        end,
+        fallback = "Interface\\Icons\\INV_Chest_Cloth_17",
+        texCoord = { 0, 1, 0, 1 },
+        precut = true,
+        dragonUI = true,
     },
 }
 
@@ -652,6 +659,15 @@ function Ez:CreateTransmogSlotChrome(parent)
     status:SetTexCoord(0.466796875, 0.552734375, 0.001953125, 0.0859375)
     status:Hide()
 
+    local appliedStatus = parent:CreateTexture(nil, "OVERLAY")
+    appliedStatus:SetWidth(44)
+    appliedStatus:SetHeight(43)
+    appliedStatus:SetPoint("CENTER")
+    appliedStatus:SetTexture(transmog)
+    appliedStatus:SetTexCoord(0.466796875, 0.552734375, 0.001953125, 0.0859375)
+    appliedStatus:SetVertexColor(0.35, 1.00, 0.35, 0.92)
+    appliedStatus:Hide()
+
     local selected = parent:CreateTexture(nil, "OVERLAY")
     selected:SetWidth(62)
     selected:SetHeight(62)
@@ -691,6 +707,7 @@ function Ez:CreateTransmogSlotChrome(parent)
 
     function parent:SetSlotPending(value)
         if value then
+            appliedStatus:Hide()
             status:Show()
             pendingGlow:Show()
             undo:Show()
@@ -701,9 +718,14 @@ function Ez:CreateTransmogSlotChrome(parent)
         end
     end
 
+    function parent:SetSlotApplied(value)
+        if value then appliedStatus:Show() else appliedStatus:Hide() end
+    end
+
     parent.scIcon = icon
     parent.scBorder = border
     parent.scStatusBorder = status
+    parent.scAppliedStatusBorder = appliedStatus
     parent.scSelectedTexture = selected
     parent.scPendingGlow = pendingGlow
     parent.scUndoTexture = undo

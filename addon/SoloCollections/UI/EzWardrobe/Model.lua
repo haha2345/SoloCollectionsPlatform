@@ -24,6 +24,9 @@ local TYPE_SCALE = {
     off = 1,
     ranged = 1,
 }
+local ARMOR_SLOT_MODEL_SCALE = {
+    WAIST = 0.86,
+}
 local ARMOR_SLOT_NAME = {
     HEAD = "Head",
     SHOULDER = "Shoulder",
@@ -506,6 +509,7 @@ function WardrobeItemsModelMixin:RenderTransmorpherArmor(record)
     -- Armor uses the stock Lua Undress/TryOn methods and never needs SoloCam.
     local prepared, prepareReason = self:PrepareTransmorpherFrame()
     if not prepared then return setUnavailable(self, prepareReason) end
+    safeCall(self.frame, "SetModelScale", ARMOR_SLOT_MODEL_SCALE[record.slot] or TYPE_SCALE[TYPE_PLAYER])
     if not safeCall(self.frame, "Undress") then
         self.suppressModelEvent = nil
         return setUnavailable(self, "MODEL_UNAVAILABLE")

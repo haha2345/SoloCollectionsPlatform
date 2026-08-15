@@ -10,7 +10,11 @@ from common import ADDON, ROOT, load_json, read_text
 MEDIA_MANIFEST = ADDON / "Media" / "assets.json"
 TEMPLATES = ADDON / "UI" / "Templates.lua"
 WARDROBE = ADDON / "UI" / "Wardrobe.lua"
+CATALOG = ADDON / "Core" / "Catalog.lua"
+MODEL_PROVIDER = ADDON / "Core" / "ModelProvider.lua"
+TRANSMORPHER_QUERY = ADDON / "Core" / "TransmorpherItemQuery.lua"
 EZ_WARDROBE_MODEL = ADDON / "UI" / "EzWardrobe" / "Model.lua"
+EZ_WARDROBE_ITEMS = ADDON / "UI" / "EzWardrobe" / "Items.lua"
 TRANSMORPHER_SETUP = ADDON / "Data" / "TransmorpherPreviewSetup.lua"
 PRESENTATIONS = ROOT / "tools" / "catalog" / "appearance_presentations.py"
 NEW_BUNDLE = ROOT / "tools" / "release" / "New-RoundTwoBundle.ps1"
@@ -63,8 +67,11 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
     def test_all_item_cards_share_transmorpher_query_and_generation_queue(self):
         source = read_text(EZ_WARDROBE_MODEL)
         self.assertIn("local ItemQuery = SC.TransmorpherItemQuery", source)
-        self.assertIn("ItemQuery:Query(record.itemId, onItemReady)", source)
+        self.assertIn("ItemQuery:Query(record.itemId, onItemReady, {", source)
+        self.assertIn("force = false", source)
         self.assertIn("queueItemRender(self, self.record, expectedGeneration)", source)
+        self.assertIn("target.activeGeneration == pending.generation", source)
+        self.assertIn("self.activeGeneration ~= expectedGeneration", source)
         self.assertIn('and "TRANSMORPHER_ARMOR" or "TRANSMORPHER_WEAPON"', source)
         self.assertIn("target:RenderTransmorpherItem(target.record)", source)
 
@@ -126,8 +133,8 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertIsNotNone(helper)
         self.assertIn("setSetOffset(", helper.group(1))
         self.assertNotIn("page.scSetOffset =", helper.group(1))
-        self.assertIn("setSetOffset((page.scSetOffset or 0) - VISIBLE_SET_ROWS)", source)
-        self.assertIn("setSetOffset((page.scSetOffset or 0) + VISIBLE_SET_ROWS)", source)
+        self.assertIn("setSetOffset((page.scSetOffset or 0) - SET_LAYOUT.VISIBLE_ROWS)", source)
+        self.assertIn("setSetOffset((page.scSetOffset or 0) + SET_LAYOUT.VISIBLE_ROWS)", source)
 
     def test_set_scroll_clamps_filter_resets_and_last_partial_page_in_one_transition(self):
         source = read_text(WARDROBE)
@@ -140,21 +147,33 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         block = setter.group(1)
         self.assertIn("math.max(0, math.min", block)
         self.assertIn("getMaxSetOffset()", block)
-        self.assertIn("math.floor(target / VISIBLE_SET_ROWS) + 1", block)
-        self.assertGreaterEqual(source.count("setSetOffset(0, true)"), 5)
+        self.assertIn("math.floor(target / SET_LAYOUT.VISIBLE_ROWS) + 1", block)
+        self.assertGreaterEqual(source.count("setSetOffset(0, true)"), 4)
+        self.assertIn("chooseDedicatedFilter", source)
+        self.assertIn("function page:SyncDedicatedFilters()", source)
+        self.assertIn("function page:SyncFilters()", source)
+        self.assertIn("page:SetScript(\"OnHide\"", source)
         self.assertNotIn("page.scSetOffset = math.max", source)
         self.assertIn("setSetOffset(page.scSetOffset, true)", source)
         self.assertIn("setScrollbar:SetValue(page.scSetOffset)", source)
 
-    def test_set_preview_is_generation_aware_and_undresses_before_tryon(self):
+    def test_set_preview_is_generation_aware_and_uses_presenter_dressup_request(self):
         source = read_text(WARDROBE)
         self.assertIn("scSetPreviewGeneration", source)
-        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function previewSet)", source, re.S)
+        queued = re.search(
+            r"local function queueSetPreview\(record, previewItems\)(.*?)(?=\n\s*local function syncSetVariantDropdown)",
+            source,
+            re.S,
+        )
         self.assertIsNotNone(queued)
         block = queued.group(1)
-        self.assertIn("Undress", block)
-        self.assertIn("TryOn", block)
-        self.assertLess(block.index("Undress"), block.index("TryOn"))
+        self.assertIn("setPresenter.Present", block)
+        self.assertIn('unit = "player"', block)
+        self.assertIn("undress = true", block)
+        self.assertIn("settleTicks = 2", block)
+        self.assertIn("items = itemStrings", block)
+        self.assertIn("onReady = function()", block)
+        self.assertLess(block.index("undress = true"), block.index("items = itemStrings"))
         self.assertIn("scSetPreviewGeneration", block)
 
     def test_set_preview_uses_only_the_selected_variant_members(self):
@@ -171,13 +190,18 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
 
     def test_set_preview_rejects_stale_work_and_cleans_pending_state(self):
         source = read_text(WARDROBE)
-        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function previewSet)", source, re.S)
+        queued = re.search(
+            r"local function queueSetPreview\(record, previewItems\)(.*?)(?=\n\s*local function syncSetVariantDropdown)",
+            source,
+            re.S,
+        )
         self.assertIsNotNone(queued)
         block = queued.group(1)
-        self.assertIn("pending.renderTicks < 2", block)
-        self.assertIn('SC.db.wardrobeTab ~= "SETS"', block)
-        self.assertIn("page.scSetPreviewPending ~= pending", block)
-        self.assertIn("page.scSetPreviewGeneration ~= pending.generation", block)
+        self.assertIn("page.scSetPreviewPending == pending", block)
+        self.assertIn("page.scSetSelectedId == pending.recordId", block)
+        self.assertIn("page.scSetPreviewPending = nil", block)
+        self.assertIn("model.scSetPreviewPending = nil", block)
+        self.assertIn('clearSetPresenter("SET_PREVIEW_PRESENT_FAILED")', block)
         self.assertIn("local function cancelSetPreview()", source)
         self.assertIn("cancelSetPreview()", source[source.index("local function refreshItems()"):])
         self.assertIn('page:RegisterEvent("UNIT_MODEL_CHANGED")', source)
@@ -201,37 +225,48 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
     def test_set_preview_preallocates_a_bounded_pool_for_nine_piece_variants(self):
         source = read_text(WARDROBE)
         self.assertIn("local SET_PIECE_POOL_LIMIT = 12", source)
-        self.assertIn("local piecePoolSize = SET_PIECE_POOL_LIMIT", source)
+        self.assertIn("local piecePoolSize = SET_LAYOUT.PIECE_POOL_LIMIT", source)
         self.assertNotIn("local piecePoolSize = maxActiveSetSlots()", source)
 
     def test_standalone_validation_is_registry_based_not_a_fixed_21_id_range(self):
         source = read_text(PRESENTATIONS)
         wardrobe = read_text(WARDROBE)
+        catalog = read_text(CATALOG)
+        model_provider = read_text(MODEL_PROVIDER)
         self.assertNotIn("len(entries) == 21", source)
         self.assertNotIn("set(range(40000, 40021))", source)
         self.assertIn("registry", source.lower())
+        self.assertIn("asset bundle/runtime registry contract drift", source)
+        self.assertIn('DIRECT_DISPLAY_CAPABILITY = "DIRECT_DISPLAY_V1"', source)
         self.assertNotIn("record.syntheticDisplayId >= 40000", wardrobe)
         self.assertNotIn("record.syntheticDisplayId <= 40020", wardrobe)
-        self.assertIn('record.presentationCapability == "DIRECT_DISPLAY_V1"', wardrobe)
-        self.assertIn("hasAssetPackVersionMismatch", wardrobe)
-        self.assertIn("record.assetPackVersion ~= generatedAssetPackVersion", wardrobe)
-        self.assertIn("资源包版本不匹配", wardrobe)
+        self.assertIn("presentationCapability = collection.presentationCapability", catalog)
+        self.assertIn("assetPackVersion = collection.assetPackVersion", catalog)
+        self.assertIn("retiredSyntheticDisplayId = collection.retiredSyntheticDisplayId", catalog)
+        self.assertIn("registryTombstoneReason = collection.registryTombstoneReason", catalog)
+        self.assertIn("Provider.DIRECT_DISPLAY_REQUEST_BASE", model_provider)
 
-    def test_weapon_grid_uses_a_fixed_pool_with_generation_safe_direct_models(self):
+    def test_weapon_grid_uses_a_fixed_pool_with_generation_safe_transmorpher_models(self):
         source = read_text(WARDROBE)
-        self.assertIn("local ITEM_PAGE_SIZE = ITEM_ROWS * ITEM_COLUMNS", source)
-        self.assertIn("for index = 1, ITEM_PAGE_SIZE do", source)
+        ez_model = read_text(EZ_WARDROBE_MODEL)
+        ez_items = read_text(EZ_WARDROBE_ITEMS)
+        self.assertIn("local ITEM_PAGE_SIZE = EzItems.PAGE_SIZE", source)
+        self.assertIn("for index = 1, self.PAGE_SIZE do", ez_items)
         self.assertIn("page.scItemGeneration = (page.scItemGeneration or 0) + 1", source)
-        self.assertIn("model.scStandaloneGeneration", source)
-        self.assertIn("isStandaloneItemGenerationCurrent", source)
-        self.assertIn("applyStandaloneItemRecord(objectModel, nil, pageGeneration)", source)
+        self.assertIn("ItemCardRenderer:Attach(itemModel, itemModel.scObjectModel)", source)
+        self.assertIn("return EzModel:Present(model, record, pageGeneration, force)", source)
+        self.assertIn("itemModel.scObjectModel = itemObjectModel", ez_items)
+        self.assertIn("local function queueItemRender", ez_model)
+        self.assertIn("target.activeGeneration == pending.generation", ez_model)
+        self.assertIn("target:RenderTransmorpherItem(target.record)", ez_model)
+        self.assertNotIn("model.scStandaloneGeneration", source)
 
     def test_runtime_audit_drives_the_production_card_pool_without_a_second_renderer(self):
         source = read_text(WARDROBE)
         audit = read_text(ROOT / "tools" / "runtime" / "SoloCollectionsWeaponPresentationAudit" / "WeaponPresentationAudit.lua")
         self.assertIn("function page:LoadRuntimeAuditAppearanceRecords(records)", source)
         self.assertIn("AUDIT_RECORD_COUNT_EXCEEDS_CARD_POOL", source)
-        self.assertIn("applyItemModelRecord(itemModel, record, pageGeneration)", source)
+        self.assertIn("ItemCardRenderer:Present(itemModel, record, pageGeneration)", source)
         self.assertIn("SC.Catalog.QueryAll(\"APPEARANCES\"", audit)
         self.assertIn("LoadRuntimeAuditAppearanceRecords(records)", audit)
         self.assertIn("#(state.page.scItemModels or {}) ~= 18", audit)
@@ -257,39 +292,36 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertNotIn('CreateFrame("PlayerModel"', audit)
 
     def test_unavailable_cards_keep_item_identity_and_a_reason(self):
-        source = read_text(WARDROBE)
-        self.assertIn("resolveItemIcon(record)", source)
-        self.assertIn("unavailableItemReasonText(record)", source)
-        self.assertIn("CLIENT_MODEL_READY_TIMEOUT", source)
-        self.assertIn("model.scUnavailableText", source)
+        model = read_text(EZ_WARDROBE_MODEL)
+        items = read_text(EZ_WARDROBE_ITEMS)
+        query = read_text(TRANSMORPHER_QUERY)
+        self.assertIn("local function setUnavailable(lifecycle, reason)", model)
+        self.assertIn("frame.scRecord", model)
+        self.assertIn("GetItemIcon(frame.scRecord.itemId)", model)
+        self.assertIn("frame.scUnavailableText:SetText(labels[reason]", model)
+        self.assertIn("ITEM_QUERY_TIMEOUT", model)
+        self.assertIn('markFailure(itemId, "ITEM_QUERY_TIMEOUT")', query)
+        self.assertIn("itemModel.scUnavailableIcon = unavailableIcon", items)
+        self.assertIn("itemModel.scUnavailableText = unavailableText", items)
 
-    def test_weapon_pose_cache_has_explicit_presentation_and_tuning_revisions(self):
+    def test_weapon_pose_metadata_has_explicit_presentation_hash_and_tuning_revision(self):
         source = read_text(WARDROBE)
+        m2_camera = read_text(ADDON / "Core" / "M2Camera.lua")
         bootstrap = read_text(ADDON / "Core" / "Bootstrap.lua")
-        self.assertIn("scEffectiveM2CameraPoseRevision", source)
-        self.assertIn("appearancePresentationHash", source)
-        self.assertIn("SC.CameraTuning or {}).revision", source)
+        self.assertIn("appearancePresentationHash = (SC.GeneratedCatalog or {}).appearancePresentationHash", source)
+        self.assertIn("generated.appearancePresentationHash or \"\"", source)
+        self.assertIn("appearancePresentationHash", m2_camera)
+        self.assertIn("CameraTuning.revision = tonumber(CameraTuning.revision) or 0", bootstrap)
         self.assertIn("CameraTuning.revision = CameraTuning.revision + 1", bootstrap)
 
-    def test_weapon_camera_resolves_appearance_then_player_model_then_generated_model_then_family_then_auto(self):
+    def test_reference_camera_workbench_is_not_the_active_item_render_path(self):
         source = read_text(WARDROBE)
-        helper = re.search(
-            r"local function getEffectiveM2CameraPose\(model\)(.*?)(?=\n\s*local function)",
-            source,
-            re.S,
-        )
-        self.assertIsNotNone(helper)
-        block = helper.group(1)
-        expected_order = [
-            'getCameraTuningScopePose("appearance"',
-            'getCameraTuningScopePose("model"',
-            "getGeneratedModelM2CameraPose(record)",
-            'getCameraTuningScopePose("weaponFamily"',
-            "local autoCamera",
-        ]
-        positions = [block.find(token) for token in expected_order]
-        self.assertTrue(all(position >= 0 for position in positions), positions)
-        self.assertEqual(positions, sorted(positions))
+        ez_model = read_text(EZ_WARDROBE_MODEL)
+        self.assertIn("--[=[ Reference-only in-game M2 camera tuner.", source)
+        self.assertIn("-- creates these frames nor exposes a toggle/fallback path.", source)
+        self.assertNotIn("local function getEffectiveM2CameraPose", source)
+        self.assertIn("RenderTransmorpherWeapon", ez_model)
+        self.assertNotIn("resolveM2CameraPose", ez_model)
         self.assertIn("已审核模型基线", source)
 
     def test_camera_workbench_is_an_in_window_inspector_not_a_dialog_overlay(self):

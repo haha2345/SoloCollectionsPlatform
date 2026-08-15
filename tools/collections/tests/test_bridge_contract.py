@@ -412,22 +412,22 @@ class BridgeContractTests(unittest.TestCase):
             self.assertNotIn(retired, bridge)
 
     def test_failed_creature_preview_callback_cannot_reach_set_creature(self):
-        for name in ("Mounts.lua", "Pets.lua"):
+        for name, type_id in (("Mounts.lua", 10), ("Pets.lua", 11)):
             page = read_text(ADDON / "UI" / name)
-            start = page.index("    local function requestModel(record")
+            start_match = re.search(r"(?m)^    local function requestModel\(record(?:, force)?\)", page)
+            self.assertIsNotNone(start_match, f"missing requestModel in {name}")
+            start = start_match.start()
             end = page.index("    local function selectRecord(record)", start)
             request = page[start:end]
+            self.assertIn("presenter:Present({", request)
+            self.assertIn(f"SC.Bridge.RequestCreaturePreview({type_id}, record.id", request)
             self.assertIn("function(ok, reason)", request)
+            self.assertIn("done(ok, reason)", request)
+            self.assertIn("onReady = function()", request)
+            self.assertIn("onUnavailable = function(reason)", request)
             self.assertIn('unavailable:SetText("模型预览暂不可用")', request)
             self.assertNotIn("model:SetCreature", request)
-            if "presenter:Present" in request:
-                self.assertIn("onUnavailable = function(reason)", request)
-                self.assertIn("done(ok, reason)", request)
-            else:
-                self.assertIn("if not ok then", request)
-                self.assertLess(request.index("if not ok then"), request.index("applyModel(record, generation)"))
-                failed = request[request.index("if not ok then") : request.index("applyModel(record, generation)")]
-                self.assertIn("return", failed)
+            self.assertNotIn("applyModel(record, generation)", request)
 
     def test_server_bridge_has_no_database_or_inventory_mutations(self):
         self.assertTrue(SERVER_LUA.is_file(), f"missing {SERVER_LUA}")

@@ -440,6 +440,7 @@ function UI.SetMainTab(key)
     else
         frame.scCollectionCount:Hide()
     end
+    frame.scProgress:Show()
     if selected == "WARDROBE" then
         frame.scWardrobeTabs:Show()
         UI.SetWardrobeTab(SC.db.wardrobeTab)

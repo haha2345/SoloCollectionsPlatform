@@ -15,9 +15,20 @@ local ARMOR_TYPES = {
     LEATHER = true,
     CLOTH = true,
 }
+local ARMOR_FILTER_SLOTS = {
+    HEAD = true,
+    SHOULDER = true,
+    CHEST = true,
+    WRIST = true,
+    HANDS = true,
+    WAIST = true,
+    LEGS = true,
+    FEET = true,
+}
 local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
     HEAD = 0,
     SHOULDER = 2,
+    SHIRT = 3,
     CHEST = 4,
     WAIST = 5,
     LEGS = 6,
@@ -27,6 +38,7 @@ local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
     BACK = 14,
     MAINHAND = 15,
     OFFHAND = 16,
+    TABARD = 18,
 }
 
 DataProvider.ARMOR_OPTIONS = {
@@ -35,6 +47,7 @@ DataProvider.ARMOR_OPTIONS = {
     { key = "LEATHER", label = "皮甲" },
     { key = "CLOTH", label = "布甲" },
 }
+DataProvider.ARMOR_FILTER_SLOTS = ARMOR_FILTER_SLOTS
 
 local function copyTable(source)
     local result = {}
@@ -68,22 +81,43 @@ local function finish(callback, ok, reason)
     return ok, reason
 end
 
+local function finishApply(callback, ok, reason)
+    return finish(callback, ok == true and (reason == nil or tostring(reason) == "ACCEPTED"), reason)
+end
+
+local function positiveInteger(value)
+    value = tonumber(value)
+    if value and value > 0 and value == math.floor(value) then return value end
+    return nil
+end
+
 function DataProvider:Create(page)
     return setmetatable({ page = page }, { __index = self })
 end
 
-function DataProvider:GetArmorState()
+function DataProvider:GetArmorState(slotKey)
     local filters = currentFilters()
     local stored = filters and filters.armorType or "AUTO"
     if not ARMOR_TYPES[stored] then stored = "AUTO" end
+    if slotKey and slotKey ~= "ALL" and not ARMOR_FILTER_SLOTS[slotKey] then
+        return stored, "ALL"
+    end
     local effective = stored == "AUTO" and defaultArmorType() or stored
     return stored, effective
 end
 
-function DataProvider:GetQueryFilters()
+function DataProvider:GetQueryFilters(overrides)
     local filters = copyTable(currentFilters())
-    local _, effectiveArmorType = self:GetArmorState()
-    filters.armorType = effectiveArmorType
+    for key, value in pairs(overrides or {}) do
+        filters[key] = value
+    end
+    local storedArmorType = filters.armorType or "AUTO"
+    if not ARMOR_TYPES[storedArmorType] then storedArmorType = "AUTO" end
+    if filters.slot and filters.slot ~= "ALL" and not ARMOR_FILTER_SLOTS[filters.slot] then
+        filters.armorType = "ALL"
+    else
+        filters.armorType = storedArmorType == "AUTO" and defaultArmorType() or storedArmorType
+    end
     return filters
 end
 
@@ -116,7 +150,7 @@ local function convertRecords(provider, records)
     return result
 end
 
-function DataProvider:QueryItems(pageNumber, pageSize)
+function DataProvider:QueryItems(pageNumber, pageSize, overrides)
     if not Catalog or type(Catalog.Query) ~= "function" then
         return {}, 1, 1, 0
     end
@@ -124,22 +158,22 @@ function DataProvider:QueryItems(pageNumber, pageSize)
     local records, page, totalPages, total = Catalog.Query(
         APPEARANCE_CATEGORY,
         query,
-        self:GetQueryFilters(),
+        self:GetQueryFilters(overrides),
         pageNumber,
         pageSize
     )
     return convertRecords(self, records), page, totalPages, total
 end
 
-function DataProvider:QueryAllItems()
+function DataProvider:QueryAllItems(overrides)
     if not Catalog or type(Catalog.QueryAll) ~= "function" then return {} end
     local query = SC.db and SC.db.query or ""
-    return convertRecords(self, Catalog.QueryAll(APPEARANCE_CATEGORY, query, self:GetQueryFilters()))
+    return convertRecords(self, Catalog.QueryAll(APPEARANCE_CATEGORY, query, self:GetQueryFilters(overrides)))
 end
 
-function DataProvider:GetProgress()
+function DataProvider:GetProgress(overrides)
     if not Catalog or type(Catalog.GetProgress) ~= "function" then return 0, 0 end
-    return Catalog.GetProgress(APPEARANCE_CATEGORY, self:GetQueryFilters())
+    return Catalog.GetProgress(APPEARANCE_CATEGORY, self:GetQueryFilters(overrides))
 end
 
 function DataProvider:SetFilter(key, value)
@@ -148,7 +182,10 @@ function DataProvider:SetFilter(key, value)
     if key == "armorType" and not ARMOR_TYPES[value] then return false end
     filters[key] = value
     if self.page then
+        self.page.itemPage = 1
+        self.page.setPage = 1
         self.page.scItemPage = 1
+        self.page.scSetOffset = 0
         self.page.scItemSelectedId = nil
         self.page.scSetSelectedId = nil
     end
@@ -164,18 +201,28 @@ function DataProvider:ApplyAppearance(record, callback)
     if type(record) ~= "table" then
         return finish(callback, false, "INVALID_APPEARANCE")
     end
-    if not record.collected then
-        return finish(callback, false, "NOT_OWNED")
-    end
-    local collectionId = tonumber(record.collectionId or record.id)
+    local collectionId = positiveInteger(record.collectionId or record.id)
     local equipmentSlot = EQUIPMENT_SLOT_BY_APPEARANCE_SLOT[record.slot]
     if not collectionId or not equipmentSlot then
         return finish(callback, false, "INVALID_TARGET_SLOT")
     end
+    local owned, ownershipKnown, ownershipState = self:IsOwned(collectionId, record.collected)
+    if not ownershipKnown and ownershipState ~= "Demo" then
+        return finish(callback, false, "BRIDGE_UNAVAILABLE")
+    end
+    if not owned then
+        return finish(callback, false, "NOT_OWNED")
+    end
     if not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
         return finish(callback, false, "BRIDGE_UNAVAILABLE")
     end
-    return SC.Bridge.ApplyAppearance(collectionId, equipmentSlot, callback)
+    if type(SC.Bridge.GetCategoryState) == "function" and
+        SC.Bridge.GetCategoryState(13) ~= "Ready" then
+        return finish(callback, false, "BRIDGE_UNAVAILABLE")
+    end
+    return SC.Bridge.ApplyAppearance(collectionId, equipmentSlot, function(ok, reason)
+        finishApply(callback, ok, reason)
+    end)
 end
 
 function DataProvider:GetCollectionState()

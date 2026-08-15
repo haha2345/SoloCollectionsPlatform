@@ -58,9 +58,12 @@ stable collection/action IDs; spell, item, display, handler, and arbitrary
 script identifiers are never accepted from the client.
 
 Type `10` is the authoritative set of account-owned mount collection IDs, and
-type `11` is the corresponding authoritative companion set. Internal types
-`16` (`mount-favorite`) and `17` (`companion-favorite`) carry favorite
-membership using the stable IDs of types 10 and 11 respectively. Types 16 and
+type `11` is the corresponding authoritative companion set. Type `13` is the
+authoritative set of account-owned appearance collection IDs. Type `14` is the
+authoritative set of official wardrobe set collection IDs, derived from the
+account's appearance ownership and the server's class, slot and variant rules.
+Internal types `16` (`mount-favorite`) and `17` (`companion-favorite`) carry
+favorite membership using the stable IDs of types 10 and 11 respectively. Types 16 and
 17 are internal projections: they are not navigation categories and never
 contribute to collection totals or progress.
 
@@ -74,6 +77,22 @@ must not update its star optimistically.
 control collection ID `1`. The server alone builds the owned, favorite and
 currently usable pool; ID `1` is forbidden in both generated catalogs. A
 different control ID is `INVALID_REQUEST`.
+
+`Q ...|13|appearanceCollectionId|APPLY|equipmentSlot` applies one collected
+appearance to a one-based client equipment slot. `Q ...|14|setCollectionId|APPLY|variantOrdinal`
+applies one collected official set variant. `target` is the selected variant
+ordinal; `-` is reserved for callers that intentionally omit the default
+variant. The wardrobe UI sends the selected ordinal, including the default
+ordinal, so the server validates the same variant that was previewed. These
+actions validate ownership, class restrictions, target slots, costs and
+persistence on the server. A successful `R ...|ACCEPTED` is the character
+transmog apply result; it does not require or imply a collection ownership
+delta.
+
+The Lua Bridge helper for type 13 intentionally accepts the zero-based 3.3.5
+client inventory slot used by the wardrobe UI and encodes `target = slot + 1`
+on the wire. UI code must call the helper instead of constructing type 13 wire
+targets directly.
 
 Client spell `150544` is the persistent native action-bar representation of
 the same random-mount operation. Its server SpellScript invokes the same

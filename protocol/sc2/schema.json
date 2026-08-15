@@ -15,6 +15,8 @@
   "projectionTypes": {
     "10": "authoritative account-owned mount collection IDs",
     "11": "authoritative account-owned companion collection IDs",
+    "13": "authoritative account-owned appearance collection IDs",
+    "14": "authoritative account-owned official wardrobe set collection IDs derived from appearance ownership",
     "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress",
     "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress"
   },
@@ -76,6 +78,16 @@
       "requiresOwned": false,
       "sideEffects": "CREATURE_QUERY_CACHE_PRIME_ONLY",
       "acceptedMeaning": "SERVER_QUERY_RESPONSE_QUEUED"
+    },
+    "APPLY": {
+      "typeIds": [13, 14],
+      "targetByTypeId": {
+        "13": "EQUIPMENT_SLOT_1_TO_19_ONE_BASED",
+        "14": "SET_VARIANT_ORDINAL_OR_DASH"
+      },
+      "requiresOwned": true,
+      "sideEffects": "SERVER_APPLIES_CHARACTER_TRANSMOG_NO_COLLECTION_OWNERSHIP_DELTA_REQUIRED",
+      "acceptedMeaning": "SERVER_VALIDATED_AND_EXECUTED_CHARACTER_APPLY"
     }
   },
   "actionStatuses": [

@@ -68,12 +68,34 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
 
     def test_client_submits_only_canonical_id_and_equipment_slot_for_apply(self):
         bridge = (ROOT / "addon" / "SoloCollections" / "Core" / "Bridge.lua").read_text(encoding="utf-8")
+        provider = (ROOT / "addon" / "SoloCollections" / "UI" / "EzWardrobe" / "DataProvider.lua").read_text(encoding="utf-8")
+        lab_state = (ROOT / "addon" / "SoloCollections" / "UI" / "WardrobeLab" / "State.lua").read_text(encoding="utf-8")
         wardrobe = (ROOT / "addon" / "SoloCollections" / "UI" / "Wardrobe.lua").read_text(encoding="utf-8")
         self.assertIn("function B.ApplyAppearance(collectionId, equipmentSlot, callback)", bridge)
+        self.assertIn("equipmentSlot < 0 or equipmentSlot > 18", bridge)
         self.assertIn('B.RequestSC2Action(13, collectionId, "APPLY", equipmentSlot + 1', bridge)
         self.assertNotIn("sourceItemId", bridge.split("function B.ApplyAppearance", 1)[1])
-        self.assertIn("EQUIPMENT_SLOT_BY_APPEARANCE_SLOT", wardrobe)
-        self.assertIn("SC.Bridge.ApplyAppearance(record.id, equipmentSlot", wardrobe)
+        self.assertIn("EQUIPMENT_SLOT_BY_APPEARANCE_SLOT", provider)
+        self.assertIn("SHIRT = 3", provider)
+        self.assertIn("TABARD = 18", provider)
+        self.assertIn("local ARMOR_FILTER_SLOTS = {", provider)
+        self.assertIn("DataProvider.ARMOR_FILTER_SLOTS = ARMOR_FILTER_SLOTS", provider)
+        self.assertIn("if slotKey and slotKey ~= \"ALL\" and not ARMOR_FILTER_SLOTS[slotKey] then", provider)
+        self.assertIn("return stored, \"ALL\"", provider)
+        self.assertIn("if filters.slot and filters.slot ~= \"ALL\" and not ARMOR_FILTER_SLOTS[filters.slot] then", provider)
+        self.assertIn("filters.armorType = \"ALL\"", provider)
+        self.assertIn("self.page.itemPage = 1", provider)
+        self.assertIn("self.page.setPage = 1", provider)
+        self.assertIn("self.page.scItemPage = 1", provider)
+        self.assertIn("self.page.scSetOffset = 0", provider)
+        self.assertIn("local function positiveInteger(value)", provider)
+        self.assertIn("local owned, ownershipKnown, ownershipState = self:IsOwned(collectionId, record.collected)", provider)
+        self.assertIn("if not ownershipKnown and ownershipState ~= \"Demo\" then", provider)
+        self.assertIn("SC.Bridge.GetCategoryState(13) ~= \"Ready\"", provider)
+        self.assertIn("SC.Bridge.ApplyAppearance(collectionId, equipmentSlot", provider)
+        self.assertIn("finishApply(callback, ok, reason)", provider)
+        self.assertIn("SC.Bridge.ApplyAppearance(appearanceCollectionId, definition.inventorySlot", lab_state)
+        self.assertIn("SC.Bridge.ApplyAppearance(entry.collectionId, entry.inventorySlot", lab_state)
         self.assertIn("Shift + 左键", wardrobe)
 
     def test_verified_standalone_presentations_join_canonical_ids(self):
@@ -131,13 +153,14 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
 
     def test_renderer_uses_synthetic_display_only_at_adapter_boundary(self):
         wardrobe = (ROOT / "addon/SoloCollections/UI/Wardrobe.lua").read_text(encoding="utf-8")
+        model_provider = (ROOT / "addon/SoloCollections/Core/ModelProvider.lua").read_text(encoding="utf-8")
+        catalog = (ROOT / "addon/SoloCollections/Core/Catalog.lua").read_text(encoding="utf-8")
         generated = (ROOT / "addon/SoloCollections_WardrobeData/Data/Generated/WardrobeCatalog.lua").read_text(encoding="utf-8")
-        self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + record.syntheticDisplayId", wardrobe)
+        self.assertIn("DIRECT_DISPLAY_REQUEST_BASE + displayId", model_provider)
+        self.assertIn("syntheticDisplayId = collection.syntheticDisplayId", catalog)
         self.assertNotIn("creatureDisplayId", wardrobe)
         self.assertNotIn("creatureDisplayId", generated)
-        self.assertIn("resolveItemIcon", wardrobe)
-        self.assertIn("unavailableItemReasonText", wardrobe)
-        self.assertIn("presentationCapability == \"DIRECT_DISPLAY_V1\"", wardrobe)
+        self.assertIn("presentationCapability = collection.presentationCapability", catalog)
 
 
 if __name__ == "__main__":

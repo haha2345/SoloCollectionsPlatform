@@ -34,6 +34,40 @@ class SC2ProtocolTests(unittest.TestCase):
             self.schema["fields"]["token"],
         )
 
+    def test_schema_documents_transmog_projection_types(self):
+        projection_types = self.schema["projectionTypes"]
+        self.assertEqual(
+            "authoritative account-owned appearance collection IDs",
+            projection_types["13"],
+        )
+        self.assertEqual(
+            "authoritative account-owned official wardrobe set collection IDs derived from appearance ownership",
+            projection_types["14"],
+        )
+
+    def test_schema_documents_transmog_apply_without_ownership_delta(self):
+        apply_semantics = self.schema["actionSemantics"]["APPLY"]
+        protocol_doc = (ROOT / "docs" / "protocol" / "sc2-wire-v1.md").read_text(encoding="utf-8")
+        self.assertEqual([13, 14], apply_semantics["typeIds"])
+        self.assertTrue(apply_semantics["requiresOwned"])
+        self.assertEqual(
+            "EQUIPMENT_SLOT_1_TO_19_ONE_BASED",
+            apply_semantics["targetByTypeId"]["13"],
+        )
+        self.assertEqual(
+            "SET_VARIANT_ORDINAL_OR_DASH",
+            apply_semantics["targetByTypeId"]["14"],
+        )
+        self.assertEqual(
+            "SERVER_APPLIES_CHARACTER_TRANSMOG_NO_COLLECTION_OWNERSHIP_DELTA_REQUIRED",
+            apply_semantics["sideEffects"],
+        )
+        self.assertEqual(
+            "SERVER_VALIDATED_AND_EXECUTED_CHARACTER_APPLY",
+            apply_semantics["acceptedMeaning"],
+        )
+        self.assertIn("The wardrobe UI sends the selected ordinal, including the default", protocol_doc)
+
     def test_all_golden_packets_round_trip(self):
         for vector in self.vectors["packets"]:
             with self.subTest(vector=vector["name"]):
@@ -48,14 +82,14 @@ class SC2ProtocolTests(unittest.TestCase):
                 self.assertEqual(vector["adler32"], codec.adler32_hex(vector["payload"]))
 
     def test_companion_owned_and_favorite_projection_contract(self):
+        projection_types = self.schema["projectionTypes"]
         self.assertEqual(
-            {
-                "10": "authoritative account-owned mount collection IDs",
-                "11": "authoritative account-owned companion collection IDs",
-                "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress",
-                "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress",
-            },
-            self.schema["projectionTypes"],
+            "authoritative account-owned companion collection IDs",
+            projection_types["11"],
+        )
+        self.assertEqual(
+            "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress",
+            projection_types["17"],
         )
         favorite = self.schema["actionSemantics"]["SET_FAVORITE"]
         random_summon = self.schema["actionSemantics"]["RANDOM_SUMMON"]

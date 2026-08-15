@@ -9,7 +9,14 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[3]
-MODULE_ROOT = Path(os.environ.get("SOLOCOLLECTIONS_MODULE_ROOT", ROOT.parent / "mod-solo-collections"))
+DEFAULT_MODULE_ROOT_CANDIDATES = (
+    ROOT.parent / "mod-solo-collections",
+    ROOT.parent.parent / "mod-solo-collections",
+)
+MODULE_ROOT = Path(os.environ["SOLOCOLLECTIONS_MODULE_ROOT"]) if "SOLOCOLLECTIONS_MODULE_ROOT" in os.environ else next(
+    (candidate for candidate in DEFAULT_MODULE_ROOT_CANDIDATES if candidate.is_dir()),
+    DEFAULT_MODULE_ROOT_CANDIDATES[0],
+)
 GENERATOR = ROOT / "tools/catalog/set_catalog.py"
 
 
@@ -54,7 +61,25 @@ class SetCatalogTests(unittest.TestCase):
         wardrobe = (ROOT / "addon/SoloCollections/UI/Wardrobe.lua").read_text(encoding="utf-8")
         sets = (ROOT / "addon/SoloCollections/Data/Sets.lua").read_text(encoding="utf-8")
         self.assertIn("IsOwnedByType(13, appearanceId)", catalog)
+        self.assertIn("local function currentSetRecordForApply(record)", wardrobe)
+        self.assertIn("local function selectedSetVariantOrdinal(record)", wardrobe)
+        self.assertIn('Catalog.Get("SETS")', wardrobe)
+        self.assertIn("local selectedOrdinal = selectedSetVariantOrdinal(record)", wardrobe)
+        self.assertIn("local matchedVariant = false", wardrobe)
+        self.assertIn("current.selectedVariantOrdinal = selectedOrdinal", wardrobe)
+        self.assertIn('if not matchedVariant then return nil, "INVALID_REQUEST" end', wardrobe)
+        self.assertIn("local function selectedSetVariantOwned(record)", wardrobe)
+        self.assertIn("state.IsOwnedByType(13, appearanceId)", wardrobe)
+        self.assertIn("local variantOwned, variantReason = selectedSetVariantOwned(record)", wardrobe)
+        self.assertIn("local variantOwned = selectedSetVariantOwned(record)", wardrobe)
+        self.assertIn("if setBridgeReadyForApply() and record.ownershipKnown ~= false and variantOwned then", wardrobe)
+        self.assertIn('elseif not variantOwned then', wardrobe)
+        self.assertIn('message = "套装应用请求无效。"', wardrobe)
+        self.assertIn("record, reason = currentSetRecordForApply(record)", wardrobe)
+        self.assertIn("applySetRecord(page.scSetSelectedRecord)", wardrobe)
+        self.assertIn("applySetRecord(concreteRecord)", wardrobe)
         self.assertIn("variant.variantOrdinal", wardrobe)
+        self.assertNotIn("if record.collected then applySet:Enable() else applySet:Disable() end", wardrobe)
         self.assertIn("local SET_PIECE_POOL_LIMIT = 12", wardrobe)
         self.assertIn("local piecePoolSize = SET_PIECE_POOL_LIMIT", wardrobe)
         self.assertNotIn("set_collected", catalog + wardrobe + sets)

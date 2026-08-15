@@ -19,13 +19,36 @@ local SET_DETAILS_LONG_NAME_Y = -30
 local SET_DETAILS_LABEL_Y = -63
 local SET_DETAILS_ICON_ROW_Y = -94
 local SET_DETAILS_MODEL_TOP_Y = -128
+local SET_LAYOUT = {
+    VISIBLE_ROWS = VISIBLE_SET_ROWS,
+    LIST_TOP_OFFSET = SET_LIST_TOP_OFFSET,
+    ROW_HEIGHT = SET_ROW_HEIGHT,
+    ROW_SPACING = SET_ROW_SPACING,
+    PIECE_SIZE = SET_PIECE_SIZE,
+    PIECE_SPACING = SET_PIECE_SPACING,
+    PIECE_COLUMNS = SET_PIECE_COLUMNS,
+    PIECE_POOL_LIMIT = SET_PIECE_POOL_LIMIT,
+    DETAILS_NAME_Y = SET_DETAILS_NAME_Y,
+    DETAILS_LONG_NAME_Y = SET_DETAILS_LONG_NAME_Y,
+    DETAILS_LABEL_Y = SET_DETAILS_LABEL_Y,
+    DETAILS_ICON_ROW_Y = SET_DETAILS_ICON_ROW_Y,
+    DETAILS_MODEL_TOP_Y = SET_DETAILS_MODEL_TOP_Y,
+}
 local DEFAULT_ROTATION = 0.18
 local TWO_PI = math.pi * 2
 local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
+
+local function applyActionAccepted(ok, reason)
+    return ok == true and (reason == nil or tostring(reason) == "ACCEPTED")
+end
+
 local function showAppearanceActionResult(ok, reason)
+    ok = applyActionAccepted(ok, reason)
     local message
     if ok then
         message = "外观已应用。"
+    elseif reason == "DISMISSED" then
+        message = "服务端未执行应用。"
     elseif reason == "NOT_ENOUGH_MONEY" then
         message = "你没有足够的钱。"
     elseif reason == "NOT_ENOUGH_TOKENS" then
@@ -45,11 +68,16 @@ local function showAppearanceActionResult(ok, reason)
 end
 
 local function showSetActionResult(ok, reason)
+    ok = applyActionAccepted(ok, reason)
     local message
     if ok then
         message = "套装外观已原子应用。"
+    elseif reason == "DISMISSED" then
+        message = "服务端未执行应用。"
     elseif reason == "NOT_OWNED" then
         message = "尚未收集完整套装。"
+    elseif reason == "INVALID_REQUEST" then
+        message = "套装应用请求无效。"
     elseif reason == "INVALID_TARGET_SLOT" then
         message = "需要先在套装的每个目标栏位装备物品。"
     elseif reason == "CLASS_RESTRICTED" then
@@ -449,6 +477,87 @@ local function concreteSetRecord(record)
         return record.scSelectedVariantRecord or (record.scVariants and record.scVariants[1])
     end
     return record
+end
+
+local function selectedSetVariantOrdinal(record)
+    local variant = record and record.selectedVariant
+    return tonumber((type(variant) == "table" and variant.variantOrdinal) or
+        (record and record.selectedVariantOrdinal))
+end
+
+local function currentSetRecordForApply(record)
+    record = concreteSetRecord(record)
+    local setId = tonumber(record and record.id)
+    if not setId or setId <= 0 or setId ~= math.floor(setId) then return nil end
+    local selectedOrdinal = selectedSetVariantOrdinal(record)
+    if Catalog and type(Catalog.Get) == "function" then
+        for _, current in ipairs(Catalog.Get("SETS") or {}) do
+            if tonumber(current.id) == setId then
+                if selectedOrdinal then
+                    local matchedVariant = false
+                    for _, variant in ipairs(current.variants or {}) do
+                        if tonumber(variant.variantOrdinal) == selectedOrdinal then
+                            current.selectedVariant = variant
+                            current.selectedVariantOrdinal = selectedOrdinal
+                            matchedVariant = true
+                            break
+                        end
+                    end
+                    if not matchedVariant then return nil, "INVALID_REQUEST" end
+                end
+                return current
+            end
+        end
+    end
+    return record
+end
+
+local function setBridgeReadyForApply()
+    if not SC.Bridge or type(SC.Bridge.ApplySet) ~= "function" then return false end
+    if type(SC.Bridge.GetCategoryState) ~= "function" then return true end
+    return SC.Bridge.GetCategoryState(14) == "Ready"
+end
+
+local function selectedSetVariantOwned(record)
+    local variant = record and record.selectedVariant
+    if type(variant) ~= "table" then return false, "INVALID_REQUEST" end
+    local requiredCount = 0
+    local state = SC.CollectionState
+    for _, member in ipairs(variant.members or {}) do
+        if member.required then
+            requiredCount = requiredCount + 1
+            local memberOwned = false
+            for _, appearanceId in ipairs(member.appearanceIds or {}) do
+                appearanceId = tonumber(appearanceId)
+                if appearanceId and state and state.IsOwnedByType and
+                    state.IsOwnedByType(13, appearanceId) then
+                    memberOwned = true
+                    break
+                end
+            end
+            if not memberOwned then return false, "NOT_OWNED" end
+        end
+    end
+    if requiredCount == 0 then return false, "INVALID_REQUEST" end
+    return true
+end
+
+local function applySetRecord(record)
+    local reason
+    record, reason = currentSetRecordForApply(record)
+    if not record then
+        showSetActionResult(false, reason or "INVALID_REQUEST")
+        return
+    end
+    local variantOwned, variantReason = selectedSetVariantOwned(record)
+    if not setBridgeReadyForApply() or record.ownershipKnown == false then
+        showSetActionResult(false, "BRIDGE_UNAVAILABLE")
+    elseif not variantOwned then
+        showSetActionResult(false, variantReason or "NOT_OWNED")
+    else
+        local variant = record.selectedVariant
+        SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)
+    end
 end
 
 local function reviewedSetInfo(record)
@@ -1137,8 +1246,8 @@ function ItemCardRenderer:Attach(model, objectModel)
     EzModel:Attach(model, objectModel)
 end
 
-function ItemCardRenderer:Present(model, record, generation)
-    return applyItemModelRecord(model, record, generation)
+function ItemCardRenderer:Present(model, record, generation, force)
+    return applyItemModelRecord(model, record, generation, force)
 end
 
 function ItemCardRenderer:Clear(model, generation)
@@ -1156,7 +1265,7 @@ function UI.CreateWardrobePage(parent)
     page.scSetPreviewGeneration = 0
     page.scDefaultSetClassApplied = false
     page.scItemModels = {}
-    page.scItemPageSize = ITEM_PAGE_SIZE
+    page.scItemPageSize = EzItems.PAGE_SIZE
     page.scSetRows = {}
     page.scPieceIcons = {}
     page.scSelectedSetVariantByGroup = {}
@@ -1335,7 +1444,7 @@ function UI.CreateWardrobePage(parent)
     preview:Hide()
 
     local model = CreateFrame("DressUpModel", nil, preview)
-    model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
+    model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_LAYOUT.DETAILS_MODEL_TOP_Y)
     model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
@@ -1344,20 +1453,20 @@ function UI.CreateWardrobePage(parent)
     end)
 
     local name = preview:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
-    name:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_NAME_Y)
+    name:SetPoint("TOP", preview, "TOP", 0, SET_LAYOUT.DETAILS_NAME_Y)
     name:SetWidth(380)
     name:SetJustifyH("CENTER")
     name:SetTextColor(1, 0.82, 0.18)
 
     local longName = preview:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-    longName:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_LONG_NAME_Y)
+    longName:SetPoint("TOP", preview, "TOP", 0, SET_LAYOUT.DETAILS_LONG_NAME_Y)
     longName:SetWidth(380)
     longName:SetJustifyH("CENTER")
     longName:SetTextColor(1, 0.82, 0.18)
     longName:Hide()
 
     local detail = preview:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    detail:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_LABEL_Y)
+    detail:SetPoint("TOP", preview, "TOP", 0, SET_LAYOUT.DETAILS_LABEL_Y)
     detail:SetWidth(380)
     detail:SetJustifyH("CENTER")
     detail:SetTextColor(0.82, 0.75, 0.62)
@@ -1412,29 +1521,29 @@ function UI.CreateWardrobePage(parent)
     end)
 
     local pieces = CreateFrame("Frame", nil, preview)
-    pieces:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_ICON_ROW_Y)
+    pieces:SetPoint("TOP", preview, "TOP", 0, SET_LAYOUT.DETAILS_ICON_ROW_Y)
     -- The production catalogue currently tops out at eight pieces, but the
     -- preview contract must also cover nine-piece variants (and leave room for
     -- a reviewed future set) without rebuilding UI frames after the catalog
     -- has already loaded.  Keep the fixed pool bounded by the existing
     -- twelve-piece safety limit instead of sizing it from today's data.
-    local piecePoolSize = SET_PIECE_POOL_LIMIT
-    local poolColumns = math.min(SET_PIECE_COLUMNS, piecePoolSize)
-    local poolRows = math.ceil(piecePoolSize / SET_PIECE_COLUMNS)
-    pieces:SetWidth((poolColumns * SET_PIECE_SIZE) + (math.max(0, poolColumns - 1) * SET_PIECE_SPACING))
-    pieces:SetHeight((poolRows * SET_PIECE_SIZE) + (math.max(0, poolRows - 1) * SET_PIECE_SPACING))
+    local piecePoolSize = SET_LAYOUT.PIECE_POOL_LIMIT
+    local poolColumns = math.min(SET_LAYOUT.PIECE_COLUMNS, piecePoolSize)
+    local poolRows = math.ceil(piecePoolSize / SET_LAYOUT.PIECE_COLUMNS)
+    pieces:SetWidth((poolColumns * SET_LAYOUT.PIECE_SIZE) + (math.max(0, poolColumns - 1) * SET_LAYOUT.PIECE_SPACING))
+    pieces:SetHeight((poolRows * SET_LAYOUT.PIECE_SIZE) + (math.max(0, poolRows - 1) * SET_LAYOUT.PIECE_SPACING))
     pieces:Hide()
     for index = 1, piecePoolSize do
         local piece = CreateFrame("Button", nil, pieces)
-        piece:SetWidth(SET_PIECE_SIZE)
-        piece:SetHeight(SET_PIECE_SIZE)
+        piece:SetWidth(SET_LAYOUT.PIECE_SIZE)
+        piece:SetHeight(SET_LAYOUT.PIECE_SIZE)
         piece:RegisterForClicks("LeftButtonUp")
         if index == 1 then
             piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
-        elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
-            piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_PIECE_SPACING)
+        elseif (index - 1) % SET_LAYOUT.PIECE_COLUMNS == 0 then
+            piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_LAYOUT.PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_LAYOUT.PIECE_SPACING)
         else
-            piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
+            piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_LAYOUT.PIECE_SPACING, 0)
         end
 
         local iconBackground = piece:CreateTexture(nil, "BACKGROUND")
@@ -1741,10 +1850,15 @@ function UI.CreateWardrobePage(parent)
         if not record then return end
         page.scSetSelectedDisplayRecord = displayRecord
         page.scSetSelectedRecord = record
-        if record.collected then applySet:Enable() else applySet:Disable() end
+        local variantOwned = selectedSetVariantOwned(record)
+        if setBridgeReadyForApply() and record.ownershipKnown ~= false and variantOwned then
+            applySet:Enable()
+        else
+            applySet:Disable()
+        end
         local previewItems = getSelectedVariantPreviewItems(record)
         model:ClearAllPoints()
-        model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
+        model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_LAYOUT.DETAILS_MODEL_TOP_Y)
         model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
         model:Show()
         syncSetVariantDropdown(displayRecord, record)
@@ -1780,18 +1894,18 @@ function UI.CreateWardrobePage(parent)
         detail:SetText(table.concat(detailParts, "  ·  "))
         local pieceState = deriveSetPieceState(record)
         local pieceCount = math.min(#previewItems, #page.scPieceIcons)
-        local firstRow = math.min(SET_PIECE_COLUMNS, pieceCount)
-        local piecesWidth = (firstRow * SET_PIECE_SIZE) + (math.max(0, firstRow - 1) * SET_PIECE_SPACING)
+        local firstRow = math.min(SET_LAYOUT.PIECE_COLUMNS, pieceCount)
+        local piecesWidth = (firstRow * SET_LAYOUT.PIECE_SIZE) + (math.max(0, firstRow - 1) * SET_LAYOUT.PIECE_SPACING)
         pieces:SetWidth(math.max(1, piecesWidth))
         if pieceCount > 0 then pieces:Show() else pieces:Hide() end
         for index, piece in ipairs(page.scPieceIcons) do
             piece:ClearAllPoints()
             if index == 1 then
                 piece:SetPoint("TOPLEFT", pieces, "TOPLEFT", 0, 0)
-            elseif (index - 1) % SET_PIECE_COLUMNS == 0 then
-                piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_PIECE_SPACING)
+            elseif (index - 1) % SET_LAYOUT.PIECE_COLUMNS == 0 then
+                piece:SetPoint("TOPLEFT", page.scPieceIcons[index - SET_LAYOUT.PIECE_COLUMNS], "BOTTOMLEFT", 0, -SET_LAYOUT.PIECE_SPACING)
             else
-                piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_PIECE_SPACING, 0)
+                piece:SetPoint("LEFT", page.scPieceIcons[index - 1], "RIGHT", SET_LAYOUT.PIECE_SPACING, 0)
             end
 
             local previewItem = previewItems[index]
@@ -1863,15 +1977,7 @@ function UI.CreateWardrobePage(parent)
         resetModelView()
     end)
     applySet:SetScript("OnClick", function()
-        local record = page.scSetSelectedRecord
-        if not record or not record.collected then
-            showSetActionResult(false, "NOT_OWNED")
-        elseif not SC.Bridge or not SC.Bridge.ApplySet then
-            showSetActionResult(false, "BRIDGE_UNAVAILABLE")
-        else
-            local variant = record.selectedVariant
-            SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)
-        end
+        applySetRecord(page.scSetSelectedRecord)
     end)
 
     local function selectItem(record)
@@ -2435,7 +2541,7 @@ function UI.CreateWardrobePage(parent)
                 or (not bodyMode and source == "auto")
             if candidateIsTunable and (not onlyUncalibrated or uncalibrated) then
                 page.scItemSelectedId = candidate.id
-                local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
+                local itemPageSize = page.scItemPageSize or EzItems.PAGE_SIZE
                 page.scItemPage = math.floor((index - 1) / itemPageSize) + 1
                 page:Refresh()
                 return true
@@ -2947,14 +3053,14 @@ function UI.CreateWardrobePage(parent)
     local function getMaxSetOffset()
         local count = page.scSetRecordCount or 0
         if count <= 0 then return 0 end
-        return math.max(0, count - VISIBLE_SET_ROWS)
+        return math.max(0, count - SET_LAYOUT.VISIBLE_ROWS)
     end
 
     setSetOffset = function(value, suppressRefresh)
         local target = math.max(0, math.min(math.floor(tonumber(value) or 0), getMaxSetOffset()))
         local changed = target ~= (page.scSetOffset or 0)
         page.scSetOffset = target
-        page.scSetPage = math.floor(target / VISIBLE_SET_ROWS) + 1
+        page.scSetPage = math.floor(target / SET_LAYOUT.VISIBLE_ROWS) + 1
         if changed and not suppressRefresh then
             page:Refresh()
         end
@@ -2968,7 +3074,7 @@ function UI.CreateWardrobePage(parent)
 
     local setScrollbar = CreateFrame("Slider", nil, setsPanel)
     setScrollbar:SetWidth(14)
-    setScrollbar:SetPoint("TOPRIGHT", setsPanel, "TOPRIGHT", -1, -SET_LIST_TOP_OFFSET)
+    setScrollbar:SetPoint("TOPRIGHT", setsPanel, "TOPRIGHT", -1, -SET_LAYOUT.LIST_TOP_OFFSET)
     setScrollbar:SetPoint("BOTTOMRIGHT", setsPanel, "BOTTOMRIGHT", -1, 37)
     setScrollbar:SetOrientation("VERTICAL")
     setScrollbar:SetMinMaxValues(0, 0)
@@ -3005,7 +3111,7 @@ function UI.CreateWardrobePage(parent)
     setsPanel:EnableMouseWheel(true)
     setsPanel:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
 
-    for index = 1, VISIBLE_SET_ROWS do
+    for index = 1, SET_LAYOUT.VISIBLE_ROWS do
         local row = createSetListRow(setsPanel, 330, function(_, record, button)
             if not record then return end
             local concreteRecord = concreteSetRecord(record)
@@ -3014,19 +3120,12 @@ function UI.CreateWardrobePage(parent)
                 Catalog.ToggleDemoFavorite("SETS", concreteRecord.id)
                 page:Refresh()
             elseif IsShiftKeyDown() then
-                if not concreteRecord.collected then
-                    showSetActionResult(false, "NOT_OWNED")
-                elseif not SC.Bridge or not SC.Bridge.ApplySet then
-                    showSetActionResult(false, "BRIDGE_UNAVAILABLE")
-                else
-                    local variant = concreteRecord.selectedVariant
-                    SC.Bridge.ApplySet(concreteRecord.id, variant and variant.variantOrdinal or nil, showSetActionResult)
-                end
+                applySetRecord(concreteRecord)
             else
                 selectSetDisplayRecord(record)
             end
         end)
-        row:SetPoint("TOPLEFT", setsPanel, "TOPLEFT", 3, -SET_LIST_TOP_OFFSET - ((index - 1) * (SET_ROW_HEIGHT + SET_ROW_SPACING)))
+        row:SetPoint("TOPLEFT", setsPanel, "TOPLEFT", 3, -SET_LAYOUT.LIST_TOP_OFFSET - ((index - 1) * (SET_LAYOUT.ROW_HEIGHT + SET_LAYOUT.ROW_SPACING)))
         row:EnableMouseWheel(true)
         row:SetScript("OnMouseWheel", function(_, delta) scrollSetList(delta) end)
         row:SetScript("OnEnter", function(self)
@@ -3078,9 +3177,9 @@ function UI.CreateWardrobePage(parent)
     itemControls:SetPoint("BOTTOM", itemsPanel, "BOTTOM", 22, 38)
 
     local setControls = UI.CreatePageControls(setsPanel, function()
-        setSetOffset((page.scSetOffset or 0) - VISIBLE_SET_ROWS)
+        setSetOffset((page.scSetOffset or 0) - SET_LAYOUT.VISIBLE_ROWS)
     end, function()
-        setSetOffset((page.scSetOffset or 0) + VISIBLE_SET_ROWS)
+        setSetOffset((page.scSetOffset or 0) + SET_LAYOUT.VISIBLE_ROWS)
     end)
     setControls:SetPoint("BOTTOM", setsPanel, "BOTTOM", 0, 5)
     setControls:SetFrameLevel(preview:GetFrameLevel() + 1)
@@ -3219,7 +3318,7 @@ function UI.CreateWardrobePage(parent)
         itemsPanel:Show()
         setsPanel:Hide()
         preview:Hide()
-        local itemPageSize = page.scItemPageSize or ITEM_PAGE_SIZE
+        local itemPageSize = page.scItemPageSize or EzItems.PAGE_SIZE
         local records, currentPage, totalPages = wardrobeFilters:QueryItems(page.scItemPage, itemPageSize)
         page.scItemPage = currentPage
         page.scItemTotalPages = totalPages
@@ -3227,7 +3326,7 @@ function UI.CreateWardrobePage(parent)
         local selected
         for index, itemModel in ipairs(page.scItemModels) do
             local record = records[index]
-            applyItemModelRecord(itemModel, record, pageGeneration)
+            ItemCardRenderer:Present(itemModel, record, pageGeneration)
             EzItems:UpdateCardState(itemModel, page.scItemSelectedId)
             if record and record.id == page.scItemSelectedId then selected = record end
         end
@@ -3246,8 +3345,8 @@ function UI.CreateWardrobePage(parent)
 
     -- The temporary runtime-audit AddOn uses this narrow entry point to drive
     -- the production 18-card pool without changing filters, collection state,
-    -- or any persisted UI setting.  It deliberately delegates to the same
-    -- applyItemModelRecord path as refreshItems, so the audit observes the same
+    -- or any persisted UI setting.  It deliberately delegates through the same
+    -- item-card renderer as refreshItems, so the audit observes the same
     -- DressUpModel/preview-Creature route rather than a second renderer.
     function page:LoadRuntimeAuditAppearanceRecords(records)
         records = records or {}
@@ -3270,7 +3369,7 @@ function UI.CreateWardrobePage(parent)
         local visible = 0
         for index, itemModel in ipairs(self.scItemModels) do
             local record = records[index]
-            applyItemModelRecord(itemModel, record, pageGeneration)
+            ItemCardRenderer:Present(itemModel, record, pageGeneration)
             if record then
                 visible = visible + 1
             end
@@ -3300,18 +3399,18 @@ function UI.CreateWardrobePage(parent)
         page.scFlatSetRecordCount = #allRecords
         page.scSetRecordCount = #allRecords
         local maxOffset = #allRecords > 0
-            and math.max(0, #allRecords - VISIBLE_SET_ROWS) or 0
+            and math.max(0, #allRecords - SET_LAYOUT.VISIBLE_ROWS) or 0
         setSetOffset(page.scSetOffset, true)
 
         local records = {}
         local firstIndex = page.scSetOffset + 1
-        local lastIndex = math.min(#allRecords, firstIndex + VISIBLE_SET_ROWS - 1)
+        local lastIndex = math.min(#allRecords, firstIndex + SET_LAYOUT.VISIBLE_ROWS - 1)
         for index = firstIndex, lastIndex do
             table.insert(records, allRecords[index])
         end
 
-        local totalPages = math.max(1, math.ceil(#allRecords / VISIBLE_SET_ROWS))
-        local currentPage = math.max(1, math.min(totalPages, math.ceil((page.scSetOffset + VISIBLE_SET_ROWS) / VISIBLE_SET_ROWS)))
+        local totalPages = math.max(1, math.ceil(#allRecords / SET_LAYOUT.VISIBLE_ROWS))
+        local currentPage = math.max(1, math.min(totalPages, math.ceil((page.scSetOffset + SET_LAYOUT.VISIBLE_ROWS) / SET_LAYOUT.VISIBLE_ROWS)))
         page.scSetPage = currentPage
         page.scSetTotalPages = totalPages
         setControls:SetPage(currentPage, totalPages)
@@ -3444,7 +3543,7 @@ function UI.CreateWardrobePage(parent)
                 -- Reset/Undress/TryOn lifecycles back into one frame.
                 if itemModel.scRenderKind ~= "TRANSMORPHER_ARMOR"
                     and itemModel.scRenderKind ~= "TRANSMORPHER_WEAPON" then
-                    applyItemModelRecord(itemModel, itemModel.scRecord, self.scItemGeneration, true)
+                    ItemCardRenderer:Present(itemModel, itemModel.scRecord, self.scItemGeneration, true)
                 end
                 if itemModel.scHitFrame and GameTooltip:IsOwned(itemModel.scHitFrame) then
                     showItemTooltip(itemModel.scHitFrame, itemModel.scRecord)

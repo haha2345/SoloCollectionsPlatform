@@ -612,8 +612,8 @@ function B.ApplyAppearance(collectionId, equipmentSlot, callback)
         end
         return nil
     end
-    -- Target is encoded as slot + 1 because '-' is reserved for actions with
-    -- no target and the SC2 numeric target grammar is strictly positive.
+    -- Appearance callers pass the zero-based 3.3.5 client inventory slot; the
+    -- wire target is one-based so every transmog slot remains a positive value.
     return B.RequestSC2Action(13, collectionId, "APPLY", equipmentSlot + 1, callback)
 end
 

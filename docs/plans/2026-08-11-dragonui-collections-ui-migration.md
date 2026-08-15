@@ -23,7 +23,7 @@
 7. 模型加载、generation 和 provider 继续复用 NewEra/SoloCollections presenter；可见的模型背景、槽位、控制和页面几何按 ezCollections 母版呈现。
 8. ezCollections 的收藏日志、衣柜和幻化页面作为实际 UI 母版进入本地集成实现；“外观收藏”和“幻化实验室”共享其 WardrobeCollectionFrame 视觉树，但保持独立产品状态。
 9. “幻化实验室”必须沿用 ezCollections `WardrobeFrame` 的 300px 角色编辑区与 662px 候选区；实验状态使用低干扰标题/状态文字，不能用独立三栏工作台替代，也不能把本地试穿误报为服务端已应用。
-10. 现有 11 个槽位保持为 `HEAD`、`SHOULDER`、`BACK`、`CHEST`、`WRIST`、`HANDS`、`WAIST`、`LEGS`、`FEET`、`MAINHAND`、`OFFHAND`；不增加衬衣和战袍。
+10. 幻化实验室当前支持目录中存在的 13 个槽位：`HEAD`、`SHOULDER`、`BACK`、`CHEST`、`SHIRT`、`TABARD`、`WRIST`、`HANDS`、`WAIST`、`LEGS`、`FEET`、`MAINHAND`、`OFFHAND`；`RANGED` 在目录出现前不启用。
 
 ## 2. 已核对的上游快照
 
@@ -335,7 +335,7 @@ DragonUI_NewEra 顶层外框（965×606）
 ├─ 左侧 WardrobeTransmogFrame（300px）
 │  ├─ 外观方案下拉框与保存入口
 │  ├─ 294×488 DressUpModel
-│  ├─ 围绕角色排列的 11 个槽位按钮
+│  ├─ 围绕角色排列的 13 个槽位按钮
 │  ├─ 清除待应用按钮
 │  └─ 权威费用/状态与应用按钮
 └─ 右侧 WardrobeCollectionFrame（662px）
@@ -347,12 +347,13 @@ DragonUI_NewEra 顶层外框（965×606）
 
 ### 9.1 初始测试范围
 
-- 只支持现有 11 个槽位；
+- 支持当前生成目录存在的 13 个槽位：头、肩、背、胸、衬衣、战袍、腕、手、腰、腿、脚、主手、副手；`RANGED` 在目录出现前不启用；
 - 点击左侧槽位后，右侧切换对应类别；选择候选后立即在左侧模型本地试穿；
-- 草稿按槽位保存 `appearanceId/sourceItemId/state`；
-- 只有一个 dirty 槽位时，“应用”复用现有 SC2 type 13；
+- 草稿按槽位保存 canonical `appearanceId`、展示 `sourceItemId` 和本地状态；
+- 单槽“应用”复用现有 SC2 type 13；
+- “应用全部草稿”逐槽发送现有 SC2 type 13；它是显式的多次应用动作，不是原子保存；
 - 官方套装的现有应用继续复用 type 14；
-- “保存整套”初期禁用，不能在客户端循环发送 11 个单槽动作伪装原子成功；
+- 自定义“保存整套”仍未开放，不能把逐槽应用伪装成原子保存或持久化套装方案；
 - 关闭窗口、切换方案或重载前必须处理未保存草稿；切换方案先确认，关闭窗口保留会话草稿但不持久化为权威状态；
 - 费用只能由服务端返回，初始 UI 不自行计算。
 
@@ -553,10 +554,10 @@ DragonUI_NewEra 顶层外框（965×606）
 4. 候选来源继续调用 SoloCollections Catalog，不调用 `C_TransmogCollection`。
 5. 点击候选只写本地 draft 并刷新中央模型。
 6. 关闭、换方案、清除草稿时处理未保存状态。
-7. 单槽应用复用现有 `SC.Bridge.ApplyAppearance`；请求成功后等待 SC2 状态刷新，不自行写 owned/applied。
+7. 单槽应用复用现有 `SC.Bridge.ApplyAppearance`；SC2 `ACCEPTED` 是服务端验证并执行的角色幻化结果，本页只保留本地 applied-preview 投影，不自行写 owned。
 8. 多槽保存按钮禁用并说明需要服务端原子方案。
 
-**完成条件：** 能选择 11 个槽位、浏览已有外观目录、本地试穿、清除草稿，并通过现有 SC2 应用单个槽位；没有 ezCollections 消息和服务端依赖。
+**完成条件：** 能选择 13 个槽位、浏览已有外观目录、本地试穿、清除草稿，并通过现有 SC2 应用单个槽位；没有 ezCollections 消息和服务端依赖。
 
 **建议提交：** `feat: port wardrobe draft interaction into transmog lab`
 
@@ -767,7 +768,7 @@ DragonUI_NewEra 顶层外框（965×606）
 ### 13.2 幻化实验室验收
 
 - 单独标签和实验角标清晰；
-- 11 槽位准确，不出现衬衣/战袍；
+- 13 槽位准确，包含衬衣/战袍；`RANGED` 在目录出现前不启用；
 - 本地草稿、预览、请求中、服务端已应用视觉上可区分；
 - 切槽、换方案、关闭窗口不会静默丢失或误提交；
 - 单槽应用只发一次现有 SC2 请求；
@@ -876,7 +877,7 @@ DragonUI_NewEra 顶层外框（965×606）
 
 - [x] 删除当前左/中/右三栏工作台布局。
 - [x] 按 WardrobeFrame 965×606 重建左侧角色槽位区和右侧候选区。
-- [x] 11 槽按钮围绕模型，点击槽位联动右侧物品/套装浏览。
+- [x] 13 槽按钮围绕模型，点击槽位联动右侧物品/套装浏览。
 - [x] local draft、清除、单槽 ApplyAppearance、预设 ApplySet 和 SC2 状态刷新保持明确分层。
 - [x] 多槽自定义保存继续禁用，直到 Task 21 提供服务端原子合同。
 
