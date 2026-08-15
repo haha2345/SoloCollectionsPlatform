@@ -392,13 +392,68 @@ function B.SetMountFavorite(collectionId, favorite, callback)
     return B.RequestSC2Action(10, collectionId, "SET_FAVORITE", favorite and 1 or 0, callback)
 end
 
-local favoriteMigration = {
-    initialized = false,
-    queue = {},
-    awaitingId = nil,
-    awaitingDeadline = 0,
-    nextAt = 0,
-    blocked = false,
+function B.SummonRandomPet(callback)
+    if not B.sc2Connected then
+        if type(callback) == "function" then pcall(callback, false, "BRIDGE_UNAVAILABLE") end
+        return nil
+    end
+    return B.RequestSC2Action(11, 1, "RANDOM_SUMMON", nil, callback)
+end
+
+function B.SetPetFavorite(collectionId, favorite, callback)
+    if not isPositiveInteger(collectionId) then
+        if type(callback) == "function" then pcall(callback, false, "INVALID_COLLECTION_ID") end
+        return nil
+    end
+    return B.RequestSC2Action(11, collectionId, "SET_FAVORITE", favorite and 1 or 0, callback)
+end
+
+local PET_ACTION_MESSAGES = {
+    ACCEPTED = "小宠物召唤请求已接受。",
+    DISMISSED = "当前小宠物已解散。",
+    NO_COMPANIONS = "尚未获得可召唤的小宠物。",
+    NO_USABLE_COMPANIONS = "当前没有可在此处召唤的小宠物。",
+    FAVORITE_NOT_OWNED = "只有已获得的小宠物才能设为偏好。",
+    LOADING = "小宠物收藏仍在同步，请稍后再试。",
+    DB_UNAVAILABLE = "收藏数据库暂时不可用。",
+    RATE_LIMITED = "操作过于频繁，请稍后再试。",
+    DEAD = "死亡状态下不能召唤小宠物。",
+    IN_COMBAT = "战斗中不能召唤小宠物。",
+    IN_VEHICLE = "载具中不能召唤小宠物。",
+    ON_TAXI = "飞行点移动中不能召唤小宠物。",
+    MAP_RESTRICTED = "当前区域不能召唤该小宠物。",
+    CAST_FAILED = "小宠物召唤失败。",
+    UNSUPPORTED = "该小宠物当前不支持此操作。",
+    INVALID_REQUEST = "小宠物操作请求无效。",
+    INVALID_COLLECTION_ID = "小宠物收藏编号无效。",
+    BRIDGE_UNAVAILABLE = "小宠物收藏服务尚未连接。",
+    TIMEOUT = "小宠物收藏服务响应超时。",
+}
+B.petActionMessages = PET_ACTION_MESSAGES
+
+function B.GetPetActionMessage(status)
+    return PET_ACTION_MESSAGES[status] or "小宠物操作失败，请稍后再试。"
+end
+
+local function newFavoriteMigration(marker, legacyCategory, ownedType, projectionType, setFavorite)
+    return {
+        marker = marker,
+        legacyCategory = legacyCategory,
+        ownedType = ownedType,
+        projectionType = projectionType,
+        setFavorite = setFavorite,
+        initialized = false,
+        queue = {},
+        awaitingId = nil,
+        awaitingDeadline = 0,
+        nextAt = 0,
+        blocked = false,
+    }
+end
+
+local favoriteMigrations = {
+    newFavoriteMigration("mountFavoritesToServer", "MOUNTS", 10, 16, B.SetMountFavorite),
+    newFavoriteMigration("petFavoritesToServer", "PETS", 11, 17, B.SetPetFavorite),
 }
 
 local function favoriteMigrationStore()
@@ -407,71 +462,85 @@ local function favoriteMigrationStore()
     return SoloCollectionsDB.migrations
 end
 
-local function completeFavoriteMigration()
-    favoriteMigrationStore().mountFavoritesToServer = 1
-    favoriteMigration.initialized = true
-    favoriteMigration.queue = {}
-    favoriteMigration.awaitingId = nil
+local function completeFavoriteMigration(migration)
+    favoriteMigrationStore()[migration.marker] = 1
+    migration.initialized = true
+    migration.queue = {}
+    migration.awaitingId = nil
 end
 
-scheduleFavoriteMigration = function()
-    if favoriteMigrationStore().mountFavoritesToServer == 1 then
-        favoriteMigration.initialized = true
+local function scheduleOneFavoriteMigration(migration)
+    if favoriteMigrationStore()[migration.marker] == 1 then
+        migration.initialized = true
         return
     end
-    if favoriteMigration.initialized or not CS or
-        B.GetCategoryState(10) ~= "Ready" or B.GetCategoryState(16) ~= "Ready" then
+    if migration.initialized or not CS or
+        B.GetCategoryState(migration.ownedType) ~= "Ready" or
+        B.GetCategoryState(migration.projectionType) ~= "Ready" then
         return
     end
-    favoriteMigration.initialized = true
-    favoriteMigration.blocked = false
-    local legacy = SoloCollectionsDB.favorites and SoloCollectionsDB.favorites.MOUNTS
+    migration.initialized = true
+    migration.blocked = false
+    local legacy = SoloCollectionsDB.favorites and SoloCollectionsDB.favorites[migration.legacyCategory]
     if type(legacy) == "table" then
         for collectionId, enabled in pairs(legacy) do
             collectionId = tonumber(collectionId)
             if enabled == true and isPositiveInteger(collectionId) and
-                CS.IsOwnedByType(10, collectionId) and not CS.IsOwnedByType(16, collectionId) then
-                favoriteMigration.queue[#favoriteMigration.queue + 1] = collectionId
+                CS.IsOwnedByType(migration.ownedType, collectionId) and
+                not CS.IsOwnedByType(migration.projectionType, collectionId) then
+                migration.queue[#migration.queue + 1] = collectionId
             end
         end
-        table.sort(favoriteMigration.queue)
+        table.sort(migration.queue)
     end
-    if #favoriteMigration.queue == 0 then completeFavoriteMigration() end
+    if #migration.queue == 0 then completeFavoriteMigration(migration) end
+end
+
+scheduleFavoriteMigration = function()
+    for _, migration in ipairs(favoriteMigrations) do
+        scheduleOneFavoriteMigration(migration)
+    end
+end
+
+local function pumpOneFavoriteMigration(migration, now)
+    if migration.blocked or not migration.initialized then return end
+    if migration.awaitingId then
+        if CS.IsOwnedByType(migration.projectionType, migration.awaitingId) then
+            migration.awaitingId = nil
+            migration.nextAt = now + 0.30
+            if #migration.queue == 0 then completeFavoriteMigration(migration) end
+        elseif now >= migration.awaitingDeadline then
+            -- Keep the old table and retry on a later login; an ACCEPTED action
+            -- without its authoritative delta is not migration completion.
+            migration.blocked = true
+        end
+        return
+    end
+    if #migration.queue == 0 or now < migration.nextAt then return end
+    local collectionId = table.remove(migration.queue, 1)
+    migration.awaitingId = collectionId
+    migration.awaitingDeadline = now + 8
+    local requestId = migration.setFavorite(collectionId, true, function(ok, reason)
+        if ok then return end
+        migration.awaitingId = nil
+        if reason == "FAVORITE_NOT_OWNED" or reason == "UNSUPPORTED" or
+            reason == "INVALID_REQUEST" or reason == "INVALID_COLLECTION_ID" then
+            migration.nextAt = (GetTime and GetTime() or now) + 0.30
+            if #migration.queue == 0 then completeFavoriteMigration(migration) end
+        else
+            migration.blocked = true
+        end
+    end)
+    if not requestId then
+        migration.awaitingId = nil
+        migration.blocked = true
+    end
 end
 
 pumpFavoriteMigration = function(now)
     scheduleFavoriteMigration()
-    if favoriteMigration.blocked or not favoriteMigration.initialized then return end
-    if favoriteMigration.awaitingId then
-        if CS.IsOwnedByType(16, favoriteMigration.awaitingId) then
-            favoriteMigration.awaitingId = nil
-            favoriteMigration.nextAt = now + 0.30
-            if #favoriteMigration.queue == 0 then completeFavoriteMigration() end
-        elseif now >= favoriteMigration.awaitingDeadline then
-            -- Keep the old table and retry on a later login; an ACCEPTED action
-            -- without its authoritative delta is not migration completion.
-            favoriteMigration.blocked = true
-        end
-        return
-    end
-    if #favoriteMigration.queue == 0 or now < favoriteMigration.nextAt then return end
-    local collectionId = table.remove(favoriteMigration.queue, 1)
-    favoriteMigration.awaitingId = collectionId
-    favoriteMigration.awaitingDeadline = now + 8
-    local requestId = B.SetMountFavorite(collectionId, true, function(ok, reason)
-        if ok then return end
-        favoriteMigration.awaitingId = nil
-        if reason == "FAVORITE_NOT_OWNED" or reason == "UNSUPPORTED" or
-            reason == "INVALID_REQUEST" or reason == "INVALID_COLLECTION_ID" then
-            favoriteMigration.nextAt = (GetTime and GetTime() or now) + 0.30
-            if #favoriteMigration.queue == 0 then completeFavoriteMigration() end
-        else
-            favoriteMigration.blocked = true
-        end
-    end)
-    if not requestId then
-        favoriteMigration.awaitingId = nil
-        favoriteMigration.blocked = true
+    for _, migration in ipairs(favoriteMigrations) do
+        pumpOneFavoriteMigration(migration, now)
     end
 end
 

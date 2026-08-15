@@ -4,10 +4,10 @@ UI.DragonUI = UI.DragonUI or {}
 
 local MountJournal = UI.DragonUI.MountJournal or {}
 UI.DragonUI.MountJournal = MountJournal
+UI.DragonUI.CompanionJournal = MountJournal
 
--- Shared geometry for the WotLK mount journal. The page is deliberately wider
--- than the other collection pages so the right detail panel can keep the
--- DragonUI header, model, and 456px content column together.
+-- Shared geometry and visual adapter for mount/companion journals. Keep the
+-- historical MountJournal table and methods as stable compatibility aliases.
 MountJournal.LAYOUT = {
     width = 768,
     height = 606,
@@ -35,6 +35,7 @@ MountJournal.LAYOUT = {
 local REQUIRED = {
     "components.collection-header",
     "components.journal-filter",
+    "components.random-collection",
     "components.random-mount",
     "components.red-action",
     "components.journal-tabs",
@@ -70,6 +71,12 @@ function MountJournal:CreateCollectionInfoHeader(parent, spec)
     return c:CreateCollectionInfoHeader(parent, spec or {})
 end
 
+-- Semantic companion alias: both journals intentionally share the same
+-- icon crop, gold ornament, name origin, and source/description widths.
+function MountJournal:CreateCompanionInfoHeader(parent, spec)
+    return self:CreateCollectionInfoHeader(parent, spec or {})
+end
+
 function MountJournal:CreateJournalFilterButton(parent, spec)
     local c = components()
     if not c then return nil end
@@ -80,6 +87,12 @@ function MountJournal:CreateRandomMountButton(parent, spec)
     local c = components()
     if not c then return nil end
     return c:CreateRandomMountButton(parent, spec or {})
+end
+
+function MountJournal:CreateRandomCompanionButton(parent, spec)
+    local c = components()
+    if not c then return nil end
+    return c:CreateRandomCollectionButton(parent, spec or {})
 end
 
 function MountJournal:SkinRedActionButton(button, spec)

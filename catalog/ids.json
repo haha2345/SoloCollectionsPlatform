@@ -111,6 +111,12 @@
         "key": "mount-favorite",
         "lifecycle": "active",
         "ordinal": 7
+      },
+      {
+        "id": 17,
+        "key": "companion-favorite",
+        "lifecycle": "active",
+        "ordinal": 8
       }
     ],
     "collections": [

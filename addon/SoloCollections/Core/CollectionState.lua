@@ -35,6 +35,12 @@ local CATEGORY_TYPE_KEYS = {
     TITLES = "title",
 }
 
+-- Internal projections participate in SC2 snapshots/deltas but never resolve
+-- through page category keys, so they cannot enter navigation or progress.
+local INTERNAL_PROJECTION_TYPES = {
+    [17] = { typeId = 17, typeKey = "companion-favorite", mappingSourceKey = "companion" },
+}
+
 local typeDefinitions = {}
 local typeIdByKey = {}
 local expectedHashByTypeId = {}
@@ -51,6 +57,15 @@ local function rebuildTypeDefinitions()
             typeIdByKey[definition.typeKey] = typeId
             if generated.typeMappingHashes then
                 expectedHashByTypeId[typeId] = generated.typeMappingHashes[definition.typeKey]
+            end
+        end
+    end
+    for typeId, definition in pairs(INTERNAL_PROJECTION_TYPES) do
+        if not typeDefinitions[typeId] then
+            typeDefinitions[typeId] = definition
+            typeIdByKey[definition.typeKey] = typeId
+            if generated.typeMappingHashes then
+                expectedHashByTypeId[typeId] = generated.typeMappingHashes[definition.mappingSourceKey]
             end
         end
     end

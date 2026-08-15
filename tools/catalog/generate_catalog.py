@@ -346,6 +346,42 @@ def _load_companion_actions(source_root: Path, collections: list[dict[str, Any]]
     return result
 
 
+def _apply_companion_journal_contract(source_root: Path, actions: dict[str, Any]) -> dict[str, Any]:
+    journal = _read_json(source_root / "companion_journal_metadata.json")
+    _require(journal.get("schemaVersion") == 1, "unsupported companion journal metadata schema")
+    rows = journal.get("entries")
+    _require(isinstance(rows, list), "companion journal entries must be an array")
+    by_id = {int(row["collectionId"]): row for row in rows}
+    entries = actions["entries"]
+    _require(len(by_id) == len(rows) == len(entries), "companion journal/action coverage differs")
+    _require(set(by_id) == {int(entry["collectionId"]) for entry in entries},
+             "companion journal/action collectionId sets differ")
+    for entry in entries:
+        row = by_id[int(entry["collectionId"])]
+        _require(int(row.get("spellId") or 0) == int(entry["canonicalSpellId"]),
+                 f"companion journal spell drift: {entry['collectionKey']}")
+        journal_visible = bool(row.get("journalVisible"))
+        actionable = bool(row.get("actionable"))
+        random_eligible = bool(row.get("randomEligible"))
+        action_spell_id = int(row.get("canonicalActionSpellId") or 0)
+        exclusion_reason = row.get("exclusionReason")
+        _require(not actionable or journal_visible, f"hidden companion is actionable: {entry['collectionKey']}")
+        _require(not random_eligible or (journal_visible and actionable),
+                 f"invalid random-eligible companion: {entry['collectionKey']}")
+        _require((exclusion_reason is None) == journal_visible,
+                 f"companion exclusion/visibility mismatch: {entry['collectionKey']}")
+        _require((action_spell_id == int(entry["canonicalSpellId"])) if actionable else action_spell_id == 0,
+                 f"companion canonical action spell mismatch: {entry['collectionKey']}")
+        entry.update({
+            "journalVisible": journal_visible,
+            "actionable": actionable,
+            "randomEligible": random_eligible,
+            "canonicalActionSpellId": action_spell_id,
+        })
+    actions["mappingHash"] = _hash({key: value for key, value in actions.items() if key != "mappingHash"})
+    return actions
+
+
 def _load_toy_actions(source_root: Path, collections: list[dict[str, Any]]) -> dict[str, Any]:
     path = source_root / "toy_actions.json"
     sources = [entry for entry in collections if entry["typeKey"] == "toy"]
@@ -775,7 +811,9 @@ def build_model(source_root: Path) -> dict[str, Any]:
         _require(identity not in seen_override, f"duplicate identity override: {identity}")
         seen_override.add(identity)
     mount_actions = _apply_mount_journal_contract(source_root, _load_mount_actions(source_root, collections))
-    companion_actions = _load_companion_actions(source_root, collections)
+    companion_actions = _apply_companion_journal_contract(
+        source_root, _load_companion_actions(source_root, collections),
+    )
     toy_actions = _load_toy_actions(source_root, collections)
     creature_presentations = _load_creature_presentations(source_root, collections)
     appearance_presentations = _load_appearance_presentations(source_root, collections)
@@ -885,6 +923,15 @@ def build_model(source_root: Path) -> dict[str, Any]:
             }
         elif entry["typeKey"] == "companion":
             basis = {"collections": basis, "actions": mapping_basis["companionActions"]}
+        elif entry["typeKey"] == "companion-favorite":
+            # Internal type 17 projects preference membership over the exact
+            # same stable IDs as the companion catalog; it has no navigation rows.
+            basis = {
+                "collections": [
+                    row for row in mapping_basis["collections"] if row["typeKey"] == "companion"
+                ],
+                "actions": mapping_basis["companionActions"],
+            }
         elif entry["typeKey"] == "toy":
             basis = {"collections": basis, "actions": mapping_basis["toyActions"]}
         model["typeMappingHashes"][entry["typeKey"]] = (
@@ -1084,6 +1131,10 @@ def _companion_catalog_inc(model: dict[str, Any]) -> str:
                 str(int(entry["canonicalSpellId"])) + "u", _cpp_uints(entry["unlockSpellIds"]),
                 str(int(collection["previewCreatureEntry"])) + "u",
                 lifecycle_names[collection["catalogLifecycle"]],
+                "true" if entry["journalVisible"] else "false",
+                "true" if entry["actionable"] else "false",
+                "true" if entry["randomEligible"] else "false",
+                str(int(entry["canonicalActionSpellId"])) + "u",
             ]) + "},"
         )
     lines += ["    };", "}", ""]
@@ -1197,6 +1248,14 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
     companion_actions_by_id = {
         int(entry["collectionId"]): entry for entry in model["companionActions"]["entries"]
     }
+    companion_journal = _read_json(repo_root / "catalog/source/companion_journal_metadata.json")
+    companion_journal_by_id = {
+        int(entry["collectionId"]): entry for entry in companion_journal["entries"]
+    }
+    _require(
+        set(companion_journal_by_id) == set(companion_actions_by_id),
+        "companion journal metadata must cover every canonical companion action",
+    )
     toy_actions_by_id = {
         int(entry["collectionId"]): entry for entry in model["toyActions"]["entries"]
     }
@@ -1252,6 +1311,26 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
             entry["uiExclusionReason"] = entry["visibilityReason"]
         elif entry["typeKey"] == "companion":
             entry["displayCreatureId"] = int(entry["previewCreatureEntry"])
+            action = companion_actions_by_id[int(entry["collectionId"])]
+            journal = companion_journal_by_id[int(entry["collectionId"])]
+            _require(int(action["canonicalSpellId"]) == int(journal["spellId"]),
+                     f"companion journal spell drift: {entry['collectionId']}")
+            entry["spellId"] = int(action["canonicalSpellId"])
+            entry["sourceText"] = journal["source"]
+            entry["sourceType"] = int(journal["sourceType"])
+            entry["descriptionZhCN"] = journal.get("descriptionZhCN") or ""
+            entry["descriptionStatus"] = journal.get("descriptionStatus") or "MISSING"
+            entry["journalVisible"] = bool(journal["journalVisible"])
+            entry["actionable"] = bool(journal["actionable"])
+            entry["randomEligible"] = bool(journal["randomEligible"])
+            entry["canonicalActionSpellId"] = int(journal.get("canonicalActionSpellId") or 0)
+            entry["acquisitionClass"] = journal.get("acquisitionClass") or "STANDARD"
+            entry["visibilityReason"] = journal.get("visibilityReason")
+            entry["exclusionReason"] = journal.get("exclusionReason")
+            entry["uiCollectible"] = entry["journalVisible"]
+            entry["uiExclusionReason"] = entry["visibilityReason"]
+            if journal.get("journalNameZhCN"):
+                entry["name"]["zhCN"] = journal["journalNameZhCN"]
         elif entry["typeKey"] == "toy":
             action = toy_actions_by_id[int(entry["collectionId"])]
             entry["displayItemId"] = int(action["itemId"])
@@ -1507,6 +1586,42 @@ def project_mount_action_contract(repo_root: Path, module_root: Path, check: boo
     return 0
 
 
+def discover_module_root(repo_root: Path) -> Path:
+    candidates = (
+        repo_root.parent / "mod-solo-collections",
+        repo_root.parent.parent / "mod-solo-collections",
+    )
+    for candidate in candidates:
+        if (candidate / "src/SoloCollectionsTypes.h").is_file() and (candidate / ".git").exists():
+            return candidate
+    raise CatalogError("cannot discover sibling mod-solo-collections checkout; pass --module-root")
+
+
+def project_companion_journal(repo_root: Path, module_root: Path, check: bool) -> int:
+    """Render the tracked AddOn/module companion journal contract without external assets."""
+    module_root = validate_module_root(repo_root, module_root)
+    model = build_model(repo_root / "catalog/source")
+    outputs = render_outputs(model, repo_root, module_root)
+    drift = []
+    for path, content in outputs.items():
+        current = path.read_text(encoding="utf-8") if path.exists() else None
+        if current == content:
+            continue
+        if check:
+            drift.append(path)
+        else:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(content, encoding="utf-8", newline="\n")
+            print(f"generated: {path}")
+    if drift:
+        for path in drift:
+            print(f"out of date: {path}", file=sys.stderr)
+        return 1
+    print(f"companion journal contract mapping hash: {model['mappingHash']}")
+    print(f"companion journal type hash: {model['typeMappingHashes']['companion']}")
+    return 0
+
+
 def _validate_creature_presentation_evidence(source_root: Path, evidence_root: Path) -> None:
     module_path = Path(__file__).with_name("creature_presentations.py")
     spec = importlib.util.spec_from_file_location("solo_creature_presentations", module_path)
@@ -1665,6 +1780,11 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="regenerate the tracked cross-repository mount action contract without external presentation evidence",
     )
+    parser.add_argument(
+        "--companion-journal-only",
+        action="store_true",
+        help="regenerate the tracked AddOn/module companion journal contract without external presentation evidence",
+    )
     args = parser.parse_args(argv)
     repo_root = Path(__file__).resolve().parents[2]
     if args.mount_journal_only:
@@ -1681,8 +1801,15 @@ def main(argv: list[str] | None = None) -> int:
         except CatalogError as exc:
             print(f"catalog error: {exc}", file=sys.stderr)
             return 2
+    if args.companion_journal_only:
+        try:
+            module_root = args.module_root or discover_module_root(repo_root)
+            return project_companion_journal(repo_root, module_root, args.check)
+        except CatalogError as exc:
+            print(f"catalog error: {exc}", file=sys.stderr)
+            return 2
     if args.module_root is None or args.evidence_root is None:
-        parser.error("--module-root and --evidence-root are required unless --mount-journal-only is used")
+        parser.error("--module-root and --evidence-root are required unless a tracked-only projection mode is used")
     source_root = args.source_root.resolve() if args.source_root else repo_root / "catalog/source"
     try:
         return generate(

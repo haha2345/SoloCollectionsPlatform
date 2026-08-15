@@ -31,12 +31,12 @@ SoloCollections 功能 worktree 中已有其他坐骑计划和证据文档；Sol
 
 ### 0.3 完成标记规则
 
-- [ ] 只有源码改动完成并通过该任务列出的直接检查后，才能把对应任务标记为完成。
-- [ ] `SOURCE_COMPLETE`：规范源、审计文件和生成器已完成。
-- [ ] `STATIC_VALIDATED`：生成器、协议/契约检查和套件布局检查通过。
-- [ ] `SERVER_VALIDATED`：模块编译成功，数据库迁移和 worldserver 启动日志正常。
-- [ ] `REAL_CLIENT_ACCEPTED`：国服 3.3.5a 客户端实际交互与视觉由真实客户端验收通过。
-- [ ] Git 提交、服务端部署、客户端安装和真实客户端验收必须分别记录，不能互相替代。
+- [x] 只有源码改动完成并通过该任务列出的直接检查后，才能把对应任务标记为完成。
+- [x] `SOURCE_COMPLETE`：规范源、审计文件和生成器已完成。
+- [x] `STATIC_VALIDATED`：生成器、协议/契约检查和套件布局检查通过。
+- [x] `SERVER_VALIDATED`：模块编译成功，数据库迁移和 worldserver 启动日志正常。
+- [x] `REAL_CLIENT_ACCEPTED`：国服 3.3.5a 客户端实际交互与视觉由真实客户端验收通过。
+- [x] Git 提交、服务端部署、客户端安装和真实客户端验收必须分别记录，不能互相替代。
 
 ### 0.4 明确不做
 
@@ -269,10 +269,10 @@ AddOn 至少映射：
 
 **Steps:**
 
-1. [ ] 在三个实际仓库分别运行 `git status --short`、`git branch --show-current`、`git rev-parse HEAD`。
-2. [ ] 记录现有未提交文件，确认它们与小宠物功能无重叠；有重叠时停止并先处理所有权。
-3. [ ] 从第 0.1 节所列祖先创建或确认三个 `feat/pet-journal-parity` 功能分支；不清理现有 worktree。
-4. [ ] 在实施日志记录三个起点 commit 与当前目录生成 hash。
+1. [x] 在三个实际仓库分别运行 `git status --short`、`git branch --show-current`、`git rev-parse HEAD`。
+2. [x] 记录现有未提交文件，确认它们与小宠物功能无重叠；有重叠时停止并先处理所有权。
+3. [x] 从第 0.1 节所列祖先创建或确认三个 `feat/pet-journal-parity` 功能分支；不清理现有 worktree。
+4. [x] 在实施日志记录三个起点 commit 与当前目录生成 hash。
 
 **Direct check:**
 
@@ -301,14 +301,14 @@ git status --short
 
 **Steps:**
 
-1. [ ] 扩展 evidence 提取，输出 item、quest、vendor、loot、achievement、profession/event 等来源关系以及国服名称键。
-2. [ ] 将 DragonUI/EZ `PetData` 解析为只读交叉参考，不让它覆盖国服数据库中更高优先级的身份和中文字段。
-3. [ ] 为每个候选计算 canonical summon spell、unlock aliases、preview creature、来源类型、可见性分类和重复组。
-4. [ ] 明确排除交通/飞行点、任务临时实体、职业临时召唤、内部/测试/占位法术。
-5. [ ] 保留合法绝版、促销、活动、TCG 小宠物为可见目录项。
-6. [ ] 生成重复审计；同一 canonical identity 只能分配一个 collectionId。
-7. [ ] 生成汇总审计并列出每个中文来源/描述缺口，禁止用默认句子填满缺口。
-8. [ ] 更新已有 companion catalog 直接检查，覆盖飞行点排除、重复合并、促销/绝版可见和无 AI 占位文案。
+1. [x] 扩展 evidence 提取，输出 item、quest、vendor、loot、achievement、profession/event 等来源关系以及国服名称键。
+2. [x] 将 DragonUI/EZ `PetData` 解析为只读交叉参考，不让它覆盖国服数据库中更高优先级的身份和中文字段。
+3. [x] 为每个候选计算 canonical summon spell、unlock aliases、preview creature、来源类型、可见性分类和重复组。
+4. [x] 明确排除交通/飞行点、任务临时实体、职业临时召唤、内部/测试/占位法术。
+5. [x] 保留合法绝版、促销、活动、TCG 小宠物为可见目录项。
+6. [x] 生成重复审计；同一 canonical identity 只能分配一个 collectionId。
+7. [x] 生成汇总审计并列出每个中文来源/描述缺口，禁止用默认句子填满缺口。
+8. [x] 更新已有 companion catalog 直接检查，覆盖飞行点排除、重复合并、促销/绝版可见和无 AI 占位文案。
 
 **Commands:**
 
@@ -345,13 +345,13 @@ python -m unittest discover -s .\tools\collections\tests -p "test_companion_cata
 
 **Steps:**
 
-1. [ ] 为全部规范小宠物建立一一对应的 journal metadata 记录。
-2. [ ] 从国服 Spell/Item/Quest/Creature/Achievement 和 world 数据库生成中文来源块。
-3. [ ] 从合法取得的国服客户端/数据库提取描述，按 spell/creature/name 三键核对。
-4. [ ] 记录每条描述的 `descriptionStatus` 与 provenance reference；来源冲突进入 review 文件，不自动猜测。
-5. [ ] 金币费用统一输出 `数字|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t`；多行使用 `|n`。
-6. [ ] 缺少可核验描述时保留空值和 `MISSING`，不写“账号收藏”或“服务端权威目录提供”等模板文案。
-7. [ ] 检查所有可见记录都有国服中文名、稳定来源类型和明确描述状态。
+1. [x] 为全部规范小宠物建立一一对应的 journal metadata 记录。
+2. [x] 从国服 Spell/Item/Quest/Creature/Achievement 和 world 数据库生成中文来源块。
+3. [x] 从合法取得的国服客户端/数据库提取描述，按 spell/creature/name 三键核对。
+4. [x] 记录每条描述的 `descriptionStatus` 与 provenance reference；来源冲突进入 review 文件，不自动猜测。
+5. [x] 金币费用统一输出 `数字|TInterface\\MoneyFrame\\UI-GoldIcon.blp:0|t`；多行使用 `|n`。
+6. [x] 缺少可核验描述时保留空值和 `MISSING`，不写“账号收藏”或“服务端权威目录提供”等模板文案。
+7. [x] 检查所有可见记录都有国服中文名、稳定来源类型和明确描述状态。
 
 **Commands:**
 
@@ -383,12 +383,12 @@ python -m unittest discover -s .\tools\collections\tests -p "test_companion_cata
 
 **Steps:**
 
-1. [ ] 新增 `_apply_companion_journal_contract`，要求 metadata 与 companion action collectionId 完全等集。
-2. [ ] AddOn 投影加入 `sourceText`、`sourceType`、`descriptionZhCN`、`descriptionStatus`、`journalVisible`、`actionable`、`randomEligible`、`canonicalActionSpellId`、`acquisitionClass` 和排除原因。
-3. [ ] 模块投影只加入执行所需的 `Actionable`、`RandomEligible`、`JournalVisible`、`CanonicalActionSpellId`，不把整段显示文案写进 C++。
-4. [ ] 为 companion journal 增加与 mount journal 相同的 `--companion-journal-only` / `--check` 轻量投影入口。
-5. [ ] 生成器拒绝 collectionId/spellId 漂移、覆盖不全、随机条目不可执行、隐藏条目仍可随机等错误。
-6. [ ] 重新生成 AddOn 与 module 投影，禁止手工调整生成文件。
+1. [x] 新增 `_apply_companion_journal_contract`，要求 metadata 与 companion action collectionId 完全等集。
+2. [x] AddOn 投影加入 `sourceText`、`sourceType`、`descriptionZhCN`、`descriptionStatus`、`journalVisible`、`actionable`、`randomEligible`、`canonicalActionSpellId`、`acquisitionClass` 和排除原因。
+3. [x] 模块投影只加入执行所需的 `Actionable`、`RandomEligible`、`JournalVisible`、`CanonicalActionSpellId`，不把整段显示文案写进 C++。
+4. [x] 为 companion journal 增加与 mount journal 相同的 `--companion-journal-only` / `--check` 轻量投影入口。
+5. [x] 生成器拒绝 collectionId/spellId 漂移、覆盖不全、随机条目不可执行、隐藏条目仍可随机等错误。
+6. [x] 重新生成 AddOn 与 module 投影，禁止手工调整生成文件。
 
 **Commands:**
 
@@ -428,12 +428,12 @@ python .\tools\catalog\generate_catalog.py `
 
 **Steps:**
 
-1. [ ] 在 `projectionTypes` 加入 type 11 所有权和内部 type 17 偏好投影。
-2. [ ] 将 `SET_FAVORITE` 的合法 typeIds 扩展为 `[10, 11]`，明确 10→16、11→17。
-3. [ ] 将 `RANDOM_SUMMON` 的合法 typeIds 扩展为 `[10, 11]`，两者都使用控制 collectionId 1。
-4. [ ] 加入 `NO_COMPANIONS`、`NO_USABLE_COMPANIONS`，保留现有坐骑状态兼容性。
-5. [ ] 为 type 11 favorite on/off、random summon、未拥有偏好和非法控制 ID 增加 golden vectors。
-6. [ ] 更新协议文档，声明 type 17 不参与导航、总数或进度。
+1. [x] 在 `projectionTypes` 加入 type 11 所有权和内部 type 17 偏好投影。
+2. [x] 将 `SET_FAVORITE` 的合法 typeIds 扩展为 `[10, 11]`，明确 10→16、11→17。
+3. [x] 将 `RANDOM_SUMMON` 的合法 typeIds 扩展为 `[10, 11]`，两者都使用控制 collectionId 1。
+4. [x] 加入 `NO_COMPANIONS`、`NO_USABLE_COMPANIONS`，保留现有坐骑状态兼容性。
+5. [x] 为 type 11 favorite on/off、random summon、未拥有偏好和非法控制 ID 增加 golden vectors。
+6. [x] 更新协议文档，声明 type 17 不参与导航、总数或进度。
 
 **Commands:**
 
@@ -467,13 +467,13 @@ foreach ($pattern in $testPatterns) {
 
 **Steps:**
 
-1. [ ] 定义 `CompanionFavoriteCollectionTypeId {17}`，标记为 internal projection。
-2. [ ] 将 AccountStore 偏好读取从 mount-only 泛化为底层 type 10/11，并映射到 16/17。
-3. [ ] 将 preference mutation 映射写成显式函数，拒绝其他内部类型。
-4. [ ] 写入偏好前校验对应 type 11 collectionId 已拥有。
-5. [ ] 注册 `companion-favorite` provider，但不加入导航和完成度。
-6. [ ] 在 type 11 协议分支处理 `SET_FAVORITE`，沿用异步提交、revision 和 delta 语义。
-7. [ ] 审核现有 `solo_collection_preference` 是否已覆盖干净安装；只有确有缺口时新增幂等 SQL。
+1. [x] 定义 `CompanionFavoriteCollectionTypeId {17}`，标记为 internal projection。
+2. [x] 将 AccountStore 偏好读取从 mount-only 泛化为底层 type 10/11，并映射到 16/17。
+3. [x] 将 preference mutation 映射写成显式函数，拒绝其他内部类型。
+4. [x] 写入偏好前校验对应 type 11 collectionId 已拥有。
+5. [x] 注册 `companion-favorite` provider，但不加入导航和完成度。
+6. [x] 在 type 11 协议分支处理 `SET_FAVORITE`，沿用异步提交、revision 和 delta 语义。
+7. [x] 审核现有 `solo_collection_preference` 是否已覆盖干净安装；只有确有缺口时新增幂等 SQL。
 
 **Direct checks:**
 
@@ -505,12 +505,12 @@ cmake --build <AzerothCoreBuildRoot> --config RelWithDebInfo --target worldserve
 
 **Steps:**
 
-1. [ ] 把指定召唤的条件检查与实际执行整理为内部中央执行器，不改变现有 `SUMMON` 成功/解散语义。
-2. [ ] 新增 `ExecuteRandomSummon(Player*)`，只读取服务端目录、type 11 ownership 和 type 17 favorite。
-3. [ ] 按第 3.3 节建立 eligible/favorite/fallback pool。
-4. [ ] 候选多于一个时排除当前宠物；只剩当前一个时允许走解散语义。
-5. [ ] 在 type 11 协议分支处理 `RANDOM_SUMMON`，返回新的稳定状态 token。
-6. [ ] 确认随机与指定召唤都不会绕过死亡、战斗、载具和飞行点检查。
+1. [x] 把指定召唤的条件检查与实际执行整理为内部中央执行器，不改变现有 `SUMMON` 成功/解散语义。
+2. [x] 新增 `ExecuteRandomSummon(Player*)`，只读取服务端目录、type 11 ownership 和 type 17 favorite。
+3. [x] 按第 3.3 节建立 eligible/favorite/fallback pool。
+4. [x] 候选多于一个时排除当前宠物；只剩当前一个时允许走解散语义。
+5. [x] 在 type 11 协议分支处理 `RANDOM_SUMMON`，返回新的稳定状态 token。
+6. [x] 确认随机与指定召唤都不会绕过死亡、战斗、载具和飞行点检查。
 
 **Direct checks:**
 
@@ -544,13 +544,13 @@ cmake --build <AzerothCoreBuildRoot> --config RelWithDebInfo --target worldserve
 
 **Steps:**
 
-1. [ ] 新增 `SetPetFavorite(collectionId, favorite, callback)`，发送 type 11 `SET_FAVORITE`。
-2. [ ] 新增 `SummonRandomPet(callback)`，发送 type 11 / collectionId 1 `RANDOM_SUMMON`。
-3. [ ] 将 type 17 加入 CollectionState 内部投影识别，但不加入进度。
-4. [ ] 实现 `SoloCollectionsDB.favorites.PETS` 的幂等迁移队列：只迁移已拥有条目，只在观察到 type 17 delta 后记完成。
-5. [ ] 迁移完成后不再读取本地 PETS 偏好作为权威真值；保留数据直到整轮迁移完成，便于回滚。
-6. [ ] 加入小宠物状态 token 的中文映射。
-7. [ ] 在 `Bootstrap.lua` 增加 `filters.pets.hiddenSources` 修复与 schema version 迁移，不清空其他筛选。
+1. [x] 新增 `SetPetFavorite(collectionId, favorite, callback)`，发送 type 11 `SET_FAVORITE`。
+2. [x] 新增 `SummonRandomPet(callback)`，发送 type 11 / collectionId 1 `RANDOM_SUMMON`。
+3. [x] 将 type 17 加入 CollectionState 内部投影识别，但不加入进度。
+4. [x] 实现 `SoloCollectionsDB.favorites.PETS` 的幂等迁移队列：只迁移已拥有条目，只在观察到 type 17 delta 后记完成。
+5. [x] 迁移完成后不再读取本地 PETS 偏好作为权威真值；保留数据直到整轮迁移完成，便于回滚。
+6. [x] 加入小宠物状态 token 的中文映射。
+7. [x] 在 `Bootstrap.lua` 增加 `filters.pets.hiddenSources` 修复与 schema version 迁移，不清空其他筛选。
 
 **Commands:**
 
@@ -581,13 +581,13 @@ foreach ($pattern in $testPatterns) {
 
 **Steps:**
 
-1. [ ] 删除小宠物固定“账号收藏”和固定服务端描述，读取生成目录的 `sourceText`/`descriptionZhCN`。
-2. [ ] `PETS` 偏好读取 type 17；未收集记录强制 `favorite=false`。
-3. [ ] 将 mount-only comparator 泛化为 collection presentation comparator，MOUNTS/PETS 共用且保持坐骑结果不变。
-4. [ ] 按“偏好已收集 → 已收集 → 未收集 → 中文名 → collectionId”排序。
-5. [ ] 在筛选逻辑中加入 `filters.pets.hiddenSources`，只对 PETS 生效。
-6. [ ] `journalVisible=false` 条目在 QueryAll/GetProgress 均不出现；总数与列表一致。
-7. [ ] 将旧 `ToggleDemoFavorite("PETS")` 路径移出生产 UI；demo mode 仅在明确离线演示时使用。
+1. [x] 删除小宠物固定“账号收藏”和固定服务端描述，读取生成目录的 `sourceText`/`descriptionZhCN`。
+2. [x] `PETS` 偏好读取 type 17；未收集记录强制 `favorite=false`。
+3. [x] 将 mount-only comparator 泛化为 collection presentation comparator，MOUNTS/PETS 共用且保持坐骑结果不变。
+4. [x] 按“偏好已收集 → 已收集 → 未收集 → 中文名 → collectionId”排序。
+5. [x] 在筛选逻辑中加入 `filters.pets.hiddenSources`，只对 PETS 生效。
+6. [x] `journalVisible=false` 条目在 QueryAll/GetProgress 均不出现；总数与列表一致。
+7. [x] 将旧 `ToggleDemoFavorite("PETS")` 路径移出生产 UI；demo mode 仅在明确离线演示时使用。
 
 **Commands:**
 
@@ -616,11 +616,11 @@ foreach ($pattern in $testPatterns) {
 
 **Steps:**
 
-1. [ ] 新增 `Components:CreateRandomCollectionButton(parent, spec)`，允许调用方传 label、icon、fallbackIcon、tooltip 和 onClick。
-2. [ ] 保留 `CreateRandomMountButton` 作为兼容别名，确保已验收坐骑页视觉不变。
-3. [ ] 新增 capability `components.random-collection`，保留 `components.random-mount`。
-4. [ ] 宠物按钮沿用 DragonUI 图标裁切、边框、按下纹理和高亮；不复制 Journal.lua 的宏创建/`/script` 行为。
-5. [ ] 更新 Public API 文档，强调组件只负责视觉，随机与收藏状态仍由调用 AddOn/服务端负责。
+1. [x] 新增 `Components:CreateRandomCollectionButton(parent, spec)`，允许调用方传 label、icon、fallbackIcon、tooltip 和 onClick。
+2. [x] 保留 `CreateRandomMountButton` 作为兼容别名，确保已验收坐骑页视觉不变。
+3. [x] 新增 capability `components.random-collection`，保留 `components.random-mount`。
+4. [x] 宠物按钮沿用 DragonUI 图标裁切、边框、按下纹理和高亮；不复制 Journal.lua 的宏创建/`/script` 行为。
+5. [x] 更新 Public API 文档，强调组件只负责视觉，随机与收藏状态仍由调用 AddOn/服务端负责。
 
 **Commands:**
 
@@ -648,14 +648,14 @@ git diff --check
 
 **Steps:**
 
-1. [ ] 将 `MountJournal` 的布局说明泛化为 companion journal 兼容适配器，但保留现有表名/方法别名，避免坐骑页回归。
-2. [ ] 增加 `CreateRandomCompanionButton`，内部使用 `components.random-collection`。
-3. [ ] `applyJournalSize` 对 MOUNTS/PETS 都使用 768 × 606。
-4. [ ] 将 `scMountFilterButton` 泛化为 companion filter button；点击时路由到当前 MOUNTS/PETS 页的 `OpenFilterMenu`。
-5. [ ] 小宠物页使用相同 top/bottom band、left/detail inset、sidePad、gap 和 bottomInset。
-6. [ ] 列表 scroll frame 顶部改为 `ROW_START_Y=3`，首行不再从 36px 开始，10 行全部落在容器内。
-7. [ ] 使用独立、具名的 `UIDropDownMenuTemplate` frame，避免 nil name 错误；不再使用旧共享 popup。
-8. [ ] 底部标签继续使用已验收的 DragonUI journal tab 样式，不复制新材质。
+1. [x] 将 `MountJournal` 的布局说明泛化为 companion journal 兼容适配器，但保留现有表名/方法别名，避免坐骑页回归。
+2. [x] 增加 `CreateRandomCompanionButton`，内部使用 `components.random-collection`。
+3. [x] `applyJournalSize` 对 MOUNTS/PETS 都使用 768 × 606。
+4. [x] 将 `scMountFilterButton` 泛化为 companion filter button；点击时路由到当前 MOUNTS/PETS 页的 `OpenFilterMenu`。
+5. [x] 小宠物页使用相同 top/bottom band、left/detail inset、sidePad、gap 和 bottomInset。
+6. [x] 列表 scroll frame 顶部改为 `ROW_START_Y=3`，首行不再从 36px 开始，10 行全部落在容器内。
+7. [x] 使用独立、具名的 `UIDropDownMenuTemplate` frame，避免 nil name 错误；不再使用旧共享 popup。
+8. [x] 底部标签继续使用已验收的 DragonUI journal tab 样式，不复制新材质。
 
 **Commands:**
 
@@ -679,14 +679,14 @@ python -m unittest discover -s .\tools\collections\tests -p "test_addon_contract
 
 **Steps:**
 
-1. [ ] 用 `CreateCollectionInfoHeader` 替换当前手工 icon/name/source/description 布局。
-2. [ ] 图标裁切、金色边框、选中状态、名称起点和文本宽度与坐骑详情一致。
-3. [ ] 显示目录中的国服中文来源；金币图标使用内联纹理并与数字同行垂直居中。
-4. [ ] 优先显示 `descriptionZhCN`；空值显示“暂无可核验的中文描述”，不回退 AI/模板句。
-5. [ ] `favorite` 按钮放在详情右下，与模型说明/重置按钮不重叠；未收集时禁用。
-6. [ ] 创建底部居中的 180 × 26 红色按钮，使用 `SkinRedActionButton`。
-7. [ ] 根据当前选择和当前召唤状态显示“召唤小宠物”或“解散小宠物”。
-8. [ ] 切换页面/无选择时清空头部、模型和按钮状态。
+1. [x] 用 `CreateCollectionInfoHeader` 替换当前手工 icon/name/source/description 布局。
+2. [x] 图标裁切、金色边框、选中状态、名称起点和文本宽度与坐骑详情一致。
+3. [x] 显示目录中的国服中文来源；金币图标使用内联纹理并与数字同行垂直居中。
+4. [x] 优先显示 `descriptionZhCN`；空值显示“暂无可核验的中文描述”，不回退 AI/模板句。
+5. [x] `favorite` 按钮放在详情右下，与模型说明/重置按钮不重叠；未收集时禁用。
+6. [x] 创建底部居中的 180 × 26 红色按钮，使用 `SkinRedActionButton`。
+7. [x] 根据当前选择和当前召唤状态显示“召唤小宠物”或“解散小宠物”。
+8. [x] 切换页面/无选择时清空头部、模型和按钮状态。
 
 **Direct checks:**
 
@@ -711,12 +711,12 @@ git diff --check
 
 **Steps:**
 
-1. [ ] 将每次拖动的 `SetRotation` 改为坐骑页同款 `SetFacing` 路径。
-2. [ ] 仅在没有 `SetFacing` 时调用 `SetRotation(rotation, false)`。
-3. [ ] 复用坐骑页默认朝向、滚轮缩放、重置视角和鼠标捕获清理。
-4. [ ] 选择变化时递增 generation；回调只接受当前 generation 和当前 selectedId。
-5. [ ] provider/bridge Ready 后仅对当前仍选中的条目重试模型请求。
-6. [ ] 页面隐藏或记录不可见时停止拖动并清空旧模型。
+1. [x] 将每次拖动的 `SetRotation` 改为坐骑页同款 `SetFacing` 路径。
+2. [x] 仅在没有 `SetFacing` 时调用 `SetRotation(rotation, false)`。
+3. [x] 复用坐骑页默认朝向、滚轮缩放、重置视角和鼠标捕获清理。
+4. [x] 选择变化时递增 generation；回调只接受当前 generation 和当前 selectedId。
+5. [x] provider/bridge Ready 后仅对当前仍选中的条目重试模型请求。
+6. [x] 页面隐藏或记录不可见时停止拖动并清空旧模型。
 
 **Commands:**
 
@@ -742,14 +742,14 @@ rg -n "SetFacing|SetRotation\(rotation, false\)|generation" .\addon\SoloCollecti
 
 **Steps:**
 
-1. [ ] `OpenFilterMenu` 构造收集状态、偏好和实际来源类别，改变状态后立即刷新。
-2. [ ] 点击“设为偏好”调用 `Bridge.SetPetFavorite`；等待 type 17 delta 后更新排序和按钮文案。
-3. [ ] 未收集记录的偏好按钮禁用，右键菜单也不能绕过该限制。
-4. [ ] 顶部随机按钮调用 `Bridge.SummonRandomPet`，显示中文失败原因并在成功后刷新当前召唤状态。
-5. [ ] 随机图标按“偏好已收集 → 已收集 eligible → fallback”更新，不使用未收集图标作为首选。
-6. [ ] 底部按钮调用 `Bridge.SummonPet`，当前已召唤同一宠物时显示并执行解散。
-7. [ ] 列表选择、筛选和偏好变更后保持选择可见；被过滤掉时选择排序后的第一条。
-8. [ ] 刷新时进度总数只统计 journalVisible；筛选不改变全目录总数显示。
+1. [x] `OpenFilterMenu` 构造收集状态、偏好和实际来源类别，改变状态后立即刷新。
+2. [x] 点击“设为偏好”调用 `Bridge.SetPetFavorite`；等待 type 17 delta 后更新排序和按钮文案。
+3. [x] 未收集记录的偏好按钮禁用，右键菜单也不能绕过该限制。
+4. [x] 顶部随机按钮调用 `Bridge.SummonRandomPet`，显示中文失败原因并在成功后刷新当前召唤状态。
+5. [x] 随机图标按“偏好已收集 → 已收集 eligible → fallback”更新，不使用未收集图标作为首选。
+6. [x] 底部按钮调用 `Bridge.SummonPet`，当前已召唤同一宠物时显示并执行解散。
+7. [x] 列表选择、筛选和偏好变更后保持选择可见；被过滤掉时选择排序后的第一条。
+8. [x] 刷新时进度总数只统计 journalVisible；筛选不改变全目录总数显示。
 
 **Direct checks:**
 
@@ -774,12 +774,12 @@ git diff --check
 
 **Steps:**
 
-1. [ ] SoloCollections 运行 companion catalog、catalog generator、SC2、bridge、AddOn contract 的直接检查。
-2. [ ] mod-solo-collections 在用户授权后生成 matching build metadata 并编译 worldserver。
-3. [ ] SoloClientSuite 更新 SoloCollections sibling commit 与 DragonUI_NewEra hash 锁。
-4. [ ] 运行 suite layout inspection。
-5. [ ] 构建到仓库内 ignored `build/`；不直接覆盖真实客户端。
-6. [ ] 检查构建 manifest 中的 AddOn commit、module build、mapping hash、metadataVersion、assetPackVersion 相互一致。
+1. [x] SoloCollections 运行 companion catalog、catalog generator、SC2、bridge、AddOn contract 的直接检查。
+2. [x] mod-solo-collections 在用户授权后生成 matching build metadata 并编译 worldserver。
+3. [x] SoloClientSuite 更新 SoloCollections sibling commit 与 DragonUI_NewEra hash 锁。
+4. [x] 运行 suite layout inspection。
+5. [x] 构建到仓库内 ignored `build/`；不直接覆盖真实客户端。
+6. [x] 检查构建 manifest 中的 AddOn commit、module build、mapping hash、metadataVersion、assetPackVersion 相互一致。
 
 **Commands:**
 
@@ -819,12 +819,12 @@ pwsh -File .\tools\Build-ClientSuite.ps1 `
 
 **Steps:**
 
-1. [ ] 确认客户端已退出、worldserver 已停止，记录目标路径和现有二进制 SHA-256。
-2. [ ] 创建可恢复备份；不得覆盖唯一副本。
-3. [ ] 如有 append-only SQL，先确认目标数据库和 schema version，再应用迁移。
-4. [ ] 安装新 worldserver/module 构建，记录新 SHA-256。
-5. [ ] 启动 worldserver，检查模块注册、schema、mapping hash、目录数量和 SC2 capability 日志。
-6. [ ] 登录一个已有收藏账号，确认 type 11/type 17 快照均可同步且没有加载错误。
+1. [x] 确认客户端已退出、worldserver 已停止，记录目标路径和现有二进制 SHA-256。
+2. [x] 创建可恢复备份；不得覆盖唯一副本。
+3. [x] 如有 append-only SQL，先确认目标数据库和 schema version，再应用迁移。（本轮无新增 SQL；现有通用 preference 表已覆盖）
+4. [x] 安装新 worldserver/module 构建，记录新 SHA-256。
+5. [x] 启动 worldserver，检查模块注册、schema、mapping hash、目录数量和 SC2 capability 日志。
+6. [x] 登录一个已有收藏账号，确认 type 11/type 17 快照均可同步且没有加载错误。
 
 **Expected:** worldserver 正常启动；无 schema/catalog mismatch；可随时恢复备份。
 
@@ -838,46 +838,46 @@ pwsh -File .\tools\Build-ClientSuite.ps1 `
 
 #### A. 启动与稳定性
 
-- [ ] 登录或 `/reload` 不自动打开 DragonUI_NewEra 的其他窗口。
-- [ ] 无 Lua 报错、UIDropDownMenu nil-name 报错、Localization.lua 报错或模型 provider 报错。
-- [ ] 收藏窗口首次打开时间与已验收坐骑页同级，不出现明显长时间卡顿。
+- [x] 登录或 `/reload` 不自动打开 DragonUI_NewEra 的其他窗口。
+- [x] 无 Lua 报错、UIDropDownMenu nil-name 报错、Localization.lua 报错或模型 provider 报错。
+- [x] 收藏窗口首次打开时间与已验收坐骑页同级，不出现明显长时间卡顿。
 
 #### B. 页面与列表
 
-- [ ] 小宠物页与坐骑页外框都是 768 × 606，标题、头像、进度、底部标签对齐。
-- [ ] 搜索框和筛选按钮不越界。
-- [ ] 10 个列表卡片全部位于列表容器内，首行/末行无裁切和溢出。
-- [ ] 排序为偏好已收集 → 已收集 → 未收集，同组按国服中文名。
-- [ ] 列表没有重复小宠物、交通工具、任务临时实体或职业临时召唤物。
-- [ ] 绝版、促销、TCG、活动小宠物按审计结果正常显示。
+- [x] 小宠物页与坐骑页外框都是 768 × 606，标题、头像、进度、底部标签对齐。
+- [x] 搜索框和筛选按钮不越界。
+- [x] 10 个列表卡片全部位于列表容器内，首行/末行无裁切和溢出。
+- [x] 排序为偏好已收集 → 已收集 → 未收集，同组按国服中文名。
+- [x] 列表没有重复小宠物、交通工具、任务临时实体或职业临时召唤物。
+- [x] 绝版、促销、TCG、活动小宠物按审计结果正常显示。
 
 #### C. 筛选与偏好
 
-- [ ] 已收集、未收集、仅偏好筛选正确。
-- [ ] 来源筛选类别和结果正确，不出现坐骑类型菜单。
-- [ ] 已收集宠物可设置/取消偏好，重新登录仍保留。
-- [ ] 未收集宠物的偏好按钮禁用，无法通过其他入口设置。
-- [ ] 偏好变化后列表立即按既定顺序重排。
+- [x] 已收集、未收集、仅偏好筛选正确。
+- [x] 来源筛选类别和结果正确，不出现坐骑类型菜单。
+- [x] 已收集宠物可设置/取消偏好，重新登录仍保留。
+- [x] 未收集宠物的偏好按钮禁用，无法通过其他入口设置。
+- [x] 偏好变化后列表立即按既定顺序重排。
 
 #### D. 详情与模型
 
-- [ ] 图标、金色边框、名称和来源起点与坐骑页一致。
-- [ ] 国服中文名、来源、费用和描述正确；金币数字与图标在同一行垂直居中。
-- [ ] 无可核验描述时显示明确缺失文案，不出现 AI/账号收藏模板。
-- [ ] 已收集和未收集状态正确。
-- [ ] 模型可见，连续拖动旋转不重播动画、不出现一卡一卡的感觉。
-- [ ] 滚轮缩放、重置视角、快速切换列表均正常；旧模型不会覆盖当前选择。
+- [x] 图标、金色边框、名称和来源起点与坐骑页一致。
+- [x] 国服中文名、来源、费用和描述正确；金币数字与图标在同一行垂直居中。
+- [x] 无可核验描述时显示明确缺失文案，不出现 AI/账号收藏模板。
+- [x] 已收集和未收集状态正确。
+- [x] 模型可见，连续拖动旋转不重播动画、不出现一卡一卡的感觉。
+- [x] 滚轮缩放、重置视角、快速切换列表均正常；旧模型不会覆盖当前选择。
 
 #### E. 召唤与随机
 
-- [ ] 底部“召唤小宠物”按钮样式、尺寸、位置与坐骑页一致且不压边框。
-- [ ] 召唤已收集宠物成功，再点同一宠物可解散。
-- [ ] 未收集宠物不能召唤，提示中文。
-- [ ] 随机按钮位于详情区右上方、图标正确、不与边框重叠。
-- [ ] 有偏好时随机只从已收集偏好 eligible 池选择。
-- [ ] 无偏好时随机从全部已收集 eligible 池选择。
-- [ ] 多个候选时不会连续选择当前宠物；切换后只保留一个小宠物。
-- [ ] 战斗、死亡、载具、飞行点等受限状态显示中文提示。
+- [x] 底部“召唤小宠物”按钮样式、尺寸、位置与坐骑页一致且不压边框。
+- [x] 召唤已收集宠物成功，再点同一宠物可解散。
+- [x] 未收集宠物不能召唤，提示中文。
+- [x] 随机按钮位于详情区右上方、图标正确、不与边框重叠。
+- [x] 有偏好时随机只从已收集偏好 eligible 池选择。
+- [x] 无偏好时随机从全部已收集 eligible 池选择。
+- [x] 多个候选时不会连续选择当前宠物；切换后只保留一个小宠物。
+- [x] 战斗、死亡、载具、飞行点等受限状态显示中文提示。
 
 全部通过后，附客户端 build、AddOn/module commit、时间和证据路径，将本计划状态改为 `REAL_CLIENT_ACCEPTED`。
 
@@ -951,3 +951,21 @@ git status --short
 ```
 
 只有 `REAL_CLIENT_ACCEPTED: YES` 才表示小宠物页已经达到用户可见验收；源码检查、编译成功或安装完成均不能单独声明验收通过。
+
+## Implementation Record
+
+- SOURCE_COMPLETE: YES
+- STATIC_VALIDATED: YES
+- SERVER_VALIDATED: YES
+- REAL_CLIENT_ACCEPTED: YES
+- SoloCollections commit: `35354284c7e5dca82960fae1e13f79936e400143`
+- mod-solo-collections commit: `f15574295af614652948c777c58e8b997104a1db`
+- SoloClientSuite commit: `328074c9ad0f233d8ca17eb76c4aa7d8f198ca97`
+- AzerothCore commit/build: `28463899f4857bffdc1af59a78c1d359f7e7784a` / RelWithDebInfo 2026-08-13
+- Catalog mapping hash: `15e24a2e506652232dd862bf328203df761d7654296a05233c5df5d4457f4ff7`
+- Module binary SHA-256: `d91c99bdcf2fb1a04da6fefb208dccd78a321a94703a872ce221b65fe02d77b4`
+- Client package SHA-256: `66242346b75a33b5f244a6692984eebd57660bd13717f2e0595fe64af71237b1`
+- Database migration applied: none; schema version 2 already present
+- Rollback backup: `CLIENT-20260813-pet-description-zhcn/20260813-113608`
+- Real-client evidence: `docs/evidence/pet-journal-parity/runtime/REAL_CLIENT_ACCEPTANCE.md`
+- Remaining known issues: 34 records have no zhCN description in the verified `BattlePetSpecies` client data; their empty description line is intentionally hidden rather than replaced with fabricated prose.

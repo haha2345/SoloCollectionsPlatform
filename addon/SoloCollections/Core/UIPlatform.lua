@@ -12,6 +12,7 @@ Platform.requiredCapabilities = {
     "modules.feature-registry",
     "components.collection-header",
     "components.journal-filter",
+    "components.random-collection",
     "components.random-mount",
     "components.red-action",
     "components.journal-tabs",

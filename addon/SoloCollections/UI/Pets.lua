@@ -1,13 +1,19 @@
 local SC = SoloCollections
 local UI = SC.UI
 local Catalog = SC.Catalog
+local CompanionJournal = UI.DragonUI and (UI.DragonUI.CompanionJournal or UI.DragonUI.MountJournal)
 
-local VISIBLE_ROWS = 10
-local ROW_HEIGHT = 46
+local JOURNAL_LAYOUT = CompanionJournal and CompanionJournal:GetLayout() or {}
+local VISIBLE_ROWS = JOURNAL_LAYOUT.visibleRows or 10
+local ROW_HEIGHT = JOURNAL_LAYOUT.rowHeight or 46
+local ROW_START_Y = JOURNAL_LAYOUT.rowStartY or 3
 local DEFAULT_ROTATION = 0.32
 local DEFAULT_MODEL_SCALE = 1
 local MIN_MODEL_SCALE = 0.35
 local MAX_MODEL_SCALE = 2.5
+local TWO_PI = math.pi * 2
+local DRAG_ROTATION_CONSTANT = tonumber(MODELFRAME_DRAG_ROTATION_CONSTANT) or 0.010
+local RANDOM_PET_FALLBACK_ICON = "Interface\\Icons\\INV_Misc_QuestionMark"
 
 local function createDetailLabel(parent, font, color)
     local label = parent:CreateFontString(nil, "OVERLAY", font)
@@ -25,6 +31,13 @@ local function showNotice(message)
     end
 end
 
+local function getPetActionMessage(reason)
+    if SC.Bridge and type(SC.Bridge.GetPetActionMessage) == "function" then
+        return SC.Bridge.GetPetActionMessage(reason)
+    end
+    return reason or "小宠物操作失败，请稍后再试。"
+end
+
 function UI.CreatePetsPage(parent)
     local page = CreateFrame("Frame", nil, parent)
     page:SetAllPoints(parent)
@@ -36,16 +49,25 @@ function UI.CreatePetsPage(parent)
     page.scModelGeneration = 0
     page.scModelReady = false
 
+    local bands = CompanionJournal and CompanionJournal:CreateBands(page)
     local list = CreateFrame("Frame", nil, page)
-    list:SetWidth(260)
-    list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    if CompanionJournal then
+        CompanionJournal:LayoutInset(list, "left")
+    else
+        list:SetWidth(260)
+        list:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
+        list:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 4, 26)
+    end
     local listInset = UI.EzCollections:ApplyInset(list)
     local listBackground = listInset.background
 
     local detail = CreateFrame("Frame", nil, page)
-    detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
-    detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    if CompanionJournal then
+        CompanionJournal:LayoutInset(detail, "right")
+    else
+        detail:SetPoint("TOPRIGHT", page, "TOPRIGHT", -6, -60)
+        detail:SetPoint("BOTTOMLEFT", list, "BOTTOMRIGHT", 20, 0)
+    end
     UI.EzCollections:ApplyInset(detail)
 
     local detailBackground = detail:CreateTexture(nil, "BACKGROUND")
@@ -65,12 +87,21 @@ function UI.CreatePetsPage(parent)
     model.scZoom = DEFAULT_MODEL_SCALE
     model.scBaseScale = nil
     local presenter = SC.ModelProvider and SC.ModelProvider.Create("CREATURE", model, {
-        controls = true,
+        controls = false,
         panelCheck = function() return page:IsShown() end,
     }) or nil
+    local function applyModelFacing(rotation)
+        if model.SetFacing then
+            model:SetFacing(rotation)
+        elseif model.SetRotation then
+            model:SetRotation(rotation, false)
+        end
+    end
     local function rotateModel(delta)
         model.rotation = (model.rotation or DEFAULT_ROTATION) + delta
-        if model.SetRotation then model:SetRotation(model.rotation) end
+        if model.rotation < 0 then model.rotation = model.rotation + TWO_PI end
+        if model.rotation > TWO_PI then model.rotation = model.rotation - TWO_PI end
+        applyModelFacing(model.rotation)
     end
     local rotateLeft, rotateRight = UI.EzCollections:CreateRotationButtons(model, function()
         rotateModel(-0.18)
@@ -93,33 +124,62 @@ function UI.CreatePetsPage(parent)
     rotateHint:SetPoint("BOTTOM", model, "BOTTOM", 0, 7)
     rotateHint:SetText("按住鼠标左键拖动旋转 · 滚轮缩放")
 
-    local infoButton = CreateFrame("Button", nil, detail)
-    infoButton:SetWidth(38)
-    infoButton:SetHeight(38)
-    infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
-    infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    local infoHeader = CompanionJournal and CompanionJournal:CreateCollectionInfoHeader(detail, {
+        x = 4,
+        y = 4,
+        width = 420,
+        height = 124,
+        textWidth = 320,
+    })
+    local infoButton = infoHeader and infoHeader.button or CreateFrame("Button", nil, detail)
+    if not infoHeader then
+        infoButton:SetSize(40, 40)
+        infoButton:SetPoint("TOPLEFT", detail, "TOPLEFT", 9, -29)
+        infoButton:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+    end
+    local infoIcon = infoHeader and infoHeader.icon or infoButton:CreateTexture(nil, "ARTWORK")
+    if not infoHeader then
+        infoIcon:SetAllPoints(infoButton)
+        UI.SetFallbackTexture(infoIcon)
+    end
+    local infoBorder, infoSelectedBorder
+    if not infoHeader then
+        infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
+    end
 
-    local infoIcon = infoButton:CreateTexture(nil, "ARTWORK")
-    infoIcon:SetAllPoints(infoButton)
-    UI.SetFallbackTexture(infoIcon)
+    local randomHost = CreateFrame("Frame", nil, (bands and bands.top) or detail)
+    randomHost:SetSize(190, 30)
+    randomHost:SetPoint("BOTTOMRIGHT", detail, "TOPRIGHT", -8, JOURNAL_LAYOUT.randomDetailGap or 6)
+    local randomSummon = CompanionJournal and CompanionJournal:CreateRandomCompanionButton(randomHost, {
+        label = "随机召唤小宠物",
+        icon = RANDOM_PET_FALLBACK_ICON,
+        fallbackIcon = RANDOM_PET_FALLBACK_ICON,
+        tooltip = "优先从已收集的偏好小宠物中随机选择；没有偏好时由服务端从全部可用小宠物中选择。",
+    }) or CreateFrame("Button", nil, randomHost)
+    randomSummon:SetSize(30, 30)
+    randomSummon:SetPoint("RIGHT", randomHost, "RIGHT", 0, 0)
 
-    local infoBorder, infoSelectedBorder = UI.EzCollections:CreateCollectionIconFrames(infoButton)
-
-    local name = createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
-    name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
-    name:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    local name = infoHeader and infoHeader.name or createDetailLabel(detail, "GameFontHighlightLarge", { 1, 1, 1 })
+    if not infoHeader then
+        name:SetPoint("TOPLEFT", infoButton, "TOPRIGHT", 12, -1)
+        name:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    end
 
     local collectionState = createDetailLabel(detail, "GameFontHighlight", { 0.45, 0.9, 0.35 })
     collectionState:SetPoint("TOPLEFT", name, "BOTTOMLEFT", 0, -7)
 
-    local source = createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
-    source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
-    source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    local source = infoHeader and infoHeader.source or createDetailLabel(detail, "GameFontHighlight", { 1, 1, 1 })
+    if not infoHeader then
+        source:SetPoint("TOPLEFT", infoButton, "BOTTOMLEFT", 0, -11)
+        source:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+    end
 
-    local description = createDetailLabel(detail, "GameFontNormal", { 1, 0.82, 0.18 })
-    description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
-    description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
-    description:SetHeight(38)
+    local description = infoHeader and infoHeader.description or createDetailLabel(detail, "GameFontNormal", { 0.82, 0.82, 0.82 })
+    if not infoHeader then
+        description:SetPoint("TOPLEFT", source, "BOTTOMLEFT", 0, -7)
+        description:SetPoint("RIGHT", detail, "RIGHT", -20, 0)
+        description:SetHeight(38)
+    end
 
     local favorite = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
     favorite:SetWidth(104)
@@ -133,11 +193,12 @@ function UI.CreatePetsPage(parent)
     reset:SetPoint("RIGHT", favorite, "LEFT", -8, 0)
     reset:SetText("重置视角")
 
-    local summon = CreateFrame("Button", nil, detail, "UIPanelButtonTemplate")
-    summon:SetWidth(140)
-    summon:SetHeight(22)
-    summon:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 0, 0)
+    local summon = CreateFrame("Button", nil, (bands and bands.bottom) or page, "UIPanelButtonTemplate")
+    summon:SetWidth(180)
+    summon:SetHeight(26)
+    summon:SetPoint("CENTER", (bands and bands.bottom) or page, "CENTER", 0, 0)
     summon:SetText("召唤小宠物")
+    if CompanionJournal then CompanionJournal:SkinRedActionButton(summon) end
     UI.RegisterNewEraCompanionAction(page, favorite)
     UI.RegisterNewEraCompanionAction(page, reset)
     UI.RegisterNewEraCompanionAction(page, summon)
@@ -158,8 +219,8 @@ function UI.CreatePetsPage(parent)
         list,
         "FauxScrollFrameTemplate"
     )
-    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -36)
-    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, 5)
+    scrollFrame:SetPoint("TOPLEFT", list, "TOPLEFT", 3, -ROW_START_Y)
+    scrollFrame:SetPoint("BOTTOMRIGHT", list, "BOTTOMRIGHT", -2, ROW_START_Y)
     scrollFrame:EnableMouseWheel(true)
     UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
 
@@ -169,10 +230,122 @@ function UI.CreatePetsPage(parent)
         page,
         "UIDropDownMenuTemplate"
     )
+    local filterMenu = _G.SoloCollectionsPetFilterMenu
+    if not filterMenu then
+        filterMenu = CreateFrame(
+            "Frame", "SoloCollectionsPetFilterMenu", UIParent, "UIDropDownMenuTemplate"
+        )
+    end
+    local function refreshFilterMenu()
+        if filterMenu and UIDropDownMenu_Refresh then
+            pcall(UIDropDownMenu_Refresh, filterMenu, nil, 1)
+        end
+    end
+    local function petFilters()
+        if not SC.db then return nil end
+        SC.db.filters = SC.db.filters or {}
+        SC.db.filters.pets = SC.db.filters.pets or {}
+        local filters = SC.db.filters.pets
+        if type(filters.hiddenSources) ~= "table" then filters.hiddenSources = {} end
+        return filters
+    end
+    local function filterMenuInit(self, level)
+        level = level or 1
+        if not SC.db then return end
+        local filters = SC.db.filters
+        if level == 1 then
+            local function addToggle(label, key)
+                local info = UIDropDownMenu_CreateInfo()
+                info.isNotRadio = true
+                info.keepShownOnClick = true
+                info.text = label
+                info.checked = function() return filters[key] and true or false end
+                info.func = function(_, _, _, checked)
+                    filters[key] = checked == nil and not filters[key] or checked and true or false
+                    page:Refresh()
+                    refreshFilterMenu()
+                end
+                UIDropDownMenu_AddButton(info, level)
+            end
+            addToggle("已收集", "collected")
+            addToggle("未收集", "uncollected")
+            addToggle("仅显示偏好", "favorites")
+
+            local sources = UIDropDownMenu_CreateInfo()
+            sources.text = "来源"
+            sources.notCheckable = true
+            sources.hasArrow = true
+            sources.value = "sources"
+            UIDropDownMenu_AddButton(sources, level)
+        elseif level == 2 and UIDROPDOWNMENU_MENU_VALUE == "sources" then
+            local all = UIDropDownMenu_CreateInfo()
+            all.notCheckable = true
+            all.keepShownOnClick = true
+            all.text = "显示全部来源"
+            all.func = function()
+                petFilters().hiddenSources = {}
+                page:Refresh()
+                refreshFilterMenu()
+            end
+            UIDropDownMenu_AddButton(all, level)
+
+            local none = UIDropDownMenu_CreateInfo()
+            none.notCheckable = true
+            none.keepShownOnClick = true
+            none.text = "隐藏全部来源"
+            none.func = function()
+                local state = petFilters()
+                state.hiddenSources = {}
+                for _, sourceType in ipairs(Catalog.GetPetSourceOrder()) do
+                    state.hiddenSources[sourceType] = true
+                end
+                page:Refresh()
+                refreshFilterMenu()
+            end
+            UIDropDownMenu_AddButton(none, level)
+
+            for _, sourceType in ipairs(Catalog.GetPetSourceOrder()) do
+                local sourceKey = sourceType
+                local info = UIDropDownMenu_CreateInfo()
+                info.isNotRadio = true
+                info.keepShownOnClick = true
+                info.text = Catalog.PetSourceLabel(sourceKey)
+                info.checked = function() return not petFilters().hiddenSources[sourceKey] end
+                info.func = function(_, _, _, checked)
+                    local state = petFilters()
+                    if checked == nil then checked = not state.hiddenSources[sourceKey] end
+                    state.hiddenSources[sourceKey] = checked and nil or true
+                    page:Refresh()
+                    refreshFilterMenu()
+                end
+                UIDropDownMenu_AddButton(info, level)
+            end
+        end
+    end
+    if UIDropDownMenu_Initialize then
+        UIDropDownMenu_Initialize(filterMenu, filterMenuInit, "MENU")
+    end
 
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
+        model:SetScript("OnUpdate", nil)
+    end
+
+    local function updateModelDrag(self)
+        if not self.scDragging or not IsMouseButtonDown("LeftButton") then
+            clearDragState()
+            return
+        end
+        local cursorX = GetCursorPosition()
+        local previousX = self.scLastCursorX or cursorX
+        self.scLastCursorX = cursorX
+        local delta = (cursorX - previousX) * DRAG_ROTATION_CONSTANT
+        if delta == 0 then return end
+        self.rotation = (self.rotation or DEFAULT_ROTATION) + delta
+        if self.rotation < 0 then self.rotation = self.rotation + TWO_PI end
+        if self.rotation > TWO_PI then self.rotation = self.rotation - TWO_PI end
+        applyModelFacing(self.rotation)
     end
 
     local function getNativeModelScale()
@@ -201,6 +374,7 @@ function UI.CreatePetsPage(parent)
         clearDragState()
     end
 
+    local refreshSummonButton
     local function summonRecord(record)
         if not record then
             return
@@ -215,9 +389,74 @@ function UI.CreatePetsPage(parent)
         end
         SC.Bridge.SummonPet(record.id, function(ok, reason)
             if ok == false then
-                showNotice(reason or "小宠物召唤请求失败。")
+                showNotice(getPetActionMessage(reason))
+            end
+            refreshSummonButton(record)
+        end)
+    end
+
+    local function isRecordSummoned(record)
+        local wantedSpellId = record and tonumber(record.canonicalActionSpellId or record.spellId)
+        if not wantedSpellId or type(GetNumCompanions) ~= "function" or
+            type(GetCompanionInfo) ~= "function" then
+            return false
+        end
+        for index = 1, (GetNumCompanions("CRITTER") or 0) do
+            local _, _, spellId, _, active = GetCompanionInfo("CRITTER", index)
+            if tonumber(spellId) == wantedSpellId and active then
+                return true
+            end
+        end
+        return false
+    end
+
+    refreshSummonButton = function(record)
+        summon:SetText(isRecordSummoned(record) and "解散小宠物" or "召唤小宠物")
+    end
+
+    local function setFavoriteRecord(record)
+        if not record or not record.collected then
+            showNotice(getPetActionMessage("FAVORITE_NOT_OWNED"))
+            return
+        end
+        if not SC.Bridge or type(SC.Bridge.SetPetFavorite) ~= "function" or
+            SC.Bridge.GetCategoryState(17) ~= "Ready" then
+            showNotice("小宠物偏好正在同步，请稍后再试。")
+            return
+        end
+        page.scPendingFavoriteId = record.id
+        favorite:Disable()
+        SC.Bridge.SetPetFavorite(record.id, not record.favorite, function(ok, reason)
+            if ok == false then
+                page.scPendingFavoriteId = nil
+                showNotice(getPetActionMessage(reason))
+                page:Refresh()
             end
         end)
+    end
+
+    local function summonRandomPet()
+        if not SC.Bridge or type(SC.Bridge.SummonRandomPet) ~= "function" then
+            showNotice(getPetActionMessage("BRIDGE_UNAVAILABLE"))
+            return
+        end
+        SC.Bridge.SummonRandomPet(function(ok, reason)
+            if ok == false then showNotice(getPetActionMessage(reason)) end
+            refreshSummonButton(page.scSelectedRecord)
+        end)
+    end
+
+    local function updateRandomPetIcon()
+        local preferred, eligible
+        for _, record in ipairs(Catalog.Get("PETS")) do
+            if record.collected and record.actionable and record.randomEligible then
+                if record.favorite and not preferred then preferred = record end
+                if not eligible then eligible = record end
+            end
+        end
+        local iconRecord = preferred or eligible
+        local icon = randomSummon._neIcon or randomSummon._tex
+        if icon then UI.SetIconTexture(icon, iconRecord and iconRecord.icon or RANDOM_PET_FALLBACK_ICON) end
     end
 
     local function openContextMenu(anchor, record)
@@ -235,7 +474,7 @@ function UI.CreatePetsPage(parent)
         end
 
         local summonInfo = UIDropDownMenu_CreateInfo()
-        summonInfo.text = "召唤小宠物"
+        summonInfo.text = isRecordSummoned(record) and "解散小宠物" or "召唤小宠物"
         summonInfo.notCheckable = 1
         summonInfo.func = function()
             summonRecord(record)
@@ -255,24 +494,46 @@ function UI.CreatePetsPage(parent)
         favoriteInfo.text = record.favorite and "取消偏好" or "设为偏好"
         favoriteInfo.notCheckable = 1
         favoriteInfo.func = function()
-            Catalog.ToggleDemoFavorite("PETS", record.id)
-            page:Refresh()
+            setFavoriteRecord(record)
         end
         if not record.collected then
             favoriteInfo.disabled = 1
             favoriteInfo.tooltipTitle = "尚未收集"
             favoriteInfo.tooltipText = "未收集的小宠物不能设为偏好。"
+        elseif not SC.Bridge or SC.Bridge.GetCategoryState(17) ~= "Ready" then
+            favoriteInfo.disabled = 1
+            favoriteInfo.tooltipTitle = "偏好正在同步"
+            favoriteInfo.tooltipText = "服务端偏好状态就绪后才能修改。"
         end
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
 
-    local function requestModel(record)
+    local function requestModel(record, force)
         page.scModelGeneration = (page.scModelGeneration or 0) + 1
         local generation = page.scModelGeneration
+        local selectedId = record and record.id
         clearModelInteraction()
         resetModelState()
         model:ClearModel()
         unavailable:Hide()
+
+        local bridgeState = SC.Bridge and SC.Bridge.GetCategoryState
+            and SC.Bridge.GetCategoryState(11)
+            or "Disconnected"
+        if not force and bridgeState ~= "Ready" then
+            page.scPendingModelId = selectedId
+            if bridgeState == "Loading" or bridgeState == "Disconnected" then
+                unavailable:SetText("正在连接收藏服务…")
+            elseif bridgeState == "Mismatch" then
+                unavailable:SetText("小宠物目录版本不匹配")
+            else
+                unavailable:SetText("小宠物模型服务不可用")
+            end
+            unavailable:Show()
+            rotateHint:Hide()
+            return
+        end
+        page.scPendingModelId = nil
 
         if not presenter or not SC.Bridge or type(SC.Bridge.RequestCreaturePreview) ~= "function" then
             unavailable:SetText("模型预览暂不可用")
@@ -285,20 +546,28 @@ function UI.CreatePetsPage(parent)
             rotation = DEFAULT_ROTATION,
             preview = function(done)
                 SC.Bridge.RequestCreaturePreview(11, record.id, function(ok, reason)
-                    if page.scModelGeneration == generation then done(ok, reason) end
+                    if page.scModelGeneration == generation and page.scSelectedId == selectedId then
+                        done(ok, reason)
+                    end
                 end)
             end,
             onReady = function()
-                if page.scModelGeneration ~= generation then return end
+                if page.scModelGeneration ~= generation or page.scSelectedId ~= selectedId then return end
+                page.scPendingModelId = nil
                 model.scBaseScale = getNativeModelScale()
                 model.scZoom = DEFAULT_MODEL_SCALE
                 page.scModelReady = true
                 unavailable:Hide(); rotateHint:Show()
             end,
             onUnavailable = function(reason)
-                if page.scModelGeneration ~= generation then return end
+                if page.scModelGeneration ~= generation or page.scSelectedId ~= selectedId then return end
                 model.scUnavailableReason = reason
-                unavailable:SetText("模型预览暂不可用")
+                if reason == "BRIDGE_UNAVAILABLE" or reason == "TIMEOUT" then
+                    page.scPendingModelId = selectedId
+                    unavailable:SetText("正在连接收藏服务…")
+                else
+                    unavailable:SetText("模型预览暂不可用")
+                end
                 unavailable:Show(); rotateHint:Hide()
             end,
         })
@@ -309,19 +578,29 @@ function UI.CreatePetsPage(parent)
             page:ClearSelection()
             return
         end
+        local modelChanged = page.scSelectedId ~= record.id or not page.scModelReady
         page.scSelectedId = record.id
         page.scSelectedRecord = record
         UI.SetIconTexture(infoIcon, record.icon)
+        infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
         UI.SetCollectedVisual(infoIcon, record.collected)
-        infoBorder:SetCollected(record.collected)
-        infoSelectedBorder:Show()
+        if infoBorder then infoBorder:SetCollected(record.collected) end
+        if infoSelectedBorder then infoSelectedBorder:Show() end
         name:SetText(record.name or "未知小宠物")
-        source:SetText("来源：" .. (record.source or "未知"))
-        description:SetText(record.description or "暂无说明。")
+        source:SetText(record.source or "来源未知")
+        local descriptionText = record.description and record.description ~= "" and record.description or nil
+        description:SetText(descriptionText or "")
+        if descriptionText then description:Show() else description:Hide() end
+        refreshSummonButton(record)
         if record.collected then
             collectionState:SetText("已收集")
             collectionState:SetTextColor(0.38, 0.9, 0.30)
-            favorite:Enable()
+            if SC.Bridge and SC.Bridge.GetCategoryState(17) == "Ready" and
+                page.scPendingFavoriteId ~= record.id then
+                favorite:Enable()
+            else
+                favorite:Disable()
+            end
             summon:Enable()
             favorite:SetText(record.favorite and "取消偏好" or "设为偏好")
         else
@@ -334,7 +613,7 @@ function UI.CreatePetsPage(parent)
         for _, row in ipairs(page.scRows) do
             row:SetSelected(row.scRecord and row.scRecord.id == record.id)
         end
-        requestModel(record)
+        if modelChanged then requestModel(record) end
     end
 
     local function refreshRows()
@@ -355,6 +634,26 @@ function UI.CreatePetsPage(parent)
         end
     end
 
+    local function scrollSelectionIntoView(records, selectedId)
+        if not selectedId then return end
+        local selectedIndex
+        for index, record in ipairs(records) do
+            if record.id == selectedId then selectedIndex = index; break end
+        end
+        if not selectedIndex then return end
+        local offset = FauxScrollFrame_GetOffset(scrollFrame) or 0
+        local newOffset = offset
+        if selectedIndex <= offset then
+            newOffset = selectedIndex - 1
+        elseif selectedIndex > offset + VISIBLE_ROWS then
+            newOffset = selectedIndex - VISIBLE_ROWS
+        end
+        newOffset = math.max(0, math.min(math.max(0, #records - VISIBLE_ROWS), newOffset))
+        if newOffset ~= offset then
+            FauxScrollFrame_OnVerticalScroll(scrollFrame, newOffset * ROW_HEIGHT, ROW_HEIGHT, refreshRows)
+        end
+    end
+
     local function scrollByWheel(self, delta)
         local currentOffset = FauxScrollFrame_GetOffset(self) or 0
         local maxOffset = math.max(0, #(page.scRecords or {}) - VISIBLE_ROWS)
@@ -368,7 +667,7 @@ function UI.CreatePetsPage(parent)
         end, function(anchor, record)
             openContextMenu(anchor, record)
         end)
-        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(36 + ((index - 1) * ROW_HEIGHT)))
+        row:SetPoint("TOPLEFT", list, "TOPLEFT", 47, -(ROW_START_Y + ((index - 1) * ROW_HEIGHT)))
         row:EnableMouseWheel(true)
         row:SetScript("OnMouseWheel", function(_, delta)
             scrollByWheel(scrollFrame, delta)
@@ -387,16 +686,20 @@ function UI.CreatePetsPage(parent)
         self.scSelectedId = nil
         self.scSelectedRecord = nil
         self.scModelGeneration = (self.scModelGeneration or 0) + 1
+        self.scPendingModelId = nil
         name:SetText("")
         source:SetText("")
         description:SetText("")
+        description:Hide()
         collectionState:SetText("")
         favorite:SetText("设为偏好")
         favorite:Disable()
+        summon:SetText("召唤小宠物")
         summon:Disable()
         UI.SetFallbackTexture(infoIcon)
-        infoBorder:SetCollected(false)
-        infoSelectedBorder:Hide()
+        infoIcon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        if infoBorder then infoBorder:SetCollected(false) end
+        if infoSelectedBorder then infoSelectedBorder:Hide() end
         unavailable:Hide()
         clearModelInteraction()
         resetModelState()
@@ -407,27 +710,14 @@ function UI.CreatePetsPage(parent)
     end
 
     function page:SyncFilters()
-        local frame = UI.CollectionsFrame
-        if not frame or not frame.scFilterPopup or not SC.db or SC.db.mainTab ~= "PETS" then
-            return
-        end
-        local filters = SC.db.filters
-        local function toggleFilter(key)
-            filters[key] = not filters[key]
-            self:Refresh()
-            self:SyncFilters()
-        end
-        frame.scFilterPopup:SetOptions({
-            { label = "已收集", checked = filters.collected, onClick = function()
-                toggleFilter("collected")
-            end },
-            { label = "未收集", checked = filters.uncollected, onClick = function()
-                toggleFilter("uncollected")
-            end },
-            { label = "仅显示偏好", checked = filters.favorites, onClick = function()
-                toggleFilter("favorites")
-            end },
-        })
+        if not SC.db or SC.db.mainTab ~= "PETS" then return end
+        refreshFilterMenu()
+    end
+
+    function page:OpenFilterMenu(anchor)
+        if not filterMenu or not ToggleDropDownMenu then return end
+        self:SyncFilters()
+        ToggleDropDownMenu(1, nil, filterMenu, anchor or self, 0, 0)
     end
 
     function page:Refresh()
@@ -446,7 +736,7 @@ function UI.CreatePetsPage(parent)
             end
         end
 
-        local collected, total = Catalog.GetProgress("PETS", SC.db.filters)
+        local collected, total = Catalog.GetProgress("PETS")
         if UI.CollectionsFrame and UI.CollectionsFrame.scProgress then
             UI.CollectionsFrame.scProgress:SetProgress(collected, total)
         end
@@ -464,9 +754,11 @@ function UI.CreatePetsPage(parent)
             UI.ShowEmptyState(empty, self, "没有符合条件的小宠物", "调整搜索文字或过滤条件后再试。")
         else
             UI.HideEmptyState(empty)
+            scrollSelectionIntoView(records, selectedRecord and selectedRecord.id or records[1].id)
             selectRecord(selectedRecord or records[1])
             refreshRows()
         end
+        updateRandomPetIcon()
         self:SyncFilters()
     end
 
@@ -475,19 +767,42 @@ function UI.CreatePetsPage(parent)
         if not record or not record.collected then
             return
         end
-        Catalog.ToggleDemoFavorite("PETS", record.id)
-        page:Refresh()
+        setFavoriteRecord(record)
     end)
 
     summon:SetScript("OnClick", function()
-        summonRecord(page.scSelectedRecord)
+        local record = page.scSelectedRecord
+        summonRecord(record)
+        refreshSummonButton(record)
     end)
+
+    randomSummon:SetScript("OnClick", summonRandomPet)
 
     reset:SetScript("OnClick", function()
         model.rotation = DEFAULT_ROTATION
         if presenter and presenter.ResetView then presenter:ResetView()
         elseif page.scSelectedRecord then requestModel(page.scSelectedRecord) end
     end)
+
+    if SC.Bridge and type(SC.Bridge.RegisterStateListener) == "function" then
+        page.scBridgeStateListener = SC.Bridge.RegisterStateListener(function(_, typeId)
+            typeId = tonumber(typeId)
+            if typeId ~= nil and typeId ~= 11 and typeId ~= 17 then return end
+            local record = page.scSelectedRecord
+            if typeId == 17 then page.scPendingFavoriteId = nil end
+            if not page:IsShown() then return end
+            page:Refresh()
+            record = page.scSelectedRecord
+            if typeId == 17 or not record then return end
+            local state = SC.Bridge.GetCategoryState and SC.Bridge.GetCategoryState(11)
+            if state == "Ready" and page.scPendingModelId == record.id then
+                requestModel(record, true)
+            elseif state == "Mismatch" and page.scPendingModelId == record.id then
+                unavailable:SetText("小宠物目录版本不匹配")
+                unavailable:Show(); rotateHint:Hide()
+            end
+        end)
+    end
 
     infoButton:SetScript("OnClick", function(self, button)
         local record = page.scSelectedRecord
@@ -498,13 +813,11 @@ function UI.CreatePetsPage(parent)
         end
     end)
 
-    if not SC.ModelProvider or SC.ModelProvider.GetMode("CREATURE") == "legacy" then
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
-            local cursorX = GetCursorPosition()
-            local scale = UIParent:GetEffectiveScale()
-            self.scLastCursorX = cursorX / scale
+            self.scLastCursorX = GetCursorPosition()
+            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
 
@@ -512,25 +825,11 @@ function UI.CreatePetsPage(parent)
         clearDragState()
     end)
 
-    model:SetScript("OnUpdate", function(self)
-        if not self.scDragging then
-            return
-        end
-        if not IsMouseButtonDown("LeftButton") then
-            clearDragState()
-            return
-        end
-        local cursorX = GetCursorPosition()
-        local scale = UIParent:GetEffectiveScale()
-        cursorX = cursorX / scale
-        local previousX = self.scLastCursorX or cursorX
-        self.scLastCursorX = cursorX
-        self.rotation = (self.rotation or DEFAULT_ROTATION) + ((cursorX - previousX) * 0.012)
-        self:SetRotation(self.rotation)
-    end)
-
     model:SetScript("OnMouseWheel", function(self, delta)
-        if not page.scModelReady or not self.SetModelScale or not self.scBaseScale then
+        if not page.scModelReady or not self.SetModelScale or not self.GetModelScale then
+            return
+        end
+        if not self.scBaseScale then
             return
         end
         local zoom = (self.scZoom or DEFAULT_MODEL_SCALE) + (delta * 0.10)
@@ -538,15 +837,15 @@ function UI.CreatePetsPage(parent)
         self.scZoom = zoom
         self:SetModelScale(self.scBaseScale * zoom)
     end)
-    end
 
     page:SetScript("OnHide", function(self)
-        self.scModelGeneration = (self.scModelGeneration or 0) + 1
-        clearModelInteraction()
-        resetModelState()
-        if presenter then presenter:Clear("PAGE_HIDDEN") else model:ClearModel() end
-        unavailable:Hide()
+        self:ClearSelection()
         CloseDropDownMenus()
+    end)
+
+    page:RegisterEvent("COMPANION_UPDATE")
+    page:SetScript("OnEvent", function()
+        refreshSummonButton(page.scSelectedRecord)
     end)
 
     page.scList = list
@@ -564,6 +863,7 @@ function UI.CreatePetsPage(parent)
     page.scCollectionState = collectionState
     page.scFavorite = favorite
     page.scSummon = summon
+    page.scRandomSummon = randomSummon
     page.scReset = reset
     page.scPresenter = presenter
     page.scRotateLeft = rotateLeft
@@ -571,6 +871,7 @@ function UI.CreatePetsPage(parent)
     page.scScrollFrame = scrollFrame
     page.scScrollHint = scrollHint
     page.scContextMenu = contextMenu
+    page.scFilterMenu = filterMenu
     page.scEmpty = empty
     return page
 end

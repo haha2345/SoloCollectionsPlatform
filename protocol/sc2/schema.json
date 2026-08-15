@@ -14,7 +14,9 @@
   "collectionPayload": "SORTED_UNIQUE_UINT32_BASE36_COMMA_OR_DASH",
   "projectionTypes": {
     "10": "authoritative account-owned mount collection IDs",
-    "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress"
+    "11": "authoritative account-owned companion collection IDs",
+    "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress",
+    "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress"
   },
   "fields": {
     "nonce": "LOWER_HEX16",
@@ -53,14 +55,15 @@
   },
   "actionSemantics": {
     "SET_FAVORITE": {
-      "typeIds": [10],
+      "typeIds": [10, 11],
       "target": "0_OR_1",
       "requiresOwned": true,
-      "sideEffects": "PERSIST_TYPE_16_PREFERENCE_AND_EMIT_DELTA",
+      "projectionTypeByOwnedType": {"10": 16, "11": 17},
+      "sideEffects": "PERSIST_MAPPED_INTERNAL_PREFERENCE_AND_EMIT_DELTA",
       "acceptedMeaning": "SERVER_VALIDATION_ACCEPTED_FOR_ASYNC_COMMIT"
     },
     "RANDOM_SUMMON": {
-      "typeIds": [10],
+      "typeIds": [10, 11],
       "collectionId": 1,
       "target": "-",
       "requiresOwned": false,
@@ -83,6 +86,8 @@
     "FAVORITE_NOT_OWNED",
     "NO_MOUNTS",
     "NO_USABLE_MOUNTS",
+    "NO_COMPANIONS",
+    "NO_USABLE_COMPANIONS",
     "CATALOG_MISMATCH",
     "ASSET_MISMATCH",
     "UNKNOWN_IDENTITY",
