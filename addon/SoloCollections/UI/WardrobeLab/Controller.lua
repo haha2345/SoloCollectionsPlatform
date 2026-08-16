@@ -37,7 +37,7 @@ function Lab.CreatePage(parent)
     Lab.CreateLayout(page, state)
     function page:Refresh()
         local request = state.requestState or {}
-        local pendingCount, pendingKind = pendingApplyCount(state)
+        local pendingCount = pendingApplyCount(state)
         local text = STATUS_TEXT[request.status] or STATUS_TEXT.IDLE
         if request.status == "REQUESTING" then
             if request.kind == "SET" then
@@ -60,15 +60,25 @@ function Lab.CreatePage(parent)
         self.scSlots:Refresh()
         self.scSources:Refresh()
         self.scPreview:RefreshDraft()
-        local canApply = pendingCount > 0 and request.status ~= "REQUESTING"
-        if pendingKind == "SET" then
-            canApply = state.presetRecord and state.presetRecord.collected and request.status ~= "REQUESTING"
+        if self.scWeaponHandWarning and self.scWeaponHandWarning.SetActive then
+            local slot = state.selectedSlot
+            self.scWeaponHandWarning:SetActive(slot == "MAINHAND" or slot == "OFFHAND")
         end
+        local copper = 0
+        if state.GetApplyCost then
+            copper = state:GetApplyCost() or 0
+        end
+        if self.scMoneyFrame and MoneyFrame_Update then
+            pcall(MoneyFrame_Update, self.scMoneyFrame:GetName(), copper, true)
+        elseif self.scMoneyText then
+            self.scMoneyText:SetText(tostring(copper))
+        end
+        local canClickApply = request.status ~= "REQUESTING" and state:HasDraft()
         local apply = self.scApplyButton or self.scApplySlot
         if apply then
-            if canApply then apply:Enable() else apply:Disable() end
+            if canClickApply then apply:Enable() else apply:Disable() end
             if self.scApplyDisabledTip then
-                if canApply then self.scApplyDisabledTip:Hide() else self.scApplyDisabledTip:Show() end
+                if canClickApply then self.scApplyDisabledTip:Hide() else self.scApplyDisabledTip:Show() end
             end
         end
         if self.scMultiSaveButton then

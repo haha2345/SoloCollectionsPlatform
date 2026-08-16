@@ -55,8 +55,10 @@ function Lab.CreateSlots(parent, state)
         button:SetScript("OnClick", function(self, mouseButton)
             if mouseButton == "RightButton" and state:IsSlotDirty(self.scSlotKey) then
                 if state.presetRecord then state:ClearDraft() else state:ClearDraft(self.scSlotKey) end
+                if Lab.PlaySound then Lab.PlaySound("revert") end
             else
                 state:SelectSlot(self.scSlotKey)
+                if Lab.PlaySound then Lab.PlaySound("slot") end
             end
         end)
         button:SetScript("OnEnter", function(self)

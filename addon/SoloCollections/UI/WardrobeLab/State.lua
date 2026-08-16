@@ -26,6 +26,82 @@ for _, definition in ipairs(Lab.SLOTS) do Lab.SLOT_BY_KEY[definition.key] = defi
 Lab.MAX_OUTFITS = 10
 Lab.OUTFIT_NAME_MAX = 48
 
+-- ez 2.2 plays extracted WAVs when SoloCollections_EzUI is present; otherwise
+-- fall back to 3.3.5 stock kits. Legion plays SOUNDKIT.UI_TRANSMOG_* which
+-- 3.3.5 does not have. Apply must not play on the button click.
+Lab.SOUNDS = {
+    open = { file = "UI_EtherealWindow_Open.wav", fallback = "igCharacterInfoOpen", alwaysFallback = true },
+    close = { file = "UI_EtherealWindow_Close.wav", fallback = "igCharacterInfoClose", alwaysFallback = true },
+    apply = { file = "UI_Transmogrify_Apply.wav" },
+    revert = { file = "UI_Reforging_Restore.wav" },
+    slot = { fallback = "igSpellBookSpellIconPickup" },
+    item = { fallback = "igMainMenuOptionCheckBoxOn" },
+}
+
+function Lab.PlaySound(key)
+    local spec = Lab.SOUNDS[key]
+    if not spec then return end
+    local UI = SC.UI
+    local playedFile = false
+    if spec.file and UI and UI.EzCollections and UI.EzCollections.MediaPath then
+        local path = UI.EzCollections:MediaPath("Sounds", spec.file)
+        if path and PlaySoundFile then
+            -- 3.3.5 cannot tell if the optional EzUI file exists. A stub
+            -- overlay still returns a path, so open/close always keep the
+            -- stock kit. Apply/revert stay silent when the WAV is missing.
+            pcall(PlaySoundFile, path)
+            playedFile = true
+        end
+    end
+    if spec.fallback and PlaySound and (spec.alwaysFallback or not playedFile) then
+        pcall(PlaySound, spec.fallback)
+    end
+end
+
+local POPUP_WHICH = {
+    confirm = "SOLOCOLLECTIONS_TRANSMOG_CONFIRM",
+    notice = "SOLOCOLLECTIONS_TRANSMOG_NOTICE",
+}
+
+function Lab.HideDialogs()
+    Lab.pendingPopupAccept = nil
+    Lab.pendingApplyState = nil
+    Lab.pendingOutfitState = nil
+    if not StaticPopup_Hide then return end
+    StaticPopup_Hide("SOLOCOLLECTIONS_TRANSMOG_CONFIRM")
+    StaticPopup_Hide("SOLOCOLLECTIONS_TRANSMOG_NOTICE")
+    StaticPopup_Hide("SOLOCOLLECTIONS_TRANSMOG_APPLY")
+    StaticPopup_Hide("SOLOCOLLECTIONS_TRANSMOG_APPLY_WARNING")
+    StaticPopup_Hide("SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT")
+end
+
+function Lab.ShowDialog(kind, text, onAccept)
+    text = tostring(text or "")
+    Lab.pendingPopupAccept = onAccept
+    local which = POPUP_WHICH[kind] or POPUP_WHICH.notice
+    local dialog
+    if StaticPopup_Show then
+        dialog = StaticPopup_Show(which, text)
+    end
+    if dialog then return dialog end
+    -- 3.3.5 can refuse a custom popup; never leave a confirm silent.
+    if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage("|cffffd100幻化：|r" .. text)
+    end
+    if UIErrorsFrame and UIErrorsFrame.AddMessage then
+        UIErrorsFrame:AddMessage(text, 1, 0.82, 0.18, 1, 6)
+    end
+    return nil
+end
+
+function Lab.Confirm(text, onAccept)
+    return Lab.ShowDialog("confirm", text, onAccept)
+end
+
+function Lab.Notice(text, onAccept)
+    return Lab.ShowDialog("notice", text, onAccept)
+end
+
 local State = {}
 State.__index = State
 
@@ -253,6 +329,94 @@ function State:GetHiddenSlots()
     return hidden
 end
 
+function State:GetApplyWarnings()
+    local warnings = {}
+    local hidden = self:GetHiddenSlots()
+    if next(hidden) and #self:GetPendingApplySlots() > 0 then
+        warnings[#warnings + 1] = "隐藏外观只会留在本地预览，不会写入装备。"
+    end
+    return warnings
+end
+
+-- Legion shows C_Transmog.GetCost() on the left MoneyFrame. SC2 has no cost
+-- field yet; never invent a copper amount on the client.
+function State:GetApplyCost()
+    return 0, "UNAVAILABLE"
+end
+
+function Lab.ConfirmApply(state, summary, onAccept)
+    local copper = 0
+    if state and state.GetApplyCost then
+        copper = state:GetApplyCost()
+    end
+    local text = tostring(summary or "确定应用当前待定幻化？")
+        .. "\n当前费用（服务端尚未返回金额，按 0 显示）："
+    Lab.pendingPopupAccept = onAccept
+    local dialog
+    if StaticPopup_Show then
+        dialog = StaticPopup_Show("SOLOCOLLECTIONS_TRANSMOG_APPLY", text, nil, copper)
+    end
+    if dialog then return dialog end
+    return Lab.Confirm(text, onAccept)
+end
+
+function Lab.BeginApplyWithWarnings(state)
+    if not state then return false end
+    if state.requestState and state.requestState.status == "REQUESTING" then
+        Lab.Notice("已有应用请求正在处理。")
+        return false
+    end
+    if state.presetRecord then
+        local canApply, reason, owned, required = state:GetSetApplyState()
+        if canApply then
+            local name = tostring(state.presetRecord.name or state.presetRecord.id)
+            return Lab.ConfirmApply(state, "确定应用套装「" .. name .. "」？", function()
+                state:BeginApplyAll()
+            end)
+        end
+        if reason == "NOT_OWNED" then
+            Lab.Notice(string.format(
+                "当前套装尚未收集完整：%s / %s。未收藏套装只能预览。",
+                tostring(owned or state.presetRecord.collectedCount or 0),
+                tostring(required or state.presetRecord.requiredCount or 0)
+            ))
+            return false
+        end
+        Lab.Notice("当前套装预设暂不能提交应用。")
+        return false
+    end
+    local canApply, reason = state:GetDraftApplyState()
+    if reason == "HIDE_VISUAL_UNSUPPORTED" then
+        Lab.Notice("隐藏外观只能本地预览，当前不能应用到装备。")
+        return false
+    end
+    if reason == "NO_DRAFT" then
+        Lab.Notice("先在右侧选择外观，建立待定幻化。")
+        return false
+    end
+    if reason == "NOT_OWNED" then
+        Lab.Notice("待定外观尚未收藏，只能本地预览。")
+        return false
+    end
+    if not canApply then
+        if reason == "BRIDGE_UNAVAILABLE" then
+            Lab.Notice("SC2 外观服务尚未就绪，暂不能提交应用。")
+        else
+            Lab.Notice("当前待定外观暂不能提交应用。")
+        end
+        return false
+    end
+    local slots = state:GetPendingApplySlots()
+    local summary = string.format("确定将 %d 个部位的幻化写入装备？", #slots)
+    local warnings = state:GetApplyWarnings()
+    if warnings[1] then
+        summary = warnings[1] .. summary
+    end
+    return Lab.ConfirmApply(state, summary, function()
+        state:BeginApplyAll()
+    end)
+end
+
 function State:HasOnlyHideVisualDrafts()
     local any = false
     for slotKey, record in pairs(self.draftBySlot) do
@@ -413,6 +577,7 @@ function State:CompleteSlotApply(slotKey, requestToken, reason)
         status = "CONFIRMED", kind = "SLOT", slot = slotKey,
         revision = currentRevision(), reason = reason,
     }
+    Lab.PlaySound("apply")
     self:Notify("AUTHORITATIVE_REFRESH")
 end
 
@@ -451,6 +616,7 @@ function State:BeginApplySet()
                 status = "CONFIRMED", kind = "SET",
                 revision = currentRevision(), reason = reason or "ACCEPTED",
             }
+            Lab.PlaySound("apply")
             self:Notify("AUTHORITATIVE_REFRESH")
         else
             self.requestState.status, self.requestState.reason = "FAILED", reason or "UNKNOWN"
@@ -526,6 +692,40 @@ function State:SaveOutfit(name)
     self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
     self:Notify("OUTFIT_SAVED")
     return outfit
+end
+
+function State:OverwriteOutfit(uid)
+    if not uid then return nil, "INVALID_OUTFIT" end
+    local slots = self:CaptureOutfitSlots()
+    if not next(slots) then return nil, "EMPTY_OUTFIT" end
+    if not SC.db or type(SC.db.transmogOutfits) ~= "table" then return nil, "NO_DATABASE" end
+    for _, outfit in ipairs(SC.db.transmogOutfits) do
+        if outfit.uid == uid and outfit.character == characterKey() then
+            outfit.slots = slots
+            self.activeOutfitUid = uid
+            self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
+            self:Notify("OUTFIT_SAVED")
+            return outfit
+        end
+    end
+    return nil, "INVALID_OUTFIT"
+end
+
+function State:RenameOutfit(uid, name)
+    name = string.gsub(tostring(name or ""), "^%s+", "")
+    name = string.gsub(name, "%s+$", "")
+    if name == "" or string.len(name) > Lab.OUTFIT_NAME_MAX then return nil, "INVALID_NAME" end
+    if not SC.db or type(SC.db.transmogOutfits) ~= "table" then return nil, "NO_DATABASE" end
+    for _, outfit in ipairs(SC.db.transmogOutfits) do
+        if outfit.uid == uid and outfit.character == characterKey() then
+            outfit.name = name
+            self.activeOutfitUid = uid
+            self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
+            self:Notify("OUTFIT_SAVED")
+            return outfit
+        end
+    end
+    return nil, "INVALID_OUTFIT"
 end
 
 function State:LoadOutfit(outfit)

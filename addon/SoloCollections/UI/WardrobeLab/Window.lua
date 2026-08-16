@@ -116,10 +116,13 @@ function UI.CreateTransmogFrame()
             self.scPage:Show()
             if self.scPage.Refresh then self.scPage:Refresh() end
         end
+        if Lab.PlaySound then Lab.PlaySound("open") end
     end)
     frame:SetScript("OnHide", function(self)
         if self.scFilterPopup then self.scFilterPopup:Hide() end
         if CloseDropDownMenus then CloseDropDownMenus() end
+        if Lab.HideDialogs then Lab.HideDialogs() end
+        if Lab.PlaySound then Lab.PlaySound("close") end
     end)
 
     if dragonShell and SC.UIPlatform then

@@ -15,32 +15,123 @@ StaticPopupDialogs["SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT"] = {
     hideOnEscape = 1,
     OnShow = function(dialog)
         local box = dialog.editBox or _G[dialog:GetName() .. "EditBox"]
-        if box then
-            box:SetFocus()
-            box:HighlightText()
+        if not box then return end
+        if Lab.pendingOutfitMode == "rename" and Lab.pendingOutfitState then
+            local current
+            for _, outfit in ipairs(Lab.GetStoredOutfits()) do
+                if outfit.uid == Lab.pendingOutfitState.activeOutfitUid then
+                    current = outfit.name
+                    break
+                end
+            end
+            if current then box:SetText(current) end
         end
+        box:SetFocus()
+        box:HighlightText()
     end,
     OnAccept = function(dialog)
         local box = dialog.editBox or _G[dialog:GetName() .. "EditBox"]
         local name = box and box:GetText() or ""
         local state = Lab.pendingOutfitState
-        if state then state:SaveOutfit(name) end
+        if not state then return end
+        if Lab.pendingOutfitMode == "rename" then
+            state:RenameOutfit(state.activeOutfitUid, name)
+        else
+            state:SaveOutfit(name)
+        end
+        Lab.pendingOutfitMode = nil
     end,
     EditBoxOnEnterPressed = function(editBox)
         local dialog = editBox:GetParent()
         local name = editBox:GetText() or ""
         local state = Lab.pendingOutfitState
-        if state then state:SaveOutfit(name) end
+        if state then
+            if Lab.pendingOutfitMode == "rename" then
+                state:RenameOutfit(state.activeOutfitUid, name)
+            else
+                state:SaveOutfit(name)
+            end
+        end
+        Lab.pendingOutfitMode = nil
         dialog:Hide()
     end,
     EditBoxOnEscapePressed = function(editBox)
         editBox:GetParent():Hide()
     end,
 }
+
+StaticPopupDialogs["SOLOCOLLECTIONS_TRANSMOG_CONFIRM"] = {
+    text = "%s",
+    button1 = "确定",
+    button2 = "取消",
+    timeout = 0,
+    whileDead = 1,
+    hideOnEscape = 1,
+    showAlert = 1,
+    OnAccept = function()
+        local fn = Lab.pendingPopupAccept
+        Lab.pendingPopupAccept = nil
+        if type(fn) == "function" then fn() end
+    end,
+    OnCancel = function()
+        Lab.pendingPopupAccept = nil
+    end,
+}
+
+StaticPopupDialogs["SOLOCOLLECTIONS_TRANSMOG_APPLY"] = {
+    text = "%s",
+    button1 = "应用",
+    button2 = "取消",
+    hasMoneyFrame = 1,
+    showAlert = 1,
+    timeout = 0,
+    whileDead = 1,
+    hideOnEscape = 1,
+    OnShow = function(self)
+        local copper = 0
+        if type(self.data) == "number" then
+            copper = self.data
+        end
+        local frameName = self:GetName() .. "MoneyFrame"
+        if MoneyFrame_Update then
+            MoneyFrame_Update(frameName, copper)
+        end
+    end,
+    OnAccept = function()
+        local fn = Lab.pendingPopupAccept
+        Lab.pendingPopupAccept = nil
+        if type(fn) == "function" then fn() end
+    end,
+    OnCancel = function()
+        Lab.pendingPopupAccept = nil
+    end,
+}
+
+StaticPopupDialogs["SOLOCOLLECTIONS_TRANSMOG_NOTICE"] = {
+    text = "%s",
+    button1 = "确定",
+    timeout = 0,
+    whileDead = 1,
+    hideOnEscape = 1,
+    showAlert = 1,
+    OnAccept = function()
+        local fn = Lab.pendingPopupAccept
+        Lab.pendingPopupAccept = nil
+        if type(fn) == "function" then fn() end
+    end,
+}
 end
 
-local function promptSave(state)
+local function promptSave(state, mode)
     Lab.pendingOutfitState = state
+    Lab.pendingOutfitMode = mode or "save"
+    if StaticPopupDialogs and StaticPopupDialogs["SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT"] then
+        if mode == "rename" then
+            StaticPopupDialogs["SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT"].text = "输入新的方案名称："
+        else
+            StaticPopupDialogs["SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT"].text = "输入幻化方案名称："
+        end
+    end
     if StaticPopup_Show then
         StaticPopup_Show("SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT")
     end
@@ -60,21 +151,18 @@ function Lab.CreateOutfits(parent, state)
     dropdown:SetFrameLevel(host:GetFrameLevel() + 2)
     UIDropDownMenu_SetWidth(dropdown, 188)
 
+    local function applyEquipped()
+        state:ClearDraft()
+        state.activeOutfitUid = nil
+        state:CaptureEquipped()
+        state:Notify("EQUIPPED_REFRESH")
+    end
+
     local function chooseEquipped()
         if state:HasDraft() then
-            if state.requestState.status == "CONFIRM_SWITCH_EQUIPPED" then
-                state:ClearDraft()
-                state.activeOutfitUid = nil
-                state:CaptureEquipped()
-                state:Notify("EQUIPPED_REFRESH")
-            else
-                state.requestState = { status = "CONFIRM_SWITCH_EQUIPPED", revision = state.requestState.revision }
-                state:Notify("CONFIRM_SWITCH_EQUIPPED")
-            end
+            Lab.Confirm("切换到当前装备会清除未应用的待定幻化。", applyEquipped)
         else
-            state.activeOutfitUid = nil
-            state:CaptureEquipped()
-            state:Notify("EQUIPPED_REFRESH")
+            applyEquipped()
         end
     end
 
@@ -109,7 +197,16 @@ function Lab.CreateOutfits(parent, state)
             local info = UIDropDownMenu_CreateInfo()
             info.text = outfit.name
             info.checked = state.activeOutfitUid == outfit.uid
-            info.func = function() state:LoadOutfit(outfit) end
+            info.func = function()
+                local selected = outfit
+                if state:HasDraft() then
+                    Lab.Confirm("载入方案会替换当前未应用的待定幻化。", function()
+                        state:LoadOutfit(selected)
+                    end)
+                else
+                    state:LoadOutfit(selected)
+                end
+            end
             UIDropDownMenu_AddButton(info)
         end
 
@@ -127,10 +224,35 @@ function Lab.CreateOutfits(parent, state)
         UIDropDownMenu_AddButton(saveInfo)
 
         if state.activeOutfitUid then
+            local overwriteInfo = UIDropDownMenu_CreateInfo()
+            overwriteInfo.text = "覆盖当前方案"
+            overwriteInfo.notCheckable = true
+            overwriteInfo.disabled = not state:HasDraft()
+            overwriteInfo.func = function()
+                local uid = state.activeOutfitUid
+                local name = UIDropDownMenu_GetText and UIDropDownMenu_GetText(dropdown) or "当前方案"
+                Lab.Confirm("用当前待定外观覆盖方案「" .. tostring(name) .. "」？", function()
+                    state:OverwriteOutfit(uid)
+                end)
+            end
+            UIDropDownMenu_AddButton(overwriteInfo)
+
+            local renameInfo = UIDropDownMenu_CreateInfo()
+            renameInfo.text = "重命名当前方案…"
+            renameInfo.notCheckable = true
+            renameInfo.func = function() promptSave(state, "rename") end
+            UIDropDownMenu_AddButton(renameInfo)
+
             local deleteInfo = UIDropDownMenu_CreateInfo()
             deleteInfo.text = "删除当前方案"
             deleteInfo.notCheckable = true
-            deleteInfo.func = function() state:DeleteOutfit(state.activeOutfitUid) end
+            deleteInfo.func = function()
+                local uid = state.activeOutfitUid
+                local name = UIDropDownMenu_GetText and UIDropDownMenu_GetText(dropdown) or "当前方案"
+                Lab.Confirm("删除方案「" .. tostring(name) .. "」？此操作不能撤销。", function()
+                    state:DeleteOutfit(uid)
+                end)
+            end
             UIDropDownMenu_AddButton(deleteInfo)
         end
     end)
@@ -150,18 +272,16 @@ function Lab.CreateOutfits(parent, state)
     clear:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight")
     clear:SetScript("OnClick", function()
         if not state:HasDraft() then return end
-        if state.requestState.status == "CONFIRM_CLEAR" then
+        Lab.Confirm("清除全部待定幻化？不会改动已经应用到装备的外观。", function()
             state:ClearDraft()
             state.activeOutfitUid = nil
-        else
-            state.requestState = { status = "CONFIRM_CLEAR", revision = state.requestState.revision }
-            state:Notify("CONFIRM_CLEAR")
-        end
+            if Lab.PlaySound then Lab.PlaySound("revert") end
+        end)
     end)
     clear:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
         GameTooltip:SetText("撤销所有待定幻化", 1, 0.82, 0.18)
-        GameTooltip:AddLine("与正式服幻化室相同：首次点击进入确认，再点一次清除。", 0.72, 0.72, 0.72, true)
+        GameTooltip:AddLine("点击后会弹出确认，不会立即清除。", 0.72, 0.72, 0.72, true)
         GameTooltip:Show()
     end)
     clear:SetScript("OnLeave", function() GameTooltip:Hide() end)

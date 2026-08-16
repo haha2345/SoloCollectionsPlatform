@@ -88,6 +88,59 @@ local function setProgress(category, filters)
     frame.scProgress:SetProgress(collected, total)
 end
 
+local SOURCE_KIND_LABELS = {
+    drop = "掉落",
+    quest = "任务",
+    vendor = "商人",
+    crafted = "专业",
+}
+
+local function appearanceSourceKindLabel(record)
+    if not record or not record.sourceKind then return nil end
+    local kinds = SC.Catalog and SC.Catalog.APPEARANCE_SOURCE_KINDS
+    if kinds then
+        for _, kind in ipairs(kinds) do
+            if kind.key == record.sourceKind then
+                return kind.label
+            end
+        end
+    end
+    return SOURCE_KIND_LABELS[record.sourceKind]
+end
+
+local function addAppearanceSourceTooltip(record)
+    local kindLabel = appearanceSourceKindLabel(record)
+    if kindLabel then
+        GameTooltip:AddLine("来源类型：" .. kindLabel, 0.82, 0.78, 0.70)
+    end
+    local text = record.source
+    if type(text) == "string" and text ~= "" and text ~= "获取方式未记录" then
+        GameTooltip:AddLine(text, 0.94, 0.82, 0.58, true)
+    end
+end
+
+local function usableSourceLabel(value)
+    if type(value) ~= "string" or value == "" then return nil end
+    if value == "NONE" or value == "UNKNOWN" then return nil end
+    return value
+end
+
+local function addSetSourceTooltip(record)
+    local presentation = record and record.presentation
+    local label = usableSourceLabel(record.source)
+    if not label and presentation then
+        if presentation.acquisition == "PVP" then
+            label = "PvP"
+        else
+            label = usableSourceLabel(presentation.displayLabel)
+                or usableSourceLabel(presentation.raidTier)
+        end
+    end
+    if label then
+        GameTooltip:AddLine("来源：" .. label, 0.94, 0.82, 0.58, true)
+    end
+end
+
 function Lab.CreateSources(parent, state)
     local host = CreateFrame("Frame", nil, parent)
     host:SetAllPoints(parent)
@@ -346,6 +399,7 @@ function Lab.CreateSources(parent, state)
             if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
                 if mouseButton ~= "RightButton" then
                     state:SetDraft(state.selectedSlot, record)
+                    if Lab.PlaySound then Lab.PlaySound("item") end
                 end
                 return
             end
@@ -354,6 +408,7 @@ function Lab.CreateSources(parent, state)
                 host:Refresh()
             else
                 state:SetDraft(state.selectedSlot, record)
+                if Lab.PlaySound then Lab.PlaySound("item") end
             end
         end)
         hit:SetScript("OnMouseWheel", function(_, delta) scrollItems(delta) end)
@@ -367,6 +422,7 @@ function Lab.CreateSources(parent, state)
                 GameTooltip:AddLine("仅本地预览，当前不能应用到装备。", 1, 0.35, 0.25, true)
             else
                 GameTooltip:AddLine(record.collected and "已收藏" or "未收藏 · 仅可预览", record.collected and 0.4 or 0.7, record.collected and 1 or 0.7, 0.4)
+                addAppearanceSourceTooltip(record)
                 GameTooltip:AddLine("左键写入所选槽位草稿 · 右键偏好", 0.75, 0.72, 0.66)
             end
             GameTooltip:Show()
@@ -513,6 +569,7 @@ function Lab.CreateSources(parent, state)
                 host:Refresh()
             else
                 state:SetPreset(record)
+                if Lab.PlaySound then Lab.PlaySound("item") end
             end
         end)
         hit:SetScript("OnMouseWheel", function(_, delta) scrollSets(delta) end)
@@ -524,6 +581,7 @@ function Lab.CreateSources(parent, state)
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:SetText(record.name or "未知套装", 1, 0.82, 0.18)
             GameTooltip:AddLine("收集进度：" .. owned .. " / " .. required, 0.45, 0.90, 0.34)
+            addSetSourceTooltip(record)
             GameTooltip:AddLine("左键加载本地套装预设 · 右键偏好", 0.75, 0.72, 0.66)
             GameTooltip:Show()
         end)

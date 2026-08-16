@@ -756,6 +756,25 @@ function Ez:CreateWardrobeSetChrome(parent)
     return border, selected, favorite, highlight
 end
 
+local function animateTexCoords(texture, textureWidth, textureHeight, frameWidth, frameHeight, numFrames, elapsed, throttle)
+    if not texture then return end
+    texture.scAntsThrottle = (texture.scAntsThrottle or 0) + elapsed
+    if texture.scAntsThrottle < (throttle or 0.01) then return end
+    texture.scAntsThrottle = 0
+    local frame = (texture.scAntsFrame or 0) + 1
+    if frame > numFrames then frame = 1 end
+    texture.scAntsFrame = frame
+    local columns = math.floor(textureWidth / frameWidth)
+    if columns < 1 then return end
+    local column = (frame - 1) % columns
+    local row = math.floor((frame - 1) / columns)
+    local left = (column * frameWidth) / textureWidth
+    local right = ((column + 1) * frameWidth) / textureWidth
+    local top = (row * frameHeight) / textureHeight
+    local bottom = ((row + 1) * frameHeight) / textureHeight
+    texture:SetTexCoord(left, right, top, bottom)
+end
+
 function Ez:CreateTransmogSlotChrome(parent)
     local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
     local textures = self:MediaPath("Transmogrify", "Textures.tga", WHITE_TEXTURE)
@@ -797,6 +816,23 @@ function Ez:CreateTransmogSlotChrome(parent)
     pendingGlow:SetBlendMode("ADD")
     pendingGlow:Hide()
 
+    -- Legion/ez PendingFrame.Ants: 44×44, AnimateTexCoords 256/48 ×22.
+    -- 3.3.5 FrameXML has no AnimateTexCoords; keep a local copy.
+    local antsPath = self:MediaPath("Transmogrify", "PurpleIconAlertAnts.tga")
+        or self:MediaPath("Transmogrify", "PurpleIconAlertAnts.blp")
+    local ants = parent:CreateTexture(nil, "OVERLAY")
+    ants:SetWidth(44)
+    ants:SetHeight(44)
+    ants:SetPoint("CENTER")
+    if antsPath then ants:SetTexture(antsPath) end
+    ants:Hide()
+    local antsDriver = CreateFrame("Frame", nil, parent)
+    antsDriver:Hide()
+    antsDriver:SetScript("OnUpdate", function(_, elapsed)
+        if not (ants:IsShown() and antsPath) then return end
+        animateTexCoords(ants, 256, 256, 48, 48, 22, elapsed, 0.01)
+    end)
+
     local undo = parent:CreateTexture(nil, "OVERLAY")
     undo:SetWidth(24)
     undo:SetHeight(22)
@@ -822,10 +858,16 @@ function Ez:CreateTransmogSlotChrome(parent)
             status:Show()
             pendingGlow:Show()
             undo:Show()
+            if antsPath then
+                ants:Show()
+                antsDriver:Show()
+            end
         else
             status:Hide()
             pendingGlow:Hide()
             undo:Hide()
+            ants:Hide()
+            antsDriver:Hide()
         end
     end
 
@@ -860,6 +902,7 @@ function Ez:CreateTransmogSlotChrome(parent)
     parent.scStatusBorder = status
     parent.scSelectedTexture = selected
     parent.scPendingGlow = pendingGlow
+    parent.scPendingAnts = ants
     parent.scUndoTexture = undo
     parent.scHiddenCover = hiddenCover
     parent.scHiddenIcon = hiddenIcon

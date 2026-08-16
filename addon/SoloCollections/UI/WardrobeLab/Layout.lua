@@ -38,6 +38,98 @@ local function applyRaceBackground(panel, background)
     if UI.EzCollections.UpdateInset then UI.EzCollections:UpdateInset(panel) end
 end
 
+-- ez 2.2 WeaponHandWarning: model BOTTOM y=5, height 46, orange Search glow.
+-- Shown only for MAINHAND / OFFHAND. Text is the ez enUS (Chinese) string.
+local function createWeaponHandWarning(model)
+    local warning = CreateFrame("Frame", nil, model)
+    warning:SetHeight(46)
+    warning:SetPoint("LEFT", model, "LEFT", 5, 0)
+    warning:SetPoint("RIGHT", model, "RIGHT", -5, 0)
+    warning:SetPoint("BOTTOM", model, "BOTTOM", 0, 5)
+    warning:SetFrameLevel((model.GetFrameLevel and model:GetFrameLevel() or 0) + 8)
+    warning:SetAlpha(0)
+    warning:Hide()
+
+    local searchPath = UI.EzCollections:MediaPath("Common", "Search.tga")
+        or UI.EzCollections:MediaPath("Common", "Search.blp")
+    local function addGlow(parent, layer)
+        local tex = parent:CreateTexture(nil, layer or "BACKGROUND")
+        if searchPath then
+            tex:SetTexture(searchPath)
+            if tex.SetBlendMode then tex:SetBlendMode("ADD") end
+            tex:SetVertexColor(1, 0.5, 0, 1)
+        else
+            tex:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
+            tex:SetVertexColor(1, 0.45, 0, 0.55)
+        end
+        return tex
+    end
+
+    local bottom = addGlow(warning)
+    bottom:SetHeight(2)
+    bottom:SetPoint("LEFT")
+    bottom:SetPoint("RIGHT")
+    bottom:SetPoint("BOTTOM")
+    if searchPath then bottom:SetTexCoord(0.001953125, 0.501953125, 0.5859375, 0.6015625) end
+
+    local bottomGlow = addGlow(warning)
+    bottomGlow:SetAllPoints(bottom)
+    if searchPath then bottomGlow:SetTexCoord(0.001953125, 0.501953125, 0.5859375, 0.6015625) end
+
+    local fill = addGlow(warning)
+    fill:SetPoint("TOP")
+    fill:SetPoint("LEFT")
+    fill:SetPoint("RIGHT")
+    fill:SetPoint("BOTTOM", bottom, "TOP")
+    if searchPath then fill:SetTexCoord(0.001953125, 0.501953125, 0.421875, 0.5859375) end
+
+    local fillGlow = addGlow(warning)
+    fillGlow:SetAllPoints(fill)
+    if searchPath then fillGlow:SetTexCoord(0.001953125, 0.501953125, 0.421875, 0.5859375) end
+
+    local text = warning:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+    text:SetPoint("TOP")
+    text:SetPoint("LEFT", warning, "LEFT", 5, 0)
+    text:SetPoint("RIGHT", warning, "RIGHT", -5, 0)
+    text:SetPoint("BOTTOM", warning, "BOTTOM", 0, 5)
+    if text.SetJustifyV then text:SetJustifyV("BOTTOM") end
+    if text.SetJustifyH then text:SetJustifyH("CENTER") end
+    if text.SetNonSpaceWrap then text:SetNonSpaceWrap(true) end
+    text:SetText("武器可能会出现在错误的手中")
+    warning.Text = text
+    warning.scWantShown = false
+
+    warning:SetScript("OnUpdate", function(self, elapsed)
+        local alpha = self:GetAlpha() or 0
+        elapsed = elapsed or 0
+        if self.scWantShown then
+            if alpha < 1 then
+                self:SetAlpha(math.min(1, alpha + elapsed * 2))
+            end
+        elseif alpha > 0 then
+            alpha = alpha - elapsed * 2
+            if alpha <= 0 then
+                self:SetAlpha(0)
+                self:Hide()
+            else
+                self:SetAlpha(alpha)
+            end
+        end
+    end)
+
+    function warning:SetActive(active)
+        self.scWantShown = not not active
+        if active then
+            if not self:IsShown() then
+                self:SetAlpha(0)
+                self:Show()
+            end
+        end
+    end
+
+    return warning
+end
+
 local function createDisabledTooltipOverlay(button, onEnter)
     local overlay = CreateFrame("Frame", nil, button)
     overlay:SetAllPoints(button)
@@ -69,6 +161,7 @@ function Lab.CreateLayout(page, state)
     local slots = Lab.CreateSlots(preview, state)
     local outfits = Lab.CreateOutfits(left, state)
     local sources = Lab.CreateSources(right, state)
+    local weaponWarning = createWeaponHandWarning(preview)
 
     local stateText = page:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     stateText:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 0, 0)
@@ -101,10 +194,49 @@ function Lab.CreateLayout(page, state)
     moneyRight:SetTexture(moneyPath)
     moneyRight:SetTexCoord(0, 0.0625, 0, 0.3125)
 
-    local moneyText = left:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    moneyText:SetPoint("RIGHT", moneyRight, "RIGHT", 2, 0)
-    moneyText:SetText("0")
-    moneyText:SetTextColor(1, 0.82, 0.18)
+    -- Legion: SmallMoneyFrameTemplate on the chrome, always showing 0 copper.
+    -- 3.3.5 MoneyFrame_Update(name, copper) has no always-show flag; 0 still
+    -- draws the copper icon. Do not invent a gold amount.
+    local moneyFrame
+    local created = pcall(function()
+        moneyFrame = CreateFrame(
+            "Frame",
+            "SoloCollectionsWardrobeMoneyFrame",
+            left,
+            "SmallMoneyFrameTemplate"
+        )
+    end)
+    if not (created and moneyFrame) then
+        moneyFrame = nil
+    end
+    local moneyText
+    if moneyFrame then
+        moneyFrame:ClearAllPoints()
+        moneyFrame:SetPoint("RIGHT", moneyRight, "RIGHT", 6, 0)
+        moneyFrame:SetFrameLevel(left:GetFrameLevel() + 8)
+        if SmallMoneyFrame_OnLoad then pcall(SmallMoneyFrame_OnLoad, moneyFrame) end
+        if MoneyFrame_SetType then pcall(MoneyFrame_SetType, moneyFrame, "STATIC") end
+        if MoneyFrame_Update then
+            pcall(MoneyFrame_Update, moneyFrame:GetName(), 0, true)
+        end
+    else
+        moneyText = left:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        moneyText:SetPoint("RIGHT", moneyRight, "RIGHT", 2, 0)
+        moneyText:SetText("0")
+        moneyText:SetTextColor(1, 0.82, 0.18)
+    end
+    local moneyHit = CreateFrame("Frame", nil, left)
+    moneyHit:SetPoint("TOPLEFT", moneyLeft, "TOPLEFT", 0, 0)
+    moneyHit:SetPoint("BOTTOMRIGHT", moneyRight, "BOTTOMRIGHT", 0, 0)
+    moneyHit:SetFrameLevel(left:GetFrameLevel() + 12)
+    moneyHit:EnableMouse(true)
+    moneyHit:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_TOP")
+        GameTooltip:SetText("幻化费用", 1, 0.82, 0.18)
+        GameTooltip:AddLine("军团把费用画在这条 MoneyFrame 上。当前 SC2 没有费用字段，客户端只显示 0，不估算金币。", 0.72, 0.72, 0.72, true)
+        GameTooltip:Show()
+    end)
+    moneyHit:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
     local apply = CreateFrame("Button", nil, left, "UIPanelButtonTemplate")
     apply:SetWidth(112)
@@ -113,9 +245,11 @@ function Lab.CreateLayout(page, state)
     apply:SetText("应用")
     apply:SetFrameLevel(left:GetFrameLevel() + 16)
     apply:SetScript("OnClick", function()
-        local sound = UI.EzCollections:MediaPath("Sounds", "UI_Transmogrify_Apply.wav")
-        if sound and PlaySoundFile then PlaySoundFile(sound) end
-        state:BeginApplyAll()
+        if Lab.BeginApplyWithWarnings then
+            Lab.BeginApplyWithWarnings(state)
+        else
+            state:BeginApplyAll()
+        end
     end)
 
     local spec = CreateFrame("Button", nil, left, "UIMenuButtonStretchTemplate")
@@ -202,7 +336,9 @@ function Lab.CreateLayout(page, state)
     page.scApplyDisabledTip = applyDisabledTip
     page.scApplySet = sources.scApplySet
     page.scMoneyFrameTextures = { moneyLeft, moneyMiddle, moneyRight }
+    page.scMoneyFrame = moneyFrame
     page.scMoneyText = moneyText
+    page.scWeaponHandWarning = weaponWarning
     page.scSpecButton = spec
     page.scSpecDisabledTip = specTip
     page.scClearAllButton = outfits.scClearButton
