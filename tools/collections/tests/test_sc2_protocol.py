@@ -54,9 +54,18 @@ class SC2ProtocolTests(unittest.TestCase):
                 "11": "authoritative account-owned companion collection IDs",
                 "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress",
                 "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress",
+                "18": "internal character-applied wardrobe slots; fixed Lab.SLOTS order; empty=- hide=2 otherwise appearance collectionId; excluded from navigation and progress",
+                "19": "internal account-outfit set; uid:nameHex:slotCsv rows separated by semicolon; excluded from navigation and progress",
             },
             self.schema["projectionTypes"],
         )
+        self.assertEqual(2, self.schema["hideVisualCollectionId"])
+        self.assertEqual(list(range(1, 10)), self.schema["reservedAppearanceCollectionIds"])
+        self.assertEqual(14, self.schema["wardrobeSlotCount"])
+        self.assertIn("INSUFFICIENT_FUNDS", self.schema["actionStatuses"])
+        self.assertIn("Y", self.schema["messages"])
+        self.assertIn("U", self.schema["messages"])
+        self.assertIn("O", self.schema["messages"])
         favorite = self.schema["actionSemantics"]["SET_FAVORITE"]
         random_summon = self.schema["actionSemantics"]["RANDOM_SUMMON"]
         self.assertEqual([10, 11], favorite["typeIds"])
@@ -82,6 +91,17 @@ class SC2ProtocolTests(unittest.TestCase):
             "mount_set_favorite_request", "mount_random_summon_request",
         }
         self.assertTrue(original_mount_vectors <= names)
+        wardrobe = {
+            "wardrobe_quote_request", "wardrobe_apply_request",
+            "wardrobe_clear_all_request", "wardrobe_clear_slots_request",
+            "wardrobe_quote_accepted", "wardrobe_quote_insufficient_funds",
+            "outfit_save_request", "outfit_rename_request", "outfit_delete_request",
+            "wardrobe_insufficient_funds_result", "outfit_limit_result",
+            "character_applied_snapshot_begin", "character_applied_snapshot_chunk",
+            "character_applied_snapshot_end", "account_outfit_snapshot_begin",
+            "account_outfit_snapshot_chunk", "account_outfit_snapshot_end",
+        }
+        self.assertTrue(wardrobe <= names)
 
     def test_chunking_is_deterministic_and_bounded(self):
         payload = ",".join(codec.to_base36(value) for value in range(1, 401))

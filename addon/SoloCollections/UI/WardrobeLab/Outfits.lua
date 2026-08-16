@@ -9,7 +9,7 @@ StaticPopupDialogs["SOLOCOLLECTIONS_SAVE_TRANSMOG_OUTFIT"] = {
     button1 = "保存",
     button2 = "取消",
     hasEditBox = 1,
-    maxLetters = 16,
+    maxLetters = 48,
     timeout = 0,
     whileDead = 1,
     hideOnEscape = 1,
@@ -93,7 +93,9 @@ StaticPopupDialogs["SOLOCOLLECTIONS_TRANSMOG_APPLY"] = {
             copper = self.data
         end
         local frameName = self:GetName() .. "MoneyFrame"
-        if MoneyFrame_Update then
+        if Lab.UpdateQuotedMoney then
+            Lab.UpdateQuotedMoney(frameName, copper)
+        elseif MoneyFrame_Update then
             MoneyFrame_Update(frameName, copper)
         end
     end,
@@ -217,11 +219,37 @@ function Lab.CreateOutfits(parent, state)
         UIDropDownMenu_AddButton(actions)
 
         local saveInfo = UIDropDownMenu_CreateInfo()
-        saveInfo.text = "保存新方案…"
+        saveInfo.text = Lab.IsOutfitReady and Lab.IsOutfitReady() and "保存新方案…" or "保存新方案…（账号方案未就绪）"
         saveInfo.notCheckable = true
-        saveInfo.disabled = not state:HasDraft()
+        saveInfo.disabled = not state:HasDraft() or not (Lab.IsOutfitReady and Lab.IsOutfitReady())
         saveInfo.func = function() promptSave(state) end
         UIDropDownMenu_AddButton(saveInfo)
+
+        local localOutfits = Lab.GetLocalOutfits and Lab.GetLocalOutfits() or {}
+        if #localOutfits > 0 and Lab.IsOutfitReady and Lab.IsOutfitReady() then
+            local uploadInfo = UIDropDownMenu_CreateInfo()
+            uploadInfo.text = "上传本地方案…"
+            uploadInfo.notCheckable = true
+            uploadInfo.func = function()
+                local first = localOutfits[1]
+                Lab.Confirm("把本机保存的「" .. tostring(first.name) .. "」上传到账号？不会在登录时自动灌库。", function()
+                    if state.UploadLocalOutfit then state:UploadLocalOutfit(first) end
+                end)
+            end
+            UIDropDownMenu_AddButton(uploadInfo)
+        end
+
+        if Lab.IsAppliedReady and Lab.IsAppliedReady() then
+            local clearAppliedInfo = UIDropDownMenu_CreateInfo()
+            clearAppliedInfo.text = "清除已应用幻化…"
+            clearAppliedInfo.notCheckable = true
+            clearAppliedInfo.func = function()
+                Lab.Confirm("清除当前角色已写入的幻化？待定预览不会自动恢复。", function()
+                    if state.ClearApplied then state:ClearApplied() end
+                end)
+            end
+            UIDropDownMenu_AddButton(clearAppliedInfo)
+        end
 
         if state.activeOutfitUid then
             local overwriteInfo = UIDropDownMenu_CreateInfo()

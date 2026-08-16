@@ -194,9 +194,8 @@ function Lab.CreateLayout(page, state)
     moneyRight:SetTexture(moneyPath)
     moneyRight:SetTexCoord(0, 0.0625, 0, 0.3125)
 
-    -- Legion: SmallMoneyFrameTemplate on the chrome, always showing 0 copper.
-    -- 3.3.5 MoneyFrame_Update(name, copper) has no always-show flag; 0 still
-    -- draws the copper icon. Do not invent a gold amount.
+    -- Legion: SmallMoneyFrameTemplate on the chrome. Only show the last U.copper
+    -- quote, including a visible 0 copper; never estimate gold on the client.
     local moneyFrame
     local created = pcall(function()
         moneyFrame = CreateFrame(
@@ -216,8 +215,10 @@ function Lab.CreateLayout(page, state)
         moneyFrame:SetFrameLevel(left:GetFrameLevel() + 8)
         if SmallMoneyFrame_OnLoad then pcall(SmallMoneyFrame_OnLoad, moneyFrame) end
         if MoneyFrame_SetType then pcall(MoneyFrame_SetType, moneyFrame, "STATIC") end
-        if MoneyFrame_Update then
-            pcall(MoneyFrame_Update, moneyFrame:GetName(), 0, true)
+        if Lab.UpdateQuotedMoney then
+            Lab.UpdateQuotedMoney(moneyFrame, 0)
+        elseif MoneyFrame_Update then
+            pcall(MoneyFrame_Update, moneyFrame:GetName(), 0)
         end
     else
         moneyText = left:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -233,7 +234,7 @@ function Lab.CreateLayout(page, state)
     moneyHit:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_TOP")
         GameTooltip:SetText("幻化费用", 1, 0.82, 0.18)
-        GameTooltip:AddLine("军团把费用画在这条 MoneyFrame 上。当前 SC2 没有费用字段，客户端只显示 0，不估算金币。", 0.72, 0.72, 0.72, true)
+        GameTooltip:AddLine("只显示最近一次服务端报价。0 铜是合法报价，也会显示；没有报价时同样按 0。客户端不估算金币。", 0.72, 0.72, 0.72, true)
         GameTooltip:Show()
     end)
     moneyHit:SetScript("OnLeave", function() GameTooltip:Hide() end)

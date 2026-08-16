@@ -1509,9 +1509,10 @@ function UI.CreateWardrobePage(parent)
     end
 
     local function preparePlayerModel()
-        model:ClearModel()
         resetModelView()
-        pcall(function() model:SetUnit("player") end)
+        if model.SetAlpha then pcall(model.SetAlpha, model, 0) end
+        -- SetUnit is owned by the generation-safe set presenter. Do not
+        -- ClearModel + SetUnit in this helper; that crashes build 12340.
     end
 
     local function deriveSetPieceState(record)

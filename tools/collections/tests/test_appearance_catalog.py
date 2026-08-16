@@ -139,6 +139,15 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
         self.assertIn("unavailableItemReasonText", wardrobe)
         self.assertIn("presentationCapability == \"DIRECT_DISPLAY_V1\"", wardrobe)
 
+    def test_appearance_collection_ids_do_not_collide_with_hide_visual_reserve(self):
+        ids = [int(row["appearanceId"]) for row in self.groups]
+        self.assertTrue(ids)
+        self.assertGreaterEqual(min(ids), 10)
+        generator = (ROOT / "tools/catalog/generate_catalog.py").read_text(encoding="utf-8")
+        appearance = (ROOT / "tools/catalog/appearance_catalog.py").read_text(encoding="utf-8")
+        self.assertIn("appearance collectionId 1-9 are reserved", generator)
+        self.assertIn("reserved for HideVisual control identities", appearance)
+
 
 if __name__ == "__main__":
     unittest.main()

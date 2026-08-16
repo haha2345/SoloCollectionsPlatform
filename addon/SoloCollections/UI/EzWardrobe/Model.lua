@@ -352,12 +352,20 @@ local function resetPreviewState(frame)
     frame.scTransmorpherSubclass = nil
 end
 
+local function modelPathReady(frame)
+    if not (frame and frame.GetModel) then return false end
+    local ok, value = pcall(frame.GetModel, frame)
+    return ok and value and value ~= ""
+end
+
 local function setUnavailable(lifecycle, reason)
     local frame = lifecycle.frame
+    lifecycle.rebuildPhase = nil
     frame.scRuntimeUnavailableReason = reason
     frame:SetScript("OnUpdate", nil)
-    safeCall(frame, "ClearModel")
     frame:Hide()
+    safeCall(frame, "SetAlpha", 0)
+    safeCall(frame, "ClearModel")
     if frame.scUnavailableIcon and frame.scRecord and GetItemIcon then
         SC.UI.SetIconTexture(frame.scUnavailableIcon, GetItemIcon(frame.scRecord.itemId))
     end
@@ -417,10 +425,8 @@ function TransmogModelMixin:SetType(modelType, force)
     resetPreviewState(self.frame)
     safeCall(self.frame, "SetPosition", 0, 0, 0)
     safeCall(self.frame, "SetFacing", 0)
-    safeCall(self.frame, "ClearModel")
-    if not safeCall(self.frame, "SetUnit", "player") then
-        return false, "PLAYER_MODEL_LOAD_FAILED"
-    end
+    -- Rebuild happens in PrepareTransmorpherFrame across later frames.
+    -- Same-frame ClearModel + SetUnit crashes build 12340 at 0x008310AC.
     syncCardViewport(self.frame)
     return true, "READY"
 end
@@ -434,6 +440,7 @@ function WardrobeItemsModelMixin:OnModelLoaded()
         or self.generation ~= self.activeGeneration then
         return
     end
+    if not modelPathReady(self.frame) then return end
     if self.transmorpherSetup then
         -- Exact Transmorpher PreviewList OnUpdateModel behavior for both armor
         -- and weapons: only restore the selected setup sequence.
@@ -449,18 +456,34 @@ function WardrobeItemsModelMixin:PrepareTransmorpherFrame()
     safeCall(self.frame, "SetAlpha", 1)
     safeCall(self.frame, "SetModelScale", 1)
 
-    -- Transmorpher DressingRoom:Reset resets model-space state, clears the
-    -- previous actor and rebuilds the player's race/sex model every render.
+    -- Transmorpher DressingRoom:Reset resets model-space state, then rebuilds
+    -- the player's race/sex model. Split ClearModel and SetUnit across frames
+    -- so 3.3.5a does not interpolate a freed animation table.
     self.suppressModelEvent = true
-    safeCall(self.frame, "SetPosition", 0, 0, 0)
-    safeCall(self.frame, "SetFacing", 0)
-    safeCall(self.frame, "ClearModel")
-    if not safeCall(self.frame, "SetUnit", "player") then
-        self.suppressModelEvent = nil
-        return false, "PLAYER_MODEL_LOAD_FAILED"
+    if self.rebuildPhase ~= "clear" and self.rebuildPhase ~= "unit" and self.rebuildPhase ~= "dress" then
+        -- DressUpModel OnLoad already SetUnit. Wait one frame before ClearModel.
+        safeCall(self.frame, "SetAlpha", 0)
+        safeCall(self.frame, "SetPosition", 0, 0, 0)
+        safeCall(self.frame, "SetFacing", 0)
+        self.rebuildPhase = "clear"
+        return false, "REBUILD_PENDING"
     end
-    syncCardViewport(self.frame)
-    applyTransmorpherLight(self.frame)
+    if self.rebuildPhase == "clear" then
+        safeCall(self.frame, "ClearModel")
+        self.rebuildPhase = "unit"
+        return false, "REBUILD_PENDING"
+    end
+    if self.rebuildPhase == "unit" then
+        if not safeCall(self.frame, "SetUnit", "player") then
+            self.suppressModelEvent = nil
+            self.rebuildPhase = nil
+            return false, "PLAYER_MODEL_LOAD_FAILED"
+        end
+        syncCardViewport(self.frame)
+        applyTransmorpherLight(self.frame)
+        self.rebuildPhase = "dress"
+        return false, "REBUILD_PENDING"
+    end
     return true, "READY"
 end
 
@@ -492,6 +515,10 @@ function WardrobeItemsModelMixin:RenderTransmorpherWeapon(record)
     -- Transmorpher PreviewList_RenderItem order:
     -- Reset -> Undress -> SetPosition -> SetFacing -> TryOn -> SetSequence.
     local prepared, prepareReason = self:PrepareTransmorpherFrame()
+    if prepareReason == "REBUILD_PENDING" then
+        queueItemRender(self, record, self.generation)
+        return true, "REBUILD_PENDING"
+    end
     if not prepared then return setUnavailable(self, prepareReason) end
 
     local undressed, undressReason = NativePreview:Undress(self.frame)
@@ -509,6 +536,8 @@ function WardrobeItemsModelMixin:RenderTransmorpherWeapon(record)
     self.suppressModelEvent = nil
     if not triedOn then return setUnavailable(self, tryOnReason or "TRYON_FAILED") end
     safeCall(self.frame, "SetSequence", setup.sequence)
+    safeCall(self.frame, "SetAlpha", 1)
+    self.rebuildPhase = nil
     return true, setupReason
 end
 
@@ -529,6 +558,10 @@ function WardrobeItemsModelMixin:RenderTransmorpherArmor(record)
     -- Direct projection of Transmorpher PreviewList_RenderItem for armor.
     -- Armor uses the stock Lua Undress/TryOn methods and never needs SoloCam.
     local prepared, prepareReason = self:PrepareTransmorpherFrame()
+    if prepareReason == "REBUILD_PENDING" then
+        queueItemRender(self, record, self.generation)
+        return true, "REBUILD_PENDING"
+    end
     if not prepared then return setUnavailable(self, prepareReason) end
     if not safeCall(self.frame, "Undress") then
         self.suppressModelEvent = nil
@@ -542,6 +575,8 @@ function WardrobeItemsModelMixin:RenderTransmorpherArmor(record)
         return setUnavailable(self, "TRYON_FAILED")
     end
     safeCall(self.frame, "SetSequence", setup.sequence)
+    safeCall(self.frame, "SetAlpha", 1)
+    self.rebuildPhase = nil
     return true, setupReason
 end
 
@@ -597,7 +632,8 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
     self.transmorpherSetup = nil
     self.weaponDescriptor = nil
     self.pendingItemRender = nil
-    safeCall(self.frame, "ClearModel")
+    self.rebuildPhase = nil
+    safeCall(self.frame, "SetAlpha", 0)
     local expectedGeneration = self.generation
     local function onItemReady(itemId, success)
         if self.generation ~= expectedGeneration
@@ -630,6 +666,7 @@ function WardrobeItemsModelMixin:Clear()
     self.transmorpherSetup = nil
     self.weaponDescriptor = nil
     self.pendingItemRender = nil
+    self.rebuildPhase = nil
     self.frame:SetScript("OnUpdate", nil)
     self.frame.scRecord = nil
     self.frame.scRecordId = nil
@@ -638,8 +675,9 @@ function WardrobeItemsModelMixin:Clear()
     resetPreviewState(self.frame)
     safeCall(self.frame, "SetPosition", 0, 0, 0)
     safeCall(self.frame, "SetFacing", 0)
-    safeCall(self.frame, "ClearModel")
     self.frame:Hide()
+    safeCall(self.frame, "SetAlpha", 0)
+    safeCall(self.frame, "ClearModel")
     if self.frame.scUnavailable then self.frame.scUnavailable:Hide() end
     if self.frame.scCard then self.frame.scCard:Hide() end
     if self.objectModel then

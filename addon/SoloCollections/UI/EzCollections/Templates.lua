@@ -653,6 +653,9 @@ function Ez:CreateWardrobeItemChrome(parent)
         end
     end
 
+    -- Legion/ez TransmogStateTexture: pink = already applied to the
+    -- equipped item (current-transmogged); gold = local pending selected.
+    -- These two atlas tiles must stay distinct.
     local selected = CreateFrame("Frame", nil, parent)
     selected:SetAllPoints(parent)
     selected:SetFrameLevel(parent:GetFrameLevel() + 2)
@@ -661,8 +664,23 @@ function Ez:CreateWardrobeItemChrome(parent)
     selectedTexture:SetHeight(128)
     selectedTexture:SetPoint("CENTER")
     selectedTexture:SetBlendMode("ADD")
-    setAtlasPixels(selectedTexture, transmog, 512, 512, 1, 103, 1, 129)
+    setAtlasPixels(selectedTexture, transmog, 512, 512, 99, 201, 1, 129)
     selected:Hide()
+
+    local applied = CreateFrame("Frame", nil, parent)
+    applied:SetAllPoints(parent)
+    applied:SetFrameLevel(parent:GetFrameLevel() + 2)
+    local appliedTexture = applied:CreateTexture(nil, "OVERLAY")
+    appliedTexture:SetWidth(102)
+    appliedTexture:SetHeight(128)
+    appliedTexture:SetPoint("CENTER")
+    appliedTexture:SetBlendMode("ADD")
+    setAtlasPixels(appliedTexture, transmog, 512, 512, 1, 103, 1, 129)
+    applied:Hide()
+
+    function parent:SetApplied(value)
+        if value then applied:Show() else applied:Hide() end
+    end
 
     local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
     highlight:SetWidth(84)
@@ -698,9 +716,11 @@ function Ez:CreateWardrobeItemChrome(parent)
     border:SetCollected(false)
     border.scTexture = borderTexture
     selected.scTexture = selectedTexture
+    applied.scTexture = appliedTexture
     favorite.scTexture = favoriteTexture
     parent.scHideVisual = hideVisual
-    return border, selected, favorite, highlight
+    parent.scApplied = applied
+    return border, selected, favorite, highlight, applied
 end
 
 function Ez:CreateWardrobeSetChrome(parent)

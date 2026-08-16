@@ -774,6 +774,8 @@ def build_model(source_root: Path) -> dict[str, Any]:
     policy_keys = {entry["policyKey"] for entry in policies}
     collections = _parse_collections(source_root, type_keys)
     _validate_reservations(ids["reservations"].get("collections", []), collections, "collectionId", "collectionKey", "collections")
+    _require(all(int(entry["collectionId"]) >= 10 for entry in collections if entry["typeKey"] == "appearance"),
+             "appearance collectionId 1-9 are reserved for HideVisual control identities")
     for entry in collections:
         _require(entry["policyKey"] in policy_keys, f"collection {entry['collectionKey']} references unknown policy")
         lifecycle = entry["lifecycle"]

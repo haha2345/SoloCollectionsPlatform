@@ -24,8 +24,17 @@ NONCE_RE = re.compile(r"^[0-9a-f]{16}$")
 HASH_RE = re.compile(r"^[0-9a-f]{64}$")
 CHECKSUM_RE = re.compile(r"^[0-9a-f]{8}$")
 FLAGS_RE = re.compile(r"^[0-9a-f]{8}$")
-CHUNK_RE = re.compile(r"^[-0-9a-z,]{1,160}$")
+CHUNK_RE = re.compile(r"^[-0-9a-z,:;]{1,160}$")
 ACTION_RE = re.compile(r"^[A-Z][A-Z0-9_]{0,31}$")
+NAME_HEX_RE = re.compile(r"^[0-9a-f]{2,96}$")
+WARDROBE_APPLY_ENTRIES_RE = re.compile(
+    r"^(?:[1-9][0-9]{0,9}:[1-9][0-9]{0,9})(?:,[1-9][0-9]{0,9}:[1-9][0-9]{0,9}){0,13}$"
+)
+WARDROBE_CLEAR_ENTRIES_RE = re.compile(r"^-$|^(?:[1-9][0-9]{0,9})(?:,[1-9][0-9]{0,9}){0,13}$")
+OUTFIT_ENTRIES_RE = re.compile(r"^-$|^(?:-|[1-9][0-9]{0,9})(?:,(?:-|[1-9][0-9]{0,9})){13}$")
+WARDROBE_OPS = {"QUOTE", "APPLY", "CLEAR"}
+OUTFIT_OPS = {"SAVE", "RENAME"}
+WARDROBE_SLOT_COUNT = 14
 
 ACTION_STATUSES = {
     "ACCEPTED",
@@ -58,6 +67,11 @@ ACTION_STATUSES = {
     "BATTLEGROUND_RESTRICTED",
     "SHAPESHIFT_RESTRICTED",
     "CAST_FAILED",
+    "INSUFFICIENT_FUNDS",
+    "OUTFIT_LIMIT",
+    "OUTFIT_EMPTY",
+    "COST_CHANGED",
+    "NOTHING_EQUIPPED",
 }
 
 RESYNC_REASONS = {
@@ -152,8 +166,36 @@ def canonical_owned_payload(collection_ids: Iterable[int]) -> str:
     return ",".join(to_base36(value) for value in values) if values else "-"
 
 
+def _name_hex(value: Any) -> str:
+    text = _match(value, "nameHex", NAME_HEX_RE)
+    _require(len(text) % 2 == 0, "nameHex must have even length")
+    return text
+
+
+def _wardrobe_entries(op: str, entries: Any, slot_count: int) -> str:
+    _require(isinstance(entries, str), "entries must be text")
+    if op == "CLEAR":
+        _match(entries, "clear entries", WARDROBE_CLEAR_ENTRIES_RE)
+        expected = 0 if entries == "-" else entries.count(",") + 1
+    else:
+        _match(entries, "wardrobe entries", WARDROBE_APPLY_ENTRIES_RE)
+        expected = entries.count(",") + 1
+    _require(slot_count == expected, "slotCount does not match entries")
+    return entries
+
+
+def _outfit_entries(op: str, entries: Any) -> str:
+    _require(isinstance(entries, str), "entries must be text")
+    if op == "RENAME":
+        _require(entries == "-", "RENAME entries must be -")
+        return entries
+    _match(entries, "outfit entries", OUTFIT_ENTRIES_RE)
+    _require(entries != "-", "SAVE entries cannot be empty")
+    return entries
+
+
 def chunk_payload(payload: str) -> list[str]:
-    _match(payload, "snapshot payload", re.compile(r"^-$|^[0-9a-z,]+$"))
+    _match(payload, "snapshot payload", re.compile(r"^[-0-9a-z,:;]+$"))
     _require(len(payload.encode("ascii")) <= MAX_SNAPSHOT_BYTES, "snapshot payload is too large")
     chunks = [payload[index:index + MAX_CHUNK_PAYLOAD_BYTES] for index in range(0, len(payload), MAX_CHUNK_PAYLOAD_BYTES)]
     _require(0 < len(chunks) <= MAX_SNAPSHOT_CHUNKS, "snapshot has too many chunks")
@@ -224,6 +266,27 @@ def _render(message: dict[str, Any]) -> tuple[str, list[str]]:
         ]
     if kind == "ERROR":
         return "X", [nonce(), str(_uint(message.get("requestId"), "requestId", 0, UINT32_MAX)), _enum(message.get("reason"), "reason", ERROR_REASONS)]
+    if kind == "WARDROBE_INTENT":
+        op = _enum(message.get("op"), "op", WARDROBE_OPS)
+        slot_count = _uint(message.get("slotCount"), "slotCount", 0, WARDROBE_SLOT_COUNT)
+        return "Y", [
+            nonce(), request_id(), op, str(slot_count),
+            _wardrobe_entries(op, message.get("entries"), slot_count),
+        ]
+    if kind == "WARDROBE_QUOTE":
+        return "U", [
+            nonce(), request_id(), _enum(message.get("status"), "status", ACTION_STATUSES),
+            str(_uint(message.get("copper"), "copper", 0, UINT32_MAX)),
+            _match(message.get("warningMask"), "warningMask", FLAGS_RE),
+        ]
+    if kind == "OUTFIT_WRITE":
+        op = _enum(message.get("op"), "op", OUTFIT_OPS)
+        return "O", [
+            nonce(), request_id(), op,
+            str(_uint(message.get("uid"), "uid", 0, UINT32_MAX)),
+            _name_hex(message.get("nameHex")),
+            _outfit_entries(op, message.get("entries")),
+        ]
     raise ProtocolError(f"unknown message kind: {kind!r}")
 
 
@@ -279,6 +342,34 @@ def _decode_fields(code: str, fields: list[str]) -> dict[str, Any]:
     if code == "X":
         exact(3)
         return {"kind": "ERROR", "sessionNonce": nonce(), "requestId": uint(1, "requestId", 0, UINT32_MAX), "reason": _enum(fields[2], "reason", ERROR_REASONS)}
+    if code == "Y":
+        exact(5)
+        op = _enum(fields[2], "op", WARDROBE_OPS)
+        slot_count = uint(3, "slotCount", 0, WARDROBE_SLOT_COUNT)
+        return {
+            "kind": "WARDROBE_INTENT", "sessionNonce": nonce(),
+            "requestId": uint(1, "requestId", 1, UINT32_MAX), "op": op,
+            "slotCount": slot_count, "entries": _wardrobe_entries(op, fields[4], slot_count),
+        }
+    if code == "U":
+        exact(5)
+        return {
+            "kind": "WARDROBE_QUOTE", "sessionNonce": nonce(),
+            "requestId": uint(1, "requestId", 1, UINT32_MAX),
+            "status": _enum(fields[2], "status", ACTION_STATUSES),
+            "copper": uint(3, "copper", 0, UINT32_MAX),
+            "warningMask": _match(fields[4], "warningMask", FLAGS_RE),
+        }
+    if code == "O":
+        exact(6)
+        op = _enum(fields[2], "op", OUTFIT_OPS)
+        return {
+            "kind": "OUTFIT_WRITE", "sessionNonce": nonce(),
+            "requestId": uint(1, "requestId", 1, UINT32_MAX), "op": op,
+            "uid": uint(3, "uid", 0, UINT32_MAX),
+            "nameHex": _name_hex(fields[4]),
+            "entries": _outfit_entries(op, fields[5]),
+        }
     raise ProtocolError(f"unknown message code: {code!r}")
 
 

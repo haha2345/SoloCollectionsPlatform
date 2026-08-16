@@ -56,6 +56,10 @@ function Lab.CreateSlots(parent, state)
             if mouseButton == "RightButton" and state:IsSlotDirty(self.scSlotKey) then
                 if state.presetRecord then state:ClearDraft() else state:ClearDraft(self.scSlotKey) end
                 if Lab.PlaySound then Lab.PlaySound("revert") end
+            elseif mouseButton == "RightButton" and state.CanClearAppliedSlot
+                and state:CanClearAppliedSlot(self.scSlotKey) then
+                state:ClearApplied(self.scSlotKey)
+                if Lab.PlaySound then Lab.PlaySound("revert") end
             else
                 state:SelectSlot(self.scSlotKey)
                 if Lab.PlaySound then Lab.PlaySound("slot") end
@@ -64,19 +68,39 @@ function Lab.CreateSlots(parent, state)
         button:SetScript("OnEnter", function(self)
             local hidden = state.IsSlotHidden and state:IsSlotHidden(self.scSlotKey)
             local itemId, pending = state:GetSlotPreviewItemId(self.scSlotKey)
+            local invSlot = self.scDefinition.inventorySlot + 1
+            local equippedId = state.equippedBySlot and state.equippedBySlot[self.scSlotKey]
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
-            if hidden then
-                GameTooltip:AddLine("隐藏外观 · 仅本地预览", 0.82, 0.42, 1)
-            elseif itemId then
-                local name = GetItemInfo and GetItemInfo(itemId)
-                GameTooltip:AddLine(name or ("物品 " .. tostring(itemId)), 1, 1, 1)
-            else
-                GameTooltip:AddLine("当前槽位为空", 0.62, 0.62, 0.62)
+            local name, r, g, b, occupied
+            if Lab.EquippedItemTitle then
+                name, r, g, b, occupied = Lab.EquippedItemTitle(invSlot, equippedId)
             end
-            if pending and not hidden then GameTooltip:AddLine("本地草稿 · 右键撤销", 0.82, 0.42, 1) end
-            if hidden then GameTooltip:AddLine("右键撤销隐藏", 0.72, 0.72, 0.72) end
-            GameTooltip:AddLine("左键选择并浏览右侧候选", 0.72, 0.72, 0.72)
+            if name then
+                GameTooltip:SetText(name, r or 1, g or 0.82, b or 0.18)
+            else
+                GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
+                if not hidden and not occupied then
+                    GameTooltip:AddLine("该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+                end
+            end
+            if hidden then
+                Lab.AppendTransmogLines(GameTooltip, "隐藏", pending, true)
+            elseif pending then
+                if itemId then
+                    local record = Lab.FindAppearanceRecord and Lab.FindAppearanceRecord(nil, itemId)
+                    local appearanceName = (record and record.name)
+                        or (GetItemInfo and GetItemInfo(itemId))
+                        or ("物品 " .. tostring(itemId))
+                    Lab.AppendTransmogLines(GameTooltip, appearanceName, true, false)
+                end
+            elseif (name or occupied) and Lab.AddInventoryTransmogTooltip then
+                Lab.AddInventoryTransmogTooltip(GameTooltip, invSlot)
+            end
+            if pending then
+                GameTooltip:AddLine("右键撤销", 1, 0.5, 1)
+            elseif state.CanClearAppliedSlot and state:CanClearAppliedSlot(self.scSlotKey) then
+                GameTooltip:AddLine("右键恢复原样", 1, 0.5, 1)
+            end
             GameTooltip:Show()
         end)
         button:SetScript("OnLeave", function() GameTooltip:Hide() end)

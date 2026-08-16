@@ -39,6 +39,7 @@ EXPECTED_LOAD_ORDER = [
     "UI\\Toys.lua",
     "UI\\Wardrobe.lua",
     "UI\\WardrobeLab\\State.lua",
+    "UI\\WardrobeLab\\Tooltip.lua",
     "UI\\WardrobeLab\\Slots.lua",
     "UI\\WardrobeLab\\Sources.lua",
     "UI\\WardrobeLab\\Outfits.lua",
@@ -549,6 +550,21 @@ class AddonContractTests(unittest.TestCase):
         self.assertIn('presenter:Clear("PAGE_HIDDEN")', mounts)
         self.assertIn("public.Model.CreatePresenter", provider)
         self.assertNotIn("local modelTimerDriver", mounts)
+
+    def test_dressup_rebuild_is_split_across_frames(self):
+        provider = read_text(ADDON / "Core" / "ModelProvider.lua")
+        model = read_text(ADDON / "UI" / "EzWardrobe" / "Model.lua")
+        preview = read_text(ADDON / "UI" / "WardrobeLab" / "Preview.lua")
+        self.assertIn("if kind == \"DRESSUP\" then", provider)
+        self.assertIn('self.phase = "waitmodel"', provider)
+        self.assertIn("modelPath(frame)", provider)
+        self.assertIn("freed track table", provider)
+        create = provider[provider.index("function Provider.Create") :]
+        self.assertLess(create.index('if kind == "DRESSUP" then'), create.index("public.Model:CreatePresenter"))
+        self.assertIn("modelPathReady(self.frame)", model)
+        self.assertIn('return false, "REBUILD_PENDING"', model)
+        self.assertIn('if prepareReason == "REBUILD_PENDING" then', model)
+        self.assertNotIn("self:ClearModel(); pcall(self.SetUnit, self, \"player\")", preview)
 
     def test_five_main_tabs_are_anchored_outside_the_journal(self):
         journal = read_text(ADDON / "UI" / "CollectionsFrame.lua")

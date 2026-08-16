@@ -136,6 +136,18 @@ local function getMemberItemId(member)
     return itemId
 end
 
+local function memberCollectionId(member)
+    if type(member) ~= "table" then return nil end
+    for _, appearanceId in ipairs(member.appearanceIds or {}) do
+        appearanceId = tonumber(appearanceId)
+        if appearanceId and SC.CollectionState and SC.CollectionState.IsOwnedByType
+            and SC.CollectionState.IsOwnedByType(13, appearanceId) then
+            return appearanceId
+        end
+    end
+    return tonumber(member.collectionId) or tonumber(member.appearanceIds and member.appearanceIds[1])
+end
+
 local function characterKey()
     return tostring(UnitName("player") or "") .. "-" .. tostring(GetRealmName and GetRealmName() or "")
 end
@@ -179,7 +191,7 @@ end
 
 function Lab.CreateHideVisualRecord(slotKey)
     return {
-        id = "HIDE:" .. tostring(slotKey or ""),
+        id = 2,
         isHideVisual = true,
         collected = true,
         favorite = false,
@@ -188,6 +200,91 @@ function Lab.CreateHideVisualRecord(slotKey)
         itemId = nil,
         itemIds = {},
     }
+end
+
+function Lab.IsAppliedReady()
+    return SC.CollectionState and SC.CollectionState.IsAppliedReady and SC.CollectionState.IsAppliedReady()
+end
+
+function Lab.IsOutfitReady()
+    return SC.CollectionState and SC.CollectionState.IsOutfitReady and SC.CollectionState.IsOutfitReady()
+end
+
+-- 3.3.5 SmallMoneyFrame STATIC collapses a true 0-copper quote. Only force the
+-- copper button for that case. Forcing it on a 1g+ quote would hide gold and
+-- show `copper % 100` as 0.
+function Lab.UpdateQuotedMoney(frameOrName, copper)
+    copper = tonumber(copper) or 0
+    if copper < 0 then copper = 0 end
+    copper = math.floor(copper)
+    local name
+    if type(frameOrName) == "string" then
+        name = frameOrName
+    elseif type(frameOrName) == "table" and frameOrName.GetName then
+        name = frameOrName:GetName()
+    end
+    if not name then return end
+    if MoneyFrame_Update then
+        pcall(MoneyFrame_Update, name, copper)
+    end
+    if copper > 0 then return end
+    local copperButton = _G and _G[name .. "CopperButton"]
+    if not copperButton and getglobal then
+        copperButton = getglobal(name .. "CopperButton")
+    end
+    if copperButton then
+        if copperButton.SetText then copperButton:SetText(0) end
+        copperButton:Show()
+    end
+end
+
+function Lab.ItemQualityColor(itemId)
+    itemId = tonumber(itemId)
+    if itemId and GetItemInfo then
+        local name, _, quality = GetItemInfo(itemId)
+        if GetItemQualityColor and quality then
+            local red, green, blue = GetItemQualityColor(quality)
+            return red, green, blue, name
+        end
+        return 1, 1, 1, name
+    end
+    return 1, 1, 1, nil
+end
+
+function Lab.AppearanceDisplayName(collectionId, itemId)
+    collectionId = tonumber(collectionId)
+    if collectionId == 2 then
+        return "隐藏", true
+    end
+    local record = Lab.FindAppearanceRecord(collectionId, itemId)
+    if record then
+        return record.name or ("外观 " .. tostring(collectionId)), false
+    end
+    if itemId and GetItemInfo then
+        local name = GetItemInfo(itemId)
+        if name then return name, false end
+    end
+    if collectionId then
+        return "外观 " .. tostring(collectionId), false
+    end
+    return nil, false
+end
+
+-- Legion / ez: header and appearance share TRANSMOGRIFY_FONT_COLOR (1, 0.5, 1).
+-- Pending replaces the applied line. Hidden uses ez L["Tooltip.Transmog.Entry.Hidden"].
+function Lab.AppendTransmogLines(tooltip, appearanceName, pending, hidden)
+    if not tooltip or type(tooltip.AddLine) ~= "function" then return end
+    local pinkR, pinkG, pinkB = 1, 0.5, 1
+    if hidden then
+        appearanceName = "隐藏"
+    end
+    if not appearanceName then return end
+    if pending then
+        tooltip:AddLine("你将要幻化为:", pinkR, pinkG, pinkB)
+    else
+        tooltip:AddLine("幻化为:", pinkR, pinkG, pinkB)
+    end
+    tooltip:AddLine(appearanceName, pinkR, pinkG, pinkB)
 end
 
 function Lab.FindAppearanceRecord(collectionId, itemId)
@@ -203,6 +300,13 @@ function Lab.FindAppearanceRecord(collectionId, itemId)
 end
 
 function Lab.GetStoredOutfits()
+    if Lab.IsOutfitReady() then
+        return SC.CollectionState.GetAccountOutfits() or {}
+    end
+    return {}
+end
+
+function Lab.GetLocalOutfits()
     local outfits = {}
     local key = characterKey()
     for _, outfit in ipairs((SC.db and SC.db.transmogOutfits) or {}) do
@@ -217,21 +321,44 @@ end
 function Lab.CreateState()
     local state = setmetatable({
         equippedBySlot = {}, draftBySlot = {}, selectedSlot = "HEAD", dirtySlots = {},
+        appliedOverlay = {}, trustedEquippedBySlot = {}, ignoredAppliedSlots = {},
         requestState = { status = "IDLE", revision = currentRevision() },
         listeners = {}, generation = 0, preservedOnClose = false,
         presetRecord = nil, requestSerial = 0, applyQueue = {},
         activeOutfitUid = nil,
+        quotedCopper = nil, quoteStatus = "UNAVAILABLE", quoteWarningMask = 0,
+        quoteToken = 0,
     }, State)
     state:CaptureEquipped()
     return state
 end
 
+function State:SyncEquippedTrust()
+    self.trustedEquippedBySlot = self.trustedEquippedBySlot or {}
+    self.ignoredAppliedSlots = self.ignoredAppliedSlots or {}
+    for _, definition in ipairs(Lab.SLOTS) do
+        local key = definition.key
+        local current = self.equippedBySlot[key]
+        if self.trustedEquippedBySlot[key] == nil then
+            self.trustedEquippedBySlot[key] = current
+        elseif self.trustedEquippedBySlot[key] ~= current then
+            self.ignoredAppliedSlots[key] = true
+        end
+    end
+end
+
 function State:CaptureEquipped()
     self.equippedBySlot = {}
     for _, definition in ipairs(Lab.SLOTS) do
-        local link = GetInventoryItemLink and GetInventoryItemLink("player", definition.inventorySlot + 1)
-        self.equippedBySlot[definition.key] = link and tonumber(string.match(link, "item:(%d+)")) or nil
+        local invSlot = definition.inventorySlot + 1
+        local itemId = GetInventoryItemID and GetInventoryItemID("player", invSlot)
+        if not itemId then
+            local link = GetInventoryItemLink and GetInventoryItemLink("player", invSlot)
+            itemId = link and tonumber(string.match(link, "item:(%d+)"))
+        end
+        self.equippedBySlot[definition.key] = tonumber(itemId)
     end
+    self:SyncEquippedTrust()
 end
 
 function State:Subscribe(owner, callback)
@@ -258,6 +385,7 @@ function State:SetDraft(slotKey, record)
     self.dirtySlots[slotKey] = true
     self.preservedOnClose = false
     self.requestState = { status = "LOCAL_DRAFT", slot = slotKey, revision = currentRevision() }
+    self:ScheduleQuote()
     self:Notify("SET_DRAFT")
     return true
 end
@@ -269,6 +397,7 @@ function State:SetPreset(record)
     self.activeOutfitUid = nil
     self.preservedOnClose = false
     self.requestState = { status = "LOCAL_PRESET", record = record, revision = currentRevision() }
+    self:ScheduleQuote()
     self:Notify("SET_PRESET")
     return true
 end
@@ -282,6 +411,7 @@ function State:ClearDraft(slotKey)
         self.activeOutfitUid = nil
     end
     self.requestState = { status = "IDLE", revision = currentRevision() }
+    self:ScheduleQuote()
     self:Notify("CLEAR_DRAFT")
 end
 
@@ -315,8 +445,70 @@ function State:IsSlotDirty(slotKey)
     return false
 end
 
+function State:RememberAppliedSlot(slotKey, collectionId)
+    self.appliedOverlay = self.appliedOverlay or {}
+    self.trustedEquippedBySlot = self.trustedEquippedBySlot or {}
+    self.ignoredAppliedSlots = self.ignoredAppliedSlots or {}
+    collectionId = tonumber(collectionId)
+    local itemId = self.equippedBySlot and self.equippedBySlot[slotKey]
+    if collectionId and collectionId > 0 then
+        self.appliedOverlay[slotKey] = { collectionId = collectionId, itemId = itemId }
+        self.trustedEquippedBySlot[slotKey] = itemId
+        self.ignoredAppliedSlots[slotKey] = nil
+    else
+        self.appliedOverlay[slotKey] = nil
+    end
+end
+
+function State:RememberAppliedEntries(entries)
+    for token in string.gmatch(tostring(entries or ""), "[^,]+") do
+        local slotPlus1, collectionId = string.match(token, "^(%d+):(%d+)$")
+        slotPlus1, collectionId = tonumber(slotPlus1), tonumber(collectionId)
+        if slotPlus1 and collectionId then
+            for _, definition in ipairs(Lab.SLOTS) do
+                if definition.inventorySlot + 1 == slotPlus1 then
+                    self:RememberAppliedSlot(definition.key, collectionId)
+                    break
+                end
+            end
+        end
+    end
+end
+
+function State:GetAppliedCollectionId(slotKey)
+    local equippedId = self.equippedBySlot and self.equippedBySlot[slotKey]
+    local overlay = self.appliedOverlay and self.appliedOverlay[slotKey]
+    if type(overlay) == "table" and overlay.itemId == equippedId then
+        return tonumber(overlay.collectionId)
+    end
+    if self.ignoredAppliedSlots and self.ignoredAppliedSlots[slotKey] then
+        return nil
+    end
+    if not Lab.IsAppliedReady() then return nil end
+    local applied = SC.CollectionState and SC.CollectionState.GetAppliedSlots
+        and SC.CollectionState.GetAppliedSlots()
+    if type(applied) ~= "table" then return nil end
+    return tonumber(applied[slotKey])
+end
+
+function State:IsAppearanceAppliedToSlot(slotKey, record)
+    if type(record) ~= "table" or not slotKey then return false end
+    local appliedId = self:GetAppliedCollectionId(slotKey)
+    if not appliedId then return false end
+    if Lab.IsHideVisualRecord(record) then
+        return appliedId == 2
+    end
+    return tonumber(record.id) == appliedId
+end
+
 function State:IsSlotHidden(slotKey)
-    return Lab.IsHideVisualRecord(self.draftBySlot[slotKey])
+    if Lab.IsHideVisualRecord(self.draftBySlot[slotKey]) then
+        return true
+    end
+    if self.draftBySlot[slotKey] then
+        return false
+    end
+    return self:GetAppliedCollectionId(slotKey) == 2
 end
 
 function State:GetHiddenSlots()
@@ -331,17 +523,109 @@ end
 
 function State:GetApplyWarnings()
     local warnings = {}
-    local hidden = self:GetHiddenSlots()
-    if next(hidden) and #self:GetPendingApplySlots() > 0 then
-        warnings[#warnings + 1] = "隐藏外观只会留在本地预览，不会写入装备。"
+    local hideDraft = false
+    for _, definition in ipairs(Lab.SLOTS) do
+        if self.dirtySlots[definition.key]
+            and Lab.IsHideVisualRecord(self.draftBySlot[definition.key]) then
+            hideDraft = true
+            break
+        end
+    end
+    if hideDraft then
+        if Lab.IsAppliedReady() then
+            warnings[#warnings + 1] = "包含隐藏外观，将写入当前角色。"
+        else
+            warnings[#warnings + 1] = "隐藏外观只会留在本地预览，不会写入装备。"
+        end
     end
     return warnings
 end
 
--- Legion shows C_Transmog.GetCost() on the left MoneyFrame. SC2 has no cost
--- field yet; never invent a copper amount on the client.
 function State:GetApplyCost()
+    if self.quoteStatus == "READY" and type(self.quotedCopper) == "number" then
+        return self.quotedCopper, "READY"
+    end
     return 0, "UNAVAILABLE"
+end
+
+function State:BuildSetIntentEntries()
+    local parts, seen = {}, {}
+    local variant = getSelectedVariant(self.presetRecord)
+    for _, member in ipairs((variant and variant.members) or {}) do
+        local slotKey = member.slotKey
+        local definition = slotKey and Lab.SLOT_BY_KEY[slotKey]
+        local collectionId = memberCollectionId(member)
+        if definition and collectionId and not seen[slotKey] then
+            local equipped = self.equippedBySlot and self.equippedBySlot[slotKey]
+            if not equipped and GetInventoryItemLink then
+                local link = GetInventoryItemLink("player", definition.inventorySlot + 1)
+                equipped = link and tonumber(string.match(link, "item:(%d+)"))
+            end
+            if equipped then
+                seen[slotKey] = true
+                parts[#parts + 1] = string.format("%d:%d", definition.inventorySlot + 1, collectionId)
+            end
+        end
+    end
+    return table.concat(parts, ","), #parts
+end
+
+function State:BuildIntentEntries()
+    if self.presetRecord then
+        return self:BuildSetIntentEntries()
+    end
+    local parts = {}
+    for _, definition in ipairs(Lab.SLOTS) do
+        local record = self.draftBySlot[definition.key]
+        if self.dirtySlots[definition.key] and record then
+            local collectionId = Lab.IsHideVisualRecord(record) and 2 or tonumber(record.id)
+            if collectionId then
+                parts[#parts + 1] = string.format("%d:%d", definition.inventorySlot + 1, collectionId)
+            end
+        end
+    end
+    return table.concat(parts, ","), #parts
+end
+
+function State:RequestQuote()
+    local entries, count = self:BuildIntentEntries()
+    if count == 0 or not SC.Bridge or type(SC.Bridge.QuoteApply) ~= "function" then
+        self.quotedCopper, self.quoteStatus, self.quoteWarningMask = nil, "UNAVAILABLE", 0
+        return nil
+    end
+    self.quoteToken = (self.quoteToken or 0) + 1
+    local token = self.quoteToken
+    return SC.Bridge.QuoteApply(entries, count, function(ok, reason, detail)
+        if self.quoteToken ~= token then return end
+        if ok and type(detail) == "table" then
+            self.quotedCopper = tonumber(detail.copper) or 0
+            self.quoteWarningMask = tonumber(detail.warningMask) or 0
+            self.quoteStatus = "READY"
+        else
+            self.quotedCopper, self.quoteStatus = nil, reason or "UNAVAILABLE"
+        end
+        self:Notify("QUOTE")
+    end)
+end
+
+function State:ScheduleQuote()
+    self.quoteAt = (GetTime and GetTime() or 0) + 0.2
+    if self.quoteFrame then return end
+    local frame = CreateFrame("Frame")
+    self.quoteFrame = frame
+    frame:SetScript("OnUpdate", function(owner)
+        if not self.quoteAt then
+            owner:SetScript("OnUpdate", nil)
+            self.quoteFrame = nil
+            return
+        end
+        if (GetTime and GetTime() or 0) >= self.quoteAt then
+            self.quoteAt = nil
+            owner:SetScript("OnUpdate", nil)
+            self.quoteFrame = nil
+            self:RequestQuote()
+        end
+    end)
 end
 
 function Lab.ConfirmApply(state, summary, onAccept)
@@ -349,8 +633,13 @@ function Lab.ConfirmApply(state, summary, onAccept)
     if state and state.GetApplyCost then
         copper = state:GetApplyCost()
     end
+    local _, costState = state:GetApplyCost()
     local text = tostring(summary or "确定应用当前待定幻化？")
-        .. "\n当前费用（服务端尚未返回金额，按 0 显示）："
+    if costState == "READY" then
+        text = text .. "\n费用由服务端报价，见下方金额。"
+    else
+        text = text .. "\n当前没有有效报价，金额按 0 显示；应用时由服务端重新计价。"
+    end
     Lab.pendingPopupAccept = onAccept
     local dialog
     if StaticPopup_Show then
@@ -445,6 +734,14 @@ function State:GetSlotPreviewItemId(slotKey)
         return nil, true
     end
     if draft then return recordItemId(draft), true end
+    local appliedId = self:GetAppliedCollectionId(slotKey)
+    if appliedId == 2 then
+        return nil, false
+    end
+    if appliedId then
+        local record = Lab.FindAppearanceRecord(appliedId)
+        if record then return recordItemId(record), false end
+    end
     return self.equippedBySlot[slotKey], false
 end
 
@@ -463,9 +760,12 @@ function State:GetPendingApplySlots()
     local slots = {}
     for _, definition in ipairs(Lab.SLOTS) do
         local record = self.draftBySlot[definition.key]
-        if self.dirtySlots[definition.key] and record and record.collected
-            and not Lab.IsHideVisualRecord(record) then
-            slots[#slots + 1] = definition.key
+        if self.dirtySlots[definition.key] and record and record.collected then
+            if Lab.IsHideVisualRecord(record) and not Lab.IsAppliedReady() then
+                -- keep hide local until type 18 is ready
+            else
+                slots[#slots + 1] = definition.key
+            end
         end
     end
     return slots
@@ -473,12 +773,18 @@ end
 
 function State:GetDraftApplyState()
     if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
-    if not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
+    if Lab.IsAppliedReady() then
+        if not SC.Bridge or type(SC.Bridge.ApplyPending) ~= "function" then
+            return false, "BRIDGE_UNAVAILABLE"
+        end
+    elseif not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
         return false, "BRIDGE_UNAVAILABLE"
     end
     local slots = self:GetPendingApplySlots()
     if #slots == 0 then
-        if self:HasOnlyHideVisualDrafts() then return false, "HIDE_VISUAL_UNSUPPORTED" end
+        if self:HasOnlyHideVisualDrafts() and not Lab.IsAppliedReady() then
+            return false, "HIDE_VISUAL_UNSUPPORTED"
+        end
         if self:GetDirtyCount() > 0 then return false, "NOT_OWNED" end
         return false, "NO_DRAFT"
     end
@@ -489,7 +795,11 @@ function State:GetSetApplyState()
     local record = self.presetRecord
     if not record then return false, "NO_PRESET" end
     if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
-    if not SC.Bridge or type(SC.Bridge.ApplySet) ~= "function" then
+    if Lab.IsAppliedReady() then
+        if not SC.Bridge or type(SC.Bridge.ApplyPending) ~= "function" then
+            return false, "BRIDGE_UNAVAILABLE"
+        end
+    elseif not SC.Bridge or type(SC.Bridge.ApplySet) ~= "function" then
         return false, "BRIDGE_UNAVAILABLE"
     end
     if not record.collected then
@@ -556,6 +866,9 @@ end
 
 function State:CompleteSlotApply(slotKey, requestToken, reason)
     if not self.requestState or self.requestState.token ~= requestToken then return end
+    local appliedId = Lab.IsHideVisualRecord(self.draftBySlot[slotKey]) and 2
+        or tonumber(self.draftBySlot[slotKey] and self.draftBySlot[slotKey].id)
+    if appliedId then self:RememberAppliedSlot(slotKey, appliedId) end
     self.draftBySlot[slotKey], self.dirtySlots[slotKey] = nil, nil
     self:CaptureEquipped()
     local queue = self.applyQueue or {}
@@ -584,10 +897,57 @@ end
 function State:BeginApplyAll()
     if self.presetRecord then return self:BeginApplySet() end
     if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
-    local slots = self:GetPendingApplySlots()
-    if #slots == 0 then return false, "NO_DRAFT" end
-    self.applyQueue = slots
-    return self:BeginApplySlot(slots[1])
+    local canApply, reason = self:GetDraftApplyState()
+    if not canApply then return false, reason end
+    if not Lab.IsAppliedReady() then
+        local slots = self:GetPendingApplySlots()
+        if #slots == 0 then return false, "NO_DRAFT" end
+        self.applyQueue = slots
+        return self:BeginApplySlot(slots[1])
+    end
+    local entries, count = self:BuildIntentEntries()
+    if count == 0 then return false, "NO_DRAFT" end
+    self:RequestQuote()
+    self.requestSerial = self.requestSerial + 1
+    local requestToken = self.requestSerial
+    self.requestState = {
+        status = "REQUESTING", kind = "BATCH",
+        revision = currentRevision(), token = requestToken,
+    }
+    self:Notify("REQUESTING")
+    local requestId = SC.Bridge.ApplyPending(entries, count, function(ok, status)
+        if not self.requestState or self.requestState.token ~= requestToken then return end
+        if ok then
+            self:RememberAppliedEntries(entries)
+            self.draftBySlot, self.dirtySlots = {}, {}
+            self:CaptureEquipped()
+            self.requestState = {
+                status = "CONFIRMED", kind = "BATCH",
+                revision = currentRevision(), reason = status or "ACCEPTED",
+            }
+            Lab.PlaySound("apply")
+            self:Notify("AUTHORITATIVE_REFRESH")
+        else
+            if status == "COST_CHANGED" then
+                self:RequestQuote()
+            end
+            if status == "INSUFFICIENT_FUNDS" then
+                Lab.Notice("金币不足，外观没有写入。费用见左侧金额。")
+            end
+            self.requestState.status, self.requestState.reason = "FAILED", status or "UNKNOWN"
+            self:Notify("REQUEST_RESULT")
+        end
+    end)
+    if self.requestState and self.requestState.token == requestToken then
+        self.requestState.requestId = requestId
+    end
+    if not requestId and self.requestState and self.requestState.token == requestToken
+        and self.requestState.status == "REQUESTING" then
+        self.requestState.status, self.requestState.reason = "FAILED", "REQUEST_NOT_SENT"
+        self:Notify("REQUEST_RESULT")
+    end
+    local failureReason = self.requestState and self.requestState.reason
+    return requestId ~= nil, requestId and nil or failureReason
 end
 
 function State:BeginApplySet()
@@ -595,6 +955,51 @@ function State:BeginApplySet()
     if not record then return false, "NO_PRESET" end
     if not record.collected then return false, "NOT_OWNED" end
     if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
+    local entries, count = self:BuildSetIntentEntries()
+    if Lab.IsAppliedReady() and count > 0 and SC.Bridge and type(SC.Bridge.ApplyPending) == "function" then
+        self:RequestQuote()
+        self.requestSerial = self.requestSerial + 1
+        local requestToken = self.requestSerial
+        self.requestState = {
+            status = "REQUESTING", kind = "SET", record = record,
+            revision = currentRevision(), token = requestToken,
+        }
+        self:Notify("REQUESTING_SET")
+        local requestId = SC.Bridge.ApplyPending(entries, count, function(ok, status)
+            if not self.requestState or self.requestState.token ~= requestToken then return end
+            if ok then
+                self:RememberAppliedEntries(entries)
+                self.presetRecord = nil
+                self.draftBySlot, self.dirtySlots = {}, {}
+                self:CaptureEquipped()
+                self.requestState = {
+                    status = "CONFIRMED", kind = "SET",
+                    revision = currentRevision(), reason = status or "ACCEPTED",
+                }
+                Lab.PlaySound("apply")
+                self:Notify("AUTHORITATIVE_REFRESH")
+            else
+                if status == "COST_CHANGED" then
+                    self:RequestQuote()
+                end
+                if status == "INSUFFICIENT_FUNDS" then
+                    Lab.Notice("金币不足，外观没有写入。费用见左侧金额。")
+                end
+                self.requestState.status, self.requestState.reason = "FAILED", status or "UNKNOWN"
+                self:Notify("REQUEST_RESULT")
+            end
+        end)
+        if self.requestState and self.requestState.token == requestToken then
+            self.requestState.requestId = requestId
+        end
+        if not requestId and self.requestState and self.requestState.token == requestToken
+            and self.requestState.status == "REQUESTING" then
+            self.requestState.status, self.requestState.reason = "FAILED", "REQUEST_NOT_SENT"
+            self:Notify("REQUEST_RESULT")
+        end
+        local failureReason = self.requestState and self.requestState.reason
+        return requestId ~= nil, requestId and nil or failureReason
+    end
     if not SC.Bridge or type(SC.Bridge.ApplySet) ~= "function" then
         return false, "BRIDGE_UNAVAILABLE"
     end
@@ -609,6 +1014,13 @@ function State:BeginApplySet()
     local requestId = SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, function(ok, reason)
         if not self.requestState or self.requestState.token ~= requestToken then return end
         if ok then
+            local appliedVariant = getSelectedVariant(record)
+            for _, member in ipairs((appliedVariant and appliedVariant.members) or {}) do
+                local collectionId = memberCollectionId(member)
+                if member.slotKey and collectionId then
+                    self:RememberAppliedSlot(member.slotKey, collectionId)
+                end
+            end
             self.presetRecord = nil
             self.draftBySlot, self.dirtySlots = {}, {}
             self:CaptureEquipped()
@@ -619,6 +1031,9 @@ function State:BeginApplySet()
             Lab.PlaySound("apply")
             self:Notify("AUTHORITATIVE_REFRESH")
         else
+            if reason == "INSUFFICIENT_FUNDS" then
+                Lab.Notice("金币不足，外观没有写入。费用见左侧金额。")
+            end
             self.requestState.status, self.requestState.reason = "FAILED", reason or "UNKNOWN"
             self:Notify("REQUEST_RESULT")
         end
@@ -656,7 +1071,7 @@ function State:CaptureOutfitSlots()
     for _, definition in ipairs(Lab.SLOTS) do
         local record = self.draftBySlot[definition.key]
         if Lab.IsHideVisualRecord(record) then
-            -- HideVisual has no SC2 action yet; do not persist a fake outfit piece.
+            slots[definition.key] = { id = 2, hide = true }
         elseif record then
             slots[definition.key] = { id = record.id, itemId = recordItemId(record) }
         else
@@ -670,62 +1085,97 @@ function State:CaptureOutfitSlots()
     return slots
 end
 
+local function encodeOutfitEntries(slotMap)
+    local parts = {}
+    for _, definition in ipairs(Lab.SLOTS) do
+        local payload = slotMap and slotMap[definition.key]
+        local collectionId
+        if type(payload) == "table" then
+            collectionId = Lab.IsHideVisualRecord(payload) and 2 or tonumber(payload.id)
+        else
+            collectionId = tonumber(payload)
+        end
+        if collectionId == 2 then
+            parts[#parts + 1] = "2"
+        elseif collectionId and collectionId > 0 then
+            parts[#parts + 1] = tostring(collectionId)
+        else
+            parts[#parts + 1] = "-"
+        end
+    end
+    return table.concat(parts, ",")
+end
+
 function State:SaveOutfit(name)
     name = string.gsub(tostring(name or ""), "^%s+", "")
     name = string.gsub(name, "%s+$", "")
     if name == "" or string.len(name) > Lab.OUTFIT_NAME_MAX then return nil, "INVALID_NAME" end
+    if not Lab.IsOutfitReady() or not SC.Bridge or type(SC.Bridge.SaveOutfit) ~= "function" then
+        return nil, "BRIDGE_UNAVAILABLE"
+    end
     local slots = self:CaptureOutfitSlots()
     if not next(slots) then return nil, "EMPTY_OUTFIT" end
-    if not SC.db then return nil, "NO_DATABASE" end
-    if type(SC.db.transmogOutfits) ~= "table" then SC.db.transmogOutfits = {} end
-    local outfits = Lab.GetStoredOutfits()
-    if #outfits >= Lab.MAX_OUTFITS then return nil, "OUTFIT_LIMIT" end
-    local uid = string.format("%s-%d", tostring(time()), self.requestSerial + 1)
-    local outfit = {
-        uid = uid,
-        name = name,
-        character = characterKey(),
-        slots = slots,
-    }
-    SC.db.transmogOutfits[#SC.db.transmogOutfits + 1] = outfit
-    self.activeOutfitUid = uid
-    self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
-    self:Notify("OUTFIT_SAVED")
-    return outfit
+    if #Lab.GetStoredOutfits() >= Lab.MAX_OUTFITS then return nil, "OUTFIT_LIMIT" end
+    local requestId = SC.Bridge.SaveOutfit(0, name, encodeOutfitEntries(slots), function(ok, reason, detail)
+        if ok then
+            self.activeOutfitUid = detail and detail.collectionId or self.activeOutfitUid
+            self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
+            self:Notify("OUTFIT_SAVED")
+        else
+            self.requestState = { status = "FAILED", reason = reason or "UNKNOWN" }
+            self:Notify("REQUEST_RESULT")
+        end
+    end)
+    if not requestId then return nil, "REQUEST_NOT_SENT" end
+    return { pending = true, requestId = requestId }
 end
 
 function State:OverwriteOutfit(uid)
+    uid = tonumber(uid)
     if not uid then return nil, "INVALID_OUTFIT" end
+    if not Lab.IsOutfitReady() or not SC.Bridge or type(SC.Bridge.SaveOutfit) ~= "function" then
+        return nil, "BRIDGE_UNAVAILABLE"
+    end
     local slots = self:CaptureOutfitSlots()
     if not next(slots) then return nil, "EMPTY_OUTFIT" end
-    if not SC.db or type(SC.db.transmogOutfits) ~= "table" then return nil, "NO_DATABASE" end
-    for _, outfit in ipairs(SC.db.transmogOutfits) do
-        if outfit.uid == uid and outfit.character == characterKey() then
-            outfit.slots = slots
+    local name = "Outfit"
+    for _, outfit in ipairs(Lab.GetStoredOutfits()) do
+        if outfit.uid == uid then name = outfit.name break end
+    end
+    local requestId = SC.Bridge.SaveOutfit(uid, name, encodeOutfitEntries(slots), function(ok, reason)
+        if ok then
             self.activeOutfitUid = uid
             self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
             self:Notify("OUTFIT_SAVED")
-            return outfit
+        else
+            self.requestState = { status = "FAILED", reason = reason or "UNKNOWN" }
+            self:Notify("REQUEST_RESULT")
         end
-    end
-    return nil, "INVALID_OUTFIT"
+    end)
+    if not requestId then return nil, "REQUEST_NOT_SENT" end
+    return { pending = true, requestId = requestId }
 end
 
 function State:RenameOutfit(uid, name)
+    uid = tonumber(uid)
     name = string.gsub(tostring(name or ""), "^%s+", "")
     name = string.gsub(name, "%s+$", "")
-    if name == "" or string.len(name) > Lab.OUTFIT_NAME_MAX then return nil, "INVALID_NAME" end
-    if not SC.db or type(SC.db.transmogOutfits) ~= "table" then return nil, "NO_DATABASE" end
-    for _, outfit in ipairs(SC.db.transmogOutfits) do
-        if outfit.uid == uid and outfit.character == characterKey() then
-            outfit.name = name
+    if not uid or name == "" or string.len(name) > Lab.OUTFIT_NAME_MAX then return nil, "INVALID_NAME" end
+    if not Lab.IsOutfitReady() or not SC.Bridge or type(SC.Bridge.RenameOutfit) ~= "function" then
+        return nil, "BRIDGE_UNAVAILABLE"
+    end
+    local requestId = SC.Bridge.RenameOutfit(uid, name, function(ok, reason)
+        if ok then
             self.activeOutfitUid = uid
             self.requestState = { status = "OUTFIT_SAVED", revision = currentRevision() }
             self:Notify("OUTFIT_SAVED")
-            return outfit
+        else
+            self.requestState = { status = "FAILED", reason = reason or "UNKNOWN" }
+            self:Notify("REQUEST_RESULT")
         end
-    end
-    return nil, "INVALID_OUTFIT"
+    end)
+    if not requestId then return nil, "REQUEST_NOT_SENT" end
+    return { pending = true, requestId = requestId }
 end
 
 function State:LoadOutfit(outfit)
@@ -733,33 +1183,120 @@ function State:LoadOutfit(outfit)
     self.presetRecord = nil
     self.draftBySlot, self.dirtySlots = {}, {}
     for slotKey, payload in pairs(outfit.slots) do
-        if Lab.SLOT_BY_KEY[slotKey] and type(payload) == "table" then
-            local record = Lab.FindAppearanceRecord(payload.id, payload.itemId)
-            if record then
-                self.draftBySlot[slotKey] = record
+        if Lab.SLOT_BY_KEY[slotKey] then
+            local collectionId = type(payload) == "table" and tonumber(payload.id) or tonumber(payload)
+            if collectionId == 2 or (type(payload) == "table" and payload.hide) then
+                self.draftBySlot[slotKey] = Lab.CreateHideVisualRecord(slotKey)
                 self.dirtySlots[slotKey] = true
+            else
+                local record = Lab.FindAppearanceRecord(collectionId, type(payload) == "table" and payload.itemId)
+                if record then
+                    self.draftBySlot[slotKey] = record
+                    self.dirtySlots[slotKey] = true
+                end
             end
         end
     end
     self.activeOutfitUid = outfit.uid
     self.preservedOnClose = false
     self.requestState = { status = "OUTFIT_LOADED", revision = currentRevision() }
+    self:ScheduleQuote()
     self:Notify("OUTFIT_LOADED")
     return true
 end
 
 function State:DeleteOutfit(uid)
-    if not SC.db or type(SC.db.transmogOutfits) ~= "table" then return false end
-    for index, outfit in ipairs(SC.db.transmogOutfits) do
-        if outfit.uid == uid then
-            table.remove(SC.db.transmogOutfits, index)
+    uid = tonumber(uid)
+    if not uid or not Lab.IsOutfitReady() or not SC.Bridge or type(SC.Bridge.DeleteOutfit) ~= "function" then
+        return false
+    end
+    local requestId = SC.Bridge.DeleteOutfit(uid, function(ok, reason)
+        if ok then
             if self.activeOutfitUid == uid then self.activeOutfitUid = nil end
             self.requestState = { status = "OUTFIT_DELETED", revision = currentRevision() }
             self:Notify("OUTFIT_DELETED")
-            return true
+        else
+            self.requestState = { status = "FAILED", reason = reason or "UNKNOWN" }
+            self:Notify("REQUEST_RESULT")
         end
+    end)
+    return requestId ~= nil
+end
+
+function State:UploadLocalOutfit(outfit)
+    if type(outfit) ~= "table" or type(outfit.name) ~= "string" or type(outfit.slots) ~= "table" then
+        return nil, "INVALID_OUTFIT"
     end
-    return false
+    if not Lab.IsOutfitReady() or not SC.Bridge or type(SC.Bridge.SaveOutfit) ~= "function" then
+        return nil, "BRIDGE_UNAVAILABLE"
+    end
+    return SC.Bridge.SaveOutfit(0, outfit.name, encodeOutfitEntries(outfit.slots), function(ok, reason)
+        self.requestState = {
+            status = ok and "OUTFIT_SAVED" or "FAILED",
+            reason = reason,
+            revision = currentRevision(),
+        }
+        self:Notify(ok and "OUTFIT_SAVED" or "REQUEST_RESULT")
+    end)
+end
+
+function State:CanClearAppliedSlot(slotKey)
+    if not slotKey or self:IsSlotDirty(slotKey) then return false end
+    if not Lab.IsAppliedReady() then return false end
+    if self.requestState and self.requestState.status == "REQUESTING" then return false end
+    return self:GetAppliedCollectionId(slotKey) ~= nil
+end
+
+function State:ClearApplied(slotKey)
+    if not Lab.IsAppliedReady() or not SC.Bridge or type(SC.Bridge.ClearApplied) ~= "function" then
+        return false, "BRIDGE_UNAVAILABLE"
+    end
+    if self.requestState and self.requestState.status == "REQUESTING" then
+        return false, "REQUEST_PENDING"
+    end
+    local entries, count = "-", 0
+    if slotKey then
+        local definition = Lab.SLOT_BY_KEY[slotKey]
+        if not definition or not self:GetAppliedCollectionId(slotKey) then
+            return false, "NOTHING_EQUIPPED"
+        end
+        entries = tostring(definition.inventorySlot + 1)
+        count = 1
+    end
+    self.requestSerial = self.requestSerial + 1
+    local requestToken = self.requestSerial
+    self.requestState = { status = "REQUESTING", kind = "CLEAR", token = requestToken, slot = slotKey }
+    self:Notify("REQUESTING")
+    local requestId = SC.Bridge.ClearApplied(entries, count, function(ok, reason)
+        if not self.requestState or self.requestState.token ~= requestToken then return end
+        if ok then
+            if slotKey then
+                self.appliedOverlay = self.appliedOverlay or {}
+                self.ignoredAppliedSlots = self.ignoredAppliedSlots or {}
+                self.appliedOverlay[slotKey] = nil
+                self.ignoredAppliedSlots[slotKey] = true
+                if self.trustedEquippedBySlot then
+                    self.trustedEquippedBySlot[slotKey] = nil
+                end
+            else
+                self.appliedOverlay, self.ignoredAppliedSlots = {}, {}
+                self.trustedEquippedBySlot = {}
+                self.draftBySlot, self.dirtySlots = {}, {}
+            end
+            self:CaptureEquipped()
+            self.requestState = { status = "CONFIRMED", kind = "CLEAR", reason = reason or "ACCEPTED", slot = slotKey }
+            self:Notify("AUTHORITATIVE_REFRESH")
+        else
+            self.requestState.status, self.requestState.reason = "FAILED", reason or "UNKNOWN"
+            self:Notify("REQUEST_RESULT")
+        end
+    end)
+    if not requestId and self.requestState and self.requestState.token == requestToken
+        and self.requestState.status == "REQUESTING" then
+        self.requestState.status, self.requestState.reason = "FAILED", "REQUEST_NOT_SENT"
+        self:Notify("REQUEST_RESULT")
+    end
+    return requestId ~= nil
 end
 
 function State:ObserveAuthoritativeState()

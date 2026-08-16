@@ -48,6 +48,7 @@ UI\Pets.lua
 UI\Toys.lua
 UI\Wardrobe.lua
 UI\WardrobeLab\State.lua
+UI\WardrobeLab\Tooltip.lua
 UI\WardrobeLab\Slots.lua
 UI\WardrobeLab\Sources.lua
 UI\WardrobeLab\Outfits.lua

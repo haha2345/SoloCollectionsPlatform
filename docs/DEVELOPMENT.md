@@ -128,6 +128,47 @@ Catalog generation and matched release commands are documented in
 [BUILDING.zh-CN.md](BUILDING.zh-CN.md) and
 [BUILDING.en.md](BUILDING.en.md).
 
+## SC2 wardrobe expansion deploy order
+
+Type 18/19 and `Y`/`U`/`O` stay on protocol version 1. Old AddOns keep using
+type 13/14. New AddOns advertise `clientBuild` `0.2.0-w1`.
+
+1. Deploy `mod-solo-collections` first (SQL update, provider, Y/U/O, type 18/19).
+   Old AddOns still only speak 13/14 and must not receive type 18/19 mappings.
+2. Deploy this AddOn second. HELLO uses `SC.VERSION .. "-w1"`; `SC.VERSION`
+   remains `0.2.0`.
+3. Ship a matched metadata/mapping-hash set. Type 18/19 hashes are slot-grammar
+   hashes, not the appearance catalog hash.
+
+Do not mark real-client wardrobe items complete without observing quote, atomic
+apply, hide persistence, clear-applied, and a second character seeing account
+outfits.
+
+Wardrobe `Y`/`U` now emit `event=wardrobe_quote` and `event=wardrobe_intent` on
+`module.solocollections.wardrobe` (status, copper, entries, source). A rejected
+`Y` body also sets `kind=Y` on `event=protocol_reject`. Use those lines to tell
+a missing client send from a server-side quote/apply result.
+
+Collected wardrobe apply uses `CanApplyCollectedVisual` so an owned appearance
+is not blocked by the source item's `AllowableClass`. Hide still stores FakeEntry
+`1`, but `OnPlayerAfterSetVisibleItemSlot` writes visible item `0`. The wardrobe
+preview reads type 18 after apply only while the same item is still equipped;
+swapping gear falls back to the real item. `U.copper` is
+`max(source item sellPrice, 1g) * ScaledCostModifier + CopperCost` per changed
+non-hide slot. Hide and clear are free. An applied, non-pending slot
+right-click sends `Y CLEAR` for that item instance (including hide). Set
+presets quote and apply through the same `Y` path when type 18 is Ready. `ApplyBaseCopper` / `ApplySlotCopper`
+are unused. `UpdateQuotedMoney` only forces the copper button when the quote
+is `0`; a 1g+ quote must keep the gold denomination. Wardrobe slot tooltips show the quality-colored equipped name plus
+pink official transmog lines (`幻化为:` / `你将要幻化为:` and the
+appearance in `1, 0.5, 1`). Pending replaces the applied line; hidden
+uses `隐藏`. The official empty-slot sentence is only for a truly empty
+inventory slot — an uncached 3.3.5 `GetInventoryItemLink` or a worn item
+with no applied transmog is not empty. They must not dump item stats via
+`SetInventoryItem`.
+`SafeDressUp` reuses the OnLoad unit and must not stay
+at alpha 0 after `/reload`, apply, or set-card present.
+
 ## Branch and pull-request practice
 
 1. Start from the latest `main`.

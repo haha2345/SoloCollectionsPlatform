@@ -22,6 +22,21 @@ local STATUS_TEXT = {
     OUTFIT_DELETED = "方案已删除",
 }
 
+local STATUS_REASON_TEXT = {
+    CLASS_RESTRICTED = "当前装备与此外观不兼容",
+    RACE_RESTRICTED = "当前种族不能使用此外观",
+    SKILL_REQUIRED = "当前角色缺少使用此外观所需的技能",
+    INVALID_TARGET_SLOT = "该部位没有可幻化的装备",
+    UNKNOWN_IDENTITY = "未知外观，服务端已拒绝",
+    NOT_OWNED = "此外观尚未收藏",
+    COST_CHANGED = "费用已变化，请重新确认后再应用",
+    INSUFFICIENT_FUNDS = "金币不足",
+    NOTHING_EQUIPPED = "没有可写入的装备",
+    UNSUPPORTED = "当前服务器不支持这项幻化",
+    INVALID_REQUEST = "请求无效",
+    REQUEST_NOT_SENT = "请求未能发出",
+}
+
 local function pendingApplyCount(state)
     if state.presetRecord then
         return state:GetDirtyCount(), "SET"
@@ -40,20 +55,25 @@ function Lab.CreatePage(parent)
         local pendingCount = pendingApplyCount(state)
         local text = STATUS_TEXT[request.status] or STATUS_TEXT.IDLE
         if request.status == "REQUESTING" then
-            if request.kind == "SET" then
+            if request.kind == "CLEAR" then
+                text = "正在恢复原装备外观…"
+            elseif request.kind == "SET" then
                 text = "正在应用套装…"
             elseif request.queueTotal and request.queueTotal > 1 then
                 text = string.format("正在应用 %d/%d 个部位…", request.queueIndex or 1, request.queueTotal)
             else
                 text = "正在应用所选部位…"
             end
+        elseif request.status == "CONFIRMED" and request.kind == "CLEAR" then
+            text = "已恢复原装备外观"
         elseif request.status == "LOCAL_DRAFT" and state.HasOnlyHideVisualDrafts
-            and state:HasOnlyHideVisualDrafts() then
+            and state:HasOnlyHideVisualDrafts()
+            and not (Lab.IsAppliedReady and Lab.IsAppliedReady()) then
             text = "隐藏外观仅本地预览 · 当前不能应用到装备"
         elseif request.status == "LOCAL_DRAFT" and pendingCount > 0 then
             text = string.format("待定 %d 个部位 · 点应用写入装备", pendingCount)
         elseif request.status == "FAILED" and request.reason then
-            text = text .. "：" .. tostring(request.reason)
+            text = text .. "：" .. (STATUS_REASON_TEXT[request.reason] or tostring(request.reason))
         end
         self.scStateText:SetText(text)
         self.scOutfits:Refresh()
@@ -68,8 +88,8 @@ function Lab.CreatePage(parent)
         if state.GetApplyCost then
             copper = state:GetApplyCost() or 0
         end
-        if self.scMoneyFrame and MoneyFrame_Update then
-            pcall(MoneyFrame_Update, self.scMoneyFrame:GetName(), copper, true)
+        if self.scMoneyFrame and Lab.UpdateQuotedMoney then
+            Lab.UpdateQuotedMoney(self.scMoneyFrame, copper)
         elseif self.scMoneyText then
             self.scMoneyText:SetText(tostring(copper))
         end
@@ -90,6 +110,41 @@ function Lab.CreatePage(parent)
         end
         self:SyncFilters()
     end
+    local function warmupTicks()
+        local entered = SC.ModelProvider and SC.ModelProvider.playerEnteredAt
+        if entered and GetTime and (GetTime() - entered) < 8 then
+            return 6
+        end
+        return 2
+    end
+    local function scheduleRefresh(owner, ticks)
+        ticks = tonumber(ticks) or warmupTicks()
+        if owner.scRefreshDelay then
+            owner.scRefreshDelay = math.max(owner.scRefreshDelay, ticks)
+            return
+        end
+        owner.scRefreshDelay = ticks
+        if owner:GetScript("OnUpdate") then return end
+        owner:SetScript("OnUpdate", function(self)
+            if not self.scRefreshDelay then
+                self:SetScript("OnUpdate", nil)
+                return
+            end
+            self.scRefreshDelay = self.scRefreshDelay - 1
+            if self.scRefreshDelay > 0 then return end
+            self.scRefreshDelay = nil
+            self:SetScript("OnUpdate", nil)
+            if self:IsShown() then self:Refresh() end
+        end)
+    end
+    if SC.Bridge and SC.Bridge.RegisterStateListener then
+        page.scAppliedListener = SC.Bridge.RegisterStateListener(function(_, typeId)
+            if tonumber(typeId) ~= 18 then return end
+            if page:IsShown() then
+                scheduleRefresh(page, 3)
+            end
+        end)
+    end
     state:Subscribe(page, function(owner, _, reason)
         if not owner:IsShown() then return end
         if reason == "SELECT_SLOT" and owner.scSources and owner.scSources.mode ~= "ITEMS" then
@@ -97,21 +152,32 @@ function Lab.CreatePage(parent)
             owner:Refresh()
             return
         end
+        if reason == "AUTHORITATIVE_REFRESH" or reason == "REQUEST_RESULT" then
+            scheduleRefresh(owner, 3)
+            return
+        end
+        if owner.scRefreshDelay then return end
         owner:Refresh()
     end)
     page:RegisterEvent("PLAYER_ENTERING_WORLD")
     page:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
-    page:SetScript("OnEvent", function(self)
+    page:SetScript("OnEvent", function(self, event)
+        if event == "PLAYER_ENTERING_WORLD" and SC.ModelProvider then
+            SC.ModelProvider.playerEnteredAt = GetTime and GetTime() or 0
+        end
         state:CaptureEquipped()
-        if self:IsShown() then self:Refresh() end
+        if self:IsShown() then
+            scheduleRefresh(self, event == "PLAYER_ENTERING_WORLD" and warmupTicks() or 3)
+        end
     end)
     page:SetScript("OnShow", function(self)
         state:CaptureEquipped()
-        self:Refresh()
+        if state.RequestQuote then state:RequestQuote() end
+        scheduleRefresh(self)
     end)
     page:SetScript("OnHide", function(self)
         state:MarkClosed()
-        if self.scPreview and self.scPreview.scPresenter then self.scPreview.scPresenter:Clear("PAGE_HIDDEN") end
+        if self.scPreview and Lab.StopDressUp then Lab.StopDressUp(self.scPreview) end
         if self.scSources and self.scSources.ClearPresenters then self.scSources:ClearPresenters("PAGE_HIDDEN") end
     end)
     function page:SyncFilters()

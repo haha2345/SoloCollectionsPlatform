@@ -149,7 +149,52 @@ function Lab.CreateSources(parent, state)
     host.setPage = 1
     host.itemCards = {}
     host.setCards = {}
+    host.scSetQueue = {}
+    host.scSetPresenting = false
     local itemRenderer = SC.WardrobeUI and SC.WardrobeUI.ItemCardRenderer
+
+    function host:ResetSetPresentQueue()
+        self.scSetQueue = {}
+        self.scSetPresenting = false
+        self.scSetActiveCard = nil
+        self.scSetActiveGeneration = nil
+    end
+
+    function host:PumpSetPresent()
+        if self.scSetPresenting then return end
+        while true do
+            local job = table.remove(self.scSetQueue, 1)
+            if not job then return end
+            if job.generation == job.card.scGeneration and job.card.scRecord and job.card.RunSetPresent then
+                self.scSetPresenting = true
+                self.scSetActiveCard = job.card
+                self.scSetActiveGeneration = job.generation
+                job.card:RunSetPresent(job.record, job.generation, function()
+                    self.scSetPresenting = false
+                    self.scSetActiveCard = nil
+                    self.scSetActiveGeneration = nil
+                    self:PumpSetPresent()
+                end)
+                return
+            end
+        end
+    end
+
+    function host:EnqueueSetPresent(card, record)
+        local generation = card.scGeneration
+        if self.scSetPresenting and self.scSetActiveCard == card and self.scSetActiveGeneration == generation then
+            return
+        end
+        for index, job in ipairs(self.scSetQueue) do
+            if job.card == card then
+                self.scSetQueue[index] = { card = card, record = record, generation = generation }
+                self:PumpSetPresent()
+                return
+            end
+        end
+        self.scSetQueue[#self.scSetQueue + 1] = { card = card, record = record, generation = generation }
+        self:PumpSetPresent()
+    end
 
     local body = CreateFrame("Frame", nil, host)
     -- Explicit size: two-point anchors often report GetWidth()==0 on 3.3.5
@@ -233,6 +278,9 @@ function Lab.CreateSources(parent, state)
         local model = CreateFrame("DressUpModel", nil, card)
         anchorModelToCard(model, card, ITEM_WIDTH, ITEM_HEIGHT)
         model:EnableMouse(false)
+        if SC.ModelProvider and SC.ModelProvider.ArmDressUpFrame then
+            SC.ModelProvider.ArmDressUpFrame(model)
+        end
         local objectModel = CreateFrame("PlayerModel", nil, card)
         anchorModelToCard(objectModel, card, ITEM_WIDTH, ITEM_HEIGHT)
         objectModel:EnableMouse(false)
@@ -345,6 +393,7 @@ function Lab.CreateSources(parent, state)
             if not record then
                 self.scRecordId = nil
                 applyOwnership(nil)
+                self:SetApplied(false)
                 if hit.SetHideVisual then hit:SetHideVisual(false) end
                 if itemRenderer then
                     itemRenderer:Clear(model, self.scGeneration)
@@ -379,6 +428,7 @@ function Lab.CreateSources(parent, state)
             self.scRecord = nil
             self.scRecordId = nil
             applyOwnership(nil)
+            self:SetApplied(false)
             if hit.SetHideVisual then hit:SetHideVisual(false) end
             if itemRenderer then
                 itemRenderer:Clear(model, self.scGeneration)
@@ -391,6 +441,10 @@ function Lab.CreateSources(parent, state)
 
         function card:SetSelected(value)
             if value then selected:Show() else selected:Hide() end
+        end
+
+        function card:SetApplied(value)
+            if hit.SetApplied then hit:SetApplied(value and true or false) end
         end
 
         hit:SetScript("OnClick", function(_, mouseButton)
@@ -419,7 +473,11 @@ function Lab.CreateSources(parent, state)
             GameTooltip:SetText(record.name or "未知外观", 1, 0.82, 0.18)
             if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
                 GameTooltip:AddLine("从预览中隐藏该部位外观。", 0.72, 0.72, 0.72, true)
-                GameTooltip:AddLine("仅本地预览，当前不能应用到装备。", 1, 0.35, 0.25, true)
+                if Lab.IsAppliedReady and Lab.IsAppliedReady() then
+                    GameTooltip:AddLine("点应用后写入当前角色，该部位不再显示模型。", 0.72, 0.72, 0.72, true)
+                else
+                    GameTooltip:AddLine("仅本地预览，当前不能应用到装备。", 1, 0.35, 0.25, true)
+                end
             else
                 GameTooltip:AddLine(record.collected and "已收藏" or "未收藏 · 仅可预览", record.collected and 0.4 or 0.7, record.collected and 1 or 0.7, 0.4)
                 addAppearanceSourceTooltip(record)
@@ -458,11 +516,7 @@ function Lab.CreateSources(parent, state)
         local model = CreateFrame("DressUpModel", nil, card)
         anchorModelToCard(model, card, SET_WIDTH, SET_HEIGHT)
         model:EnableMouse(false)
-        local presenter = SC.ModelProvider.Create("DRESSUP", model, {
-            panelCheck = function()
-                return host:IsShown() and host.mode == "SETS" and card:IsShown()
-            end,
-        })
+        if model.SetAlpha then pcall(model.SetAlpha, model, 0) end
 
         local hit = CreateFrame("Button", nil, card)
         hit:SetAllPoints(card)
@@ -522,14 +576,38 @@ function Lab.CreateSources(parent, state)
             end
         end
 
+        function card:RunSetPresent(record, generation, done)
+            local finished = false
+            local function finish()
+                if finished then return end
+                finished = true
+                if done then done() end
+            end
+            local ok = Lab.PlayDressUp and Lab.PlayDressUp(model, {
+                undress = true,
+                items = setItemStrings(record),
+                onReady = function()
+                    if card.scGeneration == generation and card.scRecord and card.scRecord.id == record.id then
+                        card.scReadyGeneration = generation
+                        applySetOwnership(card.scRecord)
+                    end
+                    finish()
+                end,
+                onUnavailable = function()
+                    finish()
+                end,
+            })
+            if not ok then finish() end
+        end
+
         function card:SetRecord(record)
             local changed = not record or self.scRecordId ~= record.id
             self.scRecord = record
             if not record then
                 self.scRecordId = nil
                 applySetOwnership(nil)
-                presenter:Clear("LAB_SET_EMPTY")
-                model:ClearModel()
+                if Lab.StopDressUp then Lab.StopDressUp(model) end
+                if model.ClearModel then model:ClearModel() end
                 self:Hide()
                 return
             end
@@ -537,21 +615,10 @@ function Lab.CreateSources(parent, state)
             model:Show()
             if changed then
                 self.scGeneration = (self.scGeneration or 0) + 1
-                local generation = self.scGeneration
-                presenter:Clear("LAB_SET_REPLACED")
-                presenter:Present({
-                    unit = "player",
-                    undress = true,
-                    settleTicks = 2,
-                    items = setItemStrings(record),
-                    onReady = function()
-                        if card.scGeneration == generation and card.scRecord and card.scRecord.id == record.id then
-                            card.scReadyGeneration = generation
-                            applySetOwnership(card.scRecord)
-                        end
-                    end,
-                })
                 self.scRecordId = record.id
+                host:EnqueueSetPresent(self, record)
+            elseif self.scReadyGeneration ~= self.scGeneration then
+                host:EnqueueSetPresent(self, record)
             end
             applySetOwnership(record)
             if record.favorite then favorite:Show() else favorite:Hide() end
@@ -588,7 +655,6 @@ function Lab.CreateSources(parent, state)
         hit:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
         card.scModel = model
-        card.scPresenter = presenter
         card.scHitFrame = hit
         card.scBorder = border
         card.scSelected = selected
@@ -646,8 +712,10 @@ function Lab.CreateSources(parent, state)
         if mode == "ITEMS" then
             itemsView:Show()
             setsView:Hide()
+            self:ResetSetPresentQueue()
             for _, card in ipairs(self.setCards) do
-                card.scPresenter:Clear("LAB_SET_VIEW_HIDDEN")
+                if Lab.StopDressUp then Lab.StopDressUp(card.scModel) end
+                if card.scModel and card.scModel.ClearModel then card.scModel:ClearModel() end
                 card.scRecordId = nil
             end
         else
@@ -733,7 +801,11 @@ function Lab.CreateSources(parent, state)
                     state.draftBySlot[state.selectedSlot] = record
                 end
                 card:SetRecord(record)
-                card:SetSelected(record and selected and record.id == selected.id)
+                local isApplied = record and state.IsAppearanceAppliedToSlot
+                    and state:IsAppearanceAppliedToSlot(state.selectedSlot, record)
+                card:SetApplied(isApplied)
+                -- Official: current-transmogged wins over pending selected.
+                card:SetSelected(record and selected and record.id == selected.id and not isApplied)
             end
             if #records == 0 then
                 UI.ShowEmptyState(itemEmpty, host, "没有符合条件的外观", "调整搜索、来源或收藏过滤后再试。")
@@ -745,11 +817,13 @@ function Lab.CreateSources(parent, state)
     end
 
     function host:ClearPresenters(reason)
+        self:ResetSetPresentQueue()
         for _, card in ipairs(self.itemCards) do
             card:ClearRenderer()
         end
         for _, card in ipairs(self.setCards) do
-            card.scPresenter:Clear(reason or "LAB_HIDDEN")
+            if Lab.StopDressUp then Lab.StopDressUp(card.scModel) end
+            if card.scModel and card.scModel.ClearModel then card.scModel:ClearModel() end
             card.scRecordId = nil
         end
     end
