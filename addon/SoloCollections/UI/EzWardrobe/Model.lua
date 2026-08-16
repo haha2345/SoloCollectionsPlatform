@@ -385,6 +385,30 @@ local function applyTransmorpherLight(frame)
     safeCall(frame, "SetLight", 1, 0, 0, 1, 0, 1, 0.7, 0.7, 0.7, 1, 0.8, 0.8, 0.64)
 end
 
+-- 3.3.5 DressUpModel SetAllPoints often leaves a leftover 3D viewport on the
+-- left of the widget. Keep an explicit card-sized rectangle centered in the
+-- cell; do not grow past the card (the renderer does not clip oversized
+-- viewports). Camera x/y/z still come from TransmorpherPreviewSetup.
+local function syncCardViewport(frame)
+    local card = frame and frame.scCard
+    if not card then return end
+    local width = card:GetWidth()
+    local height = card:GetHeight()
+    if not width or width < 1 then width = 78 end
+    if not height or height < 1 then height = 104 end
+    frame:ClearAllPoints()
+    frame:SetWidth(width)
+    frame:SetHeight(height)
+    frame:SetPoint("CENTER", card, "CENTER", 0, 0)
+    local objectModel = frame.scObjectModel
+    if objectModel then
+        objectModel:ClearAllPoints()
+        objectModel:SetWidth(width)
+        objectModel:SetHeight(height)
+        objectModel:SetPoint("CENTER", card, "CENTER", 0, 0)
+    end
+end
+
 function TransmogModelMixin:SetType(modelType, force)
     if not VALID_TYPES[modelType] then return false, "INVALID_MODEL_TYPE" end
     if self.type == modelType and not force then return false, "UNCHANGED" end
@@ -397,6 +421,7 @@ function TransmogModelMixin:SetType(modelType, force)
     if not safeCall(self.frame, "SetUnit", "player") then
         return false, "PLAYER_MODEL_LOAD_FAILED"
     end
+    syncCardViewport(self.frame)
     return true, "READY"
 end
 
@@ -434,6 +459,7 @@ function WardrobeItemsModelMixin:PrepareTransmorpherFrame()
         self.suppressModelEvent = nil
         return false, "PLAYER_MODEL_LOAD_FAILED"
     end
+    syncCardViewport(self.frame)
     applyTransmorpherLight(self.frame)
     return true, "READY"
 end
@@ -556,6 +582,7 @@ function WardrobeItemsModelMixin:Reload(record, pageGeneration, force)
         self.objectModel:Hide()
     end
     self.frame:Show()
+    syncCardViewport(self.frame)
     safeCall(self.frame, "SetModelScale", TYPE_SCALE[nextType])
 
     local typeChanged, typeReason = TransmogModelMixin.SetType(self, nextType, false)
@@ -640,6 +667,7 @@ function Model:Attach(frame, objectModel)
     frame:SetScript("OnUpdateModel", function()
         lifecycle:OnModelLoaded()
     end)
+    syncCardViewport(frame)
     safeCall(frame, "SetModelScale", TYPE_SCALE[TYPE_PLAYER])
     applyTransmorpherLight(frame)
     lifecycle:SetType(TYPE_PLAYER, false)

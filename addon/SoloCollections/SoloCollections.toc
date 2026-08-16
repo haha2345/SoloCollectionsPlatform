@@ -54,6 +54,7 @@ UI\WardrobeLab\Outfits.lua
 UI\WardrobeLab\Preview.lua
 UI\WardrobeLab\Controller.lua
 UI\WardrobeLab\Layout.lua
+UI\WardrobeLab\Window.lua
 UI\CollectionsFrame.lua
 Core\Diagnostics.lua
 Core\Bootstrap.lua

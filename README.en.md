@@ -25,6 +25,7 @@ backend.
 ## Features and status
 
 - A unified window for mounts, companions, toys, appearance items, and sets.
+  Transmogrification uses a separate Wardrobe window opened by its own button.
 - Server-authoritative SC2 handshakes, account snapshots, revision deltas, and
   action results.
 - Appearance filters, collection progress, set previews, favorites, and stable

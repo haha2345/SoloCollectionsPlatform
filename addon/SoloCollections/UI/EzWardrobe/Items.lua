@@ -52,13 +52,17 @@ local function createCard(parent, index, callbacks)
     local itemCard = CreateFrame("Frame", nil, parent, "SoloCollectionsEzWardrobeItemCardTemplate")
 
     local itemModel = CreateFrame("DressUpModel", nil, itemCard)
-    itemModel:SetAllPoints(itemCard)
+    itemModel:SetWidth(Items.LAYOUT.itemWidth)
+    itemModel:SetHeight(Items.LAYOUT.itemHeight)
+    itemModel:SetPoint("CENTER", itemCard, "CENTER", 0, 0)
     itemModel.scCard = itemCard
 
     -- Hidden compatibility object for existing set/item presenter contracts.
     -- The active appearance path is always the DressUpModel above.
     local itemObjectModel = CreateFrame("PlayerModel", nil, itemCard)
-    itemObjectModel:SetAllPoints(itemCard)
+    itemObjectModel:SetWidth(Items.LAYOUT.itemWidth)
+    itemObjectModel:SetHeight(Items.LAYOUT.itemHeight)
+    itemObjectModel:SetPoint("CENTER", itemCard, "CENTER", 0, 0)
     itemObjectModel:Hide()
 
     local unavailable = CreateFrame("Frame", nil, itemCard)

@@ -7,7 +7,6 @@ local DESIGN_SCREEN_WIDTH = 1920
 local DESIGN_SCREEN_HEIGHT = 1080
 local COLLECTION_WIDTH = 703
 local COMPANION_JOURNAL_WIDTH = 768
-local TRANSMOG_WIDTH = 965
 local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
 local TITLE_VISIBLE_ROWS = 10
@@ -19,13 +18,9 @@ local TAB_DEFINITIONS = {
     { key = "TOYS", label = "玩具箱", title = "玩具箱" },
     { key = "TITLES", label = "头衔", title = "头衔（只读）" },
     { key = "WARDROBE", label = "外观", title = "外观" },
-    { key = "TRANSMOG_LAB", label = "幻化", title = "幻化", cutoff = true },
 }
 
 local function isTabAvailable(key)
-    if key == "TRANSMOG_LAB" then
-        return SC.db and SC.db.experimental and SC.db.experimental.transmogLabEnabled == true
-    end
     return true
 end
 
@@ -233,8 +228,6 @@ local function applyJournalSize(frame, key)
     local width
     if key == "MOUNTS" or key == "PETS" or key == "WARDROBE" then
         width = COMPANION_JOURNAL_WIDTH
-    elseif key == "TRANSMOG_LAB" then
-        width = TRANSMOG_WIDTH
     else
         width = COLLECTION_WIDTH
     end
@@ -274,7 +267,7 @@ local function applyJournalControlLayout(frame, key)
     else
         if companionFilter then companionFilter:Hide() end
         filter:Show()
-        if key == "TOYS" or key == "TITLES" or key == "WARDROBE" or key == "TRANSMOG_LAB" then
+        if key == "TOYS" or key == "TITLES" or key == "WARDROBE" then
             host:SetWidth(210)
             host:SetHeight(22)
             host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
@@ -347,8 +340,6 @@ function UI.RefreshActivePage()
         activeKey = "TOYS"
     elseif SC.db.mainTab == "WARDROBE" then
         activeKey = "WARDROBE"
-    elseif SC.db.mainTab == "TRANSMOG_LAB" then
-        activeKey = "TRANSMOG_LAB"
     elseif SC.db.mainTab == "TITLES" then
         activeKey = "TITLES"
     end
@@ -661,9 +652,6 @@ function UI.CreateCollectionsFrame()
         WARDROBE = UI.CreateWardrobePage(contentHost),
         TITLES = UI.CreateTitlesPage(contentHost),
     }
-    if isTabAvailable("TRANSMOG_LAB") and SC.WardrobeLab and SC.WardrobeLab.CreatePage then
-        frame.scPages.TRANSMOG_LAB = SC.WardrobeLab.CreatePage(contentHost)
-    end
     UI.EzCollections:Guard(contentHost, "收藏日志内页已锁定到 ezCollections 2.2 素材")
 
     UI.CollectionsFrame = frame
@@ -683,6 +671,17 @@ function UI.ToggleJournal()
     if frame:IsShown() then
         frame:Hide()
     else
+        if UI.HideTransmog then UI.HideTransmog() end
+        restoreFramePosition(frame)
+        frame:Show()
+    end
+end
+
+function UI.ShowJournal()
+    local frame = UI.CreateCollectionsFrame()
+    if not frame then return end
+    if UI.HideTransmog then UI.HideTransmog() end
+    if not frame:IsShown() then
         restoreFramePosition(frame)
         frame:Show()
     end
@@ -701,5 +700,8 @@ displayWatcher:SetScript("OnEvent", function()
     end
     if UI.Launcher then
         UI.Launcher:SetClampedToScreen(true)
+    end
+    if UI.TransmogLauncher then
+        UI.TransmogLauncher:SetClampedToScreen(true)
     end
 end)

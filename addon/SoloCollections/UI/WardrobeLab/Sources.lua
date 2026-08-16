@@ -9,17 +9,44 @@ local ITEM_WIDTH = 78
 local ITEM_HEIGHT = 104
 local ITEM_GAP_X = 16
 local ITEM_GAP_Y = 24
+local ITEM_START_X = -235
+local ITEM_START_Y = -71
 local SET_COLUMNS = 4
 local SET_PAGE_SIZE = 8
 local SET_WIDTH = 129
 local SET_HEIGHT = 186
 local SET_GAP_X = 13
 local SET_GAP_Y = 14
+local SET_START_X = 50
+local SET_START_Y = 50
+
+local function anchorModelToCard(model, card, width, height)
+    model:ClearAllPoints()
+    model:SetWidth(width)
+    model:SetHeight(height)
+    model:SetPoint("CENTER", card, "CENTER", 0, 0)
+end
 
 local function copyFilters(slotKey)
     local filters = {}
     for key, value in pairs((SC.db and SC.db.filters) or {}) do filters[key] = value end
     filters.slot = slotKey
+    -- Transmog uses journal collected/uncollected, but not the favorites-only toggle.
+    filters.favorites = false
+    if SC.Catalog and SC.Catalog.IsWeaponFilterSlot and SC.Catalog.IsWeaponFilterSlot(slotKey) then
+        SC.Catalog.EnsureWeaponTypeForSlot(filters, slotKey)
+        if SC.db and SC.db.filters then
+            SC.db.filters.weaponType = filters.weaponType
+        end
+    end
+    return filters
+end
+
+local function copySetFilters()
+    local filters = {}
+    for key, value in pairs((SC.db and SC.db.filters) or {}) do filters[key] = value end
+    filters.slot = "ALL"
+    filters.favorites = false
     return filters
 end
 
@@ -54,9 +81,11 @@ local function setItemStrings(record)
 end
 
 local function setProgress(category, filters)
-    if not (UI.CollectionsFrame and UI.CollectionsFrame.scProgress) then return end
+    local frame = (UI.TransmogFrame and UI.TransmogFrame:IsShown() and UI.TransmogFrame)
+        or UI.CollectionsFrame
+    if not (frame and frame.scProgress) then return end
     local collected, total = SC.Catalog.GetProgress(category, filters)
-    UI.CollectionsFrame.scProgress:SetProgress(collected, total)
+    frame.scProgress:SetProgress(collected, total)
 end
 
 function Lab.CreateSources(parent, state)
@@ -70,19 +99,34 @@ function Lab.CreateSources(parent, state)
     local itemRenderer = SC.WardrobeUI and SC.WardrobeUI.ItemCardRenderer
 
     local body = CreateFrame("Frame", nil, host)
+    -- Explicit size: two-point anchors often report GetWidth()==0 on 3.3.5
+    -- before first layout, which leaves the marble tile at native 256px.
+    body:SetWidth(652)
+    body:SetHeight(541)
     body:SetPoint("TOPLEFT", host, "TOPLEFT", 4, -60)
-    body:SetPoint("BOTTOMRIGHT", host, "BOTTOMRIGHT", -6, 5)
     body:SetFrameLevel(host:GetFrameLevel() + 1)
     local bodyInset = UI.EzCollections:ApplyInset(body)
     UI.EzCollections:AddShadowOverlay(body)
+    local function layoutBody()
+        local width = host:GetWidth() or 0
+        local height = host:GetHeight() or 0
+        if width < 1 then width = 662 end
+        if height < 1 then height = 606 end
+        body:SetWidth(math.max(1, width - 10))
+        body:SetHeight(math.max(1, height - 65))
+        if UI.EzCollections.UpdateInset then UI.EzCollections:UpdateInset(body) end
+    end
+    host:HookScript("OnSizeChanged", layoutBody)
+    host:HookScript("OnShow", layoutBody)
+    layoutBody()
 
     local itemsView = CreateFrame("Frame", nil, host)
-    itemsView:SetAllPoints(host)
+    itemsView:SetAllPoints(body)
     itemsView:SetFrameLevel(host:GetFrameLevel() + 5)
     itemsView:EnableMouseWheel(true)
 
     local setsView = CreateFrame("Frame", nil, host)
-    setsView:SetAllPoints(host)
+    setsView:SetAllPoints(body)
     setsView:SetFrameLevel(host:GetFrameLevel() + 5)
     setsView:EnableMouseWheel(true)
     setsView:Hide()
@@ -124,9 +168,9 @@ function Lab.CreateSources(parent, state)
         card:SetWidth(ITEM_WIDTH)
         card:SetHeight(ITEM_HEIGHT)
         card:SetPoint(
-            "TOPLEFT", itemsView, "TOPLEFT",
-            57 + column * (ITEM_WIDTH + ITEM_GAP_X),
-            -71 - row * (ITEM_HEIGHT + ITEM_GAP_Y)
+            "TOP", itemsView, "TOP",
+            ITEM_START_X + column * (ITEM_WIDTH + ITEM_GAP_X),
+            ITEM_START_Y - row * (ITEM_HEIGHT + ITEM_GAP_Y)
         )
         local background = card:CreateTexture(nil, "BACKGROUND")
         background:SetAllPoints(card)
@@ -134,10 +178,10 @@ function Lab.CreateSources(parent, state)
         background:SetVertexColor(0, 0, 0, 1)
 
         local model = CreateFrame("DressUpModel", nil, card)
-        model:SetAllPoints(card)
+        anchorModelToCard(model, card, ITEM_WIDTH, ITEM_HEIGHT)
         model:EnableMouse(false)
         local objectModel = CreateFrame("PlayerModel", nil, card)
-        objectModel:SetAllPoints(card)
+        anchorModelToCard(objectModel, card, ITEM_WIDTH, ITEM_HEIGHT)
         objectModel:EnableMouse(false)
         objectModel:Hide()
 
@@ -162,6 +206,59 @@ function Lab.CreateSources(parent, state)
         hit:EnableMouseWheel(true)
         local border, selected, favorite = UI.EzCollections:CreateWardrobeItemChrome(hit)
 
+        -- DressUpModel Present() resets alpha to 1, so ownership cannot live on
+        -- the actor. Keep it on the hit frame, same as the journal item cards.
+        local uncollectedShade = hit:CreateTexture(nil, "BACKGROUND")
+        uncollectedShade:SetTexture("Interface\\Buttons\\WHITE8X8")
+        uncollectedShade:SetAllPoints(hit)
+        uncollectedShade:SetVertexColor(0, 0, 0, 0.5)
+        uncollectedShade:Hide()
+
+        local uncollectedBadge = CreateFrame("Frame", nil, hit)
+        uncollectedBadge:SetWidth(58)
+        uncollectedBadge:SetHeight(15)
+        uncollectedBadge:SetPoint("TOPRIGHT", hit, "TOPRIGHT", -4, -4)
+        uncollectedBadge:SetFrameLevel(hit:GetFrameLevel() + 3)
+        local uncollectedBadgeBg = uncollectedBadge:CreateTexture(nil, "BACKGROUND")
+        uncollectedBadgeBg:SetTexture("Interface\\Buttons\\WHITE8X8")
+        uncollectedBadgeBg:SetAllPoints(uncollectedBadge)
+        uncollectedBadgeBg:SetVertexColor(0.02, 0.02, 0.02, 0.78)
+        local uncollectedBadgeText = uncollectedBadge:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        uncollectedBadgeText:SetAllPoints(uncollectedBadge)
+        uncollectedBadgeText:SetJustifyH("CENTER")
+        uncollectedBadgeText:SetText("未收集")
+        uncollectedBadgeText:SetTextColor(0.72, 0.73, 0.74)
+        uncollectedBadge:Hide()
+
+        local collectedMark = CreateFrame("Frame", nil, hit)
+        collectedMark:SetWidth(20)
+        collectedMark:SetHeight(20)
+        collectedMark:SetPoint("TOPRIGHT", hit, "TOPRIGHT", -3, -3)
+        collectedMark:SetFrameLevel(hit:GetFrameLevel() + 3)
+        local collectedIcon = collectedMark:CreateTexture(nil, "OVERLAY")
+        collectedIcon:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
+        collectedIcon:SetAllPoints(collectedMark)
+        collectedMark:Hide()
+
+        local function applyOwnership(record)
+            if not record or (Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record)) then
+                uncollectedShade:Hide()
+                uncollectedBadge:Hide()
+                collectedMark:Hide()
+                return
+            end
+            border:SetCollected(record.collected)
+            if record.collected then
+                uncollectedShade:Hide()
+                uncollectedBadge:Hide()
+                collectedMark:Show()
+            else
+                uncollectedShade:Show()
+                uncollectedBadge:Show()
+                collectedMark:Hide()
+            end
+        end
+
         model.scCard = card
         model.scObjectModel = objectModel
         model.scUnavailable = unavailable
@@ -169,14 +266,36 @@ function Lab.CreateSources(parent, state)
         model.scUnavailableText = unavailableText
         if itemRenderer then itemRenderer:Attach(model, objectModel) end
 
+        local function stopCardModels()
+            local lifecycle = model.scEzWardrobeLifecycle
+            if lifecycle then
+                lifecycle.generation = (lifecycle.generation or 0) + 1
+                lifecycle.activeGeneration = lifecycle.generation
+                lifecycle.record = nil
+                lifecycle.recordKey = nil
+                lifecycle.pendingItemRender = nil
+                lifecycle.transmorpherSetup = nil
+                lifecycle.weaponDescriptor = nil
+                model:SetScript("OnUpdate", nil)
+            end
+            if model.ClearModel then model:ClearModel() end
+            model:Hide()
+            if objectModel.ClearModel then objectModel:ClearModel() end
+            objectModel:Hide()
+            if unavailable then unavailable:Hide() end
+        end
+
         function card:SetRecord(record)
             local changed = not record or self.scRecordId ~= record.id
             if changed then self.scGeneration = (self.scGeneration or 0) + 1 end
             self.scRecord = record
-            if itemRenderer then itemRenderer:Present(model, record, self.scGeneration or 1) end
             if not record then
                 self.scRecordId = nil
-                if not itemRenderer then
+                applyOwnership(nil)
+                if hit.SetHideVisual then hit:SetHideVisual(false) end
+                if itemRenderer then
+                    itemRenderer:Clear(model, self.scGeneration)
+                else
                     model:ClearModel()
                     objectModel:ClearModel()
                     self:Hide()
@@ -184,11 +303,21 @@ function Lab.CreateSources(parent, state)
                 return
             end
             self:Show()
-            if not itemRenderer then model:Show() end
             self.scRecordId = record.id
-            border:SetCollected(record.collected)
-            model:SetAlpha(record.collected and 1 or 0.48)
-            objectModel:SetAlpha(record.collected and 1 or 0.48)
+            if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
+                -- ItemCardRenderer:Clear also hides the card frame. Keep the
+                -- empty collected tile visible and only stop the 3D presenter.
+                stopCardModels()
+                border:SetCollected(true)
+                applyOwnership(record)
+                if favorite then favorite:Hide() end
+                if hit.SetHideVisual then hit:SetHideVisual(true) end
+                return
+            end
+            if hit.SetHideVisual then hit:SetHideVisual(false) end
+            if itemRenderer then itemRenderer:Present(model, record, self.scGeneration or 1) end
+            if not itemRenderer then model:Show() end
+            applyOwnership(record)
             if record.favorite then favorite:Show() else favorite:Hide() end
         end
 
@@ -196,6 +325,8 @@ function Lab.CreateSources(parent, state)
             self.scGeneration = (self.scGeneration or 0) + 1
             self.scRecord = nil
             self.scRecordId = nil
+            applyOwnership(nil)
+            if hit.SetHideVisual then hit:SetHideVisual(false) end
             if itemRenderer then
                 itemRenderer:Clear(model, self.scGeneration)
             else
@@ -212,6 +343,12 @@ function Lab.CreateSources(parent, state)
         hit:SetScript("OnClick", function(_, mouseButton)
             local record = card.scRecord
             if not record then return end
+            if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
+                if mouseButton ~= "RightButton" then
+                    state:SetDraft(state.selectedSlot, record)
+                end
+                return
+            end
             if mouseButton == "RightButton" then
                 SC.Catalog.ToggleDemoFavorite("APPEARANCES", record.id)
                 host:Refresh()
@@ -225,8 +362,13 @@ function Lab.CreateSources(parent, state)
             if not record then return end
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
             GameTooltip:SetText(record.name or "未知外观", 1, 0.82, 0.18)
-            GameTooltip:AddLine(record.collected and "已收藏" or "未收藏 · 仅可预览", record.collected and 0.4 or 0.7, record.collected and 1 or 0.7, 0.4)
-            GameTooltip:AddLine("左键写入所选槽位草稿 · 右键偏好", 0.75, 0.72, 0.66)
+            if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
+                GameTooltip:AddLine("从预览中隐藏该部位外观。", 0.72, 0.72, 0.72, true)
+                GameTooltip:AddLine("仅本地预览，当前不能应用到装备。", 1, 0.35, 0.25, true)
+            else
+                GameTooltip:AddLine(record.collected and "已收藏" or "未收藏 · 仅可预览", record.collected and 0.4 or 0.7, record.collected and 1 or 0.7, 0.4)
+                GameTooltip:AddLine("左键写入所选槽位草稿 · 右键偏好", 0.75, 0.72, 0.66)
+            end
             GameTooltip:Show()
         end)
         hit:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -249,8 +391,8 @@ function Lab.CreateSources(parent, state)
         card:SetHeight(SET_HEIGHT)
         card:SetPoint(
             "TOPLEFT", setsView, "TOPLEFT",
-            50 + column * (SET_WIDTH + SET_GAP_X),
-            -50 - row * (SET_HEIGHT + SET_GAP_Y)
+            SET_START_X + column * (SET_WIDTH + SET_GAP_X),
+            -SET_START_Y - row * (SET_HEIGHT + SET_GAP_Y)
         )
         local background = card:CreateTexture(nil, "BACKGROUND")
         background:SetAllPoints(card)
@@ -258,7 +400,7 @@ function Lab.CreateSources(parent, state)
         background:SetVertexColor(0, 0, 0, 1)
 
         local model = CreateFrame("DressUpModel", nil, card)
-        model:SetAllPoints(card)
+        anchorModelToCard(model, card, SET_WIDTH, SET_HEIGHT)
         model:EnableMouse(false)
         local presenter = SC.ModelProvider.Create("DRESSUP", model, {
             panelCheck = function()
@@ -273,11 +415,63 @@ function Lab.CreateSources(parent, state)
         hit:EnableMouseWheel(true)
         local border, selected, favorite = UI.EzCollections:CreateWardrobeSetChrome(hit)
 
+        local uncollectedShade = hit:CreateTexture(nil, "BACKGROUND")
+        uncollectedShade:SetTexture("Interface\\Buttons\\WHITE8X8")
+        uncollectedShade:SetAllPoints(hit)
+        uncollectedShade:SetVertexColor(0, 0, 0, 0.5)
+        uncollectedShade:Hide()
+
+        local uncollectedBadge = CreateFrame("Frame", nil, hit)
+        uncollectedBadge:SetWidth(58)
+        uncollectedBadge:SetHeight(15)
+        uncollectedBadge:SetPoint("TOPRIGHT", hit, "TOPRIGHT", -4, -4)
+        uncollectedBadge:SetFrameLevel(hit:GetFrameLevel() + 3)
+        local uncollectedBadgeBg = uncollectedBadge:CreateTexture(nil, "BACKGROUND")
+        uncollectedBadgeBg:SetTexture("Interface\\Buttons\\WHITE8X8")
+        uncollectedBadgeBg:SetAllPoints(uncollectedBadge)
+        uncollectedBadgeBg:SetVertexColor(0.02, 0.02, 0.02, 0.78)
+        local uncollectedBadgeText = uncollectedBadge:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+        uncollectedBadgeText:SetAllPoints(uncollectedBadge)
+        uncollectedBadgeText:SetJustifyH("CENTER")
+        uncollectedBadgeText:SetText("未收集")
+        uncollectedBadgeText:SetTextColor(0.72, 0.73, 0.74)
+        uncollectedBadge:Hide()
+
+        local collectedMark = CreateFrame("Frame", nil, hit)
+        collectedMark:SetWidth(20)
+        collectedMark:SetHeight(20)
+        collectedMark:SetPoint("TOPRIGHT", hit, "TOPRIGHT", -3, -3)
+        collectedMark:SetFrameLevel(hit:GetFrameLevel() + 3)
+        local collectedIcon = collectedMark:CreateTexture(nil, "OVERLAY")
+        collectedIcon:SetTexture("Interface\\RaidFrame\\ReadyCheck-Ready")
+        collectedIcon:SetAllPoints(collectedMark)
+        collectedMark:Hide()
+
+        local function applySetOwnership(record)
+            if not record then
+                uncollectedShade:Hide()
+                uncollectedBadge:Hide()
+                collectedMark:Hide()
+                return
+            end
+            border:SetCollected(record.collected)
+            if record.collected then
+                uncollectedShade:Hide()
+                uncollectedBadge:Hide()
+                collectedMark:Show()
+            else
+                uncollectedShade:Show()
+                uncollectedBadge:Show()
+                collectedMark:Hide()
+            end
+        end
+
         function card:SetRecord(record)
             local changed = not record or self.scRecordId ~= record.id
             self.scRecord = record
             if not record then
                 self.scRecordId = nil
+                applySetOwnership(nil)
                 presenter:Clear("LAB_SET_EMPTY")
                 model:ClearModel()
                 self:Hide()
@@ -297,13 +491,13 @@ function Lab.CreateSources(parent, state)
                     onReady = function()
                         if card.scGeneration == generation and card.scRecord and card.scRecord.id == record.id then
                             card.scReadyGeneration = generation
+                            applySetOwnership(card.scRecord)
                         end
                     end,
                 })
                 self.scRecordId = record.id
             end
-            border:SetCollected(record.collected)
-            model:SetAlpha(record.collected and 1 or 0.48)
+            applySetOwnership(record)
             if record.favorite then favorite:Show() else favorite:Hide() end
         end
 
@@ -367,8 +561,9 @@ function Lab.CreateSources(parent, state)
     applySet:SetWidth(112)
     applySet:SetHeight(22)
     applySet:SetPoint("BOTTOMRIGHT", setsView, "BOTTOMRIGHT", -10, 10)
-    applySet:SetText("应用套装预设")
+    applySet:SetText("应用套装")
     applySet:SetScript("OnClick", function() state:BeginApplySet() end)
+    applySet:Hide()
 
     local selectedSetName = setsView:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     selectedSetName:SetPoint("BOTTOMLEFT", setsView, "BOTTOMLEFT", 16, 16)
@@ -404,14 +599,27 @@ function Lab.CreateSources(parent, state)
                 card:ClearRenderer()
             end
         end
+        if UI.SyncTransmogFilterChrome then
+            UI.SyncTransmogFilterChrome(mode, true)
+        end
         self:Refresh()
     end
 
     function host:Refresh()
+        if self.scFilterSlot ~= state.selectedSlot then
+            self.scFilterSlot = state.selectedSlot
+            self.itemPage = 1
+        end
         local query = (SC.db and SC.db.query) or ""
         local filters = copyFilters(state.selectedSlot)
         local request = state.requestState or {}
+        if UI.SyncTransmogWeaponDropDown then
+            UI.SyncTransmogWeaponDropDown(state.selectedSlot, self.mode)
+        end
         if self.mode == "SETS" then
+            if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
+            if UI.SyncTransmogClassDropDown then UI.SyncTransmogClassDropDown(self.mode) end
+            filters = copySetFilters()
             local records, page, totalPages = SC.Catalog.Query("SETS", query, filters, self.setPage, SET_PAGE_SIZE)
             self.setPage, self.setTotalPages = page, totalPages
             setControls:SetPage(page, totalPages)
@@ -431,19 +639,32 @@ function Lab.CreateSources(parent, state)
             if state.presetRecord then
                 selectedSetName:SetText(state.presetRecord.name or ("套装 " .. tostring(state.presetRecord.id)))
             else
-                selectedSetName:SetText("选择套装以建立本地预设")
+                selectedSetName:SetText("选择套装后可直接应用")
             end
-            if state.presetRecord and state.presetRecord.collected
-                and request.status ~= "REQUESTING" and request.status ~= "WAITING_STATE" then
-                applySet:Enable()
-            else
-                applySet:Disable()
+            local canApplySet = false
+            if state.GetSetApplyState then
+                canApplySet = state:GetSetApplyState()
+            elseif state.presetRecord and state.presetRecord.collected
+                and request.status ~= "REQUESTING" then
+                canApplySet = true
             end
+            if canApplySet then applySet:Enable() else applySet:Disable() end
             setProgress("SETS", filters)
         else
-            local records, page, totalPages = SC.Catalog.Query(
-                "APPEARANCES", query, filters, self.itemPage, ITEM_PAGE_SIZE
-            )
+            if UI.SyncTransmogClassDropDown then UI.SyncTransmogClassDropDown(self.mode) end
+            local matches = SC.Catalog.QueryAll("APPEARANCES", query, filters)
+            if Lab.CreateHideVisualRecord then
+                table.insert(matches, 1, Lab.CreateHideVisualRecord(state.selectedSlot))
+            end
+            local total = #matches
+            local totalPages = math.max(1, math.ceil(total / ITEM_PAGE_SIZE))
+            self.itemPage = math.max(1, math.min(self.itemPage or 1, totalPages))
+            local firstIndex = ((self.itemPage - 1) * ITEM_PAGE_SIZE) + 1
+            local records = {}
+            for index = firstIndex, math.min(total, firstIndex + ITEM_PAGE_SIZE - 1) do
+                records[#records + 1] = matches[index]
+            end
+            local page = self.itemPage
             self.itemPage, self.itemTotalPages = page, totalPages
             itemControls:SetPage(page, totalPages)
             local selected = state.draftBySlot[state.selectedSlot]

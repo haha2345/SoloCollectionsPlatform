@@ -5,6 +5,7 @@ SC.UIPlatform = Platform
 
 Platform.API_VERSION = 1
 Platform.WINDOW_POSITION_KEY = "solocollections-journal"
+Platform.TRANSMOG_WINDOW_POSITION_KEY = "solocollections-transmog"
 Platform.requiredCapabilities = {
     "chrome.panel",
     "chrome.persist",
@@ -131,8 +132,45 @@ function Platform:RestoreWindow(frame)
     })
 end
 
+function Platform:PersistTransmogWindow(frame, dragHandle)
+    if not (frame and self:IsDragonUIShell()) then return false end
+    local saved = SC.db and SC.db.transmogFrame
+    local fallback = {
+        point = (saved and saved.point) or "CENTER",
+        relativePoint = (saved and saved.relativePoint) or "CENTER",
+        x = (saved and saved.x) or 0,
+        y = (saved and saved.y) or 0,
+    }
+    return self.public.Chrome:PersistWindowPosition(frame, self.TRANSMOG_WINDOW_POSITION_KEY, {
+        point = fallback.point,
+        relPoint = fallback.relativePoint,
+        x = fallback.x,
+        y = fallback.y,
+    }, dragHandle)
+end
+
+function Platform:RestoreTransmogWindow(frame)
+    if not (frame and self:IsDragonUIShell()) then return false end
+    local saved = SC.db and SC.db.transmogFrame
+    local fallback = {
+        point = (saved and saved.point) or "CENTER",
+        relativePoint = (saved and saved.relativePoint) or "CENTER",
+        x = (saved and saved.x) or 0,
+        y = (saved and saved.y) or 0,
+    }
+    return self.public.Chrome:RestoreWindowPosition(frame, self.TRANSMOG_WINDOW_POSITION_KEY, {
+        point = fallback.point,
+        relPoint = fallback.relativePoint,
+        x = fallback.x,
+        y = fallback.y,
+    })
+end
+
 function Platform:ResetWindowPosition()
-    if self:IsReady() then self.public.Chrome:ResetWindowPosition(self.WINDOW_POSITION_KEY) end
+    if self:IsReady() then
+        self.public.Chrome:ResetWindowPosition(self.WINDOW_POSITION_KEY)
+        self.public.Chrome:ResetWindowPosition(self.TRANSMOG_WINDOW_POSITION_KEY)
+    end
     if SC.db and SC.db.uiPlatform then
         SC.db.uiPlatform.positionMigrated = false
         SC.db.uiPlatform.legacyFrameBackup = nil

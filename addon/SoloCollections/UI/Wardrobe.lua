@@ -783,11 +783,6 @@ local function setAtlasRegion(texture, texturePath, atlasWidth, atlasHeight, reg
     )
 end
 
-local function getPlayerClassToken()
-    local classIdentity = Identity.GetPlayerClass()
-    return classIdentity.known and classIdentity.filterToken or nil
-end
-
 local function weaponOptionSupportsSlot(option, slot)
     return (slot == "MAINHAND" and option.main) or (slot == "OFFHAND" and option.off)
 end
@@ -3065,14 +3060,12 @@ function UI.CreateWardrobePage(parent)
         if not SC.db or not SC.db.filters then return end
         local filters = SC.db.filters
 
-        -- On the first set-page visit, mirror Retail by starting on the
-        -- character's own class. Afterwards an explicit "全部职业" choice is
-        -- respected for the rest of the UI session.
-        if SC.db.wardrobeTab == "SETS" and not self.scDefaultSetClassApplied then
-            self.scDefaultSetClassApplied = true
-            local playerClass = getPlayerClassToken()
-            if hasFilterValue(CLASS_FILTERS, playerClass) then
-                filters.classToken = playerClass
+        -- First sets-page visit in the session (journal or transmog) starts on
+        -- the character's class. An explicit "全部职业" choice is then kept.
+        if SC.db.wardrobeTab == "SETS" then
+            local before = filters.classToken
+            if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
+            if filters.classToken ~= before then
                 setSetOffset(0, true)
                 self.scSetSelectedId = nil
                 self.scSetSelectedGroupKey = nil
@@ -3134,21 +3127,35 @@ function UI.CreateWardrobePage(parent)
         end
 
         UIDropDownMenu_Initialize(dropDown, function(_, level)
-            if level ~= 1 then return end
-            local options = {
-                { label = "已收集", key = "collected" },
-                { label = "未收集", key = "uncollected" },
-                { label = "仅显示偏好", key = "favorites" },
-            }
-            for _, option in ipairs(options) do
-                local optionKey = option.key
-                local info = UIDropDownMenu_CreateInfo()
-                info.text = option.label
-                info.keepShownOnClick = true
-                info.isNotRadio = true
-                info.checked = function() return filters[optionKey] and true or false end
-                info.func = function(_, _, _, checked) setFilter(optionKey, checked) end
-                UIDropDownMenu_AddButton(info, level)
+            if level == 1 then
+                local options = {
+                    { label = "已收集", key = "collected" },
+                    { label = "未收集", key = "uncollected" },
+                }
+                for _, option in ipairs(options) do
+                    local optionKey = option.key
+                    local info = UIDropDownMenu_CreateInfo()
+                    info.text = option.label
+                    info.keepShownOnClick = true
+                    info.isNotRadio = true
+                    info.checked = function() return filters[optionKey] and true or false end
+                    info.func = function(_, _, _, checked) setFilter(optionKey, checked) end
+                    UIDropDownMenu_AddButton(info, level)
+                end
+                if SC.db.wardrobeTab == "ITEMS" then
+                    local sources = UIDropDownMenu_CreateInfo()
+                    sources.text = "来源"
+                    sources.notCheckable = true
+                    sources.hasArrow = true
+                    sources.value = "appearanceSources"
+                    UIDropDownMenu_AddButton(sources, level)
+                end
+            elseif level == 2 and UIDROPDOWNMENU_MENU_VALUE == "appearanceSources" then
+                UI.AddAppearanceSourceMenuButtons(level, function()
+                    page.scItemPage = 1
+                    setSetOffset(0, true)
+                    page:Refresh()
+                end)
             end
         end, "MENU")
         dropDown.scSoloCollectionsInitialized = true

@@ -21,13 +21,25 @@ function Lab.CreatePreview(parent, state)
         for _, itemId in ipairs(state:GetPreviewItemIds()) do
             items[#items + 1] = "item:" .. tostring(itemId)
         end
+        local hidden = state.GetHiddenSlots and state:GetHiddenSlots() or {}
+        local needUndress = next(hidden) ~= nil
+        local function applyHiddenPreview()
+            if not needUndress then return end
+            if self.Undress then pcall(self.Undress, self) end
+            for _, item in ipairs(items) do
+                if self.TryOn then pcall(self.TryOn, self, item) end
+            end
+        end
         if presenter then
             presenter:Present({
                 unit = "player",
                 items = items,
+                undress = needUndress,
                 settleTicks = 2,
                 onReady = function()
-                    if model.scGeneration == expectedGeneration then unavailable:Hide() end
+                    if model.scGeneration ~= expectedGeneration then return end
+                    applyHiddenPreview()
+                    unavailable:Hide()
                 end,
                 onUnavailable = function()
                     if model.scGeneration == expectedGeneration then unavailable:Show() end
@@ -35,7 +47,11 @@ function Lab.CreatePreview(parent, state)
             })
         else
             self:ClearModel(); pcall(self.SetUnit, self, "player")
-            for _, item in ipairs(items) do pcall(self.TryOn, self, item) end
+            if needUndress then
+                applyHiddenPreview()
+            else
+                for _, item in ipairs(items) do pcall(self.TryOn, self, item) end
+            end
         end
         self.scPreviewItemCount = #items
     end
