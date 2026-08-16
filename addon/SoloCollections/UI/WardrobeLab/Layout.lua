@@ -253,31 +253,6 @@ function Lab.CreateLayout(page, state)
         end
     end)
 
-    local spec = CreateFrame("Button", nil, left, "UIMenuButtonStretchTemplate")
-    spec:SetWidth(22)
-    spec:SetHeight(22)
-    spec:SetPoint("RIGHT", apply, "LEFT", 1, 0)
-    spec:SetFrameLevel(left:GetFrameLevel() + 16)
-    spec:Disable()
-    local specIcon = spec:CreateTexture(nil, "ARTWORK")
-    specIcon:SetWidth(12)
-    specIcon:SetHeight(12)
-    specIcon:SetPoint("CENTER", spec, "CENTER", 0, 0)
-    specIcon:SetTexture(UI.EzCollections:MediaPath(
-        "Buttons",
-        "SquareButtonTextures.tga",
-        "Interface\\Buttons\\UI-OptionsButton"
-    ))
-    specIcon:SetTexCoord(0.453125, 0.640625, 0.203125, 0.015625)
-    if spec.SetHighlightTexture then spec:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD") end
-    local specTip = createDisabledTooltipOverlay(spec, function(self)
-        GameTooltip:SetOwner(self, "ANCHOR_TOP")
-        GameTooltip:SetText("专精应用", 1, 0.82, 0.18)
-        GameTooltip:AddLine("当前 SoloCollections 后端按角色应用幻化，暂未开放正式服的专精独立应用。", 0.72, 0.72, 0.72, true)
-        GameTooltip:Show()
-    end)
-    specTip:Show()
-
     local function showApplyTooltip(self)
         GameTooltip:SetOwner(self, "ANCHOR_TOP")
         GameTooltip:SetText("应用", 1, 0.82, 0.18)
@@ -340,8 +315,6 @@ function Lab.CreateLayout(page, state)
     page.scMoneyFrame = moneyFrame
     page.scMoneyText = moneyText
     page.scWeaponHandWarning = weaponWarning
-    page.scSpecButton = spec
-    page.scSpecDisabledTip = specTip
     page.scClearAllButton = outfits.scClearButton
     page.scLeftBackground = leftInset.background
 end

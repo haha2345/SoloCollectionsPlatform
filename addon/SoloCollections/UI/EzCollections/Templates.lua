@@ -713,6 +713,24 @@ function Ez:CreateWardrobeItemChrome(parent)
         if value then hideVisual:Show() else hideVisual:Hide() end
     end
 
+    -- Legion PendingTransmogFrame.UndoIcon: shown on the base appearance
+    -- when the slot will revert to the real item.
+    local textures = self:MediaPath("Transmogrify", "Textures.tga", WHITE_TEXTURE)
+    local undo = CreateFrame("Frame", nil, parent)
+    undo:SetWidth(24)
+    undo:SetHeight(22)
+    undo:SetPoint("TOPRIGHT", parent, "TOPRIGHT", 6, 8)
+    undo:SetFrameLevel(parent:GetFrameLevel() + 6)
+    local undoTexture = undo:CreateTexture(nil, "OVERLAY")
+    undoTexture:SetAllPoints(undo)
+    undoTexture:SetTexture(textures)
+    undoTexture:SetTexCoord(0.1796875, 0.3671875, 0.58203125, 0.625)
+    undo:Hide()
+
+    function parent:SetUndo(value)
+        if value then undo:Show() else undo:Hide() end
+    end
+
     border:SetCollected(false)
     border.scTexture = borderTexture
     selected.scTexture = selectedTexture

@@ -98,6 +98,24 @@ function Lab.Confirm(text, onAccept)
     return Lab.ShowDialog("confirm", text, onAccept)
 end
 
+function Lab.ConfirmRestoreOriginal(state, slotKey)
+    if not state or not slotKey then return false end
+    if not (state.GetAppliedCollectionId and state:GetAppliedCollectionId(slotKey)) then
+        return false
+    end
+    local definition = Lab.SLOT_BY_KEY and Lab.SLOT_BY_KEY[slotKey]
+    local slotName = (definition and definition.label) or "该部位"
+    return Lab.Confirm("恢复" .. slotName .. "的原装备外观？已经应用到这件装备上的幻化会被清除。", function()
+        if state.IsSlotDirty and state:IsSlotDirty(slotKey) then
+            state:ClearDraft(slotKey)
+        end
+        if state.ClearApplied then
+            state:ClearApplied(slotKey)
+        end
+        if Lab.PlaySound then Lab.PlaySound("revert") end
+    end)
+end
+
 function Lab.Notice(text, onAccept)
     return Lab.ShowDialog("notice", text, onAccept)
 end
@@ -285,6 +303,35 @@ function Lab.AppendTransmogLines(tooltip, appearanceName, pending, hidden)
         tooltip:AddLine("幻化为:", pinkR, pinkG, pinkB)
     end
     tooltip:AddLine(appearanceName, pinkR, pinkG, pinkB)
+end
+
+function Lab.GetEquippedAppearanceRecord(slotKey, equippedId)
+    equippedId = tonumber(equippedId)
+    if not equippedId then return nil end
+    local record = Lab.FindAppearanceRecord(nil, equippedId)
+    if record then
+        local copy = {}
+        for key, value in pairs(record) do
+            copy[key] = value
+        end
+        copy.collected = true
+        copy.isEquippedBase = true
+        return copy
+    end
+    local name
+    if GetItemInfo then
+        name = GetItemInfo(equippedId)
+    end
+    return {
+        id = "EQUIPPED:" .. tostring(equippedId),
+        itemId = equippedId,
+        itemIds = { equippedId },
+        name = name or ("当前装备 " .. tostring(equippedId)),
+        collected = true,
+        favorite = false,
+        slot = slotKey,
+        isEquippedBase = true,
+    }
 end
 
 function Lab.FindAppearanceRecord(collectionId, itemId)
@@ -489,6 +536,20 @@ function State:GetAppliedCollectionId(slotKey)
         and SC.CollectionState.GetAppliedSlots()
     if type(applied) ~= "table" then return nil end
     return tonumber(applied[slotKey])
+end
+
+function State:IsAppearanceUndoTarget(slotKey, record)
+    if type(record) ~= "table" or not slotKey then return false end
+    if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then return false end
+    local appliedId = self:GetAppliedCollectionId(slotKey)
+    if not appliedId or tonumber(record.id) == appliedId then return false end
+    local equippedId = self.equippedBySlot and tonumber(self.equippedBySlot[slotKey])
+    if not equippedId then return false end
+    if tonumber(record.itemId) == equippedId then return true end
+    for _, sourceItemId in ipairs(record.itemIds or {}) do
+        if tonumber(sourceItemId) == equippedId then return true end
+    end
+    return false
 end
 
 function State:IsAppearanceAppliedToSlot(slotKey, record)

@@ -125,6 +125,100 @@ local function usableSourceLabel(value)
     return value
 end
 
+local function adjustedDisplayIndex(index, numEntries, columns, key)
+    if numEntries < 1 then return nil end
+    if not index or index < 1 then index = 1 end
+    if key == "LEFT" then
+        index = index - 1
+        if index < 1 then index = numEntries end
+    elseif key == "RIGHT" then
+        index = index + 1
+        if index > numEntries then index = 1 end
+    elseif key == "DOWN" then
+        local newIndex = index + columns
+        if newIndex > numEntries then
+            index = index == numEntries and 1 or numEntries
+        else
+            index = newIndex
+        end
+    elseif key == "UP" then
+        local newIndex = index - columns
+        if newIndex < 1 then
+            index = index == 1 and numEntries or 1
+        else
+            index = newIndex
+        end
+    end
+    return index
+end
+
+local function recordCoversItem(record, itemId)
+    itemId = tonumber(itemId)
+    if not record or not itemId then return false end
+    if tonumber(record.itemId) == itemId then return true end
+    for _, sourceItemId in ipairs(record.itemIds or {}) do
+        if tonumber(sourceItemId) == itemId then return true end
+    end
+    return false
+end
+
+local function pinEquippedAppearance(matches, state)
+    local equippedId = state.equippedBySlot and state.equippedBySlot[state.selectedSlot]
+    if not (Lab.GetEquippedAppearanceRecord and equippedId) then
+        return matches
+    end
+    local equipped = Lab.GetEquippedAppearanceRecord(state.selectedSlot, equippedId)
+    if not equipped then return matches end
+    for index = #matches, 1, -1 do
+        local record = matches[index]
+        if record and not (Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record)) then
+            if record.id == equipped.id or recordCoversItem(record, equippedId) then
+                table.remove(matches, index)
+            end
+        end
+    end
+    local insertAt = 1
+    if matches[1] and Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(matches[1]) then
+        insertAt = 2
+    end
+    table.insert(matches, insertAt, equipped)
+    return matches
+end
+
+local function arrangeAppearanceMatches(matches, state)
+    local collected, uncollected = {}, {}
+    for _, record in ipairs(matches or {}) do
+        if record and record.collected then
+            collected[#collected + 1] = record
+        else
+            uncollected[#uncollected + 1] = record
+        end
+    end
+    local arranged = {}
+    for _, record in ipairs(collected) do
+        arranged[#arranged + 1] = record
+    end
+    for _, record in ipairs(uncollected) do
+        arranged[#arranged + 1] = record
+    end
+    if Lab.CreateHideVisualRecord then
+        table.insert(arranged, 1, Lab.CreateHideVisualRecord(state.selectedSlot))
+    end
+    pinEquippedAppearance(arranged, state)
+    return arranged
+end
+
+local function findRecordIndex(matches, recordId)
+    recordId = tonumber(recordId) or recordId
+    if recordId == nil then return nil end
+    for index, record in ipairs(matches or {}) do
+        if record and (record.id == recordId or tonumber(record.id) == recordId) then
+            return index
+        end
+    end
+    return nil
+end
+
 local function addSetSourceTooltip(record)
     local presentation = record and record.presentation
     local label = usableSourceLabel(record.source)
@@ -394,6 +488,7 @@ function Lab.CreateSources(parent, state)
                 self.scRecordId = nil
                 applyOwnership(nil)
                 self:SetApplied(false)
+                self:SetUndo(false)
                 if hit.SetHideVisual then hit:SetHideVisual(false) end
                 if itemRenderer then
                     itemRenderer:Clear(model, self.scGeneration)
@@ -414,6 +509,7 @@ function Lab.CreateSources(parent, state)
                 applyOwnership(record)
                 if favorite then favorite:Hide() end
                 if hit.SetHideVisual then hit:SetHideVisual(true) end
+                self:SetUndo(false)
                 return
             end
             if hit.SetHideVisual then hit:SetHideVisual(false) end
@@ -429,6 +525,7 @@ function Lab.CreateSources(parent, state)
             self.scRecordId = nil
             applyOwnership(nil)
             self:SetApplied(false)
+            self:SetUndo(false)
             if hit.SetHideVisual then hit:SetHideVisual(false) end
             if itemRenderer then
                 itemRenderer:Clear(model, self.scGeneration)
@@ -447,23 +544,22 @@ function Lab.CreateSources(parent, state)
             if hit.SetApplied then hit:SetApplied(value and true or false) end
         end
 
+        function card:SetUndo(value)
+            if hit.SetUndo then hit:SetUndo(value and true or false) end
+        end
+
         hit:SetScript("OnClick", function(_, mouseButton)
             local record = card.scRecord
             if not record then return end
-            if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
-                if mouseButton ~= "RightButton" then
-                    state:SetDraft(state.selectedSlot, record)
-                    if Lab.PlaySound then Lab.PlaySound("item") end
-                end
-                return
-            end
             if mouseButton == "RightButton" then
+                if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
+                    return
+                end
                 SC.Catalog.ToggleDemoFavorite("APPEARANCES", record.id)
                 host:Refresh()
-            else
-                state:SetDraft(state.selectedSlot, record)
-                if Lab.PlaySound then Lab.PlaySound("item") end
+                return
             end
+            host:SelectItemRecord(record, true)
         end)
         hit:SetScript("OnMouseWheel", function(_, delta) scrollItems(delta) end)
         hit:SetScript("OnEnter", function(self)
@@ -479,9 +575,16 @@ function Lab.CreateSources(parent, state)
                     GameTooltip:AddLine("仅本地预览，当前不能应用到装备。", 1, 0.35, 0.25, true)
                 end
             else
+                if record.isEquippedBase then
+                    GameTooltip:AddLine("当前穿着的原装备外观", 0.82, 0.78, 0.70, true)
+                end
                 GameTooltip:AddLine(record.collected and "已收藏" or "未收藏 · 仅可预览", record.collected and 0.4 or 0.7, record.collected and 1 or 0.7, 0.4)
                 addAppearanceSourceTooltip(record)
-                GameTooltip:AddLine("左键写入所选槽位草稿 · 右键偏好", 0.75, 0.72, 0.66)
+                if state.IsAppearanceUndoTarget and state:IsAppearanceUndoTarget(state.selectedSlot, record) then
+                    GameTooltip:AddLine("左键恢复该部位的原装备外观（需确认）", 1, 0.82, 0.18)
+                else
+                    GameTooltip:AddLine("左键写入所选槽位草稿 · 右键偏好", 0.75, 0.72, 0.66)
+                end
             end
             GameTooltip:Show()
         end)
@@ -731,6 +834,86 @@ function Lab.CreateSources(parent, state)
         self:Refresh()
     end
 
+    function host:SelectItemRecord(record, allowUndo)
+        if type(record) ~= "table" then return false end
+        local slotKey = state.selectedSlot
+        if allowUndo and state.IsAppearanceUndoTarget and state:IsAppearanceUndoTarget(slotKey, record) then
+            if Lab.ConfirmRestoreOriginal then
+                Lab.ConfirmRestoreOriginal(state, slotKey)
+            end
+            return true
+        end
+        if record.isEquippedBase and type(record.id) ~= "number" then
+            if state.IsSlotDirty and state:IsSlotDirty(slotKey) then
+                state:ClearDraft(slotKey)
+            end
+            return true
+        end
+        state:SetDraft(slotKey, record)
+        if Lab.PlaySound then Lab.PlaySound("item") end
+        return true
+    end
+
+    function host:HandleVisualKey(key)
+        if key == "PAGEUP" or key == "PAGEDOWN" then
+            if self.mode == "SETS" then
+                local totalPages = self.setTotalPages or 1
+                if key == "PAGEUP" then
+                    self.setPage = math.max(1, (self.setPage or 1) - 1)
+                else
+                    self.setPage = math.min(totalPages, (self.setPage or 1) + 1)
+                end
+            else
+                local totalPages = self.itemTotalPages or 1
+                if key == "PAGEUP" then
+                    self.itemPage = math.max(1, (self.itemPage or 1) - 1)
+                else
+                    self.itemPage = math.min(totalPages, (self.itemPage or 1) + 1)
+                end
+            end
+            self:Refresh()
+            return true
+        end
+        if key ~= "LEFT" and key ~= "RIGHT" and key ~= "UP" and key ~= "DOWN" then
+            return false
+        end
+        if self.mode == "SETS" then
+            local matches = self.scSetMatches or {}
+            if #matches == 0 then return false end
+            local current = state.presetRecord and findRecordIndex(matches, state.presetRecord.id)
+            local nextIndex
+            if current then
+                nextIndex = adjustedDisplayIndex(current, #matches, SET_COLUMNS, key)
+            else
+                nextIndex = 1
+            end
+            local record = matches[nextIndex]
+            if not record then return false end
+            self.setPage = math.floor((nextIndex - 1) / SET_PAGE_SIZE) + 1
+            state:SetPreset(record)
+            if Lab.PlaySound then Lab.PlaySound("item") end
+            return true
+        end
+        local matches = self.scItemMatches or {}
+        if #matches == 0 then return false end
+        local selected = state.draftBySlot and state.draftBySlot[state.selectedSlot]
+        local currentId = selected and selected.id
+        if not currentId and state.GetAppliedCollectionId then
+            currentId = state:GetAppliedCollectionId(state.selectedSlot)
+        end
+        local current = findRecordIndex(matches, currentId)
+        local nextIndex
+        if current then
+            nextIndex = adjustedDisplayIndex(current, #matches, ITEM_COLUMNS, key)
+        else
+            nextIndex = 1
+        end
+        local record = matches[nextIndex]
+        if not record then return false end
+        self.itemPage = math.floor((nextIndex - 1) / ITEM_PAGE_SIZE) + 1
+        return self:SelectItemRecord(record)
+    end
+
     function host:Refresh()
         if self.scFilterSlot ~= state.selectedSlot then
             self.scFilterSlot = state.selectedSlot
@@ -746,7 +929,17 @@ function Lab.CreateSources(parent, state)
             if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
             if UI.SyncTransmogClassDropDown then UI.SyncTransmogClassDropDown(self.mode) end
             filters = copySetFilters()
-            local records, page, totalPages = SC.Catalog.Query("SETS", query, filters, self.setPage, SET_PAGE_SIZE)
+            local matches = SC.Catalog.QueryAll("SETS", query, filters)
+            self.scSetMatches = matches
+            local total = #matches
+            local totalPages = math.max(1, math.ceil(total / SET_PAGE_SIZE))
+            self.setPage = math.max(1, math.min(self.setPage or 1, totalPages))
+            local firstIndex = ((self.setPage - 1) * SET_PAGE_SIZE) + 1
+            local records = {}
+            for index = firstIndex, math.min(total, firstIndex + SET_PAGE_SIZE - 1) do
+                records[#records + 1] = matches[index]
+            end
+            local page = self.setPage
             self.setPage, self.setTotalPages = page, totalPages
             setControls:SetPage(page, totalPages)
             for index, card in ipairs(self.setCards) do
@@ -778,10 +971,11 @@ function Lab.CreateSources(parent, state)
             setProgress("SETS", filters)
         else
             if UI.SyncTransmogClassDropDown then UI.SyncTransmogClassDropDown(self.mode) end
-            local matches = SC.Catalog.QueryAll("APPEARANCES", query, filters)
-            if Lab.CreateHideVisualRecord then
-                table.insert(matches, 1, Lab.CreateHideVisualRecord(state.selectedSlot))
-            end
+            local matches = arrangeAppearanceMatches(
+                SC.Catalog.QueryAll("APPEARANCES", query, filters),
+                state
+            )
+            self.scItemMatches = matches
             local total = #matches
             local totalPages = math.max(1, math.ceil(total / ITEM_PAGE_SIZE))
             self.itemPage = math.max(1, math.min(self.itemPage or 1, totalPages))
@@ -803,7 +997,10 @@ function Lab.CreateSources(parent, state)
                 card:SetRecord(record)
                 local isApplied = record and state.IsAppearanceAppliedToSlot
                     and state:IsAppearanceAppliedToSlot(state.selectedSlot, record)
+                local isUndo = record and state.IsAppearanceUndoTarget
+                    and state:IsAppearanceUndoTarget(state.selectedSlot, record)
                 card:SetApplied(isApplied)
+                card:SetUndo(isUndo)
                 -- Official: current-transmogged wins over pending selected.
                 card:SetSelected(record and selected and record.id == selected.id and not isApplied)
             end

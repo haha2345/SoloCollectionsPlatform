@@ -88,6 +88,7 @@ function UI.CreateTransmogFrame()
     local dragonShell = UI.IsDragonUIShell and UI.IsDragonUIShell()
     frame:SetMovable(true)
     frame:EnableMouse(true)
+    frame:EnableKeyboard(true)
     frame:RegisterForDrag("LeftButton")
     frame:SetClampedToScreen(true)
     frame:Hide()
@@ -108,6 +109,7 @@ function UI.CreateTransmogFrame()
         end)
     end
     frame:SetScript("OnShow", function(self)
+        self:EnableKeyboard(true)
         clampFrame(self)
         if self.scSearchBox and SC.db then
             self.scSearchBox:SetText(SC.db.query or "")
@@ -123,6 +125,16 @@ function UI.CreateTransmogFrame()
         if CloseDropDownMenus then CloseDropDownMenus() end
         if Lab.HideDialogs then Lab.HideDialogs() end
         if Lab.PlaySound then Lab.PlaySound("close") end
+    end)
+    frame:SetScript("OnKeyDown", function(self, key)
+        if not self:IsShown() then return end
+        if self.scSearchBox and self.scSearchBox.HasFocus and self.scSearchBox:HasFocus() then
+            return
+        end
+        local sources = self.scPage and self.scPage.scSources
+        if sources and sources.HandleVisualKey then
+            sources:HandleVisualKey(key)
+        end
     end)
 
     if dragonShell and SC.UIPlatform then
@@ -217,6 +229,14 @@ function UI.CreateTransmogFrame()
     end)
     search:SetPoint("LEFT", searchFilterHost, "LEFT", 0, -1)
     UI.EzCollections:SkinSearchBox(search)
+    search:SetScript("OnEditFocusGained", function()
+        frame:EnableKeyboard(false)
+    end)
+    search:SetScript("OnEditFocusLost", function()
+        if frame:IsShown() then
+            frame:EnableKeyboard(true)
+        end
+    end)
 
     local filterButton, filterPopup = UI.CreateFilterPopup(searchFilterHost, 93)
     filterButton:SetHeight(22)

@@ -58,8 +58,12 @@ function Lab.CreateSlots(parent, state)
                 if Lab.PlaySound then Lab.PlaySound("revert") end
             elseif mouseButton == "RightButton" and state.CanClearAppliedSlot
                 and state:CanClearAppliedSlot(self.scSlotKey) then
-                state:ClearApplied(self.scSlotKey)
-                if Lab.PlaySound then Lab.PlaySound("revert") end
+                if Lab.ConfirmRestoreOriginal then
+                    Lab.ConfirmRestoreOriginal(state, self.scSlotKey)
+                else
+                    state:ClearApplied(self.scSlotKey)
+                    if Lab.PlaySound then Lab.PlaySound("revert") end
+                end
             else
                 state:SelectSlot(self.scSlotKey)
                 if Lab.PlaySound then Lab.PlaySound("slot") end
@@ -99,7 +103,7 @@ function Lab.CreateSlots(parent, state)
             if pending then
                 GameTooltip:AddLine("右键撤销", 1, 0.5, 1)
             elseif state.CanClearAppliedSlot and state:CanClearAppliedSlot(self.scSlotKey) then
-                GameTooltip:AddLine("右键恢复原样", 1, 0.5, 1)
+                GameTooltip:AddLine("右键恢复原样（需确认）", 1, 0.5, 1)
             end
             GameTooltip:Show()
         end)
