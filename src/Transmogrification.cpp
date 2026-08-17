@@ -393,6 +393,7 @@ uint32 Transmogrification::GetFakeEntry(ObjectGuid itemGUID) const
 {
     LOG_DEBUG("module", "Transmogrification::GetFakeEntry");
 
+    std::scoped_lock lock(_visualLock);
     transmogData::const_iterator itr = dataMap.find(itemGUID);
     if (itr == dataMap.end()) return 0;
     transmogMap::const_iterator itr2 = entryMap.find(itr->second);
@@ -400,6 +401,49 @@ uint32 Transmogrification::GetFakeEntry(ObjectGuid itemGUID) const
     transmog2Data::const_iterator itr3 = itr2->second.find(itemGUID);
     if (itr3 == itr2->second.end()) return 0;
     return itr3->second;
+}
+
+void Transmogrification::LoadPlayerTransmogCache(ObjectGuid playerGuid,
+    std::vector<std::pair<ObjectGuid, uint32>> const& entries)
+{
+    std::scoped_lock lock(_visualLock);
+    entryMap.erase(playerGuid);
+    for (auto const& [itemGuid, entry] : entries)
+    {
+        dataMap[itemGuid] = playerGuid;
+        entryMap[playerGuid][itemGuid] = entry;
+    }
+}
+
+void Transmogrification::ClearPlayerTransmogCache(ObjectGuid playerGuid)
+{
+    std::scoped_lock lock(_visualLock);
+    auto found = entryMap.find(playerGuid);
+    if (found != entryMap.end())
+    {
+        for (auto const& [itemGuid, entry] : found->second)
+        {
+            (void)entry;
+            dataMap.erase(itemGuid);
+        }
+        entryMap.erase(found);
+    }
+    selectionCache.erase(playerGuid);
+}
+
+void Transmogrification::SetSelectedSlot(ObjectGuid playerGuid, uint8 slot)
+{
+    std::scoped_lock lock(_visualLock);
+    selectionCache[playerGuid] = slot;
+}
+
+std::optional<uint8> Transmogrification::GetSelectedSlot(ObjectGuid playerGuid) const
+{
+    std::scoped_lock lock(_visualLock);
+    auto found = selectionCache.find(playerGuid);
+    if (found == selectionCache.end())
+        return std::nullopt;
+    return found->second;
 }
 
 void Transmogrification::UpdateItem(Player* player, Item* item) const
@@ -434,8 +478,11 @@ void Transmogrification::ApplyCommittedFakeEntry(Player* player, uint32 newEntry
         return;
 
     ObjectGuid itemGUID = itemTransmogrified->GetGUID();
-    entryMap[player->GetGUID()][itemGUID] = newEntry;
-    dataMap[itemGUID] = player->GetGUID();
+    {
+        std::scoped_lock lock(_visualLock);
+        entryMap[player->GetGUID()][itemGUID] = newEntry;
+        dataMap[itemGUID] = player->GetGUID();
+    }
     UpdateItem(player, itemTransmogrified);
 }
 
@@ -1471,11 +1518,16 @@ void Transmogrification::DeleteFakeFromDB(ObjectGuid::LowType itemLowGuid, Chara
 {
     ObjectGuid itemGUID = ObjectGuid::Create<HighGuid::Item>(itemLowGuid);
 
-    if (dataMap.find(itemGUID) != dataMap.end())
     {
-        if (entryMap.find(dataMap[itemGUID]) != entryMap.end())
-            entryMap[dataMap[itemGUID]].erase(itemGUID);
-        dataMap.erase(itemGUID);
+        std::scoped_lock lock(_visualLock);
+        auto found = dataMap.find(itemGUID);
+        if (found != dataMap.end())
+        {
+            auto owner = entryMap.find(found->second);
+            if (owner != entryMap.end())
+                owner->second.erase(itemGUID);
+            dataMap.erase(found);
+        }
     }
     if (trans)
         (*trans)->Append("DELETE FROM custom_transmogrification WHERE GUID = {}", itemLowGuid);

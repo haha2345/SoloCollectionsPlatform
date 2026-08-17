@@ -13,6 +13,7 @@
 #include <chrono>
 #include <limits>
 #include <map>
+#include <mutex>
 #include <set>
 #include <string>
 #include <utility>
@@ -61,16 +62,17 @@ class AccountCollectionStore::Impl
 public:
     void Initialize()
     {
+        std::scoped_lock lock(_lock);
         if (_initialized)
             return;
 
         _initialized = true;
         std::string schemaQuery =
-            "SELECT CASE WHEN COUNT(*) = 5 THEN 1 ELSE 0 END "
+            "SELECT CASE WHEN COUNT(*) = 7 THEN 1 ELSE 0 END "
             "FROM information_schema.tables "
             "WHERE table_schema = DATABASE() AND table_name IN "
             "('sc_account_state','sc_collection_unlock','sc_collection_audit','sc_migration_marker',"
-            "'solo_collection_preference')";
+            "'solo_collection_preference','character_sc_transmog','account_sc_outfit')";
         _queryCallbacks.AddCallback(CharacterDatabase.AsyncQuery(schemaQuery).WithCallback(
             [this](QueryResult result)
             {
@@ -108,12 +110,14 @@ public:
 
     void Update()
     {
+        std::scoped_lock lock(_lock);
         _queryCallbacks.ProcessReadyCallbacks();
         _transactionCallbacks.ProcessReadyCallbacks();
     }
 
     void BeginLoad(DeferredLoad load)
     {
+        std::scoped_lock lock(_lock);
         if (!load.Account.IsValid() || !load.Generation.IsValid())
             return;
 
@@ -135,6 +139,7 @@ public:
 
     void BeginLoadNow(DeferredLoad load)
     {
+        std::scoped_lock lock(_lock);
         if (!_loadingAccounts.insert(load.Account).second)
             return;
 
@@ -248,6 +253,7 @@ public:
 
     MutationStartResult BeginMutation(AccountCollectionMutation mutation)
     {
+        std::scoped_lock lock(_lock);
         if (!_writesEnabled)
             return { false, CollectionReasonCode::ReadOnly, {} };
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !mutation.Account.IsValid() ||
@@ -357,6 +363,7 @@ public:
 
     MutationStartResult BeginPreferenceMutation(AccountCollectionMutation mutation)
     {
+        std::scoped_lock lock(_lock);
         if (!_writesEnabled)
             return { false, CollectionReasonCode::ReadOnly, {} };
         std::optional<PreferenceTypeMapping> mapping = PreferenceMappingForProjection(mutation.Key.TypeId);
@@ -466,6 +473,7 @@ public:
 
     MutationStartResult BeginClearType(AccountCollectionMutation mutation)
     {
+        std::scoped_lock lock(_lock);
         if (!_writesEnabled)
             return { false, CollectionReasonCode::ReadOnly, {} };
         if (mutation.Key.TypeId != AppearanceNewCollectionTypeId)
@@ -548,6 +556,7 @@ public:
 
     bool RetryLoad(AccountId accountId, std::uint32_t playerGuid)
     {
+        std::scoped_lock lock(_lock);
         std::optional<LoginGeneration> generation = GetAccountCollectionCache().RetryFailed(accountId);
         if (!generation)
             return false;
@@ -557,6 +566,7 @@ public:
 
     bool ReloadAccount(AccountId accountId, std::uint32_t playerGuid)
     {
+        std::scoped_lock lock(_lock);
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready ||
             _pendingMutations.contains(accountId) || _loadingAccounts.contains(accountId))
             return false;
@@ -570,6 +580,7 @@ public:
 
     bool RecordRejectedMutation(AccountCollectionMutation const& mutation, CollectionReasonCode reason)
     {
+        std::scoped_lock lock(_lock);
         if (!_writesEnabled)
         {
             LOG_DEBUG("module.solocollections.audit",
@@ -620,6 +631,7 @@ public:
 
     bool RequestResync(AccountId accountId)
     {
+        std::scoped_lock lock(_lock);
         std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(accountId);
         return snapshot && snapshot->State == AccountCacheLoadState::Ready && _eventSink &&
             _eventSink->OnAccountResyncRequested(accountId);
@@ -627,11 +639,13 @@ public:
 
     bool HasPendingMutation(AccountId accountId) const
     {
+        std::scoped_lock lock(_lock);
         return _pendingMutations.contains(accountId);
     }
 
     bool CheckMigrationMarker(MigrationMarkerRequest request, MigrationCheckCallback callback)
     {
+        std::scoped_lock lock(_lock);
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !request.Account.IsValid() ||
             request.MigrationId == 0 || request.MigrationVersion == 0 || !callback)
             return false;
@@ -696,6 +710,7 @@ public:
 
     bool CompleteMigrationMarker(MigrationMarkerCompletion completion, MigrationCompleteCallback callback)
     {
+        std::scoped_lock lock(_lock);
         if (!_writesEnabled)
             return false;
         if (_diagnostics.SchemaState != AccountStoreSchemaState::Ready || !completion.Account.IsValid() ||
@@ -725,6 +740,7 @@ public:
 
     AccountStoreDiagnostics Diagnostics() const
     {
+        std::scoped_lock lock(_lock);
         AccountStoreDiagnostics result = _diagnostics;
         result.WritesEnabled = _writesEnabled;
         result.PendingLoads = _loadingAccounts.size() + _deferredLoads.size();
@@ -737,25 +753,34 @@ public:
 
     bool IsSchemaReady() const
     {
+        std::scoped_lock lock(_lock);
         return _diagnostics.SchemaState == AccountStoreSchemaState::Ready;
     }
 
     void SetEventSink(AccountCollectionEventSink* sink)
     {
+        std::scoped_lock lock(_lock);
         _eventSink = sink;
     }
 
     void SetWritesEnabled(bool enabled)
     {
+        std::scoped_lock lock(_lock);
         _writesEnabled = enabled;
     }
 
     bool WritesEnabled() const
     {
+        std::scoped_lock lock(_lock);
         return _writesEnabled;
     }
 
 private:
+    // Guards every member below. Mutations and pending-state checks may be
+    // issued from map threads (gameplay hooks) while async DB callbacks run on
+    // the world update; recursive because completions executing inside
+    // Update() may re-enter store methods through the event sink.
+    mutable std::recursive_mutex _lock;
     QueryCallbackProcessor _queryCallbacks;
     AsyncCallbackProcessor<TransactionCallback> _transactionCallbacks;
     std::map<AccountId, DeferredLoad> _deferredLoads;

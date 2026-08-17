@@ -16,8 +16,10 @@
 #include <functional>
 #include <map>
 #include <mutex>
+#include <optional>
 #include <unordered_map>
 #include <unordered_set>
+#include <utility>
 #include <vector>
 
 #define PRESETS // comment this line to disable preset feature totally
@@ -216,9 +218,15 @@ public:
     typedef std::unordered_map<uint32, std::vector<uint32>> transmogPlusData;
     typedef std::unordered_map<ObjectGuid, uint8> selectedSlotMap;
     
-    transmogMap entryMap; // entryMap[pGUID][iGUID] = entry
-    transmogData dataMap; // dataMap[iGUID] = pGUID
-    selectedSlotMap selectionCache;
+    // Thread-safe access to the visual transmog cache (entryMap/dataMap) and
+    // the gossip slot selection. These are read from map threads (visibility
+    // hooks, mirror images) while login/logout and async commit completions
+    // mutate them, so all access goes through these locked helpers.
+    void LoadPlayerTransmogCache(ObjectGuid playerGuid,
+        std::vector<std::pair<ObjectGuid, uint32>> const& entries);
+    void ClearPlayerTransmogCache(ObjectGuid playerGuid);
+    void SetSelectedSlot(ObjectGuid playerGuid, uint8 slot);
+    [[nodiscard]] std::optional<uint8> GetSelectedSlot(ObjectGuid playerGuid) const;
 
 #ifdef PRESETS
     bool EnableSetInfo;
@@ -441,6 +449,13 @@ private:
     std::recursive_mutex _dbCommitLock;
     AsyncCallbackProcessor<TransactionCallback> _dbCommits;
     QueryCallbackProcessor _dbQueries;
+
+    // Visual transmog cache and gossip slot selection; see the public locked
+    // accessors above.
+    mutable std::mutex _visualLock;
+    transmogMap entryMap; // entryMap[pGUID][iGUID] = entry
+    transmogData dataMap; // dataMap[iGUID] = pGUID
+    selectedSlotMap selectionCache;
 };
 #define sTransmogrification Transmogrification::instance()
 

@@ -58,10 +58,12 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
         self.assertIn("TransmogApplySource::Outfit", OUTFIT_SERVICE)
 
     def test_missing_selection_cannot_default_to_equipment_slot_zero(self):
-        indexed_access = "selectionCache[player->GetGUID()]"
-        self.assertEqual(1, SCRIPTS.count(indexed_access))
-        self.assertIn(f"{indexed_access} = action;", SCRIPTS)
-        self.assertGreaterEqual(SCRIPTS.count("selectionCache.find(player->GetGUID())"), 3)
+        # Slot selection goes through the locked accessors: exactly one write
+        # site, and every consumer re-checks presence instead of defaulting.
+        self.assertNotIn("selectionCache", SCRIPTS)
+        self.assertEqual(1, SCRIPTS.count("sT->SetSelectedSlot("))
+        self.assertIn("sT->SetSelectedSlot(player->GetGUID(), action);", SCRIPTS)
+        self.assertGreaterEqual(SCRIPTS.count("GetSelectedSlot(player->GetGUID())"), 3)
 
 
 class TemplateSafetyContractTests(unittest.TestCase):
