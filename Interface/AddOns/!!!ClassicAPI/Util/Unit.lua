@@ -21,6 +21,10 @@ local EventHandler_Define = EventHandler.Define
 local GTCOMM
 local UNIT_RANGE_ITEM = (WOW_PROJECT_ID_RCE ~= WOW_PROJECT_CLASSIC) and 34471
 
+local function CanUseUnitRangeItem()
+	return UNIT_RANGE_ITEM and GetItemInfo(UNIT_RANGE_ITEM) ~= nil
+end
+
 function C_UnitInRange(Unit)
 	-- 1. CheckInteractDistance(Unit, 4) is ~28 yards and very cheap.
 	-- 2. UnitInRange(Unit) handles party/raid members (~36 yards).
@@ -30,7 +34,7 @@ function C_UnitInRange(Unit)
 	return not not (
 		CheckInteractDistance(Unit, 4) or
 		UnitInRange(Unit) or
-		(UNIT_RANGE_ITEM and IsItemInRange(UNIT_RANGE_ITEM, Unit) == 1)
+		(CanUseUnitRangeItem() and IsItemInRange(UNIT_RANGE_ITEM, Unit) == 1)
 	), true
 end
 
