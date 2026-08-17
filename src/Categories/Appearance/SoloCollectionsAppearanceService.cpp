@@ -510,7 +510,8 @@ std::optional<std::uint32_t> AppearanceService::ResolveOwnedSource(
 
     for (std::uint32_t sourceItemId : definition->SourceItemIds)
         if (ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(sourceItemId))
-            if (sTransmogrification->CanTransmogrifyItemWithItem(player, targetTemplate, sourceTemplate))
+            if (sTransmogrification->CanTransmogrifyItemWithItem(player, targetTemplate, sourceTemplate)
+                || sTransmogrification->CanApplyCollectedVisual(player, targetTemplate, sourceTemplate))
                 return sourceItemId;
     return std::nullopt;
 }

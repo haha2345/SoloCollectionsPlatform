@@ -1,0 +1,33 @@
+-- Append-only: character-applied slots (type 18) and account outfits (type 19).
+
+CREATE TABLE IF NOT EXISTS `character_sc_transmog` (
+  `guid` INT UNSIGNED NOT NULL,
+  `revision` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_0` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_1` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_2` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_3` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_4` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_5` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_6` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_7` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_8` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_9` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_10` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_11` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_12` INT UNSIGNED NOT NULL DEFAULT 0,
+  `slot_13` INT UNSIGNED NOT NULL DEFAULT 0,
+  `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (`guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='SoloCollections character-applied wardrobe slots type 18';
+
+CREATE TABLE IF NOT EXISTS `account_sc_outfit` (
+  `account_id` INT UNSIGNED NOT NULL,
+  `uid` INT UNSIGNED NOT NULL,
+  `name_hex` VARCHAR(96) NOT NULL,
+  `slot_blob` VARCHAR(256) NOT NULL,
+  `revision` BIGINT UNSIGNED NOT NULL DEFAULT 0,
+  `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3),
+  PRIMARY KEY (`account_id`, `uid`),
+  KEY `idx_account_sc_outfit_revision` (`account_id`, `revision`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='SoloCollections account outfits type 19';

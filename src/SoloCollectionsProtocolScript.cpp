@@ -16,6 +16,8 @@
 #include "SoloCollectionsToyCatalog.h"
 #include "SoloCollectionsToyService.h"
 #include "SoloCollectionsTitleService.h"
+#include "SoloCollectionsTransmogProjection.h"
+#include "SoloCollectionsTransmogService.h"
 #include "Transmogrification.h"
 
 #include "Chat.h"
@@ -82,6 +84,8 @@ Sc2Server& GetSc2Server()
                 (provider->Descriptor().Storage == CollectionStorageMode::External ||
                  provider->Descriptor().Storage == CollectionStorageMode::Derived);
         }
+        categories.push_back({ CharacterAppliedCollectionTypeId, CharacterAppliedMappingHash, true, true, true });
+        categories.push_back({ AccountOutfitCollectionTypeId, AccountOutfitMappingHash, true, true, true });
         return Sc2Server(GetAccountCollectionCache(), std::string(GeneratedSc2MetadataVersion),
             std::string(GeneratedSc2AssetPackVersion), std::string(BackendBuild), std::move(categories));
     }();
@@ -155,12 +159,40 @@ void Sc2ProtocolOpenSession(Player* player)
     GetSc2Server().SetExternalOwned(
         SessionId(player), SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
             AccountId(player->GetSession()->GetAccountId())));
+    GetTransmogProjectionService().LoadCharacter(player->GetGUID());
+    GetTransmogProjectionService().LoadAccount(player->GetSession()->GetAccountId());
+    GetSc2Server().SetRawSnapshot(SessionId(player), CharacterAppliedCollectionTypeId,
+        GetTransmogProjectionService().AppliedRevision(player->GetGUID()),
+        GetTransmogProjectionService().AppliedPayload(player->GetGUID()));
+    GetSc2Server().SetRawSnapshot(SessionId(player), AccountOutfitCollectionTypeId,
+        GetTransmogProjectionService().OutfitRevision(player->GetSession()->GetAccountId()),
+        GetTransmogProjectionService().OutfitPayload(player->GetSession()->GetAccountId()));
+}
+
+void FlushWardrobeSnapshots()
+{
+    std::vector<PendingWardrobePush> pushes;
+    GetTransmogProjectionService().TakePendingPushes(pushes);
+    for (PendingWardrobePush const& push : pushes)
+    {
+        if (push.Applied && push.Session.IsValid())
+            GetSc2Server().QueueRawSnapshotReplace(push.Session, CharacterAppliedCollectionTypeId,
+                GetTransmogProjectionService().AppliedRevision(push.Character),
+                GetTransmogProjectionService().AppliedPayload(push.Character));
+        if (push.OutfitsToAccount && push.Account.IsValid())
+            GetSc2Server().QueueRawSnapshotReplaceForAccount(push.Account, AccountOutfitCollectionTypeId,
+                GetTransmogProjectionService().OutfitRevision(push.Account.Value()),
+                GetTransmogProjectionService().OutfitPayload(push.Account.Value()));
+    }
 }
 
 void Sc2ProtocolCloseSession(Player* player)
 {
     if (IsCppBackendOwner() && player)
+    {
+        GetTransmogProjectionService().UnloadCharacter(player->GetGUID());
         GetSc2Server().CloseSession(SessionId(player));
+    }
 }
 
 bool Sc2ProtocolCanUsePrivateChat(
@@ -177,8 +209,9 @@ bool Sc2ProtocolCanUsePrivateChat(
     if (!decoded.Success)
     {
         LOG_WARN("module.solocollections.protocol",
-            "event=protocol_reject result=bad_message account={} character={} bytes={}",
-            player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), body.size());
+            "event=protocol_reject result=bad_message account={} character={} bytes={} kind={}",
+            player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), body.size(),
+            body.empty() ? '-' : body.front());
     }
     GetSc2Server().SetExternalOwned(
         SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
@@ -357,6 +390,10 @@ bool Sc2ProtocolCanUsePrivateChat(
                 TransmogApplyResult result = GetAppearanceService().TryApplyCanonicalAppearance(
                     player, CollectionId(request.CollectionId), static_cast<std::uint8_t>(encodedSlot - 1),
                     ObjectGuid::Empty, TransmogApplySource::Addon, false);
+                if (result.IsSuccess())
+                    GetTransmogProjectionService().SyncLegacyApplied(player, {
+                        { static_cast<std::uint8_t>(encodedSlot - 1), request.CollectionId }
+                    });
                 return finish("appearance", AppearanceApplyStatus(result));
             }
             if (request.TypeId == SetCollectionTypeId.Value())
@@ -377,8 +414,45 @@ bool Sc2ProtocolCanUsePrivateChat(
                     ObjectGuid::Empty, TransmogApplySource::Addon);
                 return finish("set", AppearanceApplyStatus(result));
             }
+            if (request.TypeId == AccountOutfitCollectionTypeId.Value())
+            {
+                if (request.ActionId != "DELETE" || request.Target != "-")
+                    return finish("outfit", "INVALID_REQUEST");
+                return finish("outfit", GetTransmogProjectionService().DeleteOutfit(
+                    player, request.CollectionId).Status);
+            }
             return finish("unknown", "INVALID_REQUEST");
+        },
+        [player](AccountId accountId, Sc2Message const& request)
+        {
+            Sc2WardrobeOutcome outcome;
+            if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId())
+            {
+                outcome.Status = "INVALID_REQUEST";
+                return outcome;
+            }
+            if (request.Kind == Sc2MessageKind::WardrobeIntent)
+            {
+                if (request.Op == "QUOTE")
+                    return GetTransmogProjectionService().Quote(player, request.Entries);
+                if (request.Op == "APPLY")
+                    return GetTransmogProjectionService().Apply(player, request.Entries);
+                if (request.Op == "CLEAR")
+                    return GetTransmogProjectionService().Clear(player, request.Entries);
+            }
+            if (request.Kind == Sc2MessageKind::OutfitWrite)
+            {
+                if (request.Op == "SAVE")
+                    return GetTransmogProjectionService().SaveOutfit(
+                        player, request.Uid, request.NameHex, request.Entries);
+                if (request.Op == "RENAME")
+                    return GetTransmogProjectionService().RenameOutfit(
+                        player, request.Uid, request.NameHex);
+            }
+            outcome.Status = "INVALID_REQUEST";
+            return outcome;
         });
+    FlushWardrobeSnapshots();
     return false;
 }
 

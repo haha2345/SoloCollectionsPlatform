@@ -28,3 +28,18 @@ not by SQL enum ordering. No arbitrary client text is stored in schema v1.
 The legacy `custom_unlocked_appearances` table is intentionally untouched. Its
 contents are read only by explicit migration/reconciliation tools; the module
 must never silently reinterpret or delete that legacy table during startup.
+
+## Wardrobe projections
+
+Append-only update `data/sql/updates/char/2026_08_16_00_wardrobe_projections.sql`
+adds:
+
+- `character_sc_transmog`: one row per character, 14 slot columns in Lab.SLOTS
+  order, plus `revision`. `0` is empty, `2` is HideVisual, otherwise an
+  appearance collectionId. This is SC2 type 18 and is not account progress.
+- `account_sc_outfit`: up to 10 rows per account (`account_id`, `uid`),
+  `name_hex` (UTF-8 hex, max 96), `slot_blob` (same 14-segment grammar), and
+  `revision`. This is SC2 type 19.
+
+These tables do not advance `sc_account_state.revision`. Existing character
+NPC outfits stay on their own table and are not the type 19 authority.

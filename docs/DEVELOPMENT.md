@@ -9,6 +9,7 @@ src/SoloCollectionsProtocol*.{h,cpp}        SC2 codec, server, runtime bridge
 src/Categories/Appearance/                  canonical appearance service
 src/SoloCollections{Mount,Companion,Toy}*   category catalogs and actions
 src/SoloCollectionsSet*                     derived set ownership/application
+src/SoloCollectionsTransmog*                type 18/19 wardrobe projections
 src/Transmogrification.*                    adapted upstream transmog
 src/generated/*.inc                         generated catalog projections
 data/sql/                                   base SQL and append-only updates
@@ -45,6 +46,9 @@ The runtime `.solocollections status` and startup log expose the exact values.
 - Favorite projection providers are internal SC2 state and are excluded from journal
   navigation, totals, and completion semantics by the canonical protocol schema.
 - Unknown identity, catalog mismatch, or protocol mismatch fails closed.
+- Wardrobe Y APPLY/CLEAR is one request, one transaction, one fee. Type 14
+  success writes type 18 in the same item transaction. Deploy this module
+  before the AddOn that sends `-w1` / Y / O.
 
 ## Cross-repository changes
 

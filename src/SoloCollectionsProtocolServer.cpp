@@ -1,5 +1,9 @@
 #include "SoloCollectionsProtocolServer.h"
 
+#include "SoloCollectionsTransmogProjection.h"
+
+#include "Log.h"
+
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
@@ -14,6 +18,12 @@ namespace
 {
 constexpr double BucketCapacity = 12.0;
 constexpr double TokensPerSecond = 6.0;
+constexpr double QuoteBucketCapacity = 5.0;
+constexpr double QuoteTokensPerSecond = 5.0;
+constexpr double ApplyBucketCapacity = 2.0;
+constexpr double ApplyTokensPerSecond = 0.5;
+constexpr double OutfitBucketCapacity = 1.0;
+constexpr double OutfitTokensPerSecond = 1.0;
 constexpr std::uint64_t ReplayLifetimeMs = 30'000;
 constexpr std::size_t MaxReplayEntries = 128;
 constexpr std::size_t MaxOutboundPackets = 512;
@@ -29,8 +39,44 @@ bool IsActionStatus(std::string_view value)
         "IN_COMBAT", "DEAD", "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED",
         "MAP_RESTRICTED", "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED",
         "NO_MOUNTS", "NO_USABLE_MOUNTS",
+        "INSUFFICIENT_FUNDS", "OUTFIT_LIMIT", "OUTFIT_EMPTY", "COST_CHANGED", "NOTHING_EQUIPPED",
     };
     return std::find(std::begin(values), std::end(values), value) != std::end(values);
+}
+
+std::string WarningMaskHex(std::uint32_t mask)
+{
+    std::ostringstream stream;
+    stream << std::hex << std::setfill('0') << std::setw(8) << mask;
+    return stream.str();
+}
+
+std::string DefaultRawPayload(CollectionTypeId typeId)
+{
+    if (typeId == CharacterAppliedCollectionTypeId)
+        return EncodeWardrobeSlots({});
+    return "-";
+}
+
+void LogWardrobe(std::string_view event, AccountId account, AccountSessionId sessionId,
+    Sc2Message const& message, std::string_view status, std::uint32_t copper,
+    std::uint32_t warningMask, std::uint64_t revision, std::string_view source)
+{
+    LOG_INFO("module.solocollections.wardrobe",
+        "event={} account={} character={} request={} op={} slots={} entries={} "
+        "status={} copper={} warning={} revision={} source={}",
+        event, account.Value(), sessionId.Value(), message.RequestId, message.Op,
+        static_cast<unsigned>(message.SlotCount), message.Entries, status, copper,
+        warningMask, revision, source);
+}
+
+Sc2CategoryDefinition const* FindCategory(std::vector<Sc2CategoryDefinition> const& categories,
+    CollectionTypeId typeId)
+{
+    for (Sc2CategoryDefinition const& category : categories)
+        if (category.TypeId == typeId)
+            return &category;
+    return nullptr;
 }
 }
 
@@ -77,6 +123,47 @@ void Sc2Server::SetExternalOwned(AccountSessionId sessionId, CollectionTypeId ty
     std::sort(owned.begin(), owned.end());
     owned.erase(std::unique(owned.begin(), owned.end()), owned.end());
     session->second.ExternalOwned[typeId] = std::move(owned);
+}
+
+void Sc2Server::SetRawSnapshot(AccountSessionId sessionId, CollectionTypeId typeId,
+    std::uint64_t revision, std::string payload)
+{
+    std::scoped_lock lock(_mutex);
+    auto session = _sessions.find(sessionId);
+    if (session == _sessions.end() || !typeId.IsValid())
+        return;
+    session->second.RawSnapshots[typeId] = RawSnapshotState { revision, std::move(payload) };
+}
+
+void Sc2Server::QueueRawSnapshotReplace(AccountSessionId sessionId, CollectionTypeId typeId,
+    std::uint64_t revision, std::string payload)
+{
+    std::scoped_lock lock(_mutex);
+    auto session = _sessions.find(sessionId);
+    if (session == _sessions.end() || !session->second.Active || !typeId.IsValid())
+        return;
+    if (!ClientBuildHasWardrobe(session->second.ClientBuild))
+        return;
+    session->second.RawSnapshots[typeId] = RawSnapshotState { revision, payload };
+    QueueRawCategorySnapshot(session->second, typeId, revision, std::move(payload));
+}
+
+void Sc2Server::QueueRawSnapshotReplaceForAccount(AccountId accountId, CollectionTypeId typeId,
+    std::uint64_t revision, std::string payload)
+{
+    std::scoped_lock lock(_mutex);
+    if (!accountId.IsValid() || !typeId.IsValid())
+        return;
+    for (auto& [sessionId, session] : _sessions)
+    {
+        (void)sessionId;
+        if (session.Account != accountId)
+            continue;
+        session.RawSnapshots[typeId] = RawSnapshotState { revision, payload };
+        if (!session.Active || !ClientBuildHasWardrobe(session.ClientBuild))
+            continue;
+        QueueRawCategorySnapshot(session, typeId, revision, payload);
+    }
 }
 
 void Sc2Server::OnDerivedOwnedChanged(AccountId accountId, CollectionTypeId typeId,
@@ -129,6 +216,30 @@ bool Sc2Server::ConsumeToken(SessionState& session, std::uint64_t nowMs)
     if (session.Bucket.Tokens < 1.0)
         return false;
     session.Bucket.Tokens -= 1.0;
+    return true;
+}
+
+bool Sc2Server::ConsumeBucket(TokenBucket& bucket, double capacity, double rate, std::uint64_t nowMs)
+{
+    if (nowMs > bucket.LastRefillMs)
+    {
+        double elapsedSeconds = static_cast<double>(nowMs - bucket.LastRefillMs) / 1000.0;
+        bucket.Tokens = std::min(capacity, bucket.Tokens + elapsedSeconds * rate);
+        bucket.LastRefillMs = nowMs;
+    }
+    if (bucket.Tokens < 1.0)
+        return false;
+    bucket.Tokens -= 1.0;
+    return true;
+}
+
+bool Sc2Server::CategoryVisible(SessionState const& session, Sc2CategoryDefinition const& category) const
+{
+    if (!category.Enabled)
+        return false;
+    if (category.TypeId == CharacterAppliedCollectionTypeId ||
+        category.TypeId == AccountOutfitCollectionTypeId)
+        return ClientBuildHasWardrobe(session.ClientBuild);
     return true;
 }
 
@@ -186,7 +297,7 @@ void Sc2Server::QueueHandshake(SessionState& session)
     std::uint8_t categoryCount = 0;
     for (Sc2CategoryDefinition const& category : _categories)
     {
-        if (!category.Enabled)
+        if (!CategoryVisible(session, category))
             continue;
         ++categoryCount;
         if (category.TypeId.Value() >= 1 && category.TypeId.Value() <= 32)
@@ -209,7 +320,7 @@ void Sc2Server::QueueHandshake(SessionState& session)
 
     for (Sc2CategoryDefinition const& category : _categories)
     {
-        if (!category.Enabled)
+        if (!CategoryVisible(session, category))
             continue;
         Sc2Message mapping;
         mapping.Kind = Sc2MessageKind::CategoryMap;
@@ -280,12 +391,75 @@ void Sc2Server::QueueCategorySnapshot(SessionState& session,
         _diagnostics.MaxSnapshotQueueMicroseconds, elapsedMicroseconds);
 }
 
+void Sc2Server::QueueRawCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category)
+{
+    auto stored = session.RawSnapshots.find(category.TypeId);
+    std::uint64_t revision = stored == session.RawSnapshots.end() ? 0 : stored->second.Revision;
+    std::string payload = stored == session.RawSnapshots.end() || stored->second.Payload.empty() ?
+        DefaultRawPayload(category.TypeId) : stored->second.Payload;
+    QueueRawCategorySnapshot(session, category.TypeId, revision, std::move(payload));
+}
+
+void Sc2Server::QueueRawCategorySnapshot(SessionState& session, CollectionTypeId typeId,
+    std::uint64_t revision, std::string payload)
+{
+    Sc2CategoryDefinition const* category = FindCategory(_categories, typeId);
+    if (!category || !CategoryVisible(session, *category))
+        return;
+    if (payload.empty())
+        payload = DefaultRawPayload(typeId);
+    if (payload.size() > Sc2Limits::MaxSnapshotBytes)
+    {
+        QueueError(session, 0, "SNAPSHOT_TOO_LARGE");
+        return;
+    }
+    std::vector<std::string> chunks = Sc2ChunkPayload(payload);
+    std::string checksum = Sc2Adler32Hex(payload);
+    std::uint32_t transferId = session.NextTransferId++;
+    if (transferId == 0)
+        transferId = session.NextTransferId++;
+
+    Sc2Message begin;
+    begin.Kind = Sc2MessageKind::SnapshotBegin;
+    begin.SessionNonce = session.Nonce;
+    begin.TransferId = transferId;
+    begin.TypeId = typeId.Value();
+    begin.Total = static_cast<std::uint16_t>(chunks.size());
+    begin.Revision = revision;
+    begin.Checksum = checksum;
+    begin.PayloadBytes = static_cast<std::uint32_t>(payload.size());
+    Queue(session, std::move(begin));
+
+    for (std::size_t index = 0; index < chunks.size(); ++index)
+    {
+        Sc2Message chunk;
+        chunk.Kind = Sc2MessageKind::SnapshotChunk;
+        chunk.SessionNonce = session.Nonce;
+        chunk.TransferId = transferId;
+        chunk.Seq = static_cast<std::uint16_t>(index + 1);
+        chunk.Payload = std::move(chunks[index]);
+        Queue(session, std::move(chunk));
+    }
+
+    Sc2Message end;
+    end.Kind = Sc2MessageKind::SnapshotEnd;
+    end.SessionNonce = session.Nonce;
+    end.TransferId = transferId;
+    end.Checksum = checksum;
+    Queue(session, std::move(end));
+}
+
 void Sc2Server::QueueSnapshots(SessionState& session, AccountCacheSnapshot const& snapshot)
 {
     for (Sc2CategoryDefinition const& category : _categories)
     {
-        if (!category.Enabled)
+        if (!CategoryVisible(session, category))
             continue;
+        if (category.RawSnapshot)
+        {
+            QueueRawCategorySnapshot(session, category);
+            continue;
+        }
         std::optional<std::vector<CollectionId>> owned;
         if (category.External)
         {
@@ -325,7 +499,7 @@ void Sc2Server::QueueCurrentState(SessionState& session)
 }
 
 bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body, std::uint64_t nowMs,
-    ActionHandler const& actionHandler)
+    ActionHandler const& actionHandler, WardrobeHandler const& wardrobeHandler)
 {
     std::scoped_lock lock(_mutex);
     auto found = _sessions.find(sessionId);
@@ -346,11 +520,16 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         session.Active = true;
         session.AwaitingSnapshot = false;
         session.ClientNonce = message.ClientNonce;
+        session.ClientBuild = message.ClientBuild;
         session.ClientMetadataVersion = message.MetadataVersion;
         session.ClientAssetPackVersion = message.AssetPackVersion;
         session.Nonce = NewNonce();
         session.NextTransferId = 1;
+        session.ApplyInFlight = false;
         session.Bucket = TokenBucket { BucketCapacity, nowMs };
+        session.QuoteBucket = TokenBucket { QuoteBucketCapacity, nowMs };
+        session.ApplyBucket = TokenBucket { ApplyBucketCapacity, nowMs };
+        session.OutfitBucket = TokenBucket { OutfitBucketCapacity, nowMs };
         session.Replays.clear();
         session.Outbound.clear();
         if (message.ProtocolVersion != Sc2ProtocolVersion)
@@ -364,10 +543,137 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
     }
 
     if (!session.Active || message.SessionNonce != session.Nonce)
+    {
+        if (message.Kind == Sc2MessageKind::WardrobeIntent)
+            LogWardrobe(message.Op == "QUOTE" ? "wardrobe_quote" : "wardrobe_intent",
+                session.Account, sessionId, message,
+                session.Active ? "BAD_NONCE" : "INACTIVE", 0, 0, 0, "dropped");
         return true;
+    }
     if (!ConsumeToken(session, nowMs))
     {
         QueueError(session, message.RequestId, "RATE_LIMITED");
+        if (message.Kind == Sc2MessageKind::WardrobeIntent)
+            LogWardrobe(message.Op == "QUOTE" ? "wardrobe_quote" : "wardrobe_intent",
+                session.Account, sessionId, message, "RATE_LIMITED", 0, 0, 0, "session_bucket");
+        return true;
+    }
+
+    if (message.Kind == Sc2MessageKind::WardrobeIntent || message.Kind == Sc2MessageKind::OutfitWrite)
+    {
+        CleanupReplays(session, nowMs);
+        if (session.Replays.contains(message.RequestId))
+        {
+            QueueError(session, message.RequestId, "REPLAYED_REQUEST");
+            if (message.Kind == Sc2MessageKind::WardrobeIntent)
+                LogWardrobe(message.Op == "QUOTE" ? "wardrobe_quote" : "wardrobe_intent",
+                    session.Account, sessionId, message, "REPLAYED_REQUEST", 0, 0, 0, "replay");
+            return true;
+        }
+
+        bool quote = message.Kind == Sc2MessageKind::WardrobeIntent && message.Op == "QUOTE";
+        bool applyOrClear = message.Kind == Sc2MessageKind::WardrobeIntent && !quote;
+        TokenBucket& wardrobeBucket = quote ? session.QuoteBucket :
+            (applyOrClear ? session.ApplyBucket : session.OutfitBucket);
+        double capacity = quote ? QuoteBucketCapacity :
+            (applyOrClear ? ApplyBucketCapacity : OutfitBucketCapacity);
+        double rate = quote ? QuoteTokensPerSecond :
+            (applyOrClear ? ApplyTokensPerSecond : OutfitTokensPerSecond);
+        if (!ConsumeBucket(wardrobeBucket, capacity, rate, nowMs) ||
+            (applyOrClear && session.ApplyInFlight))
+        {
+            if (quote)
+            {
+                Sc2Message limited;
+                limited.Kind = Sc2MessageKind::WardrobeQuote;
+                limited.SessionNonce = session.Nonce;
+                limited.RequestId = message.RequestId;
+                limited.Status = "RATE_LIMITED";
+                limited.Copper = 0;
+                limited.WarningMask = "00000000";
+                Queue(session, std::move(limited));
+            }
+            else
+            {
+                Sc2Message limited;
+                limited.Kind = Sc2MessageKind::ActionResult;
+                limited.SessionNonce = session.Nonce;
+                limited.RequestId = message.RequestId;
+                limited.Status = "RATE_LIMITED";
+                limited.TypeId = applyOrClear ? CharacterAppliedCollectionTypeId.Value() :
+                    AccountOutfitCollectionTypeId.Value();
+                limited.CollectionId = applyOrClear ? 1 : (message.Uid == 0 ? 1 : message.Uid);
+                limited.Revision = 0;
+                Queue(session, std::move(limited));
+            }
+            if (message.Kind == Sc2MessageKind::WardrobeIntent)
+                LogWardrobe(quote ? "wardrobe_quote" : "wardrobe_intent",
+                    session.Account, sessionId, message, "RATE_LIMITED", 0, 0, 0,
+                    applyOrClear && session.ApplyInFlight ? "apply_in_flight" : "wardrobe_bucket");
+            return true;
+        }
+
+        session.Replays.emplace(message.RequestId, nowMs);
+        std::optional<AccountCacheSnapshot> snapshot = _cache.Snapshot(session.Account);
+        Sc2WardrobeOutcome outcome;
+        outcome.TypeId = applyOrClear ? CharacterAppliedCollectionTypeId.Value() :
+            AccountOutfitCollectionTypeId.Value();
+        outcome.CollectionId = applyOrClear ? 1 : (message.Uid == 0 ? 1 : message.Uid);
+        if (session.ClientMetadataVersion != _metadataVersion)
+            outcome.Status = "CATALOG_MISMATCH";
+        else if (!snapshot || snapshot->State == AccountCacheLoadState::Loading)
+            outcome.Status = "LOADING";
+        else if (snapshot->State == AccountCacheLoadState::Failed)
+            outcome.Status = "DB_UNAVAILABLE";
+        else if (wardrobeHandler)
+        {
+            if (applyOrClear)
+                session.ApplyInFlight = true;
+            outcome = wardrobeHandler(session.Account, message);
+            if (applyOrClear)
+                session.ApplyInFlight = false;
+            if (!IsActionStatus(outcome.Status))
+                outcome.Status = "INVALID_REQUEST";
+            if (outcome.TypeId == 0)
+                outcome.TypeId = applyOrClear ? CharacterAppliedCollectionTypeId.Value() :
+                    AccountOutfitCollectionTypeId.Value();
+            if (outcome.CollectionId == 0)
+                outcome.CollectionId = 1;
+        }
+        else
+            outcome.Status = "UNSUPPORTED";
+
+        if (quote)
+        {
+            Sc2Message result;
+            result.Kind = Sc2MessageKind::WardrobeQuote;
+            result.SessionNonce = session.Nonce;
+            result.RequestId = message.RequestId;
+            result.Status = outcome.Status;
+            result.Copper = outcome.Copper;
+            result.WarningMask = WarningMaskHex(outcome.WarningMask);
+            Queue(session, std::move(result));
+        }
+        else
+        {
+            Sc2Message result;
+            result.Kind = Sc2MessageKind::ActionResult;
+            result.SessionNonce = session.Nonce;
+            result.RequestId = message.RequestId;
+            result.Status = outcome.Status;
+            result.TypeId = outcome.TypeId;
+            result.CollectionId = outcome.CollectionId;
+            result.Revision = outcome.Revision;
+            Queue(session, std::move(result));
+        }
+        if (message.Kind == Sc2MessageKind::WardrobeIntent)
+            LogWardrobe(quote ? "wardrobe_quote" : "wardrobe_intent",
+                session.Account, sessionId, message, outcome.Status, outcome.Copper,
+                outcome.WarningMask, outcome.Revision,
+                session.ClientMetadataVersion != _metadataVersion ? "catalog" :
+                    (!snapshot || snapshot->State == AccountCacheLoadState::Loading) ? "loading" :
+                    (snapshot->State == AccountCacheLoadState::Failed) ? "store" :
+                    (wardrobeHandler ? "handler" : "unsupported"));
         return true;
     }
 

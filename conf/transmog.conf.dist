@@ -29,6 +29,30 @@ SoloCollections.ShadowReportPath = "logs/solo-collections-shadow.jsonl"
 SoloCollections.Preview.Enabled = 1
 
 #
+#    Wardrobe Y QUOTE/APPLY copper
+#        Description: Unused legacy keys. Wardrobe billing uses the same sell-price
+#                     formula as NPC/handbook transmog: max(source SellPrice, 10000)
+#                     * Transmogrification.ScaledCostModifier + CopperCost, per
+#                     actually changed non-hide slot. Hide and clear are free.
+#                     U still returns 0 when the quote is free. Do not restore
+#                     ApplyBaseCopper / ApplySlotCopper as the wardrobe price.
+#
+
+# SoloCollections.Transmog.ApplyBaseCopper = 0
+# SoloCollections.Transmog.ApplySlotCopper = 0
+#
+#    SoloCollections.Transmog.MixedArmor
+#        Description: Wardrobe-only armor subclass policy for collected apply.
+#                     Does not change NPC transmog (see AllowMixedArmorTypes).
+#                     same  - cloth/leather/mail/plate must match
+#                     lower - allow lower armor tiers the player can wear
+#                     any   - cloth/leather/mail/plate interchangeable
+#                     Invalid values fail closed to same.
+#        Default:     any
+#
+SoloCollections.Transmog.MixedArmor = any
+
+#
 ###################################################################################################
 
 

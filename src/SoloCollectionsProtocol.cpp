@@ -40,13 +40,24 @@ bool IsAction(std::string_view value)
     });
 }
 
+bool IsChunkChar(char character)
+{
+    return (character >= '0' && character <= '9') || (character >= 'a' && character <= 'z') ||
+        character == ',' || character == '-' || character == ':' || character == ';';
+}
+
 bool IsChunk(std::string_view value)
 {
     return !value.empty() && value.size() <= Sc2Limits::MaxChunkPayloadBytes &&
+        std::all_of(value.begin(), value.end(), IsChunkChar);
+}
+
+bool IsNameHex(std::string_view value)
+{
+    return value.size() >= 2 && value.size() <= 96 && (value.size() % 2) == 0 &&
         std::all_of(value.begin(), value.end(), [](char character)
         {
-            return (character >= '0' && character <= '9') || (character >= 'a' && character <= 'z') ||
-                character == ',' || character == '-';
+            return (character >= '0' && character <= '9') || (character >= 'a' && character <= 'f');
         });
 }
 
@@ -62,6 +73,94 @@ bool ParseUnsigned(std::string_view text, Integer minimum, Integer maximum, Inte
         return false;
     output = parsed;
     return true;
+}
+
+bool IsWardrobeApplyEntries(std::string_view value)
+{
+    if (value.empty() || value.size() > 200)
+        return false;
+    std::size_t items = 1;
+    std::size_t begin = 0;
+    while (begin < value.size())
+    {
+        std::size_t colon = value.find(':', begin);
+        std::size_t comma = value.find(',', begin);
+        if (colon == std::string_view::npos || (comma != std::string_view::npos && colon > comma))
+            return false;
+        std::uint32_t slot = 0;
+        std::uint32_t collectionId = 0;
+        if (!ParseUnsigned(value.substr(begin, colon - begin), std::uint32_t { 1 },
+                std::numeric_limits<std::uint32_t>::max(), slot))
+            return false;
+        std::size_t idEnd = comma == std::string_view::npos ? value.size() : comma;
+        if (!ParseUnsigned(value.substr(colon + 1, idEnd - colon - 1), std::uint32_t { 1 },
+                std::numeric_limits<std::uint32_t>::max(), collectionId))
+            return false;
+        if (comma == std::string_view::npos)
+            break;
+        ++items;
+        if (items > 14)
+            return false;
+        begin = comma + 1;
+    }
+    return items >= 1 && items <= 14;
+}
+
+bool IsWardrobeClearEntries(std::string_view value)
+{
+    if (value == "-")
+        return true;
+    if (value.empty() || value.size() > 80)
+        return false;
+    std::size_t items = 1;
+    std::size_t begin = 0;
+    while (begin < value.size())
+    {
+        std::size_t comma = value.find(',', begin);
+        std::uint32_t slot = 0;
+        std::size_t end = comma == std::string_view::npos ? value.size() : comma;
+        if (!ParseUnsigned(value.substr(begin, end - begin), std::uint32_t { 1 },
+                std::numeric_limits<std::uint32_t>::max(), slot))
+            return false;
+        if (comma == std::string_view::npos)
+            break;
+        ++items;
+        if (items > 14)
+            return false;
+        begin = comma + 1;
+    }
+    return items >= 1 && items <= 14;
+}
+
+bool IsOutfitEntries(std::string_view value)
+{
+    if (value == "-")
+        return true;
+    std::size_t items = 1;
+    std::size_t begin = 0;
+    while (begin < value.size())
+    {
+        std::size_t comma = value.find(',', begin);
+        std::string_view token = value.substr(begin, (comma == std::string_view::npos ? value.size() : comma) - begin);
+        if (token != "-")
+        {
+            std::uint32_t collectionId = 0;
+            if (!ParseUnsigned(token, std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), collectionId))
+                return false;
+        }
+        if (comma == std::string_view::npos)
+            break;
+        ++items;
+        begin = comma + 1;
+    }
+    return items == 14;
+}
+
+std::size_t CountListItems(std::string_view value)
+{
+    if (value.empty() || value == "-")
+        return 0;
+    return static_cast<std::size_t>(std::count(value.begin(), value.end(), ',')) + 1;
 }
 
 std::vector<std::string_view> Split(std::string_view body)
@@ -163,10 +262,7 @@ std::string Sc2CanonicalOwnedPayload(std::vector<std::uint32_t> values)
 std::vector<std::string> Sc2ChunkPayload(std::string_view payload)
 {
     if (!IsChunk(payload) && !(payload.size() > Sc2Limits::MaxChunkPayloadBytes &&
-        std::all_of(payload.begin(), payload.end(), [](char character)
-        {
-            return (character >= '0' && character <= '9') || (character >= 'a' && character <= 'z') || character == ',';
-        })))
+        std::all_of(payload.begin(), payload.end(), IsChunkChar)))
         throw std::invalid_argument("invalid SC2 snapshot payload");
     if (payload.size() > Sc2Limits::MaxSnapshotBytes)
         throw std::invalid_argument("SC2 snapshot exceeds byte limit");
@@ -298,7 +394,8 @@ Sc2DecodeResult DecodeSc2Body(std::string_view body)
                     "NOT_ENOUGH_MONEY", "NOT_ENOUGH_TOKENS",
                     "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED", "IN_COMBAT", "DEAD",
                     "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED", "MAP_RESTRICTED",
-            "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED", "NO_MOUNTS", "NO_USABLE_MOUNTS" }) ||
+                    "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED", "NO_MOUNTS", "NO_USABLE_MOUNTS",
+                    "INSUFFICIENT_FUNDS", "OUTFIT_LIMIT", "OUTFIT_EMPTY", "COST_CHANGED", "NOTHING_EQUIPPED" }) ||
                 !typeId(4) || !ParseUnsigned(fields[5], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.CollectionId) ||
                 !revision(6))
                 return Failure("invalid ACTION_RESULT");
@@ -321,6 +418,59 @@ Sc2DecodeResult DecodeSc2Body(std::string_view body)
                 return Failure("invalid ERROR");
             message.Kind = Sc2MessageKind::Error;
             message.Reason = fields[3];
+            break;
+        case 'Y':
+        {
+            std::uint8_t slotCount = 0;
+            if (fields.size() != 6 || !nonce(1) ||
+                !ParseUnsigned(fields[2], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.RequestId) ||
+                !IsOneOf(fields[3], { "QUOTE", "APPLY", "CLEAR" }) ||
+                !ParseUnsigned(fields[4], std::uint8_t { 0 }, std::uint8_t { 14 }, slotCount))
+                return Failure("invalid WARDROBE_INTENT");
+            if (fields[3] == "CLEAR")
+            {
+                if (!IsWardrobeClearEntries(fields[5]) || CountListItems(fields[5]) != slotCount)
+                    return Failure("invalid WARDROBE_INTENT");
+            }
+            else if (!IsWardrobeApplyEntries(fields[5]) || CountListItems(fields[5]) != slotCount)
+                return Failure("invalid WARDROBE_INTENT");
+            message.Kind = Sc2MessageKind::WardrobeIntent;
+            message.Op = fields[3];
+            message.SlotCount = slotCount;
+            message.Entries = fields[5];
+            break;
+        }
+        case 'U':
+            if (fields.size() != 6 || !nonce(1) ||
+                !ParseUnsigned(fields[2], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.RequestId) ||
+                !IsOneOf(fields[3], { "ACCEPTED", "DISMISSED", "LOADING", "NOT_OWNED", "FAVORITE_NOT_OWNED",
+                    "CATALOG_MISMATCH", "ASSET_MISMATCH",
+                    "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED", "INVALID_TARGET_SLOT",
+                    "NOT_ENOUGH_MONEY", "NOT_ENOUGH_TOKENS",
+                    "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED", "IN_COMBAT", "DEAD",
+                    "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED", "MAP_RESTRICTED",
+                    "BATTLEGROUND_RESTRICTED", "SHAPESHIFT_RESTRICTED", "CAST_FAILED", "NO_MOUNTS", "NO_USABLE_MOUNTS",
+                    "INSUFFICIENT_FUNDS", "OUTFIT_LIMIT", "OUTFIT_EMPTY", "COST_CHANGED", "NOTHING_EQUIPPED" }) ||
+                !ParseUnsigned(fields[4], std::uint32_t { 0 }, std::numeric_limits<std::uint32_t>::max(), message.Copper) ||
+                !IsLowerHex(fields[5], 8))
+                return Failure("invalid WARDROBE_QUOTE");
+            message.Kind = Sc2MessageKind::WardrobeQuote;
+            message.Status = fields[3];
+            message.WarningMask = fields[5];
+            break;
+        case 'O':
+            if (fields.size() != 7 || !nonce(1) ||
+                !ParseUnsigned(fields[2], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.RequestId) ||
+                !IsOneOf(fields[3], { "SAVE", "RENAME" }) ||
+                !ParseUnsigned(fields[4], std::uint32_t { 0 }, std::numeric_limits<std::uint32_t>::max(), message.Uid) ||
+                !IsNameHex(fields[5]) || !IsOutfitEntries(fields[6]))
+                return Failure("invalid OUTFIT_WRITE");
+            if ((fields[3] == "RENAME" && fields[6] != "-") || (fields[3] == "SAVE" && fields[6] == "-"))
+                return Failure("invalid OUTFIT_WRITE");
+            message.Kind = Sc2MessageKind::OutfitWrite;
+            message.Op = fields[3];
+            message.NameHex = fields[5];
+            message.Entries = fields[6];
             break;
         default:
             return Failure("unknown message code");
@@ -364,6 +514,15 @@ std::string EncodeSc2Message(Sc2Message const& message)
             return Join({ "S", message.SessionNonce, message.Reason, Number(message.TypeId), Number(message.Revision) });
         case Sc2MessageKind::Error:
             return Join({ "X", message.SessionNonce, Number(message.RequestId), message.Reason });
+        case Sc2MessageKind::WardrobeIntent:
+            return Join({ "Y", message.SessionNonce, Number(message.RequestId), message.Op,
+                Number(message.SlotCount), message.Entries });
+        case Sc2MessageKind::WardrobeQuote:
+            return Join({ "U", message.SessionNonce, Number(message.RequestId), message.Status,
+                Number(message.Copper), message.WarningMask });
+        case Sc2MessageKind::OutfitWrite:
+            return Join({ "O", message.SessionNonce, Number(message.RequestId), message.Op,
+                Number(message.Uid), message.NameHex, message.Entries });
     }
     throw std::invalid_argument("unknown SC2 message kind");
 }

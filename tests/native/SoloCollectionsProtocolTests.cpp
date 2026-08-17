@@ -41,6 +41,19 @@ void TestGoldenCodecVectors()
         "R|0123456789abcdef|103|ASSET_MISMATCH|11|100281|43",
         "S|0123456789abcdef|REVISION_GAP|0|43",
         "X|0123456789abcdef|99|REPLAYED_REQUEST",
+        "Y|0123456789abcdef|201|QUOTE|2|1:200001,3:2",
+        "Y|0123456789abcdef|202|APPLY|2|1:200001,3:2",
+        "Y|0123456789abcdef|203|CLEAR|0|-",
+        "Y|0123456789abcdef|204|CLEAR|2|1,3",
+        "U|0123456789abcdef|201|ACCEPTED|0|00000003",
+        "U|0123456789abcdef|201|INSUFFICIENT_FUNDS|0|00000000",
+        "O|0123456789abcdef|205|SAVE|0|4e6577|-,2,-,-,-,-,-,-,-,-,-,-,-,-",
+        "O|0123456789abcdef|206|RENAME|1|4f6c64|-",
+        "Q|0123456789abcdef|207|19|1|DELETE|-",
+        "R|0123456789abcdef|208|INSUFFICIENT_FUNDS|18|1|1",
+        "R|0123456789abcdef|209|OUTFIT_LIMIT|19|1|2",
+        "C|0123456789abcdef|21|1|-,2,200001,-,-,-,-,-,-,-,-,-,-,-",
+        "C|0123456789abcdef|22|1|1:4e6577:-,2,-,-,-,-,-,-,-,-,-,-,-,-",
     };
     for (std::string const& packet : packets)
     {
@@ -51,6 +64,10 @@ void TestGoldenCodecVectors()
     }
     Require(SC::Sc2Adler32Hex("-") == "002e002e", "empty checksum vector changed");
     Require(SC::Sc2Adler32Hex("1,2,z,10,1z,2s") == "179c036b", "payload checksum vector changed");
+    Require(SC::Sc2Adler32Hex("-,2,200001,-,-,-,-,-,-,-,-,-,-,-") == "5ee005ae",
+        "applied payload checksum vector changed");
+    Require(SC::Sc2Adler32Hex("1:4e6577:-,2,-,-,-,-,-,-,-,-,-,-,-,-") == "854c06cf",
+        "outfit payload checksum vector changed");
 
     for (std::string const& invalid : {
         "H|1|ABCDEF0123456789|dev|1|1",
@@ -352,7 +369,7 @@ void TestDerivedSetDeltaUsesAppearanceRevisionAndStableDiff()
         "derived set cache fixture did not become ready");
     SC::Sc2Server server(cache, "2026.07.22.2", "wotlk-3.3.5a-local-1", "phase8-set", {
         { SC::CollectionTypeId(std::uint16_t { 14 }),
-          "2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf", true, true },
+          "39aef8fce8133ac578b003e5cf990047396baaf07f66086a1aa89ca4b2f84af0", true, true },
     });
     server.OpenSession(Account(99), Session(990));
     server.SetExternalOwned(Session(990), SC::CollectionTypeId(14), {});
@@ -374,6 +391,68 @@ void TestDerivedSetDeltaUsesAppearanceRevisionAndStableDiff()
     Require(removed.size() == 1 && removed[0].find("|14|14|R|300008") != std::string::npos,
         "derived set removal was not diffed at the appearance revision");
 }
+
+void TestWardrobeCategoriesStayHiddenWithoutClientSuffix()
+{
+    SC::AccountCollectionCache cache;
+    auto opened = cache.OpenSession(Account(18), Session(1800), 0);
+    Require(cache.CompleteLoad(Account(18), opened.Generation, {}, SC::CollectionRevision(1)),
+        "wardrobe cache fixture did not become ready");
+    SC::Sc2Server server(cache, "2026.07.20.1", "wotlk-3.3.5a-local-1", "0.2.0", {
+        { SC::CollectionTypeId(std::uint16_t { 1 }),
+          "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945", true },
+        { SC::CollectionTypeId(std::uint16_t { 18 }),
+          "f09cf3e459d598eef49d2d1b56c76b5f36939e7023bce18291a7b51ec393e814", true, true, true },
+        { SC::CollectionTypeId(std::uint16_t { 19 }),
+          "ef7629703270ae32078c089e505474f952caa1db778a5ea737abe9a1f7fc0ec5", true, true, true },
+    });
+    server.OpenSession(Account(18), Session(1800));
+    (void)server.HandleInbound(Session(1800),
+        "H|1|aaaaaaaaaaaaaaaa|0.2.0|2026.07.20.1|wotlk-3.3.5a-local-1", 0);
+    std::vector<std::string> oldClient = server.DrainOutbound(Session(1800), 32);
+    for (std::string const& packet : oldClient)
+    {
+        Require(packet.find("|18|") == std::string::npos && packet.find("|19|") == std::string::npos,
+            "old client received a wardrobe mapping or snapshot");
+        Require(!packet.starts_with("U|"), "old hello emitted a wardrobe quote");
+    }
+
+    server.CloseSession(Session(1800));
+    server.OpenSession(Account(18), Session(1800));
+    (void)server.HandleInbound(Session(1800),
+        "H|1|bbbbbbbbbbbbbbbb|0.2.0-w1|2026.07.20.1|wotlk-3.3.5a-local-1", 10);
+    std::vector<std::string> wardrobeClient = server.DrainOutbound(Session(1800), 64);
+    bool sawAppliedMap = false;
+    bool sawOutfitMap = false;
+    bool sawAppliedPayload = false;
+    for (std::string const& packet : wardrobeClient)
+    {
+        sawAppliedMap = sawAppliedMap || packet.find("|18|f09cf3e459d598eef49d2d1b56c76b5f36939e7023bce18291a7b51ec393e814") != std::string::npos;
+        sawOutfitMap = sawOutfitMap || packet.find("|19|ef7629703270ae32078c089e505474f952caa1db778a5ea737abe9a1f7fc0ec5") != std::string::npos;
+        sawAppliedPayload = sawAppliedPayload ||
+            packet.find("-,-,-,-,-,-,-,-,-,-,-,-,-,-") != std::string::npos;
+    }
+    Require(sawAppliedMap && sawOutfitMap && sawAppliedPayload,
+        "wardrobe client did not receive type 18/19 mappings and the empty applied snapshot");
+
+    std::string nonce = server.SessionNonce(Session(1800));
+    bool quoted = false;
+    SC::Sc2Server::WardrobeHandler handler = [&quoted](SC::AccountId, SC::Sc2Message const& request)
+    {
+        quoted = request.Op == "QUOTE";
+        SC::Sc2WardrobeOutcome outcome;
+        outcome.Status = "ACCEPTED";
+        outcome.Copper = 0;
+        outcome.WarningMask = 1;
+        return outcome;
+    };
+    (void)server.HandleInbound(Session(1800),
+        "Y|" + nonce + "|201|QUOTE|1|1:200001", 11, {}, handler);
+    std::vector<std::string> quote = server.DrainOutbound(Session(1800), 32);
+    Require(quoted && quote.size() == 1 && quote[0].starts_with("U|") &&
+        quote[0].find("|ACCEPTED|0|00000001") != std::string::npos,
+        "wardrobe QUOTE did not return a U result");
+}
 }
 
 int main()
@@ -390,6 +469,7 @@ int main()
         TestSyntheticPersistedProviderRevisionSync();
         TestExternalTitleSnapshotsAreSessionScoped();
         TestDerivedSetDeltaUsesAppearanceRevisionAndStableDiff();
+        TestWardrobeCategoriesStayHiddenWithoutClientSuffix();
         std::cout << "SoloCollections SC2 protocol tests passed" << std::endl;
         return EXIT_SUCCESS;
     }

@@ -12,6 +12,7 @@
 #include "ItemTemplate.h"
 #include "QuestDef.h"
 #include "ItemTemplate.h"
+#include <functional>
 #include <map>
 #include <unordered_map>
 #include <unordered_set>
@@ -46,12 +47,20 @@ enum MixedWeaponSettings
     MIXED_WEAPONS_LOOSE  = 2
 };
 
+enum MixedArmorSettings
+{
+    MIXED_ARMOR_SAME  = 0,
+    MIXED_ARMOR_LOWER = 1,
+    MIXED_ARMOR_ANY   = 2
+};
+
 enum class TransmogApplySource : uint8
 {
     Gossip,
     Vendor,
     Outfit,
-    Addon
+    Addon,
+    Wardrobe
 };
 
 enum TransmogStrings : uint32
@@ -251,6 +260,7 @@ public:
 
     bool AllowMixedArmorTypes;
     bool AllowLowerTiers;
+    uint8 CollectedMixedArmorPolicy;
     bool AllowMixedOffhandArmorTypes;
     bool AllowMixedWeaponHandedness;
     bool AllowFishingPoles;
@@ -298,8 +308,17 @@ public:
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
     TransmogApplyResult TryApplyCollectedAppearances(Player* player,
         std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
-        TransmogApplySource source, bool noCost = false);
+        TransmogApplySource source, bool noCost = false,
+        std::function<void(CharacterDatabaseTransaction&)> extraStatements = {});
     bool CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
+    // Collected wardrobe apply: keep slot/armor/weapon family checks, but do not
+    // re-apply the source item's class/race/skill gates, and do not run NPC
+    // SuitableForTransmogrification on the equipped target. The account already
+    // owns the appearance; the player is already wearing the destination item.
+    // Cloth/leather/mail/plate subclass mixing follows
+    // SoloCollections.Transmog.MixedArmor (same/lower/any), not the NPC
+    // Transmogrification.AllowMixedArmorTypes flag.
+    bool CanApplyCollectedVisual(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     bool SuitableForTransmogrification(Player* player, ItemTemplate const* proto) const;
     bool SuitableForTransmogrification(ObjectGuid guid, ItemTemplate const* proto) const;
     bool IsItemTransmogrifiable(ItemTemplate const* proto, ObjectGuid const &playerGuid) const;
@@ -385,7 +404,8 @@ private:
 
     TransmogApplyResult PreflightApply(Player* player, std::vector<AppearanceApplyRequest> const& requests,
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost, AppearanceApplyPlan& plan);
-    TransmogApplyResult CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan);
+    TransmogApplyResult CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,
+        std::function<void(CharacterDatabaseTransaction&)> extraStatements = {});
     TransmogStrings ValidateApplyInteraction(Player* player, ObjectGuid interactionGuid, TransmogApplySource source) const;
     void ApplyCommittedFakeEntry(Player* player, uint32 newEntry, Item* itemTransmogrified);
 };

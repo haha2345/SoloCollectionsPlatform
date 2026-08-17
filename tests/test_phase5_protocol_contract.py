@@ -36,7 +36,7 @@ class Phase5ProtocolContractTests(unittest.TestCase):
         source = (ROOT / "src/SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
         self.assertIn('"module.solocollections.protocol"', source)
         self.assertIn(
-            '"event=protocol_reject result=bad_message account={} character={} bytes={}"', source
+            '"event=protocol_reject result=bad_message account={} character={} bytes={} kind={}"', source
         )
         log_statement = source.split('LOG_WARN("module.solocollections.protocol"', 1)[1].split(");", 1)[0]
         self.assertIn("body.size()", log_statement)

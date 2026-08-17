@@ -30,7 +30,8 @@ AppearanceCatalog::AppearanceCatalog() : _collections(LoadGeneratedAppearanceCol
     for (std::size_t index = 0; index < _collections.size(); ++index)
     {
         AppearanceCollectionDefinition const& definition = _collections[index];
-        if (!definition.Id.IsValid() || definition.DisplayId == 0 || definition.SlotFamily == 0 ||
+        if (!definition.Id.IsValid() || definition.Id.Value() < 10 || definition.DisplayId == 0 ||
+            definition.SlotFamily == 0 ||
             definition.PrimarySourceItemId == 0 || definition.SourceItemIds.empty() ||
             !_byId.emplace(definition.Id.Value(), index).second)
             throw std::runtime_error("Invalid or duplicate generated canonical appearance definition.");
