@@ -5,7 +5,7 @@
 ## Version: 0.2.0
 ## Dependencies: DragonUI_NewEra
 ## OptionalDeps: SoloCollections_EzUI, SoloCollections_RetailUI
-## X-SoloCollections-BuildChannel: development
+## X-SoloCollections-BuildChannel: stable
 ## SavedVariables: SoloCollectionsDB
 
 SoloCollections.lua
