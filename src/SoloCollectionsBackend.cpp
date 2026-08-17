@@ -10,7 +10,7 @@ namespace SoloCollections
 {
 namespace
 {
-BackendMode Mode = BackendMode::Compare;
+BackendMode Mode = BackendMode::Cpp;
 std::string ShadowReportPath = "logs/solo-collections-shadow.jsonl";
 }
 
@@ -27,7 +27,7 @@ std::string_view BackendModeName(BackendMode mode) noexcept
 
 void InitializeBackendConfiguration()
 {
-    std::string configured = sConfigMgr->GetOption<std::string>("SoloCollections.Backend", "Compare");
+    std::string configured = sConfigMgr->GetOption<std::string>("SoloCollections.Backend", "Cpp");
     std::transform(configured.begin(), configured.end(), configured.begin(), [](unsigned char value)
     {
         return static_cast<char>(std::tolower(value));

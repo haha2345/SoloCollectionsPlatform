@@ -11,7 +11,9 @@
 #                     Compare = ALE/SC1 owns production actions; C++ loads read-only state and writes
 #                               structured shadow comparisons without DB writes, actions, or success deltas.
 #                     Cpp     = C++/SC2 is the single production action and collection write owner.
-#        Default:     Compare
+#                     Production deployments must run Cpp. Lua and Compare are
+#                     migration/diagnostic modes only.
+#        Default:     Cpp
 #
 #    SoloCollections.ShadowReportPath
 #        Description: Append-only JSONL export for Compare-mode login reports. Empty disables file export;
@@ -24,7 +26,7 @@
 #        Default:     1
 #
 
-SoloCollections.Backend = Compare
+SoloCollections.Backend = Cpp
 SoloCollections.ShadowReportPath = "logs/solo-collections-shadow.jsonl"
 SoloCollections.Preview.Enabled = 1
 

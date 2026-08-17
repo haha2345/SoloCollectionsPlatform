@@ -21,11 +21,11 @@ LUA_TEXT = LUA.read_text(encoding="utf-8") if LUA.is_file() else ""
 
 
 class Phase11ShadowContractTests(unittest.TestCase):
-    def test_backend_modes_are_explicit_and_compare_is_the_phase_default(self):
+    def test_backend_modes_are_explicit_and_cpp_is_the_production_default(self):
         for token in ("Lua = 1", "Compare = 2", "Cpp = 3"):
             self.assertIn(token, BACKEND_H)
-        self.assertIn('"SoloCollections.Backend", "Compare"', BACKEND)
-        self.assertIn("SoloCollections.Backend = Compare", CONFIG)
+        self.assertIn('"SoloCollections.Backend", "Cpp"', BACKEND)
+        self.assertIn("SoloCollections.Backend = Cpp", CONFIG)
         self.assertIn("SoloCollections.ShadowReportPath", CONFIG)
         self.assertIn("fallback=Lua writes_enabled=0 actions_enabled=0", BACKEND)
 
