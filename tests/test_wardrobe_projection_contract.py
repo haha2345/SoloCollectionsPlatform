@@ -47,8 +47,8 @@ class WardrobeProjectionContractTests(unittest.TestCase):
         self.assertIn("Hide and clear are free", config)
         self.assertIn("# SoloCollections.Transmog.ApplyBaseCopper = 0", config)
         self.assertIn("# SoloCollections.Transmog.ApplySlotCopper = 0", config)
-        self.assertIn("SoloCollections.Transmog.MixedArmor = any", config)
-        self.assertIn("SoloCollections.Transmog.MixedWeapons = any", config)
+        self.assertIn("SoloCollections.Transmog.MixedArmor = same", config)
+        self.assertIn("SoloCollections.Transmog.MixedWeapons = same", config)
 
     def test_collected_visual_uses_wardrobe_mixed_armor_policy(self):
         header = (SRC / "Transmogrification.h").read_text(encoding="utf-8")

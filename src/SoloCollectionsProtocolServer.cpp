@@ -185,7 +185,8 @@ void Sc2Server::QueueOwnedSnapshotReplaceForAccount(AccountId accountId, Collect
         (void)sessionId;
         if (!session.Active || session.Account != accountId || !CategoryVisible(session, *category))
             continue;
-        QueueCategorySnapshot(session, *category, revision.Value(), *owned);
+        if (!QueueCategorySnapshot(session, *category, revision.Value(), *owned))
+            session.AwaitingSnapshot = true;
     }
 }
 
@@ -286,8 +287,12 @@ void Sc2Server::Queue(SessionState& session, Sc2Message message)
         throw std::logic_error("SC2 encoder produced an oversized packet");
     if (session.Outbound.size() >= MaxOutboundPackets)
     {
+        // Last-resort safety valve. Snapshot transfers are capacity-checked
+        // before queueing, so this only trips if small messages alone exceed
+        // the budget; restart the full snapshot cycle from scratch.
         session.Outbound.clear();
         session.AwaitingSnapshot = true;
+        session.SnapshotCursor = 0;
         return;
     }
     session.Outbound.push_back(std::move(packet));
@@ -354,7 +359,7 @@ void Sc2Server::QueueHandshake(SessionState& session)
     }
 }
 
-void Sc2Server::QueueCategorySnapshot(SessionState& session,
+bool Sc2Server::QueueCategorySnapshot(SessionState& session,
     Sc2CategoryDefinition const& category, std::uint64_t revision,
     std::vector<CollectionId> const& owned)
 {
@@ -367,9 +372,14 @@ void Sc2Server::QueueCategorySnapshot(SessionState& session,
     if (payload.size() > Sc2Limits::MaxSnapshotBytes)
     {
         QueueError(session, 0, "SNAPSHOT_TOO_LARGE");
-        return;
+        return true;
     }
     std::vector<std::string> chunks = Sc2ChunkPayload(payload);
+    // Backpressure: never start a transfer that cannot fit into the outbound
+    // queue in one piece (begin + chunks + end); the caller retries after the
+    // client drains the queue.
+    if (session.Outbound.size() + chunks.size() + 2 > MaxOutboundPackets)
+        return false;
     std::string checksum = Sc2Adler32Hex(payload);
     std::uint32_t transferId = session.NextTransferId++;
     if (transferId == 0)
@@ -412,31 +422,39 @@ void Sc2Server::QueueCategorySnapshot(SessionState& session,
     _diagnostics.LastSnapshotQueueMicroseconds = elapsedMicroseconds;
     _diagnostics.MaxSnapshotQueueMicroseconds = std::max(
         _diagnostics.MaxSnapshotQueueMicroseconds, elapsedMicroseconds);
+    return true;
 }
 
-void Sc2Server::QueueRawCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category)
+bool Sc2Server::QueueRawCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category)
 {
     auto stored = session.RawSnapshots.find(category.TypeId);
     std::uint64_t revision = stored == session.RawSnapshots.end() ? 0 : stored->second.Revision;
     std::string payload = stored == session.RawSnapshots.end() || stored->second.Payload.empty() ?
         DefaultRawPayload(category.TypeId) : stored->second.Payload;
-    QueueRawCategorySnapshot(session, category.TypeId, revision, std::move(payload));
+    return QueueRawCategorySnapshot(session, category.TypeId, revision, std::move(payload));
 }
 
-void Sc2Server::QueueRawCategorySnapshot(SessionState& session, CollectionTypeId typeId,
+bool Sc2Server::QueueRawCategorySnapshot(SessionState& session, CollectionTypeId typeId,
     std::uint64_t revision, std::string payload)
 {
     Sc2CategoryDefinition const* category = FindCategory(_categories, typeId);
     if (!category || !CategoryVisible(session, *category))
-        return;
+        return true;
     if (payload.empty())
         payload = DefaultRawPayload(typeId);
     if (payload.size() > Sc2Limits::MaxSnapshotBytes)
     {
         QueueError(session, 0, "SNAPSHOT_TOO_LARGE");
-        return;
+        return true;
     }
     std::vector<std::string> chunks = Sc2ChunkPayload(payload);
+    if (session.Outbound.size() + chunks.size() + 2 > MaxOutboundPackets)
+    {
+        // The latest payload is already stored in RawSnapshots; the pending
+        // snapshot cycle re-delivers it after the queue drains.
+        session.AwaitingSnapshot = true;
+        return false;
+    }
     std::string checksum = Sc2Adler32Hex(payload);
     std::uint32_t transferId = session.NextTransferId++;
     if (transferId == 0)
@@ -470,17 +488,26 @@ void Sc2Server::QueueRawCategorySnapshot(SessionState& session, CollectionTypeId
     end.TransferId = transferId;
     end.Checksum = checksum;
     Queue(session, std::move(end));
+    return true;
 }
 
 void Sc2Server::QueueSnapshots(SessionState& session, AccountCacheSnapshot const& snapshot)
 {
-    for (Sc2CategoryDefinition const& category : _categories)
+    // Resumes from SnapshotCursor: when a category transfer does not fit in
+    // the outbound queue, the cycle pauses (AwaitingSnapshot stays set) and
+    // PumpSession retries after the client has drained packets.
+    for (; session.SnapshotCursor < _categories.size(); ++session.SnapshotCursor)
     {
+        Sc2CategoryDefinition const& category = _categories[session.SnapshotCursor];
         if (!CategoryVisible(session, category))
             continue;
         if (category.RawSnapshot)
         {
-            QueueRawCategorySnapshot(session, category);
+            if (!QueueRawCategorySnapshot(session, category))
+            {
+                session.AwaitingSnapshot = true;
+                return;
+            }
             continue;
         }
         std::optional<std::vector<CollectionId>> owned;
@@ -498,8 +525,13 @@ void Sc2Server::QueueSnapshots(SessionState& session, AccountCacheSnapshot const
             session.AwaitingSnapshot = true;
             return;
         }
-        QueueCategorySnapshot(session, category, snapshot.Revision.Value(), *owned);
+        if (!QueueCategorySnapshot(session, category, snapshot.Revision.Value(), *owned))
+        {
+            session.AwaitingSnapshot = true;
+            return;
+        }
     }
+    session.SnapshotCursor = 0;
     session.AwaitingSnapshot = false;
 }
 
@@ -550,6 +582,7 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         session.NextTransferId = 1;
         session.ApplyInFlight = false;
         session.Deferred = DeferredResult {};
+        session.SnapshotCursor = 0;
         session.Bucket = TokenBucket { BucketCapacity, nowMs };
         session.QuoteBucket = TokenBucket { QuoteBucketCapacity, nowMs };
         session.ApplyBucket = TokenBucket { ApplyBucketCapacity, nowMs };
@@ -812,7 +845,9 @@ void Sc2Server::PumpSession(AccountSessionId sessionId, std::uint64_t nowMs)
             result.WarningMask = WarningMaskHex(0);
         Queue(session, std::move(result));
     }
-    if (session.AwaitingSnapshot)
+    // Resume a paused snapshot cycle only after the client drained at least
+    // half the queue, so payloads are not rebuilt every tick under pressure.
+    if (session.AwaitingSnapshot && session.Outbound.size() <= MaxOutboundPackets / 2)
     {
         std::optional<AccountCacheSnapshot> snapshot = _cache.Snapshot(session.Account);
         if (snapshot && snapshot->State != AccountCacheLoadState::Loading)

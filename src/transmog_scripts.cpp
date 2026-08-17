@@ -1,23 +1,9 @@
 /*
-5.0
 Transmogrification 3.3.5a - Gossip menu
-By Rochet2
+Originally by Rochet2, adapted for SoloCollections.
 
 ScriptName for NPC:
 Creature_Transmogrify
-
-TODO:
-Make DB saving even better (Deleting)? What about coding?
-
-Fix the cost formula
--- Too much data handling, use default costs
-
-Are the qualities right?
-Blizzard might have changed the quality requirements.
-(TC handles it with stat checks)
-
-Cant transmogrify rediculus items // Foereaper: would be fun to stab people with a fish
--- Cant think of any good way to handle this easily, could rip flagged items from cata DB
 */
 #include "Transmogrification.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
@@ -147,14 +133,14 @@ std::vector<ItemTemplate const*> GetValidTransmogs(Player* player, Item* target,
 void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEntry, TransmogApplySource source)
 {
     WorldSession* session = player->GetSession();
-    auto selection = sT->selectionCache.find(player->GetGUID());
-    if (selection == sT->selectionCache.end())
+    std::optional<uint8> selection = sT->GetSelectedSlot(player->GetGUID());
+    if (!selection)
     {
         ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SLOT));
         return;
     }
 
-    uint8 slot = selection->second;
+    uint8 slot = *selection;
     ObjectGuid playerGuid = player->GetGUID();
     SoloCollections::GetAppearanceService().TryApplyCollectedAppearance(
         player, itemEntry, slot, creature->GetGUID(), source, false,
@@ -187,14 +173,14 @@ void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEn
 void RemoveTransmogrification (Player* player)
 {
     WorldSession* session = player->GetSession();
-    auto selection = sT->selectionCache.find(player->GetGUID());
-    if (selection == sT->selectionCache.end())
+    std::optional<uint8> selection = sT->GetSelectedSlot(player->GetGUID());
+    if (!selection)
     {
         ChatHandler(session).SendNotification(Tstr(session, LANG_TRANSMOG_INVALID_SLOT));
         return;
     }
 
-    uint8 slot = selection->second;
+    uint8 slot = *selection;
     if (Item* newItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
     {
         if (sT->GetFakeEntry(newItem->GetGUID()))
@@ -280,7 +266,7 @@ public:
         {
             case EQUIPMENT_SLOT_END: // Show items you can use
             {
-                sT->selectionCache[player->GetGUID()] = action;
+                sT->SetSelectedSlot(player->GetGUID(), action);
 
                 bool useVendorInterface = player->GetPlayerSetting("mod-transmog", SETTING_VENDOR_INTERFACE).IsEnabled();
 
@@ -760,7 +746,7 @@ public:
     void OnPlayerLogin(Player* player) override
     {
         ObjectGuid playerGUID = player->GetGUID();
-        sT->entryMap.erase(playerGUID);
+        sT->ClearPlayerTransmogCache(playerGUID);
         // Async so concurrent logins never serialize the world thread on the
         // characters DB; the callback runs on this session's update.
         player->GetSession()->GetQueryProcessor().AddCallback(
@@ -774,16 +760,15 @@ public:
                 Player* player = ObjectAccessor::FindConnectedPlayer(playerGUID);
                 if (!player)
                     return;
+                std::vector<std::pair<ObjectGuid, uint32>> entries;
                 do
                 {
                     ObjectGuid itemGUID = ObjectGuid::Create<HighGuid::Item>((*result)[0].Get<uint32>());
                     uint32 fakeEntry = (*result)[1].Get<uint32>();
                     if (fakeEntry == HIDDEN_ITEM_ID || sObjectMgr->GetItemTemplate(fakeEntry))
-                    {
-                        sT->dataMap[itemGUID] = playerGUID;
-                        sT->entryMap[playerGUID][itemGUID] = fakeEntry;
-                    }
+                        entries.emplace_back(itemGUID, fakeEntry);
                 } while (result->NextRow());
+                sT->LoadPlayerTransmogCache(playerGUID, entries);
 
                 for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
                 {
@@ -801,10 +786,7 @@ public:
     void OnPlayerLogout(Player* player) override
     {
         ObjectGuid pGUID = player->GetGUID();
-        for (Transmogrification::transmog2Data::const_iterator it = sT->entryMap[pGUID].begin(); it != sT->entryMap[pGUID].end(); ++it)
-            sT->dataMap.erase(it->first);
-        sT->entryMap.erase(pGUID);
-        sT->selectionCache.erase(pGUID);
+        sT->ClearPlayerTransmogCache(pGUID);
 
 #ifdef PRESETS
         if (sT->GetEnableSets())
@@ -821,14 +803,14 @@ public:
         if (!sT->IsTransmogVendor(vendor->GetEntry()))
             return;
 
-        auto selection = sT->selectionCache.find(player->GetGUID());
-        if (selection == sT->selectionCache.end())
+        std::optional<uint8> selection = sT->GetSelectedSlot(player->GetGUID());
+        if (!selection)
         {
             itemEntry = 0;
             return;
         }
 
-        uint8 slot = selection->second;
+        uint8 slot = *selection;
 
         if (itemEntry == CUSTOM_HIDE_ITEM_VENDOR_ID || itemEntry == FALLBACK_HIDE_ITEM_VENDOR_ID)
         {

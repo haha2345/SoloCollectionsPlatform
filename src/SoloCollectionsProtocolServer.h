@@ -148,6 +148,9 @@ private:
         OutboundQueue Outbound;
         std::map<CollectionTypeId, std::vector<CollectionId>> ExternalOwned;
         std::map<CollectionTypeId, RawSnapshotState> RawSnapshots;
+        // Index of the next category to send while a full snapshot cycle is
+        // paused by outbound backpressure (AwaitingSnapshot == true).
+        std::size_t SnapshotCursor = 0;
     };
 
     [[nodiscard]] bool ConsumeToken(SessionState& session, std::uint64_t nowMs);
@@ -159,10 +162,13 @@ private:
     void QueueHandshake(SessionState& session);
     void QueueCurrentState(SessionState& session);
     void QueueSnapshots(SessionState& session, AccountCacheSnapshot const& snapshot);
-    void QueueCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category,
+    // Snapshot queueing returns false when the whole transfer does not fit in
+    // the outbound queue; callers keep AwaitingSnapshot set and retry after
+    // the queue drains (backpressure instead of clearing the queue).
+    bool QueueCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category,
         std::uint64_t revision, std::vector<CollectionId> const& owned);
-    void QueueRawCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category);
-    void QueueRawCategorySnapshot(SessionState& session, CollectionTypeId typeId,
+    bool QueueRawCategorySnapshot(SessionState& session, Sc2CategoryDefinition const& category);
+    bool QueueRawCategorySnapshot(SessionState& session, CollectionTypeId typeId,
         std::uint64_t revision, std::string payload);
     [[nodiscard]] std::string NewNonce();
 

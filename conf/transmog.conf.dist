@@ -62,9 +62,9 @@ SoloCollections.Preview.Enabled = 1
 #                             MISC armor (no armor type, e.g. some boots) may mix with a
 #                             tiered appearance of the same InventoryType.
 #
-#        Default:     any
+#        Default:     same
 #
-SoloCollections.Transmog.MixedArmor = any
+SoloCollections.Transmog.MixedArmor = same
 
 #    SoloCollections.Transmog.MixedWeapons
 #        Description: Wardrobe collected-apply only. Does not change NPC vendor
@@ -84,9 +84,9 @@ SoloCollections.Transmog.MixedArmor = any
 #                     any    - any melee onto any melee; any bow / gun / crossbow onto
 #                              any bow / gun / crossbow. The isolation above still applies.
 #
-#        Default:     any
+#        Default:     same
 #
-SoloCollections.Transmog.MixedWeapons = any
+SoloCollections.Transmog.MixedWeapons = same
 
 #
 ###################################################################################################

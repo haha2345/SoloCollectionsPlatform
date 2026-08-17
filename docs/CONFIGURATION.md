@@ -50,7 +50,7 @@ Values are case-insensitive; anything else fails closed to `same`.
 #         MISC armor (no armor type) may mix with a tiered appearance
 #         of the same InventoryType
 # Invalid values fail closed to same.
-SoloCollections.Transmog.MixedArmor = any
+SoloCollections.Transmog.MixedArmor = same
 ```
 
 `SoloCollections.Transmog.MixedWeapons` only affects collected wardrobe apply.
@@ -65,7 +65,7 @@ Values are case-insensitive; anything else fails closed to `same`.
 #          (dagger/fist/wand/thrown still need an exact match)
 # any    = any melee onto any melee; any bow/gun/crossbow onto any bow/gun/crossbow
 # Invalid values fail closed to same.
-SoloCollections.Transmog.MixedWeapons = any
+SoloCollections.Transmog.MixedWeapons = same
 ```
 
 NPC vendor mixing still uses `Transmogrification.AllowMixedArmorTypes` and
@@ -89,6 +89,27 @@ The same template contains inherited, adapted transmogrification settings:
 Start from conservative defaults. A broader item/weapon rule changes gameplay
 authorization, not merely UI appearance.
 
+## Legion (7.3.5) parity decisions
+
+Launch-audit decisions for the sync gaps found against LegionCore:
+
+1. Refundable items: handled. `AppearanceService::OnItemAcquired` defers the
+   unlock while `ITEM_FIELD_FLAG_REFUNDABLE` (or a tradeable BoP window) is
+   set; the periodic inventory reconcile unlocks the appearance after the
+   refund window expires. No extend-on-refund clawback is needed.
+2. Re-equip replay: transmog stays bound to the item instance GUID (same as
+   Legion). Equipping a new item does not inherit the old visual. This is a
+   deliberate product decision; the wardrobe apply tooltip in the AddOn tells
+   the player the visual is written to the currently worn item.
+3. Hidden appearances: covered by the free HIDE visual
+   (`HideVisualCollectionId` / `HIDDEN_ITEM_ID`) in the wardrobe pipeline;
+   no separate "hidden appearance" unlock rows are required on 3.3.5.
+4. Favorites: mount and pet favorites are server-persisted (type 10/11,
+   projected as 16/17). Appearance and set favorites intentionally stay in
+   the client SavedVariables for launch (per-machine, account-wide); a server
+   preference type can be added later without protocol changes if cross-
+   machine sync becomes a requirement.
+
 ## 中文说明
 
 生产收藏后端使用 `SoloCollections.Backend = Cpp`。`Compare` 只用于从旧 ALE/SC1
@@ -101,10 +122,10 @@ authorization, not merely UI appearance.
 幻化室批量应用按外观源物品卖价计价（至少 1 金，再乘
 `Transmogrification.ScaledCostModifier` 并可加 `CopperCost`），隐藏和清除为
 0，不读客户端数字。`ApplyBaseCopper` / `ApplySlotCopper` 已废弃。收藏室跨甲只读
-`SoloCollections.Transmog.MixedArmor`（`same` / `lower` / `any`，默认 `any`，
+`SoloCollections.Transmog.MixedArmor`（`same` / `lower` / `any`，默认 `same`，
 无效值按 `same`；`any` 时无甲种 MISC 可与同 `InventoryType` 的有甲种互幻），
 跨武器读 `SoloCollections.Transmog.MixedWeapons`（`same` / `family` / `any`，
-默认 `any`；弓/枪/弩与近战始终隔离，魔杖/投掷不在这组隔离里），不改 NPC 幻化台的
+默认 `same`；弓/枪/弩与近战始终隔离，魔杖/投掷不在这组隔离里），不改 NPC 幻化台的
 `AllowMixedArmorTypes` / `AllowMixedWeaponTypes`。type 18/19
 只对 HELLO `clientBuild` 带 `-w1` 的插件宣告；必须先部署模块再部署新 AddOn。
 外观写在装备实例上，换装不自动套到新物品。

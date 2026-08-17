@@ -228,35 +228,19 @@ public:
         if (!player || !player->GetSession())
             return;
         std::uint32_t guid = player->GetGUID().GetCounter();
+        // Hot path: runs every player update tick. Resolve the active mount
+        // from the (at most one) SPELL_AURA_MOUNTED aura via the catalog's
+        // action-spell hash lookup instead of scanning the whole catalog.
         SpellInfo const* activeSpell = nullptr;
-        if (player->IsMounted())
+        for (AuraEffect* mountedEffect : player->GetAuraEffectsByType(SPELL_AURA_MOUNTED))
         {
-            for (MountCollectionDefinition const& definition : GetMountCatalog().Collections())
+            if (!mountedEffect || !mountedEffect->GetBase())
+                continue;
+            SpellInfo const* candidate = mountedEffect->GetSpellInfo();
+            if (FindOwnedAction(player, candidate))
             {
-                if (definition.Lifecycle != CatalogLifecycle::Active || !definition.JournalVisible ||
-                    !definition.Actionable || !definition.Draggable || definition.CanonicalActionSpellId == 0 ||
-                    !player->HasAura(definition.CanonicalActionSpellId))
-                    continue;
-                SpellInfo const* candidate = sSpellMgr->GetSpellInfo(definition.CanonicalActionSpellId);
-                if (FindOwnedAction(player, candidate))
-                {
-                    activeSpell = candidate;
-                    break;
-                }
-            }
-        }
-        if (!activeSpell)
-        {
-            for (AuraEffect* mountedEffect : player->GetAuraEffectsByType(SPELL_AURA_MOUNTED))
-            {
-                if (!mountedEffect || !mountedEffect->GetBase())
-                    continue;
-                SpellInfo const* candidate = mountedEffect->GetSpellInfo();
-                if (FindOwnedAction(player, candidate))
-                {
-                    activeSpell = candidate;
-                    break;
-                }
+                activeSpell = candidate;
+                break;
             }
         }
         if (!activeSpell)

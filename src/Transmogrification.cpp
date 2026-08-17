@@ -1458,9 +1458,9 @@ void Transmogrification::LoadConfig(bool reload)
     AllowMixedArmorTypes = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedArmorTypes", false);
     AllowLowerTiers = sConfigMgr->GetOption<bool>("Transmogrification.AllowLowerTiers", false);
     CollectedMixedArmorPolicy = ParseCollectedMixedArmor(
-        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedArmor", "any"));
+        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedArmor", "same"));
     CollectedMixedWeaponPolicy = ParseCollectedMixedWeapons(
-        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedWeapons", "any"));
+        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedWeapons", "same"));
     AllowMixedOffhandArmorTypes = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedOffhandArmorTypes", false);
     AllowMixedWeaponHandedness = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedWeaponHandedness", false);
     AllowFishingPoles = sConfigMgr->GetOption<bool>("Transmogrification.AllowFishingPoles", false);
