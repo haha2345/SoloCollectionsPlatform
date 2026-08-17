@@ -288,7 +288,7 @@ function B.ConnectSC2(force)
         "H",
         tostring(B.sc2Version),
         clientNonce,
-        tostring(SC.VERSION or "unknown"),
+        tostring(SC.VERSION or "unknown") .. "-w1",
         tostring(generated.metadataVersion or "unknown"),
         tostring(generated.assetPackVersion or "unknown"),
     }, "|")
@@ -617,6 +617,122 @@ function B.ApplyAppearance(collectionId, equipmentSlot, callback)
     return B.RequestSC2Action(13, collectionId, "APPLY", equipmentSlot + 1, callback)
 end
 
+local function toUtf8Hex(text)
+    local parts = {}
+    for index = 1, #text do
+        parts[index] = string.format("%02x", string.byte(text, index))
+    end
+    return table.concat(parts)
+end
+
+local function sendSC2Body(body, pending)
+    local playerName = UnitName("player")
+    if not playerName or playerName == "" then
+        return nil
+    end
+    requestSerial = requestSerial + 1
+    local requestId = requestSerial
+    pending.deadline = GetTime() + requestTimeout
+    sc2PendingActions[requestId] = pending
+    SendAddonMessage(B.sc2Prefix, body, "WHISPER", playerName)
+    return requestId
+end
+
+function B.QuoteApply(entries, slotCount, callback)
+    if type(entries) ~= "string" or entries == "" or not isPositiveInteger(slotCount)
+        or not B.sc2Connected or not CS or not CS.sessionNonce then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    return sendSC2Body(table.concat({
+        "Y", CS.sessionNonce, tostring(requestSerial + 1), "QUOTE", tostring(slotCount), entries,
+    }, "|"), { kind = "WARDROBE_QUOTE", callback = callback })
+end
+
+function B.ApplyPending(entries, slotCount, callback)
+    if type(entries) ~= "string" or entries == "" or not isPositiveInteger(slotCount)
+        or not B.sc2Connected or not CS or not CS.IsAppliedReady or not CS.IsAppliedReady() then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    return sendSC2Body(table.concat({
+        "Y", CS.sessionNonce, tostring(requestSerial + 1), "APPLY", tostring(slotCount), entries,
+    }, "|"), { kind = "WARDROBE", typeId = 18, collectionId = 1, callback = callback })
+end
+
+function B.ClearApplied(entries, slotCount, callback)
+    if not B.sc2Connected or not CS or not CS.IsAppliedReady or not CS.IsAppliedReady() then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    local bodyEntries = entries
+    local count = slotCount
+    if entries == nil or entries == "-" or slotCount == 0 then
+        bodyEntries = "-"
+        count = 0
+    elseif type(entries) ~= "string" or not isPositiveInteger(slotCount) then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_REQUEST")
+        end
+        return nil
+    end
+    return sendSC2Body(table.concat({
+        "Y", CS.sessionNonce, tostring(requestSerial + 1), "CLEAR", tostring(count), bodyEntries,
+    }, "|"), { kind = "WARDROBE", typeId = 18, collectionId = 1, callback = callback })
+end
+
+function B.SaveOutfit(uid, name, entries, callback)
+    if type(name) ~= "string" or name == "" or #name > 48 or type(entries) ~= "string"
+        or entries == "-" or not B.sc2Connected or not CS or not CS.IsOutfitReady
+        or not CS.IsOutfitReady() then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    uid = tonumber(uid) or 0
+    if uid < 0 or uid ~= math.floor(uid) then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_REQUEST")
+        end
+        return nil
+    end
+    return sendSC2Body(table.concat({
+        "O", CS.sessionNonce, tostring(requestSerial + 1), "SAVE", tostring(uid),
+        toUtf8Hex(name), entries,
+    }, "|"), { kind = "WARDROBE", typeId = 19, collectionId = uid > 0 and uid or 1, callback = callback })
+end
+
+function B.RenameOutfit(uid, name, callback)
+    if not isPositiveInteger(uid) or type(name) ~= "string" or name == "" or #name > 48
+        or not B.sc2Connected or not CS or not CS.IsOutfitReady or not CS.IsOutfitReady() then
+        if type(callback) == "function" then
+            pcall(callback, false, "BRIDGE_UNAVAILABLE")
+        end
+        return nil
+    end
+    return sendSC2Body(table.concat({
+        "O", CS.sessionNonce, tostring(requestSerial + 1), "RENAME", tostring(uid),
+        toUtf8Hex(name), "-",
+    }, "|"), { kind = "WARDROBE", typeId = 19, collectionId = uid, callback = callback })
+end
+
+function B.DeleteOutfit(uid, callback)
+    if not isPositiveInteger(uid) then
+        if type(callback) == "function" then
+            pcall(callback, false, "INVALID_REQUEST")
+        end
+        return nil
+    end
+    return B.RequestSC2Action(19, uid, "DELETE", nil, callback)
+end
+
 function B.ApplySet(collectionId, variantIndex, callback)
     if not isPositiveInteger(collectionId) or
         (variantIndex ~= nil and not isPositiveInteger(variantIndex)) then
@@ -759,11 +875,29 @@ function B.OnMessage(prefix, message, channel, sender)
             local fields = detail
             local requestId = tonumber(fields[3])
             local pending = requestId and sc2PendingActions[requestId] or nil
-            if pending and pending.typeId == tonumber(fields[5]) and pending.collectionId == tonumber(fields[6]) then
+            if pending and (pending.kind == "WARDROBE" or
+                (pending.typeId == tonumber(fields[5]) and pending.collectionId == tonumber(fields[6]))) then
                 sc2PendingActions[requestId] = nil
                 if type(pending.callback) == "function" then
                     local status = fields[4]
-                    pcall(pending.callback, status == "ACCEPTED" or status == "DISMISSED", status)
+                    pcall(pending.callback, status == "ACCEPTED" or status == "DISMISSED", status, {
+                        collectionId = tonumber(fields[6]),
+                        revision = fields[7],
+                    })
+                end
+            end
+        elseif event == "WARDROBE_QUOTE" then
+            local fields = detail
+            local requestId = tonumber(fields[3])
+            local pending = requestId and sc2PendingActions[requestId] or nil
+            if pending and pending.kind == "WARDROBE_QUOTE" then
+                sc2PendingActions[requestId] = nil
+                if type(pending.callback) == "function" then
+                    local status = fields[4]
+                    pcall(pending.callback, status == "ACCEPTED", status, {
+                        copper = tonumber(fields[5]) or 0,
+                        warningMask = tonumber(fields[6], 16) or 0,
+                    })
                 end
             end
         elseif event == "ERROR" then

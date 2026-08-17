@@ -110,6 +110,7 @@ local SLOT_FILTERS = {
     { key = "FEET", label = "脚部", atlas = "feet", gapAfter = 18 },
     { key = "MAINHAND", label = "主手武器", atlas = "mainhand" },
     { key = "OFFHAND", label = "副手武器", atlas = "secondaryhand" },
+    { key = "RANGED", label = "远程武器", paperDoll = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Ranged" },
 }
 
 local SLOT_ATLAS_SIZE = 512
@@ -137,8 +138,8 @@ local ROUND_HIGHLIGHT_REGION = { 42, 78, 176, 212 }
 local WEAPON_FILTERS = {
     { key = "ONE_HAND_AXE", label = "单手斧", main = true, off = true },
     { key = "TWO_HAND_AXE", label = "双手斧", main = true },
-    { key = "BOW", label = "弓", main = true },
-    { key = "GUN", label = "枪械", main = true },
+    { key = "BOW", label = "弓", ranged = true },
+    { key = "GUN", label = "枪械", ranged = true },
     { key = "ONE_HAND_MACE", label = "单手锤", main = true, off = true },
     { key = "TWO_HAND_MACE", label = "双手锤", main = true },
     { key = "POLEARM", label = "长柄武器", main = true },
@@ -147,9 +148,9 @@ local WEAPON_FILTERS = {
     { key = "STAFF", label = "法杖", main = true },
     { key = "FIST_WEAPON", label = "拳套", main = true, off = true },
     { key = "DAGGER", label = "匕首", main = true, off = true },
-    { key = "THROWN", label = "投掷武器", main = true },
-    { key = "CROSSBOW", label = "弩", main = true },
-    { key = "WAND", label = "魔杖", main = true },
+    { key = "THROWN", label = "投掷武器", ranged = true },
+    { key = "CROSSBOW", label = "弩", ranged = true },
+    { key = "WAND", label = "魔杖", ranged = true },
     { key = "FISHING_POLE", label = "钓鱼竿", main = true },
     { key = "SHIELD", label = "盾牌", off = true },
     { key = "OFFHAND_ITEM", label = "副手物品", off = true },
@@ -158,6 +159,7 @@ local WEAPON_FILTERS = {
 local STANDALONE_ITEM_SLOTS = {
     MAINHAND = true,
     OFFHAND = true,
+    RANGED = true,
 }
 
 -- ItemSet evidence already expresses member slots. Keep preview ordering in
@@ -187,12 +189,19 @@ local function slotLabelFromKey(slotKey)
 end
 
 local function filterLabel(options, current)
+    if type(options) ~= "table" then
+        return tostring(current or "")
+    end
     for _, option in ipairs(options) do
         if option.key == current then
             return option.label
         end
     end
-    return options[1].label
+    local first = options[1]
+    if first and first.label then
+        return first.label
+    end
+    return tostring(current or "")
 end
 
 local function classLabelFromKey(classKey)
@@ -783,20 +792,17 @@ local function setAtlasRegion(texture, texturePath, atlasWidth, atlasHeight, reg
     )
 end
 
-local function getPlayerClassToken()
-    local classIdentity = Identity.GetPlayerClass()
-    return classIdentity.known and classIdentity.filterToken or nil
-end
-
-local function weaponOptionSupportsSlot(option, slot)
-    return (slot == "MAINHAND" and option.main) or (slot == "OFFHAND" and option.off)
-end
-
 local function getAvailableWeaponFilters(slot)
+    if Catalog.GetAvailableWeaponFilters then
+        return Catalog.GetAvailableWeaponFilters(slot)
+    end
     local result = {}
-    local allowed = Identity.GetWeaponTypes(slot)
+    local allowed = Identity.GetWeaponTypes(slot == "RANGED" and "MAINHAND" or slot)
     for _, option in ipairs(WEAPON_FILTERS) do
-        if weaponOptionSupportsSlot(option, slot) and allowed[option.key] then
+        local supported = (slot == "MAINHAND" and option.main)
+            or (slot == "OFFHAND" and option.off)
+            or (slot == "RANGED" and option.ranged)
+        if supported and allowed[option.key] then
             table.insert(result, option)
         end
     end
@@ -804,6 +810,9 @@ local function getAvailableWeaponFilters(slot)
 end
 
 local function ensureWeaponTypeForSlot(filters, slot)
+    if Catalog.EnsureWeaponTypeForSlot then
+        return Catalog.EnsureWeaponTypeForSlot(filters, slot)
+    end
     local options = getAvailableWeaponFilters(slot)
     for _, option in ipairs(options) do
         if filters.weaponType == option.key then
@@ -1158,7 +1167,7 @@ function UI.CreateWardrobePage(parent)
 
     local slotsFrame = CreateFrame("Frame", nil, filterBar)
     slotsFrame:SetPoint("TOPLEFT", filterBar, "TOPLEFT", 181, -20)
-    slotsFrame:SetWidth(430)
+    slotsFrame:SetWidth(468)
     slotsFrame:SetHeight(42)
     page.scSlotButtons = {}
 
@@ -1236,13 +1245,18 @@ function UI.CreateWardrobePage(parent)
         normal:SetWidth(35)
         normal:SetHeight(37)
         normal:SetPoint("CENTER", button, "CENTER", 0, 0)
-        setAtlasRegion(
-            normal,
-            UI.EzCollections:MediaPath("Transmogrify", "Transmogrify.tga", UI.Media.wardrobeSlotAtlas),
-            SLOT_ATLAS_SIZE,
-            SLOT_ATLAS_SIZE,
-            SLOT_ATLAS_REGIONS[slotOption.atlas]
-        )
+        if slotOption.atlas and SLOT_ATLAS_REGIONS[slotOption.atlas] then
+            setAtlasRegion(
+                normal,
+                UI.EzCollections:MediaPath("Transmogrify", "Transmogrify.tga", UI.Media.wardrobeSlotAtlas),
+                SLOT_ATLAS_SIZE,
+                SLOT_ATLAS_SIZE,
+                SLOT_ATLAS_REGIONS[slotOption.atlas]
+            )
+        else
+            normal:SetTexture(slotOption.paperDoll or "Interface\\PaperDoll\\UI-PaperDoll-Slot-Ranged")
+            normal:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+        end
         button:SetNormalTexture(normal)
 
         local highlight = button:CreateTexture(nil, "HIGHLIGHT")
@@ -1283,9 +1297,25 @@ function UI.CreateWardrobePage(parent)
         button:SetScript("OnLeave", function() GameTooltip:Hide() end)
         button.scSlot = slotOption.key
         button.scSelected = selected
+        if SC.NewAppearances and SC.NewAppearances.AttachSlotBadge then
+            SC.NewAppearances.AttachSlotBadge(button)
+        end
         page.scSlotButtons[slotOption.key] = button
         xOffset = xOffset + 33 + (slotOption.gapAfter or 0)
     end
+
+    local clearNew = CreateFrame("Button", nil, filterBar, "UIPanelButtonTemplate")
+    clearNew:SetWidth(128)
+    clearNew:SetHeight(20)
+    clearNew:SetPoint("TOPLEFT", filterBar, "TOPLEFT", 8, -50)
+    clearNew:SetText("清除全部新获得")
+    clearNew:Hide()
+    clearNew:SetScript("OnClick", function()
+        if SC.NewAppearances and SC.NewAppearances.ClearAll then
+            SC.NewAppearances.ClearAll(page)
+        end
+    end)
+    page.scClearNewButton = clearNew
 
     local itemsPanel, itemsInset = EzItems:CreatePanel(page)
 
@@ -1312,9 +1342,9 @@ function UI.CreateWardrobePage(parent)
     model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
-    local setPresenter = SC.WardrobeUI.ItemPresenter:AttachSet(model, function()
-        return page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
-    end)
+    model.scPreviewDriver = true
+    model.scRotation = DEFAULT_ROTATION
+    model.scZoom = 0
 
     local name = preview:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     name:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_NAME_Y)
@@ -1474,7 +1504,6 @@ function UI.CreateWardrobePage(parent)
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
-        model:SetScript("OnUpdate", nil)
     end
 
     local function applyModelFacing(rotation)
@@ -1514,9 +1543,10 @@ function UI.CreateWardrobePage(parent)
     end
 
     local function preparePlayerModel()
-        model:ClearModel()
         resetModelView()
-        pcall(function() model:SetUnit("player") end)
+        if model.SetAlpha then pcall(model.SetAlpha, model, 0) end
+        -- SetUnit is owned by the generation-safe set presenter. Do not
+        -- ClearModel + SetUnit in this helper; that crashes build 12340.
     end
 
     local function deriveSetPieceState(record)
@@ -1631,7 +1661,8 @@ function UI.CreateWardrobePage(parent)
         page.scAdvanceSetPreview = nil
         model.scSetPreviewGeneration = page.scSetPreviewGeneration
         model.scSetPreviewPending = nil
-        if setPresenter then setPresenter:Clear("SET_PREVIEW_INVALIDATED") end
+        local Lab = SC.WardrobeLab
+        if Lab and Lab.StopDressUp then Lab.StopDressUp(model) end
     end
 
     local function queueSetPreview(record)
@@ -1651,18 +1682,19 @@ function UI.CreateWardrobePage(parent)
         for _, previewItem in ipairs(previewItems) do
             itemStrings[#itemStrings + 1] = resolveTryOnItem(previewItem.previewSourceItemId)
         end
-        setPresenter:Present({
-            unit = "player",
-            undress = true,
-            settleTicks = 2,
-            items = itemStrings,
-            onReady = function()
-                if page.scSetPreviewPending == pending and page.scSetSelectedId == pending.recordId then
-                    page.scSetPreviewPending = nil
-                    model.scSetPreviewPending = nil
-                end
-            end,
-        })
+        local Lab = SC.WardrobeLab
+        if Lab and Lab.PlayDressUp then
+            Lab.PlayDressUp(model, {
+                undress = true,
+                items = itemStrings,
+                onReady = function()
+                    if page.scSetPreviewPending == pending and page.scSetSelectedId == pending.recordId then
+                        page.scSetPreviewPending = nil
+                        model.scSetPreviewPending = nil
+                    end
+                end,
+            })
+        end
         return previewItems
     end
 
@@ -1788,11 +1820,15 @@ function UI.CreateWardrobePage(parent)
         end
     end
 
+    model:SetScript("OnUpdate", function(frame)
+        if frame.scDragging then
+            updateModelDrag(frame)
+        end
+    end)
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
             self.scLastCursorX = GetCursorPosition()
-            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
     model:SetScript("OnMouseUp", function() clearDragState() end)
@@ -1803,7 +1839,6 @@ function UI.CreateWardrobePage(parent)
         end
     end)
     reset:SetScript("OnClick", function()
-        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() end
         resetModelView()
     end)
     applySet:SetScript("OnClick", function()
@@ -2878,6 +2913,11 @@ function UI.CreateWardrobePage(parent)
                 itemDataProvider:ApplyAppearance(itemModel.scRecord, showAppearanceActionResult)
             else
                 selectItem(itemModel.scRecord)
+                if SC.NewAppearances and SC.NewAppearances.MarkSeen then
+                    SC.NewAppearances.MarkSeen(itemModel.scRecord.collectionId or itemModel.scRecord.id)
+                    SC.NewAppearances.UpdateCardBadge(itemModel.scHitFrame or itemModel, itemModel.scRecord.collectionId or itemModel.scRecord.id)
+                    SC.NewAppearances.RefreshSlotBadges(page)
+                end
             end
         end,
         onEnter = function(owner, itemModel) showItemTooltip(owner, itemModel.scRecord) end,
@@ -3065,14 +3105,12 @@ function UI.CreateWardrobePage(parent)
         if not SC.db or not SC.db.filters then return end
         local filters = SC.db.filters
 
-        -- On the first set-page visit, mirror Retail by starting on the
-        -- character's own class. Afterwards an explicit "全部职业" choice is
-        -- respected for the rest of the UI session.
-        if SC.db.wardrobeTab == "SETS" and not self.scDefaultSetClassApplied then
-            self.scDefaultSetClassApplied = true
-            local playerClass = getPlayerClassToken()
-            if hasFilterValue(CLASS_FILTERS, playerClass) then
-                filters.classToken = playerClass
+        -- First sets-page visit in the session (journal or transmog) starts on
+        -- the character's class. An explicit "全部职业" choice is then kept.
+        if SC.db.wardrobeTab == "SETS" then
+            local before = filters.classToken
+            if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
+            if filters.classToken ~= before then
                 setSetOffset(0, true)
                 self.scSetSelectedId = nil
                 self.scSetSelectedGroupKey = nil
@@ -3103,10 +3141,15 @@ function UI.CreateWardrobePage(parent)
             classDropdown:Hide()
             slotsFrame:Show()
             if STANDALONE_ITEM_SLOTS[filters.slot] then
-                ensureWeaponTypeForSlot(filters, filters.slot)
-                UIDropDownMenu_SetSelectedValue(weaponDropdown, filters.weaponType)
-                UIDropDownMenu_SetText(weaponDropdown, filterLabel(getAvailableWeaponFilters(filters.slot), filters.weaponType))
-                weaponDropdown:Show()
+                local weaponOptions = getAvailableWeaponFilters(filters.slot)
+                if #weaponOptions == 0 then
+                    weaponDropdown:Hide()
+                else
+                    ensureWeaponTypeForSlot(filters, filters.slot)
+                    UIDropDownMenu_SetSelectedValue(weaponDropdown, filters.weaponType)
+                    UIDropDownMenu_SetText(weaponDropdown, filterLabel(weaponOptions, filters.weaponType))
+                    weaponDropdown:Show()
+                end
             else
                 weaponDropdown:Hide()
             end
@@ -3134,21 +3177,35 @@ function UI.CreateWardrobePage(parent)
         end
 
         UIDropDownMenu_Initialize(dropDown, function(_, level)
-            if level ~= 1 then return end
-            local options = {
-                { label = "已收集", key = "collected" },
-                { label = "未收集", key = "uncollected" },
-                { label = "仅显示偏好", key = "favorites" },
-            }
-            for _, option in ipairs(options) do
-                local optionKey = option.key
-                local info = UIDropDownMenu_CreateInfo()
-                info.text = option.label
-                info.keepShownOnClick = true
-                info.isNotRadio = true
-                info.checked = function() return filters[optionKey] and true or false end
-                info.func = function(_, _, _, checked) setFilter(optionKey, checked) end
-                UIDropDownMenu_AddButton(info, level)
+            if level == 1 then
+                local options = {
+                    { label = "已收集", key = "collected" },
+                    { label = "未收集", key = "uncollected" },
+                }
+                for _, option in ipairs(options) do
+                    local optionKey = option.key
+                    local info = UIDropDownMenu_CreateInfo()
+                    info.text = option.label
+                    info.keepShownOnClick = true
+                    info.isNotRadio = true
+                    info.checked = function() return filters[optionKey] and true or false end
+                    info.func = function(_, _, _, checked) setFilter(optionKey, checked) end
+                    UIDropDownMenu_AddButton(info, level)
+                end
+                if SC.db.wardrobeTab == "ITEMS" then
+                    local sources = UIDropDownMenu_CreateInfo()
+                    sources.text = "来源"
+                    sources.notCheckable = true
+                    sources.hasArrow = true
+                    sources.value = "appearanceSources"
+                    UIDropDownMenu_AddButton(sources, level)
+                end
+            elseif level == 2 and UIDROPDOWNMENU_MENU_VALUE == "appearanceSources" then
+                UI.AddAppearanceSourceMenuButtons(level, function()
+                    page.scItemPage = 1
+                    setSetOffset(0, true)
+                    page:Refresh()
+                end)
             end
         end, "MENU")
         dropDown.scSoloCollectionsInitialized = true
@@ -3185,6 +3242,9 @@ function UI.CreateWardrobePage(parent)
         else
             UI.HideEmptyState(itemEmpty)
             selectItem(selected or records[1])
+        end
+        if SC.NewAppearances and SC.NewAppearances.RefreshSlotBadges then
+            SC.NewAppearances.RefreshSlotBadges(page)
         end
     end
 
@@ -3302,7 +3362,8 @@ function UI.CreateWardrobePage(parent)
     end
 
     function page:Refresh()
-        if not SC.db then return end
+        if not SC.db or self.scRefreshing then return end
+        self.scRefreshing = true
         self.scRuntimeAuditActive = nil
         self:SyncDedicatedFilters()
         if SC.db.wardrobeTab == "ITEMS" then
@@ -3311,6 +3372,7 @@ function UI.CreateWardrobePage(parent)
             refreshSets()
         end
         self:SyncFilters()
+        self.scRefreshing = nil
     end
 
     function page:ApplyAppearanceCollectionChange(change)
@@ -3332,6 +3394,9 @@ function UI.CreateWardrobePage(parent)
                 refreshItems()
             else
                 EzItems:ApplyCollectionDelta(self.scItemModels, change.collectionId, collected, self.scItemSelectedId)
+                if SC.NewAppearances and SC.NewAppearances.RefreshSlotBadges then
+                    SC.NewAppearances.RefreshSlotBadges(self)
+                end
                 local owned, total = itemDataProvider:GetProgress()
                 self.scItemCollected = owned
                 self.scItemTotal = total
@@ -3364,13 +3429,10 @@ function UI.CreateWardrobePage(parent)
             return
         end
         if event == "UNIT_MODEL_CHANGED" then
-            local unit = ...
-            if unit == "player" then
-                cancelSetPreview()
-                if self:IsShown() and SC.db and SC.db.wardrobeTab == "SETS" then
-                    self:Refresh()
-                end
-            end
+            -- DressUpModel:SetUnit("player") and item-card ClearModel fire this
+            -- for "player" on 3.3.5. Cancel+Refresh here blacks the set preview
+            -- and re-enters refreshSets (Lua error / only the first set works).
+            -- The set actor is a full TryOn outfit, not a live player mirror.
             return
         end
         if not self:IsShown() then return end

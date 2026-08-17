@@ -30,9 +30,162 @@ local DEFAULT_FILTERS = {
     pets = {
         hiddenSources = {},
     },
+    appearances = {
+        hiddenSources = {},
+    },
 }
 
-local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true }
+local APPEARANCE_SOURCE_KIND_ALIASES = {
+    drop = "drop",
+    gameobject = "drop",
+    container = "drop",
+    quest = "quest",
+    vendor = "vendor",
+    crafted = "crafted",
+}
+
+Catalog.APPEARANCE_SOURCE_KINDS = {
+    { key = "drop", label = "掉落" },
+    { key = "quest", label = "任务" },
+    { key = "vendor", label = "商人" },
+    { key = "crafted", label = "专业" },
+}
+
+function Catalog.NormalizeAppearanceSourceKind(kind)
+    if type(kind) ~= "string" then
+        return nil
+    end
+    return APPEARANCE_SOURCE_KIND_ALIASES[kind]
+end
+
+local WEAPON_SLOTS = { MAINHAND = true, OFFHAND = true, RANGED = true }
+local RANGED_WEAPON_TYPES = {
+    BOW = true,
+    GUN = true,
+    CROSSBOW = true,
+    THROWN = true,
+    WAND = true,
+}
+
+Catalog.WEAPON_FILTERS = {
+    { key = "ONE_HAND_AXE", label = "单手斧", main = true, off = true },
+    { key = "TWO_HAND_AXE", label = "双手斧", main = true },
+    { key = "BOW", label = "弓", main = true },
+    { key = "GUN", label = "枪械", main = true },
+    { key = "ONE_HAND_MACE", label = "单手锤", main = true, off = true },
+    { key = "TWO_HAND_MACE", label = "双手锤", main = true },
+    { key = "POLEARM", label = "长柄武器", main = true },
+    { key = "ONE_HAND_SWORD", label = "单手剑", main = true, off = true },
+    { key = "TWO_HAND_SWORD", label = "双手剑", main = true },
+    { key = "STAFF", label = "法杖", main = true },
+    { key = "FIST_WEAPON", label = "拳套", main = true, off = true },
+    { key = "DAGGER", label = "匕首", main = true, off = true },
+    { key = "THROWN", label = "投掷武器", main = true },
+    { key = "CROSSBOW", label = "弩", main = true },
+    { key = "WAND", label = "魔杖", main = true },
+    { key = "FISHING_POLE", label = "钓鱼竿", main = true },
+    { key = "SHIELD", label = "盾牌", off = true },
+    { key = "OFFHAND_ITEM", label = "副手物品", off = true },
+}
+
+function Catalog.IsWeaponFilterSlot(slot)
+    return slot == "MAINHAND" or slot == "OFFHAND" or slot == "RANGED"
+end
+
+function Catalog.IsArmorFilterSlot(slot)
+    return slot and not WEAPON_SLOTS[slot]
+end
+
+function Catalog.ResolveArmorTypeForQuery(filters)
+    local selected = filters and filters.armorType
+    if selected == "ALL" then
+        return "ALL"
+    end
+    if selected and selected ~= "AUTO" then
+        return selected
+    end
+    local Identity = SC.IdentityRegistry
+    local resolved = Identity and Identity.GetDefaultArmorType and Identity.GetDefaultArmorType()
+    return resolved or "PLATE"
+end
+
+function Catalog.WeaponFilterSupportsSlot(option, slot)
+    if not option then
+        return false
+    end
+    if slot == "RANGED" then
+        return RANGED_WEAPON_TYPES[option.key] and true or false
+    end
+    if slot == "MAINHAND" then
+        return option.main and not RANGED_WEAPON_TYPES[option.key]
+    end
+    if slot == "OFFHAND" then
+        return option.off and true or false
+    end
+    return false
+end
+
+function Catalog.GetAvailableWeaponFilters(slot)
+    local result = {}
+    local allowed
+    if SC.IdentityRegistry and SC.IdentityRegistry.GetWeaponTypes then
+        if slot == "RANGED" then
+            allowed = SC.IdentityRegistry.GetWeaponTypes("MAINHAND")
+        else
+            allowed = SC.IdentityRegistry.GetWeaponTypes(slot)
+        end
+    end
+    local hasAllowed = false
+    if type(allowed) == "table" then
+        for _ in pairs(allowed) do
+            hasAllowed = true
+            break
+        end
+    end
+    for _, option in ipairs(Catalog.WEAPON_FILTERS) do
+        if Catalog.WeaponFilterSupportsSlot(option, slot)
+            and ((not hasAllowed) or allowed[option.key]) then
+            result[#result + 1] = option
+        end
+    end
+    -- Paladin/DK/Shaman mainhand lists have no bow/gun/wand. The journal still
+    -- shows a Ranged slot, so fall back to every ranged family rather than an
+    -- empty dropdown that crashes Refresh.
+    if slot == "RANGED" and #result == 0 then
+        for _, option in ipairs(Catalog.WEAPON_FILTERS) do
+            if Catalog.WeaponFilterSupportsSlot(option, slot) then
+                result[#result + 1] = option
+            end
+        end
+    end
+    return result
+end
+
+function Catalog.EnsureWeaponTypeForSlot(filters, slot)
+    if type(filters) ~= "table" then
+        return "AUTO"
+    end
+    local options = Catalog.GetAvailableWeaponFilters(slot)
+    for _, option in ipairs(options) do
+        if filters.weaponType == option.key then
+            return option.key
+        end
+    end
+    filters.weaponType = options[1] and options[1].key or "AUTO"
+    return filters.weaponType
+end
+
+function Catalog.WeaponFilterLabel(weaponType)
+    if not weaponType or weaponType == "AUTO" or weaponType == "ALL" then
+        return nil
+    end
+    for _, option in ipairs(Catalog.WEAPON_FILTERS) do
+        if option.key == weaponType then
+            return option.label
+        end
+    end
+    return weaponType
+end
 local generatedMountSource = nil
 local generatedCompanionSource = nil
 local generatedToySource = nil
@@ -248,18 +401,31 @@ local function getGeneratedAppearanceSource()
                     weaponType = string.match(alias, "^weapon:(.+)$") or weaponType
                 end
             end
+            -- Canonical aliases stamp bows/guns as MAINHAND; WotLK transmog
+            -- uses inventory slot 17 for those weapon families.
+            if RANGED_WEAPON_TYPES[weaponType] then
+                slot = "RANGED"
+            end
             if #itemIds == 0 and tonumber(collection.displayItemId) then
                 itemIds[1] = tonumber(collection.displayItemId)
             end
             local acquisitionSources = SC.GeneratedWardrobeAcquisitionSources and
                 SC.GeneratedWardrobeAcquisitionSources.itemSources or nil
             local acquisitionSource
+            local sourceKind
             if acquisitionSources then
                 for _, sourceItemId in ipairs(itemIds) do
                     local sourceRecord = acquisitionSources[tonumber(sourceItemId)]
-                    if sourceRecord and sourceRecord.text and sourceRecord.text ~= "" then
-                        acquisitionSource = sourceRecord.text
-                        break
+                    if sourceRecord then
+                        if not sourceKind then
+                            sourceKind = Catalog.NormalizeAppearanceSourceKind(sourceRecord.kind)
+                        end
+                        if (not acquisitionSource) and sourceRecord.text and sourceRecord.text ~= "" then
+                            acquisitionSource = sourceRecord.text
+                        end
+                        if acquisitionSource and sourceKind then
+                            break
+                        end
                     end
                 end
             end
@@ -295,6 +461,7 @@ local function getGeneratedAppearanceSource()
                 name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
                 icon = nil,
                 source = acquisitionSource or "获取方式未记录",
+                sourceKind = sourceKind,
                 description = "canonical 外观；来源物品可追溯。",
                 collected = false,
                 favorite = false,
@@ -715,6 +882,17 @@ local function petFilterMatches(record, filters)
     return not (type(hiddenSources) == "table" and sourceType ~= nil and hiddenSources[sourceType])
 end
 
+local function appearanceSourceMatches(record, filters)
+    local appearanceFilters = filters.appearances or DEFAULT_FILTERS.appearances
+    local hiddenSources = appearanceFilters.hiddenSources
+    local sourceKind = record.sourceKind
+    -- Unmapped appearances fail open: missing kind never hides a row.
+    if sourceKind == nil or sourceKind == "" then
+        return true
+    end
+    return not (type(hiddenSources) == "table" and hiddenSources[sourceKind])
+end
+
 local function metadataMatches(record, query)
     query = string.lower(tostring(query or ""))
     query = string.gsub(query, "^%s+", "")
@@ -812,6 +990,15 @@ local function filterMatches(category, record, query, filters, includeCollection
         return false
     end
     if category == "APPEARANCES" and not weaponTypeMatches(record, filters) then
+        return false
+    end
+    if category == "APPEARANCES" and filters.hideRangedWeapons then
+        local weaponType = resolvedWeaponType(record)
+        if weaponType == "BOW" or weaponType == "GUN" or weaponType == "CROSSBOW" then
+            return false
+        end
+    end
+    if category == "APPEARANCES" and not appearanceSourceMatches(record, filters) then
         return false
     end
     return metadataMatches(record, query)

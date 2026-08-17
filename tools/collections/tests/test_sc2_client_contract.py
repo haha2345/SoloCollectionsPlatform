@@ -109,6 +109,36 @@ class SC2ClientContractTests(unittest.TestCase):
         category_keys = state[state.index("local CATEGORY_TYPE_KEYS"):state.index("local INTERNAL_PROJECTION_TYPES")]
         self.assertNotIn("companion-favorite", category_keys)
 
+    def test_wardrobe_projections_are_internal_and_do_not_use_appearance_hash(self):
+        state = (ADDON / "Core/CollectionState.lua").read_text(encoding="utf-8")
+        bridge = (ADDON / "Core/Bridge.lua").read_text(encoding="utf-8")
+        lab = (ADDON / "UI/WardrobeLab/State.lua").read_text(encoding="utf-8")
+        self.assertIn('[18] = { typeId = 18, typeKey = "character-applied"', state)
+        self.assertIn('[19] = { typeId = 19, typeKey = "account-outfit"', state)
+        self.assertIn('[20] = { typeId = 20, typeKey = "appearance-new"', state)
+        self.assertIn('mappingSourceKey = "appearance"', state)
+        self.assertIn("f09cf3e459d598eef49d2d1b56c76b5f36939e7023bce18291a7b51ec393e814", state)
+        self.assertIn("ef7629703270ae32078c089e505474f952caa1db778a5ea737abe9a1f7fc0ec5", state)
+        self.assertIn("CS.IsAppliedReady", state)
+        self.assertIn("CS.GetAccountOutfits", state)
+        self.assertNotIn("accountRevision = transfer.baseRevision", state.split("if transfer.typeId == 18")[1].split("if transfer.typeId == 19")[0])
+        self.assertIn('tostring(SC.VERSION or "unknown") .. "-w1"', bridge)
+        self.assertIn("function B.QuoteApply", bridge)
+        self.assertIn("function B.ApplyPending", bridge)
+        self.assertIn("function B.ClearApplied", bridge)
+        self.assertIn("function B.SaveOutfit", bridge)
+        self.assertIn("id = 2", lab)
+        self.assertIn("ApplyPending", lab)
+        self.assertIn("BuildSetIntentEntries", lab)
+        self.assertIn("quotedCopper", lab)
+        self.assertIn("SyncEquippedTrust", lab)
+        self.assertIn("ignoredAppliedSlots", lab)
+        self.assertIn("overlay.itemId == equippedId", lab)
+        category_keys = state[state.index("local CATEGORY_TYPE_KEYS"):state.index("local INTERNAL_PROJECTION_TYPES")]
+        self.assertNotIn("character-applied", category_keys)
+        self.assertNotIn("account-outfit", category_keys)
+        self.assertNotIn("appearance-new", category_keys)
+
 
 if __name__ == "__main__":
     unittest.main()

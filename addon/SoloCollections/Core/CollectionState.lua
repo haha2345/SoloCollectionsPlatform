@@ -37,8 +37,18 @@ local CATEGORY_TYPE_KEYS = {
 
 -- Internal projections participate in SC2 snapshots/deltas but never resolve
 -- through page category keys, so they cannot enter navigation or progress.
+local APPLIED_MAPPING_HASH = "f09cf3e459d598eef49d2d1b56c76b5f36939e7023bce18291a7b51ec393e814"
+local OUTFIT_MAPPING_HASH = "ef7629703270ae32078c089e505474f952caa1db778a5ea737abe9a1f7fc0ec5"
+local WARDROBE_SLOT_KEYS = {
+    "HEAD", "SHOULDER", "BACK", "CHEST", "SHIRT", "TABARD", "WRIST",
+    "HANDS", "WAIST", "LEGS", "FEET", "MAINHAND", "OFFHAND", "RANGED",
+}
+
 local INTERNAL_PROJECTION_TYPES = {
     [17] = { typeId = 17, typeKey = "companion-favorite", mappingSourceKey = "companion" },
+    [18] = { typeId = 18, typeKey = "character-applied", mappingHash = APPLIED_MAPPING_HASH },
+    [19] = { typeId = 19, typeKey = "account-outfit", mappingHash = OUTFIT_MAPPING_HASH },
+    [20] = { typeId = 20, typeKey = "appearance-new", mappingSourceKey = "appearance" },
 }
 
 local typeDefinitions = {}
@@ -64,7 +74,9 @@ local function rebuildTypeDefinitions()
         if not typeDefinitions[typeId] then
             typeDefinitions[typeId] = definition
             typeIdByKey[definition.typeKey] = typeId
-            if generated.typeMappingHashes then
+            if definition.mappingHash then
+                expectedHashByTypeId[typeId] = definition.mappingHash
+            elseif generated.typeMappingHashes then
                 expectedHashByTypeId[typeId] = generated.typeMappingHashes[definition.mappingSourceKey]
             end
         end
@@ -292,6 +304,9 @@ local function applyDelta(delta)
         category.owned[delta.collectionId] = nil
     end
     CS.accountRevision = delta.revision
+    if SC.NewAppearances and SC.NewAppearances.OnDelta then
+        SC.NewAppearances.OnDelta(delta)
+    end
     notifyChanged(delta.typeId, {
         kind = "DELTA",
         collectionId = delta.collectionId,
@@ -351,13 +366,128 @@ local function failTransfer(transfer, reason, now)
     refreshGlobalState(transfer.typeId)
 end
 
-local function commitSnapshot(transfer, payload)
-    local owned = parseOwnedPayload(payload)
-    if not owned then
-        return false
+local function parseAppliedPayload(payload)
+    if type(payload) ~= "string" or payload == "" then
+        return nil
     end
+    local values, count, start = {}, 0, 1
+    while true do
+        local separator = string.find(payload, ",", start, true)
+        local token = separator and string.sub(payload, start, separator - 1) or string.sub(payload, start)
+        count = count + 1
+        if token == "-" then
+            values[count] = 0
+        else
+            if not isCanonicalDecimal(token, 10) then
+                return nil
+            end
+            local collectionId = tonumber(token)
+            if not collectionId or collectionId < 1 then
+                return nil
+            end
+            values[count] = collectionId
+        end
+        if not separator then
+            break
+        end
+        start = separator + 1
+    end
+    if count ~= #WARDROBE_SLOT_KEYS then
+        return nil
+    end
+    local byKey = {}
+    for index, key in ipairs(WARDROBE_SLOT_KEYS) do
+        if values[index] ~= 0 then
+            byKey[key] = values[index]
+        end
+    end
+    return { values = values, byKey = byKey }
+end
+
+local function fromUtf8Hex(hex)
+    if type(hex) ~= "string" or #hex < 2 or #hex > 96 or #hex % 2 ~= 0
+        or not string.match(hex, "^[0-9a-f]+$") then
+        return nil
+    end
+    local chars = {}
+    for index = 1, #hex, 2 do
+        chars[#chars + 1] = string.char(tonumber(string.sub(hex, index, index + 1), 16))
+    end
+    return table.concat(chars)
+end
+
+local function parseOutfitPayload(payload)
+    if payload == "-" then
+        return {}
+    end
+    if type(payload) ~= "string" or payload == "" then
+        return nil
+    end
+    local outfits, start = {}, 1
+    while true do
+        local separator = string.find(payload, ";", start, true)
+        local row = separator and string.sub(payload, start, separator - 1) or string.sub(payload, start)
+        local uidText, nameHex, slotsCsv = string.match(row, "^(%d+):([0-9a-f]+):(.+)$")
+        if not uidText then
+            return nil
+        end
+        local slots = parseAppliedPayload(slotsCsv)
+        local name = fromUtf8Hex(nameHex)
+        local uid = tonumber(uidText)
+        if not slots or not name or not uid or uid < 1 then
+            return nil
+        end
+        outfits[#outfits + 1] = {
+            uid = uid,
+            name = name,
+            nameHex = nameHex,
+            slots = slots.byKey,
+            slotValues = slots.values,
+        }
+        if not separator then
+            break
+        end
+        start = separator + 1
+    end
+    return outfits
+end
+
+local function commitSnapshot(transfer, payload)
     local category = categoryFor(transfer.typeId)
     if not category or category.state == "Mismatch" then
+        return false
+    end
+    if transfer.typeId == 18 then
+        local applied = parseAppliedPayload(payload)
+        if not applied then
+            return false
+        end
+        category.appliedSlots = applied.byKey
+        category.appliedValues = applied.values
+        category.hasSnapshot = true
+        category.state = "Ready"
+        category.revision = transfer.baseRevision
+        category.lastError = nil
+        CS.pendingTransfers[transfer.transferId] = nil
+        refreshGlobalState(transfer.typeId)
+        return true
+    end
+    if transfer.typeId == 19 then
+        local outfits = parseOutfitPayload(payload)
+        if not outfits then
+            return false
+        end
+        category.outfits = outfits
+        category.hasSnapshot = true
+        category.state = "Ready"
+        category.revision = transfer.baseRevision
+        category.lastError = nil
+        CS.pendingTransfers[transfer.transferId] = nil
+        refreshGlobalState(transfer.typeId)
+        return true
+    end
+    local owned = parseOwnedPayload(payload)
+    if not owned then
         return false
     end
     category.owned = owned
@@ -430,6 +560,11 @@ local function handleCategoryMap(fields)
     if not typeId or not isLowerHex(fields[4], 64) then
         return nil
     end
+    if not typeDefinitions[typeId] then
+        receivedMappingCount = receivedMappingCount + 1
+        refreshGlobalState()
+        return "CATEGORY_MAP"
+    end
     local category = CS.categories[typeId]
     if not category then
         category = { typeId = typeId, typeKey = "unknown", owned = {}, hasSnapshot = false }
@@ -501,7 +636,7 @@ local function handleSnapshotChunk(fields, now)
     local payload = fields[5]
     local transfer = transferId and CS.pendingTransfers[transferId] or nil
     if not transfer or not seq or seq > transfer.total or #payload < 1 or #payload > MAX_CHUNK_BYTES or
-        not string.match(payload, "^[0-9a-z,%-]+$") then
+        not string.match(payload, "^[0-9a-z,%-:;]+$") then
         return nil
     end
     if transfer.chunks[seq] then
@@ -556,6 +691,9 @@ local function handleDelta(fields, now)
     if not typeId or not revision or not operation or not collectionId then
         return nil
     end
+    if typeId == 18 or typeId == 19 then
+        return "DELTA"
+    end
     if compareDecimal(revision, CS.accountRevision) <= 0 then
         return "DELTA"
     end
@@ -606,6 +744,17 @@ local function handleActionResult(fields)
     return "ACTION_RESULT", fields
 end
 
+local function handleWardrobeQuote(fields)
+    if #fields ~= 6 or fields[2] ~= CS.sessionNonce or
+        not parseBoundedInteger(fields[3], 10, 1, 4294967295) or
+        not string.match(fields[4], "^[A-Z_]+$") or
+        not isCanonicalDecimal(fields[5], 10) or
+        not isLowerHex(fields[6], 8) then
+        return nil
+    end
+    return "WARDROBE_QUOTE", fields
+end
+
 function CS.SetSender(callback)
     sender = callback
 end
@@ -634,7 +783,7 @@ end
 function CS.HandleMessage(message, now)
     now = tonumber(now) or 0
     if type(message) ~= "string" or #message < 1 or #message > MAX_BODY_BYTES or
-        string.find(message, "[^%w|%._~,%-%:]" ) then
+        string.find(message, "[^%w|%._~,%-%:;]") then
         return nil
     end
     local fields = splitFields(message)
@@ -651,6 +800,7 @@ function CS.HandleMessage(message, now)
     if code == "E" then return handleSnapshotEnd(fields, now) end
     if code == "D" then return handleDelta(fields, now) end
     if code == "R" then return handleActionResult(fields) end
+    if code == "U" then return handleWardrobeQuote(fields) end
     if code == "X" then return handleError(fields) end
     return nil
 end
@@ -708,4 +858,38 @@ end
 function CS.IsOwnedByType(typeId, collectionId)
     local category = CS.categories[tonumber(typeId)]
     return category and category.state == "Ready" and category.owned[tonumber(collectionId)] == true or false
+end
+
+function CS.GetOwnedSet(typeId)
+    local category = CS.categories[tonumber(typeId)]
+    if not category or category.state ~= "Ready" then
+        return nil
+    end
+    return category.owned
+end
+
+function CS.IsAppliedReady()
+    local category = CS.categories[18]
+    return category and category.state == "Ready" or false
+end
+
+function CS.GetAppliedSlots()
+    local category = CS.categories[18]
+    if not category or category.state ~= "Ready" then
+        return nil
+    end
+    return category.appliedSlots or {}
+end
+
+function CS.IsOutfitReady()
+    local category = CS.categories[19]
+    return category and category.state == "Ready" or false
+end
+
+function CS.GetAccountOutfits()
+    local category = CS.categories[19]
+    if not category or category.state ~= "Ready" then
+        return nil
+    end
+    return category.outfits or {}
 end

@@ -47,9 +47,18 @@ local PORTRAITS = {
         dragonUI = true,
     },
     TRANSMOG_LAB = {
-        relative = "Interface\\Icons\\INV_Arcane_Orb.blp",
-        fallback = function() return UI.Media and UI.Media.tabs and UI.Media.tabs.TRANSMOG_LAB end,
-        texCoord = { 0.07, 0.93, 0.07, 0.93 },
+        texture = function()
+            if Assets and type(Assets.Path) == "function" then
+                return Assets.Path("Textures\\UI-MicroButton-Transmogrify-Up.tga")
+            end
+            if SC.RetailUI and type(SC.RetailUI.GetWardrobePortraitPath) == "function" then
+                return SC.RetailUI.GetWardrobePortraitPath()
+            end
+            return "Interface\\Icons\\INV_Chest_Cloth_17"
+        end,
+        fallback = "Interface\\Icons\\INV_Chest_Cloth_17",
+        texCoord = { 0, 1, 0, 1 },
+        precut = true,
     },
 }
 
@@ -105,6 +114,96 @@ function Ez:UpdateBodyCanvas(frame)
         texture:SetTexCoord(0, width / 256, 0, height / 256)
     else
         texture:SetTexCoord(0, 1, 0, 1)
+    end
+end
+
+local function hideInsetTiles(inset)
+    if not inset or not inset.tiles then return end
+    for index = 1, #inset.tiles do
+        inset.tiles[index]:Hide()
+    end
+end
+
+local function insetFrameSize(frame)
+    local width = frame:GetWidth() or 0
+    local height = frame:GetHeight() or 0
+    local left, right = frame:GetLeft(), frame:GetRight()
+    local bottom, top = frame:GetBottom(), frame:GetTop()
+    -- 3.3.5 GetWidth/GetHeight can stay on the XML Size after SetPoint
+    -- stretch. Prefer the larger screen-space box so marble tiles cover
+    -- the pagination strip instead of leaving the journal body color.
+    if left and right then
+        width = math.max(width, right - left)
+    end
+    if top and bottom then
+        height = math.max(height, top - bottom)
+    end
+    return width, height
+end
+
+function Ez:ScheduleInsetUpdate(frame)
+    if not frame then return end
+    if not frame.scEzCollectionsInsetUpdater then
+        local updater = CreateFrame("Frame", nil, frame)
+        updater:Hide()
+        updater:SetScript("OnUpdate", function(self)
+            self:Hide()
+            Ez:UpdateInset(frame)
+        end)
+        frame.scEzCollectionsInsetUpdater = updater
+    end
+    frame.scEzCollectionsInsetUpdater:Show()
+end
+
+function Ez:UpdateInset(frame)
+    local inset = frame and frame.scEzCollectionsInset
+    local background = inset and inset.background
+    if not background then return end
+    -- 3.3.5 often cannot wrap a single tiled texture, so HorizTile+TexCoord
+    -- leaves a native-size strip. Repeat native 256px pieces instead.
+    if not background.scEzCollectionsTiled then
+        hideInsetTiles(inset)
+        background:Show()
+        return
+    end
+    local width, height = insetFrameSize(frame)
+    if width < 1 or height < 1 then
+        self:ScheduleInsetUpdate(frame)
+        return
+    end
+    local tile = background.scEzCollectionsTileSize or 256
+    local path = background.scEzCollectionsPath
+    if not path then return end
+    background:Hide()
+    inset.tiles = inset.tiles or {}
+    local index = 0
+    local row = 0
+    while row * tile < height do
+        local col = 0
+        while col * tile < width do
+            index = index + 1
+            local tex = inset.tiles[index]
+            if not tex then
+                tex = frame:CreateTexture(nil, "BACKGROUND")
+                inset.tiles[index] = tex
+            end
+            local tw = math.min(tile, width - col * tile)
+            local th = math.min(tile, height - row * tile)
+            tex:ClearAllPoints()
+            tex:SetTexture(path)
+            if tex.SetHorizTile then tex:SetHorizTile(false) end
+            if tex.SetVertTile then tex:SetVertTile(false) end
+            tex:SetWidth(tw)
+            tex:SetHeight(th)
+            tex:SetPoint("TOPLEFT", frame, "TOPLEFT", col * tile, -row * tile)
+            tex:SetTexCoord(0, tw / tile, 0, th / tile)
+            tex:Show()
+            col = col + 1
+        end
+        row = row + 1
+    end
+    for extra = index + 1, #inset.tiles do
+        inset.tiles[extra]:Hide()
     end
 end
 
@@ -257,7 +356,14 @@ function Ez:ApplyInset(frame)
     background:SetAllPoints(frame)
     background:SetHorizTile(true)
     background:SetVertTile(true)
-    if marble == WHITE_TEXTURE then background:SetVertexColor(0.08, 0.07, 0.055, 0.98) end
+    background.scEzCollectionsPath = marble
+    if marble == WHITE_TEXTURE then
+        background:SetVertexColor(0.08, 0.07, 0.055, 0.98)
+        background.scEzCollectionsTiled = false
+    else
+        background.scEzCollectionsTiled = true
+        background.scEzCollectionsTileSize = 256
+    end
 
     local topLeft = makeTexture(frame, "BORDER", frameAtlas, 6, 6, {
         0.63281250, 0.67968750, 0.54687500, 0.59375000,
@@ -304,6 +410,18 @@ function Ez:ApplyInset(frame)
         left = left,
         right = right,
     }
+    if not frame.scEzCollectionsInsetHooked then
+        frame.scEzCollectionsInsetHooked = true
+        if frame.HookScript then
+            frame:HookScript("OnSizeChanged", function(self)
+                Ez:UpdateInset(self)
+            end)
+            frame:HookScript("OnShow", function(self)
+                Ez:UpdateInset(self)
+            end)
+        end
+    end
+    self:UpdateInset(frame)
     return frame.scEzCollectionsInset
 end
 
@@ -518,6 +636,13 @@ local function setAtlasPixels(texture, path, atlasWidth, atlasHeight, left, righ
     )
 end
 
+local function placeItemChrome(texture, width, height)
+    texture:ClearAllPoints()
+    texture:SetWidth(width)
+    texture:SetHeight(height)
+    texture:SetPoint("CENTER", texture:GetParent(), "CENTER", 0, -3)
+end
+
 function Ez:CreateWardrobeItemChrome(parent)
     local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
     local collections = self:MediaPath("Collections", "Collections.tga", WHITE_TEXTURE)
@@ -526,37 +651,46 @@ function Ez:CreateWardrobeItemChrome(parent)
     border:SetAllPoints(parent)
     border:SetFrameLevel(parent:GetFrameLevel() + 1)
     local borderTexture = border:CreateTexture(nil, "OVERLAY")
-    borderTexture:SetPoint("CENTER", border, "CENTER", 0, -3)
+    placeItemChrome(borderTexture, 94, 120)
     function border:SetCollected(value)
         self.scCollected = value and true or false
         if self.scCollected then
-            borderTexture:SetWidth(96)
-            borderTexture:SetHeight(122)
-            setAtlasPixels(borderTexture, transmog, 512, 512, 1, 97, 131, 253)
+            setAtlasPixels(borderTexture, transmog, 512, 512, 2, 96, 132, 252)
         else
-            borderTexture:SetWidth(96)
-            borderTexture:SetHeight(122)
-            setAtlasPixels(borderTexture, transmog, 512, 512, 1, 97, 255, 377)
+            setAtlasPixels(borderTexture, transmog, 512, 512, 2, 96, 256, 376)
         end
+        placeItemChrome(borderTexture, 94, 120)
     end
 
+    -- Legion/ez TransmogStateTexture stays at atlas pixel size and sits on
+    -- the card with CENTER 0,-3. Stretching those tiles to 78x104 warps the
+    -- frame into a heavy vignette.
     local selected = CreateFrame("Frame", nil, parent)
     selected:SetAllPoints(parent)
     selected:SetFrameLevel(parent:GetFrameLevel() + 2)
     local selectedTexture = selected:CreateTexture(nil, "OVERLAY")
-    selectedTexture:SetWidth(102)
-    selectedTexture:SetHeight(128)
-    selectedTexture:SetPoint("CENTER")
     selectedTexture:SetBlendMode("ADD")
-    setAtlasPixels(selectedTexture, transmog, 512, 512, 1, 103, 1, 129)
+    setAtlasPixels(selectedTexture, transmog, 512, 512, 101, 199, 3, 127)
+    placeItemChrome(selectedTexture, 98, 124)
     selected:Hide()
 
+    local applied = CreateFrame("Frame", nil, parent)
+    applied:SetAllPoints(parent)
+    applied:SetFrameLevel(parent:GetFrameLevel() + 2)
+    local appliedTexture = applied:CreateTexture(nil, "OVERLAY")
+    appliedTexture:SetBlendMode("ADD")
+    setAtlasPixels(appliedTexture, transmog, 512, 512, 3, 97, 3, 127)
+    placeItemChrome(appliedTexture, 94, 124)
+    applied:Hide()
+
+    function parent:SetApplied(value)
+        if value then applied:Show() else applied:Hide() end
+    end
+
     local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
-    highlight:SetWidth(84)
-    highlight:SetHeight(110)
-    highlight:SetPoint("CENTER")
     highlight:SetBlendMode("ADD")
-    setAtlasPixels(highlight, transmog, 512, 512, 105, 189, 225, 335)
+    setAtlasPixels(highlight, transmog, 512, 512, 107, 187, 227, 333)
+    placeItemChrome(highlight, 80, 106)
 
     local favorite = CreateFrame("Frame", nil, parent)
     favorite:SetWidth(31)
@@ -568,11 +702,46 @@ function Ez:CreateWardrobeItemChrome(parent)
     setAtlasPixels(favoriteTexture, collections, 512, 512, 93, 124, 7, 40)
     favorite:Hide()
 
+    local hideVisual = CreateFrame("Frame", nil, parent)
+    hideVisual:SetWidth(36)
+    hideVisual:SetHeight(30)
+    hideVisual:SetPoint("TOPLEFT", parent, "TOPLEFT", -12, 13)
+    hideVisual:SetFrameLevel(parent:GetFrameLevel() + 5)
+    local hideTexture = hideVisual:CreateTexture(nil, "OVERLAY")
+    hideTexture:SetAllPoints(hideVisual)
+    setAtlasPixels(hideTexture, transmog, 512, 512, 412, 448, 88, 118)
+    hideVisual:Hide()
+
+    function parent:SetHideVisual(value)
+        if value then hideVisual:Show() else hideVisual:Hide() end
+    end
+
+    -- Legion PendingTransmogFrame.UndoIcon: shown on the base appearance
+    -- when the slot will revert to the real item.
+    local textures = self:MediaPath("Transmogrify", "Textures.tga", WHITE_TEXTURE)
+    local undo = CreateFrame("Frame", nil, parent)
+    undo:SetWidth(24)
+    undo:SetHeight(22)
+    undo:SetPoint("TOPRIGHT", parent, "TOPRIGHT", 6, 8)
+    undo:SetFrameLevel(parent:GetFrameLevel() + 6)
+    local undoTexture = undo:CreateTexture(nil, "OVERLAY")
+    undoTexture:SetAllPoints(undo)
+    undoTexture:SetTexture(textures)
+    undoTexture:SetTexCoord(0.1796875, 0.3671875, 0.58203125, 0.625)
+    undo:Hide()
+
+    function parent:SetUndo(value)
+        if value then undo:Show() else undo:Hide() end
+    end
+
     border:SetCollected(false)
     border.scTexture = borderTexture
     selected.scTexture = selectedTexture
+    applied.scTexture = appliedTexture
     favorite.scTexture = favoriteTexture
-    return border, selected, favorite, highlight
+    parent.scHideVisual = hideVisual
+    parent.scApplied = applied
+    return border, selected, favorite, highlight, applied
 end
 
 function Ez:CreateWardrobeSetChrome(parent)
@@ -628,6 +797,25 @@ function Ez:CreateWardrobeSetChrome(parent)
     return border, selected, favorite, highlight
 end
 
+local function animateTexCoords(texture, textureWidth, textureHeight, frameWidth, frameHeight, numFrames, elapsed, throttle)
+    if not texture then return end
+    texture.scAntsThrottle = (texture.scAntsThrottle or 0) + elapsed
+    if texture.scAntsThrottle < (throttle or 0.01) then return end
+    texture.scAntsThrottle = 0
+    local frame = (texture.scAntsFrame or 0) + 1
+    if frame > numFrames then frame = 1 end
+    texture.scAntsFrame = frame
+    local columns = math.floor(textureWidth / frameWidth)
+    if columns < 1 then return end
+    local column = (frame - 1) % columns
+    local row = math.floor((frame - 1) / columns)
+    local left = (column * frameWidth) / textureWidth
+    local right = ((column + 1) * frameWidth) / textureWidth
+    local top = (row * frameHeight) / textureHeight
+    local bottom = ((row + 1) * frameHeight) / textureHeight
+    texture:SetTexCoord(left, right, top, bottom)
+end
+
 function Ez:CreateTransmogSlotChrome(parent)
     local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
     local textures = self:MediaPath("Transmogrify", "Textures.tga", WHITE_TEXTURE)
@@ -669,6 +857,23 @@ function Ez:CreateTransmogSlotChrome(parent)
     pendingGlow:SetBlendMode("ADD")
     pendingGlow:Hide()
 
+    -- Legion/ez PendingFrame.Ants: 44×44, AnimateTexCoords 256/48 ×22.
+    -- 3.3.5 FrameXML has no AnimateTexCoords; keep a local copy.
+    local antsPath = self:MediaPath("Transmogrify", "PurpleIconAlertAnts.tga")
+        or self:MediaPath("Transmogrify", "PurpleIconAlertAnts.blp")
+    local ants = parent:CreateTexture(nil, "OVERLAY")
+    ants:SetWidth(44)
+    ants:SetHeight(44)
+    ants:SetPoint("CENTER")
+    if antsPath then ants:SetTexture(antsPath) end
+    ants:Hide()
+    local antsDriver = CreateFrame("Frame", nil, parent)
+    antsDriver:Hide()
+    antsDriver:SetScript("OnUpdate", function(_, elapsed)
+        if not (ants:IsShown() and antsPath) then return end
+        animateTexCoords(ants, 256, 256, 48, 48, 22, elapsed, 0.01)
+    end)
+
     local undo = parent:CreateTexture(nil, "OVERLAY")
     undo:SetWidth(24)
     undo:SetHeight(22)
@@ -677,13 +882,16 @@ function Ez:CreateTransmogSlotChrome(parent)
     undo:SetTexCoord(0.1796875, 0.3671875, 0.58203125, 0.625)
     undo:Hide()
 
-    local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
+    -- OVERLAY instead of HIGHLIGHT: 3.3.5 still lights the parent HIGHLIGHT
+    -- when the mouse is over a child empty-block.
+    local highlight = parent:CreateTexture(nil, "OVERLAY")
     highlight:SetWidth(44)
     highlight:SetHeight(41)
     highlight:SetPoint("CENTER")
     highlight:SetTexture(transmog)
     highlight:SetTexCoord(0.646484375, 0.732421875, 0.001953125, 0.08203125)
     highlight:SetBlendMode("ADD")
+    highlight:Hide()
 
     function parent:SetSlotSelected(value)
         if value then selected:Show() else selected:Hide() end
@@ -694,20 +902,92 @@ function Ez:CreateTransmogSlotChrome(parent)
             status:Show()
             pendingGlow:Show()
             undo:Show()
+            if antsPath then
+                ants:Show()
+                antsDriver:Show()
+            end
         else
             status:Hide()
             pendingGlow:Hide()
             undo:Hide()
+            ants:Hide()
+            antsDriver:Hide()
         end
+    end
+
+    local hiddenCover = parent:CreateTexture(nil, "ARTWORK")
+    hiddenCover:SetWidth(46)
+    hiddenCover:SetHeight(45)
+    hiddenCover:SetPoint("CENTER")
+    setAtlasPixels(hiddenCover, transmog, 512, 512, 191, 237, 1, 46)
+    hiddenCover:SetAlpha(0.6)
+    hiddenCover:Hide()
+
+    local hiddenIcon = parent:CreateTexture(nil, "ARTWORK")
+    hiddenIcon:SetWidth(36)
+    hiddenIcon:SetHeight(30)
+    hiddenIcon:SetPoint("CENTER")
+    setAtlasPixels(hiddenIcon, transmog, 512, 512, 412, 448, 88, 118)
+    hiddenIcon:SetAlpha(0.7)
+    hiddenIcon:Hide()
+
+    function parent:SetSlotHidden(value)
+        if value then
+            hiddenCover:Show()
+            hiddenIcon:Show()
+        else
+            hiddenCover:Hide()
+            hiddenIcon:Hide()
+        end
+    end
+
+    -- Legion / ez NoItemTexture: red X over the empty paperdoll icon.
+    local noItem = parent:CreateTexture(nil, "BORDER")
+    noItem:SetWidth(34)
+    noItem:SetHeight(34)
+    noItem:SetPoint("CENTER")
+    noItem:SetTexture(textures)
+    noItem:SetTexCoord(0.28906250, 0.55468750, 0.51171875, 0.57812500)
+    noItem:SetAlpha(0.75)
+    noItem:Hide()
+
+    function parent:SetSlotEmpty(value)
+        if value then noItem:Show() else noItem:Hide() end
     end
 
     parent.scIcon = icon
     parent.scBorder = border
     parent.scStatusBorder = status
     parent.scSelectedTexture = selected
+    parent.scSlotHighlight = highlight
     parent.scPendingGlow = pendingGlow
+    parent.scPendingAnts = ants
     parent.scUndoTexture = undo
+    parent.scHiddenCover = hiddenCover
+    parent.scHiddenIcon = hiddenIcon
+    parent.scNoItemTexture = noItem
     return icon, border, selected, status, pendingGlow, undo
+end
+
+function Ez:CreateTransmogEnchantChrome(parent)
+    local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
+
+    local icon = parent:CreateTexture(nil, "BACKGROUND")
+    icon:SetWidth(18)
+    icon:SetHeight(18)
+    icon:SetPoint("CENTER")
+    icon:Hide()
+
+    local border = parent:CreateTexture(nil, "BORDER")
+    border:SetWidth(40)
+    border:SetHeight(40)
+    border:SetPoint("CENTER")
+    setAtlasPixels(border, transmog, 512, 512, 377, 417, 1, 41)
+    border:SetAlpha(0.55)
+
+    parent.scIcon = icon
+    parent.scBorder = border
+    return icon, border
 end
 
 function Ez:CreateRotationButtons(model, onLeft, onRight)

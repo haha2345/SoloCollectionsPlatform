@@ -41,6 +41,7 @@ UI\EzWardrobe\Assets.lua
 UI\EzWardrobe\Model.lua
 UI\EzWardrobe\Items.xml
 UI\EzWardrobe\Items.lua
+UI\Wardrobe\NewAppearances.lua
 UI\Wardrobe\Filters.lua
 UI\CompanionBase.lua
 UI\Mounts.lua
@@ -48,12 +49,14 @@ UI\Pets.lua
 UI\Toys.lua
 UI\Wardrobe.lua
 UI\WardrobeLab\State.lua
+UI\WardrobeLab\Tooltip.lua
 UI\WardrobeLab\Slots.lua
 UI\WardrobeLab\Sources.lua
 UI\WardrobeLab\Outfits.lua
 UI\WardrobeLab\Preview.lua
 UI\WardrobeLab\Controller.lua
 UI\WardrobeLab\Layout.lua
+UI\WardrobeLab\Window.lua
 UI\CollectionsFrame.lua
 Core\Diagnostics.lua
 Core\Bootstrap.lua

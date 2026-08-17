@@ -16,7 +16,6 @@ SC.TABS = {
     "TOYS",
     "TITLES",
     "WARDROBE",
-    "TRANSMOG_LAB",
 }
 SC.WARDROBE_TABS = {
     "ITEMS",

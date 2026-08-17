@@ -10,6 +10,7 @@ from common import ADDON, ROOT, load_json, read_text
 MEDIA_MANIFEST = ADDON / "Media" / "assets.json"
 TEMPLATES = ADDON / "UI" / "Templates.lua"
 WARDROBE = ADDON / "UI" / "Wardrobe.lua"
+PREVIEW = ADDON / "UI" / "WardrobeLab" / "Preview.lua"
 EZ_WARDROBE_MODEL = ADDON / "UI" / "EzWardrobe" / "Model.lua"
 TRANSMORPHER_SETUP = ADDON / "Data" / "TransmorpherPreviewSetup.lua"
 PRESENTATIONS = ROOT / "tools" / "catalog" / "appearance_presentations.py"
@@ -27,6 +28,8 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
             "SHOULDER": "Shoulder",
             "BACK": "Back",
             "CHEST": "Chest",
+            "SHIRT": "Shirt",
+            "TABARD": "Tabard",
             "WRIST": "Wrist",
             "HANDS": "Hands",
             "WAIST": "Waist",
@@ -38,6 +41,7 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
             self.assertEqual(20, setup.count(f'["{transmorpher_slot}"] = {{'))
         self.assertIn('local armorData = raceData["Armor"]', model)
         self.assertIn('return armorData[slotName], slotName, "READY"', model)
+        self.assertIn('record.slot ~= "RANGED"', model)
 
     def test_armor_follows_the_transmorpher_reset_and_render_order(self):
         source = read_text(EZ_WARDROBE_MODEL)
@@ -148,14 +152,17 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
 
     def test_set_preview_is_generation_aware_and_undresses_before_tryon(self):
         source = read_text(WARDROBE)
+        preview = read_text(PREVIEW)
         self.assertIn("scSetPreviewGeneration", source)
-        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function previewSet)", source, re.S)
+        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function )", source, re.S)
         self.assertIsNotNone(queued)
         block = queued.group(1)
-        self.assertIn("Undress", block)
-        self.assertIn("TryOn", block)
-        self.assertLess(block.index("Undress"), block.index("TryOn"))
+        self.assertIn("Lab.PlayDressUp", block)
+        self.assertIn("undress = true", block)
         self.assertIn("scSetPreviewGeneration", block)
+        self.assertIn("if undress and frame.Undress then", preview)
+        self.assertIn("if frame.TryOn then pcall(frame.TryOn, frame, item) end", preview)
+        self.assertLess(preview.index("if undress and frame.Undress then"), preview.index("if frame.TryOn then pcall(frame.TryOn, frame, item) end"))
 
     def test_set_preview_uses_only_the_selected_variant_members(self):
         source = read_text(WARDROBE)
@@ -171,17 +178,20 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
 
     def test_set_preview_rejects_stale_work_and_cleans_pending_state(self):
         source = read_text(WARDROBE)
-        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function previewSet)", source, re.S)
+        queued = re.search(r"local function queueSetPreview\(record\)(.*?)(?=\n\s*local function )", source, re.S)
         self.assertIsNotNone(queued)
         block = queued.group(1)
-        self.assertIn("pending.renderTicks < 2", block)
-        self.assertIn('SC.db.wardrobeTab ~= "SETS"', block)
-        self.assertIn("page.scSetPreviewPending ~= pending", block)
-        self.assertIn("page.scSetPreviewGeneration ~= pending.generation", block)
+        self.assertIn("Lab.PlayDressUp", block)
+        self.assertIn("page.scSetPreviewPending == pending", block)
+        self.assertIn("page.scSetSelectedId == pending.recordId", block)
         self.assertIn("local function cancelSetPreview()", source)
+        self.assertIn("Lab.StopDressUp", source[source.index("local function cancelSetPreview()"):])
         self.assertIn("cancelSetPreview()", source[source.index("local function refreshItems()"):])
         self.assertIn('page:RegisterEvent("UNIT_MODEL_CHANGED")', source)
         self.assertIn('page:RegisterEvent("PLAYER_ENTERING_WORLD")', source)
+        handler = source[source.index('if event == "UNIT_MODEL_CHANGED" then'):]
+        self.assertIn("return", handler[:400])
+        self.assertNotIn("cancelSetPreview()", handler[:400])
 
     def test_set_preview_selects_one_deterministic_source_per_member_slot(self):
         source = read_text(WARDROBE)

@@ -105,7 +105,7 @@ class SetPresentationTests(unittest.TestCase):
         changed = copy.deepcopy(output["presentations"])
         changed[0]["sortRank"]["tier"] += 1
         self.assertNotEqual(output["presentationHash"], presentations.canonical_hash(changed))
-        self.assertEqual("2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf",
+        self.assertEqual("39aef8fce8133ac578b003e5cf990047396baaf07f66086a1aa89ca4b2f84af0",
                          self.normalized["mappingHash"])
 
     def test_addon_comparator_uses_rank_then_itemset_id(self):

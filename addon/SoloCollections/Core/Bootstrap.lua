@@ -1,17 +1,20 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 7,
+    schemaVersion = 10,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
+    transmogLauncher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -82, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
+    transmogFrame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
     mainTab = "MOUNTS",
     wardrobeTab = "ITEMS",
     uiPlatform = {
         uiShell = SC.DEFAULT_UI_SHELL or "DRAGONUI",
         positionMigrated = false,
     },
+    transmogOutfits = {},
     experimental = {
-        transmogLabEnabled = SC.BUILD_CHANNEL == "development",
+        transmogLabEnabled = true,
         modelProvider = "newera",
         modelProviderByKind = { CREATURE = "newera", DRESSUP = "newera", DISPLAY = "newera" },
     },
@@ -34,8 +37,14 @@ local DEFAULTS = {
         pets = {
             hiddenSources = {},
         },
+        appearances = {
+            hiddenSources = {},
+        },
     },
     favorites = {},
+    seenAppearanceIds = {},
+    newAppearanceIds = {},
+    newAppearancesSeeded = false,
     debug = false,
     bridge = {
         status = "idle",
@@ -59,18 +68,20 @@ local VALID_POINTS = {
 }
 
 local VALID_MAIN_TABS = {
-    MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true,
-    TRANSMOG_LAB = true, TITLES = true,
+    MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true, TITLES = true,
 }
 local VALID_WARDROBE_TABS = { ITEMS = true, SETS = true }
 local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()
 local VALID_SLOTS = {
     ALL = true, HEAD = true, SHOULDER = true, BACK = true, CHEST = true,
-    WRIST = true, HANDS = true, WAIST = true, LEGS = true, FEET = true,
-    MAINHAND = true, OFFHAND = true,
+    SHIRT = true, TABARD = true, WRIST = true, HANDS = true, WAIST = true,
+    LEGS = true, FEET = true, MAINHAND = true, OFFHAND = true, RANGED = true,
 }
 local VALID_ARMOR_TYPES = {
-    AUTO = true, PLATE = true, MAIL = true, LEATHER = true, CLOTH = true,
+    AUTO = true, ALL = true, PLATE = true, MAIL = true, LEATHER = true, CLOTH = true,
+}
+local VALID_APPEARANCE_SOURCE_KINDS = {
+    drop = true, quest = true, vendor = true, crafted = true,
 }
 local VALID_WEAPON_TYPES = {
     AUTO = true,
@@ -407,6 +418,7 @@ local function normalizeDatabase(db)
     end
 
     normalizePosition(db, "launcher", DEFAULTS.launcher)
+    normalizePosition(db, "transmogLauncher", DEFAULTS.transmogLauncher)
     repairScalar(db, "uiPlatform", "table", {})
     repairEnum(db.uiPlatform, "uiShell", { LEGACY = true, DRAGONUI = true }, DEFAULTS.uiPlatform.uiShell)
     repairScalar(db.uiPlatform, "positionMigrated", "boolean", DEFAULTS.uiPlatform.positionMigrated)
@@ -414,6 +426,10 @@ local function normalizeDatabase(db)
         db.frame = nil
     else
         normalizePosition(db, "frame", DEFAULTS.frame)
+    end
+    normalizePosition(db, "transmogFrame", DEFAULTS.transmogFrame)
+    if db.mainTab == "TRANSMOG_LAB" then
+        db.mainTab = "WARDROBE"
     end
     repairScalar(db, "experimental", "table", {})
     repairScalar(
@@ -428,9 +444,16 @@ local function normalizeDatabase(db)
         repairEnum(db.experimental.modelProviderByKind, kind, { legacy = true, newera = true }, fallback)
     end
     repairEnum(db, "mainTab", VALID_MAIN_TABS, DEFAULTS.mainTab)
-    if db.mainTab == "TRANSMOG_LAB" and not db.experimental.transmogLabEnabled then
-        db.mainTab = DEFAULTS.mainTab
+    db.experimental.transmogLabEnabled = true
+    repairScalar(db, "transmogOutfits", "table", {})
+    local validOutfits = {}
+    for _, outfit in ipairs(db.transmogOutfits) do
+        if type(outfit) == "table" and type(outfit.uid) == "string" and type(outfit.name) == "string"
+            and type(outfit.character) == "string" and type(outfit.slots) == "table" then
+            validOutfits[#validOutfits + 1] = outfit
+        end
     end
+    db.transmogOutfits = validOutfits
     repairEnum(db, "wardrobeTab", VALID_WARDROBE_TABS, DEFAULTS.wardrobeTab)
     repairScalar(db, "query", "string", DEFAULTS.query)
 
@@ -460,8 +483,29 @@ local function normalizeDatabase(db)
             db.filters.pets.hiddenSources[sourceType] = nil
         end
     end
+    repairScalar(db.filters, "appearances", "table", {})
+    repairScalar(db.filters.appearances, "hiddenSources", "table", {})
+    for sourceKind, hidden in pairs(db.filters.appearances.hiddenSources) do
+        if type(sourceKind) ~= "string" or not VALID_APPEARANCE_SOURCE_KINDS[sourceKind]
+            or type(hidden) ~= "boolean" then
+            db.filters.appearances.hiddenSources[sourceKind] = nil
+        end
+    end
 
     repairScalar(db, "favorites", "table", {})
+    repairScalar(db, "seenAppearanceIds", "table", {})
+    repairScalar(db, "newAppearanceIds", "table", {})
+    repairScalar(db, "newAppearancesSeeded", "boolean", false)
+    for collectionId, seen in pairs(db.seenAppearanceIds) do
+        if type(collectionId) ~= "number" or seen ~= true then
+            db.seenAppearanceIds[collectionId] = nil
+        end
+    end
+    for collectionId, isNew in pairs(db.newAppearanceIds) do
+        if type(collectionId) ~= "number" or isNew ~= true then
+            db.newAppearanceIds[collectionId] = nil
+        end
+    end
     normalizeCameraTuning(db)
     -- Capability attestation is deliberately process-local in M2Camera.lua.
     -- Remove an experimental pre-v7 saved marker so a stock client always
@@ -500,7 +544,9 @@ function SC:ResetLayoutAndFilters()
         self.UIPlatform:ResetWindowPosition()
     end
     SoloCollectionsDB.launcher = nil
+    SoloCollectionsDB.transmogLauncher = nil
     SoloCollectionsDB.frame = nil
+    SoloCollectionsDB.transmogFrame = nil
     SoloCollectionsDB.mainTab = nil
     SoloCollectionsDB.wardrobeTab = nil
     SoloCollectionsDB.query = nil
@@ -516,6 +562,13 @@ function SC:ToggleJournal()
     if self.UIPlatform and not self.UIPlatform:CanCreateUI() then return end
     if self.UI.ToggleJournal then
         self.UI.ToggleJournal()
+    end
+end
+
+function SC:ToggleTransmog()
+    if self.UIPlatform and not self.UIPlatform:CanCreateUI() then return end
+    if self.UI.ToggleTransmog then
+        self.UI.ToggleTransmog()
     end
 end
 
@@ -562,6 +615,14 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         end)
     elseif command == "reset" then
         SC:ResetLayoutAndFilters()
+    elseif command == "transmog" or command == "tmog" or command == "幻化" then
+        SC:ToggleTransmog()
+    elseif command == "acceptcheck" then
+        if SC.RunAcceptanceCheck then
+            SC.RunAcceptanceCheck()
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cffff9f40SoloCollections:|r acceptcheck 未加载")
+        end
     elseif command == "debug" then
         SC.db.debug = not SC.db.debug
         DEFAULT_CHAT_FRAME:AddMessage("SoloCollections debug: " .. (SC.db.debug and "on" or "off"))
@@ -602,4 +663,10 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
     else
         SC:ToggleJournal()
     end
+end
+
+SLASH_SOLOTRANSMOG1 = "/transmog"
+SLASH_SOLOTRANSMOG2 = "/scwardrobe"
+SlashCmdList.SOLOTRANSMOG = function()
+    SC:ToggleTransmog()
 end

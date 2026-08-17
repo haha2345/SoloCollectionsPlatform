@@ -15,6 +15,12 @@ for the generated slot and portrait assets is
 `Media/Retail` is not a supported base-UI path and is not part of the repository
 or a clean release bundle.
 
+`Media/Icons/collections-micro.tga` is a separate, maintainer-authorized extract
+from a local Legion 7.3.5.26972 client (`UI-MicroButton-Mounts-Up.blp`,
+FileDataID 615164). It is the collections micro-button that build actually
+uses. Intermediate BLP/CASC output stays in ignored `_work`. This file is not
+project-authored and must be replaced before a public redistribution.
+
 ## Public repository gate
 
 Before the first public GitHub push:

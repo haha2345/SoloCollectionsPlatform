@@ -8,13 +8,16 @@ local SLOT_POINTS = {
     SHOULDER = { "TOP", -121, -94 },
     BACK = { "TOP", -121, -147 },
     CHEST = { "TOP", -121, -200 },
-    WRIST = { "TOP", -121, -253 },
+    SHIRT = { "TOP", -121, -253 },
+    TABARD = { "TOP", -121, -306 },
+    WRIST = { "TOP", -121, -359 },
     HANDS = { "TOP", 123, -118 },
     WAIST = { "TOP", 123, -171 },
     LEGS = { "TOP", 123, -224 },
     FEET = { "TOP", 123, -277 },
     MAINHAND = { "BOTTOM", -26, 45 },
     OFFHAND = { "BOTTOM", 27, 45 },
+    RANGED = { "BOTTOM", 90, 45 },
 }
 
 local SLOT_FALLBACKS = {
@@ -22,6 +25,8 @@ local SLOT_FALLBACKS = {
     SHOULDER = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Shoulder",
     BACK = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Chest",
     CHEST = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Chest",
+    SHIRT = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Shirt",
+    TABARD = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Tabard",
     WRIST = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Wrists",
     HANDS = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Hands",
     WAIST = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Waist",
@@ -29,6 +34,7 @@ local SLOT_FALLBACKS = {
     FEET = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Feet",
     MAINHAND = "Interface\\PaperDoll\\UI-PaperDoll-Slot-MainHand",
     OFFHAND = "Interface\\PaperDoll\\UI-PaperDoll-Slot-SecondaryHand",
+    RANGED = "Interface\\PaperDoll\\UI-PaperDoll-Slot-Ranged",
 }
 
 function Lab.CreateSlots(parent, state)
@@ -46,39 +52,156 @@ function Lab.CreateSlots(parent, state)
         UI.EzCollections:CreateTransmogSlotChrome(button)
         button.scSlotKey = definition.key
         button.scDefinition = definition
+        local emptyBlock = CreateFrame("Button", nil, button)
+        emptyBlock:SetPoint("TOPLEFT", button, "TOPLEFT", -14, 14)
+        emptyBlock:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 14, -14)
+        emptyBlock:SetFrameLevel(button:GetFrameLevel() + 8)
+        emptyBlock:EnableMouse(true)
+        emptyBlock:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+        emptyBlock:Hide()
+        emptyBlock:SetScript("OnClick", function()
+            if Lab.NotifyEmptySlot then Lab.NotifyEmptySlot() end
+        end)
+        emptyBlock:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText(definition.label, 1, 0.82, 0.18)
+            GameTooltip:AddLine(Lab.EMPTY_SLOT_TEXT or "该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+            GameTooltip:Show()
+        end)
+        emptyBlock:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        button.scEmptyBlock = emptyBlock
         button:SetScript("OnClick", function(self, mouseButton)
+            if not state:IsSlotOccupied(self.scSlotKey) then
+                return
+            end
             if mouseButton == "RightButton" and state:IsSlotDirty(self.scSlotKey) then
                 if state.presetRecord then state:ClearDraft() else state:ClearDraft(self.scSlotKey) end
+                if Lab.PlaySound then Lab.PlaySound("revert") end
+            elseif mouseButton == "RightButton" and state.CanClearAppliedSlot
+                and state:CanClearAppliedSlot(self.scSlotKey) then
+                if Lab.ConfirmRestoreOriginal then
+                    Lab.ConfirmRestoreOriginal(state, self.scSlotKey)
+                else
+                    state:ClearApplied(self.scSlotKey)
+                    if Lab.PlaySound then Lab.PlaySound("revert") end
+                end
             else
                 state:SelectSlot(self.scSlotKey)
+                if Lab.PlaySound then Lab.PlaySound("slot") end
             end
         end)
         button:SetScript("OnEnter", function(self)
-            local itemId, pending = state:GetSlotPreviewItemId(self.scSlotKey)
-            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
-            if itemId then
-                local name = GetItemInfo and GetItemInfo(itemId)
-                GameTooltip:AddLine(name or ("物品 " .. tostring(itemId)), 1, 1, 1)
-            else
-                GameTooltip:AddLine("当前槽位为空", 0.62, 0.62, 0.62)
+            if self.scSlotHighlight and state:IsSlotOccupied(self.scSlotKey) then
+                self.scSlotHighlight:Show()
             end
-            if pending then GameTooltip:AddLine("本地草稿 · 右键撤销", 0.82, 0.42, 1) end
-            GameTooltip:AddLine("左键选择并浏览右侧候选", 0.72, 0.72, 0.72)
+            local hidden = state.IsSlotHidden and state:IsSlotHidden(self.scSlotKey)
+            local itemId, pending = state:GetSlotPreviewItemId(self.scSlotKey)
+            local invSlot = self.scDefinition.inventorySlot + 1
+            local equippedId = state.equippedBySlot and state.equippedBySlot[self.scSlotKey]
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            local occupied = state.IsSlotOccupied and state:IsSlotOccupied(self.scSlotKey)
+            local name, r, g, b, titleOccupied
+            if Lab.EquippedItemTitle then
+                name, r, g, b, titleOccupied = Lab.EquippedItemTitle(invSlot, equippedId)
+            end
+            if occupied == nil then occupied = titleOccupied end
+            if not occupied then
+                GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
+                GameTooltip:AddLine(Lab.EMPTY_SLOT_TEXT or "该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+                GameTooltip:Show()
+                return
+            end
+            if name then
+                GameTooltip:SetText(name, r or 1, g or 0.82, b or 0.18)
+            else
+                GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
+            end
+            local draft = state.draftBySlot and state.draftBySlot[self.scSlotKey]
+            local pendingUncollected = pending and draft
+                and not (Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(draft))
+                and not (Lab.IsCollectedRecord and Lab.IsCollectedRecord(draft))
+            if pendingUncollected then
+                GameTooltip:AddLine(
+                    (Lab.ApplyReasonText and Lab.ApplyReasonText("NOT_OWNED")) or "你尚未收集此外观。",
+                    1, 0.12, 0.12, true
+                )
+            elseif hidden then
+                Lab.AppendTransmogLines(GameTooltip, "隐藏", pending, true)
+            elseif pending then
+                if itemId then
+                    local record = Lab.FindAppearanceRecord and Lab.FindAppearanceRecord(nil, itemId)
+                    local appearanceName = (record and record.name)
+                        or (GetItemInfo and GetItemInfo(itemId))
+                        or ("物品 " .. tostring(itemId))
+                    Lab.AppendTransmogLines(GameTooltip, appearanceName, true, false)
+                end
+            elseif (name or occupied) and Lab.AddInventoryTransmogTooltip then
+                Lab.AddInventoryTransmogTooltip(GameTooltip, invSlot)
+            end
+            if pending then
+                GameTooltip:AddLine("右键撤销", 1, 0.5, 1)
+            elseif state.CanClearAppliedSlot and state:CanClearAppliedSlot(self.scSlotKey) then
+                GameTooltip:AddLine("右键恢复原样（需确认）", 1, 0.5, 1)
+            end
             GameTooltip:Show()
         end)
-        button:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        button:SetScript("OnLeave", function(self)
+            if self.scSlotHighlight then self.scSlotHighlight:Hide() end
+            GameTooltip:Hide()
+        end)
         host.buttons[definition.key] = button
     end
     function host:Refresh()
         for slotKey, button in pairs(self.buttons) do
-            local itemId = state:GetSlotPreviewItemId(slotKey)
+            local occupied = not state.IsSlotOccupied or state:IsSlotOccupied(slotKey)
+            local itemId = occupied and state:GetSlotPreviewItemId(slotKey) or nil
             local texture = itemId and GetItemIcon and GetItemIcon(itemId)
             button.scIcon:SetTexture(texture or SLOT_FALLBACKS[slotKey] or "Interface\\Icons\\INV_Misc_QuestionMark")
-            if button.scIcon.SetDesaturated then button.scIcon:SetDesaturated(itemId == nil) end
-            button:SetSlotSelected(state.selectedSlot == slotKey)
-            button:SetSlotPending(state:IsSlotDirty(slotKey))
+            if button.scIcon.SetDesaturated then button.scIcon:SetDesaturated(not occupied or itemId == nil) end
+            button:SetSlotSelected(occupied and state.selectedSlot == slotKey)
+            button:SetSlotPending(occupied and state.IsSlotApplyable and state:IsSlotApplyable(slotKey))
+            if button.SetSlotEmpty then button:SetSlotEmpty(not occupied) end
+            if button.scEmptyBlock then
+                if occupied then button.scEmptyBlock:Hide() else button.scEmptyBlock:Show() end
+            end
+            if button.EnableMouse then
+                button:EnableMouse(occupied and true or false)
+            end
+            if button.scSlotHighlight then
+                button.scSlotHighlight:SetAlpha(occupied and 1 or 0)
+                if not occupied then button.scSlotHighlight:Hide() end
+            end
+            if button.SetSlotHidden then
+                button:SetSlotHidden(occupied and state.IsSlotHidden and state:IsSlotHidden(slotKey))
+            end
         end
     end
+
+    local function createEnchantButton(x)
+        local button = CreateFrame("Button", nil, host)
+        button:SetWidth(27)
+        button:SetHeight(27)
+        button:SetPoint("CENTER", host, "CENTER", x, -203)
+        button:SetFrameLevel(host:GetFrameLevel() + 6)
+        button:Disable()
+        button:EnableMouse(true)
+        if UI.EzCollections and UI.EzCollections.CreateTransmogEnchantChrome then
+            UI.EzCollections:CreateTransmogEnchantChrome(button)
+        end
+        local tip = CreateFrame("Frame", nil, button)
+        tip:SetAllPoints(button)
+        tip:SetFrameLevel(button:GetFrameLevel() + 1)
+        tip:EnableMouse(true)
+        tip:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText("武器附魔", 1, 0.82, 0.18)
+            GameTooltip:AddLine("附魔幻化尚未接入服务端，当前不能预览或应用。", 0.72, 0.72, 0.72, true)
+            GameTooltip:Show()
+        end)
+        tip:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        return button
+    end
+    host.scMainHandEnchant = createEnchantButton(-26)
+    host.scOffHandEnchant = createEnchantButton(27)
     return host
 end

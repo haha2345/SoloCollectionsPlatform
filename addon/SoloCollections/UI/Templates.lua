@@ -31,6 +31,7 @@ UI.Media = {
     collectedFrame = MEDIA_ROOT .. "Borders\\collected-frame.tga",
     uncollectedFrame = MEDIA_ROOT .. "Borders\\uncollected-frame.tga",
     launcher = MEDIA_ROOT .. "Icons\\launcher.tga",
+    collectionsLauncher = MEDIA_ROOT .. "Icons\\collections-micro.tga",
     mountPortrait = MEDIA_ROOT .. "Icons\\mount-portrait.tga",
     wardrobeSlotAtlas = MEDIA_ROOT .. "Icons\\WardrobeSlots\\slot-atlas.tga",
     roundHighlightAtlas = MEDIA_ROOT .. "Icons\\WardrobeSlots\\round-highlight.tga",
@@ -266,7 +267,10 @@ function UI.ApplyNineSlice(owner, texturePath, size)
     return slices
 end
 
-function UI.CreateJournalFrame(parent, name, width, height)
+function UI.CreateJournalFrame(parent, name, width, height, options)
+    options = type(options) == "table" and options or {}
+    local titleText = options.title or "收藏"
+    local portraitPath = options.portrait or UI.Media.mountPortrait
     local frame = CreateFrame("Frame", name, parent or UIParent)
     frame:SetWidth(width or 920)
     frame:SetHeight(height or 793)
@@ -278,8 +282,8 @@ function UI.CreateJournalFrame(parent, name, width, height)
     if public then
         public.Chrome:Apply(frame, {
             layout = "PortraitFrameTemplate",
-            title = "收藏",
-            portrait = UI.Media.mountPortrait,
+            title = titleText,
+            portrait = portraitPath,
             portraitOpts = {
                 -- Match ezCollections' PortraitFrameTemplate geometry. The
                 -- native SetPortraitToTexture call supplies the round crop.
@@ -736,7 +740,7 @@ function UI.CreateFilterPopup(parent, width)
 
     button:SetScript("OnClick", function(self)
         local wardrobeDropDown = self.scWardrobeDropDown
-        if wardrobeDropDown and SC.db and SC.db.mainTab == "WARDROBE" and ToggleDropDownMenu then
+        if wardrobeDropDown and ToggleDropDownMenu then
             popup:Hide()
             arrow:SetTexCoord(0, 1, 0, 1)
             if PlaySound then PlaySound("igMainMenuOptionCheckBoxOn") end
@@ -760,6 +764,185 @@ function UI.CreateFilterPopup(parent, width)
         self.scWardrobeDropDown = dropDown
     end
     return button, popup
+end
+
+function UI.RefreshDropDownCheckMarks()
+    -- 3.3.5 UIDropDownMenu_Refresh does not re-run function-style info.checked.
+    if not UIDROPDOWNMENU_MAXBUTTONS then return end
+    for level = 1, 2 do
+        for index = 1, UIDROPDOWNMENU_MAXBUTTONS do
+            local button = _G["DropDownList" .. level .. "Button" .. index]
+            local check = _G["DropDownList" .. level .. "Button" .. index .. "Check"]
+            if button and check then
+                local checked = button:IsShown() and type(button.checked) == "function"
+                    and button.checked()
+                if checked then check:Show() else check:Hide() end
+            end
+        end
+    end
+end
+
+function UI.GetAppearanceSourceFilters()
+    if not SC.db then return nil end
+    SC.db.filters = SC.db.filters or {}
+    SC.db.filters.appearances = SC.db.filters.appearances or {}
+    local filters = SC.db.filters.appearances
+    if type(filters.hiddenSources) ~= "table" then
+        filters.hiddenSources = {}
+    end
+    return filters
+end
+
+local PLAYER_ARMOR_TYPES = {
+    PLATE = true,
+    MAIL = true,
+    LEATHER = true,
+    CLOTH = true,
+}
+
+local function playerClassFilterToken()
+    local Identity = SC.IdentityRegistry
+    local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
+    local token = classIdentity and classIdentity.known and classIdentity.filterToken
+    if not token then return nil end
+    local options = Identity.GetClassFilterOptions and Identity.GetClassFilterOptions() or {}
+    for _, option in ipairs(options) do
+        if option.key == token then
+            return token
+        end
+    end
+    return nil
+end
+
+function UI.EnsureDefaultSetClassFilter()
+    if UI.scSetClassDefaultApplied then return false end
+    if not (SC.db and SC.db.filters) then return false end
+    UI.scSetClassDefaultApplied = true
+    if SC.db.filters.classToken and SC.db.filters.classToken ~= "ALL" then
+        return false
+    end
+    local token = playerClassFilterToken()
+    if not token then return false end
+    SC.db.filters.classToken = token
+    return true
+end
+
+function UI.ApplyTransmogOpenFilters()
+    if not (SC.db and SC.db.filters) then return false end
+    local Identity = SC.IdentityRegistry
+    local changed = false
+    local token = playerClassFilterToken()
+    if token and SC.db.filters.classToken ~= token then
+        SC.db.filters.classToken = token
+        changed = true
+    end
+    local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
+    local armorType = Identity and Identity.GetDefaultArmorType and Identity.GetDefaultArmorType(classIdentity)
+    if PLAYER_ARMOR_TYPES[armorType] and SC.db.filters.armorType ~= armorType then
+        SC.db.filters.armorType = armorType
+        changed = true
+    end
+    return changed
+end
+
+function UI.AddCollectedStateMenuButtons(level, onChanged)
+    if not (SC.db and UIDropDownMenu_CreateInfo and UIDropDownMenu_AddButton) then
+        return
+    end
+    SC.db.filters = SC.db.filters or {}
+    local filters = SC.db.filters
+    local options = {
+        { key = "collected", label = "已收集" },
+        { key = "uncollected", label = "未收集" },
+    }
+    for _, option in ipairs(options) do
+        local key = option.key
+        local info = UIDropDownMenu_CreateInfo()
+        info.isNotRadio = true
+        info.keepShownOnClick = true
+        info.text = option.label
+        info.checked = function()
+            return filters[key] ~= false
+        end
+        info.func = function(_, _, _, checked)
+            if checked == nil then
+                checked = not (filters[key] ~= false)
+            end
+            filters[key] = checked and true or false
+            if onChanged then onChanged() end
+            UI.RefreshDropDownCheckMarks()
+        end
+        UIDropDownMenu_AddButton(info, level)
+    end
+end
+
+function UI.AddAppearanceSourceMenuButtons(level, onChanged)
+    local kinds = SC.Catalog and SC.Catalog.APPEARANCE_SOURCE_KINDS
+    if not (kinds and UIDropDownMenu_CreateInfo and UIDropDownMenu_AddButton) then
+        return
+    end
+    local function sourceFilters()
+        return UI.GetAppearanceSourceFilters()
+    end
+
+    local all = UIDropDownMenu_CreateInfo()
+    all.notCheckable = true
+    all.keepShownOnClick = true
+    all.text = "全部勾选"
+    all.func = function()
+        local filters = sourceFilters()
+        if filters then filters.hiddenSources = {} end
+        if onChanged then onChanged() end
+        UI.RefreshDropDownCheckMarks()
+    end
+    UIDropDownMenu_AddButton(all, level)
+
+    local none = UIDropDownMenu_CreateInfo()
+    none.notCheckable = true
+    none.keepShownOnClick = true
+    none.text = "全部取消"
+    none.func = function()
+        local filters = sourceFilters()
+        if filters then
+            local hidden = {}
+            for _, kind in ipairs(kinds) do
+                hidden[kind.key] = true
+            end
+            filters.hiddenSources = hidden
+        end
+        if onChanged then onChanged() end
+        UI.RefreshDropDownCheckMarks()
+    end
+    UIDropDownMenu_AddButton(none, level)
+
+    for _, kind in ipairs(kinds) do
+        local key = kind.key
+        local info = UIDropDownMenu_CreateInfo()
+        info.isNotRadio = true
+        info.keepShownOnClick = true
+        info.text = kind.label
+        info.checked = function()
+            local filters = sourceFilters()
+            local hidden = filters and filters.hiddenSources
+            return not (hidden and hidden[key])
+        end
+        info.func = function(_, _, _, checked)
+            local filters = sourceFilters()
+            if not filters then return end
+            local hidden = filters.hiddenSources
+            if checked == nil then
+                checked = not hidden[key]
+            end
+            if checked then
+                hidden[key] = nil
+            else
+                hidden[key] = true
+            end
+            if onChanged then onChanged() end
+            UI.RefreshDropDownCheckMarks()
+        end
+        UIDropDownMenu_AddButton(info, level)
+    end
 end
 
 function UI.CreateRetailProgressBar(parent, width)

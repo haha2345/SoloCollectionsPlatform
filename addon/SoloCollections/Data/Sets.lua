@@ -4825,6 +4825,7 @@ SoloCollections.Data.Sets = {
         itemIds = {
             16929,
             16932,
+            24259,
             16931,
             16934,
             16928,
@@ -4857,6 +4858,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "SHOULDER",
                         sourceItemIds = {
                             16932
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            208988
+                        },
+                        memberKey = "back",
+                        required = true,
+                        slotKey = "BACK",
+                        sourceItemIds = {
+                            24259
                         }
                     },
                     {
@@ -14929,6 +14941,7 @@ SoloCollections.Data.Sets = {
         itemIds = {
             21347,
             21345,
+            31938,
             21343,
             21346,
             21344
@@ -14958,6 +14971,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "SHOULDER",
                         sourceItemIds = {
                             21345
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            211330
+                        },
+                        memberKey = "back",
+                        required = true,
+                        slotKey = "BACK",
+                        sourceItemIds = {
+                            31938
                         }
                     },
                     {
@@ -29401,6 +29425,7 @@ SoloCollections.Data.Sets = {
             28285,
             27739,
             28203,
+            27447,
             27535,
             27839
         },
@@ -29440,6 +29465,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "CHEST",
                         sourceItemIds = {
                             28203
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            210512
+                        },
+                        memberKey = "wrist",
+                        required = true,
+                        slotKey = "WRIST",
+                        sourceItemIds = {
+                            27447
                         }
                     },
                     {
@@ -29529,6 +29565,7 @@ SoloCollections.Data.Sets = {
             29061,
             29064,
             29062,
+            28512,
             29065,
             29063
         },
@@ -29568,6 +29605,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "CHEST",
                         sourceItemIds = {
                             29062
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            209498
+                        },
+                        memberKey = "wrist",
+                        required = true,
+                        slotKey = "WRIST",
+                        sourceItemIds = {
+                            28512
                         }
                     },
                     {
@@ -29651,6 +29699,7 @@ SoloCollections.Data.Sets = {
             29068,
             29070,
             29066,
+            28512,
             29067,
             29069
         },
@@ -29690,6 +29739,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "CHEST",
                         sourceItemIds = {
                             29066
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            209498
+                        },
+                        memberKey = "wrist",
+                        required = true,
+                        slotKey = "WRIST",
+                        sourceItemIds = {
+                            28512
                         }
                     },
                     {
@@ -29773,6 +29833,7 @@ SoloCollections.Data.Sets = {
             29073,
             29075,
             29071,
+            28512,
             29072,
             29074
         },
@@ -29812,6 +29873,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "CHEST",
                         sourceItemIds = {
                             29071
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            209498
+                        },
+                        memberKey = "wrist",
+                        required = true,
+                        slotKey = "WRIST",
+                        sourceItemIds = {
+                            28512
                         }
                     },
                     {
@@ -30388,7 +30460,8 @@ SoloCollections.Data.Sets = {
             29031,
             29029,
             29032,
-            29030
+            29030,
+            30043
         },
         variants = {
             {
@@ -30448,6 +30521,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             29030
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            211820
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            30043
                         }
                     }
                 },
@@ -30510,7 +30594,8 @@ SoloCollections.Data.Sets = {
             29037,
             29033,
             29034,
-            29036
+            29036,
+            30043
         },
         variants = {
             {
@@ -30570,6 +30655,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             29036
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            211820
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            30043
                         }
                     }
                 },
@@ -30632,7 +30728,8 @@ SoloCollections.Data.Sets = {
             29043,
             29038,
             29039,
-            29042
+            29042,
+            30043
         },
         variants = {
             {
@@ -30692,6 +30789,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             29042
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            211820
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            30043
                         }
                     }
                 },
@@ -39653,6 +39761,7 @@ SoloCollections.Data.Sets = {
             35331,
             35332,
             35328,
+            14143,
             35330
         },
         variants = {
@@ -39702,6 +39811,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "HANDS",
                         sourceItemIds = {
                             35328
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            204216
+                        },
+                        memberKey = "waist",
+                        required = true,
+                        slotKey = "WAIST",
+                        sourceItemIds = {
+                            14143
                         }
                     },
                     {
@@ -45354,6 +45474,7 @@ SoloCollections.Data.Sets = {
             43744,
             43748,
             43739,
+            28480,
             43741,
             43746
         },
@@ -45393,6 +45514,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "CHEST",
                         sourceItemIds = {
                             43739
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            208227
+                        },
+                        memberKey = "wrist",
+                        required = true,
+                        slotKey = "WRIST",
+                        sourceItemIds = {
+                            28480
                         }
                     },
                     {
@@ -45477,6 +45609,7 @@ SoloCollections.Data.Sets = {
             43805,
             43794,
             43796,
+            30678,
             43803
         },
         variants = {
@@ -45526,6 +45659,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "HANDS",
                         sourceItemIds = {
                             43796
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            208393
+                        },
+                        memberKey = "waist",
+                        required = true,
+                        slotKey = "WAIST",
+                        sourceItemIds = {
+                            30678
                         }
                     },
                     {
@@ -45599,6 +45743,7 @@ SoloCollections.Data.Sets = {
             43806,
             43807,
             43797,
+            30678,
             43798
         },
         variants = {
@@ -45648,6 +45793,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "HANDS",
                         sourceItemIds = {
                             43797
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            208393
+                        },
+                        memberKey = "waist",
+                        required = true,
+                        slotKey = "WAIST",
+                        sourceItemIds = {
+                            30678
                         }
                     },
                     {
@@ -45721,6 +45877,7 @@ SoloCollections.Data.Sets = {
             43804,
             43793,
             43799,
+            30678,
             43802
         },
         variants = {
@@ -45770,6 +45927,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "HANDS",
                         sourceItemIds = {
                             43799
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            208393
+                        },
+                        memberKey = "waist",
+                        required = true,
+                        slotKey = "WAIST",
+                        sourceItemIds = {
+                            30678
                         }
                     },
                     {
@@ -47185,6 +47353,7 @@ SoloCollections.Data.Sets = {
             43781,
             43780,
             43778,
+            29256,
             43779
         },
         variants = {
@@ -47234,6 +47403,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "HANDS",
                         sourceItemIds = {
                             43778
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            208365
+                        },
+                        memberKey = "waist",
+                        required = true,
+                        slotKey = "WAIST",
+                        sourceItemIds = {
+                            29256
                         }
                     },
                     {
@@ -48727,7 +48907,8 @@ SoloCollections.Data.Sets = {
             46226,
             46213,
             46216,
-            46224
+            46224,
+            46328
         },
         variants = {
             {
@@ -48787,6 +48968,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46224
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216511
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46328
                         }
                     }
                 },
@@ -48849,7 +49041,8 @@ SoloCollections.Data.Sets = {
             46225,
             46214,
             46219,
-            46222
+            46222,
+            46328
         },
         variants = {
             {
@@ -48909,6 +49102,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46222
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216511
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46328
                         }
                     }
                 },
@@ -48971,7 +49175,8 @@ SoloCollections.Data.Sets = {
             46227,
             46228,
             46217,
-            46218
+            46218,
+            46328
         },
         variants = {
             {
@@ -49031,6 +49236,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46218
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216511
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46328
                         }
                     }
                 },
@@ -49947,7 +50163,8 @@ SoloCollections.Data.Sets = {
             46287,
             46278,
             46280,
-            46285
+            46285,
+            46327
         },
         variants = {
             {
@@ -50007,6 +50224,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46285
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216510
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46327
                         }
                     }
                 },
@@ -50069,7 +50297,8 @@ SoloCollections.Data.Sets = {
             46286,
             46279,
             46283,
-            46284
+            46284,
+            46327
         },
         variants = {
             {
@@ -50129,6 +50358,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46284
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216510
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46327
                         }
                     }
                 },
@@ -50313,6 +50553,7 @@ SoloCollections.Data.Sets = {
             46259,
             46258,
             46247,
+            29250,
             46254
         },
         variants = {
@@ -50362,6 +50603,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "HANDS",
                         sourceItemIds = {
                             46247
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            210401
+                        },
+                        memberKey = "waist",
+                        required = true,
+                        slotKey = "WAIST",
+                        sourceItemIds = {
+                            29250
                         }
                     },
                     {
@@ -50435,7 +50687,8 @@ SoloCollections.Data.Sets = {
             46241,
             46232,
             46235,
-            46239
+            46239,
+            46326
         },
         variants = {
             {
@@ -50495,6 +50748,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46239
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216509
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46326
                         }
                     }
                 },
@@ -50557,7 +50821,8 @@ SoloCollections.Data.Sets = {
             46240,
             46233,
             46236,
-            46238
+            46238,
+            46326
         },
         variants = {
             {
@@ -50617,6 +50882,17 @@ SoloCollections.Data.Sets = {
                         slotKey = "LEGS",
                         sourceItemIds = {
                             46238
+                        }
+                    },
+                    {
+                        appearanceIds = {
+                            216509
+                        },
+                        memberKey = "feet",
+                        required = true,
+                        slotKey = "FEET",
+                        sourceItemIds = {
+                            46326
                         }
                     }
                 },

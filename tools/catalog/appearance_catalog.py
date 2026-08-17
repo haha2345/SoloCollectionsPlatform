@@ -96,7 +96,12 @@ def build_groups(rows: list[dict[str, Any]], ids: dict[str, Any], previous: dict
 
     reservations = ids["reservations"].setdefault("collections", [])
     reserved_by_key = {row["key"]: row for row in reservations}
-    next_id = max(200_000, max((int(row["id"]) + 1 for row in reservations), default=200_000))
+    for reservation in reservations:
+        if int(reservation["id"]) < 10:
+            raise ValueError(
+                f"appearance collectionId {reservation['id']} is reserved for HideVisual control identities"
+            )
+    next_id = max(200_000, max((int(row["id"]) + 1 for row in reservations), default=200_000), 10)
     next_ordinal = max((int(row["ordinal"]) + 1 for row in reservations), default=0)
     previous_by_key = {row["collectionKey"]: row for row in previous.get("groups", [])}
     groups: list[dict[str, Any]] = []

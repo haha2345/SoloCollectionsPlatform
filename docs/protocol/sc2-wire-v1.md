@@ -42,6 +42,9 @@ D|sessionNonce|typeId|revision|operation|collectionId
 
 Q|sessionNonce|requestId|typeId|collectionId|actionId|target
 R|sessionNonce|requestId|status|typeId|collectionId|revision
+Y|sessionNonce|requestId|op|slotCount|entries
+U|sessionNonce|requestId|status|copper|warningMask
+O|sessionNonce|requestId|op|uid|nameHex|entries
 S|sessionNonce|reason|typeId|revision
 X|sessionNonce|requestId|reason
 ```
@@ -62,7 +65,66 @@ type `11` is the corresponding authoritative companion set. Internal types
 `16` (`mount-favorite`) and `17` (`companion-favorite`) carry favorite
 membership using the stable IDs of types 10 and 11 respectively. Types 16 and
 17 are internal projections: they are not navigation categories and never
-contribute to collection totals or progress.
+contribute to collection totals or progress. Type `20` (`appearance-new`) is
+the account-authoritative set of **unseen owned** appearance IDs. It reuses
+the type 13 mapping hash, stores rows in `sc_collection_unlock` (`type_id=20`),
+and is excluded from navigation and progress. Existing type 13 unlocks are
+not backfilled: a missing type 20 row means seen. Gameplay and GM unlocks of
+type 13 after this projection exists may insert a matching type 20 row.
+Migration and historical inventory reconcile must not. Character switches
+keep the same account snapshot, so badges do not relight.
+
+Internal types `18` (`character-applied`) and `19` (`account-outfit`) are
+wardrobe projections. Their `M` mapping hashes are syntax/slot-order hashes,
+not the appearance catalog hash. Bit `17` / `18` of `enabledCategoryFlags`
+announce them. They use `B/C/E` snapshot replace only; `D` is illegal for
+these types because a delta has no slot field.
+
+Type 18 payload is a fixed 14-segment list in `Lab.SLOTS` order:
+`HEAD,SHOULDER,BACK,CHEST,SHIRT,TABARD,WRIST,HANDS,WAIST,LEGS,FEET,MAINHAND,OFFHAND,RANGED`.
+Empty is `-`, HideVisual is reserved collection ID `2`, otherwise the
+appearance collection ID in canonical decimal. Type 13 catalogs must never
+assign collection IDs `1–9`.
+
+Type 19 payload is `-` when the account has no outfits, otherwise
+`uid:nameHex:slotCsv` rows separated by `;`. `nameHex` is UTF-8 lowercase
+hex of a name at most 48 bytes (hex length 2–96). Slot CSV uses the same
+14-segment grammar as type 18. The account may store at most 10 outfits.
+
+`Y` is the wardrobe intent. `op` is `QUOTE`, `APPLY`, or `CLEAR`.
+`QUOTE`/`APPLY` entries are `slotPlus1:collectionId` comma lists (at most
+14 unique equipment slots). HideVisual uses collection ID `2`. `CLEAR`
+entries are `slotPlus1` values, or `slotCount=0` and `entries=-` to clear
+every applied slot. `U` is the quote result: `copper` is authoritative
+(including `0`) and `warningMask` is eight lowercase hex bits. Quote copper
+is the sum of each actually changed non-hide slot using
+`max(source item sellPrice, 1g) * ScaledCostModifier + CopperCost`. Hide and
+clear are `0`. Stable
+warning bits are `REPLACES_EXISTING` (`00000001`), `INCLUDES_HIDE`
+(`00000002`), and `NO_ITEM_IN_SLOT` (`00000004`). The AddOn localizes
+those bits; the server never sends free-form text.
+
+`O` writes account outfits (`SAVE` / `RENAME`). `uid=0` on `SAVE` creates
+a new outfit; a non-zero `uid` overwrites that row. `LOAD` is not a wire
+action: the AddOn copies a type 19 snapshot into the local draft and then
+sends `Y APPLY`. `DELETE` keeps the existing `Q` shape:
+`Q|...|19|uid|DELETE|-`.
+
+`Q`/`R` field tables are unchanged. Handbook single-slot APPLY (type 13)
+and set APPLY (type 14) stay on `Q`. Wardrobe dirty slots and Ready set
+presets use one `Y APPLY`.
+Type 14 success must also update the type 18 projection.
+
+New stable statuses include `INSUFFICIENT_FUNDS`, `OUTFIT_LIMIT`,
+`OUTFIT_EMPTY`, `COST_CHANGED`, and `NOTHING_EQUIPPED`. Empty-slot APPLY
+fails; empty-slot HideVisual is a no-op and may set `NO_ITEM_IN_SLOT`.
+`QUOTE` is read-only. `APPLY` revalidates before deducting; a stale quote
+or changed copper returns `COST_CHANGED` and the client must quote again.
+
+Old clients that do not advertise wardrobe support in `clientBuild` (the
+`-w1` suffix) keep receiving only types 10–17. A server that does not
+implement `Y`/`U`/`O` must reject those codes as `UNSUPPORTED` / unknown
+message, never as success.
 
 `Q ...|10|collectionId|SET_FAVORITE|1` and
 `Q ...|11|collectionId|SET_FAVORITE|1` set favorites; target `0` removes them.
@@ -74,6 +136,16 @@ must not update its star optimistically.
 control collection ID `1`. The server alone builds the owned, favorite and
 currently usable pool; ID `1` is forbidden in both generated catalogs. A
 different control ID is `INVALID_REQUEST`.
+
+`Q ...|13|collectionId|MARK_SEEN|-` clears one unseen flag: the appearance
+must already be owned on type 13, then type 20 is revoked (idempotent if
+already absent) and a type 20 `R` delta is emitted. SavedVariables must not
+authorize this.
+
+`Q ...|13|1|MARK_ALL_SEEN|-` uses reserved control collection ID `1`. One
+transaction deletes every type 20 row for the account, advances revision
+once, and replaces the type 20 snapshot. The AddOn may hide badges
+optimistically after `ACCEPTED`, then fade the visible card marks.
 
 Client spell `150544` is the persistent native action-bar representation of
 the same random-mount operation. Its server SpellScript invokes the same
@@ -92,9 +164,11 @@ successful `DISMISSED` toggle result as the SC2 action.
 3. `E` commits only when every sequence from 1 through `total` exists, the byte
    count matches, both checksums match, the category mapping hash matches, and
    the complete payload is canonical.
-4. Commit is an atomic replacement of that category's owned set at
-   `baseRevision`. Deltas arriving during a transfer are queued and then applied
-   in contiguous revision order.
+4. Commit is an atomic replacement of that category's payload at
+   `baseRevision`. Owned-set types replace the sorted unique ID set. Types 18
+   and 19 replace their slot/outfit payload and never update `accountRevision`.
+   Deltas arriving during a transfer are queued and then applied in contiguous
+   revision order; types 18 and 19 never use `D`.
 5. A missing chunk, conflicting duplicate, checksum failure, mapping mismatch,
    timeout, or revision gap keeps the last good state and sends bounded `S`.
    Packets with an old nonce are silently discarded.
@@ -116,7 +190,8 @@ The stable action status set includes `ACCEPTED`, `DISMISSED`, `LOADING`, `NOT_O
 `NO_USABLE_COMPANIONS`,
 `CATALOG_MISMATCH`, `ASSET_MISMATCH`, `UNKNOWN_IDENTITY`, class/race/skill
 restrictions, `INVALID_TARGET_SLOT`, `DB_UNAVAILABLE`, `RATE_LIMITED`,
-`INVALID_REQUEST`, and `UNSUPPORTED`. `DISMISSED` is a successful idempotent
+`INVALID_REQUEST`, `UNSUPPORTED`, `INSUFFICIENT_FUNDS`, `OUTFIT_LIMIT`,
+`OUTFIT_EMPTY`, `COST_CHANGED`, and `NOTHING_EQUIPPED`. `DISMISSED` is a successful idempotent
 companion toggle result. Mount actions additionally distinguish
 `IN_COMBAT`, `DEAD`, `IN_VEHICLE`, `ON_TAXI`, `INDOORS`,
 `FLYING_NOT_ALLOWED`, `MAP_RESTRICTED`, `BATTLEGROUND_RESTRICTED`,

@@ -384,9 +384,15 @@ def build_normalized(repo_root: Path, evidence: dict[str, Any], review: dict[str
             "iconItemId": candidate["members"][0]["sourceItemIds"][0],
             "variants": [{
                 "variantKey": "default", "variantOrdinal": 1, "isDefault": True, "lifecycle": "ACTIVE",
-                "members": candidate["members"], "omissions": candidate["omissions"],
+                "members": [dict(member) for member in candidate["members"]],
+                "omissions": candidate["omissions"],
             }],
         })
+    catalog_dir = str(Path(__file__).resolve().parent)
+    if catalog_dir not in sys.path:
+        sys.path.insert(0, catalog_dir)
+    from set_extras import attach_name_family_extras
+    attach_name_family_extras(repo_root, normalized_sets, evidence.get("candidates") or [])
     reservations.sort(key=lambda row: (int(row["ordinal"]), str(row["key"])))
     review_policy_hash = canonical_hash(review)
     basis = [{
