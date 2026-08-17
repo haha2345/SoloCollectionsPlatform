@@ -314,6 +314,9 @@ public:
         MutationStartResult started = GetAccountCollectionStore().BeginMutation(mutation);
         if (!started.Accepted)
             return RejectAndAudit(handler, mutation, started.Reason);
+        if (kind == CollectionMutationKind::Grant && typeId == AppearanceCollectionTypeId)
+            GetAppearanceService().QueueNewFlag(*accountId, collectionId, mutation.CharacterGuid,
+                mutation.ActorAccountId, mutation.ActorGuid);
 
         handler->PSendSysMessage(
             "SoloCollections {} queued: account={} type={} collection={} pending_revision={}",

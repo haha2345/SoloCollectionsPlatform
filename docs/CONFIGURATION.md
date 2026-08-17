@@ -41,13 +41,31 @@ legacy keys; do not restore them as the wardrobe price.
 (`CanApplyCollectedVisual`). It does not change NPC transmog. That path does
 not run NPC `SuitableForTransmogrification` on the equipped target, so wearing
 an armor type without the matching skill cannot block a collected visual.
+Values are case-insensitive; anything else fails closed to `same`.
 
 ```ini
 # same  = cloth/leather/mail/plate must match
 # lower = allow lower armor tiers the player can wear
-# any   = cloth/leather/mail/plate interchangeable
+# any   = cloth/leather/mail/plate interchangeable;
+#         MISC armor (no armor type) may mix with a tiered appearance
+#         of the same InventoryType
 # Invalid values fail closed to same.
 SoloCollections.Transmog.MixedArmor = any
+```
+
+`SoloCollections.Transmog.MixedWeapons` only affects collected wardrobe apply.
+Bow, gun, and crossbow stay isolated from melee even when the value is `any`.
+Wand and thrown are not in that isolation set. NPC transmog still uses
+`Transmogrification.AllowMixedWeaponTypes` (distributed default STRICT).
+Values are case-insensitive; anything else fails closed to `same`.
+
+```ini
+# same   = weapon subclass must match
+# family = 1H axe/sword/mace; 2H axe/sword/mace/staff/polearm
+#          (dagger/fist/wand/thrown still need an exact match)
+# any    = any melee onto any melee; any bow/gun/crossbow onto any bow/gun/crossbow
+# Invalid values fail closed to same.
+SoloCollections.Transmog.MixedWeapons = any
 ```
 
 NPC vendor mixing still uses `Transmogrification.AllowMixedArmorTypes` and
@@ -84,7 +102,10 @@ authorization, not merely UI appearance.
 `Transmogrification.ScaledCostModifier` 并可加 `CopperCost`），隐藏和清除为
 0，不读客户端数字。`ApplyBaseCopper` / `ApplySlotCopper` 已废弃。收藏室跨甲只读
 `SoloCollections.Transmog.MixedArmor`（`same` / `lower` / `any`，默认 `any`，
-无效值按 `same`），不改 NPC 幻化台的 `AllowMixedArmorTypes`。type 18/19
+无效值按 `same`；`any` 时无甲种 MISC 可与同 `InventoryType` 的有甲种互幻），
+跨武器读 `SoloCollections.Transmog.MixedWeapons`（`same` / `family` / `any`，
+默认 `any`；弓/枪/弩与近战始终隔离，魔杖/投掷不在这组隔离里），不改 NPC 幻化台的
+`AllowMixedArmorTypes` / `AllowMixedWeaponTypes`。type 18/19
 只对 HELLO `clientBuild` 带 `-w1` 的插件宣告；必须先部署模块再部署新 AddOn。
 外观写在装备实例上，换装不自动套到新物品。
 幻化配置会影响费用、物品品质、护甲/武器类型和玩家权限；修改前应备份运行配置，

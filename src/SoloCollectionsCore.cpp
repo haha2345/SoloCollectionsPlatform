@@ -257,6 +257,26 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class AppearanceNewCollectionProvider final : public CollectionProvider
+{
+public:
+    AppearanceNewCollectionProvider()
+    {
+        _descriptor.TypeId = AppearanceNewCollectionTypeId;
+        _descriptor.TypeKey = "appearance-new";
+        _descriptor.Dependencies = { AppearanceCollectionTypeId };
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        return GetAppearanceService().Evaluate(collectionId);
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class SetCollectionProvider final : public CollectionProvider
 {
 public:
@@ -376,6 +396,7 @@ public:
         registerProvider("companion-favorite", std::make_unique<CompanionFavoriteCollectionProvider>());
         registerProvider("toy", std::make_unique<ToyCollectionProvider>());
         registerProvider("appearance", std::make_unique<AppearanceCollectionProvider>());
+        registerProvider("appearance-new", std::make_unique<AppearanceNewCollectionProvider>());
         registerProvider("set", std::make_unique<SetCollectionProvider>());
         registerProvider("title", std::make_unique<TitleCollectionProvider>());
 

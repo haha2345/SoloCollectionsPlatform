@@ -261,6 +261,7 @@ public:
     bool AllowMixedArmorTypes;
     bool AllowLowerTiers;
     uint8 CollectedMixedArmorPolicy;
+    uint8 CollectedMixedWeaponPolicy;
     bool AllowMixedOffhandArmorTypes;
     bool AllowMixedWeaponHandedness;
     bool AllowFishingPoles;
@@ -317,7 +318,8 @@ public:
     // owns the appearance; the player is already wearing the destination item.
     // Cloth/leather/mail/plate subclass mixing follows
     // SoloCollections.Transmog.MixedArmor (same/lower/any), not the NPC
-    // Transmogrification.AllowMixedArmorTypes flag.
+    // Transmogrification.AllowMixedArmorTypes flag. Weapon subclass mixing
+    // follows SoloCollections.Transmog.MixedWeapons (same/family/any).
     bool CanApplyCollectedVisual(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     bool SuitableForTransmogrification(Player* player, ItemTemplate const* proto) const;
     bool SuitableForTransmogrification(ObjectGuid guid, ItemTemplate const* proto) const;

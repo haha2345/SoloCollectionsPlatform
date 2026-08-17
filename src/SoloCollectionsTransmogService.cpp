@@ -60,6 +60,32 @@ char const* OwnedSourceFailureStatus(Player* player, CollectionId appearanceId)
     return sawTemplate ? "CLASS_RESTRICTED" : "SKILL_REQUIRED";
 }
 
+char const* CollectedApplyFailureStatus(Player* player, CollectionId appearanceId, ItemTemplate const* target)
+{
+    AppearanceCollectionDefinition const* definition = GetAppearanceCatalog().Find(appearanceId);
+    if (!player || !definition || !target)
+        return "SKILL_REQUIRED";
+    bool weaponBlock = false;
+    bool armorBlock = false;
+    for (std::uint32_t sourceItemId : definition->SourceItemIds)
+    {
+        ItemTemplate const* source = sObjectMgr->GetItemTemplate(sourceItemId);
+        if (!source)
+            continue;
+        if (sTransmogrification->CanApplyCollectedVisual(player, target, source))
+            return "SKILL_REQUIRED";
+        if (source->Class == ITEM_CLASS_WEAPON && target->Class == ITEM_CLASS_WEAPON)
+            weaponBlock = true;
+        else if (source->Class == ITEM_CLASS_ARMOR && target->Class == ITEM_CLASS_ARMOR)
+            armorBlock = true;
+    }
+    if (weaponBlock)
+        return "WEAPON_TYPE";
+    if (armorBlock)
+        return "ARMOR_TYPE";
+    return OwnedSourceFailureStatus(player, appearanceId);
+}
+
 std::uint32_t AccountOf(Player* player)
 {
     return player && player->GetSession() ? player->GetSession()->GetAccountId() : 0;
@@ -452,7 +478,7 @@ TransmogProjectionService::ParsedIntent TransmogProjectionService::EvaluateInten
             player, CollectionId(collectionId), inventorySlot);
         if (!sourceItemId)
         {
-            intent.Status = OwnedSourceFailureStatus(player, CollectionId(collectionId));
+            intent.Status = CollectedApplyFailureStatus(player, CollectionId(collectionId), item->GetTemplate());
             return intent;
         }
         std::uint32_t currentFake = sTransmogrification->GetFakeEntry(item->GetGUID());

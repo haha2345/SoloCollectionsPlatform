@@ -115,6 +115,8 @@ public:
     [[nodiscard]] std::optional<LoginGeneration> BeginReload(AccountId accountId);
 
     [[nodiscard]] DeltaQueueResult QueueDelta(AccountId accountId, CollectionDelta delta);
+    [[nodiscard]] bool ClearOwnedType(
+        AccountId accountId, CollectionTypeId typeId, CollectionRevision revision);
     [[nodiscard]] std::vector<CollectionDelta> DrainReadyDeltas(AccountId accountId);
     [[nodiscard]] std::size_t EvictExpired(std::uint64_t nowMs);
 

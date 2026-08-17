@@ -743,6 +743,42 @@ uint8 ParseCollectedMixedArmor(std::string value)
         return MIXED_ARMOR_LOWER;
     return MIXED_ARMOR_SAME;
 }
+
+uint8 ParseCollectedMixedWeapons(std::string value)
+{
+    for (char& ch : value)
+        ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
+    if (value == "any")
+        return MIXED_WEAPONS_LOOSE;
+    if (value == "family")
+        return MIXED_WEAPONS_MODERN;
+    return MIXED_WEAPONS_STRICT;
+}
+
+bool CollectedWeaponFamilyAllowed(uint32 targetSub, uint32 sourceSub)
+{
+    switch (targetSub)
+    {
+        case ITEM_SUBCLASS_WEAPON_AXE:
+        case ITEM_SUBCLASS_WEAPON_SWORD:
+        case ITEM_SUBCLASS_WEAPON_MACE:
+            return sourceSub == ITEM_SUBCLASS_WEAPON_AXE
+                || sourceSub == ITEM_SUBCLASS_WEAPON_SWORD
+                || sourceSub == ITEM_SUBCLASS_WEAPON_MACE;
+        case ITEM_SUBCLASS_WEAPON_AXE2:
+        case ITEM_SUBCLASS_WEAPON_SWORD2:
+        case ITEM_SUBCLASS_WEAPON_MACE2:
+        case ITEM_SUBCLASS_WEAPON_STAFF:
+        case ITEM_SUBCLASS_WEAPON_POLEARM:
+            return sourceSub == ITEM_SUBCLASS_WEAPON_AXE2
+                || sourceSub == ITEM_SUBCLASS_WEAPON_SWORD2
+                || sourceSub == ITEM_SUBCLASS_WEAPON_MACE2
+                || sourceSub == ITEM_SUBCLASS_WEAPON_STAFF
+                || sourceSub == ITEM_SUBCLASS_WEAPON_POLEARM;
+        default:
+            return false;
+    }
+}
 }
 
 bool Transmogrification::CanApplyCollectedVisual(Player* player, ItemTemplate const* target, ItemTemplate const* source) const
@@ -780,13 +816,37 @@ bool Transmogrification::CanApplyCollectedVisual(Player* player, ItemTemplate co
     if (source->SubClass != target->SubClass)
     {
         bool allowed = false;
-        if (source->Class == ITEM_CLASS_ARMOR && target->Class == ITEM_CLASS_ARMOR
-            && IsTieredArmorSubclass(source->SubClass) && IsTieredArmorSubclass(target->SubClass))
+        if (source->Class == ITEM_CLASS_ARMOR && target->Class == ITEM_CLASS_ARMOR)
         {
-            if (CollectedMixedArmorPolicy == MIXED_ARMOR_ANY)
+            bool sourceTiered = IsTieredArmorSubclass(source->SubClass);
+            bool targetTiered = IsTieredArmorSubclass(target->SubClass);
+            bool eitherMisc = source->SubClass == ITEM_SUBCLASS_ARMOR_MISC
+                || target->SubClass == ITEM_SUBCLASS_ARMOR_MISC;
+            if (sourceTiered && targetTiered)
+            {
+                if (CollectedMixedArmorPolicy == MIXED_ARMOR_ANY)
+                    allowed = true;
+                else if (CollectedMixedArmorPolicy == MIXED_ARMOR_LOWER)
+                    allowed = TierAvailable(player, 0, source->SubClass);
+            }
+            else if (eitherMisc && source->InventoryType == target->InventoryType)
+            {
+                if (CollectedMixedArmorPolicy == MIXED_ARMOR_ANY)
+                    allowed = true;
+                else if (CollectedMixedArmorPolicy == MIXED_ARMOR_LOWER)
+                    allowed = !sourceTiered || TierAvailable(player, 0, source->SubClass);
+            }
+            else
+                allowed = IsSubclassMismatchAllowed(player, source, target);
+        }
+        else if (source->Class == ITEM_CLASS_WEAPON && target->Class == ITEM_CLASS_WEAPON)
+        {
+            if (CollectedMixedWeaponPolicy == MIXED_WEAPONS_LOOSE)
                 allowed = true;
-            else if (CollectedMixedArmorPolicy == MIXED_ARMOR_LOWER)
-                allowed = TierAvailable(player, 0, source->SubClass);
+            else if (CollectedMixedWeaponPolicy == MIXED_WEAPONS_MODERN)
+                allowed = CollectedWeaponFamilyAllowed(target->SubClass, source->SubClass);
+            else if (source->SubClass == ITEM_SUBCLASS_WEAPON_MISC)
+                allowed = source->InventoryType == target->InventoryType;
         }
         else
             allowed = IsSubclassMismatchAllowed(player, source, target);
@@ -1275,6 +1335,8 @@ void Transmogrification::LoadConfig(bool reload)
     AllowLowerTiers = sConfigMgr->GetOption<bool>("Transmogrification.AllowLowerTiers", false);
     CollectedMixedArmorPolicy = ParseCollectedMixedArmor(
         sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedArmor", "any"));
+    CollectedMixedWeaponPolicy = ParseCollectedMixedWeapons(
+        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedWeapons", "any"));
     AllowMixedOffhandArmorTypes = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedOffhandArmorTypes", false);
     AllowMixedWeaponHandedness = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedWeaponHandedness", false);
     AllowFishingPoles = sConfigMgr->GetOption<bool>("Transmogrification.AllowFishingPoles", false);

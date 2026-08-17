@@ -138,6 +138,130 @@ void AppearanceService::Update()
             AdvanceMigration(accountId, state);
     }
     AdvanceQueuedUnlocks();
+    AdvanceNewClears();
+    AdvanceNewFlags();
+}
+
+bool AppearanceService::ShouldMarkAppearanceNew(
+    CollectionSourceKind sourceKind, AppearanceUnlockTrigger trigger)
+{
+    if (trigger == AppearanceUnlockTrigger::HistoricalReconcile)
+        return false;
+    return sourceKind == CollectionSourceKind::Gameplay ||
+        sourceKind == CollectionSourceKind::GameMaster;
+}
+
+void AppearanceService::EnqueueNewFlagLocked(AccountId accountId, CollectionId appearanceId,
+    std::uint32_t characterGuid, std::uint32_t actorAccountId, std::uint32_t actorGuid)
+{
+    if (!accountId.IsValid() || !appearanceId.IsValid())
+        return;
+    if (GetAccountCollectionService().Evaluate(
+            accountId, { AppearanceNewCollectionTypeId, appearanceId }).IsSuccess())
+        return;
+    if (!_queuedNewFlagIds[accountId].insert(appearanceId).second)
+        return;
+    _pendingNewFlags[accountId].push_back({ appearanceId, characterGuid, actorAccountId, actorGuid });
+}
+
+void AppearanceService::QueueNewFlag(AccountId accountId, CollectionId appearanceId,
+    std::uint32_t characterGuid, std::uint32_t actorAccountId, std::uint32_t actorGuid)
+{
+    std::scoped_lock lock(_mutex);
+    EnqueueNewFlagLocked(accountId, appearanceId, characterGuid, actorAccountId, actorGuid);
+}
+
+void AppearanceService::QueueNewClear(AccountId accountId, CollectionId appearanceId)
+{
+    if (!accountId.IsValid() || !appearanceId.IsValid())
+        return;
+    std::scoped_lock lock(_mutex);
+    _pendingNewClears[accountId].push_back(appearanceId);
+}
+
+void AppearanceService::AdvanceNewFlags()
+{
+    for (auto account = _pendingNewFlags.begin(); account != _pendingNewFlags.end();)
+    {
+        AccountId accountId = account->first;
+        std::deque<PendingNewFlag>& queue = account->second;
+        if (queue.empty())
+        {
+            _queuedNewFlagIds.erase(accountId);
+            account = _pendingNewFlags.erase(account);
+            continue;
+        }
+        if (!GetAccountCollectionService().IsReady(accountId) ||
+            GetAccountCollectionStore().HasPendingMutation(accountId))
+        {
+            ++account;
+            continue;
+        }
+
+        PendingNewFlag const& pending = queue.front();
+        if (GetAccountCollectionService().Evaluate(
+                accountId, { AppearanceNewCollectionTypeId, pending.Appearance }).IsSuccess())
+        {
+            _queuedNewFlagIds[accountId].erase(pending.Appearance);
+            queue.pop_front();
+            continue;
+        }
+        if (!GetAccountCollectionService().Evaluate(
+                accountId, { AppearanceCollectionTypeId, pending.Appearance }).IsSuccess())
+        {
+            ++account;
+            continue;
+        }
+        MutationStartResult started = GetAccountCollectionService().TryUnlock(accountId,
+            { AppearanceNewCollectionTypeId, pending.Appearance }, CollectionSourceKind::System,
+            0, pending.CharacterGuid, pending.ActorAccountId, pending.ActorGuid);
+        if (started.Accepted || started.Reason == CollectionReasonCode::PendingOperation ||
+            started.Reason == CollectionReasonCode::NotReady)
+        {
+            ++account;
+            continue;
+        }
+        _queuedNewFlagIds[accountId].erase(pending.Appearance);
+        queue.pop_front();
+    }
+}
+
+void AppearanceService::AdvanceNewClears()
+{
+    for (auto account = _pendingNewClears.begin(); account != _pendingNewClears.end();)
+    {
+        AccountId accountId = account->first;
+        std::deque<CollectionId>& queue = account->second;
+        if (queue.empty())
+        {
+            account = _pendingNewClears.erase(account);
+            continue;
+        }
+        if (!GetAccountCollectionService().IsReady(accountId) ||
+            GetAccountCollectionStore().HasPendingMutation(accountId))
+        {
+            ++account;
+            continue;
+        }
+
+        CollectionId appearanceId = queue.front();
+        if (!GetAccountCollectionService().Evaluate(
+                accountId, { AppearanceNewCollectionTypeId, appearanceId }).IsSuccess())
+        {
+            queue.pop_front();
+            continue;
+        }
+        MutationStartResult started = GetAccountCollectionService().TryRevoke(accountId,
+            { AppearanceNewCollectionTypeId, appearanceId }, CollectionSourceKind::System,
+            0, 0, 0, 0);
+        if (started.Accepted || started.Reason == CollectionReasonCode::PendingOperation ||
+            started.Reason == CollectionReasonCode::NotReady)
+        {
+            ++account;
+            continue;
+        }
+        queue.pop_front();
+    }
 }
 
 AppearanceUnlockQueueResult AppearanceService::QueueCanonicalUnlock(AccountId accountId,
@@ -246,7 +370,15 @@ void AppearanceService::AdvanceQueuedUnlocks()
         MutationStartResult started = GetAccountCollectionService().TryUnlock(accountId,
             { AppearanceCollectionTypeId, pending.Appearance }, pending.SourceKind,
             pending.SourceItemId, pending.CharacterGuid, pending.ActorAccountId, pending.ActorGuid);
-        if (started.Accepted || started.Reason == CollectionReasonCode::PendingOperation ||
+        if (started.Accepted)
+        {
+            if (ShouldMarkAppearanceNew(pending.SourceKind, pending.Trigger))
+                EnqueueNewFlagLocked(accountId, pending.Appearance, pending.CharacterGuid,
+                    pending.ActorAccountId, pending.ActorGuid);
+            ++account;
+            continue;
+        }
+        if (started.Reason == CollectionReasonCode::PendingOperation ||
             started.Reason == CollectionReasonCode::NotReady)
         {
             ++account;

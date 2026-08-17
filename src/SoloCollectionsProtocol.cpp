@@ -390,7 +390,8 @@ Sc2DecodeResult DecodeSc2Body(std::string_view body)
                 !ParseUnsigned(fields[2], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.RequestId) ||
                 !IsOneOf(fields[3], { "ACCEPTED", "DISMISSED", "LOADING", "NOT_OWNED", "FAVORITE_NOT_OWNED",
                     "CATALOG_MISMATCH", "ASSET_MISMATCH",
-                    "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED", "INVALID_TARGET_SLOT",
+                    "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED",
+                    "WEAPON_TYPE", "ARMOR_TYPE", "INVALID_TARGET_SLOT",
                     "NOT_ENOUGH_MONEY", "NOT_ENOUGH_TOKENS",
                     "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED", "IN_COMBAT", "DEAD",
                     "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED", "MAP_RESTRICTED",
@@ -445,7 +446,8 @@ Sc2DecodeResult DecodeSc2Body(std::string_view body)
                 !ParseUnsigned(fields[2], std::uint32_t { 1 }, std::numeric_limits<std::uint32_t>::max(), message.RequestId) ||
                 !IsOneOf(fields[3], { "ACCEPTED", "DISMISSED", "LOADING", "NOT_OWNED", "FAVORITE_NOT_OWNED",
                     "CATALOG_MISMATCH", "ASSET_MISMATCH",
-                    "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED", "INVALID_TARGET_SLOT",
+                    "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED",
+                    "WEAPON_TYPE", "ARMOR_TYPE", "INVALID_TARGET_SLOT",
                     "NOT_ENOUGH_MONEY", "NOT_ENOUGH_TOKENS",
                     "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED", "IN_COMBAT", "DEAD",
                     "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED", "MAP_RESTRICTED",

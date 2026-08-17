@@ -43,3 +43,13 @@ adds:
 
 These tables do not advance `sc_account_state.revision`. Existing character
 NPC outfits stay on their own table and are not the type 19 authority.
+
+## Appearance unseen projection
+
+SC2 type 20 (`appearance-new`) stores unseen owned appearance IDs in the
+existing `sc_collection_unlock` table (`type_id=20`). It is not collection
+progress: a row means the account has not yet marked that owned appearance
+as seen. Existing type 13 unlocks are not backfilled. `MARK_ALL_SEEN` deletes
+every type 20 row for the account in one revision and writes a single audit
+row with `collection_id=1`. Do not store unseen flags in
+`solo_collection_preference`.

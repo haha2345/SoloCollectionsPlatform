@@ -69,6 +69,8 @@ public:
         std::uint64_t revision, std::string payload);
     void QueueRawSnapshotReplaceForAccount(AccountId accountId, CollectionTypeId typeId,
         std::uint64_t revision, std::string payload);
+    void QueueOwnedSnapshotReplaceForAccount(AccountId accountId, CollectionTypeId typeId,
+        CollectionRevision revision);
     void OnDerivedOwnedChanged(AccountId accountId, CollectionTypeId typeId,
         std::vector<CollectionId> owned, CollectionRevision revision);
     [[nodiscard]] bool HandleInbound(

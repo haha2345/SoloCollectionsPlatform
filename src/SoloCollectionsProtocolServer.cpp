@@ -34,6 +34,7 @@ bool IsActionStatus(std::string_view value)
         "ACCEPTED", "DISMISSED", "LOADING", "NOT_OWNED", "FAVORITE_NOT_OWNED",
         "CATALOG_MISMATCH", "ASSET_MISMATCH",
         "UNKNOWN_IDENTITY", "CLASS_RESTRICTED", "RACE_RESTRICTED", "SKILL_REQUIRED",
+        "WEAPON_TYPE", "ARMOR_TYPE",
         "INVALID_TARGET_SLOT", "DB_UNAVAILABLE", "RATE_LIMITED", "INVALID_REQUEST", "UNSUPPORTED",
         "NOT_ENOUGH_MONEY", "NOT_ENOUGH_TOKENS",
         "IN_COMBAT", "DEAD", "IN_VEHICLE", "ON_TAXI", "INDOORS", "FLYING_NOT_ALLOWED",
@@ -163,6 +164,25 @@ void Sc2Server::QueueRawSnapshotReplaceForAccount(AccountId accountId, Collectio
         if (!session.Active || !ClientBuildHasWardrobe(session.ClientBuild))
             continue;
         QueueRawCategorySnapshot(session, typeId, revision, payload);
+    }
+}
+
+void Sc2Server::QueueOwnedSnapshotReplaceForAccount(AccountId accountId, CollectionTypeId typeId,
+    CollectionRevision revision)
+{
+    std::scoped_lock lock(_mutex);
+    Sc2CategoryDefinition const* category = FindCategory(_categories, typeId);
+    if (!accountId.IsValid() || !category || !revision.IsValid())
+        return;
+    std::optional<std::vector<CollectionId>> owned = _cache.OwnedByType(accountId, typeId);
+    if (!owned)
+        return;
+    for (auto& [sessionId, session] : _sessions)
+    {
+        (void)sessionId;
+        if (!session.Active || session.Account != accountId || !CategoryVisible(session, *category))
+            continue;
+        QueueCategorySnapshot(session, *category, revision.Value(), *owned);
     }
 }
 

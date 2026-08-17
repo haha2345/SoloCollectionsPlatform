@@ -1,6 +1,7 @@
 #include "SoloCollectionsProtocolScript.h"
 
 #include "SoloCollectionsAccountCache.h"
+#include "SoloCollectionsAccountService.h"
 #include "SoloCollectionsAccountStore.h"
 #include "SoloCollectionsBackend.h"
 #include "Categories/Appearance/SoloCollectionsAppearanceService.h"
@@ -86,6 +87,7 @@ Sc2Server& GetSc2Server()
         }
         categories.push_back({ CharacterAppliedCollectionTypeId, CharacterAppliedMappingHash, true, true, true });
         categories.push_back({ AccountOutfitCollectionTypeId, AccountOutfitMappingHash, true, true, true });
+        categories.push_back({ AppearanceNewCollectionTypeId, AppearanceNewMappingHash, true, false, false });
         return Sc2Server(GetAccountCollectionCache(), std::string(GeneratedSc2MetadataVersion),
             std::string(GeneratedSc2AssetPackVersion), std::string(BackendBuild), std::move(categories));
     }();
@@ -101,6 +103,15 @@ public:
         if (delta.Key.TypeId == SetAppearanceDependencyTypeId)
             GetSc2Server().OnDerivedOwnedChanged(accountId, SetCollectionTypeId,
                 GetSetCatalog().CompletedByAccount(accountId), delta.Revision);
+        if (delta.Key.TypeId == AppearanceCollectionTypeId &&
+            delta.Kind == CollectionDeltaKind::Revoke)
+            GetAppearanceService().QueueNewClear(accountId, delta.Key.Id);
+    }
+
+    void OnOwnedSnapshotReplaced(
+        AccountId accountId, CollectionTypeId typeId, CollectionRevision revision) override
+    {
+        GetSc2Server().QueueOwnedSnapshotReplaceForAccount(accountId, typeId, revision);
     }
 
     void OnCollectionMutationFailed(
@@ -380,6 +391,63 @@ bool Sc2ProtocolCanUsePrivateChat(
             }
             if (request.TypeId == AppearanceCollectionTypeId.Value())
             {
+                if (request.ActionId == "MARK_SEEN")
+                {
+                    if (request.Target != "-")
+                        return finish("appearance_seen", "INVALID_REQUEST");
+                    CollectionId appearanceId(request.CollectionId);
+                    if (!GetAppearanceService().Evaluate(appearanceId).Availability.CatalogKnown)
+                        return finish("appearance_seen", "UNKNOWN_IDENTITY");
+                    if (!GetAccountCollectionCache().IsOwned(accountId,
+                        { AppearanceCollectionTypeId, appearanceId }))
+                        return finish("appearance_seen", "NOT_OWNED");
+                    if (!GetAccountCollectionCache().IsOwned(accountId,
+                        { AppearanceNewCollectionTypeId, appearanceId }))
+                        return finish("appearance_seen", "ACCEPTED");
+                    MutationStartResult started = GetAccountCollectionService().TryRevoke(accountId,
+                        { AppearanceNewCollectionTypeId, appearanceId }, CollectionSourceKind::Gameplay,
+                        0, player->GetGUID().GetCounter(), accountId.Value(),
+                        player->GetGUID().GetCounter());
+                    if (started.Accepted)
+                        return finish("appearance_seen", "ACCEPTED");
+                    switch (started.Reason)
+                    {
+                        case CollectionReasonCode::NotOwned:
+                            return finish("appearance_seen", "ACCEPTED");
+                        case CollectionReasonCode::NotReady:
+                            return finish("appearance_seen", "LOADING");
+                        case CollectionReasonCode::DatabaseError:
+                        case CollectionReasonCode::ReadOnly:
+                            return finish("appearance_seen", "DB_UNAVAILABLE");
+                        case CollectionReasonCode::PendingOperation:
+                            return finish("appearance_seen", "RATE_LIMITED");
+                        default:
+                            return finish("appearance_seen", "INVALID_REQUEST");
+                    }
+                }
+                if (request.ActionId == "MARK_ALL_SEEN")
+                {
+                    if (request.CollectionId != 1 || request.Target != "-")
+                        return finish("appearance_seen_all", "INVALID_REQUEST");
+                    MutationStartResult started = GetAccountCollectionService().TryClearType(accountId,
+                        AppearanceNewCollectionTypeId, CollectionSourceKind::Gameplay,
+                        player->GetGUID().GetCounter(), accountId.Value(),
+                        player->GetGUID().GetCounter());
+                    if (started.Accepted)
+                        return finish("appearance_seen_all", "ACCEPTED");
+                    switch (started.Reason)
+                    {
+                        case CollectionReasonCode::NotReady:
+                            return finish("appearance_seen_all", "LOADING");
+                        case CollectionReasonCode::DatabaseError:
+                        case CollectionReasonCode::ReadOnly:
+                            return finish("appearance_seen_all", "DB_UNAVAILABLE");
+                        case CollectionReasonCode::PendingOperation:
+                            return finish("appearance_seen_all", "RATE_LIMITED");
+                        default:
+                            return finish("appearance_seen_all", "INVALID_REQUEST");
+                    }
+                }
                 std::uint32_t encodedSlot = 0;
                 auto parsed = std::from_chars(request.Target.data(),
                     request.Target.data() + request.Target.size(), encodedSlot);

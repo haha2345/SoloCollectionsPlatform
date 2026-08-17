@@ -111,6 +111,8 @@ public:
     virtual void OnCollectionMutationFailed(
         AccountId accountId, CollectionKey const& key, CollectionReasonCode reason) = 0;
     virtual bool OnAccountResyncRequested(AccountId accountId) = 0;
+    virtual void OnOwnedSnapshotReplaced(
+        AccountId /*accountId*/, CollectionTypeId /*typeId*/, CollectionRevision /*revision*/) {}
 };
 
 class AccountCollectionStore
@@ -130,6 +132,8 @@ public:
     [[nodiscard]] MutationStartResult BeginMutation(AccountCollectionMutation mutation);
     // Accepts only registered internal preference projections (mount 16, companion 17).
     [[nodiscard]] MutationStartResult BeginPreferenceMutation(AccountCollectionMutation mutation);
+    // One-revision clear of a persisted internal projection (currently type 20).
+    [[nodiscard]] MutationStartResult BeginClearType(AccountCollectionMutation mutation);
     [[nodiscard]] bool RecordRejectedMutation(
         AccountCollectionMutation const& mutation, CollectionReasonCode reason);
     [[nodiscard]] bool RequestResync(AccountId accountId);

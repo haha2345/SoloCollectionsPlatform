@@ -48,6 +48,7 @@ class WardrobeProjectionContractTests(unittest.TestCase):
         self.assertIn("# SoloCollections.Transmog.ApplyBaseCopper = 0", config)
         self.assertIn("# SoloCollections.Transmog.ApplySlotCopper = 0", config)
         self.assertIn("SoloCollections.Transmog.MixedArmor = any", config)
+        self.assertIn("SoloCollections.Transmog.MixedWeapons = any", config)
 
     def test_collected_visual_uses_wardrobe_mixed_armor_policy(self):
         header = (SRC / "Transmogrification.h").read_text(encoding="utf-8")
@@ -57,13 +58,19 @@ class WardrobeProjectionContractTests(unittest.TestCase):
         self.assertIn("CollectedMixedArmorPolicy", header)
         self.assertIn("SoloCollections.Transmog.MixedArmor", transmog)
         self.assertIn("ParseCollectedMixedArmor", transmog)
+        self.assertIn("ParseCollectedMixedWeapons", transmog)
         self.assertIn("CollectedMixedArmorPolicy == MIXED_ARMOR_ANY", transmog)
+        self.assertIn("CollectedMixedWeaponPolicy == MIXED_WEAPONS_LOOSE", transmog)
+        self.assertIn("ITEM_SUBCLASS_ARMOR_MISC", transmog)
         self.assertIn("The player is already wearing `target`", transmog)
         self.assertNotIn(
             "if (!SuitableForTransmogrification(player, target))\n        return false;",
             transmog,
         )
         self.assertIn("OwnedSourceFailureStatus", service)
+        self.assertIn("CollectedApplyFailureStatus", service)
+        self.assertIn("return \"WEAPON_TYPE\"", service)
+        self.assertIn("return \"ARMOR_TYPE\"", service)
         self.assertIn("return sawTemplate ? \"CLASS_RESTRICTED\" : \"SKILL_REQUIRED\"", service)
 
 
