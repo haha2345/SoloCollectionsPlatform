@@ -11,11 +11,9 @@ Private.Tooltip = Tooltip
 
 -- General Event
 Tooltip:SetScript("OnEvent", function(Self, Event)
-	-- [Unit.lua:C_UnitInRange] Force client to cache Vial of the Sunwell
-	if ( WOW_PROJECT_ID_RCE ~= WOW_PROJECT_CLASSIC ) then
-		C_Item.RequestLoadItemDataByID(34471)
-	end
-
+	-- Do not pre-warm Unit.lua's range-check item here. On 3.3.5a/SoloCam,
+	-- the hidden item query can leak ERR_ITEM_NOT_FOUND during login; the
+	-- range helper still uses IsItemInRange on demand.
 	Private.AsyncCallbackSystemReady()
 	Self:UnregisterEvent(Event)
 	Self:SetScript("OnEvent", nil)
