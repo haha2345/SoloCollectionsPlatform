@@ -973,6 +973,236 @@ def _lua(value: Any, indent: int = 0) -> str:
     raise TypeError(type(value))
 
 
+_RANGED_WEAPON_TYPES = {"BOW", "GUN", "CROSSBOW", "THROWN", "WAND"}
+
+
+def _compact_pool_index(pool: dict[Any, int], values: list[Any], key: Any, value: Any = None) -> int:
+    index = pool.get(key)
+    if index is None:
+        values.append(key if value is None else value)
+        index = len(values)
+        pool[key] = index
+    return index
+
+
+def _compact_scalar(value: Any) -> str:
+    if isinstance(value, str):
+        return _lua_string(value)
+    if isinstance(value, float):
+        return repr(value)
+    return str(int(value))
+
+
+def _compact_array(values: Iterable[Any], indent: str, width: int = 118) -> str:
+    lines: list[str] = []
+    current = indent
+    for value in values:
+        piece = _compact_scalar(value) + ","
+        if len(current) + len(piece) > width and current != indent:
+            lines.append(current)
+            current = indent
+        current += piece
+    if current != indent:
+        lines.append(current)
+    return "\n".join(lines)
+
+
+def _compact_sparse(entries: dict[int, Any], indent: str, width: int = 118) -> str:
+    lines: list[str] = []
+    current = indent
+    for key in sorted(entries):
+        value = entries[key]
+        if isinstance(value, list):
+            rendered = "{" + ",".join(_compact_scalar(item) for item in value) + "}"
+        else:
+            rendered = _compact_scalar(value)
+        piece = f"[{key}]={rendered},"
+        if len(current) + len(piece) > width and current != indent:
+            lines.append(current)
+            current = indent
+        current += piece
+    if current != indent:
+        lines.append(current)
+    return "\n".join(lines)
+
+
+def _wardrobe_catalog_lua(model: dict[str, Any], wardrobe_collections: list[dict[str, Any]]) -> str:
+    """Render the LoadOnDemand wardrobe catalog in the compact v2 format.
+
+    Only public, active appearance rows ship to the client; the runtime record
+    projection is rebuilt from parallel arrays by Core/Catalog.lua so the
+    resident Lua footprint stays flat instead of one nested table per row.
+    """
+    records = [
+        entry for entry in wardrobe_collections
+        if entry["typeKey"] == "appearance" and entry["lifecycle"] == "active"
+        and entry["uiLifecycle"] == "public"
+    ]
+    slots: list[str] = []
+    slot_pool: dict[str, int] = {}
+    armors: list[str] = []
+    armor_pool: dict[str, int] = {}
+    weapon_types: list[str] = []
+    weapon_type_pool: dict[str, int] = {}
+    weapon_categories: list[str] = []
+    weapon_category_pool: dict[str, int] = {}
+    camera_keys: list[str] = []
+    camera_key_pool: dict[str, int] = {}
+    model_paths: list[str] = []
+    model_path_pool: dict[str, int] = {}
+    m2_cameras: list[dict[str, Any]] = []
+    m2_camera_pool: dict[str, int] = {}
+    auto_cameras: list[dict[str, Any]] = []
+    auto_camera_pool: dict[str, int] = {}
+
+    ids: list[int] = []
+    item_ids: list[int] = []
+    slot_ids: list[int] = []
+    armor_ids: list[int] = []
+    names: list[str] = []
+    extra_item_ids: dict[int, list[int]] = {}
+    weapon_refs: dict[int, int] = {}
+
+    weapon_type_ids: list[int] = []
+    weapon_category_ids: list[int] = []
+    native_display_ids: list[int] = []
+    synthetic_display_ids: list[int] = []
+    model_path_ids: list[int] = []
+    model_scales: list[float] = []
+    camera_key_ids: list[int] = []
+    m2_camera_ids: list[int] = []
+    auto_camera_ids: list[int] = []
+    model_signatures: dict[int, str] = {}
+    reason_codes: dict[int, str] = {}
+    weapon_extras: dict[int, dict[str, Any]] = {}
+    weapon_asset_packs: set[str] = set()
+
+    for entry in records:
+        index = len(ids) + 1
+        alias_items: list[int] = []
+        slot = "HEAD"
+        armor = None
+        alias_weapon = None
+        for alias in entry.get("aliases", []):
+            if alias.startswith("item:"):
+                alias_items.append(int(alias[5:]))
+            elif alias.startswith("slot:"):
+                slot = alias[5:]
+            elif alias.startswith("armor:"):
+                armor = alias[6:]
+            elif alias.startswith("weapon:"):
+                alias_weapon = alias[7:]
+        # Canonical aliases stamp bows/guns as MAINHAND; WotLK transmog uses
+        # the ranged inventory slot for those weapon families. This mirrors
+        # the historical client-side remap exactly (alias-derived type only).
+        if alias_weapon in _RANGED_WEAPON_TYPES:
+            slot = "RANGED"
+        display_item = int(entry["displayItemId"])
+        ids.append(int(entry["collectionId"]))
+        item_ids.append(display_item)
+        slot_ids.append(_compact_pool_index(slot_pool, slots, slot))
+        armor_ids.append(_compact_pool_index(armor_pool, armors, armor) if armor else 0)
+        name = entry.get("name") or {}
+        names.append(name.get("zhCN") or name.get("enUS") or entry["collectionKey"])
+        if alias_items and alias_items != [display_item]:
+            extra_item_ids[index] = alias_items
+
+        if entry.get("renderMode") != "BODY":
+            weapon_index = len(weapon_type_ids) + 1
+            weapon_refs[index] = weapon_index
+            weapon_type = entry.get("weaponType") or alias_weapon
+            weapon_category = entry.get("weaponCategory")
+            weapon_type_ids.append(
+                _compact_pool_index(weapon_type_pool, weapon_types, weapon_type) if weapon_type else 0)
+            weapon_category_ids.append(
+                _compact_pool_index(weapon_category_pool, weapon_categories, weapon_category)
+                if weapon_category else 0)
+            native_display_ids.append(int(entry.get("nativeDisplayId") or 0))
+            synthetic_display_ids.append(int(entry.get("syntheticDisplayId") or 0))
+            model_path = entry.get("modelPath")
+            model_path_ids.append(
+                _compact_pool_index(model_path_pool, model_paths, model_path) if model_path else 0)
+            model_scales.append(float(entry.get("modelScale") or 0))
+            camera_key = entry.get("cameraTuningKey")
+            camera_key_ids.append(
+                _compact_pool_index(camera_key_pool, camera_keys, camera_key) if camera_key else 0)
+            m2_camera = entry.get("m2Camera")
+            m2_camera_ids.append(
+                _compact_pool_index(m2_camera_pool, m2_cameras,
+                                    json.dumps(m2_camera, sort_keys=True), m2_camera)
+                if m2_camera else 0)
+            auto_camera = entry.get("autoCamera")
+            auto_camera_ids.append(
+                _compact_pool_index(auto_camera_pool, auto_cameras,
+                                    json.dumps(auto_camera, sort_keys=True), auto_camera)
+                if auto_camera else 0)
+            if entry.get("modelSignature"):
+                model_signatures[weapon_index] = entry["modelSignature"]
+            if entry.get("presentationReasonCode"):
+                reason_codes[weapon_index] = entry["presentationReasonCode"]
+            if entry.get("assetPackVersion"):
+                weapon_asset_packs.add(entry["assetPackVersion"])
+            extras = {
+                key: entry[key]
+                for key in ("generatedModelCameraOverride", "retiredSyntheticDisplayId",
+                            "registryTombstoneReason")
+                if entry.get(key) is not None
+            }
+            if extras:
+                weapon_extras[weapon_index] = extras
+
+    _require(len(weapon_asset_packs) <= 1, "wardrobe weapon rows must share one asset pack version")
+    weapon_asset_pack = next(iter(weapon_asset_packs), None)
+
+    pad = "        "
+    parts = [
+        "-- Generated by tools/catalog/generate_catalog.py. Do not edit.",
+        "SoloCollections.GeneratedWardrobeCatalog = {",
+        "    compactFormat = 2,",
+        f"    schemaVersion = {_lua(model['schemaVersion'])},",
+        f"    metadataVersion = {_lua(model['metadataVersion'])},",
+        f"    mappingHash = {_lua(model['mappingHash'])},",
+        f"    weaponAssetPackVersion = {_lua(weapon_asset_pack)},",
+        f"    appearanceCount = {len(ids)},",
+        f"    slots = {_lua(slots, 1)},",
+        f"    armorTypes = {_lua(armors, 1)},",
+        f"    weaponTypes = {_lua(weapon_types, 1)},",
+        f"    weaponCategories = {_lua(weapon_categories, 1)},",
+        f"    cameraKeys = {_lua(camera_keys, 1)},",
+        f"    modelPaths = {_lua(model_paths, 1)},",
+        f"    m2Cameras = {_lua(m2_cameras, 1)},",
+        f"    autoCameras = {_lua(auto_cameras, 1)},",
+        "    appearances = {",
+        "        ids = {\n" + _compact_array(ids, pad) + "\n        },",
+        "        itemIds = {\n" + _compact_array(item_ids, pad) + "\n        },",
+        "        slotIds = {\n" + _compact_array(slot_ids, pad) + "\n        },",
+        "        armorIds = {\n" + _compact_array(armor_ids, pad) + "\n        },",
+        "        names = {\n" + _compact_array(names, pad) + "\n        },",
+        "        extraItemIds = {\n" + _compact_sparse(extra_item_ids, pad) + "\n        },",
+        "        weaponRefs = {\n" + _compact_sparse(weapon_refs, pad) + "\n        },",
+        "    },",
+        "    weapons = {",
+        "        typeIds = {\n" + _compact_array(weapon_type_ids, pad) + "\n        },",
+        "        categoryIds = {\n" + _compact_array(weapon_category_ids, pad) + "\n        },",
+        "        nativeDisplayIds = {\n" + _compact_array(native_display_ids, pad) + "\n        },",
+        "        syntheticDisplayIds = {\n" + _compact_array(synthetic_display_ids, pad) + "\n        },",
+        "        modelPathIds = {\n" + _compact_array(model_path_ids, pad) + "\n        },",
+        "        modelScales = {\n" + _compact_array(model_scales, pad) + "\n        },",
+        "        cameraKeyIds = {\n" + _compact_array(camera_key_ids, pad) + "\n        },",
+        "        m2CameraIds = {\n" + _compact_array(m2_camera_ids, pad) + "\n        },",
+        "        autoCameraIds = {\n" + _compact_array(auto_camera_ids, pad) + "\n        },",
+        "        modelSignatures = {\n" + _compact_sparse(model_signatures, pad) + "\n        },",
+        "        reasonCodes = {\n" + _compact_sparse(reason_codes, pad) + "\n        },",
+        "        extras = {\n" + "\n".join(
+            f"{pad}[{key}] = {_lua(value, 2)}," for key, value in sorted(weapon_extras.items())
+        ) + "\n        },",
+        "    },",
+        "}",
+        "",
+    ]
+    return "\n".join(parts)
+
+
 def _cpp_string(value: str) -> str:
     return '"' + value.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -1365,12 +1595,7 @@ def render_outputs(model: dict[str, Any], repo_root: Path, module_root: Path) ->
         "appearancePresentationPublicCount": model["appearancePresentationPublicCount"],
         "deprecatedAliases": model["deprecatedAliases"],
     }) + "\n"
-    wardrobe_catalog_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedWardrobeCatalog = " + _lua({
-        "schemaVersion": model["schemaVersion"],
-        "metadataVersion": model["metadataVersion"],
-        "mappingHash": model["mappingHash"],
-        "collections": wardrobe_collections,
-    }) + "\n"
+    wardrobe_catalog_lua = _wardrobe_catalog_lua(model, wardrobe_collections)
     identity_lua = "-- Generated by tools/catalog/generate_catalog.py. Do not edit.\nSoloCollections.GeneratedIdentityData = " + _lua({
         "schemaVersion": model["schemaVersion"], "mappingHash": model["mappingHash"],
         "classes": model["classes"], "races": model["races"], "aliases": model["aliases"],

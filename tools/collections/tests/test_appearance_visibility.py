@@ -36,8 +36,14 @@ class AppearanceVisibilityTests(unittest.TestCase):
         self.assertIn("uiLifecycleDoesNotChangeCatalogAuthorization", read_text(ROOT / "catalog/review/appearances/visibility-policy.json"))
 
     def test_client_only_lists_public_appearances(self):
-        catalog_lua = read_text(ADDON / "Core/Catalog.lua")
-        self.assertIn('collection.uiLifecycle == "public"', catalog_lua)
+        # The generator filters the client wardrobe catalog to public rows at
+        # emission time, so non-public appearances never ship to the client.
+        generator = read_text(ROOT / "tools/catalog/generate_catalog.py")
+        self.assertIn('entry["uiLifecycle"] == "public"', generator)
+        generated = read_text(
+            ROOT / "addon/SoloCollections_WardrobeData/Data/Generated/WardrobeCatalog.lua")
+        self.assertIn("compactFormat = 2", generated)
+        self.assertNotIn("uiLifecycle", generated)
 
     def test_risk_signals_are_evidence_not_identity_deletion(self):
         ids = {entry["appearanceId"] for entry in self.evidence["decisions"]}

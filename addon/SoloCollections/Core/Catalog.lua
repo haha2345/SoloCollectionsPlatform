@@ -189,7 +189,6 @@ end
 local generatedMountSource = nil
 local generatedCompanionSource = nil
 local generatedToySource = nil
-local generatedAppearanceSource = nil
 local wardrobeLoadAttempted = false
 local mountDescriptionCache = {}
 local mountDescriptionGaps = {}
@@ -376,99 +375,206 @@ local function getGeneratedToySource()
     return generatedToySource
 end
 
-local function getGeneratedAppearanceSource()
-    if generatedAppearanceSource then
-        return generatedAppearanceSource
+-- Compact wardrobe store -----------------------------------------------
+-- WardrobeCatalog.lua ships parallel arrays (compactFormat 2): the alias
+-- parsing, deprecated filtering and camera dedup all happened in the
+-- generator. The store below reads those arrays directly and materializes
+-- full record tables only for query matches, so the resident footprint is
+-- the generated arrays plus small indexes instead of one nested table per
+-- appearance.
+local appearanceStore = nil
+
+local APPEARANCE_DESCRIPTION = "canonical 外观；来源物品可追溯。"
+
+local function buildAppearanceStore()
+    if appearanceStore then
+        return appearanceStore
     end
-    generatedAppearanceSource = {}
-    ensureWardrobeCatalog()
-    local generated = SC.GeneratedWardrobeCatalog or {}
-    for _, collection in ipairs(generated.collections or {}) do
-        if collection.typeKey == "appearance" and collection.lifecycle == "active" and
-            collection.uiLifecycle == "public" then
-            local names = collection.name or {}
-            local itemIds = {}
-            local slot = "HEAD"
-            local armorType
-            local weaponType
-            for _, alias in ipairs(collection.aliases or {}) do
-                local itemId = string.match(alias, "^item:(%d+)$")
-                if itemId then
-                    table.insert(itemIds, tonumber(itemId))
-                else
-                    slot = string.match(alias, "^slot:(.+)$") or slot
-                    armorType = string.match(alias, "^armor:(.+)$") or armorType
-                    weaponType = string.match(alias, "^weapon:(.+)$") or weaponType
+    if not ensureWardrobeCatalog() then
+        return nil
+    end
+    local generated = SC.GeneratedWardrobeCatalog
+    if not generated or generated.compactFormat ~= 2 or not generated.appearances then
+        return nil
+    end
+    local appearances = generated.appearances
+    local store = {
+        count = generated.appearanceCount or #appearances.ids,
+        ids = appearances.ids,
+        itemIds = appearances.itemIds,
+        slotIds = appearances.slotIds,
+        armorIds = appearances.armorIds,
+        names = appearances.names,
+        extraItemIds = appearances.extraItemIds or {},
+        weaponRefs = appearances.weaponRefs or {},
+        weapons = generated.weapons or {},
+        slots = generated.slots or {},
+        armorTypes = generated.armorTypes or {},
+        weaponTypes = generated.weaponTypes or {},
+        weaponCategories = generated.weaponCategories or {},
+        cameraKeys = generated.cameraKeys or {},
+        modelPaths = generated.modelPaths or {},
+        m2Cameras = generated.m2Cameras or {},
+        autoCameras = generated.autoCameras or {},
+        weaponAssetPackVersion = generated.weaponAssetPackVersion,
+    }
+    local indexById = {}
+    for index = 1, store.count do
+        indexById[store.ids[index]] = index
+    end
+    store.indexById = indexById
+    appearanceStore = store
+    return store
+end
+
+local function appearanceSlotName(store, index)
+    return store.slots[store.slotIds[index]] or "HEAD"
+end
+
+local function appearanceArmorType(store, index)
+    local armorId = store.armorIds[index]
+    if armorId and armorId ~= 0 then
+        return store.armorTypes[armorId]
+    end
+    return nil
+end
+
+local function appearanceWeaponType(store, index)
+    local weaponIndex = store.weaponRefs[index]
+    if not weaponIndex then
+        return nil
+    end
+    local typeId = store.weapons.typeIds[weaponIndex]
+    if typeId and typeId ~= 0 then
+        return store.weaponTypes[typeId]
+    end
+    return nil
+end
+
+local function appearanceWeaponCategory(store, index)
+    local weaponIndex = store.weaponRefs[index]
+    if not weaponIndex then
+        return nil
+    end
+    local categoryId = store.weapons.categoryIds[weaponIndex]
+    if categoryId and categoryId ~= 0 then
+        return store.weaponCategories[categoryId]
+    end
+    return nil
+end
+
+-- Resolves acquisition text/kind without allocating an itemIds table.
+local function appearanceSourceInfo(store, index)
+    local acquisition = SC.GeneratedWardrobeAcquisitionSources
+    local itemSources = acquisition and acquisition.itemSources or nil
+    if not itemSources then
+        return nil, nil
+    end
+    local text, kind
+    local extra = store.extraItemIds[index]
+    if extra then
+        for _, itemId in ipairs(extra) do
+            local sourceRecord = itemSources[itemId]
+            if sourceRecord then
+                if not kind then
+                    kind = Catalog.NormalizeAppearanceSourceKind(sourceRecord.kind)
+                end
+                if (not text) and sourceRecord.text and sourceRecord.text ~= "" then
+                    text = sourceRecord.text
+                end
+                if text and kind then
+                    break
                 end
             end
-            -- Canonical aliases stamp bows/guns as MAINHAND; WotLK transmog
-            -- uses inventory slot 17 for those weapon families.
-            if RANGED_WEAPON_TYPES[weaponType] then
-                slot = "RANGED"
+        end
+    else
+        local sourceRecord = itemSources[store.itemIds[index]]
+        if sourceRecord then
+            kind = Catalog.NormalizeAppearanceSourceKind(sourceRecord.kind)
+            if sourceRecord.text and sourceRecord.text ~= "" then
+                text = sourceRecord.text
             end
-            if #itemIds == 0 and tonumber(collection.displayItemId) then
-                itemIds[1] = tonumber(collection.displayItemId)
-            end
-            local acquisitionSources = SC.GeneratedWardrobeAcquisitionSources and
-                SC.GeneratedWardrobeAcquisitionSources.itemSources or nil
-            local acquisitionSource
-            local sourceKind
-            if acquisitionSources then
-                for _, sourceItemId in ipairs(itemIds) do
-                    local sourceRecord = acquisitionSources[tonumber(sourceItemId)]
-                    if sourceRecord then
-                        if not sourceKind then
-                            sourceKind = Catalog.NormalizeAppearanceSourceKind(sourceRecord.kind)
-                        end
-                        if (not acquisitionSource) and sourceRecord.text and sourceRecord.text ~= "" then
-                            acquisitionSource = sourceRecord.text
-                        end
-                        if acquisitionSource and sourceKind then
-                            break
-                        end
-                    end
-                end
-            end
-            table.insert(generatedAppearanceSource, {
-                id = collection.collectionId,
-                itemId = tonumber(collection.displayItemId) or itemIds[1],
-                iconItemId = tonumber(collection.displayItemId) or itemIds[1],
-                itemIds = itemIds,
-                slot = slot,
-                armorType = armorType,
-                weaponType = collection.weaponType or weaponType,
-                weaponCategory = collection.weaponCategory,
-                renderMode = collection.renderMode,
-                nativeDisplayId = collection.nativeDisplayId,
-                syntheticDisplayId = collection.syntheticDisplayId,
-                modelPath = collection.modelPath,
-                modelScale = collection.modelScale,
-                cameraTuningKey = collection.cameraTuningKey,
-                m2Camera = collection.m2Camera,
-                modelSignature = collection.modelSignature,
-                -- Keep reviewed, generated model-scoped camera defaults in the
-                -- runtime projection.  Wardrobe resolves this below explicit
-                -- player appearance/model tuning and above weapon-family
-                -- fallbacks; dropping it here silently turns it into auto.
-                generatedModelCameraOverride = collection.generatedModelCameraOverride,
-                autoCamera = collection.autoCamera,
-                presentationStatus = collection.presentationStatus,
-                presentationReasonCode = collection.presentationReasonCode,
-                presentationCapability = collection.presentationCapability,
-                assetPackVersion = collection.assetPackVersion,
-                retiredSyntheticDisplayId = collection.retiredSyntheticDisplayId,
-                registryTombstoneReason = collection.registryTombstoneReason,
-                name = names.zhCN ~= "" and names.zhCN or names.enUS or collection.collectionKey,
-                icon = nil,
-                source = acquisitionSource or "获取方式未记录",
-                sourceKind = sourceKind,
-                description = "canonical 外观；来源物品可追溯。",
-                collected = false,
-                favorite = false,
-            })
         end
     end
-    return generatedAppearanceSource
+    return text, kind
+end
+
+local function appearanceItemIdList(store, index)
+    local extra = store.extraItemIds[index]
+    if extra then
+        local itemIds = {}
+        for position, itemId in ipairs(extra) do
+            itemIds[position] = itemId
+        end
+        return itemIds
+    end
+    return { store.itemIds[index] }
+end
+
+local function materializeAppearance(store, index)
+    local record = {
+        id = store.ids[index],
+        itemId = store.itemIds[index],
+        iconItemId = store.itemIds[index],
+        itemIds = appearanceItemIdList(store, index),
+        slot = appearanceSlotName(store, index),
+        armorType = appearanceArmorType(store, index),
+        name = store.names[index],
+        icon = nil,
+        description = APPEARANCE_DESCRIPTION,
+        collected = false,
+        favorite = false,
+    }
+    local sourceText, sourceKind = appearanceSourceInfo(store, index)
+    record.source = sourceText or "获取方式未记录"
+    record.sourceKind = sourceKind
+    local weaponIndex = store.weaponRefs[index]
+    if weaponIndex then
+        local weapons = store.weapons
+        record.weaponType = appearanceWeaponType(store, index)
+        record.weaponCategory = appearanceWeaponCategory(store, index)
+        local nativeDisplayId = weapons.nativeDisplayIds[weaponIndex]
+        record.nativeDisplayId = nativeDisplayId ~= 0 and nativeDisplayId or nil
+        local syntheticDisplayId = weapons.syntheticDisplayIds[weaponIndex]
+        record.syntheticDisplayId = syntheticDisplayId ~= 0 and syntheticDisplayId or nil
+        local modelPathId = weapons.modelPathIds[weaponIndex]
+        record.modelPath = modelPathId ~= 0 and store.modelPaths[modelPathId] or nil
+        local modelScale = weapons.modelScales[weaponIndex]
+        record.modelScale = modelScale ~= 0 and modelScale or nil
+        local cameraKeyId = weapons.cameraKeyIds[weaponIndex]
+        record.cameraTuningKey = cameraKeyId ~= 0 and store.cameraKeys[cameraKeyId] or nil
+        -- Camera tables are deduplicated in the generated catalog and shared
+        -- across records; treat them as read-only.
+        local m2CameraId = weapons.m2CameraIds[weaponIndex]
+        record.m2Camera = m2CameraId ~= 0 and store.m2Cameras[m2CameraId] or nil
+        local autoCameraId = weapons.autoCameraIds[weaponIndex]
+        record.autoCamera = autoCameraId ~= 0 and store.autoCameras[autoCameraId] or nil
+        record.modelSignature = weapons.modelSignatures and weapons.modelSignatures[weaponIndex]
+        record.presentationReasonCode = weapons.reasonCodes and weapons.reasonCodes[weaponIndex]
+        local extras = weapons.extras and weapons.extras[weaponIndex]
+        if extras then
+            -- Keep reviewed, generated model-scoped camera defaults in the
+            -- runtime projection.  Wardrobe resolves this below explicit
+            -- player appearance/model tuning and above weapon-family
+            -- fallbacks; dropping it here silently turns it into auto.
+            record.generatedModelCameraOverride = extras.generatedModelCameraOverride
+            record.retiredSyntheticDisplayId = extras.retiredSyntheticDisplayId
+            record.registryTombstoneReason = extras.registryTombstoneReason
+        end
+        if record.syntheticDisplayId then
+            record.renderMode = "STANDALONE"
+            record.presentationStatus = "READY"
+            record.presentationCapability = "DIRECT_DISPLAY_V1"
+        else
+            record.renderMode = "UNAVAILABLE"
+            record.presentationStatus = "UNAVAILABLE"
+            record.presentationCapability = "UNAVAILABLE"
+        end
+        record.assetPackVersion = store.weaponAssetPackVersion
+    else
+        record.renderMode = "BODY"
+    end
+    return record
 end
 
 local function resolvedWeaponType(record)
@@ -595,6 +701,11 @@ local function resolveRecordState(category, record, fallback)
 end
 
 local function getSource(category)
+    -- Appearances resolve through the compact wardrobe store; never fall
+    -- through to demo data for this category.
+    if category == "APPEARANCES" then
+        return nil
+    end
     if category == "MOUNTS" and SC.GeneratedCatalog then
         return getGeneratedMountSource()
     end
@@ -604,8 +715,10 @@ local function getSource(category)
     if category == "TOYS" and SC.GeneratedCatalog then
         return getGeneratedToySource()
     end
-    if category == "APPEARANCES" and ensureWardrobeCatalog() then
-        return getGeneratedAppearanceSource()
+    -- Set data ships in the LoadOnDemand wardrobe data addon alongside the
+    -- appearance catalog; load it on first access.
+    if category == "SETS" then
+        ensureWardrobeCatalog()
     end
     local key = CATEGORY_KEYS[category]
     if not key or not SC.Data then
@@ -1051,8 +1164,89 @@ local function collectionPresentationLess(left, right)
     return (tonumber(left.id) or 0) < (tonumber(right.id) or 0)
 end
 
+-- A single reusable probe table backs appearance filtering so a full query
+-- pass allocates no garbage for non-matching rows.
+local appearanceProbe = {}
+
+local function fillAppearanceProbe(store, index, needsSource)
+    local probe = appearanceProbe
+    probe.id = store.ids[index]
+    probe.slot = appearanceSlotName(store, index)
+    probe.armorType = appearanceArmorType(store, index)
+    probe.weaponType = appearanceWeaponType(store, index)
+    probe.weaponCategory = appearanceWeaponCategory(store, index)
+    probe.name = store.names[index]
+    probe.description = APPEARANCE_DESCRIPTION
+    if needsSource then
+        local sourceText, sourceKind = appearanceSourceInfo(store, index)
+        probe.source = sourceText or "获取方式未记录"
+        probe.sourceKind = sourceKind
+    else
+        probe.source = nil
+        probe.sourceKind = nil
+    end
+    probe.collected = false
+    probe.ownershipKnown = nil
+    probe.collectionState = nil
+    probe.favorite = false
+    return probe
+end
+
+local function appearanceQueryNeedsSource(query, filters)
+    if query ~= nil and string.gsub(tostring(query), "%s", "") ~= "" then
+        return true
+    end
+    local appearanceFilters = filters.appearances
+    local hiddenSources = appearanceFilters and appearanceFilters.hiddenSources
+    return type(hiddenSources) == "table" and next(hiddenSources) ~= nil
+end
+
+local function forEachMatchingAppearance(query, filters, includeCollectionState, callback)
+    local store = buildAppearanceStore()
+    if not store then
+        return
+    end
+    local needsSource = appearanceQueryNeedsSource(query, filters)
+    local slotFilter = filters.slot
+    local checkSlot = slotFilter ~= nil and slotFilter ~= "ALL"
+    for index = 1, store.count do
+        if not checkSlot or appearanceSlotName(store, index) == slotFilter then
+            local probe = fillAppearanceProbe(store, index, needsSource)
+            overlayCollectionState("APPEARANCES", probe, false)
+            if filterMatches("APPEARANCES", probe, query, filters, includeCollectionState) then
+                callback(store, index, probe)
+            end
+        end
+    end
+end
+
+function Catalog.GetAppearanceSlotIndex()
+    local store = buildAppearanceStore()
+    if not store then
+        return nil
+    end
+    local result = {}
+    for index = 1, store.count do
+        result[store.ids[index]] = appearanceSlotName(store, index)
+    end
+    return result
+end
+
 function Catalog.Get(category)
     local result = {}
+    if category == "APPEARANCES" then
+        local store = buildAppearanceStore()
+        if not store then
+            return result
+        end
+        for index = 1, store.count do
+            local record = materializeAppearance(store, index)
+            overlayCollectionState(category, record, false)
+            record.favorite = getFavorite(category, record)
+            result[index] = record
+        end
+        return result
+    end
     local source = getSource(category)
     if not source then
         return result
@@ -1067,8 +1261,19 @@ end
 
 function Catalog.QueryAll(category, query, filters)
     local matches = {}
-    local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
+    if category == "APPEARANCES" then
+        forEachMatchingAppearance(query, activeFilters, true, function(store, index, probe)
+            local record = materializeAppearance(store, index)
+            record.collected = probe.collected
+            record.ownershipKnown = probe.ownershipKnown
+            record.collectionState = probe.collectionState
+            record.favorite = getFavorite(category, record)
+            matches[#matches + 1] = record
+        end)
+        return matches
+    end
+    local source = getSource(category) or {}
     for _, sourceRecord in ipairs(source) do
         local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
         if filterMatches(category, record, query, activeFilters, true) then
@@ -1100,6 +1305,7 @@ function Catalog.Query(category, query, filters, page, pageSize)
 end
 
 function Catalog.RunSyntheticAppearanceBenchmark(count)
+    if SC.BUILD_CHANNEL ~= "development" then return nil end
     count = math.max(1, math.min(50000, math.floor(tonumber(count) or 17000)))
     local timer = type(debugprofilestop) == "function" and debugprofilestop or function() return GetTime() * 1000 end
     local memoryBefore = collectgarbage("count")
@@ -1165,6 +1371,7 @@ function Catalog.RunSyntheticAppearanceBenchmark(count)
 end
 
 function Catalog.RunExpandedCollectionBenchmark(appearanceCount, companionCount, setCount)
+    if SC.BUILD_CHANNEL ~= "development" then return nil end
     appearanceCount = math.max(1, math.min(50000, math.floor(tonumber(appearanceCount) or 18190)))
     companionCount = math.max(1, math.min(1000, math.floor(tonumber(companionCount) or 201)))
     setCount = math.max(1, math.min(2000, math.floor(tonumber(setCount) or 509)))
@@ -1220,8 +1427,17 @@ end
 function Catalog.GetProgress(category, filters)
     local collected = 0
     local total = 0
-    local source = getSource(category) or {}
     local activeFilters = resolvedFilters(filters)
+    if category == "APPEARANCES" then
+        forEachMatchingAppearance("", activeFilters, false, function(_, _, probe)
+            total = total + 1
+            if probe.collected then
+                collected = collected + 1
+            end
+        end)
+        return collected, total
+    end
+    local source = getSource(category) or {}
     for _, sourceRecord in ipairs(source) do
         local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
         if filterMatches(category, record, "", activeFilters, false) then
@@ -1243,6 +1459,18 @@ function Catalog.ToggleDemoFavorite(category, id)
     end
     if category == "MOUNTS" then
         return nil
+    end
+    if category == "APPEARANCES" then
+        local store = buildAppearanceStore()
+        local index = store and store.indexById[tonumber(id) or id]
+        if not index then
+            return nil
+        end
+        local record = materializeAppearance(store, index)
+        overlayCollectionState(category, record, false)
+        local value = not getFavorite(category, record)
+        ensureFavoriteStore(category)[record.id] = value
+        return value
     end
     local source = getSource(category) or {}
     for _, sourceRecord in ipairs(source) do

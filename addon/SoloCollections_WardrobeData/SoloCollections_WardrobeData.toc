@@ -8,3 +8,4 @@
 
 Data\Generated\WardrobeCatalog.lua
 Data\Generated\WardrobeAcquisitionSources.lua
+Data\Sets.lua

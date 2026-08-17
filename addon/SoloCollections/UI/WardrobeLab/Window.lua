@@ -661,6 +661,7 @@ local function acceptAdd(report, name, ok, detail)
 end
 
 function SC.RunAcceptanceCheck()
+    if SC.BUILD_CHANNEL ~= "development" then return nil end
     if UI.ShowTransmog then
         UI.ShowTransmog()
     elseif SC.ToggleTransmog then

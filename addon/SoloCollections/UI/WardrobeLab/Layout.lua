@@ -289,6 +289,7 @@ function Lab.CreateLayout(page, state)
             end
             if canApply then
                 GameTooltip:AddLine("通过 SC2 请求服务端应用当前套装预设。", 0.72, 0.72, 0.72, true)
+                GameTooltip:AddLine("幻化写在当前穿着的装备上：更换该部位装备后需重新应用。", 0.82, 0.78, 0.70, true)
             else
                 local owned = tonumber(variantOwned) or tonumber(state.presetRecord.collectedCount) or 0
                 local required = tonumber(variantRequired) or tonumber(state.presetRecord.requiredCount) or #(state.presetRecord.itemIds or {})
@@ -303,6 +304,7 @@ function Lab.CreateLayout(page, state)
             end
             if canApply then
                 GameTooltip:AddLine("应用当前待定外观；每个槽位仍由 SC2 服务端验证。", 0.72, 0.72, 0.72, true)
+                GameTooltip:AddLine("幻化写在当前穿着的装备上：更换该部位装备后需重新应用。", 0.82, 0.78, 0.70, true)
             else
                 local listed = false
                 if state.GetDraftSlotReasons then

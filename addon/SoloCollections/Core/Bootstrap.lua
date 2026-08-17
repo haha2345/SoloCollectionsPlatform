@@ -604,6 +604,7 @@ SLASH_SOLOCOLLECTIONS1 = "/sc"
 SLASH_SOLOCOLLECTIONS2 = "/collections"
 SlashCmdList.SOLOCOLLECTIONS = function(message)
     local command = string.lower((message or ""):match("^%s*(.-)%s*$"))
+    local devBuild = SC.BUILD_CHANNEL == "development"
     local toyId = string.match(command, "^toy%s+(%d+)$")
     if toyId and SC.Bridge and SC.Bridge.UseToy then
         SC.Bridge.UseToy(tonumber(toyId), function(ok, reason)
@@ -617,13 +618,13 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         SC:ResetLayoutAndFilters()
     elseif command == "transmog" or command == "tmog" or command == "幻化" then
         SC:ToggleTransmog()
-    elseif command == "acceptcheck" then
+    elseif devBuild and command == "acceptcheck" then
         if SC.RunAcceptanceCheck then
             SC.RunAcceptanceCheck()
         else
             DEFAULT_CHAT_FRAME:AddMessage("|cffff9f40SoloCollections:|r acceptcheck 未加载")
         end
-    elseif command == "debug" then
+    elseif devBuild and command == "debug" then
         SC.db.debug = not SC.db.debug
         DEFAULT_CHAT_FRAME:AddMessage("SoloCollections debug: " .. (SC.db.debug and "on" or "off"))
     elseif command == "reconnect" and SC.Bridge and SC.Bridge.Connect then
@@ -638,14 +639,14 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
             "SoloCollections ezCollections UI assets: " .. message
                 .. " | asset=" .. tostring(status.assetTreeHash or "unknown")
         )
-    elseif string.match(command, "^shell%s+") then
+    elseif devBuild and string.match(command, "^shell%s+") then
         local mode = string.match(command, "^shell%s+(%S+)$")
         if SC.UIPlatform and SC.UIPlatform:SetShellMode(mode) then
             DEFAULT_CHAT_FRAME:AddMessage("SoloCollections UI shell: " .. string.upper(mode) .. "（/reload 后生效）")
         else
             DEFAULT_CHAT_FRAME:AddMessage("用法：/sc shell dragonui 或 /sc shell legacy")
         end
-    elseif string.match(command, "^model%s+") then
+    elseif devBuild and string.match(command, "^model%s+") then
         local first, second = string.match(command, "^model%s+(%S+)%s*(%S*)$")
         local kind = string.upper(first or "")
         local mode = string.lower(second ~= "" and second or first or "")

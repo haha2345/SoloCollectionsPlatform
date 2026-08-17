@@ -66,22 +66,14 @@ class BodyCameraWorkbenchContractTests(unittest.TestCase):
         self.assertIn("function CameraProfiles.GetProfile", source)
         self.assertIn("profileHash = CameraProfiles.profileHash", source)
 
-    def test_body_workbench_exposes_only_five_delta_fields_and_profile_metadata(self):
+    def test_body_workbench_is_stripped_but_profile_validation_remains(self):
+        # The body-camera workbench sliders were development tooling and are
+        # stripped from the release addon; the runtime profile hash validation
+        # in M2Camera must stay.
         source = read_text(WARDROBE)
-        for field in (
-            "verticalOffsetDelta",
-            "horizontalOffsetDelta",
-            "distanceScaleMultiplier",
-            "minimumDistanceDelta",
-            "yawOffsetDelta",
-        ):
-            self.assertIn(f'createBodyCameraTuningSlider', source)
-            self.assertIn(f'"{field}"', source)
-        self.assertNotIn('createBodyCameraTuningSlider(6,', source)
-        self.assertIn("sentinel 0x%04X", source)
-        self.assertIn("profile v%s", source)
+        self.assertNotIn("createBodyCameraTuningSlider", source)
+        self.assertNotIn("cameraTuningPanel", source)
         self.assertIn("PROFILE_HASH_MISMATCH", read_text(M2_CAMERA))
-        self.assertIn("只读：需要匹配的 SoloCam v7", source)
 
     def test_visible_same_profile_reapplies_by_generation_and_resets_on_pool_reuse(self):
         wardrobe = read_text(WARDROBE)

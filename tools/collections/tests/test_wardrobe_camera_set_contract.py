@@ -302,16 +302,14 @@ class WardrobeCameraSetContractTests(unittest.TestCase):
         self.assertEqual(positions, sorted(positions))
         self.assertIn("已审核模型基线", source)
 
-    def test_camera_workbench_is_an_in_window_inspector_not_a_dialog_overlay(self):
+    def test_camera_workbench_is_stripped_from_the_release_addon(self):
+        # The in-game M2 camera workbench was development tooling. The release
+        # audit removed the commented reference block, so no workbench frame or
+        # toggle may remain in the shipped item page.
         source = read_text(WARDROBE)
-        panel = re.search(
-            r'local cameraTuningPanel = CreateFrame\("Frame".*?cameraTuningPanel:Hide\(\)',
-            source,
-            re.S,
-        )
-        self.assertIsNotNone(panel)
-        self.assertNotIn('SetFrameStrata("DIALOG")', panel.group(0))
-        self.assertNotIn('page, "TOPRIGHT", -5, -42', panel.group(0))
+        self.assertNotIn("cameraTuningPanel", source)
+        self.assertNotIn("ToggleCameraTuning", source)
+        self.assertNotIn("镜头工作台", source)
 
 
 if __name__ == "__main__":

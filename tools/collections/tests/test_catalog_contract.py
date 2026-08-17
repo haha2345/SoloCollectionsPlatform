@@ -12,7 +12,6 @@ EXPECTED = {
     "Mounts.lua": (24, ("id", "creatureId", "spellId", "name", "icon", "source", "description", "collected", "favorite")),
     "Pets.lua": (24, ("id", "creatureId", "spellId", "name", "icon", "source", "description", "collected", "favorite")),
     "Toys.lua": (36, ("id", "itemId", "spellId", "name", "icon", "source", "description", "collected", "favorite")),
-    "Appearances.lua": (70, ("id", "itemId", "slot", "classMask", "name", "icon", "source", "collected", "favorite")),
 }
 
 

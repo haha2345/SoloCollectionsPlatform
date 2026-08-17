@@ -31,7 +31,7 @@ class SetCatalogTests(unittest.TestCase):
         self.assertEqual(self.model["mappingHash"], addon_model["mappingHash"])
         self.assertNotEqual(self.model["presentationHash"], addon_model["presentationHash"])
         self.assertTrue(all("presentation" in row for row in addon_model["sets"]))
-        addon_sets = (ROOT / "addon/SoloCollections/Data/Sets.lua").read_text(encoding="utf-8")
+        addon_sets = (ROOT / "addon/SoloCollections_WardrobeData/Data/Sets.lua").read_text(encoding="utf-8")
         self.assertIn("presentation =", addon_sets)
 
     def test_review_driven_catalog_and_priest_t1(self):
@@ -52,7 +52,7 @@ class SetCatalogTests(unittest.TestCase):
     def test_client_derives_type14_from_type13_and_sends_variant_ordinal(self):
         catalog = (ROOT / "addon/SoloCollections/Core/Catalog.lua").read_text(encoding="utf-8")
         wardrobe = (ROOT / "addon/SoloCollections/UI/Wardrobe.lua").read_text(encoding="utf-8")
-        sets = (ROOT / "addon/SoloCollections/Data/Sets.lua").read_text(encoding="utf-8")
+        sets = (ROOT / "addon/SoloCollections_WardrobeData/Data/Sets.lua").read_text(encoding="utf-8")
         self.assertIn("IsOwnedByType(13, appearanceId)", catalog)
         self.assertIn("variant.variantOrdinal", wardrobe)
         self.assertIn("local SET_PIECE_POOL_LIMIT = 12", wardrobe)

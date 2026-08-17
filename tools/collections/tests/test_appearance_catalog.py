@@ -47,14 +47,18 @@ class CanonicalAppearanceCatalogTests(unittest.TestCase):
 
     def test_client_uses_generated_canonical_rows_instead_of_demo_duplicates(self):
         source = (ROOT / "addon" / "SoloCollections" / "Core" / "Catalog.lua").read_text(encoding="utf-8")
-        self.assertIn("getGeneratedAppearanceSource", source)
-        self.assertIn('collection.typeKey == "appearance"', source)
-        self.assertIn('string.match(alias, "^item:(%d+)$")', source)
+        # The compact wardrobe store is the only appearance source; the
+        # category never falls back to demo data.
+        self.assertIn("buildAppearanceStore", source)
+        self.assertIn("materializeAppearance", source)
+        self.assertIn('if category == "APPEARANCES" then\n        return nil\n    end', source)
+        generator = (ROOT / "tools/catalog/generate_catalog.py").read_text(encoding="utf-8")
+        self.assertIn('alias.startswith("item:")', generator)
 
     def test_client_projection_preserves_generated_model_camera_defaults(self):
         source = (ROOT / "addon" / "SoloCollections" / "Core" / "Catalog.lua").read_text(encoding="utf-8")
         self.assertIn(
-            "generatedModelCameraOverride = collection.generatedModelCameraOverride",
+            "record.generatedModelCameraOverride = extras.generatedModelCameraOverride",
             source,
         )
         report = json.loads(

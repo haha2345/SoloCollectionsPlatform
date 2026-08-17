@@ -175,7 +175,7 @@ def outputs(repo: Path, module: Path, model: dict[str, Any], presentations: dict
     addon_content = (json.dumps(addon_model, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")
     result = {
         repo / "catalog/generated/set-catalog.json": addon_content,
-        repo / "addon/SoloCollections/Data/Sets.lua": render_lua(addon_model).encode("utf-8"),
+        repo / "addon/SoloCollections_WardrobeData/Data/Sets.lua": render_lua(addon_model).encode("utf-8"),
     }
     if include_module:
         identity_content = (json.dumps(model, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8")

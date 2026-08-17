@@ -1,5 +1,12 @@
 local SC = SoloCollections
 
+-- Development-only instrumentation: synthetic benchmarks and page timing
+-- probes. Stable builds keep the file for contract reference but never
+-- register the module.
+if SC.BUILD_CHANNEL ~= "development" then
+    return
+end
+
 SC.Diagnostics = SC.Diagnostics or {}
 local Diagnostics = SC.Diagnostics
 

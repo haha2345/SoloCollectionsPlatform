@@ -31,7 +31,16 @@ local slotById
 local function rebuildSlotIndex()
     slotById = {}
     local Catalog = SC.Catalog
-    if not Catalog or not Catalog.Get then
+    if not Catalog then
+        return
+    end
+    -- The compact wardrobe store exposes an id->slot map directly; avoid
+    -- materializing every appearance record just to learn slots.
+    if Catalog.GetAppearanceSlotIndex then
+        slotById = Catalog.GetAppearanceSlotIndex() or {}
+        return
+    end
+    if not Catalog.Get then
         return
     end
     for _, record in ipairs(Catalog.Get("APPEARANCES") or {}) do

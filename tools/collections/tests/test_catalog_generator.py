@@ -186,7 +186,9 @@ class CatalogGeneratorTests(unittest.TestCase):
         self.assertNotIn("canonicalSpellId", rendered)
         self.assertNotRegex(rendered, r"(?m)^\s+actionId = ")
         wardrobe = outputs[ROOT / "addon/SoloCollections_WardrobeData/Data/Generated/WardrobeCatalog.lua"]
-        self.assertIn('typeKey = "appearance"', wardrobe)
+        self.assertIn("compactFormat = 2", wardrobe)
+        self.assertIn("appearances = {", wardrobe)
+        self.assertNotIn('typeKey = "appearance"', wardrobe)
         self.assertNotIn('collectionKey = "appearance.', rendered)
 
     def test_companion_journal_contract_projects_display_and_execution_fields(self):

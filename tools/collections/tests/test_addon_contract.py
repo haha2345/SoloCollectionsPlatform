@@ -17,8 +17,6 @@ EXPECTED_LOAD_ORDER = [
     "Data\\Mounts.lua",
     "Data\\Pets.lua",
     "Data\\Toys.lua",
-    "Data\\Appearances.lua",
-    "Data\\Sets.lua",
     "Core\\IdentityRegistry.lua",
     "Core\\CollectionState.lua",
     "Core\\Catalog.lua",
