@@ -150,7 +150,20 @@ Wardrobe `Y`/`U` now emit `event=wardrobe_quote` and `event=wardrobe_intent` on
 a missing client send from a server-side quote/apply result.
 
 Collected wardrobe apply uses `CanApplyCollectedVisual` so an owned appearance
-is not blocked by the source item's `AllowableClass`. Hide still stores FakeEntry
+is not blocked by the source item's `AllowableClass` or by NPC armor-skill
+checks on the equipped target. Cloth/leather/mail/plate mixing on that path
+follows `SoloCollections.Transmog.MixedArmor` (`same` / `lower` / `any`,
+default `any`, invalid values fail closed to `same`). NPC transmog still uses
+`Transmogrification.AllowMixedArmorTypes`. Shirt and tabard wardrobe cards
+use the player `DressUpModel` armor presenter (ezCollections TryOn path,
+Transmorpher Shirt/Tabard cameras). Gun, bow, and crossbow cards use the
+Transmorpher ranged weapon presenter. The journal items page hides
+gun/bow/crossbow. After a successful apply the left preview keeps the current
+actor when the TryOn list is unchanged. Journal set preview ignores
+`UNIT_MODEL_CHANGED` from its own `SetUnit`. Set members keep ItemSet.dbc
+pieces and add same-name-prefix extras for missing wrist/waist/feet/back
+(23 sets gained extras in this pass, including T8 Darkruned/Breakthrough/
+Aegis boots). T7 Scourgeborne-style shoes with different names stay absent. Hide still stores FakeEntry
 `1`, but `OnPlayerAfterSetVisibleItemSlot` writes visible item `0`. The wardrobe
 preview reads type 18 after apply only while the same item is still equipped;
 swapping gear falls back to the real item. `U.copper` is
@@ -164,7 +177,13 @@ pink official transmog lines (`幻化为:` / `你将要幻化为:` and the
 appearance in `1, 0.5, 1`). Pending replaces the applied line; hidden
 uses `隐藏`. The official empty-slot sentence is only for a truly empty
 inventory slot — an uncached 3.3.5 `GetInventoryItemLink` or a worn item
-with no applied transmog is not empty. They must not dump item stats via
+with no applied transmog is not empty. Empty slots cannot take a draft or
+enter `Y APPLY`; clicking an appearance shows
+`该装备栏里没有装备物品。` Uncollected pending drafts do not quote or
+enable Apply; clicking Apply shows `你尚未收集此外观。` Other blocked
+reasons (hide not ready, incompatible, insufficient funds, server reject)
+use the same pre-apply check and notice instead of a 0-copper confirm.
+They must not dump item stats via
 `SetInventoryItem`.
 `SafeDressUp` reuses the OnLoad unit and must not stay
 at alpha 0 after `/reload`, apply, or set-card present.

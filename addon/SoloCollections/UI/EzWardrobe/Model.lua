@@ -29,6 +29,8 @@ local ARMOR_SLOT_NAME = {
     SHOULDER = "Shoulder",
     BACK = "Back",
     CHEST = "Chest",
+    SHIRT = "Shirt",
+    TABARD = "Tabard",
     WRIST = "Wrist",
     HANDS = "Hands",
     WAIST = "Waist",
@@ -198,7 +200,10 @@ local function getItemDescriptor(record)
 end
 
 local function modelTypeForRecord(record)
-    if not record or (record.slot ~= "MAINHAND" and record.slot ~= "OFFHAND") then
+    if not record then return TYPE_PLAYER end
+    -- Ranged cards must use Transmorpher's Ranged/Bow/Gun/Crossbow setup.
+    -- Treating RANGED as armor sent them through Shirt-less player TryOn.
+    if record.slot ~= "MAINHAND" and record.slot ~= "OFFHAND" and record.slot ~= "RANGED" then
         return TYPE_PLAYER
     end
 

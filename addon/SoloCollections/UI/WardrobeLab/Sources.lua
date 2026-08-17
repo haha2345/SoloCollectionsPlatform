@@ -38,6 +38,8 @@ local function copyFilters(slotKey)
         if SC.db and SC.db.filters then
             SC.db.filters.weaponType = filters.weaponType
         end
+    elseif SC.Catalog and SC.Catalog.ResolveArmorTypeForQuery then
+        filters.armorType = SC.Catalog.ResolveArmorTypeForQuery(filters)
     end
     return filters
 end
@@ -205,6 +207,25 @@ local function arrangeAppearanceMatches(matches, state)
         table.insert(arranged, 1, Lab.CreateHideVisualRecord(state.selectedSlot))
     end
     pinEquippedAppearance(arranged, state)
+    return arranged
+end
+
+local function arrangeSetMatches(matches)
+    local collected, uncollected = {}, {}
+    for _, record in ipairs(matches or {}) do
+        if record and record.collected then
+            collected[#collected + 1] = record
+        else
+            uncollected[#uncollected + 1] = record
+        end
+    end
+    local arranged = {}
+    for _, record in ipairs(collected) do
+        arranged[#arranged + 1] = record
+    end
+    for _, record in ipairs(uncollected) do
+        arranged[#arranged + 1] = record
+    end
     return arranged
 end
 
@@ -379,6 +400,11 @@ function Lab.CreateSources(parent, state)
         anchorModelToCard(objectModel, card, ITEM_WIDTH, ITEM_HEIGHT)
         objectModel:EnableMouse(false)
         objectModel:Hide()
+        local itemIcon = card:CreateTexture(nil, "ARTWORK")
+        itemIcon:SetWidth(48)
+        itemIcon:SetHeight(48)
+        itemIcon:SetPoint("CENTER", card, "CENTER", 0, 8)
+        itemIcon:Hide()
 
         local unavailable = CreateFrame("Frame", nil, card)
         unavailable:SetAllPoints(card)
@@ -477,6 +503,7 @@ function Lab.CreateSources(parent, state)
             model:Hide()
             if objectModel.ClearModel then objectModel:ClearModel() end
             objectModel:Hide()
+            if itemIcon then itemIcon:Hide() end
             if unavailable then unavailable:Hide() end
         end
 
@@ -489,6 +516,7 @@ function Lab.CreateSources(parent, state)
                 applyOwnership(nil)
                 self:SetApplied(false)
                 self:SetUndo(false)
+                if itemIcon then itemIcon:Hide() end
                 if hit.SetHideVisual then hit:SetHideVisual(false) end
                 if itemRenderer then
                     itemRenderer:Clear(model, self.scGeneration)
@@ -513,6 +541,7 @@ function Lab.CreateSources(parent, state)
                 return
             end
             if hit.SetHideVisual then hit:SetHideVisual(false) end
+            if itemIcon then itemIcon:Hide() end
             if itemRenderer then itemRenderer:Present(model, record, self.scGeneration or 1) end
             if not itemRenderer then model:Show() end
             applyOwnership(record)
@@ -526,6 +555,7 @@ function Lab.CreateSources(parent, state)
             applyOwnership(nil)
             self:SetApplied(false)
             self:SetUndo(false)
+            if itemIcon then itemIcon:Hide() end
             if hit.SetHideVisual then hit:SetHideVisual(false) end
             if itemRenderer then
                 itemRenderer:Clear(model, self.scGeneration)
@@ -569,7 +599,9 @@ function Lab.CreateSources(parent, state)
             GameTooltip:SetText(record.name or "未知外观", 1, 0.82, 0.18)
             if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
                 GameTooltip:AddLine("从预览中隐藏该部位外观。", 0.72, 0.72, 0.72, true)
-                if Lab.IsAppliedReady and Lab.IsAppliedReady() then
+                if state.IsSlotOccupied and not state:IsSlotOccupied(state.selectedSlot) then
+                    GameTooltip:AddLine(Lab.EMPTY_SLOT_TEXT or "该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+                elseif Lab.IsAppliedReady and Lab.IsAppliedReady() then
                     GameTooltip:AddLine("点应用后写入当前角色，该部位不再显示模型。", 0.72, 0.72, 0.72, true)
                 else
                     GameTooltip:AddLine("仅本地预览，当前不能应用到装备。", 1, 0.35, 0.25, true)
@@ -580,7 +612,9 @@ function Lab.CreateSources(parent, state)
                 end
                 GameTooltip:AddLine(record.collected and "已收藏" or "未收藏 · 仅可预览", record.collected and 0.4 or 0.7, record.collected and 1 or 0.7, 0.4)
                 addAppearanceSourceTooltip(record)
-                if state.IsAppearanceUndoTarget and state:IsAppearanceUndoTarget(state.selectedSlot, record) then
+                if state.IsSlotOccupied and not state:IsSlotOccupied(state.selectedSlot) then
+                    GameTooltip:AddLine(Lab.EMPTY_SLOT_TEXT or "该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+                elseif state.IsAppearanceUndoTarget and state:IsAppearanceUndoTarget(state.selectedSlot, record) then
                     GameTooltip:AddLine("左键恢复该部位的原装备外观（需确认）", 1, 0.82, 0.18)
                 else
                     GameTooltip:AddLine("左键写入所选槽位草稿 · 右键偏好", 0.75, 0.72, 0.66)
@@ -592,6 +626,7 @@ function Lab.CreateSources(parent, state)
 
         card.scModel = model
         card.scObjectModel = objectModel
+        card.scItemIcon = itemIcon
         card.scHitFrame = hit
         card.scBorder = border
         card.scSelected = selected
@@ -789,7 +824,13 @@ function Lab.CreateSources(parent, state)
     applySet:SetHeight(22)
     applySet:SetPoint("BOTTOMRIGHT", setsView, "BOTTOMRIGHT", -10, 10)
     applySet:SetText("应用套装")
-    applySet:SetScript("OnClick", function() state:BeginApplySet() end)
+    applySet:SetScript("OnClick", function()
+        if Lab.BeginApplyWithWarnings then
+            Lab.BeginApplyWithWarnings(state)
+        else
+            state:BeginApplySet()
+        end
+    end)
     applySet:Hide()
 
     local selectedSetName = setsView:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
@@ -842,6 +883,13 @@ function Lab.CreateSources(parent, state)
                 Lab.ConfirmRestoreOriginal(state, slotKey)
             end
             return true
+        end
+        if state.IsSlotOccupied and not state:IsSlotOccupied(slotKey) then
+            if state.IsSlotDirty and state:IsSlotDirty(slotKey) then
+                state:ClearDraft(slotKey)
+            end
+            if Lab.NotifyEmptySlot then Lab.NotifyEmptySlot() end
+            return false
         end
         if record.isEquippedBase and type(record.id) ~= "number" then
             if state.IsSlotDirty and state:IsSlotDirty(slotKey) then
@@ -896,6 +944,9 @@ function Lab.CreateSources(parent, state)
         end
         local matches = self.scItemMatches or {}
         if #matches == 0 then return false end
+        if state.IsSlotOccupied and not state:IsSlotOccupied(state.selectedSlot) then
+            return false
+        end
         local selected = state.draftBySlot and state.draftBySlot[state.selectedSlot]
         local currentId = selected and selected.id
         if not currentId and state.GetAppliedCollectionId then
@@ -925,11 +976,14 @@ function Lab.CreateSources(parent, state)
         if UI.SyncTransmogWeaponDropDown then
             UI.SyncTransmogWeaponDropDown(state.selectedSlot, self.mode)
         end
+        if UI.SyncTransmogArmorDropDown then
+            UI.SyncTransmogArmorDropDown(state.selectedSlot, self.mode)
+        end
         if self.mode == "SETS" then
             if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
             if UI.SyncTransmogClassDropDown then UI.SyncTransmogClassDropDown(self.mode) end
             filters = copySetFilters()
-            local matches = SC.Catalog.QueryAll("SETS", query, filters)
+            local matches = arrangeSetMatches(SC.Catalog.QueryAll("SETS", query, filters))
             self.scSetMatches = matches
             local total = #matches
             local totalPages = math.max(1, math.ceil(total / SET_PAGE_SIZE))

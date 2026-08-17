@@ -14,30 +14,44 @@ local ignoredSlots = {}
 local function equippedItemId(definition)
     if not definition then return nil end
     local invSlot = definition.inventorySlot + 1
-    local itemId = GetInventoryItemID and GetInventoryItemID("player", invSlot)
-    if itemId then return tonumber(itemId) end
-    if not GetInventoryItemLink then return nil end
-    local link = GetInventoryItemLink("player", invSlot)
-    return link and tonumber(string.match(link, "item:(%d+)")) or nil
+    local itemId = Lab.PositiveItemId and Lab.PositiveItemId(GetInventoryItemID and GetInventoryItemID("player", invSlot))
+    if itemId then return itemId end
+    local link = Lab.InventoryItemLink and Lab.InventoryItemLink(invSlot)
+    return link and (Lab.PositiveItemId and Lab.PositiveItemId(string.match(link, "item:(%d+)"))) or nil
 end
 
 local function inventoryLink(inventorySlotId)
+    if Lab.InventoryItemLink then
+        return Lab.InventoryItemLink(inventorySlotId)
+    end
     if not GetInventoryItemLink then return nil end
-    return GetInventoryItemLink("player", inventorySlotId)
+    local link = GetInventoryItemLink("player", inventorySlotId)
+    if type(link) ~= "string" or link == "" then return nil end
+    return link
 end
 
 local function inventoryItemId(inventorySlotId, knownItemId)
+    if Lab.PositiveItemId then
+        knownItemId = Lab.PositiveItemId(knownItemId)
+        if knownItemId then return knownItemId end
+        local itemId = Lab.PositiveItemId(GetInventoryItemID and GetInventoryItemID("player", inventorySlotId))
+        if itemId then return itemId end
+        local link = inventoryLink(inventorySlotId)
+        return link and Lab.PositiveItemId(string.match(link, "item:(%d+)")) or nil
+    end
     knownItemId = tonumber(knownItemId)
-    if knownItemId then return knownItemId end
+    if knownItemId and knownItemId > 0 then return knownItemId end
     local itemId = GetInventoryItemID and GetInventoryItemID("player", inventorySlotId)
-    if itemId then return tonumber(itemId) end
+    itemId = tonumber(itemId)
+    if itemId and itemId > 0 then return itemId end
     local link = inventoryLink(inventorySlotId)
     return link and tonumber(string.match(link, "item:(%d+)")) or nil
 end
 
--- 3.3.5 GetInventoryItemLink is often nil until the item is cached, even when
--- the slot is worn. Texture / count still report a real item.
 local function inventoryOccupied(inventorySlotId, itemId)
+    if Lab.IsInventoryOccupied then
+        return Lab.IsInventoryOccupied(inventorySlotId, itemId)
+    end
     if tonumber(itemId) then return true end
     if inventoryLink(inventorySlotId) then return true end
     if GetInventoryItemTexture and GetInventoryItemTexture("player", inventorySlotId) then

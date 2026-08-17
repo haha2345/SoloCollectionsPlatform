@@ -137,8 +137,6 @@ local ROUND_HIGHLIGHT_REGION = { 42, 78, 176, 212 }
 local WEAPON_FILTERS = {
     { key = "ONE_HAND_AXE", label = "单手斧", main = true, off = true },
     { key = "TWO_HAND_AXE", label = "双手斧", main = true },
-    { key = "BOW", label = "弓", main = true },
-    { key = "GUN", label = "枪械", main = true },
     { key = "ONE_HAND_MACE", label = "单手锤", main = true, off = true },
     { key = "TWO_HAND_MACE", label = "双手锤", main = true },
     { key = "POLEARM", label = "长柄武器", main = true },
@@ -148,7 +146,6 @@ local WEAPON_FILTERS = {
     { key = "FIST_WEAPON", label = "拳套", main = true, off = true },
     { key = "DAGGER", label = "匕首", main = true, off = true },
     { key = "THROWN", label = "投掷武器", main = true },
-    { key = "CROSSBOW", label = "弩", main = true },
     { key = "WAND", label = "魔杖", main = true },
     { key = "FISHING_POLE", label = "钓鱼竿", main = true },
     { key = "SHIELD", label = "盾牌", off = true },
@@ -1307,9 +1304,9 @@ function UI.CreateWardrobePage(parent)
     model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
     model:EnableMouse(true)
     model:EnableMouseWheel(true)
-    local setPresenter = SC.WardrobeUI.ItemPresenter:AttachSet(model, function()
-        return page:IsShown() and SC.db and SC.db.wardrobeTab == "SETS"
-    end)
+    model.scPreviewDriver = true
+    model.scRotation = DEFAULT_ROTATION
+    model.scZoom = 0
 
     local name = preview:CreateFontString(nil, "OVERLAY", "GameFontNormalLarge")
     name:SetPoint("TOP", preview, "TOP", 0, SET_DETAILS_NAME_Y)
@@ -1469,7 +1466,6 @@ function UI.CreateWardrobePage(parent)
     local function clearDragState()
         model.scDragging = nil
         model.scLastCursorX = nil
-        model:SetScript("OnUpdate", nil)
     end
 
     local function applyModelFacing(rotation)
@@ -1627,7 +1623,8 @@ function UI.CreateWardrobePage(parent)
         page.scAdvanceSetPreview = nil
         model.scSetPreviewGeneration = page.scSetPreviewGeneration
         model.scSetPreviewPending = nil
-        if setPresenter then setPresenter:Clear("SET_PREVIEW_INVALIDATED") end
+        local Lab = SC.WardrobeLab
+        if Lab and Lab.StopDressUp then Lab.StopDressUp(model) end
     end
 
     local function queueSetPreview(record)
@@ -1647,18 +1644,19 @@ function UI.CreateWardrobePage(parent)
         for _, previewItem in ipairs(previewItems) do
             itemStrings[#itemStrings + 1] = resolveTryOnItem(previewItem.previewSourceItemId)
         end
-        setPresenter:Present({
-            unit = "player",
-            undress = true,
-            settleTicks = 2,
-            items = itemStrings,
-            onReady = function()
-                if page.scSetPreviewPending == pending and page.scSetSelectedId == pending.recordId then
-                    page.scSetPreviewPending = nil
-                    model.scSetPreviewPending = nil
-                end
-            end,
-        })
+        local Lab = SC.WardrobeLab
+        if Lab and Lab.PlayDressUp then
+            Lab.PlayDressUp(model, {
+                undress = true,
+                items = itemStrings,
+                onReady = function()
+                    if page.scSetPreviewPending == pending and page.scSetSelectedId == pending.recordId then
+                        page.scSetPreviewPending = nil
+                        model.scSetPreviewPending = nil
+                    end
+                end,
+            })
+        end
         return previewItems
     end
 
@@ -1784,11 +1782,15 @@ function UI.CreateWardrobePage(parent)
         end
     end
 
+    model:SetScript("OnUpdate", function(frame)
+        if frame.scDragging then
+            updateModelDrag(frame)
+        end
+    end)
     model:SetScript("OnMouseDown", function(self, button)
         if button == "LeftButton" then
             self.scDragging = true
             self.scLastCursorX = GetCursorPosition()
-            self:SetScript("OnUpdate", updateModelDrag)
         end
     end)
     model:SetScript("OnMouseUp", function() clearDragState() end)
@@ -1799,7 +1801,6 @@ function UI.CreateWardrobePage(parent)
         end
     end)
     reset:SetScript("OnClick", function()
-        if setPresenter and setPresenter.ResetView then setPresenter:ResetView() end
         resetModelView()
     end)
     applySet:SetScript("OnClick", function()
@@ -3310,7 +3311,8 @@ function UI.CreateWardrobePage(parent)
     end
 
     function page:Refresh()
-        if not SC.db then return end
+        if not SC.db or self.scRefreshing then return end
+        self.scRefreshing = true
         self.scRuntimeAuditActive = nil
         self:SyncDedicatedFilters()
         if SC.db.wardrobeTab == "ITEMS" then
@@ -3319,6 +3321,7 @@ function UI.CreateWardrobePage(parent)
             refreshSets()
         end
         self:SyncFilters()
+        self.scRefreshing = nil
     end
 
     function page:ApplyAppearanceCollectionChange(change)
@@ -3372,13 +3375,10 @@ function UI.CreateWardrobePage(parent)
             return
         end
         if event == "UNIT_MODEL_CHANGED" then
-            local unit = ...
-            if unit == "player" then
-                cancelSetPreview()
-                if self:IsShown() and SC.db and SC.db.wardrobeTab == "SETS" then
-                    self:Refresh()
-                end
-            end
+            -- DressUpModel:SetUnit("player") and item-card ClearModel fire this
+            -- for "player" on 3.3.5. Cancel+Refresh here blacks the set preview
+            -- and re-enters refreshSets (Lua error / only the first set works).
+            -- The set actor is a full TryOn outfit, not a live player mirror.
             return
         end
         if not self:IsShown() then return end

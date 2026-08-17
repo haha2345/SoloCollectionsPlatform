@@ -88,7 +88,6 @@ function UI.CreateTransmogFrame()
     local dragonShell = UI.IsDragonUIShell and UI.IsDragonUIShell()
     frame:SetMovable(true)
     frame:EnableMouse(true)
-    frame:EnableKeyboard(true)
     frame:RegisterForDrag("LeftButton")
     frame:SetClampedToScreen(true)
     frame:Hide()
@@ -109,7 +108,7 @@ function UI.CreateTransmogFrame()
         end)
     end
     frame:SetScript("OnShow", function(self)
-        self:EnableKeyboard(true)
+        if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
         clampFrame(self)
         if self.scSearchBox and SC.db then
             self.scSearchBox:SetText(SC.db.query or "")
@@ -118,23 +117,15 @@ function UI.CreateTransmogFrame()
             self.scPage:Show()
             if self.scPage.Refresh then self.scPage:Refresh() end
         end
+        if UI.BindTransmogKeys then UI.BindTransmogKeys(self) end
         if Lab.PlaySound then Lab.PlaySound("open") end
     end)
     frame:SetScript("OnHide", function(self)
+        if UI.ClearTransmogKeys then UI.ClearTransmogKeys(self) end
         if self.scFilterPopup then self.scFilterPopup:Hide() end
         if CloseDropDownMenus then CloseDropDownMenus() end
         if Lab.HideDialogs then Lab.HideDialogs() end
         if Lab.PlaySound then Lab.PlaySound("close") end
-    end)
-    frame:SetScript("OnKeyDown", function(self, key)
-        if not self:IsShown() then return end
-        if self.scSearchBox and self.scSearchBox.HasFocus and self.scSearchBox:HasFocus() then
-            return
-        end
-        local sources = self.scPage and self.scPage.scSources
-        if sources and sources.HandleVisualKey then
-            sources:HandleVisualKey(key)
-        end
     end)
 
     if dragonShell and SC.UIPlatform then
@@ -230,11 +221,11 @@ function UI.CreateTransmogFrame()
     search:SetPoint("LEFT", searchFilterHost, "LEFT", 0, -1)
     UI.EzCollections:SkinSearchBox(search)
     search:SetScript("OnEditFocusGained", function()
-        frame:EnableKeyboard(false)
+        if UI.ClearTransmogKeys then UI.ClearTransmogKeys(frame) end
     end)
     search:SetScript("OnEditFocusLost", function()
-        if frame:IsShown() then
-            frame:EnableKeyboard(true)
+        if frame:IsShown() and UI.BindTransmogKeys then
+            UI.BindTransmogKeys(frame)
         end
     end)
 
@@ -340,7 +331,64 @@ function UI.CreateTransmogFrame()
             end
         end)
         frame.scWeaponDropDown = weaponDropDown
+
+        local armorDropDown = CreateFrame(
+            "Frame",
+            "SoloCollectionsTransmogArmorDropDown",
+            itemsView,
+            "UIDropDownMenuTemplate"
+        )
+        armorDropDown:SetPoint("TOPRIGHT", itemsView, "TOPRIGHT", -32, -25)
+        armorDropDown:SetFrameLevel(itemsView:GetFrameLevel() + 10)
+        if UIDropDownMenu_SetWidth then
+            UIDropDownMenu_SetWidth(armorDropDown, 140)
+        end
+        armorDropDown:Hide()
+        UIDropDownMenu_Initialize(armorDropDown, function()
+            if not (SC.db and SC.db.filters) then return end
+            local options = UI.GetTransmogArmorFilterOptions and UI.GetTransmogArmorFilterOptions() or {}
+            for _, option in ipairs(options) do
+                local armorOption = option
+                local info = UIDropDownMenu_CreateInfo()
+                info.text = armorOption.label
+                info.value = armorOption.key
+                info.checked = SC.db.filters.armorType == armorOption.key
+                    or (armorOption.key ~= "ALL" and SC.db.filters.armorType == "AUTO"
+                        and SC.Catalog and SC.Catalog.ResolveArmorTypeForQuery
+                        and SC.Catalog.ResolveArmorTypeForQuery(SC.db.filters) == armorOption.key)
+                info.func = function()
+                    SC.db.filters.armorType = armorOption.key
+                    if page.scSources then page.scSources.itemPage = 1 end
+                    refreshTransmogPage()
+                end
+                UIDropDownMenu_AddButton(info)
+            end
+        end)
+        frame.scArmorDropDown = armorDropDown
     end
+
+    frame.scKeyButtons = {}
+    local visualKeys = { "LEFT", "RIGHT", "UP", "DOWN", "PAGEUP", "PAGEDOWN" }
+    for _, key in ipairs(visualKeys) do
+        local button = CreateFrame("Button", "SoloCollectionsWardrobeKey" .. key, frame)
+        button.scKey = key
+        button:SetScript("OnClick", function(self)
+            if not frame:IsShown() then return end
+            if frame.scSearchBox and frame.scSearchBox.HasFocus and frame.scSearchBox:HasFocus() then
+                return
+            end
+            local sources = frame.scPage and frame.scPage.scSources
+            if sources and sources.HandleVisualKey then
+                sources:HandleVisualKey(self.scKey)
+            end
+        end)
+        frame.scKeyButtons[key] = button
+    end
+    local escapeButton = CreateFrame("Button", "SoloCollectionsWardrobeKeyESCAPE", frame)
+    escapeButton:SetScript("OnClick", function()
+        frame:Hide()
+    end)
+    frame.scEscapeButton = escapeButton
 
     local setsView = page.scSources and page.scSources.scSetsView
     if setsView and UIDropDownMenu_Initialize then
@@ -443,6 +491,74 @@ function UI.SyncTransmogClassDropDown(mode)
         UIDropDownMenu_SetText(dropDown, label)
     end
     dropDown:Show()
+end
+
+function UI.GetTransmogArmorFilterOptions()
+    local options = {}
+    local source = SC.EzWardrobe and SC.EzWardrobe.DataProvider and SC.EzWardrobe.DataProvider.ARMOR_OPTIONS or {}
+    for _, option in ipairs(source) do
+        options[#options + 1] = option
+    end
+    options[#options + 1] = { key = "ALL", label = "全部" }
+    return options
+end
+
+function UI.ClearTransmogKeys(frame)
+    frame = frame or UI.TransmogFrame
+    if frame and ClearOverrideBindings then
+        ClearOverrideBindings(frame)
+    end
+end
+
+function UI.BindTransmogKeys(frame)
+    frame = frame or UI.TransmogFrame
+    if not (frame and SetOverrideBindingClick) then return end
+    UI.ClearTransmogKeys(frame)
+    if not frame:IsShown() then return end
+    if frame.scSearchBox and frame.scSearchBox.HasFocus and frame.scSearchBox:HasFocus() then
+        return
+    end
+    for key, button in pairs(frame.scKeyButtons or {}) do
+        if button and button.GetName then
+            SetOverrideBindingClick(frame, true, key, button:GetName())
+        end
+    end
+    if frame.scEscapeButton and frame.scEscapeButton.GetName then
+        SetOverrideBindingClick(frame, true, "ESCAPE", frame.scEscapeButton:GetName())
+    end
+end
+
+function UI.SyncTransmogArmorDropDown(slot, mode)
+    local frame = UI.TransmogFrame
+    local dropDown = frame and frame.scArmorDropDown
+    if not dropDown then return end
+    if mode == "SETS" or not (SC.Catalog and SC.Catalog.IsArmorFilterSlot and SC.Catalog.IsArmorFilterSlot(slot)) then
+        dropDown:Hide()
+        return
+    end
+    local options = UI.GetTransmogArmorFilterOptions()
+    local stored = SC.db and SC.db.filters and SC.db.filters.armorType or "AUTO"
+    local selected = stored
+    if stored == "AUTO" and SC.Catalog.ResolveArmorTypeForQuery then
+        selected = SC.Catalog.ResolveArmorTypeForQuery(SC.db and SC.db.filters)
+    end
+    local label = "全部"
+    for _, option in ipairs(options) do
+        if option.key == selected then
+            label = option.label
+            break
+        end
+    end
+    if UIDropDownMenu_SetSelectedValue then
+        UIDropDownMenu_SetSelectedValue(dropDown, selected)
+    end
+    if UIDropDownMenu_SetText then
+        UIDropDownMenu_SetText(dropDown, label)
+    end
+    dropDown:Show()
+    if UIDropDownMenu_EnableDropDown then
+        UIDropDownMenu_EnableDropDown(dropDown)
+    end
 end
 
 function UI.SyncTransmogWeaponDropDown(slot, mode)

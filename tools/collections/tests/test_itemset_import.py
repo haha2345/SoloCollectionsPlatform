@@ -44,6 +44,11 @@ class ItemSetImportTests(unittest.TestCase):
         priest = next(value for value in self.model["sets"] if value["itemSetId"] == 202)
         self.assertEqual(8, len(priest["variants"][0]["members"]))
 
+    def test_name_family_extras_add_missing_offset_slots(self):
+        darkruned = next(value for value in self.model["sets"] if value["itemSetId"] == 834)
+        self.assertTrue(any(member["slotKey"] == "FEET" and member["required"]
+                            for member in darkruned["variants"][0]["members"]))
+
     def test_class_policy_modes_include_single_multi_and_any(self):
         modes = {row["classPolicy"]["mode"] for row in self.model["sets"]}
         self.assertIn("ANY", modes)

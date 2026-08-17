@@ -10,10 +10,14 @@ local MAX_ZOOM = 0.7
 local ZOOM_STEP = 0.08
 
 -- Item cards already render because EzWardrobe does ClearModel / SetUnit /
--- Undress / TryOn on the model's own later frames and does not wait for
--- GetModel(). SafeDressUp shared that wait and left the hidden-created
--- left preview and set cards at alpha 0. This dresser copies the item-card
--- timing onto the target DressUpModel.
+-- Undress / TryOn on a host-frame queue and does not wait for GetModel().
+-- SafeDressUp shared that wait and left hidden-created actors at alpha 0.
+-- PlayDressUp copies the item-card timing, but the stepper must live on a
+-- host frame: DressUpModel OnUpdate often dies after ClearModel on 3.3.5,
+-- which is what left the left preview black after apply.
+
+local dressDriver = CreateFrame("Frame")
+local activeDressers = {}
 
 local function applyPreviewCamera(model)
     if not model then return end
@@ -46,12 +50,37 @@ local function stepPreviewDrag(frame)
     applyPreviewCamera(frame)
 end
 
+local function previewModelAlive(model)
+    if not model or not model.GetModel then return false end
+    local ok, value = pcall(model.GetModel, model)
+    return ok and value and value ~= ""
+end
+
+local function pumpDressers()
+    local any
+    for model in pairs(activeDressers) do
+        if model.scDressState and model.scDressState ~= "idle" then
+            any = true
+            Lab.StepDressUp(model)
+        else
+            activeDressers[model] = nil
+        end
+    end
+    if not any then
+        dressDriver:SetScript("OnUpdate", nil)
+    end
+end
+
+local function ensureDressDriver()
+    if not dressDriver:GetScript("OnUpdate") then
+        dressDriver:SetScript("OnUpdate", pumpDressers)
+    end
+end
+
 function Lab.StepDressUp(frame)
     if not frame then return end
     if frame.scDressGeneration ~= frame.scDressToken then
-        if not frame.scPreviewDriver then
-            frame:SetScript("OnUpdate", nil)
-        end
+        activeDressers[frame] = nil
         return
     end
     local state = frame.scDressState
@@ -62,7 +91,11 @@ function Lab.StepDressUp(frame)
     if state == "prep" then
         if frame.SetAutoDress then pcall(frame.SetAutoDress, frame, true) end
         if frame.SetDoBlend then pcall(frame.SetDoBlend, frame, true) end
-        if frame.SetKeepModelOnHide then pcall(frame.SetKeepModelOnHide, frame, false) end
+        -- Keep the left preview across apply/hide so AUTHORITATIVE_REFRESH
+        -- does not destroy a still-valid actor. Small cards can rebuild.
+        if frame.SetKeepModelOnHide then
+            pcall(frame.SetKeepModelOnHide, frame, frame.scPreviewDriver and true or false)
+        end
         if frame.SetModelScale then pcall(frame.SetModelScale, frame, 1) end
         if not frame.scPreviewDriver then
             if frame.SetPosition then pcall(frame.SetPosition, frame, 0, 0, 0) end
@@ -79,9 +112,7 @@ function Lab.StepDressUp(frame)
     if state == "unit" then
         local ok = frame.SetUnit and pcall(frame.SetUnit, frame, "player")
         if not ok then
-            if not frame.scPreviewDriver then
-                frame:SetScript("OnUpdate", nil)
-            end
+            activeDressers[frame] = nil
             if frame.SetAlpha then pcall(frame.SetAlpha, frame, 1) end
             if type(onUnavailable) == "function" then pcall(onUnavailable, "set-unit") end
             return
@@ -116,9 +147,7 @@ function Lab.StepDressUp(frame)
         end
         if frame.SetAlpha then pcall(frame.SetAlpha, frame, 1) end
         frame.scDressState = "idle"
-        if not frame.scPreviewDriver then
-            frame:SetScript("OnUpdate", nil)
-        end
+        activeDressers[frame] = nil
         if type(onReady) == "function" then pcall(onReady) end
     end
 end
@@ -127,9 +156,9 @@ function Lab.StopDressUp(model)
     if not model then return end
     model.scDressGeneration = (model.scDressGeneration or 0) + 1
     model.scDressState = nil
-    if not model.scPreviewDriver then
-        model:SetScript("OnUpdate", nil)
-    end
+    model.scDressReady = false
+    model.scDressSignature = nil
+    activeDressers[model] = nil
     if model.SetAlpha then pcall(model.SetAlpha, model, 0) end
 end
 
@@ -147,11 +176,8 @@ function Lab.PlayDressUp(model, spec)
     model.scDressItemIndex = 1
     if model.SetAlpha then pcall(model.SetAlpha, model, 0) end
     model:Show()
-    if not model.scPreviewDriver then
-        model:SetScript("OnUpdate", function(frame)
-            Lab.StepDressUp(frame)
-        end)
-    end
+    activeDressers[model] = true
+    ensureDressDriver()
     return true
 end
 
@@ -179,10 +205,6 @@ function Lab.CreatePreview(parent, state)
     end
 
     model:SetScript("OnUpdate", function(frame)
-        if frame.scDressState and frame.scDressState ~= "idle" then
-            Lab.StepDressUp(frame)
-            return
-        end
         if frame.scDragging then
             stepPreviewDrag(frame)
         end
@@ -233,11 +255,16 @@ function Lab.CreatePreview(parent, state)
         local needUndress = next(hidden) ~= nil
         local signature = table.concat(items, ",")
         if needUndress then signature = signature .. "|H" end
-        if self.scDressSignature == signature and self.scDressReady and self.scDressState == "idle" then
-            if self.SetAlpha then pcall(self.SetAlpha, self, 1) end
-            applyPreviewCamera(self)
-            unavailable:Hide()
-            return
+        if self.scDressSignature == signature then
+            if self.scDressState and self.scDressState ~= "idle" then
+                return
+            end
+            if self.scDressReady and previewModelAlive(self) then
+                if self.SetAlpha then pcall(self.SetAlpha, self, 1) end
+                applyPreviewCamera(self)
+                unavailable:Hide()
+                return
+            end
         end
         self.scDressSignature = signature
         self.scDressReady = false

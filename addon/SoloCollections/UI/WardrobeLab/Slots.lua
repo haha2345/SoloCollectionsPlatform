@@ -75,19 +75,33 @@ function Lab.CreateSlots(parent, state)
             local invSlot = self.scDefinition.inventorySlot + 1
             local equippedId = state.equippedBySlot and state.equippedBySlot[self.scSlotKey]
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            local name, r, g, b, occupied
+            local occupied = state.IsSlotOccupied and state:IsSlotOccupied(self.scSlotKey)
+            local name, r, g, b, titleOccupied
             if Lab.EquippedItemTitle then
-                name, r, g, b, occupied = Lab.EquippedItemTitle(invSlot, equippedId)
+                name, r, g, b, titleOccupied = Lab.EquippedItemTitle(invSlot, equippedId)
+            end
+            if occupied == nil then occupied = titleOccupied end
+            if not occupied then
+                GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
+                GameTooltip:AddLine(Lab.EMPTY_SLOT_TEXT or "该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+                GameTooltip:Show()
+                return
             end
             if name then
                 GameTooltip:SetText(name, r or 1, g or 0.82, b or 0.18)
             else
                 GameTooltip:SetText(self.scDefinition.label, 1, 0.82, 0.18)
-                if not hidden and not occupied then
-                    GameTooltip:AddLine("该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
-                end
             end
-            if hidden then
+            local draft = state.draftBySlot and state.draftBySlot[self.scSlotKey]
+            local pendingUncollected = pending and draft
+                and not (Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(draft))
+                and not (Lab.IsCollectedRecord and Lab.IsCollectedRecord(draft))
+            if pendingUncollected then
+                GameTooltip:AddLine(
+                    (Lab.ApplyReasonText and Lab.ApplyReasonText("NOT_OWNED")) or "你尚未收集此外观。",
+                    1, 0.12, 0.12, true
+                )
+            elseif hidden then
                 Lab.AppendTransmogLines(GameTooltip, "隐藏", pending, true)
             elseif pending then
                 if itemId then
@@ -112,14 +126,16 @@ function Lab.CreateSlots(parent, state)
     end
     function host:Refresh()
         for slotKey, button in pairs(self.buttons) do
-            local itemId = state:GetSlotPreviewItemId(slotKey)
+            local occupied = not state.IsSlotOccupied or state:IsSlotOccupied(slotKey)
+            local itemId = occupied and state:GetSlotPreviewItemId(slotKey) or nil
             local texture = itemId and GetItemIcon and GetItemIcon(itemId)
             button.scIcon:SetTexture(texture or SLOT_FALLBACKS[slotKey] or "Interface\\Icons\\INV_Misc_QuestionMark")
-            if button.scIcon.SetDesaturated then button.scIcon:SetDesaturated(itemId == nil) end
+            if button.scIcon.SetDesaturated then button.scIcon:SetDesaturated(not occupied or itemId == nil) end
             button:SetSlotSelected(state.selectedSlot == slotKey)
-            button:SetSlotPending(state:IsSlotDirty(slotKey))
+            button:SetSlotPending(occupied and state.IsSlotApplyable and state:IsSlotApplyable(slotKey))
+            if button.SetSlotEmpty then button:SetSlotEmpty(not occupied) end
             if button.SetSlotHidden then
-                button:SetSlotHidden(state.IsSlotHidden and state:IsSlotHidden(slotKey))
+                button:SetSlotHidden(occupied and state.IsSlotHidden and state:IsSlotHidden(slotKey))
             end
         end
     end

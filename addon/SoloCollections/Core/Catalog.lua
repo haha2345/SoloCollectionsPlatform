@@ -92,6 +92,23 @@ function Catalog.IsWeaponFilterSlot(slot)
     return slot == "MAINHAND" or slot == "OFFHAND" or slot == "RANGED"
 end
 
+function Catalog.IsArmorFilterSlot(slot)
+    return slot and not WEAPON_SLOTS[slot]
+end
+
+function Catalog.ResolveArmorTypeForQuery(filters)
+    local selected = filters and filters.armorType
+    if selected == "ALL" then
+        return "ALL"
+    end
+    if selected and selected ~= "AUTO" then
+        return selected
+    end
+    local Identity = SC.IdentityRegistry
+    local resolved = Identity and Identity.GetDefaultArmorType and Identity.GetDefaultArmorType()
+    return resolved or "PLATE"
+end
+
 function Catalog.WeaponFilterSupportsSlot(option, slot)
     if not option then
         return false
@@ -964,6 +981,12 @@ local function filterMatches(category, record, query, filters, includeCollection
     end
     if category == "APPEARANCES" and not weaponTypeMatches(record, filters) then
         return false
+    end
+    if category == "APPEARANCES" and filters.hideRangedWeapons then
+        local weaponType = resolvedWeaponType(record)
+        if weaponType == "BOW" or weaponType == "GUN" or weaponType == "CROSSBOW" then
+            return false
+        end
     end
     if category == "APPEARANCES" and not appearanceSourceMatches(record, filters) then
         return false

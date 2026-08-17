@@ -26,7 +26,7 @@ local STATUS_REASON_TEXT = {
     CLASS_RESTRICTED = "当前装备与此外观不兼容",
     RACE_RESTRICTED = "当前种族不能使用此外观",
     SKILL_REQUIRED = "当前角色缺少使用此外观所需的技能",
-    INVALID_TARGET_SLOT = "该部位没有可幻化的装备",
+    INVALID_TARGET_SLOT = "该装备栏里没有装备物品。",
     UNKNOWN_IDENTITY = "未知外观，服务端已拒绝",
     NOT_OWNED = "此外观尚未收藏",
     COST_CHANGED = "费用已变化，请重新确认后再应用",
@@ -66,14 +66,26 @@ function Lab.CreatePage(parent)
             end
         elseif request.status == "CONFIRMED" and request.kind == "CLEAR" then
             text = "已恢复原装备外观"
-        elseif request.status == "LOCAL_DRAFT" and state.HasOnlyHideVisualDrafts
-            and state:HasOnlyHideVisualDrafts()
-            and not (Lab.IsAppliedReady and Lab.IsAppliedReady()) then
-            text = "隐藏外观仅本地预览 · 当前不能应用到装备"
-        elseif request.status == "LOCAL_DRAFT" and pendingCount > 0 then
-            text = string.format("待定 %d 个部位 · 点应用写入装备", pendingCount)
+        elseif request.status == "LOCAL_DRAFT" or request.status == "LOCAL_PRESET" then
+            local canApply, reason, owned, required
+            if state.presetRecord and state.GetSetApplyState then
+                canApply, reason, owned, required = state:GetSetApplyState()
+            elseif state.GetDraftApplyState then
+                canApply, reason = state:GetDraftApplyState()
+            end
+            if not canApply and reason and reason ~= "NO_DRAFT" then
+                text = Lab.ApplyReasonText and Lab.ApplyReasonText(reason, {
+                    set = state.presetRecord ~= nil,
+                    owned = owned or (state.presetRecord and state.presetRecord.collectedCount),
+                    required = required or (state.presetRecord and state.presetRecord.requiredCount),
+                }) or (STATUS_REASON_TEXT[reason] or text)
+            elseif pendingCount > 0 then
+                text = string.format("待定 %d 个部位 · 点应用写入装备", pendingCount)
+            end
         elseif request.status == "FAILED" and request.reason then
-            text = text .. "：" .. (STATUS_REASON_TEXT[request.reason] or tostring(request.reason))
+            local reasonText = Lab.ApplyReasonText and Lab.ApplyReasonText(request.reason)
+                or STATUS_REASON_TEXT[request.reason] or tostring(request.reason)
+            text = text .. "：" .. reasonText
         end
         self.scStateText:SetText(text)
         self.scOutfits:Refresh()
@@ -88,12 +100,19 @@ function Lab.CreatePage(parent)
         if state.GetApplyCost then
             copper = state:GetApplyCost() or 0
         end
+        local canApply, applyReason = false, nil
+        if state.presetRecord and state.GetSetApplyState then
+            canApply, applyReason = state:GetSetApplyState()
+        elseif state.GetDraftApplyState then
+            canApply, applyReason = state:GetDraftApplyState()
+        end
         if self.scMoneyFrame and Lab.UpdateQuotedMoney then
-            Lab.UpdateQuotedMoney(self.scMoneyFrame, copper)
+            local color = applyReason == "INSUFFICIENT_FUNDS" and "red" or "white"
+            Lab.UpdateQuotedMoney(self.scMoneyFrame, copper, color)
         elseif self.scMoneyText then
             self.scMoneyText:SetText(tostring(copper))
         end
-        local canClickApply = request.status ~= "REQUESTING" and state:HasDraft()
+        local canClickApply = request.status ~= "REQUESTING" and canApply
         local apply = self.scApplyButton or self.scApplySlot
         if apply then
             if canClickApply then apply:Enable() else apply:Disable() end
@@ -161,17 +180,28 @@ function Lab.CreatePage(parent)
     end)
     page:RegisterEvent("PLAYER_ENTERING_WORLD")
     page:RegisterEvent("PLAYER_EQUIPMENT_CHANGED")
+    page:RegisterEvent("PLAYER_MONEY")
     page:SetScript("OnEvent", function(self, event)
         if event == "PLAYER_ENTERING_WORLD" and SC.ModelProvider then
             SC.ModelProvider.playerEnteredAt = GetTime and GetTime() or 0
         end
+        if event == "PLAYER_MONEY" then
+            if self:IsShown() then scheduleRefresh(self, 1) end
+            return
+        end
         state:CaptureEquipped()
+        if event == "PLAYER_EQUIPMENT_CHANGED" and state.EnsureSelectedSlotCanTransmog then
+            state:EnsureSelectedSlotCanTransmog()
+        end
         if self:IsShown() then
             scheduleRefresh(self, event == "PLAYER_ENTERING_WORLD" and warmupTicks() or 3)
         end
     end)
     page:SetScript("OnShow", function(self)
         state:CaptureEquipped()
+        if state.EnsureSelectedSlotCanTransmog then
+            state:EnsureSelectedSlotCanTransmog()
+        end
         if state.RequestQuote then state:RequestQuote() end
         scheduleRefresh(self)
     end)

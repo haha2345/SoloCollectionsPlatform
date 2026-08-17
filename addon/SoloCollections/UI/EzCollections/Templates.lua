@@ -935,6 +935,20 @@ function Ez:CreateTransmogSlotChrome(parent)
         end
     end
 
+    -- Legion / ez NoItemTexture: red X over the empty paperdoll icon.
+    local noItem = parent:CreateTexture(nil, "BORDER")
+    noItem:SetWidth(34)
+    noItem:SetHeight(34)
+    noItem:SetPoint("CENTER")
+    noItem:SetTexture(textures)
+    noItem:SetTexCoord(0.28906250, 0.55468750, 0.51171875, 0.57812500)
+    noItem:SetAlpha(0.75)
+    noItem:Hide()
+
+    function parent:SetSlotEmpty(value)
+        if value then noItem:Show() else noItem:Hide() end
+    end
+
     parent.scIcon = icon
     parent.scBorder = border
     parent.scStatusBorder = status
@@ -944,6 +958,7 @@ function Ez:CreateTransmogSlotChrome(parent)
     parent.scUndoTexture = undo
     parent.scHiddenCover = hiddenCover
     parent.scHiddenIcon = hiddenIcon
+    parent.scNoItemTexture = noItem
     return icon, border, selected, status, pendingGlow, undo
 end
 

@@ -234,7 +234,21 @@ function Lab.CreateLayout(page, state)
     moneyHit:SetScript("OnEnter", function(self)
         GameTooltip:SetOwner(self, "ANCHOR_TOP")
         GameTooltip:SetText("幻化费用", 1, 0.82, 0.18)
-        GameTooltip:AddLine("只显示最近一次服务端报价。0 铜是合法报价，也会显示；没有报价时同样按 0。客户端不估算金币。", 0.72, 0.72, 0.72, true)
+        local canApply, reason = false, nil
+        if state.presetRecord and state.GetSetApplyState then
+            canApply, reason = state:GetSetApplyState()
+        elseif state.GetDraftApplyState then
+            canApply, reason = state:GetDraftApplyState()
+        end
+        if not canApply and reason and reason ~= "NO_DRAFT" and Lab.ApplyReasonText then
+            GameTooltip:AddLine(Lab.ApplyReasonText(reason, {
+                set = state.presetRecord ~= nil,
+                owned = state.presetRecord and state.presetRecord.collectedCount,
+                required = state.presetRecord and state.presetRecord.requiredCount,
+            }), 1, 0.35, 0.25, true)
+        else
+            GameTooltip:AddLine("只显示最近一次服务端报价。0 铜是合法报价，也会显示；没有可应用的待定时同样按 0。客户端不估算金币。", 0.72, 0.72, 0.72, true)
+        end
         GameTooltip:Show()
     end)
     moneyHit:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -263,16 +277,12 @@ function Lab.CreateLayout(page, state)
             end
             if canApply then
                 GameTooltip:AddLine("通过 SC2 请求服务端应用当前套装预设。", 0.72, 0.72, 0.72, true)
-            elseif reason == "NOT_OWNED" then
+            else
                 local owned = tonumber(variantOwned) or tonumber(state.presetRecord.collectedCount) or 0
                 local required = tonumber(variantRequired) or tonumber(state.presetRecord.requiredCount) or #(state.presetRecord.itemIds or {})
-                GameTooltip:AddLine("当前版本尚未收集完整：" .. owned .. " / " .. required, 1, 0.35, 0.25, true)
-            elseif reason == "BRIDGE_UNAVAILABLE" then
-                GameTooltip:AddLine("SC2 套装服务尚未就绪，暂不能提交应用。", 1, 0.35, 0.25, true)
-            elseif reason == "REQUEST_PENDING" then
-                GameTooltip:AddLine("已有应用请求正在处理。", 1, 0.76, 0.32, true)
-            else
-                GameTooltip:AddLine("当前套装预设暂不能提交应用。", 1, 0.35, 0.25, true)
+                GameTooltip:AddLine(Lab.ApplyReasonText and Lab.ApplyReasonText(reason, {
+                    set = true, owned = owned, required = required,
+                }) or "当前套装预设暂不能提交应用。", 1, 0.35, 0.25, true)
             end
         else
             local canApply, reason = false, nil
@@ -281,18 +291,11 @@ function Lab.CreateLayout(page, state)
             end
             if canApply then
                 GameTooltip:AddLine("应用当前待定外观；每个槽位仍由 SC2 服务端验证。", 0.72, 0.72, 0.72, true)
-            elseif reason == "NO_DRAFT" then
-                GameTooltip:AddLine("先在右侧选择外观，建立待定幻化。", 0.72, 0.72, 0.72, true)
-            elseif reason == "HIDE_VISUAL_UNSUPPORTED" then
-                GameTooltip:AddLine("隐藏外观只能本地预览，当前没有可写入装备的 hide 源。", 1, 0.35, 0.25, true)
-            elseif reason == "NOT_OWNED" then
-                GameTooltip:AddLine("待定外观中包含未收藏项，只能本地预览。", 1, 0.35, 0.25, true)
-            elseif reason == "BRIDGE_UNAVAILABLE" then
-                GameTooltip:AddLine("SC2 外观服务尚未就绪，暂不能提交应用。", 1, 0.35, 0.25, true)
-            elseif reason == "REQUEST_PENDING" then
-                GameTooltip:AddLine("已有应用请求正在处理。", 1, 0.76, 0.32, true)
             else
-                GameTooltip:AddLine("当前待定外观暂不能提交应用。", 1, 0.35, 0.25, true)
+                GameTooltip:AddLine(
+                    (Lab.ApplyReasonText and Lab.ApplyReasonText(reason)) or "当前待定外观暂不能提交应用。",
+                    1, 0.35, 0.25, true
+                )
             end
         end
         GameTooltip:Show()
@@ -300,6 +303,11 @@ function Lab.CreateLayout(page, state)
     apply:SetScript("OnEnter", showApplyTooltip)
     apply:SetScript("OnLeave", function() GameTooltip:Hide() end)
     local applyDisabledTip = createDisabledTooltipOverlay(apply, showApplyTooltip)
+    applyDisabledTip:SetScript("OnMouseUp", function(_, mouseButton)
+        if mouseButton == "LeftButton" and Lab.BeginApplyWithWarnings then
+            Lab.BeginApplyWithWarnings(state)
+        end
+    end)
 
     page.scStateText = stateText
     page.scPanels = { left = left, right = right }

@@ -75,7 +75,7 @@ local VALID_SLOTS = {
     LEGS = true, FEET = true, MAINHAND = true, OFFHAND = true, RANGED = true,
 }
 local VALID_ARMOR_TYPES = {
-    AUTO = true, PLATE = true, MAIL = true, LEATHER = true, CLOTH = true,
+    AUTO = true, ALL = true, PLATE = true, MAIL = true, LEATHER = true, CLOTH = true,
 }
 local VALID_APPEARANCE_SOURCE_KINDS = {
     drop = true, quest = true, vendor = true, crafted = true,

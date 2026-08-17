@@ -10,6 +10,7 @@ local Identity = SC.IdentityRegistry
 local APPEARANCE_CATEGORY = "APPEARANCES"
 local ARMOR_TYPES = {
     AUTO = true,
+    ALL = true,
     PLATE = true,
     MAIL = true,
     LEATHER = true,
@@ -84,6 +85,7 @@ function DataProvider:GetQueryFilters()
     local filters = copyTable(currentFilters())
     local _, effectiveArmorType = self:GetArmorState()
     filters.armorType = effectiveArmorType
+    filters.hideRangedWeapons = true
     return filters
 end
 
@@ -108,10 +110,19 @@ function DataProvider:ToItemRecord(record)
     return item
 end
 
+local JOURNAL_HIDDEN_WEAPON_TYPES = {
+    BOW = true,
+    GUN = true,
+    CROSSBOW = true,
+}
+
 local function convertRecords(provider, records)
     local result = {}
-    for index, record in ipairs(records or {}) do
-        result[index] = provider:ToItemRecord(record)
+    for _, record in ipairs(records or {}) do
+        local weaponType = record.weaponType or record.weaponCategory
+        if not JOURNAL_HIDDEN_WEAPON_TYPES[weaponType] then
+            result[#result + 1] = provider:ToItemRecord(record)
+        end
     end
     return result
 end

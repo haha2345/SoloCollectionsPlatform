@@ -23,6 +23,115 @@ Lab.SLOTS = {
 Lab.SLOT_BY_KEY = {}
 for _, definition in ipairs(Lab.SLOTS) do Lab.SLOT_BY_KEY[definition.key] = definition end
 
+-- Legion TRANSMOGRIFY_INVALID_NO_ITEM. 3.3.5 GetInventoryItemLink is often
+-- nil until the item is cached; a real item still has count > 0 or an icon
+-- that is not the paperdoll empty-slot art. Item id 0 / "" is empty.
+Lab.EMPTY_SLOT_TEXT = "该装备栏里没有装备物品。"
+
+function Lab.PositiveItemId(value)
+    value = tonumber(value)
+    if value and value > 0 then return value end
+    return nil
+end
+
+function Lab.InventoryItemLink(inventorySlotId)
+    if not GetInventoryItemLink then return nil end
+    local link = GetInventoryItemLink("player", inventorySlotId)
+    if type(link) ~= "string" or link == "" then return nil end
+    if not string.find(link, "item:") then return nil end
+    return link
+end
+
+local function normalizeTexture(path)
+    if type(path) ~= "string" or path == "" then return nil end
+    path = string.lower(path)
+    path = string.gsub(path, "\\", "/")
+    path = string.gsub(path, "%.blp$", "")
+    path = string.gsub(path, "%.tga$", "")
+    return path
+end
+
+local function isPaperdollEmptyTexture(texture)
+    local normalized = normalizeTexture(texture)
+    if not normalized then return true end
+    return string.find(normalized, "paperdoll/ui%-paperdoll%-slot", 1, false) ~= nil
+end
+
+function Lab.IsInventoryOccupied(inventorySlotId, knownItemId)
+    inventorySlotId = tonumber(inventorySlotId)
+    if not inventorySlotId then return false end
+    if Lab.PositiveItemId(knownItemId) then return true end
+    if GetInventoryItemID and Lab.PositiveItemId(GetInventoryItemID("player", inventorySlotId)) then
+        return true
+    end
+    local link = Lab.InventoryItemLink(inventorySlotId)
+    if link and Lab.PositiveItemId(string.match(link, "item:(%d+)")) then
+        return true
+    end
+    if GetInventoryItemCount and (GetInventoryItemCount("player", inventorySlotId) or 0) > 0 then
+        return true
+    end
+    if GetInventoryItemTexture then
+        local texture = GetInventoryItemTexture("player", inventorySlotId)
+        if texture and not isPaperdollEmptyTexture(texture) then
+            return true
+        end
+    end
+    return false
+end
+
+function Lab.NotifyEmptySlot()
+    local text = Lab.EMPTY_SLOT_TEXT
+    if UIErrorsFrame and UIErrorsFrame.AddMessage then
+        UIErrorsFrame:AddMessage(text, 1, 0.12, 0.12, 1)
+    end
+end
+
+-- Legion apply-block copy. Slot tooltip uses the same strings.
+Lab.APPLY_REASON_TEXT = {
+    NO_DRAFT = "先在右侧选择外观，建立待定幻化。",
+    NOT_OWNED = "你尚未收集此外观。",
+    INVALID_TARGET_SLOT = Lab.EMPTY_SLOT_TEXT,
+    NOTHING_EQUIPPED = Lab.EMPTY_SLOT_TEXT,
+    HIDE_VISUAL_UNSUPPORTED = "隐藏外观只能本地预览，当前不能应用到装备。",
+    CLASS_RESTRICTED = "当前装备与此外观不兼容。",
+    RACE_RESTRICTED = "当前种族不能使用此外观。",
+    SKILL_REQUIRED = "当前角色缺少使用此外观所需的技能。",
+    UNKNOWN_IDENTITY = "未知外观，服务端已拒绝。",
+    COST_CHANGED = "费用已变化，请重新确认后再应用。",
+    INSUFFICIENT_FUNDS = "金币不足。",
+    UNSUPPORTED = "当前服务器不支持这项幻化。",
+    INVALID_REQUEST = "请求无效。",
+    REQUEST_NOT_SENT = "请求未能发出。",
+    REQUEST_PENDING = "已有应用请求正在处理。",
+    BRIDGE_UNAVAILABLE = "SC2 外观服务尚未就绪，暂不能提交应用。",
+    NO_PRESET = "先选择一套套装预设。",
+}
+
+function Lab.ApplyReasonText(reason, extra)
+    extra = extra or {}
+    if reason == "NOT_OWNED" and extra.set then
+        return string.format(
+            "当前套装尚未收集完整：%s / %s。未收藏套装只能预览。",
+            tostring(extra.owned or 0),
+            tostring(extra.required or 0)
+        )
+    end
+    if reason and Lab.APPLY_REASON_TEXT[reason] then
+        return Lab.APPLY_REASON_TEXT[reason]
+    end
+    return extra.fallback or "当前待定外观暂不能提交应用。"
+end
+
+function Lab.NotifyApplyBlocked(reason, extra)
+    return Lab.Notice(Lab.ApplyReasonText(reason, extra))
+end
+
+function Lab.IsCollectedRecord(record)
+    if type(record) ~= "table" then return false end
+    return record.collected == true or record.collected == 1
+end
+
 Lab.MAX_OUTFITS = 10
 Lab.OUTFIT_NAME_MAX = 48
 
@@ -231,7 +340,7 @@ end
 -- 3.3.5 SmallMoneyFrame STATIC collapses a true 0-copper quote. Only force the
 -- copper button for that case. Forcing it on a 1g+ quote would hide gold and
 -- show `copper % 100` as 0.
-function Lab.UpdateQuotedMoney(frameOrName, copper)
+function Lab.UpdateQuotedMoney(frameOrName, copper, colorKey)
     copper = tonumber(copper) or 0
     if copper < 0 then copper = 0 end
     copper = math.floor(copper)
@@ -244,6 +353,9 @@ function Lab.UpdateQuotedMoney(frameOrName, copper)
     if not name then return end
     if MoneyFrame_Update then
         pcall(MoneyFrame_Update, name, copper)
+    end
+    if SetMoneyFrameColor then
+        pcall(SetMoneyFrameColor, name, colorKey or "white")
     end
     if copper > 0 then return end
     local copperButton = _G and _G[name .. "CopperButton"]
@@ -377,6 +489,7 @@ function Lab.CreateState()
         quoteToken = 0,
     }, State)
     state:CaptureEquipped()
+    state:EnsureSelectedSlotCanTransmog()
     return state
 end
 
@@ -398,14 +511,59 @@ function State:CaptureEquipped()
     self.equippedBySlot = {}
     for _, definition in ipairs(Lab.SLOTS) do
         local invSlot = definition.inventorySlot + 1
-        local itemId = GetInventoryItemID and GetInventoryItemID("player", invSlot)
+        local itemId = Lab.PositiveItemId(GetInventoryItemID and GetInventoryItemID("player", invSlot))
         if not itemId then
-            local link = GetInventoryItemLink and GetInventoryItemLink("player", invSlot)
-            itemId = link and tonumber(string.match(link, "item:(%d+)"))
+            local link = Lab.InventoryItemLink(invSlot)
+            itemId = link and Lab.PositiveItemId(string.match(link, "item:(%d+)"))
         end
-        self.equippedBySlot[definition.key] = tonumber(itemId)
+        self.equippedBySlot[definition.key] = itemId
     end
     self:SyncEquippedTrust()
+    self:DropEmptySlotDrafts()
+end
+
+function State:IsSlotOccupied(slotKey)
+    local definition = Lab.SLOT_BY_KEY[slotKey]
+    if not definition then return false end
+    local equippedId = self.equippedBySlot and self.equippedBySlot[slotKey]
+    return Lab.IsInventoryOccupied(definition.inventorySlot + 1, equippedId)
+end
+
+function State:CanTransmogSlot(slotKey)
+    return self:IsSlotOccupied(slotKey)
+end
+
+function State:EnsureSelectedSlotCanTransmog()
+    if self:IsSlotOccupied(self.selectedSlot) then return false end
+    for _, definition in ipairs(Lab.SLOTS) do
+        if self:IsSlotOccupied(definition.key) then
+            self.selectedSlot = definition.key
+            return true
+        end
+    end
+    return false
+end
+
+function State:DropEmptySlotDrafts()
+    local changed = false
+    for slotKey, _ in pairs(self.dirtySlots) do
+        if not self:IsSlotOccupied(slotKey) then
+            self.draftBySlot[slotKey] = nil
+            self.dirtySlots[slotKey] = nil
+            changed = true
+        end
+    end
+    if changed then self:ScheduleQuote() end
+    return changed
+end
+
+function State:HasEmptySlotDrafts()
+    for slotKey, record in pairs(self.draftBySlot) do
+        if self.dirtySlots[slotKey] and record and not self:IsSlotOccupied(slotKey) then
+            return true
+        end
+    end
+    return false
 end
 
 function State:Subscribe(owner, callback)
@@ -426,6 +584,7 @@ end
 
 function State:SetDraft(slotKey, record)
     if not Lab.SLOT_BY_KEY[slotKey] or type(record) ~= "table" then return false end
+    if not self:IsSlotOccupied(slotKey) then return false, "INVALID_TARGET_SLOT" end
     self.presetRecord = nil
     self.activeOutfitUid = nil
     self.draftBySlot[slotKey] = record
@@ -616,16 +775,9 @@ function State:BuildSetIntentEntries()
         local slotKey = member.slotKey
         local definition = slotKey and Lab.SLOT_BY_KEY[slotKey]
         local collectionId = memberCollectionId(member)
-        if definition and collectionId and not seen[slotKey] then
-            local equipped = self.equippedBySlot and self.equippedBySlot[slotKey]
-            if not equipped and GetInventoryItemLink then
-                local link = GetInventoryItemLink("player", definition.inventorySlot + 1)
-                equipped = link and tonumber(string.match(link, "item:(%d+)"))
-            end
-            if equipped then
-                seen[slotKey] = true
-                parts[#parts + 1] = string.format("%d:%d", definition.inventorySlot + 1, collectionId)
-            end
+        if definition and collectionId and not seen[slotKey] and self:IsSlotOccupied(slotKey) then
+            seen[slotKey] = true
+            parts[#parts + 1] = string.format("%d:%d", definition.inventorySlot + 1, collectionId)
         end
     end
     return table.concat(parts, ","), #parts
@@ -638,7 +790,7 @@ function State:BuildIntentEntries()
     local parts = {}
     for _, definition in ipairs(Lab.SLOTS) do
         local record = self.draftBySlot[definition.key]
-        if self.dirtySlots[definition.key] and record then
+        if self:IsSlotApplyable(definition.key) and record then
             local collectionId = Lab.IsHideVisualRecord(record) and 2 or tonumber(record.id)
             if collectionId then
                 parts[#parts + 1] = string.format("%d:%d", definition.inventorySlot + 1, collectionId)
@@ -724,36 +876,16 @@ function Lab.BeginApplyWithWarnings(state)
                 state:BeginApplyAll()
             end)
         end
-        if reason == "NOT_OWNED" then
-            Lab.Notice(string.format(
-                "当前套装尚未收集完整：%s / %s。未收藏套装只能预览。",
-                tostring(owned or state.presetRecord.collectedCount or 0),
-                tostring(required or state.presetRecord.requiredCount or 0)
-            ))
-            return false
-        end
-        Lab.Notice("当前套装预设暂不能提交应用。")
+        Lab.NotifyApplyBlocked(reason, {
+            set = true,
+            owned = owned or (state.presetRecord and state.presetRecord.collectedCount) or 0,
+            required = required or (state.presetRecord and state.presetRecord.requiredCount) or 0,
+        })
         return false
     end
     local canApply, reason = state:GetDraftApplyState()
-    if reason == "HIDE_VISUAL_UNSUPPORTED" then
-        Lab.Notice("隐藏外观只能本地预览，当前不能应用到装备。")
-        return false
-    end
-    if reason == "NO_DRAFT" then
-        Lab.Notice("先在右侧选择外观，建立待定幻化。")
-        return false
-    end
-    if reason == "NOT_OWNED" then
-        Lab.Notice("待定外观尚未收藏，只能本地预览。")
-        return false
-    end
     if not canApply then
-        if reason == "BRIDGE_UNAVAILABLE" then
-            Lab.Notice("SC2 外观服务尚未就绪，暂不能提交应用。")
-        else
-            Lab.Notice("当前待定外观暂不能提交应用。")
-        end
+        Lab.NotifyApplyBlocked(reason)
         return false
     end
     local slots = state:GetPendingApplySlots()
@@ -817,38 +949,78 @@ function State:GetPreviewItemIds()
     return items
 end
 
+function State:IsSlotApplyable(slotKey)
+    local record = self.draftBySlot[slotKey]
+    if not self.dirtySlots[slotKey] or type(record) ~= "table" then return false end
+    if not self:IsSlotOccupied(slotKey) then return false end
+    if Lab.IsHideVisualRecord(record) then
+        return Lab.IsAppliedReady() and true or false
+    end
+    return Lab.IsCollectedRecord(record)
+end
+
 function State:GetPendingApplySlots()
     local slots = {}
     for _, definition in ipairs(Lab.SLOTS) do
-        local record = self.draftBySlot[definition.key]
-        if self.dirtySlots[definition.key] and record and record.collected then
-            if Lab.IsHideVisualRecord(record) and not Lab.IsAppliedReady() then
-                -- keep hide local until type 18 is ready
-            else
-                slots[#slots + 1] = definition.key
-            end
+        if self:IsSlotApplyable(definition.key) then
+            slots[#slots + 1] = definition.key
         end
     end
     return slots
 end
 
-function State:GetDraftApplyState()
-    if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
+function State:GetAffordabilityReason()
+    if self.quoteStatus and self.quoteStatus ~= "READY" and self.quoteStatus ~= "UNAVAILABLE" then
+        return self.quoteStatus
+    end
+    if self.quoteStatus == "READY" and type(self.quotedCopper) == "number" then
+        local money = GetMoney and GetMoney() or 0
+        if self.quotedCopper > 0 and money < self.quotedCopper then
+            return "INSUFFICIENT_FUNDS"
+        end
+    end
+    return nil
+end
+
+function State:GetDraftBlockReason()
+    if self.requestState.status == "REQUESTING" then return "REQUEST_PENDING" end
     if Lab.IsAppliedReady() then
         if not SC.Bridge or type(SC.Bridge.ApplyPending) ~= "function" then
-            return false, "BRIDGE_UNAVAILABLE"
+            return "BRIDGE_UNAVAILABLE"
         end
     elseif not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
-        return false, "BRIDGE_UNAVAILABLE"
+        return "BRIDGE_UNAVAILABLE"
     end
-    local slots = self:GetPendingApplySlots()
-    if #slots == 0 then
-        if self:HasOnlyHideVisualDrafts() and not Lab.IsAppliedReady() then
-            return false, "HIDE_VISUAL_UNSUPPORTED"
+    local anyDirty = false
+    local anyEmpty, anyUncollected, anyHideBlocked, anyApplyable = false, false, false, false
+    for _, definition in ipairs(Lab.SLOTS) do
+        local record = self.draftBySlot[definition.key]
+        if self.dirtySlots[definition.key] and record then
+            anyDirty = true
+            if not self:IsSlotOccupied(definition.key) then
+                anyEmpty = true
+            elseif Lab.IsHideVisualRecord(record) and not Lab.IsAppliedReady() then
+                anyHideBlocked = true
+            elseif not Lab.IsHideVisualRecord(record) and not Lab.IsCollectedRecord(record) then
+                anyUncollected = true
+            else
+                anyApplyable = true
+            end
         end
-        if self:GetDirtyCount() > 0 then return false, "NOT_OWNED" end
-        return false, "NO_DRAFT"
     end
+    if not anyDirty then return "NO_DRAFT" end
+    if not anyApplyable then
+        if anyUncollected then return "NOT_OWNED" end
+        if anyEmpty then return "INVALID_TARGET_SLOT" end
+        if anyHideBlocked then return "HIDE_VISUAL_UNSUPPORTED" end
+        return "NO_DRAFT"
+    end
+    return self:GetAffordabilityReason()
+end
+
+function State:GetDraftApplyState()
+    local reason = self:GetDraftBlockReason()
+    if reason then return false, reason end
     return true
 end
 
@@ -863,9 +1035,13 @@ function State:GetSetApplyState()
     elseif not SC.Bridge or type(SC.Bridge.ApplySet) ~= "function" then
         return false, "BRIDGE_UNAVAILABLE"
     end
-    if not record.collected then
+    if not Lab.IsCollectedRecord(record) then
         return false, "NOT_OWNED", tonumber(record.collectedCount), tonumber(record.requiredCount)
     end
+    local _, count = self:BuildSetIntentEntries()
+    if count == 0 then return false, "INVALID_TARGET_SLOT" end
+    local reason = self:GetAffordabilityReason()
+    if reason then return false, reason end
     return true
 end
 
@@ -880,8 +1056,9 @@ end
 function State:BeginApplySlot(slotKey)
     local record, definition = self.draftBySlot[slotKey], Lab.SLOT_BY_KEY[slotKey]
     if not record or not definition then return false, "NO_DRAFT" end
+    if not self:IsSlotOccupied(slotKey) then return false, "INVALID_TARGET_SLOT" end
     if Lab.IsHideVisualRecord(record) then return false, "HIDE_VISUAL_UNSUPPORTED" end
-    if not record.collected then return false, "NOT_OWNED" end
+    if not Lab.IsCollectedRecord(record) then return false, "NOT_OWNED" end
     if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
     if not SC.Bridge or type(SC.Bridge.ApplyAppearance) ~= "function" then
         return false, "BRIDGE_UNAVAILABLE"
@@ -1014,7 +1191,8 @@ end
 function State:BeginApplySet()
     local record = self.presetRecord
     if not record then return false, "NO_PRESET" end
-    if not record.collected then return false, "NOT_OWNED" end
+    local canApply, reason = self:GetSetApplyState()
+    if not canApply then return false, reason end
     if self.requestState.status == "REQUESTING" then return false, "REQUEST_PENDING" end
     local entries, count = self:BuildSetIntentEntries()
     if Lab.IsAppliedReady() and count > 0 and SC.Bridge and type(SC.Bridge.ApplyPending) == "function" then

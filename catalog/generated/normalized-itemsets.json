@@ -10,8 +10,8 @@
     "unresolved": 43,
     "variants": 465
   },
-  "mappingHash": "2110892144adcdf60834c30785569ef38b5af7980cbdb62d684846cf44cc87cf",
-  "presentationHash": "d976a654145dab3ff06d26c6c2657fc715d5bd8482ce3e7d1953b4f1fe0a9bf1",
+  "mappingHash": "39aef8fce8133ac578b003e5cf990047396baaf07f66086a1aa89ca4b2f84af0",
+  "presentationHash": "0cda98fb0f36b34c5578be459ebed7793dd49684a6f08ebe9277d95cbfaea01a",
   "schemaVersion": 2,
   "sets": [
     {
@@ -3475,6 +3475,17 @@
               "slotKey": "SHOULDER",
               "sourceItemIds": [
                 16932
+              ]
+            },
+            {
+              "appearanceIds": [
+                208988
+              ],
+              "memberKey": "back",
+              "required": true,
+              "slotKey": "BACK",
+              "sourceItemIds": [
+                24259
               ]
             },
             {
@@ -10464,6 +10475,17 @@
               "slotKey": "SHOULDER",
               "sourceItemIds": [
                 21345
+              ]
+            },
+            {
+              "appearanceIds": [
+                211330
+              ],
+              "memberKey": "back",
+              "required": true,
+              "slotKey": "BACK",
+              "sourceItemIds": [
+                31938
               ]
             },
             {
@@ -20470,6 +20492,17 @@
             },
             {
               "appearanceIds": [
+                210512
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                27447
+              ]
+            },
+            {
+              "appearanceIds": [
                 210314
               ],
               "memberKey": "hands",
@@ -20551,6 +20584,17 @@
               "slotKey": "CHEST",
               "sourceItemIds": [
                 29062
+              ]
+            },
+            {
+              "appearanceIds": [
+                209498
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                28512
               ]
             },
             {
@@ -20640,6 +20684,17 @@
             },
             {
               "appearanceIds": [
+                209498
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                28512
+              ]
+            },
+            {
+              "appearanceIds": [
                 209480
               ],
               "memberKey": "hands",
@@ -20721,6 +20776,17 @@
               "slotKey": "CHEST",
               "sourceItemIds": [
                 29071
+              ]
+            },
+            {
+              "appearanceIds": [
+                209498
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                28512
               ]
             },
             {
@@ -21167,6 +21233,17 @@
               "sourceItemIds": [
                 29030
               ]
+            },
+            {
+              "appearanceIds": [
+                211820
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                30043
+              ]
             }
           ],
           "omissions": [],
@@ -21252,6 +21329,17 @@
               "sourceItemIds": [
                 29036
               ]
+            },
+            {
+              "appearanceIds": [
+                211820
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                30043
+              ]
             }
           ],
           "omissions": [],
@@ -21336,6 +21424,17 @@
               "slotKey": "LEGS",
               "sourceItemIds": [
                 29042
+              ]
+            },
+            {
+              "appearanceIds": [
+                211820
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                30043
               ]
             }
           ],
@@ -27712,6 +27811,17 @@
             },
             {
               "appearanceIds": [
+                204216
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                14143
+              ]
+            },
+            {
+              "appearanceIds": [
                 212742
               ],
               "memberKey": "legs",
@@ -31687,6 +31797,17 @@
             },
             {
               "appearanceIds": [
+                208227
+              ],
+              "memberKey": "wrist",
+              "required": true,
+              "slotKey": "WRIST",
+              "sourceItemIds": [
+                28480
+              ]
+            },
+            {
+              "appearanceIds": [
                 214733
               ],
               "memberKey": "hands",
@@ -31783,6 +31904,17 @@
             },
             {
               "appearanceIds": [
+                208393
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                30678
+              ]
+            },
+            {
+              "appearanceIds": [
                 214688
               ],
               "memberKey": "legs",
@@ -31868,6 +32000,17 @@
             },
             {
               "appearanceIds": [
+                208393
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                30678
+              ]
+            },
+            {
+              "appearanceIds": [
                 214687
               ],
               "memberKey": "legs",
@@ -31949,6 +32092,17 @@
               "slotKey": "HANDS",
               "sourceItemIds": [
                 43799
+              ]
+            },
+            {
+              "appearanceIds": [
+                208393
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                30678
               ]
             },
             {
@@ -32969,6 +33123,17 @@
               "slotKey": "HANDS",
               "sourceItemIds": [
                 43778
+              ]
+            },
+            {
+              "appearanceIds": [
+                208365
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                29256
               ]
             },
             {
@@ -34098,6 +34263,17 @@
               "sourceItemIds": [
                 46224
               ]
+            },
+            {
+              "appearanceIds": [
+                216511
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46328
+              ]
             }
           ],
           "omissions": [],
@@ -34183,6 +34359,17 @@
               "sourceItemIds": [
                 46222
               ]
+            },
+            {
+              "appearanceIds": [
+                216511
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46328
+              ]
             }
           ],
           "omissions": [],
@@ -34267,6 +34454,17 @@
               "slotKey": "LEGS",
               "sourceItemIds": [
                 46218
+              ]
+            },
+            {
+              "appearanceIds": [
+                216511
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46328
               ]
             }
           ],
@@ -34948,6 +35146,17 @@
               "sourceItemIds": [
                 46285
               ]
+            },
+            {
+              "appearanceIds": [
+                216510
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46327
+              ]
             }
           ],
           "omissions": [],
@@ -35032,6 +35241,17 @@
               "slotKey": "LEGS",
               "sourceItemIds": [
                 46284
+              ]
+            },
+            {
+              "appearanceIds": [
+                216510
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46327
               ]
             }
           ],
@@ -35195,6 +35415,17 @@
             },
             {
               "appearanceIds": [
+                210401
+              ],
+              "memberKey": "waist",
+              "required": true,
+              "slotKey": "WAIST",
+              "sourceItemIds": [
+                29250
+              ]
+            },
+            {
+              "appearanceIds": [
                 216043
               ],
               "memberKey": "legs",
@@ -35288,6 +35519,17 @@
               "sourceItemIds": [
                 46239
               ]
+            },
+            {
+              "appearanceIds": [
+                216509
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46326
+              ]
             }
           ],
           "omissions": [],
@@ -35372,6 +35614,17 @@
               "slotKey": "LEGS",
               "sourceItemIds": [
                 46238
+              ]
+            },
+            {
+              "appearanceIds": [
+                216509
+              ],
+              "memberKey": "feet",
+              "required": true,
+              "slotKey": "FEET",
+              "sourceItemIds": [
+                46326
               ]
             }
           ],
