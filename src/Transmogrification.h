@@ -317,6 +317,9 @@ public:
     // completion runs on the world update thread via ProcessPendingCommits().
     // Never blocks the calling thread; safe to call from map threads.
     void EnqueueDbCommit(CharacterDatabaseTransaction const& transaction, std::function<void(bool)> completion);
+    // Enqueues an asynchronous CharacterDatabase query; the WithCallback
+    // continuation runs on the world update thread via ProcessPendingCommits().
+    void EnqueueDbQuery(QueryCallback&& callback);
     void ProcessPendingCommits(); // world-thread only, pumped every world update
 
     void TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
@@ -437,6 +440,7 @@ private:
     // running inside ProcessPendingCommits() on the world thread.
     std::recursive_mutex _dbCommitLock;
     AsyncCallbackProcessor<TransactionCallback> _dbCommits;
+    QueryCallbackProcessor _dbQueries;
 };
 #define sTransmogrification Transmogrification::instance()
 

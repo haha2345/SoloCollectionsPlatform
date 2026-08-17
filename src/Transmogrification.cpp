@@ -602,10 +602,17 @@ void Transmogrification::EnqueueDbCommit(CharacterDatabaseTransaction const& tra
     callback.AfterComplete(std::move(completion));
 }
 
+void Transmogrification::EnqueueDbQuery(QueryCallback&& callback)
+{
+    std::scoped_lock lock(_dbCommitLock);
+    _dbQueries.AddCallback(std::move(callback));
+}
+
 void Transmogrification::ProcessPendingCommits()
 {
     std::scoped_lock lock(_dbCommitLock);
     _dbCommits.ProcessReadyCallbacks();
+    _dbQueries.ProcessReadyCallbacks();
 }
 
 void Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,

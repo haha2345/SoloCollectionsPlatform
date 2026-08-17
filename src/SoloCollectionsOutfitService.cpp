@@ -74,27 +74,33 @@ void CommitOutfitTransactionAsync(CharacterDatabaseTransaction const& transactio
 
 void OutfitService::Load(ObjectGuid characterGuid)
 {
-    OutfitMap loaded;
-    QueryResult result = CharacterDatabase.Query(
+    // Async login prefetch; the callback runs on the world update thread,
+    // which is the only place _byCharacter is touched.
+    sTransmogrification->EnqueueDbQuery(CharacterDatabase.AsyncQuery(Acore::StringFormat(
         "SELECT `PresetID`, `SetName`, `SetData` FROM `custom_transmogrification_sets` WHERE `Owner` = {}",
-        characterGuid.GetCounter());
-    if (result)
-    {
-        do
+        characterGuid.GetCounter()))
+        .WithCallback([this, characterGuid](QueryResult result)
         {
-            std::uint8_t outfitId = (*result)[0].Get<std::uint8_t>();
-            std::optional<std::string> name = NormalizeOutfitName((*result)[1].Get<std::string>());
-            std::optional<std::map<std::uint8_t, std::uint32_t>> appearances =
-                ParseOutfitData((*result)[2].Get<std::string>());
-            if (outfitId >= sTransmogrification->GetMaxSets() || !name || !appearances || !loaded.emplace(outfitId,
-                    OutfitRecord { outfitId, std::move(*name), std::move(*appearances) }).second)
+            OutfitMap loaded;
+            if (result)
             {
-                LOG_WARN("module", "SoloCollections ignored invalid legacy outfit {} for character {}.",
-                    static_cast<std::uint32_t>(outfitId), characterGuid.ToString());
+                do
+                {
+                    std::uint8_t outfitId = (*result)[0].Get<std::uint8_t>();
+                    std::optional<std::string> name = NormalizeOutfitName((*result)[1].Get<std::string>());
+                    std::optional<std::map<std::uint8_t, std::uint32_t>> appearances =
+                        ParseOutfitData((*result)[2].Get<std::string>());
+                    if (outfitId >= sTransmogrification->GetMaxSets() || !name || !appearances ||
+                        !loaded.emplace(outfitId,
+                            OutfitRecord { outfitId, std::move(*name), std::move(*appearances) }).second)
+                    {
+                        LOG_WARN("module", "SoloCollections ignored invalid legacy outfit {} for character {}.",
+                            static_cast<std::uint32_t>(outfitId), characterGuid.ToString());
+                    }
+                } while (result->NextRow());
             }
-        } while (result->NextRow());
-    }
-    _byCharacter[characterGuid] = std::move(loaded);
+            _byCharacter[characterGuid] = std::move(loaded);
+        }));
 }
 
 void OutfitService::Unload(ObjectGuid characterGuid)

@@ -33,7 +33,10 @@ struct PendingWardrobePush
 class TransmogProjectionService
 {
 public:
-    void LoadCharacter(ObjectGuid characterGuid);
+    // Asynchronous prefetch for the login/OpenSession path: the DB query runs
+    // off-thread and the projection is stored on the world update, followed by
+    // a wardrobe push so connected sessions receive the loaded snapshot.
+    void LoadCharacter(ObjectGuid characterGuid, std::uint32_t accountId);
     void UnloadCharacter(ObjectGuid characterGuid);
     void LoadAccount(std::uint32_t accountId);
 
@@ -99,6 +102,13 @@ private:
 
     void EnsureCharacterLoaded(ObjectGuid characterGuid);
     void EnsureAccountLoaded(std::uint32_t accountId);
+    // Blocking loads; only used as a fallback when a write arrives before the
+    // asynchronous prefetch has resolved.
+    void LoadCharacterSync(ObjectGuid characterGuid);
+    void LoadAccountSync(std::uint32_t accountId);
+    void StoreApplied(ObjectGuid characterGuid, AppliedState&& loaded, std::uint32_t pushAccountId);
+    void StoreOutfits(std::uint32_t accountId, AccountOutfits&& loaded, bool push);
+    [[nodiscard]] static AccountOutfits ParseOutfitRows(QueryResult const& result);
     [[nodiscard]] ParsedIntent EvaluateIntent(Player* player, std::string_view entries) const;
     [[nodiscard]] AppliedState const* FindApplied(ObjectGuid characterGuid) const;
     AppliedState& EnsureApplied(ObjectGuid characterGuid);

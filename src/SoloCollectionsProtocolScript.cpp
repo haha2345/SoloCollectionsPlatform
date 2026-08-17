@@ -173,7 +173,11 @@ void Sc2ProtocolOpenSession(Player* player)
     GetSc2Server().SetExternalOwned(
         SessionId(player), SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
             AccountId(player->GetSession()->GetAccountId())));
-    GetTransmogProjectionService().LoadCharacter(player->GetGUID());
+    // Both loads are asynchronous; the initial raw snapshots below may still
+    // be empty, and the load completions enqueue wardrobe pushes that replace
+    // them once the DB rows arrive.
+    GetTransmogProjectionService().LoadCharacter(
+        player->GetGUID(), player->GetSession()->GetAccountId());
     GetTransmogProjectionService().LoadAccount(player->GetSession()->GetAccountId());
     GetSc2Server().SetRawSnapshot(SessionId(player), CharacterAppliedCollectionTypeId,
         GetTransmogProjectionService().AppliedRevision(player->GetGUID()),
@@ -190,9 +194,17 @@ void FlushWardrobeSnapshots()
     for (PendingWardrobePush const& push : pushes)
     {
         if (push.Applied && push.Session.IsValid())
+        {
+            // SetRawSnapshot covers sessions that have not completed the SC2
+            // hello yet (async login prefetch resolving before the handshake);
+            // the replace additionally queues a delta for active sessions.
+            GetSc2Server().SetRawSnapshot(push.Session, CharacterAppliedCollectionTypeId,
+                GetTransmogProjectionService().AppliedRevision(push.Character),
+                GetTransmogProjectionService().AppliedPayload(push.Character));
             GetSc2Server().QueueRawSnapshotReplace(push.Session, CharacterAppliedCollectionTypeId,
                 GetTransmogProjectionService().AppliedRevision(push.Character),
                 GetTransmogProjectionService().AppliedPayload(push.Character));
+        }
         if (push.OutfitsToAccount && push.Account.IsValid())
             GetSc2Server().QueueRawSnapshotReplaceForAccount(push.Account, AccountOutfitCollectionTypeId,
                 GetTransmogProjectionService().OutfitRevision(push.Account.Value()),

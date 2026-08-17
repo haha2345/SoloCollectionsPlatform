@@ -761,26 +761,36 @@ public:
     {
         ObjectGuid playerGUID = player->GetGUID();
         sT->entryMap.erase(playerGUID);
-        QueryResult result = CharacterDatabase.Query("SELECT GUID, FakeEntry FROM custom_transmogrification WHERE Owner = {}", player->GetGUID().GetCounter());
-        if (result)
-        {
-            do
+        // Async so concurrent logins never serialize the world thread on the
+        // characters DB; the callback runs on this session's update.
+        player->GetSession()->GetQueryProcessor().AddCallback(
+            CharacterDatabase.AsyncQuery(Acore::StringFormat(
+                "SELECT GUID, FakeEntry FROM custom_transmogrification WHERE Owner = {}",
+                playerGUID.GetCounter()))
+            .WithCallback([playerGUID](QueryResult result)
             {
-                ObjectGuid itemGUID = ObjectGuid::Create<HighGuid::Item>((*result)[0].Get<uint32>());
-                uint32 fakeEntry = (*result)[1].Get<uint32>();
-                if (fakeEntry == HIDDEN_ITEM_ID || sObjectMgr->GetItemTemplate(fakeEntry))
+                if (!result)
+                    return;
+                Player* player = ObjectAccessor::FindConnectedPlayer(playerGUID);
+                if (!player)
+                    return;
+                do
                 {
-                    sT->dataMap[itemGUID] = playerGUID;
-                    sT->entryMap[playerGUID][itemGUID] = fakeEntry;
-                }
-            } while (result->NextRow());
+                    ObjectGuid itemGUID = ObjectGuid::Create<HighGuid::Item>((*result)[0].Get<uint32>());
+                    uint32 fakeEntry = (*result)[1].Get<uint32>();
+                    if (fakeEntry == HIDDEN_ITEM_ID || sObjectMgr->GetItemTemplate(fakeEntry))
+                    {
+                        sT->dataMap[itemGUID] = playerGUID;
+                        sT->entryMap[playerGUID][itemGUID] = fakeEntry;
+                    }
+                } while (result->NextRow());
 
-            for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
-            {
-                if (Item* item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
-                    player->SetVisibleItemSlot(slot, item);
-            }
-        }
+                for (uint8 slot = EQUIPMENT_SLOT_START; slot < EQUIPMENT_SLOT_END; ++slot)
+                {
+                    if (Item* item = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
+                        player->SetVisibleItemSlot(slot, item);
+                }
+            }));
 
 #ifdef PRESETS
         if (sT->GetEnableSets())

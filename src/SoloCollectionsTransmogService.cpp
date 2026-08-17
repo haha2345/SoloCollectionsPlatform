@@ -231,16 +231,57 @@ TransmogProjectionService::AccountOutfits& TransmogProjectionService::EnsureOutf
     return _outfits[accountId];
 }
 
-void TransmogProjectionService::LoadCharacter(ObjectGuid characterGuid)
+namespace
+{
+constexpr char const* AppliedSelectSql =
+    "SELECT revision, slot_0, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, "
+    "slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13 "
+    "FROM character_sc_transmog WHERE guid = {}";
+}
+
+void TransmogProjectionService::StoreApplied(ObjectGuid characterGuid, AppliedState&& loaded,
+    std::uint32_t pushAccountId)
+{
+    bool hasData = loaded.Revision != 0;
+    std::scoped_lock lock(_mutex);
+    // A write may have landed while the prefetch was in flight; never clobber
+    // fresher in-memory state with the older query result.
+    AppliedState& current = _applied[characterGuid.GetCounter()];
+    if (current.Loaded && current.Revision >= loaded.Revision)
+        return;
+    current = std::move(loaded);
+    if (hasData && pushAccountId)
+        EnqueueAppliedPush(characterGuid, pushAccountId);
+}
+
+void TransmogProjectionService::LoadCharacter(ObjectGuid characterGuid, std::uint32_t accountId)
+{
+    if (!characterGuid)
+        return;
+    sTransmogrification->EnqueueDbQuery(CharacterDatabase.AsyncQuery(
+        Acore::StringFormat(AppliedSelectSql, characterGuid.GetCounter()))
+        .WithCallback([this, characterGuid, accountId](QueryResult result)
+        {
+            AppliedState loaded;
+            loaded.Loaded = true;
+            if (result)
+            {
+                Field* fields = result->Fetch();
+                loaded.Revision = fields[0].Get<std::uint64_t>();
+                for (std::size_t index = 0; index < WardrobeSlotCount; ++index)
+                    loaded.Slots[index] = fields[index + 1].Get<std::uint32_t>();
+            }
+            StoreApplied(characterGuid, std::move(loaded), accountId);
+        }));
+}
+
+void TransmogProjectionService::LoadCharacterSync(ObjectGuid characterGuid)
 {
     if (!characterGuid)
         return;
     AppliedState loaded;
     loaded.Loaded = true;
-    QueryResult result = CharacterDatabase.Query(
-        "SELECT revision, slot_0, slot_1, slot_2, slot_3, slot_4, slot_5, slot_6, "
-        "slot_7, slot_8, slot_9, slot_10, slot_11, slot_12, slot_13 "
-        "FROM character_sc_transmog WHERE guid = {}", characterGuid.GetCounter());
+    QueryResult result = CharacterDatabase.Query(AppliedSelectSql, characterGuid.GetCounter());
     if (result)
     {
         Field* fields = result->Fetch();
@@ -248,8 +289,7 @@ void TransmogProjectionService::LoadCharacter(ObjectGuid characterGuid)
         for (std::size_t index = 0; index < WardrobeSlotCount; ++index)
             loaded.Slots[index] = fields[index + 1].Get<std::uint32_t>();
     }
-    std::scoped_lock lock(_mutex);
-    _applied[characterGuid.GetCounter()] = std::move(loaded);
+    StoreApplied(characterGuid, std::move(loaded), 0);
 }
 
 void TransmogProjectionService::UnloadCharacter(ObjectGuid characterGuid)
@@ -267,7 +307,7 @@ void TransmogProjectionService::EnsureCharacterLoaded(ObjectGuid characterGuid)
         if (found != _applied.end() && found->second.Loaded)
             return;
     }
-    LoadCharacter(characterGuid);
+    LoadCharacterSync(characterGuid);
 }
 
 void TransmogProjectionService::EnsureAccountLoaded(std::uint32_t accountId)
@@ -278,18 +318,21 @@ void TransmogProjectionService::EnsureAccountLoaded(std::uint32_t accountId)
         if (found != _outfits.end() && found->second.Loaded)
             return;
     }
-    LoadAccount(accountId);
+    LoadAccountSync(accountId);
 }
 
-void TransmogProjectionService::LoadAccount(std::uint32_t accountId)
+namespace
 {
-    if (accountId == 0)
-        return;
+constexpr char const* OutfitSelectSql =
+    "SELECT uid, name_hex, slot_blob, revision FROM account_sc_outfit "
+    "WHERE account_id = {} ORDER BY uid";
+}
+
+TransmogProjectionService::AccountOutfits TransmogProjectionService::ParseOutfitRows(
+    QueryResult const& result)
+{
     AccountOutfits loaded;
     loaded.Loaded = true;
-    QueryResult result = CharacterDatabase.Query(
-        "SELECT uid, name_hex, slot_blob, revision FROM account_sc_outfit "
-        "WHERE account_id = {} ORDER BY uid", accountId);
     if (result)
     {
         do
@@ -307,8 +350,39 @@ void TransmogProjectionService::LoadAccount(std::uint32_t accountId)
             loaded.Outfits.push_back(std::move(outfit));
         } while (result->NextRow());
     }
+    return loaded;
+}
+
+void TransmogProjectionService::StoreOutfits(std::uint32_t accountId, AccountOutfits&& loaded, bool push)
+{
+    bool hasData = !loaded.Outfits.empty() || loaded.Revision != 0;
     std::scoped_lock lock(_mutex);
-    _outfits[accountId] = std::move(loaded);
+    AccountOutfits& current = _outfits[accountId];
+    if (current.Loaded && current.Revision >= loaded.Revision)
+        return;
+    current = std::move(loaded);
+    if (push && hasData)
+        EnqueueOutfitPush(accountId);
+}
+
+void TransmogProjectionService::LoadAccount(std::uint32_t accountId)
+{
+    if (accountId == 0)
+        return;
+    sTransmogrification->EnqueueDbQuery(CharacterDatabase.AsyncQuery(
+        Acore::StringFormat(OutfitSelectSql, accountId))
+        .WithCallback([this, accountId](QueryResult result)
+        {
+            StoreOutfits(accountId, ParseOutfitRows(result), true);
+        }));
+}
+
+void TransmogProjectionService::LoadAccountSync(std::uint32_t accountId)
+{
+    if (accountId == 0)
+        return;
+    QueryResult result = CharacterDatabase.Query(OutfitSelectSql, accountId);
+    StoreOutfits(accountId, ParseOutfitRows(result), false);
 }
 
 std::string TransmogProjectionService::AppliedPayload(ObjectGuid characterGuid) const
