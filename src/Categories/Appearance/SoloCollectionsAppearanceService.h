@@ -24,6 +24,9 @@ struct TransmogApplyResult;
 namespace SoloCollections
 {
 inline constexpr CollectionTypeId AppearanceCollectionTypeId { std::uint16_t { 13 } };
+inline constexpr CollectionTypeId AppearanceNewCollectionTypeId { std::uint16_t { 20 } };
+inline constexpr char AppearanceNewMappingHash[] =
+    "7d49a257465ebca7c4231d97e7916cf48ba4dc8429eb1c7f9d0edfd0982b0a16";
 
 enum class AppearanceRepositoryHealth : std::uint8_t
 {
@@ -80,6 +83,9 @@ public:
     [[nodiscard]] AppearanceUnlockQueueResult QueueGameMasterUnlock(AccountId accountId,
         std::uint32_t characterGuid, std::uint32_t sourceItemId,
         std::uint32_t actorAccountId, std::uint32_t actorGuid);
+    void QueueNewFlag(AccountId accountId, CollectionId appearanceId,
+        std::uint32_t characterGuid = 0, std::uint32_t actorAccountId = 0, std::uint32_t actorGuid = 0);
+    void QueueNewClear(AccountId accountId, CollectionId appearanceId);
     void ScanHistoricalInventory(Player* player);
     [[nodiscard]] bool HasCollectedSource(AccountId accountId, std::uint32_t sourceItemId) const;
     [[nodiscard]] std::unordered_set<std::uint32_t> CollectedSources(AccountId accountId) const;
@@ -144,9 +150,23 @@ private:
         std::uint32_t ActorGuid = 0;
     };
 
+    struct PendingNewFlag
+    {
+        CollectionId Appearance;
+        std::uint32_t CharacterGuid = 0;
+        std::uint32_t ActorAccountId = 0;
+        std::uint32_t ActorGuid = 0;
+    };
+
     void BeginMigrationCheck(AccountId accountId, MigrationState& state);
     void AdvanceMigration(AccountId accountId, MigrationState& state);
     void AdvanceQueuedUnlocks();
+    void AdvanceNewFlags();
+    void AdvanceNewClears();
+    void EnqueueNewFlagLocked(AccountId accountId, CollectionId appearanceId,
+        std::uint32_t characterGuid, std::uint32_t actorAccountId, std::uint32_t actorGuid);
+    [[nodiscard]] static bool ShouldMarkAppearanceNew(
+        CollectionSourceKind sourceKind, AppearanceUnlockTrigger trigger);
     [[nodiscard]] AppearanceUnlockQueueResult QueueCanonicalUnlock(AccountId accountId,
         std::uint32_t characterGuid, std::uint32_t sourceItemId,
         CollectionSourceKind sourceKind, AppearanceUnlockTrigger trigger,
@@ -157,6 +177,9 @@ private:
     std::map<AccountId, MigrationState> _migrations;
     std::map<AccountId, std::deque<PendingUnlock>> _pendingUnlocks;
     std::map<AccountId, std::set<CollectionId>> _queuedAppearanceIds;
+    std::map<AccountId, std::deque<PendingNewFlag>> _pendingNewFlags;
+    std::map<AccountId, std::set<CollectionId>> _queuedNewFlagIds;
+    std::map<AccountId, std::deque<CollectionId>> _pendingNewClears;
     std::map<std::uint32_t, std::uint32_t> _inventoryReconcileElapsed;
     AppearanceRepositoryHealth _health = AppearanceRepositoryHealth::Uninitialized;
 };

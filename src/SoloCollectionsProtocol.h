@@ -32,6 +32,9 @@ enum class Sc2MessageKind : std::uint8_t
     Delta,
     ActionRequest,
     ActionResult,
+    WardrobeIntent,
+    WardrobeQuote,
+    OutfitWrite,
     Resync,
     Error,
 };
@@ -55,6 +58,10 @@ struct Sc2Message
     std::string Target;
     std::string Status;
     std::string Reason;
+    std::string Op;
+    std::string Entries;
+    std::string NameHex;
+    std::string WarningMask;
     std::uint16_t TypeId = 0;
     std::uint16_t Total = 0;
     std::uint16_t Seq = 0;
@@ -63,6 +70,9 @@ struct Sc2Message
     std::uint32_t RequestId = 0;
     std::uint32_t CollectionId = 0;
     std::uint32_t PayloadBytes = 0;
+    std::uint32_t Copper = 0;
+    std::uint32_t Uid = 0;
+    std::uint8_t SlotCount = 0;
     std::uint64_t Revision = 0;
 };
 

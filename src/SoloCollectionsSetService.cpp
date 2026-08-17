@@ -4,8 +4,10 @@
 #include "SoloCollectionsAccountService.h"
 #include "SoloCollectionsIdentity.h"
 #include "SoloCollectionsSetCatalog.h"
+#include "SoloCollectionsTransmogService.h"
 #include "Transmogrification.h"
 
+#include "DatabaseEnv.h"
 #include "Item.h"
 #include "Player.h"
 
@@ -103,6 +105,7 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
         return { LANG_TRANSMOG_MISSING_SRC_ITEM };
 
     std::map<std::uint8_t, std::uint32_t> sources;
+    std::map<std::uint8_t, std::uint32_t> appliedAppearances;
     std::set<std::uint8_t> requestedSlots;
     for (SetMemberDefinition const& member : variant->Members)
     {
@@ -142,14 +145,38 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
         }
 
         sources.emplace(*slot, *sourceItemId);
+        appliedAppearances.emplace(*slot, member.AppearanceAlternatives.empty() ? 0 :
+            member.AppearanceAlternatives.front().Value());
+        for (CollectionId appearanceId : member.AppearanceAlternatives)
+            if (OwnsAppearance(accountId, appearanceId) &&
+                GetAppearanceService().ResolveOwnedSource(player, appearanceId, *slot) == sourceItemId)
+            {
+                appliedAppearances[*slot] = appearanceId.Value();
+                break;
+            }
         if (sTransmogrification->GetFakeEntry(target->GetGUID()) == *sourceItemId)
             sources.erase(*slot);
     }
 
     if (sources.empty())
         return { LANG_TRANSMOG_OK, 0 };
-    return GetAppearanceService().TryApplyCollectedAppearances(
-        player, sources, interactionGuid, source, false);
+
+    WardrobeSlotValues nextSlots {};
+    std::uint64_t nextRevision = 0;
+    bool writeApplied = GetTransmogProjectionService().PrepareLegacyMerge(
+        player, appliedAppearances, nextSlots, nextRevision);
+    TransmogApplyResult result = sTransmogrification->TryApplyCollectedAppearances(
+        player, sources, interactionGuid, source, false,
+        [&](CharacterDatabaseTransaction& transaction)
+        {
+            if (!writeApplied)
+                return;
+            GetTransmogProjectionService().AppendAppliedSql(transaction, player->GetGUID(),
+                nextSlots, nextRevision);
+        });
+    if (result.IsSuccess() && writeApplied)
+        GetTransmogProjectionService().CommitLegacyAppliedCache(player, nextSlots, nextRevision);
+    return result;
 }
 
 SetService const& GetSetService()

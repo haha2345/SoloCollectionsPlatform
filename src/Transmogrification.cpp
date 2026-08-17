@@ -7,7 +7,9 @@
 #include "TemporarySummon.h"
 #include "Tokenize.h"
 #include "WorldSessionMgr.h"
+#include <cctype>
 #include <limits>
+#include <string>
 
 namespace
 {
@@ -445,7 +447,7 @@ TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, Obj
     // SC2 authenticates an AddOn action to the player's active world session.
     // It submits only a canonical appearance ID and equipment slot; source
     // resolution and all collection/cost checks remain server-side below.
-    if (source == TransmogApplySource::Addon)
+    if (source == TransmogApplySource::Addon || source == TransmogApplySource::Wardrobe)
         return LANG_TRANSMOG_OK;
 
     uint32 requiredNpcFlag = source == TransmogApplySource::Vendor ? UNIT_NPC_FLAG_VENDOR : UNIT_NPC_FLAG_NONE;
@@ -487,7 +489,7 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
     if (!player || !player->GetSession() || requests.empty())
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
-    if (noCost && source != TransmogApplySource::Outfit)
+    if (noCost && source != TransmogApplySource::Outfit && source != TransmogApplySource::Wardrobe)
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
 
     if (TransmogStrings interactionResult = ValidateApplyInteraction(player, interactionGuid, source);
@@ -547,7 +549,10 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
                     return { LANG_TRANSMOG_MISSING_SRC_ITEM };
             }
 
-            if (!CanTransmogrifyItemWithItem(player, targetTemplate, prepared.SourceTemplate))
+            bool compatible = CanTransmogrifyItemWithItem(player, targetTemplate, prepared.SourceTemplate);
+            if (!compatible && GetUseCollectionSystem())
+                compatible = CanApplyCollectedVisual(player, targetTemplate, prepared.SourceTemplate);
+            if (!compatible)
                 return { LANG_TRANSMOG_INVALID_ITEMS };
 
             prepared.FakeEntry = request.SourceItemEntry;
@@ -560,7 +565,8 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
 
         if (chargeMoney)
         {
-            double configuredCost = static_cast<double>(GetSpecialPrice(targetTemplate)) *
+            ItemTemplate const* priced = prepared.SourceTemplate ? prepared.SourceTemplate : targetTemplate;
+            double configuredCost = static_cast<double>(GetSpecialPrice(priced)) *
                 static_cast<double>(ScaledCostModifier) + static_cast<double>(CopperCost);
             if (configuredCost > 0.0)
             {
@@ -586,7 +592,8 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
     return { LANG_TRANSMOG_OK };
 }
 
-TransmogApplyResult Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan)
+TransmogApplyResult Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,
+    std::function<void(CharacterDatabaseTransaction&)> extraStatements)
 {
     if (!player || plan.Appearances.empty())
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
@@ -597,6 +604,8 @@ TransmogApplyResult Transmogrification::CommitApplyPlan(Player* player, Appearan
         transaction->Append("REPLACE INTO custom_transmogrification (GUID, FakeEntry, Owner) VALUES ({}, {}, {})",
             appearance.TargetItem->GetGUID().GetCounter(), appearance.FakeEntry, player->GetGUID().GetCounter());
     }
+    if (extraStatements)
+        extraStatements(transaction);
 
     bool committed = false;
     try
@@ -659,7 +668,8 @@ TransmogApplyResult Transmogrification::TryApplyCollectedAppearance(Player* play
 
 TransmogApplyResult Transmogrification::TryApplyCollectedAppearances(Player* player,
     std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
-    TransmogApplySource source, bool noCost)
+    TransmogApplySource source, bool noCost,
+    std::function<void(CharacterDatabaseTransaction&)> extraStatements)
 {
     if (appearances.empty())
         return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
@@ -670,7 +680,7 @@ TransmogApplyResult Transmogrification::TryApplyCollectedAppearances(Player* pla
         requests.push_back({ slot, itemEntry == HIDDEN_ITEM_ID ? UINT_MAX : itemEntry });
     AppearanceApplyPlan plan;
     TransmogApplyResult result = PreflightApply(player, requests, interactionGuid, source, noCost, plan);
-    return result.IsSuccess() ? CommitApplyPlan(player, plan) : result;
+    return result.IsSuccess() ? CommitApplyPlan(player, plan, std::move(extraStatements)) : result;
 }
 
 bool Transmogrification::CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* target, ItemTemplate const* source) const
@@ -714,6 +724,136 @@ bool Transmogrification::CanTransmogrifyItemWithItem(Player* player, ItemTemplat
 
     if (source->SubClass != target->SubClass && !IsSubclassMismatchAllowed(player, source, target))
         return false;
+
+    if (source->InventoryType != target->InventoryType && !IsInvTypeMismatchAllowed(source, target))
+        return false;
+
+    return true;
+}
+
+namespace
+{
+uint8 ParseCollectedMixedArmor(std::string value)
+{
+    for (char& ch : value)
+        ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
+    if (value == "any")
+        return MIXED_ARMOR_ANY;
+    if (value == "lower")
+        return MIXED_ARMOR_LOWER;
+    return MIXED_ARMOR_SAME;
+}
+
+uint8 ParseCollectedMixedWeapons(std::string value)
+{
+    for (char& ch : value)
+        ch = static_cast<char>(std::tolower(static_cast<unsigned char>(ch)));
+    if (value == "any")
+        return MIXED_WEAPONS_LOOSE;
+    if (value == "family")
+        return MIXED_WEAPONS_MODERN;
+    return MIXED_WEAPONS_STRICT;
+}
+
+bool CollectedWeaponFamilyAllowed(uint32 targetSub, uint32 sourceSub)
+{
+    switch (targetSub)
+    {
+        case ITEM_SUBCLASS_WEAPON_AXE:
+        case ITEM_SUBCLASS_WEAPON_SWORD:
+        case ITEM_SUBCLASS_WEAPON_MACE:
+            return sourceSub == ITEM_SUBCLASS_WEAPON_AXE
+                || sourceSub == ITEM_SUBCLASS_WEAPON_SWORD
+                || sourceSub == ITEM_SUBCLASS_WEAPON_MACE;
+        case ITEM_SUBCLASS_WEAPON_AXE2:
+        case ITEM_SUBCLASS_WEAPON_SWORD2:
+        case ITEM_SUBCLASS_WEAPON_MACE2:
+        case ITEM_SUBCLASS_WEAPON_STAFF:
+        case ITEM_SUBCLASS_WEAPON_POLEARM:
+            return sourceSub == ITEM_SUBCLASS_WEAPON_AXE2
+                || sourceSub == ITEM_SUBCLASS_WEAPON_SWORD2
+                || sourceSub == ITEM_SUBCLASS_WEAPON_MACE2
+                || sourceSub == ITEM_SUBCLASS_WEAPON_STAFF
+                || sourceSub == ITEM_SUBCLASS_WEAPON_POLEARM;
+        default:
+            return false;
+    }
+}
+}
+
+bool Transmogrification::CanApplyCollectedVisual(Player* player, ItemTemplate const* target, ItemTemplate const* source) const
+{
+    if (!player || !target || !source)
+        return false;
+
+    if (source->Class != ITEM_CLASS_ARMOR && source->Class != ITEM_CLASS_WEAPON)
+        return false;
+
+    if (source->Class != target->Class)
+        return false;
+
+    if (source->InventoryType == INVTYPE_BAG ||
+        source->InventoryType == INVTYPE_RELIC ||
+        source->InventoryType == INVTYPE_FINGER ||
+        source->InventoryType == INVTYPE_TRINKET ||
+        source->InventoryType == INVTYPE_AMMO ||
+        source->InventoryType == INVTYPE_QUIVER)
+        return false;
+
+    if (target->InventoryType == INVTYPE_BAG ||
+        target->InventoryType == INVTYPE_RELIC ||
+        target->InventoryType == INVTYPE_FINGER ||
+        target->InventoryType == INVTYPE_TRINKET ||
+        target->InventoryType == INVTYPE_AMMO ||
+        target->InventoryType == INVTYPE_QUIVER)
+        return false;
+
+    // The player is already wearing `target`. NPC SuitableFor gates
+    // (armor skill, AllowableClass) must not block a collected visual.
+    if (IsRangedWeapon(source->Class, source->SubClass) != IsRangedWeapon(target->Class, target->SubClass))
+        return false;
+
+    if (source->SubClass != target->SubClass)
+    {
+        bool allowed = false;
+        if (source->Class == ITEM_CLASS_ARMOR && target->Class == ITEM_CLASS_ARMOR)
+        {
+            bool sourceTiered = IsTieredArmorSubclass(source->SubClass);
+            bool targetTiered = IsTieredArmorSubclass(target->SubClass);
+            bool eitherMisc = source->SubClass == ITEM_SUBCLASS_ARMOR_MISC
+                || target->SubClass == ITEM_SUBCLASS_ARMOR_MISC;
+            if (sourceTiered && targetTiered)
+            {
+                if (CollectedMixedArmorPolicy == MIXED_ARMOR_ANY)
+                    allowed = true;
+                else if (CollectedMixedArmorPolicy == MIXED_ARMOR_LOWER)
+                    allowed = TierAvailable(player, 0, source->SubClass);
+            }
+            else if (eitherMisc && source->InventoryType == target->InventoryType)
+            {
+                if (CollectedMixedArmorPolicy == MIXED_ARMOR_ANY)
+                    allowed = true;
+                else if (CollectedMixedArmorPolicy == MIXED_ARMOR_LOWER)
+                    allowed = !sourceTiered || TierAvailable(player, 0, source->SubClass);
+            }
+            else
+                allowed = IsSubclassMismatchAllowed(player, source, target);
+        }
+        else if (source->Class == ITEM_CLASS_WEAPON && target->Class == ITEM_CLASS_WEAPON)
+        {
+            if (CollectedMixedWeaponPolicy == MIXED_WEAPONS_LOOSE)
+                allowed = true;
+            else if (CollectedMixedWeaponPolicy == MIXED_WEAPONS_MODERN)
+                allowed = CollectedWeaponFamilyAllowed(target->SubClass, source->SubClass);
+            else if (source->SubClass == ITEM_SUBCLASS_WEAPON_MISC)
+                allowed = source->InventoryType == target->InventoryType;
+        }
+        else
+            allowed = IsSubclassMismatchAllowed(player, source, target);
+
+        if (!allowed)
+            return false;
+    }
 
     if (source->InventoryType != target->InventoryType && !IsInvTypeMismatchAllowed(source, target))
         return false;
@@ -1193,6 +1333,10 @@ void Transmogrification::LoadConfig(bool reload)
 
     AllowMixedArmorTypes = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedArmorTypes", false);
     AllowLowerTiers = sConfigMgr->GetOption<bool>("Transmogrification.AllowLowerTiers", false);
+    CollectedMixedArmorPolicy = ParseCollectedMixedArmor(
+        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedArmor", "any"));
+    CollectedMixedWeaponPolicy = ParseCollectedMixedWeapons(
+        sConfigMgr->GetOption<std::string>("SoloCollections.Transmog.MixedWeapons", "any"));
     AllowMixedOffhandArmorTypes = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedOffhandArmorTypes", false);
     AllowMixedWeaponHandedness = sConfigMgr->GetOption<bool>("Transmogrification.AllowMixedWeaponHandedness", false);
     AllowFishingPoles = sConfigMgr->GetOption<bool>("Transmogrification.AllowFishingPoles", false);

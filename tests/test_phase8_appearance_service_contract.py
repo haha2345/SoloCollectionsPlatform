@@ -45,6 +45,10 @@ class AppearanceServiceContractTests(unittest.TestCase):
         self.assertIn("AppearanceCollectionTypeId", core)
         self.assertIn('TypeKey = "appearance"', core)
 
+    def test_canonical_catalog_rejects_reserved_hide_visual_ids(self):
+        catalog = (APPEARANCE / "SoloCollectionsAppearanceCatalog.cpp").read_text(encoding="utf-8")
+        self.assertIn("definition.Id.Value() < 10", catalog)
+
     def test_canonical_catalog_maps_every_source_once_and_selects_server_side(self):
         catalog = (APPEARANCE / "SoloCollectionsAppearanceCatalog.cpp").read_text(encoding="utf-8")
         service = (APPEARANCE / "SoloCollectionsAppearanceService.cpp").read_text(encoding="utf-8")
@@ -58,6 +62,7 @@ class AppearanceServiceContractTests(unittest.TestCase):
         self.assertIn("GetAccountCollectionService().Evaluate", service)
         self.assertIn("ResolveOwnedSource", service)
         self.assertIn("CanTransmogrifyItemWithItem", service)
+        self.assertIn("CanApplyCollectedVisual", service)
 
     def test_same_display_is_partitioned_by_slot_and_compatibility_family(self):
         data = __import__("json").loads(

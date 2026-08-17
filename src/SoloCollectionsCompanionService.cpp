@@ -7,14 +7,17 @@
 #include "Creature.h"
 #include "Log.h"
 #include "Player.h"
+#include "Random.h"
 #include "SpellMgr.h"
 #include "WorldSession.h"
 
+#include <algorithm>
 #include <deque>
 #include <map>
 #include <mutex>
 #include <set>
 #include <utility>
+#include <vector>
 
 namespace SoloCollections
 {
@@ -123,10 +126,90 @@ public:
             return "INVALID_REQUEST";
         if (definition->Lifecycle == CatalogLifecycle::Tombstone)
             return "INVALID_REQUEST";
-        if (!CatalogLifecycleAllowsAction(definition->Lifecycle))
+        if (!CatalogLifecycleAllowsAction(definition->Lifecycle) || !definition->JournalVisible ||
+            !definition->Actionable)
             return "UNSUPPORTED";
         if (!GetAccountCollectionCache().IsOwned(account, { CompanionCollectionTypeId, collectionId }))
             return "NOT_OWNED";
+        return ExecuteOwnedSummon(player, account, *definition);
+    }
+
+    std::string ExecuteRandomSummon(Player* player)
+    {
+        if (!player || !player->GetSession())
+            return "INVALID_REQUEST";
+
+        AccountId account = PlayerAccount(player);
+        std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(account);
+        if (!snapshot || snapshot->State == AccountCacheLoadState::Loading)
+            return "LOADING";
+        if (snapshot->State == AccountCacheLoadState::Failed)
+            return "DB_UNAVAILABLE";
+
+        std::optional<std::vector<CollectionId>> owned =
+            GetAccountCollectionCache().OwnedByType(account, CompanionCollectionTypeId);
+        if (!owned || owned->empty())
+            return "NO_COMPANIONS";
+
+        std::vector<CollectionId> eligible;
+        std::vector<CollectionId> favorites;
+        for (CompanionCollectionDefinition const& definition : GetCompanionCatalog().Collections())
+        {
+            if (definition.Lifecycle != CatalogLifecycle::Active || !definition.JournalVisible ||
+                !definition.Actionable || !definition.RandomEligible)
+                continue;
+            if (!GetAccountCollectionCache().IsOwned(
+                    account, { CompanionCollectionTypeId, definition.Id }))
+                continue;
+            eligible.push_back(definition.Id);
+            if (GetAccountCollectionCache().IsOwned(
+                    account, { CompanionFavoriteCollectionTypeId, definition.Id }))
+                favorites.push_back(definition.Id);
+        }
+        if (eligible.empty())
+            return "NO_USABLE_COMPANIONS";
+
+        std::vector<CollectionId> pool = favorites.empty() ? eligible : favorites;
+        if (pool.size() > 1)
+        {
+            if (Creature* current = player->GetCompanionPet())
+            {
+                std::uint32_t currentSpellId = current->GetUInt32Value(UNIT_CREATED_BY_SPELL);
+                if (CompanionCollectionDefinition const* currentDefinition =
+                        GetCompanionCatalog().FindBySpell(currentSpellId))
+                {
+                    pool.erase(std::remove(pool.begin(), pool.end(), currentDefinition->Id), pool.end());
+                }
+            }
+        }
+
+        std::size_t initialPoolSize = pool.size();
+        while (!pool.empty())
+        {
+            std::size_t index = urand(0, static_cast<std::uint32_t>(pool.size() - 1));
+            CollectionId selected = pool[index];
+            pool.erase(pool.begin() + index);
+            std::string result = ExecuteSummon(player, selected);
+            if (result == "ACCEPTED" || result == "DISMISSED")
+            {
+                CompanionCollectionDefinition const* definition = GetCompanionCatalog().Find(selected);
+                LOG_INFO("module.solocollections.companion",
+                    "event=companion_random account={} character={} pool_size={} favorite_pool={} collection={} spell={} result={}",
+                    account.Value(), player->GetGUID().GetCounter(), initialPoolSize,
+                    favorites.empty() ? 0 : favorites.size(), selected.Value(),
+                    definition ? definition->CanonicalActionSpellId : 0, result);
+                return result;
+            }
+            if (result != "MAP_RESTRICTED" && result != "CAST_FAILED" && result != "UNSUPPORTED")
+                return result;
+        }
+        return "NO_USABLE_COMPANIONS";
+    }
+
+private:
+    std::string ExecuteOwnedSummon(Player* player, AccountId account,
+        CompanionCollectionDefinition const& definition)
+    {
         if (!player->IsAlive())
             return "DEAD";
         if (player->IsInCombat())
@@ -140,17 +223,18 @@ public:
         // retaining a stale service-side GUID across map changes or logout.
         if (Creature* current = player->GetCompanionPet())
         {
-            if (current->GetUInt32Value(UNIT_CREATED_BY_SPELL) == definition->CanonicalSpellId)
+            if (current->GetUInt32Value(UNIT_CREATED_BY_SPELL) == definition.CanonicalActionSpellId)
             {
                 current->DespawnOrUnsummon();
                 LOG_INFO("module.solocollections.companion",
                     "event=companion_toggle result=dismissed account={} character={} collection={} spell={}",
-                    account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->CanonicalSpellId);
+                    account.Value(), player->GetGUID().GetCounter(), definition.Id.Value(),
+                    definition.CanonicalActionSpellId);
                 return "DISMISSED";
             }
         }
 
-        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(definition->CanonicalSpellId);
+        SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(definition.CanonicalActionSpellId);
         if (!spellInfo)
             return "CAST_FAILED";
         if (spellInfo->CheckLocation(player->GetMapId(), player->GetZoneId(), player->GetAreaId(), player, true) != SPELL_CAST_OK)
@@ -160,11 +244,10 @@ public:
             return "CAST_FAILED";
         LOG_INFO("module.solocollections.companion",
             "event=companion_summon result=accepted account={} character={} collection={} spell={}",
-            account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->CanonicalSpellId);
+            account.Value(), player->GetGUID().GetCounter(), definition.Id.Value(),
+            definition.CanonicalActionSpellId);
         return "ACCEPTED";
     }
-
-private:
     static void QueueGrant(AccountState& state, CompanionCollectionDefinition const& definition,
         std::uint32_t spellId, std::uint32_t characterGuid, CollectionSourceKind sourceKind)
     {
@@ -286,6 +369,10 @@ void CompanionCollectionService::Update() { _impl->Update(); }
 std::string CompanionCollectionService::ExecuteSummon(Player* player, CollectionId collectionId)
 {
     return _impl->ExecuteSummon(player, collectionId);
+}
+std::string CompanionCollectionService::ExecuteRandomSummon(Player* player)
+{
+    return _impl->ExecuteRandomSummon(player);
 }
 
 CompanionCollectionService& GetCompanionCollectionService()

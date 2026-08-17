@@ -11,6 +11,9 @@
 namespace SoloCollections
 {
 inline constexpr CollectionTypeId CompanionCollectionTypeId { std::uint16_t { 11 } };
+// Internal SC2 projection of account preferences; not a journal/navigation category.
+inline constexpr CollectionTypeId CompanionFavoriteCollectionTypeId { std::uint16_t { 17 } };
+inline constexpr CollectionId CompanionRandomActionCollectionId { std::uint32_t { 1 } };
 
 struct CompanionCollectionDefinition
 {
@@ -20,6 +23,10 @@ struct CompanionCollectionDefinition
     std::vector<std::uint32_t> UnlockSpellIds;
     std::uint32_t PreviewCreatureEntry = 0;
     CatalogLifecycle Lifecycle = CatalogLifecycle::Disabled;
+    bool JournalVisible = false;
+    bool Actionable = false;
+    bool RandomEligible = false;
+    std::uint32_t CanonicalActionSpellId = 0;
 };
 
 class CompanionCatalog final

@@ -179,6 +179,36 @@ DeltaQueueResult AccountCollectionCache::QueueDelta(AccountId accountId, Collect
     return DeltaQueueResult::Applied;
 }
 
+bool AccountCollectionCache::ClearOwnedType(
+    AccountId accountId, CollectionTypeId typeId, CollectionRevision revision)
+{
+    std::scoped_lock lock(_mutex);
+    auto entry = _entries.find(accountId);
+    if (entry == _entries.end() || entry->second.State != AccountCacheLoadState::Ready ||
+        !typeId.IsValid() || !revision.IsValid())
+        return false;
+    if (revision.Value() < entry->second.Revision.Value())
+        return false;
+
+    for (auto owned = entry->second.Owned.begin(); owned != entry->second.Owned.end();)
+    {
+        if (owned->TypeId == typeId)
+            owned = entry->second.Owned.erase(owned);
+        else
+            ++owned;
+    }
+    for (auto pending = entry->second.PendingDeltas.begin();
+        pending != entry->second.PendingDeltas.end();)
+    {
+        if (pending->first.TypeId == typeId)
+            pending = entry->second.PendingDeltas.erase(pending);
+        else
+            ++pending;
+    }
+    entry->second.Revision = revision;
+    return true;
+}
+
 std::vector<CollectionDelta> AccountCollectionCache::DrainReadyDeltas(AccountId accountId)
 {
     std::scoped_lock lock(_mutex);

@@ -3,6 +3,8 @@
 #include "SoloCollectionsAccountCache.h"
 #include "SoloCollectionsProvider.h"
 
+#include <cstdint>
+
 namespace SoloCollections
 {
 CollectionResult AccountCollectionService::Evaluate(AccountId accountId, CollectionKey const& key) const
@@ -105,6 +107,73 @@ MutationStartResult AccountCollectionService::TryUnlock(AccountId accountId, Col
     mutation.ActorAccountId = actorAccountId;
     mutation.ActorGuid = actorGuid;
     return GetAccountCollectionStore().BeginMutation(mutation);
+}
+
+MutationStartResult AccountCollectionService::TryRevoke(AccountId accountId, CollectionKey const& key,
+    CollectionSourceKind sourceKind, std::uint64_t sourceId, std::uint32_t characterGuid,
+    std::uint32_t actorAccountId, std::uint32_t actorGuid)
+{
+    CollectionProviderRegistry const& registry = GetCollectionProviderRegistry();
+    CollectionProvider const* provider = registry.Find(key.TypeId);
+    CollectionProviderRuntimeState const* providerState = registry.State(key.TypeId);
+    if (!provider || !providerState)
+        return { false, CollectionReasonCode::UnknownType, {} };
+    if (providerState->Mode == CollectionProviderMode::Disabled)
+        return { false, CollectionReasonCode::Disabled, {} };
+    if (!provider->Evaluate(key.Id).Availability.CatalogKnown)
+        return { false, CollectionReasonCode::UnknownCollection, {} };
+    if (providerState->Mode == CollectionProviderMode::ReadOnly ||
+        provider->Descriptor().Storage != CollectionStorageMode::Persisted)
+        return { false, CollectionReasonCode::ReadOnly, {} };
+
+    std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(accountId);
+    if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
+        return { false, snapshot && snapshot->State == AccountCacheLoadState::Failed ?
+            CollectionReasonCode::LoadFailed : CollectionReasonCode::NotReady, {} };
+
+    AccountCollectionMutation mutation;
+    mutation.Account = accountId;
+    mutation.Generation = snapshot->Generation;
+    mutation.Key = key;
+    mutation.Kind = CollectionMutationKind::Revoke;
+    mutation.SourceKind = sourceKind;
+    mutation.SourceId = sourceId;
+    mutation.CharacterGuid = characterGuid;
+    mutation.ActorAccountId = actorAccountId;
+    mutation.ActorGuid = actorGuid;
+    return GetAccountCollectionStore().BeginMutation(mutation);
+}
+
+MutationStartResult AccountCollectionService::TryClearType(AccountId accountId, CollectionTypeId typeId,
+    CollectionSourceKind sourceKind, std::uint32_t characterGuid,
+    std::uint32_t actorAccountId, std::uint32_t actorGuid)
+{
+    CollectionProviderRegistry const& registry = GetCollectionProviderRegistry();
+    CollectionProvider const* provider = registry.Find(typeId);
+    CollectionProviderRuntimeState const* providerState = registry.State(typeId);
+    if (!provider || !providerState)
+        return { false, CollectionReasonCode::UnknownType, {} };
+    if (providerState->Mode == CollectionProviderMode::Disabled)
+        return { false, CollectionReasonCode::Disabled, {} };
+    if (providerState->Mode == CollectionProviderMode::ReadOnly ||
+        provider->Descriptor().Storage != CollectionStorageMode::Persisted)
+        return { false, CollectionReasonCode::ReadOnly, {} };
+
+    std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(accountId);
+    if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
+        return { false, snapshot && snapshot->State == AccountCacheLoadState::Failed ?
+            CollectionReasonCode::LoadFailed : CollectionReasonCode::NotReady, {} };
+
+    AccountCollectionMutation mutation;
+    mutation.Account = accountId;
+    mutation.Generation = snapshot->Generation;
+    mutation.Key = { typeId, CollectionId(std::uint32_t { 1 }) };
+    mutation.Kind = CollectionMutationKind::Revoke;
+    mutation.SourceKind = sourceKind;
+    mutation.CharacterGuid = characterGuid;
+    mutation.ActorAccountId = actorAccountId;
+    mutation.ActorGuid = actorGuid;
+    return GetAccountCollectionStore().BeginClearType(std::move(mutation));
 }
 
 bool AccountCollectionService::IsReady(AccountId accountId) const

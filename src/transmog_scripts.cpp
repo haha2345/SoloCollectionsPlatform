@@ -44,9 +44,9 @@ const uint32 CUSTOM_HIDE_ITEM_VENDOR_ID     = 57575;//Custom Hide Item item
 const uint32 CUSTOM_REMOVE_TMOG_VENDOR_ID   = 57576;//Custom Remove Transmog item
 
 
-uint32 GetTransmogPrice (ItemTemplate const* targetItem)
+uint32 GetTransmogPrice (ItemTemplate const* sourceItem)
 {
-    uint32 price = sT->GetSpecialPrice(targetItem);
+    uint32 price = sT->GetSpecialPrice(sourceItem);
     price *= sT->GetScaledCostModifier();
     price += sT->GetCopperCost();
     return price;
@@ -500,12 +500,11 @@ public:
 
         if (oldItem)
         {
-            uint32 price = GetTransmogPrice(oldItem->GetTemplate());
             std::ostringstream ss;
             if (sT->GetRequireToken())
                 ss << std::endl << std::endl << sT->GetTokenAmount() << " x " << sT->GetItemLink(sT->GetTokenEntry(), session);
-            std::string lineEnd = GetTransmogPriceText(price) + ss.str();
-            std::string hiddenLineEnd = sT->GetHiddenTransmogIsFree() ? std::string() : GetTransmogPriceText(price);
+            std::string tokenSuffix = ss.str();
+            std::string hiddenLineEnd = sT->GetHiddenTransmogIsFree() ? std::string() : GetTransmogPriceText(GetTransmogPrice(oldItem->GetTemplate()));
 
             std::unordered_map<uint32, std::string>::iterator searchStringIterator = sT->searchStringByPlayer.find(player->GetGUID().GetCounter());
             hasSearchString = !(searchStringIterator == sT->searchStringByPlayer.end());
@@ -553,6 +552,7 @@ public:
                         break;
                     }
                     ItemTemplate const* sourceTemplate = allowedItems.at(i);
+                    std::string lineEnd = GetTransmogPriceText(GetTransmogPrice(sourceTemplate)) + tokenSuffix;
                     // BoxMoney must remain zero: AzerothCore deducts it before the
                     // script callback, which would charge rejected stale/forged
                     // gossip requests. CommitApplyPlan owns all resource changes.
@@ -658,7 +658,6 @@ public:
         uint32 itemCount = itemList.size();
         uint32 spoofCount = spoofedItems.size();
         uint32 totalItems = itemCount + spoofCount;
-        uint32 price = GetTransmogPrice(targetItem->GetTemplate());
 
         WorldPacket data(SMSG_LIST_INVENTORY, 8 + 1 + totalItems * 8 * 4);
         data << uint64(creature->GetGUID().GetRawValue());
@@ -678,7 +677,7 @@ public:
         {
             ItemTemplate const* sourceTemplate = itemList[i];
             if (sourceTemplate)
-                EncodeItemToPacket(data, sourceTemplate, count, price);
+                EncodeItemToPacket(data, sourceTemplate, count, GetTransmogPrice(sourceTemplate));
         }
 
         data.put(count_pos, count);
@@ -704,7 +703,10 @@ public:
 
         if (uint32 entry = sT->GetFakeEntry(item->GetGUID()))
         {
-            player->SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (slot * 2), entry);
+            // item_template has no entry 1. Writing HIDDEN_ITEM_ID leaves the
+            // real item on the player model; hide must use visible item 0.
+            player->SetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + (slot * 2),
+                entry == HIDDEN_ITEM_ID ? 0 : entry);
         }
     }
 

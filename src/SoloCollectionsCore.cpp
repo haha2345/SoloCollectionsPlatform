@@ -18,9 +18,11 @@
 #include "SoloCollectionsTitleService.h"
 
 #include "Item.h"
+#include "Chat.h"
 #include "Player.h"
 #include "Log.h"
 #include "ScriptMgr.h"
+#include "SpellScript.h"
 #include "WorldSession.h"
 
 #include <chrono>
@@ -37,6 +39,44 @@ std::uint64_t MonotonicMilliseconds()
     return static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(
         std::chrono::steady_clock::now().time_since_epoch()).count());
 }
+
+std::string_view RandomMountMessage(std::string_view reason)
+{
+    if (reason == "NO_MOUNTS") return "尚未获得可召唤的坐骑。";
+    if (reason == "NO_USABLE_MOUNTS") return "当前没有可在此处召唤的坐骑。";
+    if (reason == "IN_COMBAT") return "战斗中不能召唤坐骑。";
+    if (reason == "DEAD") return "死亡状态下不能召唤坐骑。";
+    if (reason == "IN_VEHICLE") return "乘坐载具时不能召唤坐骑。";
+    if (reason == "ON_TAXI") return "使用飞行点时不能召唤坐骑。";
+    if (reason == "INDOORS") return "室内不能召唤坐骑。";
+    if (reason == "SHAPESHIFT_RESTRICTED") return "当前形态不能召唤坐骑，请恢复人形。";
+    if (reason == "BATTLEGROUND_RESTRICTED") return "当前战场状态不能召唤该坐骑。";
+    if (reason == "LOADING") return "收藏状态正在同步，请稍后再试。";
+    if (reason == "DB_UNAVAILABLE") return "收藏服务暂时不可用，请稍后再试。";
+    return "坐骑召唤失败，请检查当前角色状态。";
+}
+
+class spell_solo_collections_random_mount final : public SpellScript
+{
+    PrepareSpellScript(spell_solo_collections_random_mount);
+
+    void HandleDummy(SpellEffIndex effectIndex)
+    {
+        PreventHitDefaultEffect(effectIndex);
+        Player* player = GetCaster() ? GetCaster()->ToPlayer() : nullptr;
+        if (!player || !player->GetSession())
+            return;
+        std::string result = GetMountCollectionService().ExecuteRandomSummon(player);
+        if (result != "ACCEPTED" && result != "DISMISSED")
+            ChatHandler(player->GetSession()).SendNotification(RandomMountMessage(result).data());
+    }
+
+    void Register() override
+    {
+        OnEffectHitTarget += SpellEffectFn(
+            spell_solo_collections_random_mount::HandleDummy, EFFECT_0, SPELL_EFFECT_DUMMY);
+    }
+};
 
 class SyntheticCollectionProvider final : public CollectionProvider
 {
@@ -93,6 +133,33 @@ private:
     CollectionProviderDescriptor _descriptor;
 };
 
+class MountFavoriteCollectionProvider final : public CollectionProvider
+{
+public:
+    MountFavoriteCollectionProvider()
+    {
+        _descriptor.TypeId = MountFavoriteCollectionTypeId;
+        _descriptor.TypeKey = "mount-favorite";
+        _descriptor.Dependencies = { MountCollectionTypeId };
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        MountCollectionDefinition const* definition = GetMountCatalog().Find(collectionId);
+        bool known = definition && definition->JournalVisible && definition->Actionable;
+        result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        return result;
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
 class CompanionCollectionProvider final : public CollectionProvider
 {
 public:
@@ -108,6 +175,34 @@ public:
     {
         CollectionResult result;
         bool known = GetCompanionCatalog().Find(collectionId) != nullptr;
+        result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
+        result.Availability.CatalogKnown = known;
+        result.Availability.AssetReady = known;
+        return result;
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
+class CompanionFavoriteCollectionProvider final : public CollectionProvider
+{
+public:
+    CompanionFavoriteCollectionProvider()
+    {
+        _descriptor.TypeId = CompanionFavoriteCollectionTypeId;
+        _descriptor.TypeKey = "companion-favorite";
+        _descriptor.Dependencies = { CompanionCollectionTypeId };
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        CollectionResult result;
+        CompanionCollectionDefinition const* definition = GetCompanionCatalog().Find(collectionId);
+        bool known = definition && definition->Lifecycle == CatalogLifecycle::Active &&
+            definition->JournalVisible && definition->Actionable;
         result.Reason = known ? CollectionReasonCode::NotOwned : CollectionReasonCode::UnknownCollection;
         result.Availability.CatalogKnown = known;
         result.Availability.AssetReady = known;
@@ -150,6 +245,26 @@ public:
     {
         _descriptor.TypeId = AppearanceCollectionTypeId;
         _descriptor.TypeKey = "appearance";
+    }
+
+    [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
+    [[nodiscard]] CollectionResult Evaluate(CollectionId collectionId) const override
+    {
+        return GetAppearanceService().Evaluate(collectionId);
+    }
+
+private:
+    CollectionProviderDescriptor _descriptor;
+};
+
+class AppearanceNewCollectionProvider final : public CollectionProvider
+{
+public:
+    AppearanceNewCollectionProvider()
+    {
+        _descriptor.TypeId = AppearanceNewCollectionTypeId;
+        _descriptor.TypeKey = "appearance-new";
+        _descriptor.Dependencies = { AppearanceCollectionTypeId };
     }
 
     [[nodiscard]] CollectionProviderDescriptor const& Descriptor() const override { return _descriptor; }
@@ -276,9 +391,12 @@ public:
         };
         registerProvider("synthetic", std::make_unique<SyntheticCollectionProvider>());
         registerProvider("mount", std::make_unique<MountCollectionProvider>());
+        registerProvider("mount-favorite", std::make_unique<MountFavoriteCollectionProvider>());
         registerProvider("companion", std::make_unique<CompanionCollectionProvider>());
+        registerProvider("companion-favorite", std::make_unique<CompanionFavoriteCollectionProvider>());
         registerProvider("toy", std::make_unique<ToyCollectionProvider>());
         registerProvider("appearance", std::make_unique<AppearanceCollectionProvider>());
+        registerProvider("appearance-new", std::make_unique<AppearanceNewCollectionProvider>());
         registerProvider("set", std::make_unique<SetCollectionProvider>());
         registerProvider("title", std::make_unique<TitleCollectionProvider>());
 
@@ -337,7 +455,21 @@ public:
             PLAYERHOOK_ON_CREATE_ITEM, PLAYERHOOK_ON_QUEST_REWARD_ITEM,
             PLAYERHOOK_ON_AFTER_STORE_OR_EQUIP_NEW_ITEM, PLAYERHOOK_ON_EQUIP,
             PLAYERHOOK_ON_LOOT_ITEM, PLAYERHOOK_ON_GROUP_ROLL_REWARD_ITEM,
-            PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT }) { }
+            PLAYERHOOK_CAN_PLAYER_USE_PRIVATE_CHAT,
+            PLAYERHOOK_ON_CAN_USE_FLYING_MOUNT_AS_GROUND,
+            PLAYERHOOK_ON_CAN_REPLACE_MOUNT }) { }
+
+    bool OnPlayerCanUseFlyingMountAsGround(Player* player, SpellInfo const* spellInfo,
+        std::uint32_t mapId, std::uint32_t zoneId, std::uint32_t areaId) override
+    {
+        return IsCppBackendOwner() && GetMountCollectionService().CanUseFlyingMountAsGround(
+            player, spellInfo, mapId, zoneId, areaId);
+    }
+
+    bool OnPlayerCanReplaceMount(Player* player, SpellInfo const* spellInfo) override
+    {
+        return IsCppBackendOwner() && GetMountCollectionService().CanReplaceMount(player, spellInfo);
+    }
 
     void OnPlayerLogin(Player* player) override
     {
@@ -385,6 +517,20 @@ public:
     {
         if (IsCppBackendOwner())
         {
+            GetMountCollectionService().ReconcileNativeMountState(player);
+            GetMountCollectionService().ReconcileCharacterMountActions(player);
+            if (player && player->GetSession() && !player->HasSpell(MountRandomSpellId))
+            {
+                std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(
+                    AccountId(player->GetSession()->GetAccountId()));
+                if (snapshot && snapshot->State == AccountCacheLoadState::Ready)
+                {
+                    player->learnSpell(MountRandomSpellId, false);
+                    LOG_INFO("module.solocollections.mount",
+                        "event=random_mount_spell_learn account={} character={} spell={} result=learned",
+                        player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), MountRandomSpellId);
+                }
+            }
             Sc2ProtocolPumpAndSend(player);
             GetAppearanceService().OnPlayerUpdate(player, diff);
         }
@@ -488,6 +634,7 @@ private:
 
 void AddSC_solo_collections_core()
 {
+    RegisterSpellScript(SoloCollections::spell_solo_collections_random_mount);
     new SoloCollections::SoloCollectionsCoreWorldScript();
     new SoloCollections::SoloCollectionsCorePlayerScript();
 }

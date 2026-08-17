@@ -17,6 +17,12 @@ public:
     [[nodiscard]] MutationStartResult TryUnlock(AccountId accountId, CollectionKey const& key,
         CollectionSourceKind sourceKind, std::uint64_t sourceId, std::uint32_t characterGuid,
         std::uint32_t actorAccountId = 0, std::uint32_t actorGuid = 0);
+    [[nodiscard]] MutationStartResult TryRevoke(AccountId accountId, CollectionKey const& key,
+        CollectionSourceKind sourceKind, std::uint64_t sourceId, std::uint32_t characterGuid,
+        std::uint32_t actorAccountId = 0, std::uint32_t actorGuid = 0);
+    [[nodiscard]] MutationStartResult TryClearType(AccountId accountId, CollectionTypeId typeId,
+        CollectionSourceKind sourceKind, std::uint32_t characterGuid,
+        std::uint32_t actorAccountId = 0, std::uint32_t actorGuid = 0);
     [[nodiscard]] bool IsReady(AccountId accountId) const;
 };
 

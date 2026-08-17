@@ -29,6 +29,64 @@ SoloCollections.ShadowReportPath = "logs/solo-collections-shadow.jsonl"
 SoloCollections.Preview.Enabled = 1
 
 #
+#    Wardrobe Y QUOTE/APPLY copper
+#        Description: Unused legacy keys. Wardrobe billing uses the same sell-price
+#                     formula as NPC/handbook transmog: max(source SellPrice, 10000)
+#                     * Transmogrification.ScaledCostModifier + CopperCost, per
+#                     actually changed non-hide slot. Hide and clear are free.
+#                     U still returns 0 when the quote is free. Do not restore
+#                     ApplyBaseCopper / ApplySlotCopper as the wardrobe price.
+#
+
+# SoloCollections.Transmog.ApplyBaseCopper = 0
+# SoloCollections.Transmog.ApplySlotCopper = 0
+#
+#    SoloCollections.Transmog.MixedArmor
+#        Description: Wardrobe collected-apply only (CanApplyCollectedVisual, Y QUOTE/APPLY).
+#                     Does not change NPC vendor transmog. NPC still uses
+#                     Transmogrification.AllowMixedArmorTypes and AllowLowerTiers
+#                     (distributed defaults off).
+#                     Does not run NPC armor-skill or AllowableClass gates on the
+#                     equipped target; the player is already wearing that item.
+#                     Values are case-insensitive. Any other string fails closed to same.
+#
+#                     same  - cloth / leather / mail / plate must match.
+#                             Shirt, tabard, cloak, and other MISC armor stay
+#                             same-InventoryType only (boots onto boots, not boots onto gloves).
+#                     lower - cloth / leather / mail / plate may use a lower tier
+#                             the player can wear. MISC + same InventoryType is allowed
+#                             when the appearance is not a higher tier the player cannot wear.
+#                     any   - cloth / leather / mail / plate interchangeable.
+#                             MISC armor (no armor type, e.g. some boots) may mix with a
+#                             tiered appearance of the same InventoryType.
+#
+#        Default:     any
+#
+SoloCollections.Transmog.MixedArmor = any
+
+#    SoloCollections.Transmog.MixedWeapons
+#        Description: Wardrobe collected-apply only. Does not change NPC vendor
+#                     transmog (Transmogrification.AllowMixedWeaponTypes, default STRICT).
+#                     Values are case-insensitive. Any other string fails closed to same.
+#
+#                     Isolation this key cannot lift:
+#                     bow / gun / crossbow cannot apply onto a melee weapon, and
+#                     melee cannot apply onto bow / gun / crossbow.
+#                     Wand and thrown are not in that isolation set.
+#
+#                     same   - weapon subclass must match (sword onto sword, and so on).
+#                     family - 1H axe / sword / mace may mix with each other;
+#                              2H axe / sword / mace / staff / polearm may mix with each other.
+#                              Dagger, fist, wand, thrown, and other subclasses still need
+#                              an exact subclass match.
+#                     any    - any melee onto any melee; any bow / gun / crossbow onto
+#                              any bow / gun / crossbow. The isolation above still applies.
+#
+#        Default:     any
+#
+SoloCollections.Transmog.MixedWeapons = any
+
+#
 ###################################################################################################
 
 
