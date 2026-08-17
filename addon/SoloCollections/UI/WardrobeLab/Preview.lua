@@ -57,16 +57,21 @@ local function previewModelAlive(model)
 end
 
 local function pumpDressers()
-    local any
+    -- Lua 5.1 forbids adding/removing keys while pairs()/next is running.
+    -- StepDressUp and onReady both mutate activeDressers, so snapshot first.
+    local pending = {}
     for model in pairs(activeDressers) do
+        pending[#pending + 1] = model
+    end
+    for index = 1, #pending do
+        local model = pending[index]
         if model.scDressState and model.scDressState ~= "idle" then
-            any = true
             Lab.StepDressUp(model)
         else
             activeDressers[model] = nil
         end
     end
-    if not any then
+    if next(activeDressers) == nil then
         dressDriver:SetScript("OnUpdate", nil)
     end
 end
