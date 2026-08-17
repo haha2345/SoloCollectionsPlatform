@@ -23,6 +23,7 @@
 
 #include "Chat.h"
 #include "Log.h"
+#include "ObjectAccessor.h"
 #include "Player.h"
 #include "SharedDefines.h"
 #include "WorldPacket.h"
@@ -30,6 +31,8 @@
 
 #include <chrono>
 #include <charconv>
+#include <memory>
+#include <optional>
 #include <string_view>
 #include <utility>
 
@@ -230,7 +233,7 @@ bool Sc2ProtocolCanUsePrivateChat(
         SessionId(player), SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
             AccountId(player->GetSession()->GetAccountId())));
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
-        [player](AccountId accountId, Sc2Message const& request)
+        [player](AccountId accountId, Sc2Message const& request) -> std::optional<std::string>
         {
             auto actionStarted = std::chrono::steady_clock::now();
             auto finish = [&](std::string_view actionKind, std::string status, std::uint32_t entry = 0)
@@ -455,14 +458,38 @@ bool Sc2ProtocolCanUsePrivateChat(
                     parsed.ptr != request.Target.data() + request.Target.size() ||
                     encodedSlot == 0 || encodedSlot > EQUIPMENT_SLOT_END)
                     return finish("appearance", "INVALID_TARGET_SLOT");
-                TransmogApplyResult result = GetAppearanceService().TryApplyCanonicalAppearance(
-                    player, CollectionId(request.CollectionId), static_cast<std::uint8_t>(encodedSlot - 1),
-                    ObjectGuid::Empty, TransmogApplySource::Addon, false);
-                if (result.IsSuccess())
-                    GetTransmogProjectionService().SyncLegacyApplied(player, {
-                        { static_cast<std::uint8_t>(encodedSlot - 1), request.CollectionId }
+                // Async commit: if the completion fires synchronously
+                // (validation failure) return inline, otherwise defer the
+                // ActionResult until the DB callback resolves.
+                auto inlineStatus = std::make_shared<std::optional<std::string>>();
+                auto handlerReturned = std::make_shared<bool>(false);
+                AccountSessionId sessionId = SessionId(player);
+                ObjectGuid characterGuid = player->GetGUID();
+                std::uint32_t requestId = request.RequestId;
+                std::uint32_t collectionId = request.CollectionId;
+                std::uint8_t slot = static_cast<std::uint8_t>(encodedSlot - 1);
+                GetAppearanceService().TryApplyCanonicalAppearance(
+                    player, CollectionId(request.CollectionId), slot,
+                    ObjectGuid::Empty, TransmogApplySource::Addon, false,
+                    [inlineStatus, handlerReturned, sessionId, characterGuid, requestId,
+                        collectionId, slot](TransmogApplyResult result)
+                    {
+                        if (result.IsSuccess())
+                            if (Player* current = ObjectAccessor::FindConnectedPlayer(characterGuid))
+                                GetTransmogProjectionService().SyncLegacyApplied(current, {
+                                    { slot, collectionId }
+                                });
+                        std::string status = AppearanceApplyStatus(result);
+                        if (!*handlerReturned)
+                            *inlineStatus = std::move(status);
+                        else
+                            GetSc2Server().CompleteDeferredAction(sessionId, requestId, std::move(status));
                     });
-                return finish("appearance", AppearanceApplyStatus(result));
+                *handlerReturned = true;
+                if (*inlineStatus)
+                    return finish("appearance", std::move(**inlineStatus));
+                (void)finish("appearance", "DEFERRED");
+                return std::nullopt;
             }
             if (request.TypeId == SetCollectionTypeId.Value())
             {
@@ -477,21 +504,53 @@ bool Sc2ProtocolCanUsePrivateChat(
                 }
                 if (request.ActionId != "APPLY")
                     return finish("set", "INVALID_REQUEST");
-                TransmogApplyResult result = GetSetService().TryApply(
+                auto inlineStatus = std::make_shared<std::optional<std::string>>();
+                auto handlerReturned = std::make_shared<bool>(false);
+                AccountSessionId sessionId = SessionId(player);
+                std::uint32_t requestId = request.RequestId;
+                GetSetService().TryApply(
                     player, CollectionId(request.CollectionId), variantIndex,
-                    ObjectGuid::Empty, TransmogApplySource::Addon);
-                return finish("set", AppearanceApplyStatus(result));
+                    ObjectGuid::Empty, TransmogApplySource::Addon,
+                    [inlineStatus, handlerReturned, sessionId, requestId](TransmogApplyResult result)
+                    {
+                        std::string status = AppearanceApplyStatus(result);
+                        if (!*handlerReturned)
+                            *inlineStatus = std::move(status);
+                        else
+                            GetSc2Server().CompleteDeferredAction(sessionId, requestId, std::move(status));
+                    });
+                *handlerReturned = true;
+                if (*inlineStatus)
+                    return finish("set", std::move(**inlineStatus));
+                (void)finish("set", "DEFERRED");
+                return std::nullopt;
             }
             if (request.TypeId == AccountOutfitCollectionTypeId.Value())
             {
                 if (request.ActionId != "DELETE" || request.Target != "-")
                     return finish("outfit", "INVALID_REQUEST");
-                return finish("outfit", GetTransmogProjectionService().DeleteOutfit(
-                    player, request.CollectionId).Status);
+                auto inlineStatus = std::make_shared<std::optional<std::string>>();
+                auto handlerReturned = std::make_shared<bool>(false);
+                AccountSessionId sessionId = SessionId(player);
+                std::uint32_t requestId = request.RequestId;
+                GetTransmogProjectionService().DeleteOutfit(player, request.CollectionId,
+                    [inlineStatus, handlerReturned, sessionId, requestId](Sc2WardrobeOutcome outcome)
+                    {
+                        if (!*handlerReturned)
+                            *inlineStatus = std::move(outcome.Status);
+                        else
+                            GetSc2Server().CompleteDeferredAction(
+                                sessionId, requestId, std::move(outcome.Status));
+                    });
+                *handlerReturned = true;
+                if (*inlineStatus)
+                    return finish("outfit", std::move(**inlineStatus));
+                (void)finish("outfit", "DEFERRED");
+                return std::nullopt;
             }
             return finish("unknown", "INVALID_REQUEST");
         },
-        [player](AccountId accountId, Sc2Message const& request)
+        [player](AccountId accountId, Sc2Message const& request) -> std::optional<Sc2WardrobeOutcome>
         {
             Sc2WardrobeOutcome outcome;
             if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId())
@@ -499,26 +558,61 @@ bool Sc2ProtocolCanUsePrivateChat(
                 outcome.Status = "INVALID_REQUEST";
                 return outcome;
             }
+            if (request.Kind == Sc2MessageKind::WardrobeIntent && request.Op == "QUOTE")
+                return GetTransmogProjectionService().Quote(player, request.Entries);
+
+            // Write flows are asynchronous. If the completion fires
+            // synchronously (validation failure) return inline, otherwise
+            // defer the reply until the DB callback resolves.
+            auto inlineOutcome = std::make_shared<std::optional<Sc2WardrobeOutcome>>();
+            auto handlerReturned = std::make_shared<bool>(false);
+            AccountSessionId sessionId = SessionId(player);
+            std::uint32_t requestId = request.RequestId;
+            auto complete = [inlineOutcome, handlerReturned, sessionId, requestId](Sc2WardrobeOutcome result)
+            {
+                if (!*handlerReturned)
+                    *inlineOutcome = std::move(result);
+                else
+                    GetSc2Server().CompleteDeferredWardrobe(sessionId, requestId, std::move(result));
+            };
+            bool dispatched = false;
             if (request.Kind == Sc2MessageKind::WardrobeIntent)
             {
-                if (request.Op == "QUOTE")
-                    return GetTransmogProjectionService().Quote(player, request.Entries);
                 if (request.Op == "APPLY")
-                    return GetTransmogProjectionService().Apply(player, request.Entries);
-                if (request.Op == "CLEAR")
-                    return GetTransmogProjectionService().Clear(player, request.Entries);
+                {
+                    GetTransmogProjectionService().Apply(player, request.Entries, complete);
+                    dispatched = true;
+                }
+                else if (request.Op == "CLEAR")
+                {
+                    GetTransmogProjectionService().Clear(player, request.Entries, complete);
+                    dispatched = true;
+                }
             }
-            if (request.Kind == Sc2MessageKind::OutfitWrite)
+            else if (request.Kind == Sc2MessageKind::OutfitWrite)
             {
                 if (request.Op == "SAVE")
-                    return GetTransmogProjectionService().SaveOutfit(
-                        player, request.Uid, request.NameHex, request.Entries);
-                if (request.Op == "RENAME")
-                    return GetTransmogProjectionService().RenameOutfit(
-                        player, request.Uid, request.NameHex);
+                {
+                    GetTransmogProjectionService().SaveOutfit(
+                        player, request.Uid, request.NameHex, request.Entries, complete);
+                    dispatched = true;
+                }
+                else if (request.Op == "RENAME")
+                {
+                    GetTransmogProjectionService().RenameOutfit(
+                        player, request.Uid, request.NameHex, complete);
+                    dispatched = true;
+                }
             }
-            outcome.Status = "INVALID_REQUEST";
-            return outcome;
+            if (!dispatched)
+            {
+                outcome.Status = "INVALID_REQUEST";
+                return outcome;
+            }
+            *handlerReturned = true;
+            if (*inlineOutcome)
+                return std::move(**inlineOutcome);
+            return std::nullopt;
         });
     FlushWardrobeSnapshots();
     return false;
@@ -529,6 +623,9 @@ void Sc2ProtocolPumpAndSend(Player* player)
     if (!IsCppBackendOwner() || !player || !player->GetSession())
         return;
     AccountSessionId sessionId = SessionId(player);
+    // Deferred (async commit) completions enqueue pushes outside HandleInbound;
+    // flush them here so they reach clients on the next pump.
+    FlushWardrobeSnapshots();
     GetSc2Server().SetExternalOwned(
         sessionId, SetCollectionTypeId, GetSetCatalog().CompletedByAccount(
             AccountId(player->GetSession()->GetAccountId())));

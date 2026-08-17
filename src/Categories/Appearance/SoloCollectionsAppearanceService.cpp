@@ -648,43 +648,47 @@ std::optional<std::uint32_t> AppearanceService::ResolveOwnedSource(
     return std::nullopt;
 }
 
-TransmogApplyResult AppearanceService::TryApplyCollectedAppearance(Player* player,
+void AppearanceService::TryApplyCollectedAppearance(Player* player,
     std::uint32_t sourceItemEntry, std::uint8_t slot, ObjectGuid interactionGuid,
-    TransmogApplySource source, bool noCost)
+    TransmogApplySource source, bool noCost, ApplyCompletion completion)
 {
-    return sTransmogrification->TryApplyCollectedAppearance(
-        player, sourceItemEntry, slot, interactionGuid, source, noCost);
+    sTransmogrification->TryApplyCollectedAppearance(
+        player, sourceItemEntry, slot, interactionGuid, source, noCost, std::move(completion));
 }
 
-TransmogApplyResult AppearanceService::TryApplyCollectedAppearances(Player* player,
+void AppearanceService::TryApplyCollectedAppearances(Player* player,
     std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid,
-    TransmogApplySource source, bool noCost)
+    TransmogApplySource source, bool noCost, ApplyCompletion completion)
 {
-    return sTransmogrification->TryApplyCollectedAppearances(
-        player, appearances, interactionGuid, source, noCost);
+    sTransmogrification->TryApplyCollectedAppearances(
+        player, appearances, interactionGuid, source, noCost, {}, std::move(completion));
 }
 
-TransmogApplyResult AppearanceService::TryApplyCanonicalAppearance(Player* player,
+void AppearanceService::TryApplyCanonicalAppearance(Player* player,
     CollectionId appearanceId, std::uint8_t slot, ObjectGuid interactionGuid,
-    TransmogApplySource source, bool noCost)
+    TransmogApplySource source, bool noCost, ApplyCompletion completion)
 {
-    return TryApplyCanonicalAppearances(
-        player, { { slot, appearanceId } }, interactionGuid, source, noCost);
+    TryApplyCanonicalAppearances(
+        player, { { slot, appearanceId } }, interactionGuid, source, noCost, std::move(completion));
 }
 
-TransmogApplyResult AppearanceService::TryApplyCanonicalAppearances(Player* player,
+void AppearanceService::TryApplyCanonicalAppearances(Player* player,
     std::map<std::uint8_t, CollectionId> const& appearances, ObjectGuid interactionGuid,
-    TransmogApplySource source, bool noCost)
+    TransmogApplySource source, bool noCost, ApplyCompletion completion)
 {
     std::map<std::uint8_t, std::uint32_t> resolved;
     for (auto const& [slot, appearanceId] : appearances)
     {
         std::optional<std::uint32_t> sourceItemId = ResolveOwnedSource(player, appearanceId, slot);
         if (!sourceItemId)
-            return { LANG_TRANSMOG_MISSING_SRC_ITEM };
+        {
+            if (completion)
+                completion({ LANG_TRANSMOG_MISSING_SRC_ITEM });
+            return;
+        }
         resolved.emplace(slot, *sourceItemId);
     }
-    return TryApplyCollectedAppearances(player, resolved, interactionGuid, source, noCost);
+    TryApplyCollectedAppearances(player, resolved, interactionGuid, source, noCost, std::move(completion));
 }
 
 AppearanceService& GetAppearanceService()

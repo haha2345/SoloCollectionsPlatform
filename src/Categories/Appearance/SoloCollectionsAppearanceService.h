@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <deque>
+#include <functional>
 #include <map>
 #include <mutex>
 #include <optional>
@@ -95,18 +96,22 @@ public:
     [[nodiscard]] std::optional<std::uint32_t> ResolveOwnedSource(
         Player* player, CollectionId appearanceId, std::uint8_t slot) const;
 
-    [[nodiscard]] TransmogApplyResult TryApplyCollectedAppearance(Player* player,
+    // Asynchronous apply flows: the completion runs on the world update
+    // thread after the database commit resolves, or synchronously when
+    // preflight validation fails.
+    using ApplyCompletion = std::function<void(TransmogApplyResult)>;
+    void TryApplyCollectedAppearance(Player* player,
         std::uint32_t sourceItemEntry, std::uint8_t slot, ObjectGuid interactionGuid,
-        TransmogApplySource source, bool noCost = false);
-    [[nodiscard]] TransmogApplyResult TryApplyCollectedAppearances(Player* player,
+        TransmogApplySource source, bool noCost, ApplyCompletion completion);
+    void TryApplyCollectedAppearances(Player* player,
         std::map<std::uint8_t, std::uint32_t> const& appearances, ObjectGuid interactionGuid,
-        TransmogApplySource source, bool noCost = false);
-    [[nodiscard]] TransmogApplyResult TryApplyCanonicalAppearance(Player* player,
+        TransmogApplySource source, bool noCost, ApplyCompletion completion);
+    void TryApplyCanonicalAppearance(Player* player,
         CollectionId appearanceId, std::uint8_t slot, ObjectGuid interactionGuid,
-        TransmogApplySource source, bool noCost = false);
-    [[nodiscard]] TransmogApplyResult TryApplyCanonicalAppearances(Player* player,
+        TransmogApplySource source, bool noCost, ApplyCompletion completion);
+    void TryApplyCanonicalAppearances(Player* player,
         std::map<std::uint8_t, CollectionId> const& appearances, ObjectGuid interactionGuid,
-        TransmogApplySource source, bool noCost = false);
+        TransmogApplySource source, bool noCost, ApplyCompletion completion);
 
 private:
     using LegacyCollectionCache = std::unordered_map<std::uint32_t, std::unordered_set<std::uint32_t>>;

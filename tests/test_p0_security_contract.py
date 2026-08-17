@@ -32,7 +32,7 @@ class AppearanceAuthorizationContractTests(unittest.TestCase):
     def test_facade_rechecks_account_collection_and_exact_source(self):
         preflight = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::PreflightApply", 1
-        )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
+        )[1].split("void Transmogrification::EnqueueDbCommit", 1)[0]
 
         self.assertIn("player->GetSession()->GetAccountId()", preflight)
         self.assertIn("GetAppearanceService().HasCollectedSource", preflight)
@@ -102,7 +102,7 @@ class AtomicApplyContractTests(unittest.TestCase):
     def test_preflight_checks_all_resources_without_mutating_them(self):
         preflight = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::PreflightApply", 1
-        )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
+        )[1].split("void Transmogrification::EnqueueDbCommit", 1)[0]
 
         self.assertIn("LANG_TRANSMOG_MISSING_DEST_ITEM", preflight)
         self.assertIn("LANG_TRANSMOG_NOT_ENOUGH_MONEY", preflight)
@@ -114,27 +114,32 @@ class AtomicApplyContractTests(unittest.TestCase):
 
     def test_multi_slot_outfit_is_preflighted_and_committed_once(self):
         single = IMPLEMENTATION.split(
-            "TransmogApplyResult Transmogrification::TryApplyCollectedAppearance", 1
-        )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedAppearances", 1)[0]
+            "void Transmogrification::TryApplyCollectedAppearance", 1
+        )[1].split("void Transmogrification::TryApplyCollectedAppearances", 1)[0]
         multi = IMPLEMENTATION.split(
-            "TransmogApplyResult Transmogrification::TryApplyCollectedAppearances", 1
+            "void Transmogrification::TryApplyCollectedAppearances", 1
         )[1].split("bool Transmogrification::CanTransmogrifyItemWithItem", 1)[0]
         self.assertIn("source == TransmogApplySource::Outfit", single)
         self.assertIn("TryApplyCollectedAppearances", single)
         self.assertIn("PreflightApply(player, requests", multi)
-        self.assertIn("CommitApplyPlan(player, plan)", multi)
+        self.assertIn("CommitApplyPlan(player, plan", multi)
         self.assertIn("TryApplyCollectedAppearances", OUTFIT_SERVICE)
         self.assertIn("TransmogApplySource::Outfit, true", OUTFIT_SERVICE)
         self.assertNotIn("TryApplyCollectedPreset", SCRIPTS + IMPLEMENTATION)
 
     def test_database_success_precedes_cost_and_cache_mutation(self):
+        # The commit is asynchronous: no world/map thread may block on the DB
+        # future, and all resource/cache mutations must live inside the
+        # completion callback, gated on the transaction having committed.
+        self.assertNotIn("m_future.get()", IMPLEMENTATION)
         commit = IMPLEMENTATION.split(
-            "TransmogApplyResult Transmogrification::CommitApplyPlan", 1
-        )[1].split("TransmogApplyResult Transmogrification::TryApplyCollectedAppearance", 1)[0]
-        db_success = commit.index("callback.m_future.get()")
+            "void Transmogrification::CommitApplyPlan", 1
+        )[1].split("void Transmogrification::TryApplyCollectedAppearance", 1)[0]
+        db_success = commit.index("if (!committed)")
         self.assertLess(db_success, commit.index("DestroyItemCount"))
         self.assertLess(db_success, commit.index("ModifyMoney"))
         self.assertLess(db_success, commit.index("ApplyCommittedFakeEntry"))
+        self.assertIn("EnqueueDbCommit", commit)
         self.assertIn("LANG_TRANSMOG_DATABASE_ERROR", commit)
         self.assertIn("no resources or cache entries were changed", commit)
 
@@ -142,7 +147,7 @@ class AtomicApplyContractTests(unittest.TestCase):
         gossip_menu = SCRIPTS.split(
             "void ShowTransmogItemsInGossipMenu", 1
         )[1].split("static std::vector<ItemTemplate const*> GetSpoofedVendorItems", 1)[0]
-        self.assertIn("GetTransmogPriceText(price)", gossip_menu)
+        self.assertIn("GetTransmogPriceText(GetTransmogPrice(", gossip_menu)
         self.assertIn("CommitApplyPlan owns all resource changes", gossip_menu)
         self.assertNotIn("lineEnd, price, false", gossip_menu)
         self.assertRegex(gossip_menu, r"lineEnd,\s*0,\s*false\)")
@@ -150,7 +155,7 @@ class AtomicApplyContractTests(unittest.TestCase):
     def test_duplicate_slots_and_duplicate_appearance_are_rejected(self):
         preflight = IMPLEMENTATION.split(
             "TransmogApplyResult Transmogrification::PreflightApply", 1
-        )[1].split("TransmogApplyResult Transmogrification::CommitApplyPlan", 1)[0]
+        )[1].split("void Transmogrification::EnqueueDbCommit", 1)[0]
         self.assertIn("requestedSlots.insert(request.Slot).second", preflight)
         self.assertIn("GetFakeEntry(targetItem->GetGUID()) == prepared.FakeEntry", preflight)
 

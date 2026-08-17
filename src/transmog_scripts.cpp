@@ -155,25 +155,33 @@ void PerformTransmogrification(Player* player, Creature* creature, uint32 itemEn
     }
 
     uint8 slot = selection->second;
-    TransmogApplyResult result = SoloCollections::GetAppearanceService().TryApplyCollectedAppearance(
-        player, itemEntry, slot, creature->GetGUID(), source);
-    if (result.IsSuccess())
-    {
-        session->SendAreaTriggerMessage("{}", Tstr(session, LANG_TRANSMOG_OK));
-
-        if (sT->ShowSetDisclaimer &&
-            !player->GetPlayerSetting("mod-transmog", SETTING_HIDE_SET_DISCLAIMER).value)
+    ObjectGuid playerGuid = player->GetGUID();
+    SoloCollections::GetAppearanceService().TryApplyCollectedAppearance(
+        player, itemEntry, slot, creature->GetGUID(), source, false,
+        [playerGuid, slot](TransmogApplyResult result)
         {
-            if (Item* destItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
+            Player* player = ObjectAccessor::FindConnectedPlayer(playerGuid);
+            if (!player || !player->GetSession())
+                return;
+            WorldSession* session = player->GetSession();
+            if (result.IsSuccess())
             {
-                ItemTemplate const* destTemplate = destItem->GetTemplate();
-                if (destTemplate && destTemplate->ItemSet)
-                    ChatHandler(session).PSendSysMessage("{}", Tstr(session, LANG_TRANSMOG_SET_DISCLAIMER));
+                session->SendAreaTriggerMessage("{}", Tstr(session, LANG_TRANSMOG_OK));
+
+                if (sT->ShowSetDisclaimer &&
+                    !player->GetPlayerSetting("mod-transmog", SETTING_HIDE_SET_DISCLAIMER).value)
+                {
+                    if (Item* destItem = player->GetItemByPos(INVENTORY_SLOT_BAG_0, slot))
+                    {
+                        ItemTemplate const* destTemplate = destItem->GetTemplate();
+                        if (destTemplate && destTemplate->ItemSet)
+                            ChatHandler(session).PSendSysMessage("{}", Tstr(session, LANG_TRANSMOG_SET_DISCLAIMER));
+                    }
+                }
             }
-        }
-    }
-    else
-        ChatHandler(session).SendNotification(Tstr(session, result.Code));
+            else
+                ChatHandler(session).SendNotification(Tstr(session, result.Code));
+        });
 }
 
 void RemoveTransmogrification (Player* player)
@@ -343,11 +351,23 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                TransmogApplyResult result = SoloCollections::GetOutfitService().Apply(
-                    player, static_cast<uint8>(action), creature->GetGUID());
-                if (!result.IsSuccess())
-                    ChatHandler(session).SendNotification(Tstr(session, result.Code));
-                OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 6, action);
+                {
+                    ObjectGuid playerGuid = player->GetGUID();
+                    ObjectGuid creatureGuid = creature->GetGUID();
+                    SoloCollections::GetOutfitService().Apply(
+                        player, static_cast<uint8>(action), creature->GetGUID(),
+                        [this, playerGuid, creatureGuid, action](TransmogApplyResult result)
+                        {
+                            Player* player = ObjectAccessor::FindConnectedPlayer(playerGuid);
+                            if (!player || !player->GetSession())
+                                return;
+                            if (!result.IsSuccess())
+                                ChatHandler(player->GetSession()).SendNotification(
+                                    Tstr(player->GetSession(), result.Code));
+                            if (Creature* creature = ObjectAccessor::GetCreature(*player, creatureGuid))
+                                OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 6, action);
+                        });
+                }
             } break;
             case EQUIPMENT_SLOT_END + 6: // view preset
             {
@@ -383,12 +403,23 @@ public:
                     OnGossipHello(player, creature);
                     return true;
                 }
-                TransmogApplyResult result = SoloCollections::GetOutfitService().Delete(
-                    player, static_cast<uint8>(action));
-                if (!result.IsSuccess())
-                    ChatHandler(session).SendNotification(Tstr(session, result.Code));
-
-                OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 4, 0);
+                {
+                    ObjectGuid playerGuid = player->GetGUID();
+                    ObjectGuid creatureGuid = creature->GetGUID();
+                    SoloCollections::GetOutfitService().Delete(
+                        player, static_cast<uint8>(action),
+                        [this, playerGuid, creatureGuid](TransmogApplyResult result)
+                        {
+                            Player* player = ObjectAccessor::FindConnectedPlayer(playerGuid);
+                            if (!player || !player->GetSession())
+                                return;
+                            if (!result.IsSuccess())
+                                ChatHandler(player->GetSession()).SendNotification(
+                                    Tstr(player->GetSession(), result.Code));
+                            if (Creature* creature = ObjectAccessor::GetCreature(*player, creatureGuid))
+                                OnGossipSelect(player, creature, EQUIPMENT_SLOT_END + 4, 0);
+                        });
+                }
             } break;
             case EQUIPMENT_SLOT_END + 8: // Save preset
             {
@@ -472,9 +503,19 @@ public:
             OnGossipHello(player, creature);
             return true;
         }
-        TransmogApplyResult result = SoloCollections::GetOutfitService().Save(player, code);
-        if (!result.IsSuccess())
-            ChatHandler(player->GetSession()).SendNotification(Tstr(player->GetSession(), result.Code));
+        {
+            ObjectGuid playerGuid = player->GetGUID();
+            SoloCollections::GetOutfitService().Save(player, code,
+                [playerGuid](TransmogApplyResult result)
+                {
+                    Player* player = ObjectAccessor::FindConnectedPlayer(playerGuid);
+                    if (!player || !player->GetSession())
+                        return;
+                    if (!result.IsSuccess())
+                        ChatHandler(player->GetSession()).SendNotification(
+                            Tstr(player->GetSession(), result.Code));
+                });
+        }
         //OnGossipSelect(player, creature, EQUIPMENT_SLOT_END+4, 0);
         CloseGossipMenuFor(player); // Wait for SetMoney to get fixed, issue #10053
         return true;
@@ -800,8 +841,16 @@ class WS_Transmogrification : public WorldScript
 {
 public:
     WS_Transmogrification() : WorldScript("WS_Transmogrification", {
-        WORLDHOOK_ON_STARTUP
+        WORLDHOOK_ON_STARTUP,
+        WORLDHOOK_ON_UPDATE
     }) { }
+
+    void OnUpdate(uint32 /*diff*/) override
+    {
+        // Resolves finished async transmog DB commits (money, cache updates,
+        // completion callbacks) on the world thread.
+        sTransmogrification->ProcessPendingCommits();
+    }
 
     void OnStartup() override
     {

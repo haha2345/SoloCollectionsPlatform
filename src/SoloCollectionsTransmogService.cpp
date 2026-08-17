@@ -8,6 +8,7 @@
 #include "Item.h"
 #include "ItemTemplate.h"
 #include "Log.h"
+#include "ObjectAccessor.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "QueryResult.h"
@@ -390,20 +391,18 @@ void TransmogProjectionService::AppendAuditSql(CharacterDatabaseTransaction& tra
         accountId, typeId, collectionId, actionKind, 1, 0, characterGuid, accountId, characterGuid, revision, 0);
 }
 
-bool TransmogProjectionService::CommitTransaction(CharacterDatabaseTransaction& transaction) const
+void TransmogProjectionService::CommitTransactionAsync(CharacterDatabaseTransaction& transaction,
+    std::function<void(bool)> completion) const
 {
-    bool committed = false;
-    try
-    {
-        TransactionCallback callback = CharacterDatabase.AsyncCommitTransaction(transaction);
-        committed = callback.m_future.get();
-    }
-    catch (std::exception const& exception)
-    {
-        LOG_ERROR("module.solocollections.wardrobe",
-            "event=wardrobe_transaction result=exception what={}", exception.what());
-    }
-    return committed;
+    sTransmogrification->EnqueueDbCommit(transaction,
+        [completion = std::move(completion)](bool committed)
+        {
+            if (!committed)
+                LOG_ERROR("module.solocollections.wardrobe",
+                    "event=wardrobe_transaction result=failed");
+            if (completion)
+                completion(committed);
+        });
 }
 
 void TransmogProjectionService::RememberQuote(ObjectGuid characterGuid, std::string_view entries,
@@ -512,19 +511,25 @@ Sc2WardrobeOutcome TransmogProjectionService::Quote(Player* player, std::string_
     return Failure(intent.Status, CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper);
 }
 
-Sc2WardrobeOutcome TransmogProjectionService::Apply(Player* player, std::string_view entries)
+void TransmogProjectionService::Apply(Player* player, std::string_view entries, WardrobeCompletion done)
 {
+    auto finish = [&done](Sc2WardrobeOutcome outcome)
+    {
+        if (done)
+            done(std::move(outcome));
+    };
+
     if (!player || !player->GetSession())
-        return Failure("INVALID_REQUEST");
+        return finish(Failure("INVALID_REQUEST"));
 
     ParsedIntent intent = EvaluateIntent(player, entries);
     if (intent.Status != "ACCEPTED")
-        return Failure(intent.Status, CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper);
+        return finish(Failure(intent.Status, CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper));
 
     if (auto quoted = CachedQuoteCopper(player->GetGUID(), entries); quoted && *quoted != intent.Copper)
-        return Failure("COST_CHANGED", CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper);
+        return finish(Failure("COST_CHANGED", CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper));
     if (intent.Copper && !player->HasEnoughMoney(intent.Copper))
-        return Failure("INSUFFICIENT_FUNDS", CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper);
+        return finish(Failure("INSUFFICIENT_FUNDS", CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper));
 
     EnsureCharacterLoaded(player->GetGUID());
     WardrobeSlotValues current {};
@@ -571,7 +576,7 @@ Sc2WardrobeOutcome TransmogProjectionService::Apply(Player* player, std::string_
         Sc2WardrobeOutcome outcome = Failure("ACCEPTED", CharacterAppliedCollectionTypeId.Value(), 1,
             intent.WarningMask, 0);
         outcome.Revision = AppliedRevision(player->GetGUID());
-        return outcome;
+        return finish(std::move(outcome));
     }
 
     std::uint64_t revision = 0;
@@ -580,59 +585,83 @@ Sc2WardrobeOutcome TransmogProjectionService::Apply(Player* player, std::string_
         revision = EnsureApplied(player->GetGUID()).Revision + 1;
     }
 
-    bool committed = false;
+    ObjectGuid characterGuid = player->GetGUID();
+    std::uint32_t accountId = AccountOf(player);
+    std::uint32_t copper = intent.Copper;
+    std::uint32_t warningMask = intent.WarningMask;
+    auto onCommitted =
+        [this, characterGuid, accountId, next, revision, copper, warningMask, done = std::move(done)](bool committed, bool databaseError)
+        {
+            if (!committed)
+            {
+                if (done)
+                    done(Failure(databaseError ? "DB_UNAVAILABLE" : "INVALID_REQUEST",
+                        CharacterAppliedCollectionTypeId.Value(), 1, warningMask, copper));
+                return;
+            }
+
+            if (copper)
+                if (Player* player = ObjectAccessor::FindConnectedPlayer(characterGuid))
+                    player->ModifyMoney(-static_cast<int32>(copper), false);
+
+            {
+                std::scoped_lock lock(_mutex);
+                AppliedState& state = EnsureApplied(characterGuid);
+                state.Slots = next;
+                state.Revision = revision;
+                state.Loaded = true;
+                EnqueueAppliedPush(characterGuid, accountId);
+            }
+
+            Sc2WardrobeOutcome outcome = Failure("ACCEPTED", CharacterAppliedCollectionTypeId.Value(), 1,
+                warningMask, copper);
+            outcome.Revision = revision;
+            if (done)
+                done(std::move(outcome));
+        };
+
     if (!itemEntries.empty())
     {
-        TransmogApplyResult result = sTransmogrification->TryApplyCollectedAppearances(
+        sTransmogrification->TryApplyCollectedAppearances(
             player, itemEntries, ObjectGuid::Empty, TransmogApplySource::Wardrobe, true,
-            [this, player, &next, revision](CharacterDatabaseTransaction& transaction)
+            [this, characterGuid, accountId, next, revision](CharacterDatabaseTransaction& transaction)
             {
-                AppendAppliedSql(transaction, player->GetGUID(), next, revision);
-                AppendAuditSql(transaction, AccountOf(player), CharacterAppliedCollectionTypeId.Value(),
-                    1, AuditApply, CharacterGuid(player), revision);
+                AppendAppliedSql(transaction, characterGuid, next, revision);
+                AppendAuditSql(transaction, accountId, CharacterAppliedCollectionTypeId.Value(),
+                    1, AuditApply, characterGuid.GetCounter(), revision);
+            },
+            [onCommitted = std::move(onCommitted)](TransmogApplyResult result)
+            {
+                onCommitted(result.IsSuccess(), result.Code == LANG_TRANSMOG_DATABASE_ERROR);
             });
-        committed = result.IsSuccess();
-        if (!committed)
-            return Failure(result.Code == LANG_TRANSMOG_DATABASE_ERROR ? "DB_UNAVAILABLE" : "INVALID_REQUEST",
-                CharacterAppliedCollectionTypeId.Value(), 1, intent.WarningMask, intent.Copper);
     }
     else
     {
         CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
-        AppendAppliedSql(transaction, player->GetGUID(), next, revision);
-        AppendAuditSql(transaction, AccountOf(player), CharacterAppliedCollectionTypeId.Value(),
-            1, AuditApply, CharacterGuid(player), revision);
-        committed = CommitTransaction(transaction);
-        if (!committed)
-            return Failure("DB_UNAVAILABLE", CharacterAppliedCollectionTypeId.Value(), 1,
-                intent.WarningMask, intent.Copper);
+        AppendAppliedSql(transaction, characterGuid, next, revision);
+        AppendAuditSql(transaction, accountId, CharacterAppliedCollectionTypeId.Value(),
+            1, AuditApply, characterGuid.GetCounter(), revision);
+        CommitTransactionAsync(transaction,
+            [onCommitted = std::move(onCommitted)](bool committed)
+            {
+                onCommitted(committed, true);
+            });
     }
-
-    if (intent.Copper)
-        player->ModifyMoney(-static_cast<int32>(intent.Copper), false);
-
-    {
-        std::scoped_lock lock(_mutex);
-        AppliedState& state = EnsureApplied(player->GetGUID());
-        state.Slots = next;
-        state.Revision = revision;
-        state.Loaded = true;
-        EnqueueAppliedPush(player->GetGUID(), AccountOf(player));
-    }
-
-    Sc2WardrobeOutcome outcome = Failure("ACCEPTED", CharacterAppliedCollectionTypeId.Value(), 1,
-        intent.WarningMask, intent.Copper);
-    outcome.Revision = revision;
-    return outcome;
 }
 
-Sc2WardrobeOutcome TransmogProjectionService::Clear(Player* player, std::string_view entries)
+void TransmogProjectionService::Clear(Player* player, std::string_view entries, WardrobeCompletion done)
 {
+    auto finish = [&done](Sc2WardrobeOutcome outcome)
+    {
+        if (done)
+            done(std::move(outcome));
+    };
+
     if (!player || !player->GetSession())
-        return Failure("INVALID_REQUEST");
+        return finish(Failure("INVALID_REQUEST"));
     auto indices = ParseClearIndices(entries);
     if (!indices || indices->empty())
-        return Failure("INVALID_REQUEST");
+        return finish(Failure("INVALID_REQUEST"));
 
     EnsureCharacterLoaded(player->GetGUID());
 
@@ -664,48 +693,74 @@ Sc2WardrobeOutcome TransmogProjectionService::Clear(Player* player, std::string_
         }
     }
     if (!any)
-        return Failure("NOTHING_EQUIPPED");
+        return finish(Failure("NOTHING_EQUIPPED"));
+
+    ObjectGuid characterGuid = player->GetGUID();
+    std::uint32_t accountId = AccountOf(player);
+    std::vector<ObjectGuid> clearedItemGuids;
+    clearedItemGuids.reserve(clearedItems.size());
 
     CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
     for (Item* item : clearedItems)
-        sTransmogrification->DeleteFakeFromDB(item->GetGUID().GetCounter(), &transaction);
-    AppendAppliedSql(transaction, player->GetGUID(), next, revision);
-    AppendAuditSql(transaction, AccountOf(player), CharacterAppliedCollectionTypeId.Value(),
-        1, AuditClear, CharacterGuid(player), revision);
-    if (!CommitTransaction(transaction))
-        return Failure("DB_UNAVAILABLE");
-
-    for (Item* item : clearedItems)
-        sTransmogrification->UpdateItem(player, item);
-
     {
-        std::scoped_lock lock(_mutex);
-        AppliedState& state = EnsureApplied(player->GetGUID());
-        state.Slots = next;
-        state.Revision = revision;
-        state.Loaded = true;
-        EnqueueAppliedPush(player->GetGUID(), AccountOf(player));
+        sTransmogrification->DeleteFakeFromDB(item->GetGUID().GetCounter(), &transaction);
+        clearedItemGuids.push_back(item->GetGUID());
     }
+    AppendAppliedSql(transaction, characterGuid, next, revision);
+    AppendAuditSql(transaction, accountId, CharacterAppliedCollectionTypeId.Value(),
+        1, AuditClear, characterGuid.GetCounter(), revision);
+    CommitTransactionAsync(transaction,
+        [this, characterGuid, accountId, next, revision,
+            clearedItemGuids = std::move(clearedItemGuids), done = std::move(done)](bool committed)
+        {
+            if (!committed)
+            {
+                if (done)
+                    done(Failure("DB_UNAVAILABLE"));
+                return;
+            }
 
-    Sc2WardrobeOutcome outcome = Failure("ACCEPTED");
-    outcome.Revision = revision;
-    return outcome;
+            if (Player* player = ObjectAccessor::FindConnectedPlayer(characterGuid))
+                for (ObjectGuid itemGuid : clearedItemGuids)
+                    if (Item* item = player->GetItemByGuid(itemGuid))
+                        sTransmogrification->UpdateItem(player, item);
+
+            {
+                std::scoped_lock lock(_mutex);
+                AppliedState& state = EnsureApplied(characterGuid);
+                state.Slots = next;
+                state.Revision = revision;
+                state.Loaded = true;
+                EnqueueAppliedPush(characterGuid, accountId);
+            }
+
+            Sc2WardrobeOutcome outcome = Failure("ACCEPTED");
+            outcome.Revision = revision;
+            if (done)
+                done(std::move(outcome));
+        });
 }
 
-Sc2WardrobeOutcome TransmogProjectionService::SaveOutfit(Player* player, std::uint32_t uid,
-    std::string_view nameHex, std::string_view entries)
+void TransmogProjectionService::SaveOutfit(Player* player, std::uint32_t uid,
+    std::string_view nameHex, std::string_view entries, WardrobeCompletion done)
 {
+    auto finish = [&done](Sc2WardrobeOutcome outcome)
+    {
+        if (done)
+            done(std::move(outcome));
+    };
+
     if (!player || !player->GetSession())
-        return Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value());
+        return finish(Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value()));
     std::optional<WardrobeSlotValues> slots = DecodeWardrobeSlots(entries);
     if (!slots)
-        return Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value());
+        return finish(Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value()));
     bool empty = std::all_of(slots->begin(), slots->end(), [](std::uint32_t value) { return value == 0; });
     if (empty)
-        return Failure("OUTFIT_EMPTY", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid);
+        return finish(Failure("OUTFIT_EMPTY", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid));
     for (std::uint32_t value : *slots)
         if (value != 0 && !IsHideVisualId(value) && IsReservedAppearanceId(value))
-            return Failure("UNKNOWN_IDENTITY", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid);
+            return finish(Failure("UNKNOWN_IDENTITY", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid));
 
     std::uint32_t accountId = AccountOf(player);
     EnsureAccountLoaded(accountId);
@@ -717,7 +772,7 @@ Sc2WardrobeOutcome TransmogProjectionService::SaveOutfit(Player* player, std::ui
         if (uid == 0)
         {
             if (account.Outfits.size() >= MaxAccountOutfits)
-                return Failure("OUTFIT_LIMIT", AccountOutfitCollectionTypeId.Value());
+                return finish(Failure("OUTFIT_LIMIT", AccountOutfitCollectionTypeId.Value()));
             std::array<bool, MaxAccountOutfits + 1> used {};
             for (AccountOutfitRecord const& outfit : account.Outfits)
                 if (outfit.Uid >= 1 && outfit.Uid <= MaxAccountOutfits)
@@ -729,7 +784,7 @@ Sc2WardrobeOutcome TransmogProjectionService::SaveOutfit(Player* player, std::ui
                     break;
                 }
             if (uid == 0)
-                return Failure("OUTFIT_LIMIT", AccountOutfitCollectionTypeId.Value());
+                return finish(Failure("OUTFIT_LIMIT", AccountOutfitCollectionTypeId.Value()));
         }
         else
         {
@@ -738,7 +793,7 @@ Sc2WardrobeOutcome TransmogProjectionService::SaveOutfit(Player* player, std::ui
                 if (outfit.Uid == uid)
                     exists = true;
             if (!exists && account.Outfits.size() >= MaxAccountOutfits)
-                return Failure("OUTFIT_LIMIT", AccountOutfitCollectionTypeId.Value(), uid);
+                return finish(Failure("OUTFIT_LIMIT", AccountOutfitCollectionTypeId.Value(), uid));
         }
         stored.Uid = uid;
         stored.NameHex = std::string(nameHex);
@@ -755,39 +810,54 @@ Sc2WardrobeOutcome TransmogProjectionService::SaveOutfit(Player* player, std::ui
         accountId, stored.Uid, stored.NameHex, EncodeWardrobeSlots(stored.Slots), revision);
     AppendAuditSql(transaction, accountId, AccountOutfitCollectionTypeId.Value(), stored.Uid,
         AuditSave, CharacterGuid(player), revision);
-    if (!CommitTransaction(transaction))
-        return Failure("DB_UNAVAILABLE", AccountOutfitCollectionTypeId.Value(), stored.Uid);
-
-    {
-        std::scoped_lock lock(_mutex);
-        AccountOutfits& account = EnsureOutfits(accountId);
-        bool replaced = false;
-        for (AccountOutfitRecord& outfit : account.Outfits)
-            if (outfit.Uid == stored.Uid)
+    CommitTransactionAsync(transaction,
+        [this, accountId, stored = std::move(stored), revision, done = std::move(done)](bool committed)
+        {
+            if (!committed)
             {
-                outfit = stored;
-                replaced = true;
-                break;
+                if (done)
+                    done(Failure("DB_UNAVAILABLE", AccountOutfitCollectionTypeId.Value(), stored.Uid));
+                return;
             }
-        if (!replaced)
-            account.Outfits.push_back(stored);
-        std::sort(account.Outfits.begin(), account.Outfits.end(),
-            [](AccountOutfitRecord const& left, AccountOutfitRecord const& right) { return left.Uid < right.Uid; });
-        account.Revision = revision;
-        account.Loaded = true;
-        EnqueueOutfitPush(accountId);
-    }
 
-    Sc2WardrobeOutcome outcome = Failure("ACCEPTED", AccountOutfitCollectionTypeId.Value(), stored.Uid);
-    outcome.Revision = revision;
-    return outcome;
+            {
+                std::scoped_lock lock(_mutex);
+                AccountOutfits& account = EnsureOutfits(accountId);
+                bool replaced = false;
+                for (AccountOutfitRecord& outfit : account.Outfits)
+                    if (outfit.Uid == stored.Uid)
+                    {
+                        outfit = stored;
+                        replaced = true;
+                        break;
+                    }
+                if (!replaced)
+                    account.Outfits.push_back(stored);
+                std::sort(account.Outfits.begin(), account.Outfits.end(),
+                    [](AccountOutfitRecord const& left, AccountOutfitRecord const& right) { return left.Uid < right.Uid; });
+                account.Revision = revision;
+                account.Loaded = true;
+                EnqueueOutfitPush(accountId);
+            }
+
+            Sc2WardrobeOutcome outcome = Failure("ACCEPTED", AccountOutfitCollectionTypeId.Value(), stored.Uid);
+            outcome.Revision = revision;
+            if (done)
+                done(std::move(outcome));
+        });
 }
 
-Sc2WardrobeOutcome TransmogProjectionService::RenameOutfit(Player* player, std::uint32_t uid,
-    std::string_view nameHex)
+void TransmogProjectionService::RenameOutfit(Player* player, std::uint32_t uid,
+    std::string_view nameHex, WardrobeCompletion done)
 {
+    auto finish = [&done](Sc2WardrobeOutcome outcome)
+    {
+        if (done)
+            done(std::move(outcome));
+    };
+
     if (!player || !player->GetSession() || uid == 0)
-        return Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid);
+        return finish(Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid));
     std::uint32_t accountId = AccountOf(player);
     EnsureAccountLoaded(accountId);
     std::uint64_t revision = 0;
@@ -799,40 +869,56 @@ Sc2WardrobeOutcome TransmogProjectionService::RenameOutfit(Player* player, std::
             if (outfit.Uid == uid)
                 exists = true;
         if (!exists)
-            return Failure("UNKNOWN_IDENTITY", AccountOutfitCollectionTypeId.Value(), uid);
+            return finish(Failure("UNKNOWN_IDENTITY", AccountOutfitCollectionTypeId.Value(), uid));
         revision = account.Revision + 1;
     }
 
+    std::string name(nameHex);
     CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
     transaction->Append(
         "UPDATE account_sc_outfit SET name_hex = '{}', revision = {} WHERE account_id = {} AND uid = {}",
-        std::string(nameHex), revision, accountId, uid);
+        name, revision, accountId, uid);
     AppendAuditSql(transaction, accountId, AccountOutfitCollectionTypeId.Value(), uid,
         AuditRename, CharacterGuid(player), revision);
-    if (!CommitTransaction(transaction))
-        return Failure("DB_UNAVAILABLE", AccountOutfitCollectionTypeId.Value(), uid);
-
-    {
-        std::scoped_lock lock(_mutex);
-        AccountOutfits& account = EnsureOutfits(accountId);
-        for (AccountOutfitRecord& outfit : account.Outfits)
-            if (outfit.Uid == uid)
+    CommitTransactionAsync(transaction,
+        [this, accountId, uid, name = std::move(name), revision, done = std::move(done)](bool committed)
+        {
+            if (!committed)
             {
-                outfit.NameHex = std::string(nameHex);
-                outfit.Revision = revision;
+                if (done)
+                    done(Failure("DB_UNAVAILABLE", AccountOutfitCollectionTypeId.Value(), uid));
+                return;
             }
-        account.Revision = revision;
-        EnqueueOutfitPush(accountId);
-    }
-    Sc2WardrobeOutcome outcome = Failure("ACCEPTED", AccountOutfitCollectionTypeId.Value(), uid);
-    outcome.Revision = revision;
-    return outcome;
+
+            {
+                std::scoped_lock lock(_mutex);
+                AccountOutfits& account = EnsureOutfits(accountId);
+                for (AccountOutfitRecord& outfit : account.Outfits)
+                    if (outfit.Uid == uid)
+                    {
+                        outfit.NameHex = name;
+                        outfit.Revision = revision;
+                    }
+                account.Revision = revision;
+                EnqueueOutfitPush(accountId);
+            }
+            Sc2WardrobeOutcome outcome = Failure("ACCEPTED", AccountOutfitCollectionTypeId.Value(), uid);
+            outcome.Revision = revision;
+            if (done)
+                done(std::move(outcome));
+        });
 }
 
-Sc2WardrobeOutcome TransmogProjectionService::DeleteOutfit(Player* player, std::uint32_t uid)
+void TransmogProjectionService::DeleteOutfit(Player* player, std::uint32_t uid, WardrobeCompletion done)
 {
+    auto finish = [&done](Sc2WardrobeOutcome outcome)
+    {
+        if (done)
+            done(std::move(outcome));
+    };
+
     if (!player || !player->GetSession() || uid == 0)
-        return Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid);
+        return finish(Failure("INVALID_REQUEST", AccountOutfitCollectionTypeId.Value(), uid == 0 ? 1 : uid));
     std::uint32_t accountId = AccountOf(player);
     EnsureAccountLoaded(accountId);
     std::uint64_t revision = 0;
@@ -844,7 +930,7 @@ Sc2WardrobeOutcome TransmogProjectionService::DeleteOutfit(Player* player, std::
             if (outfit.Uid == uid)
                 exists = true;
         if (!exists)
-            return Failure("UNKNOWN_IDENTITY", AccountOutfitCollectionTypeId.Value(), uid);
+            return finish(Failure("UNKNOWN_IDENTITY", AccountOutfitCollectionTypeId.Value(), uid));
         revision = account.Revision + 1;
     }
 
@@ -852,20 +938,29 @@ Sc2WardrobeOutcome TransmogProjectionService::DeleteOutfit(Player* player, std::
     transaction->Append("DELETE FROM account_sc_outfit WHERE account_id = {} AND uid = {}", accountId, uid);
     AppendAuditSql(transaction, accountId, AccountOutfitCollectionTypeId.Value(), uid,
         AuditDelete, CharacterGuid(player), revision);
-    if (!CommitTransaction(transaction))
-        return Failure("DB_UNAVAILABLE", AccountOutfitCollectionTypeId.Value(), uid);
+    CommitTransactionAsync(transaction,
+        [this, accountId, uid, revision, done = std::move(done)](bool committed)
+        {
+            if (!committed)
+            {
+                if (done)
+                    done(Failure("DB_UNAVAILABLE", AccountOutfitCollectionTypeId.Value(), uid));
+                return;
+            }
 
-    {
-        std::scoped_lock lock(_mutex);
-        AccountOutfits& account = EnsureOutfits(accountId);
-        account.Outfits.erase(std::remove_if(account.Outfits.begin(), account.Outfits.end(),
-            [uid](AccountOutfitRecord const& outfit) { return outfit.Uid == uid; }), account.Outfits.end());
-        account.Revision = revision;
-        EnqueueOutfitPush(accountId);
-    }
-    Sc2WardrobeOutcome outcome = Failure("ACCEPTED", AccountOutfitCollectionTypeId.Value(), uid);
-    outcome.Revision = revision;
-    return outcome;
+            {
+                std::scoped_lock lock(_mutex);
+                AccountOutfits& account = EnsureOutfits(accountId);
+                account.Outfits.erase(std::remove_if(account.Outfits.begin(), account.Outfits.end(),
+                    [uid](AccountOutfitRecord const& outfit) { return outfit.Uid == uid; }), account.Outfits.end());
+                account.Revision = revision;
+                EnqueueOutfitPush(accountId);
+            }
+            Sc2WardrobeOutcome outcome = Failure("ACCEPTED", AccountOutfitCollectionTypeId.Value(), uid);
+            outcome.Revision = revision;
+            if (done)
+                done(std::move(outcome));
+        });
 }
 
 bool TransmogProjectionService::PrepareLegacyMerge(Player* player,
@@ -887,17 +982,17 @@ bool TransmogProjectionService::PrepareLegacyMerge(Player* player,
     return true;
 }
 
-void TransmogProjectionService::CommitLegacyAppliedCache(Player* player, WardrobeSlotValues const& slots,
-    std::uint64_t revision)
+void TransmogProjectionService::CommitLegacyAppliedCache(ObjectGuid characterGuid, std::uint32_t accountId,
+    WardrobeSlotValues const& slots, std::uint64_t revision)
 {
-    if (!player)
+    if (!characterGuid)
         return;
     std::scoped_lock lock(_mutex);
-    AppliedState& state = EnsureApplied(player->GetGUID());
+    AppliedState& state = EnsureApplied(characterGuid);
     state.Slots = slots;
     state.Revision = revision;
     state.Loaded = true;
-    EnqueueAppliedPush(player->GetGUID(), AccountOf(player));
+    EnqueueAppliedPush(characterGuid, accountId);
 }
 
 void TransmogProjectionService::SyncLegacyApplied(Player* player,
@@ -907,13 +1002,18 @@ void TransmogProjectionService::SyncLegacyApplied(Player* player,
     std::uint64_t revision = 0;
     if (!PrepareLegacyMerge(player, slotToCollectionId, slots, revision))
         return;
+    ObjectGuid characterGuid = player->GetGUID();
+    std::uint32_t accountId = AccountOf(player);
     CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
-    AppendAppliedSql(transaction, player->GetGUID(), slots, revision);
-    AppendAuditSql(transaction, AccountOf(player), CharacterAppliedCollectionTypeId.Value(),
-        1, AuditApply, CharacterGuid(player), revision);
-    if (!CommitTransaction(transaction))
-        return;
-    CommitLegacyAppliedCache(player, slots, revision);
+    AppendAppliedSql(transaction, characterGuid, slots, revision);
+    AppendAuditSql(transaction, accountId, CharacterAppliedCollectionTypeId.Value(),
+        1, AuditApply, characterGuid.GetCounter(), revision);
+    CommitTransactionAsync(transaction,
+        [this, characterGuid, accountId, slots, revision](bool committed)
+        {
+            if (committed)
+                CommitLegacyAppliedCache(characterGuid, accountId, slots, revision);
+        });
 }
 
 TransmogProjectionService& GetTransmogProjectionService()

@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "Config.h"
+#include "DatabaseEnv.h"
 #include "ScriptMgr.h"
 #include "ScriptedGossip.h"
 #include "GameEventMgr.h"
@@ -14,6 +15,7 @@
 #include "ItemTemplate.h"
 #include <functional>
 #include <map>
+#include <mutex>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -305,12 +307,26 @@ public:
     uint32 GetFakeEntry(ObjectGuid itemGUID) const;
     void UpdateItem(Player* player, Item* item) const;
     void DeleteFakeEntry(Player* player, uint8 slot, Item* itemTransmogrified, CharacterDatabaseTransaction* trans = nullptr);
-    TransmogApplyResult TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
-        ObjectGuid interactionGuid, TransmogApplySource source, bool noCost = false);
-    TransmogApplyResult TryApplyCollectedAppearances(Player* player,
+
+    // Completion callback for asynchronous apply flows. Runs on the world
+    // update thread after the database transaction resolves, or synchronously
+    // when preflight validation fails before any transaction is started.
+    using ApplyCompletion = std::function<void(TransmogApplyResult)>;
+
+    // Enqueues an asynchronous CharacterDatabase transaction commit. The
+    // completion runs on the world update thread via ProcessPendingCommits().
+    // Never blocks the calling thread; safe to call from map threads.
+    void EnqueueDbCommit(CharacterDatabaseTransaction const& transaction, std::function<void(bool)> completion);
+    void ProcessPendingCommits(); // world-thread only, pumped every world update
+
+    void TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
+        ObjectGuid interactionGuid, TransmogApplySource source, bool noCost,
+        ApplyCompletion completion);
+    void TryApplyCollectedAppearances(Player* player,
         std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
-        TransmogApplySource source, bool noCost = false,
-        std::function<void(CharacterDatabaseTransaction&)> extraStatements = {});
+        TransmogApplySource source, bool noCost,
+        std::function<void(CharacterDatabaseTransaction&)> extraStatements,
+        ApplyCompletion completion);
     bool CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* destination, ItemTemplate const* source) const;
     // Collected wardrobe apply: keep slot/armor/weapon family checks, but do not
     // re-apply the source item's class/race/skill gates, and do not run NPC
@@ -406,10 +422,21 @@ private:
 
     TransmogApplyResult PreflightApply(Player* player, std::vector<AppearanceApplyRequest> const& requests,
         ObjectGuid interactionGuid, TransmogApplySource source, bool noCost, AppearanceApplyPlan& plan);
-    TransmogApplyResult CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,
-        std::function<void(CharacterDatabaseTransaction&)> extraStatements = {});
+    // Builds the transaction and commits it asynchronously. Costs, cache
+    // entries, and visible item slots are only mutated inside the commit
+    // callback after the database reported success; on failure the completion
+    // receives LANG_TRANSMOG_DATABASE_ERROR and nothing was charged.
+    void CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,
+        std::function<void(CharacterDatabaseTransaction&)> extraStatements,
+        ApplyCompletion completion);
     TransmogStrings ValidateApplyInteraction(Player* player, ObjectGuid interactionGuid, TransmogApplySource source) const;
     void ApplyCommittedFakeEntry(Player* player, uint32 newEntry, Item* itemTransmogrified);
+
+    // Pending async transaction commits. Guarded by a recursive mutex because
+    // commits may be enqueued from map threads (gossip) and from completions
+    // running inside ProcessPendingCommits() on the world thread.
+    std::recursive_mutex _dbCommitLock;
+    AsyncCallbackProcessor<TransactionCallback> _dbCommits;
 };
 #define sTransmogrification Transmogrification::instance()
 

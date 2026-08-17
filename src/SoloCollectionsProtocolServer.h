@@ -10,6 +10,7 @@
 #include <functional>
 #include <map>
 #include <mutex>
+#include <optional>
 #include <random>
 #include <string>
 #include <vector>
@@ -53,8 +54,14 @@ struct Sc2ServerDiagnostics
 class Sc2Server
 {
 public:
-    using ActionHandler = std::function<std::string(AccountId, Sc2Message const&)>;
-    using WardrobeHandler = std::function<Sc2WardrobeOutcome(AccountId, Sc2Message const&)>;
+    // Handlers may return std::nullopt to defer the reply: the request stays
+    // pending (ApplyInFlight / DeferredResult) until CompleteDeferredAction /
+    // CompleteDeferredWardrobe queues the result, or the deadline in
+    // PumpSession expires with DB_UNAVAILABLE. Handlers run while the server
+    // mutex is held, so completions must never be invoked synchronously from
+    // inside a handler.
+    using ActionHandler = std::function<std::optional<std::string>(AccountId, Sc2Message const&)>;
+    using WardrobeHandler = std::function<std::optional<Sc2WardrobeOutcome>(AccountId, Sc2Message const&)>;
     Sc2Server(AccountCollectionCache& cache, std::string metadataVersion,
         std::string assetPackVersion, std::string backendBuild,
         std::vector<Sc2CategoryDefinition> categories);
@@ -78,6 +85,12 @@ public:
         ActionHandler const& actionHandler = {},
         WardrobeHandler const& wardrobeHandler = {});
     void PumpSession(AccountSessionId sessionId, std::uint64_t nowMs);
+    // Resolves a deferred ActionRequest with the final status. Ignored when
+    // the session is gone or a different request is pending.
+    void CompleteDeferredAction(AccountSessionId sessionId, std::uint32_t requestId, std::string status);
+    // Resolves a deferred WardrobeIntent / OutfitWrite with the final outcome.
+    void CompleteDeferredWardrobe(AccountSessionId sessionId, std::uint32_t requestId,
+        Sc2WardrobeOutcome outcome);
     [[nodiscard]] std::vector<std::string> DrainOutbound(
         AccountSessionId sessionId, std::size_t maximum = Sc2Limits::MaxPacketsPerTick);
     [[nodiscard]] std::string SessionNonce(AccountSessionId sessionId) const;
@@ -103,12 +116,24 @@ private:
         std::string Payload;
     };
 
+    struct DeferredResult
+    {
+        bool Active = false;
+        std::uint32_t RequestId = 0;
+        std::uint64_t DeadlineMs = 0;
+        // Prebuilt result template (kind, nonce, request id, type/collection
+        // defaults); completion only fills the outcome fields.
+        Sc2Message Template;
+        bool ApplyOrClear = false;
+    };
+
     struct SessionState
     {
         AccountId Account;
         bool Active = false;
         bool AwaitingSnapshot = false;
         bool ApplyInFlight = false;
+        DeferredResult Deferred;
         std::string ClientNonce;
         std::string ClientBuild;
         std::string ClientMetadataVersion;

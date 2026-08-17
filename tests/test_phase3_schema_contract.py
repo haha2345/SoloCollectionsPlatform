@@ -6,6 +6,7 @@ import unittest
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 SNAPSHOT = ROOT / "data" / "sql" / "db-characters" / "solo_collections_schema_v1.sql"
 MIGRATION = ROOT / "data" / "sql" / "updates" / "char" / "2026_07_20_00_solo_collections_schema_v1.sql"
+ALL_MIGRATIONS = sorted((ROOT / "data" / "sql" / "updates" / "char").glob("*.sql"))
 DOC = (ROOT / "docs" / "schema" / "account-collections-v1.md").read_text(encoding="utf-8")
 
 
@@ -17,7 +18,10 @@ def normalized_schema(path):
 
 class VersionedSchemaContractTests(unittest.TestCase):
     def test_snapshot_and_append_only_migration_define_the_same_schema(self):
-        self.assertEqual(normalized_schema(SNAPSHOT), normalized_schema(MIGRATION))
+        # The snapshot (fresh installs) must equal the concatenation of every
+        # append-only update file, so both install paths produce one schema.
+        combined = " ".join(normalized_schema(path) for path in ALL_MIGRATIONS).strip()
+        self.assertEqual(normalized_schema(SNAPSHOT), combined)
 
     def test_all_required_tables_and_keys_exist(self):
         sql = normalized_schema(MIGRATION)

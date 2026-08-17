@@ -5,6 +5,7 @@
 #include "DatabaseEnv.h"
 #include "Item.h"
 #include "Log.h"
+#include "ObjectAccessor.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "Util.h"
@@ -56,24 +57,18 @@ std::optional<std::map<std::uint8_t, std::uint32_t>> ParseOutfitData(std::string
     return appearances;
 }
 
-bool CommitOutfitTransaction(CharacterDatabaseTransaction const& transaction, ObjectGuid characterGuid,
-    std::string_view operation)
+void CommitOutfitTransactionAsync(CharacterDatabaseTransaction const& transaction, ObjectGuid characterGuid,
+    std::string_view operation, std::function<void(bool)> completion)
 {
-    try
-    {
-        TransactionCallback callback = CharacterDatabase.AsyncCommitTransaction(transaction);
-        if (callback.m_future.get())
-            return true;
-    }
-    catch (std::exception const& exception)
-    {
-        LOG_ERROR("module", "SoloCollections outfit {} raised an exception for character {}: {}",
-            operation, characterGuid.ToString(), exception.what());
-        return false;
-    }
-    LOG_ERROR("module", "SoloCollections outfit {} failed for character {}.",
-        operation, characterGuid.ToString());
-    return false;
+    sTransmogrification->EnqueueDbCommit(transaction,
+        [characterGuid, operation = std::string(operation), completion = std::move(completion)](bool committed)
+        {
+            if (!committed)
+                LOG_ERROR("module", "SoloCollections outfit {} failed for character {}.",
+                    operation, characterGuid.ToString());
+            if (completion)
+                completion(committed);
+        });
 }
 }
 
@@ -121,17 +116,23 @@ OutfitRecord const* OutfitService::Find(ObjectGuid characterGuid, std::uint8_t o
     return found == outfits.end() ? nullptr : &found->second;
 }
 
-TransmogApplyResult OutfitService::Save(Player* player, std::string_view requestedName)
+void OutfitService::Save(Player* player, std::string_view requestedName, OutfitCompletion completion)
 {
+    auto fail = [&completion](TransmogApplyResult result)
+    {
+        if (completion)
+            completion(result);
+    };
+
     if (!player || !player->GetSession() || !sTransmogrification->GetEnableSets())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
     std::optional<std::string> name = NormalizeOutfitName(requestedName);
     if (!name)
-        return { LANG_TRANSMOG_PRESET_ERR_INVALID_NAME };
+        return fail({ LANG_TRANSMOG_PRESET_ERR_INVALID_NAME });
 
     OutfitMap& outfits = _byCharacter[player->GetGUID()];
     if (outfits.size() >= sTransmogrification->GetMaxSets())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
     std::optional<std::uint8_t> outfitId;
     for (std::uint16_t candidate = 0; candidate < sTransmogrification->GetMaxSets(); ++candidate)
         if (!outfits.contains(static_cast<std::uint8_t>(candidate)))
@@ -140,7 +141,7 @@ TransmogApplyResult OutfitService::Save(Player* player, std::string_view request
             break;
         }
     if (!outfitId)
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
 
     std::map<std::uint8_t, std::uint32_t> appearances;
     std::uint64_t baseCost = 0;
@@ -162,10 +163,10 @@ TransmogApplyResult OutfitService::Save(Player* player, std::string_view request
             baseCost += sTransmogrification->GetSpecialPrice(sourceTemplate);
         }
         if (appearances.size() >= OutfitSlotMaxCount || !appearances.emplace(slot, entry).second)
-            return { LANG_TRANSMOG_INVALID_SLOT };
+            return fail({ LANG_TRANSMOG_INVALID_SLOT });
     }
     if (appearances.empty())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
 
     double configuredCost = static_cast<double>(baseCost) *
         static_cast<double>(sTransmogrification->GetSetCostModifier()) +
@@ -173,10 +174,10 @@ TransmogApplyResult OutfitService::Save(Player* player, std::string_view request
     if (configuredCost < 0.0)
         configuredCost = 0.0;
     if (configuredCost > static_cast<double>(MAX_MONEY_AMOUNT))
-        return { LANG_TRANSMOG_NOT_ENOUGH_MONEY };
+        return fail({ LANG_TRANSMOG_NOT_ENOUGH_MONEY });
     std::uint32_t cost = static_cast<std::uint32_t>(configuredCost);
     if (cost && !player->HasEnoughMoney(cost))
-        return { LANG_TRANSMOG_NOT_ENOUGH_MONEY };
+        return fail({ LANG_TRANSMOG_NOT_ENOUGH_MONEY });
 
     std::ostringstream serialized;
     for (auto const& [slot, entry] : appearances)
@@ -185,43 +186,80 @@ TransmogApplyResult OutfitService::Save(Player* player, std::string_view request
     std::string escapedData = serialized.str();
     CharacterDatabase.EscapeString(escapedName);
     CharacterDatabase.EscapeString(escapedData);
+    ObjectGuid characterGuid = player->GetGUID();
     CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
     transaction->Append(
         "REPLACE INTO `custom_transmogrification_sets` (`Owner`, `PresetID`, `SetName`, `SetData`) "
         "VALUES ({}, {}, '{}', '{}')",
-        player->GetGUID().GetCounter(), static_cast<std::uint32_t>(*outfitId), escapedName, escapedData);
-    if (!CommitOutfitTransaction(transaction, player->GetGUID(), "save"))
-        return { LANG_TRANSMOG_DATABASE_ERROR };
+        characterGuid.GetCounter(), static_cast<std::uint32_t>(*outfitId), escapedName, escapedData);
+    CommitOutfitTransactionAsync(transaction, characterGuid, "save",
+        [this, characterGuid, outfitId = *outfitId, name = std::move(*name),
+            appearances = std::move(appearances), cost, completion = std::move(completion)](bool committed) mutable
+        {
+            if (!committed)
+            {
+                if (completion)
+                    completion({ LANG_TRANSMOG_DATABASE_ERROR });
+                return;
+            }
 
-    outfits.emplace(*outfitId, OutfitRecord { *outfitId, std::move(*name), std::move(appearances) });
-    if (cost)
-        player->ModifyMoney(-static_cast<std::int32_t>(cost), false);
-    return { LANG_TRANSMOG_OK, static_cast<std::uint32_t>(*outfitId) + 1 };
+            auto found = _byCharacter.find(characterGuid);
+            if (found != _byCharacter.end())
+                found->second.emplace(outfitId,
+                    OutfitRecord { outfitId, std::move(name), std::move(appearances) });
+            if (cost)
+                if (Player* player = ObjectAccessor::FindConnectedPlayer(characterGuid))
+                    player->ModifyMoney(-static_cast<std::int32_t>(cost), false);
+            if (completion)
+                completion({ LANG_TRANSMOG_OK, static_cast<std::uint32_t>(outfitId) + 1 });
+        });
 }
 
-TransmogApplyResult OutfitService::Delete(Player* player, std::uint8_t outfitId)
+void OutfitService::Delete(Player* player, std::uint8_t outfitId, OutfitCompletion completion)
 {
     if (!player || !player->GetSession() || !Find(player->GetGUID(), outfitId))
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+    {
+        if (completion)
+            completion({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
+        return;
+    }
+    ObjectGuid characterGuid = player->GetGUID();
     CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
     transaction->Append("DELETE FROM `custom_transmogrification_sets` WHERE `Owner` = {} AND `PresetID` = {}",
-        player->GetGUID().GetCounter(), static_cast<std::uint32_t>(outfitId));
-    if (!CommitOutfitTransaction(transaction, player->GetGUID(), "delete"))
-        return { LANG_TRANSMOG_DATABASE_ERROR };
-    _byCharacter[player->GetGUID()].erase(outfitId);
-    return { LANG_TRANSMOG_OK, 1 };
+        characterGuid.GetCounter(), static_cast<std::uint32_t>(outfitId));
+    CommitOutfitTransactionAsync(transaction, characterGuid, "delete",
+        [this, characterGuid, outfitId, completion = std::move(completion)](bool committed)
+        {
+            if (!committed)
+            {
+                if (completion)
+                    completion({ LANG_TRANSMOG_DATABASE_ERROR });
+                return;
+            }
+            auto found = _byCharacter.find(characterGuid);
+            if (found != _byCharacter.end())
+                found->second.erase(outfitId);
+            if (completion)
+                completion({ LANG_TRANSMOG_OK, 1 });
+        });
 }
 
-TransmogApplyResult OutfitService::Apply(Player* player, std::uint8_t outfitId,
-    ObjectGuid interactionGuid) const
+void OutfitService::Apply(Player* player, std::uint8_t outfitId,
+    ObjectGuid interactionGuid, OutfitCompletion completion) const
 {
+    auto fail = [&completion](TransmogApplyResult result)
+    {
+        if (completion)
+            completion(result);
+    };
+
     if (!player || !player->GetSession())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
     OutfitRecord const* outfit = Find(player->GetGUID(), outfitId);
     if (!outfit || outfit->Appearances.empty() || outfit->Appearances.size() > OutfitSlotMaxCount)
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
-    return GetAppearanceService().TryApplyCollectedAppearances(
-        player, outfit->Appearances, interactionGuid, TransmogApplySource::Outfit, true);
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
+    GetAppearanceService().TryApplyCollectedAppearances(
+        player, outfit->Appearances, interactionGuid, TransmogApplySource::Outfit, true, std::move(completion));
 }
 
 OutfitService& GetOutfitService()

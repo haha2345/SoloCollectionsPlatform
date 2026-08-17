@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS `solo_collection_preference` (
   `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`account_id`, `type_id`, `collection_id`),
   KEY `idx_solo_collection_preference_type` (`account_id`, `type_id`, `favorite`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='SoloCollections account preferences for collection types 10 and 11';

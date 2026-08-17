@@ -8,6 +8,7 @@
 #include "ObjectGuid.h"
 
 #include <cstdint>
+#include <functional>
 #include <map>
 #include <mutex>
 #include <optional>
@@ -41,14 +42,19 @@ public:
     [[nodiscard]] std::string OutfitPayload(std::uint32_t accountId) const;
     [[nodiscard]] std::uint64_t OutfitRevision(std::uint32_t accountId) const;
 
+    // Completion for asynchronous write flows: invoked exactly once. It runs
+    // synchronously when validation fails before any transaction is started,
+    // otherwise on the world update thread after the database commit resolves.
+    using WardrobeCompletion = std::function<void(Sc2WardrobeOutcome)>;
+
     [[nodiscard]] Sc2WardrobeOutcome Quote(Player* player, std::string_view entries);
-    [[nodiscard]] Sc2WardrobeOutcome Apply(Player* player, std::string_view entries);
-    [[nodiscard]] Sc2WardrobeOutcome Clear(Player* player, std::string_view entries);
-    [[nodiscard]] Sc2WardrobeOutcome SaveOutfit(Player* player, std::uint32_t uid,
-        std::string_view nameHex, std::string_view entries);
-    [[nodiscard]] Sc2WardrobeOutcome RenameOutfit(Player* player, std::uint32_t uid,
-        std::string_view nameHex);
-    [[nodiscard]] Sc2WardrobeOutcome DeleteOutfit(Player* player, std::uint32_t uid);
+    void Apply(Player* player, std::string_view entries, WardrobeCompletion done);
+    void Clear(Player* player, std::string_view entries, WardrobeCompletion done);
+    void SaveOutfit(Player* player, std::uint32_t uid,
+        std::string_view nameHex, std::string_view entries, WardrobeCompletion done);
+    void RenameOutfit(Player* player, std::uint32_t uid,
+        std::string_view nameHex, WardrobeCompletion done);
+    void DeleteOutfit(Player* player, std::uint32_t uid, WardrobeCompletion done);
 
     void SyncLegacyApplied(Player* player, std::map<std::uint8_t, std::uint32_t> const& slotToCollectionId);
     [[nodiscard]] bool PrepareLegacyMerge(Player* player,
@@ -56,7 +62,8 @@ public:
         WardrobeSlotValues& outSlots, std::uint64_t& outRevision);
     void AppendAppliedSql(CharacterDatabaseTransaction& transaction, ObjectGuid characterGuid,
         WardrobeSlotValues const& slots, std::uint64_t revision) const;
-    void CommitLegacyAppliedCache(Player* player, WardrobeSlotValues const& slots, std::uint64_t revision);
+    void CommitLegacyAppliedCache(ObjectGuid characterGuid, std::uint32_t accountId,
+        WardrobeSlotValues const& slots, std::uint64_t revision);
 
     void TakePendingPushes(std::vector<PendingWardrobePush>& out);
 
@@ -101,7 +108,10 @@ private:
         std::uint32_t characterGuid, std::uint64_t revision) const;
     void EnqueueAppliedPush(ObjectGuid characterGuid, std::uint32_t accountId);
     void EnqueueOutfitPush(std::uint32_t accountId);
-    [[nodiscard]] bool CommitTransaction(CharacterDatabaseTransaction& transaction) const;
+    // Non-blocking: the completion runs on the world update thread once the
+    // transaction resolves (true = committed).
+    void CommitTransactionAsync(CharacterDatabaseTransaction& transaction,
+        std::function<void(bool)> completion) const;
     void RememberQuote(ObjectGuid characterGuid, std::string_view entries, std::uint32_t copper);
     [[nodiscard]] std::optional<std::uint32_t> CachedQuoteCopper(ObjectGuid characterGuid,
         std::string_view entries) const;

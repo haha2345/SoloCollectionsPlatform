@@ -25,6 +25,9 @@ constexpr double ApplyTokensPerSecond = 0.5;
 constexpr double OutfitBucketCapacity = 1.0;
 constexpr double OutfitTokensPerSecond = 1.0;
 constexpr std::uint64_t ReplayLifetimeMs = 30'000;
+// Safety net for deferred (async DB commit) replies; the DB callback normally
+// resolves well before this.
+constexpr std::uint64_t DeferredTimeoutMs = 15'000;
 constexpr std::size_t MaxReplayEntries = 128;
 constexpr std::size_t MaxOutboundPackets = 512;
 
@@ -546,6 +549,7 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         session.Nonce = NewNonce();
         session.NextTransferId = 1;
         session.ApplyInFlight = false;
+        session.Deferred = DeferredResult {};
         session.Bucket = TokenBucket { BucketCapacity, nowMs };
         session.QuoteBucket = TokenBucket { QuoteBucketCapacity, nowMs };
         session.ApplyBucket = TokenBucket { ApplyBucketCapacity, nowMs };
@@ -639,29 +643,62 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
         outcome.TypeId = applyOrClear ? CharacterAppliedCollectionTypeId.Value() :
             AccountOutfitCollectionTypeId.Value();
         outcome.CollectionId = applyOrClear ? 1 : (message.Uid == 0 ? 1 : message.Uid);
+        bool deferred = false;
         if (session.ClientMetadataVersion != _metadataVersion)
             outcome.Status = "CATALOG_MISMATCH";
         else if (!snapshot || snapshot->State == AccountCacheLoadState::Loading)
             outcome.Status = "LOADING";
         else if (snapshot->State == AccountCacheLoadState::Failed)
             outcome.Status = "DB_UNAVAILABLE";
+        else if (!quote && session.Deferred.Active)
+            outcome.Status = "RATE_LIMITED";
         else if (wardrobeHandler)
         {
             if (applyOrClear)
                 session.ApplyInFlight = true;
-            outcome = wardrobeHandler(session.Account, message);
-            if (applyOrClear)
-                session.ApplyInFlight = false;
-            if (!IsActionStatus(outcome.Status))
-                outcome.Status = "INVALID_REQUEST";
-            if (outcome.TypeId == 0)
-                outcome.TypeId = applyOrClear ? CharacterAppliedCollectionTypeId.Value() :
-                    AccountOutfitCollectionTypeId.Value();
-            if (outcome.CollectionId == 0)
-                outcome.CollectionId = 1;
+            std::optional<Sc2WardrobeOutcome> handled = wardrobeHandler(session.Account, message);
+            if (!handled)
+            {
+                // Async DB commit in flight; reply comes via
+                // CompleteDeferredWardrobe (or DB_UNAVAILABLE on timeout).
+                // ApplyInFlight intentionally stays set until then.
+                deferred = true;
+                session.Deferred.Active = true;
+                session.Deferred.RequestId = message.RequestId;
+                session.Deferred.DeadlineMs = nowMs + DeferredTimeoutMs;
+                session.Deferred.ApplyOrClear = applyOrClear;
+                Sc2Message templ;
+                templ.Kind = quote ? Sc2MessageKind::WardrobeQuote : Sc2MessageKind::ActionResult;
+                templ.SessionNonce = session.Nonce;
+                templ.RequestId = message.RequestId;
+                templ.TypeId = outcome.TypeId;
+                templ.CollectionId = outcome.CollectionId;
+                session.Deferred.Template = std::move(templ);
+            }
+            else
+            {
+                if (applyOrClear)
+                    session.ApplyInFlight = false;
+                outcome = std::move(*handled);
+                if (!IsActionStatus(outcome.Status))
+                    outcome.Status = "INVALID_REQUEST";
+                if (outcome.TypeId == 0)
+                    outcome.TypeId = applyOrClear ? CharacterAppliedCollectionTypeId.Value() :
+                        AccountOutfitCollectionTypeId.Value();
+                if (outcome.CollectionId == 0)
+                    outcome.CollectionId = 1;
+            }
         }
         else
             outcome.Status = "UNSUPPORTED";
+
+        if (deferred)
+        {
+            if (message.Kind == Sc2MessageKind::WardrobeIntent)
+                LogWardrobe(quote ? "wardrobe_quote" : "wardrobe_intent",
+                    session.Account, sessionId, message, "DEFERRED", 0, 0, 0, "async_commit");
+            return true;
+        }
 
         if (quote)
         {
@@ -722,9 +759,22 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
             result.Status = "LOADING";
         else if (snapshot->State == AccountCacheLoadState::Failed)
             result.Status = "DB_UNAVAILABLE";
+        else if (session.Deferred.Active)
+            result.Status = "RATE_LIMITED";
         else if (actionHandler)
         {
-            result.Status = actionHandler(session.Account, message);
+            std::optional<std::string> status = actionHandler(session.Account, message);
+            if (!status)
+            {
+                // Async commit in flight; reply comes via CompleteDeferredAction.
+                session.Deferred.Active = true;
+                session.Deferred.RequestId = message.RequestId;
+                session.Deferred.DeadlineMs = nowMs + DeferredTimeoutMs;
+                session.Deferred.ApplyOrClear = false;
+                session.Deferred.Template = result;
+                return true;
+            }
+            result.Status = std::move(*status);
             if (!IsActionStatus(result.Status))
                 result.Status = "INVALID_REQUEST";
         }
@@ -744,16 +794,74 @@ bool Sc2Server::HandleInbound(AccountSessionId sessionId, std::string_view body,
     return true;
 }
 
-void Sc2Server::PumpSession(AccountSessionId sessionId, std::uint64_t /*nowMs*/)
+void Sc2Server::PumpSession(AccountSessionId sessionId, std::uint64_t nowMs)
 {
     std::scoped_lock lock(_mutex);
     auto found = _sessions.find(sessionId);
-    if (found != _sessions.end() && found->second.Active && found->second.AwaitingSnapshot)
+    if (found == _sessions.end() || !found->second.Active)
+        return;
+    SessionState& session = found->second;
+    if (session.Deferred.Active && nowMs != 0 && nowMs >= session.Deferred.DeadlineMs)
     {
-        std::optional<AccountCacheSnapshot> snapshot = _cache.Snapshot(found->second.Account);
-        if (snapshot && snapshot->State != AccountCacheLoadState::Loading)
-            QueueCurrentState(found->second);
+        Sc2Message result = std::move(session.Deferred.Template);
+        if (session.Deferred.ApplyOrClear)
+            session.ApplyInFlight = false;
+        session.Deferred = DeferredResult {};
+        result.Status = "DB_UNAVAILABLE";
+        if (result.Kind == Sc2MessageKind::WardrobeQuote)
+            result.WarningMask = WarningMaskHex(0);
+        Queue(session, std::move(result));
     }
+    if (session.AwaitingSnapshot)
+    {
+        std::optional<AccountCacheSnapshot> snapshot = _cache.Snapshot(session.Account);
+        if (snapshot && snapshot->State != AccountCacheLoadState::Loading)
+            QueueCurrentState(session);
+    }
+}
+
+void Sc2Server::CompleteDeferredAction(
+    AccountSessionId sessionId, std::uint32_t requestId, std::string status)
+{
+    Sc2WardrobeOutcome outcome;
+    outcome.Status = std::move(status);
+    CompleteDeferredWardrobe(sessionId, requestId, std::move(outcome));
+}
+
+void Sc2Server::CompleteDeferredWardrobe(
+    AccountSessionId sessionId, std::uint32_t requestId, Sc2WardrobeOutcome outcome)
+{
+    std::scoped_lock lock(_mutex);
+    auto found = _sessions.find(sessionId);
+    if (found == _sessions.end())
+        return;
+    SessionState& session = found->second;
+    if (!session.Active || !session.Deferred.Active || session.Deferred.RequestId != requestId)
+        return;
+
+    Sc2Message result = std::move(session.Deferred.Template);
+    if (session.Deferred.ApplyOrClear)
+        session.ApplyInFlight = false;
+    session.Deferred = DeferredResult {};
+
+    if (!IsActionStatus(outcome.Status))
+        outcome.Status = "INVALID_REQUEST";
+    result.Status = outcome.Status;
+    if (result.Kind == Sc2MessageKind::WardrobeQuote)
+    {
+        result.Copper = outcome.Copper;
+        result.WarningMask = WarningMaskHex(outcome.WarningMask);
+    }
+    else
+    {
+        if (outcome.TypeId != 0)
+            result.TypeId = outcome.TypeId;
+        if (outcome.CollectionId != 0)
+            result.CollectionId = outcome.CollectionId;
+        if (outcome.Revision != 0)
+            result.Revision = outcome.Revision;
+    }
+    Queue(session, std::move(result));
 }
 
 std::vector<std::string> Sc2Server::DrainOutbound(AccountSessionId sessionId, std::size_t maximum)

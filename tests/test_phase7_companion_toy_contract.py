@@ -31,7 +31,7 @@ class CompanionProviderContractTests(unittest.TestCase):
         self.assertIn("HasPendingMutation(account)", service)
         self.assertIn("CompanionCollectionTypeId", service)
         self.assertIn("for (std::uint32_t spellId : definition.UnlockSpellIds)", service)
-        self.assertIn("definition->CanonicalSpellId", service)
+        self.assertIn("definition->CanonicalActionSpellId", service)
         self.assertNotIn("CollectionMutationKind::Revoke", service)
 
     def test_toggle_and_replacement_never_touch_combat_pet_state(self):

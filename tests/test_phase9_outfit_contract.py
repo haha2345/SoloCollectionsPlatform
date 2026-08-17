@@ -16,7 +16,7 @@ class OutfitContractTests(unittest.TestCase):
     def test_outfits_are_character_scoped_and_do_not_grant_collections(self):
         self.assertIn("ObjectGuid characterGuid", HEADER)
         self.assertIn("WHERE `Owner` = {}", SERVICE)
-        self.assertIn("player->GetGUID().GetCounter()", SERVICE)
+        self.assertIn("characterGuid.GetCounter()", SERVICE)
         self.assertNotIn("AccountId", HEADER + SERVICE)
         self.assertNotIn("TryUnlock", SERVICE)
         self.assertNotIn("sc_collection_unlock", SERVICE)
@@ -41,25 +41,29 @@ class OutfitContractTests(unittest.TestCase):
         self.assertIn("outfit->Appearances.size() > OutfitSlotMaxCount", SERVICE)
 
     def test_save_and_delete_update_memory_only_after_confirmed_database_commit(self):
-        save = SERVICE.split("TransmogApplyResult OutfitService::Save", 1)[1].split(
-            "TransmogApplyResult OutfitService::Delete", 1
+        # Both writes are asynchronous: memory/money mutations happen inside
+        # the commit completion, gated on the transaction having committed.
+        save = SERVICE.split("void OutfitService::Save", 1)[1].split(
+            "void OutfitService::Delete", 1
         )[0]
-        delete = SERVICE.split("TransmogApplyResult OutfitService::Delete", 1)[1].split(
-            "TransmogApplyResult OutfitService::Apply", 1
+        delete = SERVICE.split("void OutfitService::Delete", 1)[1].split(
+            "void OutfitService::Apply", 1
         )[0]
-        self.assertLess(save.index("CommitOutfitTransaction"), save.index("outfits.emplace"))
-        self.assertLess(save.index("CommitOutfitTransaction"), save.index("player->ModifyMoney"))
-        self.assertLess(delete.index("CommitOutfitTransaction"), delete.index(".erase(outfitId)"))
+        self.assertLess(save.index("CommitOutfitTransactionAsync"), save.index(".emplace(outfitId"))
+        self.assertLess(save.index("CommitOutfitTransactionAsync"), save.index("ModifyMoney"))
+        self.assertLess(save.index("if (!committed)"), save.index(".emplace(outfitId"))
+        self.assertLess(delete.index("CommitOutfitTransactionAsync"), delete.index(".erase(outfitId)"))
+        self.assertLess(delete.index("if (!committed)"), delete.index(".erase(outfitId)"))
         self.assertNotIn("WHERE Owner = {} AND PresetID = {}", SCRIPTS)
         self.assertEqual(1, SCRIPTS.count("DELETE FROM `custom_transmogrification_sets`"))
         self.assertIn("WHERE NOT EXISTS", SCRIPTS)
 
     def test_apply_uses_the_shared_atomic_preflight_pipeline(self):
-        apply = SERVICE.split("TransmogApplyResult OutfitService::Apply", 1)[1]
+        apply = SERVICE.split("void OutfitService::Apply", 1)[1]
         self.assertIn("GetAppearanceService().TryApplyCollectedAppearances", apply)
         self.assertIn("TransmogApplySource::Outfit, true", apply)
         self.assertIn("PreflightApply(player, requests", TRANSMOG)
-        self.assertIn("CommitApplyPlan(player, plan)", TRANSMOG)
+        self.assertIn("CommitApplyPlan(player, plan", TRANSMOG)
         self.assertIn("GetOutfitService().Apply(", SCRIPTS)
 
     def test_legacy_gossip_is_only_a_view_and_service_router(self):

@@ -3,6 +3,7 @@
 #include "SoloCollectionsOutfitService.h"
 #include "ItemTemplate.h"
 #include "DatabaseEnv.h"
+#include "ObjectAccessor.h"
 #include "SpellMgr.h"
 #include "TemporarySummon.h"
 #include "Tokenize.h"
@@ -592,87 +593,150 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
     return { LANG_TRANSMOG_OK };
 }
 
-TransmogApplyResult Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,
-    std::function<void(CharacterDatabaseTransaction&)> extraStatements)
+void Transmogrification::EnqueueDbCommit(CharacterDatabaseTransaction const& transaction,
+    std::function<void(bool)> completion)
+{
+    std::scoped_lock lock(_dbCommitLock);
+    TransactionCallback& callback = _dbCommits.AddCallback(
+        CharacterDatabase.AsyncCommitTransaction(transaction));
+    callback.AfterComplete(std::move(completion));
+}
+
+void Transmogrification::ProcessPendingCommits()
+{
+    std::scoped_lock lock(_dbCommitLock);
+    _dbCommits.ProcessReadyCallbacks();
+}
+
+void Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan const& plan,
+    std::function<void(CharacterDatabaseTransaction&)> extraStatements, ApplyCompletion completion)
 {
     if (!player || plan.Appearances.empty())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+    {
+        if (completion)
+            completion({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
+        return;
+    }
+
+    // Snapshot the plan as GUIDs/entries; raw Item pointers must not cross the
+    // asynchronous commit boundary because the player can move or destroy
+    // items (or log out) before the transaction resolves.
+    struct CommittedAppearance
+    {
+        ObjectGuid TargetItem;
+        ObjectGuid OwnedSource;
+        uint32 FakeEntry = 0;
+        uint32 SourceItemEntry = 0;
+    };
+    std::vector<CommittedAppearance> committedPlan;
+    committedPlan.reserve(plan.Appearances.size());
 
     CharacterDatabaseTransaction transaction = CharacterDatabase.BeginTransaction();
     for (PreparedAppearance const& appearance : plan.Appearances)
     {
         transaction->Append("REPLACE INTO custom_transmogrification (GUID, FakeEntry, Owner) VALUES ({}, {}, {})",
             appearance.TargetItem->GetGUID().GetCounter(), appearance.FakeEntry, player->GetGUID().GetCounter());
+        committedPlan.push_back({ appearance.TargetItem->GetGUID(),
+            appearance.OwnedSource ? appearance.OwnedSource->GetGUID() : ObjectGuid::Empty,
+            appearance.FakeEntry,
+            appearance.SourceTemplate ? appearance.SourceTemplate->ItemId : 0 });
     }
     if (extraStatements)
         extraStatements(transaction);
 
-    bool committed = false;
-    try
-    {
-        TransactionCallback callback = CharacterDatabase.AsyncCommitTransaction(transaction);
-        committed = callback.m_future.get();
-    }
-    catch (std::exception const& exception)
-    {
-        LOG_ERROR("module", "Transmogrification::CommitApplyPlan - Appearance transaction raised an exception for player {}: {}",
-            player->GetGUID().ToString(), exception.what());
-    }
-
-    if (!committed)
-    {
-        LOG_ERROR("module", "Transmogrification::CommitApplyPlan - Appearance transaction failed for player {}; no resources or cache entries were changed.",
-            player->GetGUID().ToString());
-        return { LANG_TRANSMOG_DATABASE_ERROR };
-    }
-
-    if (plan.TokenCost)
-        player->DestroyItemCount(TokenEntry, plan.TokenCost, true);
-    if (plan.MoneyCost)
-        player->ModifyMoney(-static_cast<int32>(plan.MoneyCost), false);
-
-    for (PreparedAppearance const& appearance : plan.Appearances)
-    {
-        ApplyCommittedFakeEntry(player, appearance.FakeEntry, appearance.TargetItem);
-
-        if (!appearance.SourceTemplate)
-            continue;
-
-        appearance.TargetItem->UpdatePlayedTime(player);
-        appearance.TargetItem->SetOwnerGUID(player->GetGUID());
-        appearance.TargetItem->SetNotRefundable(player);
-        appearance.TargetItem->ClearSoulboundTradeable(player);
-
-        if (appearance.OwnedSource)
+    ObjectGuid playerGuid = player->GetGUID();
+    uint32 tokenCost = plan.TokenCost;
+    uint32 moneyCost = plan.MoneyCost;
+    EnqueueDbCommit(transaction,
+        [this, playerGuid, committedPlan = std::move(committedPlan), tokenCost, moneyCost,
+            completion = std::move(completion)](bool committed)
         {
-            if (appearance.SourceTemplate->Bonding == BIND_WHEN_EQUIPPED || appearance.SourceTemplate->Bonding == BIND_WHEN_USE)
-                appearance.OwnedSource->SetBinding(true);
-            appearance.OwnedSource->SetOwnerGUID(player->GetGUID());
-            appearance.OwnedSource->SetNotRefundable(player);
-            appearance.OwnedSource->ClearSoulboundTradeable(player);
-        }
-    }
+            if (!committed)
+            {
+                LOG_ERROR("module", "Transmogrification::CommitApplyPlan - Appearance transaction failed for player {}; no resources or cache entries were changed.",
+                    playerGuid.ToString());
+                if (completion)
+                    completion({ LANG_TRANSMOG_DATABASE_ERROR });
+                return;
+            }
 
-    return { LANG_TRANSMOG_OK, static_cast<uint32>(plan.Appearances.size()) };
+            Player* player = ObjectAccessor::FindConnectedPlayer(playerGuid);
+            if (!player)
+            {
+                LOG_WARN("module", "Transmogrification::CommitApplyPlan - Player {} disconnected before the appearance commit resolved; visuals load from DB on next login.",
+                    playerGuid.ToString());
+                if (completion)
+                    completion({ LANG_TRANSMOG_OK, 0 });
+                return;
+            }
+
+            if (tokenCost)
+                player->DestroyItemCount(TokenEntry, tokenCost, true);
+            if (moneyCost)
+                player->ModifyMoney(-static_cast<int32>(moneyCost), false);
+
+            for (CommittedAppearance const& appearance : committedPlan)
+            {
+                Item* targetItem = player->GetItemByGuid(appearance.TargetItem);
+                if (!targetItem)
+                    continue;
+
+                ApplyCommittedFakeEntry(player, appearance.FakeEntry, targetItem);
+
+                if (!appearance.SourceItemEntry)
+                    continue;
+
+                targetItem->UpdatePlayedTime(player);
+                targetItem->SetOwnerGUID(player->GetGUID());
+                targetItem->SetNotRefundable(player);
+                targetItem->ClearSoulboundTradeable(player);
+
+                if (appearance.OwnedSource)
+                {
+                    if (Item* ownedSource = player->GetItemByGuid(appearance.OwnedSource))
+                    {
+                        ItemTemplate const* sourceTemplate = ownedSource->GetTemplate();
+                        if (sourceTemplate &&
+                            (sourceTemplate->Bonding == BIND_WHEN_EQUIPPED || sourceTemplate->Bonding == BIND_WHEN_USE))
+                            ownedSource->SetBinding(true);
+                        ownedSource->SetOwnerGUID(player->GetGUID());
+                        ownedSource->SetNotRefundable(player);
+                        ownedSource->ClearSoulboundTradeable(player);
+                    }
+                }
+            }
+
+            if (completion)
+                completion({ LANG_TRANSMOG_OK, static_cast<uint32>(committedPlan.size()) });
+        });
 }
 
-TransmogApplyResult Transmogrification::TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
-    ObjectGuid interactionGuid, TransmogApplySource source, bool noCost)
+void Transmogrification::TryApplyCollectedAppearance(Player* player, uint32 sourceItemEntry, uint8 slot,
+    ObjectGuid interactionGuid, TransmogApplySource source, bool noCost, ApplyCompletion completion)
 {
     if (source == TransmogApplySource::Outfit)
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+    {
+        if (completion)
+            completion({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
+        return;
+    }
 
-    return TryApplyCollectedAppearances(
-        player, { { slot, sourceItemEntry } }, interactionGuid, source, noCost);
+    TryApplyCollectedAppearances(
+        player, { { slot, sourceItemEntry } }, interactionGuid, source, noCost, {}, std::move(completion));
 }
 
-TransmogApplyResult Transmogrification::TryApplyCollectedAppearances(Player* player,
+void Transmogrification::TryApplyCollectedAppearances(Player* player,
     std::map<uint8, uint32> const& appearances, ObjectGuid interactionGuid,
     TransmogApplySource source, bool noCost,
-    std::function<void(CharacterDatabaseTransaction&)> extraStatements)
+    std::function<void(CharacterDatabaseTransaction&)> extraStatements,
+    ApplyCompletion completion)
 {
     if (appearances.empty())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+    {
+        if (completion)
+            completion({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
+        return;
+    }
 
     std::vector<AppearanceApplyRequest> requests;
     requests.reserve(appearances.size());
@@ -680,7 +744,13 @@ TransmogApplyResult Transmogrification::TryApplyCollectedAppearances(Player* pla
         requests.push_back({ slot, itemEntry == HIDDEN_ITEM_ID ? UINT_MAX : itemEntry });
     AppearanceApplyPlan plan;
     TransmogApplyResult result = PreflightApply(player, requests, interactionGuid, source, noCost, plan);
-    return result.IsSuccess() ? CommitApplyPlan(player, plan, std::move(extraStatements)) : result;
+    if (!result.IsSuccess())
+    {
+        if (completion)
+            completion(result);
+        return;
+    }
+    CommitApplyPlan(player, plan, std::move(extraStatements), std::move(completion));
 }
 
 bool Transmogrification::CanTransmogrifyItemWithItem(Player* player, ItemTemplate const* target, ItemTemplate const* source) const

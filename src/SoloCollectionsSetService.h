@@ -6,6 +6,7 @@
 #include "ObjectGuid.h"
 
 #include <cstdint>
+#include <functional>
 
 class Player;
 enum class TransmogApplySource : std::uint8_t;
@@ -16,8 +17,11 @@ namespace SoloCollections
 class SetService final
 {
 public:
-    [[nodiscard]] TransmogApplyResult TryApply(Player* player, CollectionId collectionId,
-        std::uint32_t variantIndex, ObjectGuid interactionGuid, TransmogApplySource source) const;
+    // Asynchronous: the completion runs on the world update thread after the
+    // database commit resolves, or synchronously on validation failure.
+    void TryApply(Player* player, CollectionId collectionId,
+        std::uint32_t variantIndex, ObjectGuid interactionGuid, TransmogApplySource source,
+        std::function<void(TransmogApplyResult)> completion) const;
 };
 
 SetService const& GetSetService();

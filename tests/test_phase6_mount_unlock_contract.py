@@ -41,7 +41,9 @@ class MountUnlockContractTests(unittest.TestCase):
         self.assertIn("CompleteMigrationMarker", SERVICE)
         self.assertIn("GetMountCollectionService().Update()", CORE)
         player_update = CORE[CORE.index("void OnPlayerUpdate"):CORE.index("void OnPlayerLearnSpell")]
-        self.assertNotIn("GetMountCollectionService", player_update)
+        # Per-player reconcile hooks are allowed here, but the migration pump
+        # (Update) must stay on the world update, never per player tick.
+        self.assertNotIn("GetMountCollectionService().Update()", player_update)
         self.assertIn("std::mutex _mutex", SERVICE)
 
     def test_account_mutations_are_serial_and_emit_revision_deltas(self):
@@ -70,7 +72,14 @@ class MountUnlockContractTests(unittest.TestCase):
             '"CAST_FAILED"',
         ):
             self.assertIn(token, SERVICE)
-        self.assertNotIn("Dismount(", SERVICE)
+        # Dismount is only allowed for the two intentional flows: swapping the
+        # current mount before a summon cast, and toggling off via random
+        # summon. Both must also clear the mounted aura.
+        self.assertEqual(2, SERVICE.count("player->Dismount()"))
+        import re
+        paired = re.findall(
+            r"player->Dismount\(\);\s*player->RemoveAurasByType\(SPELL_AURA_MOUNTED\);", SERVICE)
+        self.assertEqual(SERVICE.count("player->Dismount()"), len(paired))
         self.assertIn("TRIGGERED_IGNORE_CASTER_MOUNTED_OR_ON_VEHICLE", SERVICE)
         self.assertIn("IsActionStatus", PROTOCOL_SERVER)
 

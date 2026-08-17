@@ -86,23 +86,30 @@ bool ClassAllowed(Player* player, SetCollectionDefinition const& definition)
 }
 }
 
-TransmogApplyResult SetService::TryApply(Player* player, CollectionId collectionId,
-    std::uint32_t variantIndex, ObjectGuid interactionGuid, TransmogApplySource source) const
+void SetService::TryApply(Player* player, CollectionId collectionId,
+    std::uint32_t variantIndex, ObjectGuid interactionGuid, TransmogApplySource source,
+    std::function<void(TransmogApplyResult)> completion) const
 {
+    auto fail = [&completion](TransmogApplyResult result)
+    {
+        if (completion)
+            completion(result);
+    };
+
     if (!player || !player->GetSession() || !collectionId.IsValid())
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
 
     SetCollectionDefinition const* definition = GetSetCatalog().Find(collectionId);
     if (!definition)
-        return { LANG_TRANSMOG_INVALID_SRC_ENTRY };
+        return fail({ LANG_TRANSMOG_INVALID_SRC_ENTRY });
 
     if (!ClassAllowed(player, *definition))
-        return { LANG_TRANSMOG_INVALID_ITEMS };
+        return fail({ LANG_TRANSMOG_INVALID_ITEMS });
 
     AccountId accountId(player->GetSession()->GetAccountId());
     SetVariantDefinition const* variant = SelectVariant(accountId, *definition, variantIndex);
     if (!variant)
-        return { LANG_TRANSMOG_MISSING_SRC_ITEM };
+        return fail({ LANG_TRANSMOG_MISSING_SRC_ITEM });
 
     std::map<std::uint8_t, std::uint32_t> sources;
     std::map<std::uint8_t, std::uint32_t> appliedAppearances;
@@ -111,15 +118,15 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
     {
         std::optional<std::uint8_t> slot = EquipmentSlot(member.SlotKey);
         if (!slot)
-            return { LANG_TRANSMOG_INVALID_SLOT };
+            return fail({ LANG_TRANSMOG_INVALID_SLOT });
         if (!requestedSlots.insert(*slot).second)
-            return { LANG_TRANSMOG_INVALID_SLOT };
+            return fail({ LANG_TRANSMOG_INVALID_SLOT });
 
         Item* target = player->GetItemByPos(INVENTORY_SLOT_BAG_0, *slot);
         if (!target)
         {
             if (member.Required)
-                return { LANG_TRANSMOG_MISSING_DEST_ITEM };
+                return fail({ LANG_TRANSMOG_MISSING_DEST_ITEM });
             continue;
         }
 
@@ -138,9 +145,9 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
         if (!sourceItemId)
         {
             if (member.Required)
-                return { ownsAlternative ? LANG_TRANSMOG_INVALID_ITEMS : LANG_TRANSMOG_MISSING_SRC_ITEM };
+                return fail({ ownsAlternative ? LANG_TRANSMOG_INVALID_ITEMS : LANG_TRANSMOG_MISSING_SRC_ITEM });
             if (ownsAlternative)
-                return { LANG_TRANSMOG_INVALID_ITEMS };
+                return fail({ LANG_TRANSMOG_INVALID_ITEMS });
             continue;
         }
 
@@ -159,24 +166,33 @@ TransmogApplyResult SetService::TryApply(Player* player, CollectionId collection
     }
 
     if (sources.empty())
-        return { LANG_TRANSMOG_OK, 0 };
+        return fail({ LANG_TRANSMOG_OK, 0 });
 
     WardrobeSlotValues nextSlots {};
     std::uint64_t nextRevision = 0;
     bool writeApplied = GetTransmogProjectionService().PrepareLegacyMerge(
         player, appliedAppearances, nextSlots, nextRevision);
-    TransmogApplyResult result = sTransmogrification->TryApplyCollectedAppearances(
+    ObjectGuid playerGuid = player->GetGUID();
+    std::uint32_t playerAccountId = player->GetSession()->GetAccountId();
+    sTransmogrification->TryApplyCollectedAppearances(
         player, sources, interactionGuid, source, false,
-        [&](CharacterDatabaseTransaction& transaction)
+        // Runs synchronously while the transaction is being built.
+        [playerGuid, nextSlots, nextRevision, writeApplied](CharacterDatabaseTransaction& transaction)
         {
             if (!writeApplied)
                 return;
-            GetTransmogProjectionService().AppendAppliedSql(transaction, player->GetGUID(),
+            GetTransmogProjectionService().AppendAppliedSql(transaction, playerGuid,
                 nextSlots, nextRevision);
+        },
+        [playerGuid, playerAccountId, nextSlots, nextRevision, writeApplied,
+            completion = std::move(completion)](TransmogApplyResult result)
+        {
+            if (result.IsSuccess() && writeApplied)
+                GetTransmogProjectionService().CommitLegacyAppliedCache(
+                    playerGuid, playerAccountId, nextSlots, nextRevision);
+            if (completion)
+                completion(result);
         });
-    if (result.IsSuccess() && writeApplied)
-        GetTransmogProjectionService().CommitLegacyAppliedCache(player, nextSlots, nextRevision);
-    return result;
 }
 
 SetService const& GetSetService()

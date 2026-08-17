@@ -33,12 +33,16 @@ public:
     void Load(ObjectGuid characterGuid);
     void Unload(ObjectGuid characterGuid);
 
+    // Asynchronous: completions run on the world update thread after the
+    // database commit resolves, or synchronously on validation failure.
+    using OutfitCompletion = std::function<void(TransmogApplyResult)>;
+
     [[nodiscard]] OutfitMap const& List(ObjectGuid characterGuid) const;
     [[nodiscard]] OutfitRecord const* Find(ObjectGuid characterGuid, std::uint8_t outfitId) const;
-    [[nodiscard]] TransmogApplyResult Save(Player* player, std::string_view requestedName);
-    [[nodiscard]] TransmogApplyResult Delete(Player* player, std::uint8_t outfitId);
-    [[nodiscard]] TransmogApplyResult Apply(Player* player, std::uint8_t outfitId,
-        ObjectGuid interactionGuid) const;
+    void Save(Player* player, std::string_view requestedName, OutfitCompletion completion);
+    void Delete(Player* player, std::uint8_t outfitId, OutfitCompletion completion);
+    void Apply(Player* player, std::uint8_t outfitId, ObjectGuid interactionGuid,
+        OutfitCompletion completion) const;
 
 private:
     std::unordered_map<ObjectGuid, OutfitMap> _byCharacter;
