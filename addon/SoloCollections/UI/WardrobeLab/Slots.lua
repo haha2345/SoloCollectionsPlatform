@@ -52,7 +52,28 @@ function Lab.CreateSlots(parent, state)
         UI.EzCollections:CreateTransmogSlotChrome(button)
         button.scSlotKey = definition.key
         button.scDefinition = definition
+        local emptyBlock = CreateFrame("Button", nil, button)
+        emptyBlock:SetPoint("TOPLEFT", button, "TOPLEFT", -14, 14)
+        emptyBlock:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", 14, -14)
+        emptyBlock:SetFrameLevel(button:GetFrameLevel() + 8)
+        emptyBlock:EnableMouse(true)
+        emptyBlock:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+        emptyBlock:Hide()
+        emptyBlock:SetScript("OnClick", function()
+            if Lab.NotifyEmptySlot then Lab.NotifyEmptySlot() end
+        end)
+        emptyBlock:SetScript("OnEnter", function(self)
+            GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+            GameTooltip:SetText(definition.label, 1, 0.82, 0.18)
+            GameTooltip:AddLine(Lab.EMPTY_SLOT_TEXT or "该装备栏里没有装备物品。", 1, 0.12, 0.12, true)
+            GameTooltip:Show()
+        end)
+        emptyBlock:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        button.scEmptyBlock = emptyBlock
         button:SetScript("OnClick", function(self, mouseButton)
+            if not state:IsSlotOccupied(self.scSlotKey) then
+                return
+            end
             if mouseButton == "RightButton" and state:IsSlotDirty(self.scSlotKey) then
                 if state.presetRecord then state:ClearDraft() else state:ClearDraft(self.scSlotKey) end
                 if Lab.PlaySound then Lab.PlaySound("revert") end
@@ -70,6 +91,9 @@ function Lab.CreateSlots(parent, state)
             end
         end)
         button:SetScript("OnEnter", function(self)
+            if self.scSlotHighlight and state:IsSlotOccupied(self.scSlotKey) then
+                self.scSlotHighlight:Show()
+            end
             local hidden = state.IsSlotHidden and state:IsSlotHidden(self.scSlotKey)
             local itemId, pending = state:GetSlotPreviewItemId(self.scSlotKey)
             local invSlot = self.scDefinition.inventorySlot + 1
@@ -121,7 +145,10 @@ function Lab.CreateSlots(parent, state)
             end
             GameTooltip:Show()
         end)
-        button:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        button:SetScript("OnLeave", function(self)
+            if self.scSlotHighlight then self.scSlotHighlight:Hide() end
+            GameTooltip:Hide()
+        end)
         host.buttons[definition.key] = button
     end
     function host:Refresh()
@@ -131,9 +158,19 @@ function Lab.CreateSlots(parent, state)
             local texture = itemId and GetItemIcon and GetItemIcon(itemId)
             button.scIcon:SetTexture(texture or SLOT_FALLBACKS[slotKey] or "Interface\\Icons\\INV_Misc_QuestionMark")
             if button.scIcon.SetDesaturated then button.scIcon:SetDesaturated(not occupied or itemId == nil) end
-            button:SetSlotSelected(state.selectedSlot == slotKey)
+            button:SetSlotSelected(occupied and state.selectedSlot == slotKey)
             button:SetSlotPending(occupied and state.IsSlotApplyable and state:IsSlotApplyable(slotKey))
             if button.SetSlotEmpty then button:SetSlotEmpty(not occupied) end
+            if button.scEmptyBlock then
+                if occupied then button.scEmptyBlock:Hide() else button.scEmptyBlock:Show() end
+            end
+            if button.EnableMouse then
+                button:EnableMouse(occupied and true or false)
+            end
+            if button.scSlotHighlight then
+                button.scSlotHighlight:SetAlpha(occupied and 1 or 0)
+                if not occupied then button.scSlotHighlight:Hide() end
+            end
             if button.SetSlotHidden then
                 button:SetSlotHidden(occupied and state.IsSlotHidden and state:IsSlotHidden(slotKey))
             end

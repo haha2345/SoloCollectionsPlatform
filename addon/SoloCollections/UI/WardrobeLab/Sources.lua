@@ -426,6 +426,9 @@ function Lab.CreateSources(parent, state)
         hit:RegisterForClicks("LeftButtonUp", "RightButtonUp")
         hit:EnableMouseWheel(true)
         local border, selected, favorite = UI.EzCollections:CreateWardrobeItemChrome(hit)
+        if SC.NewAppearances and SC.NewAppearances.AttachCardBadge then
+            SC.NewAppearances.AttachCardBadge(hit)
+        end
 
         -- DressUpModel Present() resets alpha to 1, so ownership cannot live on
         -- the actor. Keep it on the hit frame, same as the journal item cards.
@@ -466,6 +469,9 @@ function Lab.CreateSources(parent, state)
                 uncollectedShade:Hide()
                 uncollectedBadge:Hide()
                 collectedMark:Hide()
+                if SC.NewAppearances and SC.NewAppearances.UpdateCardBadge then
+                    SC.NewAppearances.UpdateCardBadge(hit, nil)
+                end
                 return
             end
             border:SetCollected(record.collected)
@@ -477,6 +483,9 @@ function Lab.CreateSources(parent, state)
                 uncollectedShade:Show()
                 uncollectedBadge:Show()
                 collectedMark:Hide()
+            end
+            if SC.NewAppearances and SC.NewAppearances.UpdateCardBadge then
+                SC.NewAppearances.UpdateCardBadge(hit, record.collectionId or record.id)
             end
         end
 
@@ -899,6 +908,9 @@ function Lab.CreateSources(parent, state)
         end
         state:SetDraft(slotKey, record)
         if Lab.PlaySound then Lab.PlaySound("item") end
+        if SC.NewAppearances and SC.NewAppearances.MarkSeen then
+            SC.NewAppearances.MarkSeen(record.collectionId or record.id)
+        end
         return true
     end
 

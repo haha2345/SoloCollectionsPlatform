@@ -203,8 +203,10 @@ class AddonContractTests(unittest.TestCase):
             "frame.scPortrait:SetTexture(UI.Media.tabs[selected] or UI.Media.launcher)",
         ):
             self.assertIn(token, journal)
-        self.assertIn("icon:SetTexture(UI.Media.launcher)", launcher)
+        self.assertIn("UI.Media.collectionsLauncher", launcher)
+        self.assertIn("MICRO_BUTTON_ICON_COORD", launcher)
         self.assertNotIn("Media\\Icons\\launcher.tga", launcher)
+        self.assertNotIn("Media\\Icons\\collections-micro.tga", launcher)
         self.assertNotIn("UI.Media.collectedFrame", launcher)
 
     def test_retail_search_uses_three_slice_and_progress_uses_clipped_inner_bar(self):

@@ -108,7 +108,13 @@ function UI.CreateTransmogFrame()
         end)
     end
     frame:SetScript("OnShow", function(self)
-        if UI.EnsureDefaultSetClassFilter then UI.EnsureDefaultSetClassFilter() end
+        if UI.ApplyTransmogOpenFilters then
+            local changed = UI.ApplyTransmogOpenFilters()
+            if changed and self.scPage and self.scPage.scSources then
+                self.scPage.scSources.itemPage = 1
+                self.scPage.scSources.setPage = 1
+            end
+        end
         clampFrame(self)
         if self.scSearchBox and SC.db then
             self.scSearchBox:SetText(SC.db.query or "")
@@ -434,15 +440,23 @@ function UI.CreateTransmogFrame()
     return frame
 end
 
+function UI.ShowTransmog()
+    local frame = UI.CreateTransmogFrame()
+    if not frame then return end
+    if frame:IsShown() then return frame end
+    if UI.HideJournal then UI.HideJournal() end
+    restoreFramePosition(frame)
+    frame:Show()
+    return frame
+end
+
 function UI.ToggleTransmog()
     local frame = UI.CreateTransmogFrame()
     if not frame then return end
     if frame:IsShown() then
         frame:Hide()
     else
-        if UI.HideJournal then UI.HideJournal() end
-        restoreFramePosition(frame)
-        frame:Show()
+        UI.ShowTransmog()
     end
 end
 
@@ -604,3 +618,226 @@ displayWatcher:SetScript("OnEvent", function()
         UI.TransmogLauncher:SetClampedToScreen(true)
     end
 end)
+
+local function acceptChat(text)
+    if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
+        DEFAULT_CHAT_FRAME:AddMessage(text)
+    end
+end
+
+local function acceptNear(value, expected, slack)
+    return math.abs((tonumber(value) or 0) - expected) <= (slack or 2)
+end
+
+local function acceptMeasure(region)
+    if not region then return nil end
+    return {
+        w = region.GetWidth and region:GetWidth() or 0,
+        h = region.GetHeight and region:GetHeight() or 0,
+        shown = region.IsShown and region:IsShown() and true or false,
+        alpha = region.GetAlpha and region:GetAlpha() or nil,
+        left = region.GetLeft and region:GetLeft() or nil,
+        right = region.GetRight and region:GetRight() or nil,
+        top = region.GetTop and region:GetTop() or nil,
+        bottom = region.GetBottom and region:GetBottom() or nil,
+    }
+end
+
+local function acceptCovers(outer, inner)
+    if not (outer and inner and outer.left and inner.left) then return false end
+    return outer.left <= inner.left + 1
+        and outer.right >= inner.right - 1
+        and outer.top >= inner.top - 1
+        and outer.bottom <= inner.bottom + 1
+end
+
+local function acceptAdd(report, name, ok, detail)
+    report.checks[#report.checks + 1] = {
+        name = name,
+        ok = ok and true or false,
+        detail = detail or "",
+    }
+    if not ok then report.passed = false end
+end
+
+function SC.RunAcceptanceCheck()
+    if UI.ShowTransmog then
+        UI.ShowTransmog()
+    elseif SC.ToggleTransmog then
+        SC:ToggleTransmog()
+    end
+
+    local frame = UI.TransmogFrame
+    if frame then
+        if SC.db then
+            SC.db.transmogFrame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 20 }
+        end
+        frame:ClearAllPoints()
+        frame:SetPoint("CENTER", UIParent, "CENTER", 0, 20)
+        frame:Show()
+    end
+
+    local report = {
+        time = tostring((time and time()) or 0),
+        passed = true,
+        checks = {},
+        slots = {},
+        cards = {},
+    }
+    local page = frame and frame.scPage
+    local state = page and page.scState
+    local slots = page and page.scSlots
+    local sources = page and page.scSources
+    if page and page.Refresh then page:Refresh() end
+
+    acceptAdd(report, "transmog_shown", frame and frame:IsShown() and true or false,
+        frame and string.format("scale=%.2f left=%.0f right=%.0f w=%.0f parentW=%.0f",
+            frame:GetScale() or 0, frame:GetLeft() or -1, frame:GetRight() or -1,
+            frame:GetWidth() or 0, UIParent:GetWidth() or 0) or "missing frame")
+    acceptAdd(report, "page_ready", page and state and slots and true or false,
+        page and "scPage" or "missing page")
+
+    local emptyCount = 0
+    local occupiedCount = 0
+    local selectedBefore = state and state.selectedSlot
+    if slots and slots.buttons and state then
+        for _, definition in ipairs(Lab.SLOTS or {}) do
+            local button = slots.buttons[definition.key]
+            local occupied = state:IsSlotOccupied(definition.key) and true or false
+            local block = button and button.scEmptyBlock
+            local highlight = button and button.scSlotHighlight
+            local ring = button and button.scSelectedTexture
+            local blockSize = acceptMeasure(block)
+            local ringSize = acceptMeasure(ring)
+            local highlightAlpha = highlight and highlight.GetAlpha and highlight:GetAlpha() or -1
+            local mouseEnabled = button and button.IsMouseEnabled and button:IsMouseEnabled()
+            if mouseEnabled == 1 then mouseEnabled = true end
+            if mouseEnabled == 0 then mouseEnabled = false end
+            local beforeThis = state.selectedSlot
+            local selectOk = state:SelectSlot(definition.key)
+            local selectedAfter = state.selectedSlot
+            if occupied then
+                occupiedCount = occupiedCount + 1
+            else
+                emptyCount = emptyCount + 1
+                if block and block.GetScript and block:GetScript("OnClick") then
+                    block:GetScript("OnClick")(block, "LeftButton")
+                end
+            end
+            local row = {
+                key = definition.key,
+                occupied = occupied,
+                blockShown = block and block:IsShown() and true or false,
+                blockSize = blockSize,
+                coversRing = acceptCovers(blockSize, ringSize),
+                highlightAlpha = highlightAlpha,
+                mouseEnabled = mouseEnabled and true or false,
+                selectReturned = selectOk and true or false,
+                selectedAfter = selectedAfter,
+            }
+            report.slots[#report.slots + 1] = row
+            if occupied then
+                acceptAdd(report, "occupied_" .. definition.key,
+                    (not row.blockShown)
+                        and acceptNear(highlightAlpha, 1, 0.05)
+                        and mouseEnabled
+                        and (selectOk and selectedAfter == definition.key),
+                    string.format("block=%s hl=%.2f mouse=%s select=%s",
+                        tostring(row.blockShown), highlightAlpha,
+                        tostring(row.mouseEnabled), tostring(selectOk)))
+            else
+                acceptAdd(report, "empty_" .. definition.key,
+                    row.blockShown
+                        and blockSize and blockSize.w >= 70 and blockSize.h >= 70
+                        and row.coversRing
+                        and acceptNear(highlightAlpha, 0, 0.05)
+                        and not mouseEnabled
+                        and not selectOk
+                        and selectedAfter == beforeThis,
+                    string.format("block=%sx%s cover=%s hl=%.2f mouse=%s select=%s stay=%s",
+                        tostring(blockSize and blockSize.w), tostring(blockSize and blockSize.h),
+                        tostring(row.coversRing), highlightAlpha, tostring(row.mouseEnabled),
+                        tostring(selectOk), tostring(selectedAfter == beforeThis)))
+            end
+        end
+        if selectedBefore and state.selectedSlot ~= selectedBefore and state:IsSlotOccupied(selectedBefore) then
+            state:SelectSlot(selectedBefore)
+        end
+    end
+    acceptAdd(report, "has_empty_slot", emptyCount > 0,
+        string.format("empty=%d occupied=%d", emptyCount, occupiedCount))
+
+    local firstCard
+    if sources and sources.itemCards then
+        for index, card in ipairs(sources.itemCards) do
+            if card:IsShown() then
+                firstCard = card
+                break
+            end
+        end
+        if not firstCard then firstCard = sources.itemCards[1] end
+    end
+    if firstCard then
+        local cardSize = acceptMeasure(firstCard)
+        local borderTex = firstCard.scBorder and firstCard.scBorder.scTexture
+        local selectedTex = firstCard.scSelected and firstCard.scSelected.scTexture
+        local applied = firstCard.scApplied
+        local appliedTex = applied and applied.scTexture
+        local borderSize = acceptMeasure(borderTex)
+        local selectedSize = acceptMeasure(selectedTex)
+        local appliedSize = acceptMeasure(appliedTex)
+        report.cards = {
+            card = cardSize,
+            border = borderSize,
+            selected = selectedSize,
+            applied = appliedSize,
+        }
+        acceptAdd(report, "card_body_78x104",
+            cardSize and acceptNear(cardSize.w, 78) and acceptNear(cardSize.h, 104),
+            cardSize and string.format("%sx%s", cardSize.w, cardSize.h) or "missing")
+        acceptAdd(report, "border_94x120_not_stretched",
+            borderSize and acceptNear(borderSize.w, 94) and acceptNear(borderSize.h, 120)
+                and not (acceptNear(borderSize.w, 78) and acceptNear(borderSize.h, 104)),
+            borderSize and string.format("%sx%s", borderSize.w, borderSize.h) or "missing")
+        acceptAdd(report, "selected_98x124_not_stretched",
+            selectedSize and acceptNear(selectedSize.w, 98) and acceptNear(selectedSize.h, 124)
+                and not (acceptNear(selectedSize.w, 78) and acceptNear(selectedSize.h, 104)),
+            selectedSize and string.format("%sx%s", selectedSize.w, selectedSize.h) or "missing")
+        if appliedSize then
+            acceptAdd(report, "applied_94x124_not_stretched",
+                acceptNear(appliedSize.w, 94) and acceptNear(appliedSize.h, 124)
+                    and not (acceptNear(appliedSize.w, 78) and acceptNear(appliedSize.h, 104)),
+                string.format("%sx%s", appliedSize.w, appliedSize.h))
+        end
+    else
+        acceptAdd(report, "item_card_present", false, "no item cards")
+    end
+
+    if type(SoloCollectionsDB) ~= "table" then SoloCollectionsDB = {} end
+    SoloCollectionsDB.acceptanceProbe = report
+    if SC.db then SC.db.acceptanceProbe = report end
+
+    local failed = {}
+    for _, check in ipairs(report.checks) do
+        if not check.ok then
+            failed[#failed + 1] = check.name
+        end
+    end
+    local summary = string.format(
+        "SoloCollections acceptcheck: %s %d/%d",
+        report.passed and "PASS" or "FAIL",
+        #report.checks - #failed,
+        #report.checks
+    )
+    if UIErrorsFrame and UIErrorsFrame.AddMessage then
+        UIErrorsFrame:AddMessage(summary, report.passed and 0.2 or 1, report.passed and 1 or 0.2, 0.2, 1)
+    end
+    acceptChat("|cff00ff96" .. summary .. "|r")
+    if #failed > 0 then
+        acceptChat("|cffff6060  fail: " .. table.concat(failed, ", ") .. "|r")
+    end
+    for _, check in ipairs(report.checks) do
+        acceptChat(string.format("  %s %s %s", check.ok and "OK" or "NG", check.name, check.detail or ""))
+    end
+    return report
+end

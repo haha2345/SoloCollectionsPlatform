@@ -28,6 +28,7 @@ local EQUIPMENT_SLOT_BY_APPEARANCE_SLOT = {
     BACK = 14,
     MAINHAND = 15,
     OFFHAND = 16,
+    RANGED = 17,
 }
 
 DataProvider.ARMOR_OPTIONS = {
@@ -85,7 +86,7 @@ function DataProvider:GetQueryFilters()
     local filters = copyTable(currentFilters())
     local _, effectiveArmorType = self:GetArmorState()
     filters.armorType = effectiveArmorType
-    filters.hideRangedWeapons = true
+    filters.hideRangedWeapons = filters.slot ~= "RANGED"
     return filters
 end
 
@@ -104,6 +105,8 @@ function DataProvider:ToItemRecord(record)
         item.ezModelType = "main"
     elseif item.slot == "OFFHAND" then
         item.ezModelType = "off"
+    elseif item.slot == "RANGED" then
+        item.ezModelType = "ranged"
     else
         item.ezModelType = "player"
     end
@@ -116,30 +119,56 @@ local JOURNAL_HIDDEN_WEAPON_TYPES = {
     CROSSBOW = true,
 }
 
+local function appendRecords(target, source)
+    for _, record in ipairs(source) do
+        target[#target + 1] = record
+    end
+end
+
 local function convertRecords(provider, records)
-    local result = {}
+    local hideRanged = true
+    local filters = provider and provider.GetQueryFilters and provider:GetQueryFilters()
+    if filters then
+        hideRanged = filters.hideRangedWeapons ~= false
+    end
+    local newest, collected, uncollected = {}, {}, {}
+    local New = SC.NewAppearances
+    local isNew = New and New.IsNew
     for _, record in ipairs(records or {}) do
         local weaponType = record.weaponType or record.weaponCategory
-        if not JOURNAL_HIDDEN_WEAPON_TYPES[weaponType] then
-            result[#result + 1] = provider:ToItemRecord(record)
+        if not (hideRanged and JOURNAL_HIDDEN_WEAPON_TYPES[weaponType]) then
+            local item = provider:ToItemRecord(record)
+            if item then
+                if isNew and isNew(item.collectionId) then
+                    newest[#newest + 1] = item
+                elseif item.collected then
+                    collected[#collected + 1] = item
+                else
+                    uncollected[#uncollected + 1] = item
+                end
+            end
         end
     end
+    local result = {}
+    appendRecords(result, newest)
+    appendRecords(result, collected)
+    appendRecords(result, uncollected)
     return result
 end
 
 function DataProvider:QueryItems(pageNumber, pageSize)
-    if not Catalog or type(Catalog.Query) ~= "function" then
-        return {}, 1, 1, 0
+    local matches = self:QueryAllItems()
+    pageSize = math.max(1, math.floor(tonumber(pageSize) or 18))
+    local total = #matches
+    local totalPages = math.max(1, math.ceil(total / pageSize))
+    pageNumber = math.max(1, math.min(math.floor(tonumber(pageNumber) or 1), totalPages))
+    local firstIndex = ((pageNumber - 1) * pageSize) + 1
+    local lastIndex = math.min(total, firstIndex + pageSize - 1)
+    local pageRecords = {}
+    for index = firstIndex, lastIndex do
+        pageRecords[#pageRecords + 1] = matches[index]
     end
-    local query = SC.db and SC.db.query or ""
-    local records, page, totalPages, total = Catalog.Query(
-        APPEARANCE_CATEGORY,
-        query,
-        self:GetQueryFilters(),
-        pageNumber,
-        pageSize
-    )
-    return convertRecords(self, records), page, totalPages, total
+    return pageRecords, pageNumber, totalPages, total
 end
 
 function DataProvider:QueryAllItems()

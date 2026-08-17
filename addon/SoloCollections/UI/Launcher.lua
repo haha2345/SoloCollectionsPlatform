@@ -34,7 +34,10 @@ local function savePosition(button, key, defaults)
     }
 end
 
-local function createLauncherButton(name, iconTexture, tooltipTitle, tooltipBody, onClick, positionKey, defaults)
+local MICRO_BUTTON_ICON_COORD = { 0.08, 0.92, 0.50, 0.98 }
+local SQUARE_ICON_COORD = { 0.08, 0.92, 0.08, 0.92 }
+
+local function createLauncherButton(name, iconTexture, tooltipTitle, tooltipBody, onClick, positionKey, defaults, iconTexCoord)
     local button = CreateFrame("Button", name, UIParent)
     button:SetWidth(46)
     button:SetHeight(46)
@@ -62,7 +65,7 @@ local function createLauncherButton(name, iconTexture, tooltipTitle, tooltipBody
     icon:SetTexture(iconTexture)
     icon:SetPoint("TOPLEFT", button, "TOPLEFT", 6, -6)
     icon:SetPoint("BOTTOMRIGHT", button, "BOTTOMRIGHT", -6, 6)
-    icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
+    icon:SetTexCoord(unpack(iconTexCoord or SQUARE_ICON_COORD))
 
     local ring = button:CreateTexture(nil, "OVERLAY")
     ring:SetTexture("Interface\\Buttons\\UI-Quickslot2")
@@ -124,14 +127,15 @@ function UI.CreateLauncher()
     if not UI.Launcher then
         UI.Launcher = createLauncherButton(
             "SoloCollectionsLauncher",
-            UI.Media.launcher,
+            UI.Media.collectionsLauncher,
             "收藏",
             "点击打开收藏日志，拖动可改变位置。",
             function()
                 SC:ToggleJournal()
             end,
             "launcher",
-            COLLECTION_DEFAULT
+            COLLECTION_DEFAULT,
+            MICRO_BUTTON_ICON_COORD
         )
     end
 
@@ -149,7 +153,8 @@ function UI.CreateLauncher()
                 end
             end,
             "transmogLauncher",
-            TRANSMOG_DEFAULT
+            TRANSMOG_DEFAULT,
+            MICRO_BUTTON_ICON_COORD
         )
     end
 

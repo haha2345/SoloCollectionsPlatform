@@ -65,7 +65,14 @@ type `11` is the corresponding authoritative companion set. Internal types
 `16` (`mount-favorite`) and `17` (`companion-favorite`) carry favorite
 membership using the stable IDs of types 10 and 11 respectively. Types 16 and
 17 are internal projections: they are not navigation categories and never
-contribute to collection totals or progress.
+contribute to collection totals or progress. Type `20` (`appearance-new`) is
+the account-authoritative set of **unseen owned** appearance IDs. It reuses
+the type 13 mapping hash, stores rows in `sc_collection_unlock` (`type_id=20`),
+and is excluded from navigation and progress. Existing type 13 unlocks are
+not backfilled: a missing type 20 row means seen. Gameplay and GM unlocks of
+type 13 after this projection exists may insert a matching type 20 row.
+Migration and historical inventory reconcile must not. Character switches
+keep the same account snapshot, so badges do not relight.
 
 Internal types `18` (`character-applied`) and `19` (`account-outfit`) are
 wardrobe projections. Their `M` mapping hashes are syntax/slot-order hashes,
@@ -129,6 +136,16 @@ must not update its star optimistically.
 control collection ID `1`. The server alone builds the owned, favorite and
 currently usable pool; ID `1` is forbidden in both generated catalogs. A
 different control ID is `INVALID_REQUEST`.
+
+`Q ...|13|collectionId|MARK_SEEN|-` clears one unseen flag: the appearance
+must already be owned on type 13, then type 20 is revoked (idempotent if
+already absent) and a type 20 `R` delta is emitted. SavedVariables must not
+authorize this.
+
+`Q ...|13|1|MARK_ALL_SEEN|-` uses reserved control collection ID `1`. One
+transaction deletes every type 20 row for the account, advances revision
+once, and replaces the type 20 snapshot. The AddOn may hide badges
+optimistically after `ACCEPTED`, then fade the visible card marks.
 
 Client spell `150544` is the persistent native action-bar representation of
 the same random-mount operation. Its server SpellScript invokes the same

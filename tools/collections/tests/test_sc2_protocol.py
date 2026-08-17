@@ -56,6 +56,7 @@ class SC2ProtocolTests(unittest.TestCase):
                 "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress",
                 "18": "internal character-applied wardrobe slots; fixed Lab.SLOTS order; empty=- hide=2 otherwise appearance collectionId; excluded from navigation and progress",
                 "19": "internal account-outfit set; uid:nameHex:slotCsv rows separated by semicolon; excluded from navigation and progress",
+                "20": "internal unseen owned appearance collection IDs; uses type 13 mapping hash; excluded from navigation and progress; not backfilled for existing unlocks",
             },
             self.schema["projectionTypes"],
         )
@@ -63,11 +64,19 @@ class SC2ProtocolTests(unittest.TestCase):
         self.assertEqual(list(range(1, 10)), self.schema["reservedAppearanceCollectionIds"])
         self.assertEqual(14, self.schema["wardrobeSlotCount"])
         self.assertIn("INSUFFICIENT_FUNDS", self.schema["actionStatuses"])
+        self.assertIn("WEAPON_TYPE", self.schema["actionStatuses"])
+        self.assertIn("ARMOR_TYPE", self.schema["actionStatuses"])
         self.assertIn("Y", self.schema["messages"])
         self.assertIn("U", self.schema["messages"])
         self.assertIn("O", self.schema["messages"])
         favorite = self.schema["actionSemantics"]["SET_FAVORITE"]
         random_summon = self.schema["actionSemantics"]["RANDOM_SUMMON"]
+        mark_seen = self.schema["actionSemantics"]["MARK_SEEN"]
+        mark_all_seen = self.schema["actionSemantics"]["MARK_ALL_SEEN"]
+        self.assertEqual([13], mark_seen["typeIds"])
+        self.assertEqual(20, mark_seen["projectionType"])
+        self.assertEqual(1, mark_all_seen["collectionId"])
+        self.assertEqual(20, mark_all_seen["projectionType"])
         self.assertEqual([10, 11], favorite["typeIds"])
         self.assertEqual({"10": 16, "11": 17}, favorite["projectionTypeByOwnedType"])
         self.assertEqual([10, 11], random_summon["typeIds"])

@@ -41,6 +41,7 @@ UI\EzWardrobe\Assets.lua
 UI\EzWardrobe\Model.lua
 UI\EzWardrobe\Items.xml
 UI\EzWardrobe\Items.lua
+UI\Wardrobe\NewAppearances.lua
 UI\Wardrobe\Filters.lua
 UI\CompanionBase.lua
 UI\Mounts.lua

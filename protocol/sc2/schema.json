@@ -29,7 +29,8 @@
     "16": "internal mount-favorite membership using type 10 collection IDs; excluded from navigation and progress",
     "17": "internal companion-favorite membership using type 11 collection IDs; excluded from navigation and progress",
     "18": "internal character-applied wardrobe slots; fixed Lab.SLOTS order; empty=- hide=2 otherwise appearance collectionId; excluded from navigation and progress",
-    "19": "internal account-outfit set; uid:nameHex:slotCsv rows separated by semicolon; excluded from navigation and progress"
+    "19": "internal account-outfit set; uid:nameHex:slotCsv rows separated by semicolon; excluded from navigation and progress",
+    "20": "internal unseen owned appearance collection IDs; uses type 13 mapping hash; excluded from navigation and progress; not backfilled for existing unlocks"
   },
   "warningBits": {
     "00000001": "REPLACES_EXISTING",
@@ -156,6 +157,27 @@
       "target": "-",
       "sideEffects": "DELETE_ACCOUNT_OUTFIT",
       "acceptedMeaning": "SERVER_DELETED_ACCOUNT_OUTFIT"
+    },
+    "MARK_SEEN": {
+      "message": "Q",
+      "typeIds": [13],
+      "actionId": "MARK_SEEN",
+      "target": "-",
+      "requiresOwned": true,
+      "projectionType": 20,
+      "sideEffects": "REVOKE_TYPE_20_IF_PRESENT_AND_EMIT_DELTA",
+      "acceptedMeaning": "SERVER_CLEARED_UNSEEN_FLAG_FOR_OWNED_APPEARANCE"
+    },
+    "MARK_ALL_SEEN": {
+      "message": "Q",
+      "typeIds": [13],
+      "actionId": "MARK_ALL_SEEN",
+      "collectionId": 1,
+      "target": "-",
+      "requiresOwned": false,
+      "projectionType": 20,
+      "sideEffects": "ONE_TRANSACTION_CLEAR_TYPE_20_THEN_SNAPSHOT_REPLACE",
+      "acceptedMeaning": "SERVER_CLEARED_ALL_UNSEEN_APPEARANCE_FLAGS"
     }
   },
   "actionStatuses": [
@@ -174,6 +196,8 @@
     "CLASS_RESTRICTED",
     "RACE_RESTRICTED",
     "SKILL_REQUIRED",
+    "WEAPON_TYPE",
+    "ARMOR_TYPE",
     "INVALID_TARGET_SLOT",
     "DB_UNAVAILABLE",
     "RATE_LIMITED",

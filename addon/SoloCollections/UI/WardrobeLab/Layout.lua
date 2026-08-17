@@ -241,11 +241,23 @@ function Lab.CreateLayout(page, state)
             canApply, reason = state:GetDraftApplyState()
         end
         if not canApply and reason and reason ~= "NO_DRAFT" and Lab.ApplyReasonText then
-            GameTooltip:AddLine(Lab.ApplyReasonText(reason, {
-                set = state.presetRecord ~= nil,
-                owned = state.presetRecord and state.presetRecord.collectedCount,
-                required = state.presetRecord and state.presetRecord.requiredCount,
-            }), 1, 0.35, 0.25, true)
+            local listed = false
+            if not state.presetRecord and state.GetDraftSlotReasons then
+                local slotReasons = state:GetDraftSlotReasons()
+                for _, entry in ipairs(slotReasons) do
+                    GameTooltip:AddLine(Lab.ApplyReasonText(entry.reason, {
+                        slotLabel = entry.label,
+                    }), 1, 0.35, 0.25, true)
+                    listed = true
+                end
+            end
+            if not listed then
+                GameTooltip:AddLine(Lab.ApplyReasonText(reason, {
+                    set = state.presetRecord ~= nil,
+                    owned = state.presetRecord and state.presetRecord.collectedCount,
+                    required = state.presetRecord and state.presetRecord.requiredCount,
+                }), 1, 0.35, 0.25, true)
+            end
         else
             GameTooltip:AddLine("只显示最近一次服务端报价。0 铜是合法报价，也会显示；没有可应用的待定时同样按 0。客户端不估算金币。", 0.72, 0.72, 0.72, true)
         end
@@ -292,10 +304,25 @@ function Lab.CreateLayout(page, state)
             if canApply then
                 GameTooltip:AddLine("应用当前待定外观；每个槽位仍由 SC2 服务端验证。", 0.72, 0.72, 0.72, true)
             else
-                GameTooltip:AddLine(
-                    (Lab.ApplyReasonText and Lab.ApplyReasonText(reason)) or "当前待定外观暂不能提交应用。",
-                    1, 0.35, 0.25, true
-                )
+                local listed = false
+                if state.GetDraftSlotReasons then
+                    local slotReasons = state:GetDraftSlotReasons()
+                    for _, entry in ipairs(slotReasons) do
+                        GameTooltip:AddLine(
+                            (Lab.ApplyReasonText and Lab.ApplyReasonText(entry.reason, {
+                                slotLabel = entry.label,
+                            })) or "当前待定外观暂不能提交应用。",
+                            1, 0.35, 0.25, true
+                        )
+                        listed = true
+                    end
+                end
+                if not listed then
+                    GameTooltip:AddLine(
+                        (Lab.ApplyReasonText and Lab.ApplyReasonText(reason)) or "当前待定外观暂不能提交应用。",
+                        1, 0.35, 0.25, true
+                    )
+                end
             end
         end
         GameTooltip:Show()

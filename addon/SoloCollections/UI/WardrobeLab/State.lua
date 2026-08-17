@@ -68,14 +68,17 @@ function Lab.IsInventoryOccupied(inventorySlotId, knownItemId)
     if link and Lab.PositiveItemId(string.match(link, "item:(%d+)")) then
         return true
     end
-    if GetInventoryItemCount and (GetInventoryItemCount("player", inventorySlotId) or 0) > 0 then
-        return true
-    end
     if GetInventoryItemTexture then
         local texture = GetInventoryItemTexture("player", inventorySlotId)
         if texture and not isPaperdollEmptyTexture(texture) then
             return true
         end
+        if isPaperdollEmptyTexture(texture) then
+            return false
+        end
+    end
+    if GetInventoryItemCount and (GetInventoryItemCount("player", inventorySlotId) or 0) > 0 then
+        return true
     end
     return false
 end
@@ -97,6 +100,8 @@ Lab.APPLY_REASON_TEXT = {
     CLASS_RESTRICTED = "当前装备与此外观不兼容。",
     RACE_RESTRICTED = "当前种族不能使用此外观。",
     SKILL_REQUIRED = "当前角色缺少使用此外观所需的技能。",
+    WEAPON_TYPE = "武器类型不兼容。",
+    ARMOR_TYPE = "护甲类型不兼容。",
     UNKNOWN_IDENTITY = "未知外观，服务端已拒绝。",
     COST_CHANGED = "费用已变化，请重新确认后再应用。",
     INSUFFICIENT_FUNDS = "金币不足。",
@@ -110,17 +115,22 @@ Lab.APPLY_REASON_TEXT = {
 
 function Lab.ApplyReasonText(reason, extra)
     extra = extra or {}
+    local text
     if reason == "NOT_OWNED" and extra.set then
-        return string.format(
+        text = string.format(
             "当前套装尚未收集完整：%s / %s。未收藏套装只能预览。",
             tostring(extra.owned or 0),
             tostring(extra.required or 0)
         )
+    elseif reason and Lab.APPLY_REASON_TEXT[reason] then
+        text = Lab.APPLY_REASON_TEXT[reason]
+    else
+        text = extra.fallback or "当前待定外观暂不能提交应用。"
     end
-    if reason and Lab.APPLY_REASON_TEXT[reason] then
-        return Lab.APPLY_REASON_TEXT[reason]
+    if extra.slotLabel and extra.slotLabel ~= "" then
+        return extra.slotLabel .. "：" .. text
     end
-    return extra.fallback or "当前待定外观暂不能提交应用。"
+    return text
 end
 
 function Lab.NotifyApplyBlocked(reason, extra)
@@ -577,6 +587,7 @@ end
 
 function State:SelectSlot(slotKey)
     if not Lab.SLOT_BY_KEY[slotKey] then return false end
+    if not self:IsSlotOccupied(slotKey) then return false end
     self.selectedSlot = slotKey
     self:Notify("SELECT_SLOT")
     return true
@@ -940,9 +951,18 @@ end
 
 function State:GetPreviewItemIds()
     local items = {}
+    local selected = self.selectedSlot
+    local hideRanged = selected == "MAINHAND" or selected == "OFFHAND"
+    local hideMelee = selected == "RANGED"
     for _, definition in ipairs(Lab.SLOTS) do
-        if not self:IsSlotHidden(definition.key) then
-            local itemId = self:GetSlotPreviewItemId(definition.key)
+        local key = definition.key
+        if hideRanged and key == "RANGED" then
+            -- Hunters AutoDress a drawn ranged weapon; omit it while
+            -- previewing a melee slot.
+        elseif hideMelee and (key == "MAINHAND" or key == "OFFHAND") then
+            -- Selecting the ranged slot should not keep a melee weapon drawn.
+        elseif not self:IsSlotHidden(key) then
+            local itemId = self:GetSlotPreviewItemId(key)
             if itemId then items[#items + 1] = itemId end
         end
     end
@@ -1016,6 +1036,61 @@ function State:GetDraftBlockReason()
         return "NO_DRAFT"
     end
     return self:GetAffordabilityReason()
+end
+
+local PREVIEW_RANGED_WEAPON_TYPES = {
+    BOW = true, GUN = true, CROSSBOW = true, THROWN = true, WAND = true,
+}
+
+function State:GetDraftSlotReasons()
+    local reasons = {}
+    for _, definition in ipairs(Lab.SLOTS) do
+        local record = self.draftBySlot[definition.key]
+        if self.dirtySlots[definition.key] and record then
+            local reason
+            if not self:IsSlotOccupied(definition.key) then
+                reason = "INVALID_TARGET_SLOT"
+            elseif not Lab.IsHideVisualRecord(record) and not Lab.IsCollectedRecord(record) then
+                reason = "NOT_OWNED"
+            else
+                local weaponType = record.weaponType or record.weaponCategory
+                local isRanged = PREVIEW_RANGED_WEAPON_TYPES[weaponType] or record.slot == "RANGED"
+                if (definition.key == "MAINHAND" or definition.key == "OFFHAND") and isRanged then
+                    reason = "WEAPON_TYPE"
+                elseif definition.key == "RANGED" and weaponType and not isRanged then
+                    reason = "WEAPON_TYPE"
+                end
+            end
+            if reason then
+                reasons[#reasons + 1] = {
+                    slot = definition.key,
+                    label = definition.label,
+                    reason = reason,
+                }
+            end
+        end
+    end
+    if #reasons == 0 and self.quoteStatus
+        and self.quoteStatus ~= "READY" and self.quoteStatus ~= "UNAVAILABLE" then
+        for _, definition in ipairs(Lab.SLOTS) do
+            if self:IsSlotApplyable(definition.key) then
+                reasons[#reasons + 1] = {
+                    slot = definition.key,
+                    label = definition.label,
+                    reason = self.quoteStatus,
+                }
+            end
+        end
+        if #reasons == 0 then
+            local selected = Lab.SLOT_BY_KEY[self.selectedSlot]
+            reasons[1] = {
+                slot = self.selectedSlot,
+                label = selected and selected.label or tostring(self.selectedSlot or ""),
+                reason = self.quoteStatus,
+            }
+        end
+    end
+    return reasons
 end
 
 function State:GetDraftApplyState()

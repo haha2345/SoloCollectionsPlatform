@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "distribution": {
     "localStatus": "project-authored-base-ui-ready",
-    "publicStatus": "project-authored-base-ui-ready",
+    "publicStatus": "replace-client-extracted-collections-micro-before-public-push",
     "pathContract": "Base UI roles resolve only to tracked files under Media; optional skins are declared separately and never satisfy a base role.",
     "policy": "../../../docs/ASSETS.md"
   },
@@ -10,7 +10,7 @@
     "type": "project-authored-procedural",
     "generator": "../../../tools/media/generate_base_ui_media.py",
     "license": "Project-authored assets; redistributable with SoloCollections.",
-    "notes": "The slot atlas, selected ring, hover ring and mount portrait are generated from deterministic project source. No Retail CASC, extracted Blizzard BLP, or optional local media is read by the generator. Existing journal chrome and tab artwork remain project-owned recreated TGA assets."
+    "notes": "The slot atlas, selected ring, hover ring and mount portrait are generated from deterministic project source. No Retail CASC, extracted Blizzard BLP, or optional local media is read by the generator. Existing journal chrome and tab artwork remain project-owned recreated TGA assets. Icons/collections-micro.tga is a separate maintainer-authorized Legion extract and is not generated."
   },
   "format": {
     "container": "TGA",
@@ -78,6 +78,12 @@
       "role": "base collection-chest launcher",
       "provenance": "project-owned legacy base UI icon"
     },
+    "Icons/collections-micro.tga": {
+      "width": 32,
+      "height": 64,
+      "role": "Legion collections micro-button",
+      "provenance": "maintainer-authorized extract from local Legion 7.3.5.26972 CASC Interface/Buttons/UI-MicroButton-Mounts-Up.blp FileDataID 615164; intermediate BLP stays in ignored _work; not for public redistribution"
+    },
     "Icons/mount-portrait.tga": {
       "width": 64,
       "height": 64,
@@ -107,6 +113,7 @@
     "Tabs/toys.tga": "DD3A5EFC8E05622BB4A23D5F8CC3A05C2574D59A7566EC5E47E99DC350872B6D",
     "Tabs/wardrobe.tga": "6C741523F7FB5395A998A691CB485D24C4B7711DB019FFD84E4F4A213FD17E5D",
     "Icons/launcher.tga": "A7D47E6D29B9F77BBE7842AE1806F872F2DEAB4CE796C99990662FBBFC5F6BC2",
+    "Icons/collections-micro.tga": "32C7441E7305AD4B6589FB0F480DF4FE7A1DF00D1360AFA6A3FFA650F0514877",
     "Icons/mount-portrait.tga": "052894EB375D9A5E2DA1FD0B58C4130784DB6B0368E9ABE6458C1C6063EA655C",
     "Icons/WardrobeSlots/slot-atlas.tga": "AAEABEA0281D60F198D5BF1522777B2A64A21FD17DDD2D78F4526DED4E8A8A67",
     "Icons/WardrobeSlots/round-highlight.tga": "288DBA10296F821CB5786FFB78DEF00B1C67192A34A0530AFBE8ED228BC9DE35"

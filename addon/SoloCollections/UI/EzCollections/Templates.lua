@@ -127,11 +127,16 @@ end
 local function insetFrameSize(frame)
     local width = frame:GetWidth() or 0
     local height = frame:GetHeight() or 0
-    if width < 1 or height < 1 then
-        local left, right = frame:GetLeft(), frame:GetRight()
-        local bottom, top = frame:GetBottom(), frame:GetTop()
-        if left and right then width = right - left end
-        if top and bottom then height = top - bottom end
+    local left, right = frame:GetLeft(), frame:GetRight()
+    local bottom, top = frame:GetBottom(), frame:GetTop()
+    -- 3.3.5 GetWidth/GetHeight can stay on the XML Size after SetPoint
+    -- stretch. Prefer the larger screen-space box so marble tiles cover
+    -- the pagination strip instead of leaving the journal body color.
+    if left and right then
+        width = math.max(width, right - left)
+    end
+    if top and bottom then
+        height = math.max(height, top - bottom)
     end
     return width, height
 end
@@ -631,6 +636,13 @@ local function setAtlasPixels(texture, path, atlasWidth, atlasHeight, left, righ
     )
 end
 
+local function placeItemChrome(texture, width, height)
+    texture:ClearAllPoints()
+    texture:SetWidth(width)
+    texture:SetHeight(height)
+    texture:SetPoint("CENTER", texture:GetParent(), "CENTER", 0, -3)
+end
+
 function Ez:CreateWardrobeItemChrome(parent)
     local transmog = self:MediaPath("Transmogrify", "Transmogrify.tga", WHITE_TEXTURE)
     local collections = self:MediaPath("Collections", "Collections.tga", WHITE_TEXTURE)
@@ -639,43 +651,36 @@ function Ez:CreateWardrobeItemChrome(parent)
     border:SetAllPoints(parent)
     border:SetFrameLevel(parent:GetFrameLevel() + 1)
     local borderTexture = border:CreateTexture(nil, "OVERLAY")
-    borderTexture:SetPoint("CENTER", border, "CENTER", 0, -3)
+    placeItemChrome(borderTexture, 94, 120)
     function border:SetCollected(value)
         self.scCollected = value and true or false
         if self.scCollected then
-            borderTexture:SetWidth(96)
-            borderTexture:SetHeight(122)
-            setAtlasPixels(borderTexture, transmog, 512, 512, 1, 97, 131, 253)
+            setAtlasPixels(borderTexture, transmog, 512, 512, 2, 96, 132, 252)
         else
-            borderTexture:SetWidth(96)
-            borderTexture:SetHeight(122)
-            setAtlasPixels(borderTexture, transmog, 512, 512, 1, 97, 255, 377)
+            setAtlasPixels(borderTexture, transmog, 512, 512, 2, 96, 256, 376)
         end
+        placeItemChrome(borderTexture, 94, 120)
     end
 
-    -- Legion/ez TransmogStateTexture: pink = already applied to the
-    -- equipped item (current-transmogged); gold = local pending selected.
-    -- These two atlas tiles must stay distinct.
+    -- Legion/ez TransmogStateTexture stays at atlas pixel size and sits on
+    -- the card with CENTER 0,-3. Stretching those tiles to 78x104 warps the
+    -- frame into a heavy vignette.
     local selected = CreateFrame("Frame", nil, parent)
     selected:SetAllPoints(parent)
     selected:SetFrameLevel(parent:GetFrameLevel() + 2)
     local selectedTexture = selected:CreateTexture(nil, "OVERLAY")
-    selectedTexture:SetWidth(102)
-    selectedTexture:SetHeight(128)
-    selectedTexture:SetPoint("CENTER")
     selectedTexture:SetBlendMode("ADD")
-    setAtlasPixels(selectedTexture, transmog, 512, 512, 99, 201, 1, 129)
+    setAtlasPixels(selectedTexture, transmog, 512, 512, 101, 199, 3, 127)
+    placeItemChrome(selectedTexture, 98, 124)
     selected:Hide()
 
     local applied = CreateFrame("Frame", nil, parent)
     applied:SetAllPoints(parent)
     applied:SetFrameLevel(parent:GetFrameLevel() + 2)
     local appliedTexture = applied:CreateTexture(nil, "OVERLAY")
-    appliedTexture:SetWidth(102)
-    appliedTexture:SetHeight(128)
-    appliedTexture:SetPoint("CENTER")
     appliedTexture:SetBlendMode("ADD")
-    setAtlasPixels(appliedTexture, transmog, 512, 512, 1, 103, 1, 129)
+    setAtlasPixels(appliedTexture, transmog, 512, 512, 3, 97, 3, 127)
+    placeItemChrome(appliedTexture, 94, 124)
     applied:Hide()
 
     function parent:SetApplied(value)
@@ -683,11 +688,9 @@ function Ez:CreateWardrobeItemChrome(parent)
     end
 
     local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
-    highlight:SetWidth(84)
-    highlight:SetHeight(110)
-    highlight:SetPoint("CENTER")
     highlight:SetBlendMode("ADD")
-    setAtlasPixels(highlight, transmog, 512, 512, 105, 189, 225, 335)
+    setAtlasPixels(highlight, transmog, 512, 512, 107, 187, 227, 333)
+    placeItemChrome(highlight, 80, 106)
 
     local favorite = CreateFrame("Frame", nil, parent)
     favorite:SetWidth(31)
@@ -879,13 +882,16 @@ function Ez:CreateTransmogSlotChrome(parent)
     undo:SetTexCoord(0.1796875, 0.3671875, 0.58203125, 0.625)
     undo:Hide()
 
-    local highlight = parent:CreateTexture(nil, "HIGHLIGHT")
+    -- OVERLAY instead of HIGHLIGHT: 3.3.5 still lights the parent HIGHLIGHT
+    -- when the mouse is over a child empty-block.
+    local highlight = parent:CreateTexture(nil, "OVERLAY")
     highlight:SetWidth(44)
     highlight:SetHeight(41)
     highlight:SetPoint("CENTER")
     highlight:SetTexture(transmog)
     highlight:SetTexCoord(0.646484375, 0.732421875, 0.001953125, 0.08203125)
     highlight:SetBlendMode("ADD")
+    highlight:Hide()
 
     function parent:SetSlotSelected(value)
         if value then selected:Show() else selected:Hide() end
@@ -953,6 +959,7 @@ function Ez:CreateTransmogSlotChrome(parent)
     parent.scBorder = border
     parent.scStatusBorder = status
     parent.scSelectedTexture = selected
+    parent.scSlotHighlight = highlight
     parent.scPendingGlow = pendingGlow
     parent.scPendingAnts = ants
     parent.scUndoTexture = undo

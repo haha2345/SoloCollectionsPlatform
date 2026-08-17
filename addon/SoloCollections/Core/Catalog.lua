@@ -148,6 +148,16 @@ function Catalog.GetAvailableWeaponFilters(slot)
             result[#result + 1] = option
         end
     end
+    -- Paladin/DK/Shaman mainhand lists have no bow/gun/wand. The journal still
+    -- shows a Ranged slot, so fall back to every ranged family rather than an
+    -- empty dropdown that crashes Refresh.
+    if slot == "RANGED" and #result == 0 then
+        for _, option in ipairs(Catalog.WEAPON_FILTERS) do
+            if Catalog.WeaponFilterSupportsSlot(option, slot) then
+                result[#result + 1] = option
+            end
+        end
+    end
     return result
 end
 

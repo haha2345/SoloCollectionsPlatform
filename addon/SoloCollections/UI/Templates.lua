@@ -31,6 +31,7 @@ UI.Media = {
     collectedFrame = MEDIA_ROOT .. "Borders\\collected-frame.tga",
     uncollectedFrame = MEDIA_ROOT .. "Borders\\uncollected-frame.tga",
     launcher = MEDIA_ROOT .. "Icons\\launcher.tga",
+    collectionsLauncher = MEDIA_ROOT .. "Icons\\collections-micro.tga",
     mountPortrait = MEDIA_ROOT .. "Icons\\mount-portrait.tga",
     wardrobeSlotAtlas = MEDIA_ROOT .. "Icons\\WardrobeSlots\\slot-atlas.tga",
     roundHighlightAtlas = MEDIA_ROOT .. "Icons\\WardrobeSlots\\round-highlight.tga",
@@ -792,6 +793,27 @@ function UI.GetAppearanceSourceFilters()
     return filters
 end
 
+local PLAYER_ARMOR_TYPES = {
+    PLATE = true,
+    MAIL = true,
+    LEATHER = true,
+    CLOTH = true,
+}
+
+local function playerClassFilterToken()
+    local Identity = SC.IdentityRegistry
+    local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
+    local token = classIdentity and classIdentity.known and classIdentity.filterToken
+    if not token then return nil end
+    local options = Identity.GetClassFilterOptions and Identity.GetClassFilterOptions() or {}
+    for _, option in ipairs(options) do
+        if option.key == token then
+            return token
+        end
+    end
+    return nil
+end
+
 function UI.EnsureDefaultSetClassFilter()
     if UI.scSetClassDefaultApplied then return false end
     if not (SC.db and SC.db.filters) then return false end
@@ -799,18 +821,28 @@ function UI.EnsureDefaultSetClassFilter()
     if SC.db.filters.classToken and SC.db.filters.classToken ~= "ALL" then
         return false
     end
-    local Identity = SC.IdentityRegistry
-    local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
-    local token = classIdentity and classIdentity.known and classIdentity.filterToken
+    local token = playerClassFilterToken()
     if not token then return false end
-    local options = Identity.GetClassFilterOptions and Identity.GetClassFilterOptions() or {}
-    for _, option in ipairs(options) do
-        if option.key == token then
-            SC.db.filters.classToken = token
-            return true
-        end
+    SC.db.filters.classToken = token
+    return true
+end
+
+function UI.ApplyTransmogOpenFilters()
+    if not (SC.db and SC.db.filters) then return false end
+    local Identity = SC.IdentityRegistry
+    local changed = false
+    local token = playerClassFilterToken()
+    if token and SC.db.filters.classToken ~= token then
+        SC.db.filters.classToken = token
+        changed = true
     end
-    return false
+    local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
+    local armorType = Identity and Identity.GetDefaultArmorType and Identity.GetDefaultArmorType(classIdentity)
+    if PLAYER_ARMOR_TYPES[armorType] and SC.db.filters.armorType ~= armorType then
+        SC.db.filters.armorType = armorType
+        changed = true
+    end
+    return changed
 end
 
 function UI.AddCollectedStateMenuButtons(level, onChanged)

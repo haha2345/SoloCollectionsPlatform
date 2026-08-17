@@ -133,8 +133,10 @@ Catalog generation and matched release commands are documented in
 Type 18/19 and `Y`/`U`/`O` stay on protocol version 1. Old AddOns keep using
 type 13/14. New AddOns advertise `clientBuild` `0.2.0-w1`.
 
-1. Deploy `mod-solo-collections` first (SQL update, provider, Y/U/O, type 18/19).
-   Old AddOns still only speak 13/14 and must not receive type 18/19 mappings.
+1. Deploy `mod-solo-collections` first (SQL update, provider, Y/U/O, type 18/19,
+   and type 20 `appearance-new`). Old AddOns still only speak 13/14 and must not
+   receive type 18/19 mappings. Type 20 reuses the type 13 mapping hash and is
+   not backfilled for existing unlocks.
 2. Deploy this AddOn second. HELLO uses `SC.VERSION .. "-w1"`; `SC.VERSION`
    remains `0.2.0`.
 3. Ship a matched metadata/mapping-hash set. Type 18/19 hashes are slot-grammar
@@ -153,12 +155,17 @@ Collected wardrobe apply uses `CanApplyCollectedVisual` so an owned appearance
 is not blocked by the source item's `AllowableClass` or by NPC armor-skill
 checks on the equipped target. Cloth/leather/mail/plate mixing on that path
 follows `SoloCollections.Transmog.MixedArmor` (`same` / `lower` / `any`,
-default `any`, invalid values fail closed to `same`). NPC transmog still uses
-`Transmogrification.AllowMixedArmorTypes`. Shirt and tabard wardrobe cards
+default `any`, invalid values fail closed to `same`). Weapon subclass mixing
+follows `SoloCollections.Transmog.MixedWeapons` (`same` / `family` / `any`,
+default `any`); bow/gun/crossbow stay isolated from melee. Wand and thrown
+are not in that isolation set. MISC armor can mix with a
+tiered appearance of the same inventory type when MixedArmor is `any`. NPC
+transmog still uses `Transmogrification.AllowMixedArmorTypes` and
+`Transmogrification.AllowMixedWeaponTypes`. Shirt and tabard wardrobe cards
 use the player `DressUpModel` armor presenter (ezCollections TryOn path,
 Transmorpher Shirt/Tabard cameras). Gun, bow, and crossbow cards use the
-Transmorpher ranged weapon presenter. The journal items page hides
-gun/bow/crossbow. After a successful apply the left preview keeps the current
+Transmorpher ranged weapon presenter. The journal items page shows
+gun/bow/crossbow only on the ranged slot filter. After a successful apply the left preview keeps the current
 actor when the TryOn list is unchanged. Journal set preview ignores
 `UNIT_MODEL_CHANGED` from its own `SetUnit`. Set members keep ItemSet.dbc
 pieces and add same-name-prefix extras for missing wrist/waist/feet/back

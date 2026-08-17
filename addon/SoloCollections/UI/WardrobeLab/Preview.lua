@@ -257,9 +257,14 @@ function Lab.CreatePreview(parent, state)
             items[#items + 1] = "item:" .. tostring(itemId)
         end
         local hidden = state.GetHiddenSlots and state:GetHiddenSlots() or {}
-        local needUndress = next(hidden) ~= nil
+        local selected = state.selectedSlot
+        local hideRanged = selected == "MAINHAND" or selected == "OFFHAND"
+        local hideMelee = selected == "RANGED"
+        local needUndress = next(hidden) ~= nil or hideRanged or hideMelee
         local signature = table.concat(items, ",")
         if needUndress then signature = signature .. "|H" end
+        if hideRanged then signature = signature .. "|NR" end
+        if hideMelee then signature = signature .. "|NM" end
         if self.scDressSignature == signature then
             if self.scDressState and self.scDressState ~= "idle" then
                 return

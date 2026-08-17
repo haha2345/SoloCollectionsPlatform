@@ -115,6 +115,8 @@ class SC2ClientContractTests(unittest.TestCase):
         lab = (ADDON / "UI/WardrobeLab/State.lua").read_text(encoding="utf-8")
         self.assertIn('[18] = { typeId = 18, typeKey = "character-applied"', state)
         self.assertIn('[19] = { typeId = 19, typeKey = "account-outfit"', state)
+        self.assertIn('[20] = { typeId = 20, typeKey = "appearance-new"', state)
+        self.assertIn('mappingSourceKey = "appearance"', state)
         self.assertIn("f09cf3e459d598eef49d2d1b56c76b5f36939e7023bce18291a7b51ec393e814", state)
         self.assertIn("ef7629703270ae32078c089e505474f952caa1db778a5ea737abe9a1f7fc0ec5", state)
         self.assertIn("CS.IsAppliedReady", state)
@@ -135,6 +137,7 @@ class SC2ClientContractTests(unittest.TestCase):
         category_keys = state[state.index("local CATEGORY_TYPE_KEYS"):state.index("local INTERNAL_PROJECTION_TYPES")]
         self.assertNotIn("character-applied", category_keys)
         self.assertNotIn("account-outfit", category_keys)
+        self.assertNotIn("appearance-new", category_keys)
 
 
 if __name__ == "__main__":

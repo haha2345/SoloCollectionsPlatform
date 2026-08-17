@@ -1,7 +1,7 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 9,
+    schemaVersion = 10,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     transmogLauncher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -82, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
@@ -42,6 +42,9 @@ local DEFAULTS = {
         },
     },
     favorites = {},
+    seenAppearanceIds = {},
+    newAppearanceIds = {},
+    newAppearancesSeeded = false,
     debug = false,
     bridge = {
         status = "idle",
@@ -490,6 +493,19 @@ local function normalizeDatabase(db)
     end
 
     repairScalar(db, "favorites", "table", {})
+    repairScalar(db, "seenAppearanceIds", "table", {})
+    repairScalar(db, "newAppearanceIds", "table", {})
+    repairScalar(db, "newAppearancesSeeded", "boolean", false)
+    for collectionId, seen in pairs(db.seenAppearanceIds) do
+        if type(collectionId) ~= "number" or seen ~= true then
+            db.seenAppearanceIds[collectionId] = nil
+        end
+    end
+    for collectionId, isNew in pairs(db.newAppearanceIds) do
+        if type(collectionId) ~= "number" or isNew ~= true then
+            db.newAppearanceIds[collectionId] = nil
+        end
+    end
     normalizeCameraTuning(db)
     -- Capability attestation is deliberately process-local in M2Camera.lua.
     -- Remove an experimental pre-v7 saved marker so a stock client always
@@ -601,6 +617,12 @@ SlashCmdList.SOLOCOLLECTIONS = function(message)
         SC:ResetLayoutAndFilters()
     elseif command == "transmog" or command == "tmog" or command == "幻化" then
         SC:ToggleTransmog()
+    elseif command == "acceptcheck" then
+        if SC.RunAcceptanceCheck then
+            SC.RunAcceptanceCheck()
+        else
+            DEFAULT_CHAT_FRAME:AddMessage("|cffff9f40SoloCollections:|r acceptcheck 未加载")
+        end
     elseif command == "debug" then
         SC.db.debug = not SC.db.debug
         DEFAULT_CHAT_FRAME:AddMessage("SoloCollections debug: " .. (SC.db.debug and "on" or "off"))

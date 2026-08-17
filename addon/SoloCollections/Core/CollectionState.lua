@@ -48,6 +48,7 @@ local INTERNAL_PROJECTION_TYPES = {
     [17] = { typeId = 17, typeKey = "companion-favorite", mappingSourceKey = "companion" },
     [18] = { typeId = 18, typeKey = "character-applied", mappingHash = APPLIED_MAPPING_HASH },
     [19] = { typeId = 19, typeKey = "account-outfit", mappingHash = OUTFIT_MAPPING_HASH },
+    [20] = { typeId = 20, typeKey = "appearance-new", mappingSourceKey = "appearance" },
 }
 
 local typeDefinitions = {}
@@ -303,6 +304,9 @@ local function applyDelta(delta)
         category.owned[delta.collectionId] = nil
     end
     CS.accountRevision = delta.revision
+    if SC.NewAppearances and SC.NewAppearances.OnDelta then
+        SC.NewAppearances.OnDelta(delta)
+    end
     notifyChanged(delta.typeId, {
         kind = "DELTA",
         collectionId = delta.collectionId,
@@ -854,6 +858,14 @@ end
 function CS.IsOwnedByType(typeId, collectionId)
     local category = CS.categories[tonumber(typeId)]
     return category and category.state == "Ready" and category.owned[tonumber(collectionId)] == true or false
+end
+
+function CS.GetOwnedSet(typeId)
+    local category = CS.categories[tonumber(typeId)]
+    if not category or category.state ~= "Ready" then
+        return nil
+    end
+    return category.owned
 end
 
 function CS.IsAppliedReady()

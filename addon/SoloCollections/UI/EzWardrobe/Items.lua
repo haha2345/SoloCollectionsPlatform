@@ -100,6 +100,9 @@ local function createCard(parent, index, callbacks)
     uncollectedShade:Hide()
 
     local border, selected, favorite, hover = UI.EzCollections:CreateWardrobeItemChrome(hit)
+    if SC.NewAppearances and SC.NewAppearances.AttachCardBadge then
+        SC.NewAppearances.AttachCardBadge(hit)
+    end
 
     local name = hit:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     name:SetPoint("BOTTOMLEFT", hit, "BOTTOMLEFT", 5, 5)
@@ -188,6 +191,9 @@ function Items:UpdateCardState(itemModel, selectedId)
             itemModel.scCollectedState:Hide()
             itemModel.scUncollectedShade:Hide()
             itemModel.scSelected:Hide()
+            if SC.NewAppearances and SC.NewAppearances.UpdateCardBadge then
+                SC.NewAppearances.UpdateCardBadge(itemModel.scHitFrame or itemModel, nil)
+            end
         end
         return
     end
@@ -204,6 +210,9 @@ function Items:UpdateCardState(itemModel, selectedId)
         itemModel.scCollectionState:Show()
     end
     if record.favorite then itemModel.scFavorite:Show() else itemModel.scFavorite:Hide() end
+    if SC.NewAppearances and SC.NewAppearances.UpdateCardBadge then
+        SC.NewAppearances.UpdateCardBadge(itemModel.scHitFrame or itemModel, record.collectionId or record.id)
+    end
     if record.collectionId == selectedId or record.id == selectedId then
         itemModel.scSelected:Show()
     else
