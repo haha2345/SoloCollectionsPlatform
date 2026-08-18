@@ -43,6 +43,10 @@ venv/
 # Generated personal build metadata
 mod-solo-collections/src/generated/SoloCollectionsBuildInfo.inc
 
+# Microsoft YaHei is licensed; keep the local subset out of the public tree.
+SoloCollections/addon/SoloCollections/Media/Fonts/*.ttf
+SoloCollections/addon/SoloCollections/Media/Fonts/*.ttc
+
 # OS
 Thumbs.db
 Desktop.ini

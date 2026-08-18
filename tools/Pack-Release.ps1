@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$Version = '0.3.0',
+    [string]$Version = '0.3.1',
     [string]$ClientRoot = 'D:\Games\wow335\World of Warcraft11'
 )
 
@@ -29,7 +29,7 @@ $addonSrc = Join-Path $Platform 'SoloCollections\addon\SoloCollections'
 $addonStage = New-Stage 'addon'
 $addonDest = Join-Path $addonStage 'SoloCollections'
 New-Item -ItemType Directory -Force -Path $addonDest | Out-Null
-& robocopy $addonSrc $addonDest /E /NFL /NDL /NJH /NJS /NC /NS /XD .git | Out-Null
+& robocopy $addonSrc $addonDest /E /NFL /NDL /NJH /NJS /NC /NS /XD .git /XF *.ttf *.ttc | Out-Null
 if ($LASTEXITCODE -ge 8) { throw "robocopy addon failed: $LASTEXITCODE" }
 Copy-Item $InstallDoc (Join-Path $addonStage 'INSTALL.zh-CN.md')
 Compress-Folder $addonStage (Join-Path $OutRoot "SoloCollections-v$Version-addon.zip")

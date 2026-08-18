@@ -2,7 +2,7 @@
 
 **魔兽世界 3.3.5a（WotLK 12340）账号级全功能收藏系统与军团风格幻化平台**
 
-[![Release](https://img.shields.io/badge/Release-v0.3.0-blue.svg)](https://github.com/haha2345/SoloCollectionsPlatform/releases/tag/v0.3.0)
+[![Release](https://img.shields.io/badge/Release-v0.3.1-blue.svg)](https://github.com/haha2345/SoloCollectionsPlatform/releases/tag/v0.3.1)
 [![AzerothCore](https://img.shields.io/badge/AzerothCore-WotLK%203.3.5a-orange.svg)](https://www.azerothcore.org/)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/License%20(AddOn)-GPL--3.0--or--later-green.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![License: AGPL-3.0](https://img.shields.io/badge/License%20(C%2B%2B)-AGPL--3.0-blueviolet.svg)](https://www.gnu.org/licenses/agpl-3.0.html)

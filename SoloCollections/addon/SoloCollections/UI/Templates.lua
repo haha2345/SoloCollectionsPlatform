@@ -267,6 +267,55 @@ function UI.ApplyNineSlice(owner, texturePath, size)
     return slices
 end
 
+local YAHEI_BOLD_PATHS = {
+    "Interface\\AddOns\\SoloCollections\\Media\\Fonts\\msyhbd.ttf",
+    "Fonts\\msyhbd.ttf",
+    "Fonts\\msyh.ttf",
+}
+
+local function applyYaHeiBold(fontString, size)
+    if not (fontString and fontString.SetFont) then
+        return
+    end
+    size = size or 12
+    for _, path in ipairs(YAHEI_BOLD_PATHS) do
+        local ok = pcall(function()
+            fontString:SetFont(path, size, "")
+        end)
+        if ok and fontString.GetFont then
+            local used = fontString:GetFont()
+            if type(used) == "string" and used:lower():find("msyh", 1, true) then
+                return
+            end
+        end
+    end
+    if STANDARD_TEXT_FONT then
+        pcall(function()
+            fontString:SetFont(STANDARD_TEXT_FONT, size, "")
+        end)
+    end
+end
+
+function UI.AttachAuthorCredit(frame)
+    if not frame or frame.scAuthorCredit then
+        return frame and frame.scAuthorCredit
+    end
+    local host = CreateFrame("Frame", nil, frame)
+    host:SetSize(220, 16)
+    host:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -14, 8)
+    host:SetFrameLevel(frame:GetFrameLevel() + 80)
+    host:EnableMouse(false)
+    local credit = host:CreateFontString(nil, "OVERLAY")
+    credit:SetPoint("BOTTOMRIGHT", host, "BOTTOMRIGHT", 0, 0)
+    credit:SetJustifyH("RIGHT")
+    credit:SetText("本项目由woden开发")
+    credit:SetTextColor(1, 1, 1)
+    applyYaHeiBold(credit, 12)
+    frame.scAuthorCredit = credit
+    frame.scAuthorCreditHost = host
+    return credit
+end
+
 function UI.CreateJournalFrame(parent, name, width, height, options)
     options = type(options) == "table" and options or {}
     local titleText = options.title or "收藏"
@@ -296,6 +345,7 @@ function UI.CreateJournalFrame(parent, name, width, height, options)
         frame.scBackground = UI.EzCollections and UI.EzCollections:CreateBodyCanvas(frame) or frame.Bg
         frame.scHeaderBackground = frame.TitleContainer or frame.TitleBand
         frame.scPlatformShell = "DRAGONUI"
+        UI.AttachAuthorCredit(frame)
         return frame
     end
 
@@ -342,6 +392,7 @@ function UI.CreateJournalFrame(parent, name, width, height, options)
         background:Hide()
         frame.scBackground = UI.EzCollections:CreateBodyCanvas(frame)
     end
+    UI.AttachAuthorCredit(frame)
     return frame
 end
 

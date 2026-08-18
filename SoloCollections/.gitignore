@@ -43,3 +43,6 @@ Wow-*.exe
 # Project-authored placeholder media remains trackable. Client-extracted
 # Retail media stays local and is distributed separately; see docs/ASSETS.md.
 addon/SoloCollections/Media/Retail/
+addon/SoloCollections/Media/Fonts/*.ttf
+addon/SoloCollections/Media/Fonts/*.ttc
+

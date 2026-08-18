@@ -1,4 +1,6 @@
-# SoloCollectionsPlatform v0.3.0 怎么用
+# SoloCollectionsPlatform v0.3.1 怎么用
+
+相对 v0.3.0：模块启动日志和每次登录聊天框会提示 `SoloCollections`、QQ 群、邮箱和学习交流声明；收藏 / 幻化窗口右下角署名「本项目由woden开发」；world 库新增 `sc_module_credits`（玩法不读这张表）。
 
 这不是完整游戏包。你必须自己已有：
 

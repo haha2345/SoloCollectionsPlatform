@@ -34,6 +34,31 @@ namespace SoloCollections
 {
 namespace
 {
+constexpr char const* kCreditsModuleName = "SoloCollections";
+constexpr char const* kCreditsQqGroup = "1031799838";
+constexpr char const* kCreditsEmail = "woden3702@gmail.com";
+constexpr char const* kCreditsLicense = "本模块仅限学习交流使用，禁止用于商业用途。";
+
+void LogModuleCredits()
+{
+    LOG_INFO("module.solocollections", "{}", kCreditsModuleName);
+    LOG_INFO("module.solocollections", "QQ群：{}", kCreditsQqGroup);
+    LOG_INFO("module.solocollections", "邮箱：{}", kCreditsEmail);
+    LOG_INFO("module.solocollections", "{}", kCreditsLicense);
+}
+
+void SendModuleCredits(Player* player)
+{
+    if (!player || !player->GetSession())
+        return;
+
+    ChatHandler handler(player->GetSession());
+    handler.PSendSysMessage("|cffffd100{}|r", kCreditsModuleName);
+    handler.PSendSysMessage("QQ群：{}", kCreditsQqGroup);
+    handler.PSendSysMessage("邮箱：{}", kCreditsEmail);
+    handler.PSendSysMessage("{}", kCreditsLicense);
+}
+
 std::uint64_t MonotonicMilliseconds()
 {
     return static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -428,6 +453,7 @@ public:
             "event=provider_registry result=ready providers={} backend={} writes_enabled={}",
             registry.TopologicalOrder().size(), BackendModeName(GetBackendMode()),
             GetAccountCollectionStore().WritesEnabled() ? 1 : 0);
+        LogModuleCredits();
     }
 
     void OnUpdate(std::uint32_t /*diff*/) override
@@ -473,7 +499,12 @@ public:
 
     void OnPlayerLogin(Player* player) override
     {
-        if (!player || !player->GetSession() || GetBackendMode() == BackendMode::Lua)
+        if (!player || !player->GetSession())
+            return;
+
+        SendModuleCredits(player);
+
+        if (GetBackendMode() == BackendMode::Lua)
             return;
 
         AccountId accountId(player->GetSession()->GetAccountId());
