@@ -256,6 +256,49 @@ local function addSetSourceTooltip(record)
     end
 end
 
+local function appearanceRecordItemId(record)
+    if type(record) ~= "table" then
+        return nil
+    end
+    return tonumber(record.itemId or (record.itemIds and record.itemIds[1]))
+end
+
+local function appearanceTitleColor(record)
+    if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
+        return 0.55, 0.55, 0.58
+    end
+    local itemId = appearanceRecordItemId(record)
+    if itemId and GetItemInfo then
+        local _, _, quality = GetItemInfo(itemId)
+        if quality ~= nil and GetItemQualityColor then
+            local red, green, blue = GetItemQualityColor(quality)
+            return red, green, blue
+        end
+    end
+    return 1, 0.82, 0.18
+end
+
+local pendingItemTooltip = { hit = nil, itemId = nil }
+local tooltipWatch = CreateFrame("Frame")
+tooltipWatch:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+tooltipWatch:SetScript("OnEvent", function(_, _, itemId)
+    itemId = tonumber(itemId)
+    if not itemId or itemId ~= pendingItemTooltip.itemId then
+        return
+    end
+    local hit = pendingItemTooltip.hit
+    if not hit or not GameTooltip or not GameTooltip.IsShown or not GameTooltip:IsShown() then
+        return
+    end
+    if GameTooltip.GetOwner and GameTooltip:GetOwner() ~= hit then
+        return
+    end
+    local onEnter = hit.GetScript and hit:GetScript("OnEnter")
+    if onEnter then
+        onEnter(hit)
+    end
+end)
+
 function Lab.CreateSources(parent, state)
     local host = CreateFrame("Frame", nil, parent)
     host:SetAllPoints(parent)
@@ -604,8 +647,11 @@ function Lab.CreateSources(parent, state)
         hit:SetScript("OnEnter", function(self)
             local record = card.scRecord
             if not record then return end
+            pendingItemTooltip.hit = self
+            pendingItemTooltip.itemId = appearanceRecordItemId(record)
+            local titleR, titleG, titleB = appearanceTitleColor(record)
             GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-            GameTooltip:SetText(record.name or "未知外观", 1, 0.82, 0.18)
+            GameTooltip:SetText(record.name or "未知外观", titleR, titleG, titleB)
             if Lab.IsHideVisualRecord and Lab.IsHideVisualRecord(record) then
                 GameTooltip:AddLine("从预览中隐藏该部位外观。", 0.72, 0.72, 0.72, true)
                 if state.IsSlotOccupied and not state:IsSlotOccupied(state.selectedSlot) then
@@ -631,7 +677,13 @@ function Lab.CreateSources(parent, state)
             end
             GameTooltip:Show()
         end)
-        hit:SetScript("OnLeave", function() GameTooltip:Hide() end)
+        hit:SetScript("OnLeave", function(self)
+            if pendingItemTooltip.hit == self then
+                pendingItemTooltip.hit = nil
+                pendingItemTooltip.itemId = nil
+            end
+            GameTooltip:Hide()
+        end)
 
         card.scModel = model
         card.scObjectModel = objectModel

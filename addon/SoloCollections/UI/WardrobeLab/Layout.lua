@@ -240,7 +240,7 @@ function Lab.CreateLayout(page, state)
         elseif state.GetDraftApplyState then
             canApply, reason = state:GetDraftApplyState()
         end
-        if not canApply and reason and reason ~= "NO_DRAFT" and Lab.ApplyReasonText then
+        if not canApply and Lab.ApplyReasonText then
             local listed = false
             if not state.presetRecord and state.GetDraftSlotReasons then
                 local slotReasons = state:GetDraftSlotReasons()
@@ -258,8 +258,6 @@ function Lab.CreateLayout(page, state)
                     required = state.presetRecord and state.presetRecord.requiredCount,
                 }), 1, 0.35, 0.25, true)
             end
-        else
-            GameTooltip:AddLine("只显示最近一次服务端报价。0 铜是合法报价，也会显示；没有可应用的待定时同样按 0。客户端不估算金币。", 0.72, 0.72, 0.72, true)
         end
         GameTooltip:Show()
     end)
@@ -287,10 +285,7 @@ function Lab.CreateLayout(page, state)
             if state.GetSetApplyState then
                 canApply, reason, variantOwned, variantRequired = state:GetSetApplyState()
             end
-            if canApply then
-                GameTooltip:AddLine("通过 SC2 请求服务端应用当前套装预设。", 0.72, 0.72, 0.72, true)
-                GameTooltip:AddLine("幻化写在当前穿着的装备上：更换该部位装备后需重新应用。", 0.82, 0.78, 0.70, true)
-            else
+            if not canApply then
                 local owned = tonumber(variantOwned) or tonumber(state.presetRecord.collectedCount) or 0
                 local required = tonumber(variantRequired) or tonumber(state.presetRecord.requiredCount) or #(state.presetRecord.itemIds or {})
                 GameTooltip:AddLine(Lab.ApplyReasonText and Lab.ApplyReasonText(reason, {
@@ -302,10 +297,7 @@ function Lab.CreateLayout(page, state)
             if state.GetDraftApplyState then
                 canApply, reason = state:GetDraftApplyState()
             end
-            if canApply then
-                GameTooltip:AddLine("应用当前待定外观；每个槽位仍由 SC2 服务端验证。", 0.72, 0.72, 0.72, true)
-                GameTooltip:AddLine("幻化写在当前穿着的装备上：更换该部位装备后需重新应用。", 0.82, 0.78, 0.70, true)
-            else
+            if not canApply then
                 local listed = false
                 if state.GetDraftSlotReasons then
                     local slotReasons = state:GetDraftSlotReasons()
