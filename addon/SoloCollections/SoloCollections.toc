@@ -19,7 +19,6 @@ Data\Generated\CameraProfiles.lua
 Data\TransmorpherPreviewSetup.lua
 Data\Mounts.lua
 Data\Pets.lua
-Data\Toys.lua
 Core\IdentityRegistry.lua
 Core\CollectionState.lua
 Core\Catalog.lua
@@ -44,7 +43,7 @@ UI\Wardrobe\Filters.lua
 UI\CompanionBase.lua
 UI\Mounts.lua
 UI\Pets.lua
-UI\Toys.lua
+UI\Titles.lua
 UI\Wardrobe.lua
 UI\WardrobeLab\State.lua
 UI\WardrobeLab\Tooltip.lua

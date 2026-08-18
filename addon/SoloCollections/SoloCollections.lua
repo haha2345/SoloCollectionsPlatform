@@ -13,7 +13,6 @@ SC.PROTOCOL_VERSION = 1
 SC.TABS = {
     "MOUNTS",
     "PETS",
-    "TOYS",
     "TITLES",
     "WARDROBE",
 }
