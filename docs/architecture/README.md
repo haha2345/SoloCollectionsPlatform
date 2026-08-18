@@ -9,7 +9,7 @@
 2. [02-正式服风格公共UI.md](02-正式服风格公共UI.md)
 3. [03-坐骑页实现.md](03-坐骑页实现.md)
 4. [04-小宠物页实现.md](04-小宠物页实现.md)
-5. [05-玩具箱实现.md](05-玩具箱实现.md)
+5. [05-玩具箱实现.md](05-玩具箱实现.md)（上线暂不启用，实现停在 `feat/deferred-toy-box`）
 6. [06-外观页和套装页.md](06-外观页和套装页.md)
 7. [07-外观各部位镜头参数.md](07-外观各部位镜头参数.md)
 8. [08-客户端SoloCam扩展.md](08-客户端SoloCam扩展.md)
@@ -37,7 +37,10 @@
 - 物品页内置镜头工作台，导出先进入 review-only 流程。
 - 目录规模不应增加模型 frame 或常驻 `OnUpdate` 数量；页面使用固定对象池。
 
-最新数量、已验证范围和限制见 [STATUS.md](../STATUS.md)。镜头贡献请直接阅读
+最新数量、已验证范围和限制见 [STATUS.md](../STATUS.md)。
+2026-08-18 收藏手册 + 幻化室验收见
+[2026-08-18-collections-transmog-acceptance.md](../evidence/2026-08-18-collections-transmog-acceptance.md)。
+镜头贡献请直接阅读
 [CAMERA_CONTRIBUTIONS.md](../CAMERA_CONTRIBUTIONS.md)。
 
 ## 阅读旧实现细节时的规则

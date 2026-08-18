@@ -793,13 +793,6 @@ function UI.GetAppearanceSourceFilters()
     return filters
 end
 
-local PLAYER_ARMOR_TYPES = {
-    PLATE = true,
-    MAIL = true,
-    LEATHER = true,
-    CLOTH = true,
-}
-
 local function playerClassFilterToken()
     local Identity = SC.IdentityRegistry
     local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
@@ -829,17 +822,17 @@ end
 
 function UI.ApplyTransmogOpenFilters()
     if not (SC.db and SC.db.filters) then return false end
-    local Identity = SC.IdentityRegistry
     local changed = false
     local token = playerClassFilterToken()
     if token and SC.db.filters.classToken ~= token then
         SC.db.filters.classToken = token
         changed = true
     end
-    local classIdentity = Identity and Identity.GetPlayerClass and Identity.GetPlayerClass()
-    local armorType = Identity and Identity.GetDefaultArmorType and Identity.GetDefaultArmorType(classIdentity)
-    if PLAYER_ARMOR_TYPES[armorType] and SC.db.filters.armorType ~= armorType then
-        SC.db.filters.armorType = armorType
+    -- AUTO tracks the equipped item's armor class per slot; forcing the
+    -- class's endgame armor type here would hide low-level appearances the
+    -- server actually accepts.
+    if SC.db.filters.armorType ~= "AUTO" then
+        SC.db.filters.armorType = "AUTO"
         changed = true
     end
     return changed

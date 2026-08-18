@@ -163,12 +163,21 @@ function Lab.CreateLayout(page, state)
     local sources = Lab.CreateSources(right, state)
     local weaponWarning = createWeaponHandWarning(preview)
 
-    local stateText = page:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    stateText:SetPoint("BOTTOMLEFT", page, "BOTTOMLEFT", 0, 0)
-    stateText:SetWidth(1)
-    stateText:SetJustifyH("LEFT")
+    -- Host frame keeps the status line above the DressUpModel, which is a
+    -- separate child frame of the left panel and draws over page regions.
+    local stateHost = CreateFrame("Frame", nil, left)
+    stateHost:SetPoint("BOTTOMLEFT", left, "BOTTOMLEFT", 40, 6)
+    stateHost:SetPoint("BOTTOMRIGHT", left, "BOTTOMRIGHT", -8, 6)
+    -- Two text lines tall: with a fixed height the FontString wraps long
+    -- reasons instead of truncating them with an ellipsis.
+    stateHost:SetHeight(26)
+    stateHost:SetFrameLevel(left:GetFrameLevel() + 20)
+    local stateText = stateHost:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    stateText:SetAllPoints(stateHost)
+    stateText:SetJustifyH("CENTER")
+    stateText:SetJustifyV("BOTTOM")
+    if stateText.SetNonSpaceWrap then stateText:SetNonSpaceWrap(true) end
     stateText:SetTextColor(1, 0.72, 0.24)
-    stateText:Hide()
 
     local moneyPath = UI.EzCollections:MediaPath(
         "Common",

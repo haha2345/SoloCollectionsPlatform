@@ -98,21 +98,21 @@ function Diagnostics.RunPerformanceBaseline()
     local originalWardrobeTab = SC.db.wardrobeTab
     local originalQuery = SC.db.query
     local pageResults = {}
-    for _, key in ipairs({ "MOUNTS", "PETS", "TOYS", "WARDROBE", "TITLES" }) do
+    for _, key in ipairs({ "MOUNTS", "PETS", "WARDROBE" }) do
         pageResults[key] = pageTiming(key)
     end
 
     local synthetic = SC.Catalog.RunSyntheticAppearanceBenchmark(18190)
     local expanded = SC.Catalog.RunExpandedCollectionBenchmark(18190, 201, 509)
     local snapshot = snapshotBenchmark()
-    SC.UI.SetMainTab("TITLES")
+    SC.UI.SetMainTab("WARDROBE")
     local pendingTasks, hiddenUpdates = hiddenModelDiagnostics(frame)
     local wardrobe = frame.scPages.WARDROBE
     local poolSize = wardrobe and #(wardrobe.scItemModels or {}) or 0
 
     print(string.format(
-        "SC_PERF pages_ms mounts=%.3f pets=%.3f toys=%.3f wardrobe=%.3f titles=%.3f",
-        pageResults.MOUNTS, pageResults.PETS, pageResults.TOYS, pageResults.WARDROBE, pageResults.TITLES))
+        "SC_PERF pages_ms mounts=%.3f pets=%.3f wardrobe=%.3f",
+        pageResults.MOUNTS, pageResults.PETS, pageResults.WARDROBE))
     print(string.format(
         "SC_PERF catalog scale=%d load_ms=%.3f filter_ms=%.3f page_ms=%.3f peak_kb=%.1f model_pool=%d",
         synthetic.count, synthetic.loadMs, synthetic.filterMs, synthetic.pageMs,

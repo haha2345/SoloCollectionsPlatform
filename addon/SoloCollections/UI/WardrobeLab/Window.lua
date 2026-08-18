@@ -361,7 +361,12 @@ function UI.CreateTransmogFrame()
                 info.checked = SC.db.filters.armorType == armorOption.key
                     or (armorOption.key ~= "ALL" and SC.db.filters.armorType == "AUTO"
                         and SC.Catalog and SC.Catalog.ResolveArmorTypeForQuery
-                        and SC.Catalog.ResolveArmorTypeForQuery(SC.db.filters) == armorOption.key)
+                        -- Resolve AUTO against the lab's selected slot, not the
+                        -- journal slot stored in SC.db.filters.slot.
+                        and SC.Catalog.ResolveArmorTypeForQuery({
+                            armorType = "AUTO",
+                            slot = page.scState and page.scState.selectedSlot,
+                        }) == armorOption.key)
                 info.func = function()
                     SC.db.filters.armorType = armorOption.key
                     if page.scSources then page.scSources.itemPage = 1 end
@@ -554,7 +559,9 @@ function UI.SyncTransmogArmorDropDown(slot, mode)
     local stored = SC.db and SC.db.filters and SC.db.filters.armorType or "AUTO"
     local selected = stored
     if stored == "AUTO" and SC.Catalog.ResolveArmorTypeForQuery then
-        selected = SC.Catalog.ResolveArmorTypeForQuery(SC.db and SC.db.filters)
+        -- Resolve AUTO against the lab's selected slot (the caller passes it),
+        -- not the journal slot stored in SC.db.filters.slot.
+        selected = SC.Catalog.ResolveArmorTypeForQuery({ armorType = "AUTO", slot = slot })
     end
     local label = "全部"
     for _, option in ipairs(options) do

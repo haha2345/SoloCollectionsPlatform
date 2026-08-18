@@ -890,9 +890,6 @@ local function showItemTooltip(owner, record)
     end
 
     GameTooltip:AddLine(record.collected and "已收集" or "未收集 · 仍可预览", record.collected and 0.38 or 0.62, record.collected and 0.90 or 0.58, 0.32)
-    if record.collected then
-        GameTooltip:AddLine("Shift + 左键：应用到当前装备", 1.00, 0.82, 0.18)
-    end
     GameTooltip:Show()
 end
 
@@ -1383,6 +1380,7 @@ function UI.CreateWardrobePage(parent)
     applySet:SetPoint("RIGHT", reset, "LEFT", -8, 0)
     applySet:SetText("应用套装")
     applySet:Disable()
+    applySet:Hide()
     page.scApplySet = applySet
 
     local variantDropdown = CreateFrame("Frame", "SoloCollectionsWardrobeSetVariantDropdown", preview, "UIDropDownMenuTemplate")
@@ -1719,6 +1717,7 @@ function UI.CreateWardrobePage(parent)
         page.scSetSelectedDisplayRecord = displayRecord
         page.scSetSelectedRecord = record
         if record.collected then applySet:Enable() else applySet:Disable() end
+        applySet:Hide()
         model:ClearAllPoints()
         model:SetPoint("TOPLEFT", preview, "TOPLEFT", 9, SET_DETAILS_MODEL_TOP_Y)
         model:SetPoint("BOTTOMRIGHT", preview, "BOTTOMRIGHT", -9, 76)
@@ -1842,15 +1841,7 @@ function UI.CreateWardrobePage(parent)
         resetModelView()
     end)
     applySet:SetScript("OnClick", function()
-        local record = page.scSetSelectedRecord
-        if not record or not record.collected then
-            showSetActionResult(false, "NOT_OWNED")
-        elseif not SC.Bridge or not SC.Bridge.ApplySet then
-            showSetActionResult(false, "BRIDGE_UNAVAILABLE")
-        else
-            local variant = record.selectedVariant
-            SC.Bridge.ApplySet(record.id, variant and variant.variantOrdinal or nil, showSetActionResult)
-        end
+        return
     end)
 
     local function selectItem(record)
@@ -1884,8 +1875,6 @@ function UI.CreateWardrobePage(parent)
             if button == "RightButton" then
                 itemDataProvider:ToggleFavorite(itemModel.scRecord.collectionId)
                 page:Refresh()
-            elseif IsShiftKeyDown() then
-                itemDataProvider:ApplyAppearance(itemModel.scRecord, showAppearanceActionResult)
             else
                 selectItem(itemModel.scRecord)
                 if SC.NewAppearances and SC.NewAppearances.MarkSeen then
@@ -1972,15 +1961,6 @@ function UI.CreateWardrobePage(parent)
             if button == "RightButton" then
                 Catalog.ToggleDemoFavorite("SETS", concreteRecord.id)
                 page:Refresh()
-            elseif IsShiftKeyDown() then
-                if not concreteRecord.collected then
-                    showSetActionResult(false, "NOT_OWNED")
-                elseif not SC.Bridge or not SC.Bridge.ApplySet then
-                    showSetActionResult(false, "BRIDGE_UNAVAILABLE")
-                else
-                    local variant = concreteRecord.selectedVariant
-                    SC.Bridge.ApplySet(concreteRecord.id, variant and variant.variantOrdinal or nil, showSetActionResult)
-                end
             else
                 selectSetDisplayRecord(record)
             end
@@ -2020,7 +2000,7 @@ function UI.CreateWardrobePage(parent)
                 end
             end
             GameTooltip:AddLine("收集进度：" .. owned .. " / " .. required, 0.45, 0.90, 0.34)
-            GameTooltip:AddLine("左键选择 · Shift+左键应用当前版本 · 右键偏好", 0.78, 0.74, 0.64)
+            GameTooltip:AddLine("左键选择 · 右键偏好", 0.78, 0.74, 0.64)
             GameTooltip:Show()
         end)
         row:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -2059,6 +2039,7 @@ function UI.CreateWardrobePage(parent)
         self.scSetSelectedRecord = nil
         self.scSetSelectedDisplayRecord = nil
         applySet:Disable()
+        applySet:Hide()
         for _, itemModel in ipairs(self.scItemModels) do
             itemModel.scSelected:Hide()
         end
@@ -2325,6 +2306,7 @@ function UI.CreateWardrobePage(parent)
             page.scSetSelectedRecord = nil
             page.scSetSelectedDisplayRecord = nil
             applySet:Disable()
+            applySet:Hide()
             pieces:Hide()
             setProgress:Hide()
             syncSetVariantDropdown(nil, nil)

@@ -159,7 +159,11 @@ function Lab.CreateSlots(parent, state)
             button.scIcon:SetTexture(texture or SLOT_FALLBACKS[slotKey] or "Interface\\Icons\\INV_Misc_QuestionMark")
             if button.scIcon.SetDesaturated then button.scIcon:SetDesaturated(not occupied or itemId == nil) end
             button:SetSlotSelected(occupied and state.selectedSlot == slotKey)
-            button:SetSlotPending(occupied and state.IsSlotApplyable and state:IsSlotApplyable(slotKey))
+            -- IsSlotApplyable only covers per-slot drafts; set presets live in
+            -- presetRecord, and IsSlotDirty is what knows about their members.
+            local pending = occupied and ((state.IsSlotApplyable and state:IsSlotApplyable(slotKey))
+                or (state.presetRecord and state.IsSlotDirty and state:IsSlotDirty(slotKey)))
+            button:SetSlotPending(pending and true or false)
             if button.SetSlotEmpty then button:SetSlotEmpty(not occupied) end
             if button.scEmptyBlock then
                 if occupied then button.scEmptyBlock:Hide() else button.scEmptyBlock:Show() end

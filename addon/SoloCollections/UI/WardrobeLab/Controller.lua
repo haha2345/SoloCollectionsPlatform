@@ -9,7 +9,7 @@ function Lab.IsEnabled()
 end
 
 local STATUS_TEXT = {
-    IDLE = "选择外观试穿，再点应用写入当前装备",
+    IDLE = "选择外观试穿，点应用写入装备",
     LOCAL_DRAFT = "待定幻化 · 尚未应用到装备",
     LOCAL_PRESET = "套装预设 · 尚未应用到装备",
     CONFIRM_CLEAR = "再点一次撤销按钮以清除全部待定",
@@ -56,6 +56,7 @@ function Lab.CreatePage(parent)
         local request = state.requestState or {}
         local pendingCount = pendingApplyCount(state)
         local text = STATUS_TEXT[request.status] or STATUS_TEXT.IDLE
+        local textIsBlockReason = false
         if request.status == "REQUESTING" then
             if request.kind == "CLEAR" then
                 text = "正在恢复原装备外观…"
@@ -81,6 +82,7 @@ function Lab.CreatePage(parent)
                     owned = owned or (state.presetRecord and state.presetRecord.collectedCount),
                     required = required or (state.presetRecord and state.presetRecord.requiredCount),
                 }) or (STATUS_REASON_TEXT[reason] or text)
+                textIsBlockReason = true
             elseif pendingCount > 0 then
                 text = string.format("待定 %d 个部位 · 点应用写入装备", pendingCount)
             end
@@ -88,8 +90,14 @@ function Lab.CreatePage(parent)
             local reasonText = Lab.ApplyReasonText and Lab.ApplyReasonText(request.reason)
                 or STATUS_REASON_TEXT[request.reason] or tostring(request.reason)
             text = text .. "：" .. reasonText
+            textIsBlockReason = true
         end
         self.scStateText:SetText(text)
+        if textIsBlockReason then
+            self.scStateText:SetTextColor(1, 0.35, 0.25)
+        else
+            self.scStateText:SetTextColor(1, 0.72, 0.24)
+        end
         self.scOutfits:Refresh()
         self.scSlots:Refresh()
         self.scSources:Refresh()

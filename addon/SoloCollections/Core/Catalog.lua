@@ -96,6 +96,65 @@ function Catalog.IsArmorFilterSlot(slot)
     return slot and not WEAPON_SLOTS[slot]
 end
 
+-- 1-based player inventory slot ids (3.3.5 InventorySlotId) for the armor
+-- transmog slots. Mirrors WardrobeLab Lab.SLOTS (inventorySlot + 1) without
+-- making the core catalog depend on UI code.
+local ARMOR_SLOT_INVENTORY_ID = {
+    HEAD = 1,
+    SHOULDER = 3,
+    BACK = 15,
+    CHEST = 5,
+    SHIRT = 4,
+    TABARD = 19,
+    WRIST = 9,
+    HANDS = 10,
+    WAIST = 6,
+    LEGS = 7,
+    FEET = 8,
+}
+
+-- GetItemInfo armor subtype names (zhCN client, enUS fallback).
+local ARMOR_SUBTYPE_KEYS = {
+    ["布甲"] = "CLOTH",
+    ["皮甲"] = "LEATHER",
+    ["锁甲"] = "MAIL",
+    ["板甲"] = "PLATE",
+    Cloth = "CLOTH",
+    Leather = "LEATHER",
+    Mail = "MAIL",
+    Plate = "PLATE",
+}
+
+local function equippedArmorTypeForSlot(slot)
+    local invSlot = slot and ARMOR_SLOT_INVENTORY_ID[slot]
+    if not invSlot then
+        return nil
+    end
+    -- GetInventoryItemID is unreliable on this client; fall back to parsing
+    -- the item link, mirroring WardrobeLab's equipped-slot scan.
+    local itemId = GetInventoryItemID and tonumber(GetInventoryItemID("player", invSlot))
+    if not itemId or itemId <= 0 then
+        local link = GetInventoryItemLink and GetInventoryItemLink("player", invSlot)
+        itemId = type(link) == "string" and tonumber(string.match(link, "item:(%d+)")) or nil
+    end
+    if not itemId or itemId <= 0 then
+        return nil
+    end
+    local armorType = Catalog.GetAppearanceArmorTypeByItemId
+        and Catalog.GetAppearanceArmorTypeByItemId(itemId)
+    if armorType then
+        return armorType
+    end
+    -- GetItemInfo may return nil for uncached items; treat as unresolved.
+    if GetItemInfo then
+        local _, _, _, _, _, _, itemSubType = GetItemInfo(itemId)
+        if itemSubType then
+            return ARMOR_SUBTYPE_KEYS[itemSubType]
+        end
+    end
+    return nil
+end
+
 function Catalog.ResolveArmorTypeForQuery(filters)
     local selected = filters and filters.armorType
     if selected == "ALL" then
@@ -103,6 +162,15 @@ function Catalog.ResolveArmorTypeForQuery(filters)
     end
     if selected and selected ~= "AUTO" then
         return selected
+    end
+    -- AUTO follows the item currently worn in the queried slot: the server
+    -- validates against the equipped item's armor class, not the class's
+    -- endgame proficiency (a level 1 warrior may wear cloth).
+    if filters and Catalog.IsArmorFilterSlot(filters.slot) then
+        local equipped = equippedArmorTypeForSlot(filters.slot)
+        if equipped then
+            return equipped
+        end
     end
     local Identity = SC.IdentityRegistry
     local resolved = Identity and Identity.GetDefaultArmorType and Identity.GetDefaultArmorType()
@@ -437,6 +505,43 @@ local function appearanceArmorType(store, index)
         return store.armorTypes[armorId]
     end
     return nil
+end
+
+-- Lazy itemId → armor type projection over the compact appearance arrays, so
+-- equipped-item lookups (AUTO armor filter) avoid materializing records.
+local armorTypeByItemId = nil
+
+function Catalog.GetAppearanceArmorTypeByItemId(itemId)
+    itemId = tonumber(itemId)
+    if not itemId then
+        return nil
+    end
+    if not armorTypeByItemId then
+        local store = buildAppearanceStore()
+        if not store then
+            return nil
+        end
+        local index = {}
+        for position = 1, store.count do
+            local armorType = appearanceArmorType(store, position)
+            if armorType then
+                local primary = store.itemIds[position]
+                if primary and index[primary] == nil then
+                    index[primary] = armorType
+                end
+                local extra = store.extraItemIds[position]
+                if extra then
+                    for _, extraItemId in ipairs(extra) do
+                        if index[extraItemId] == nil then
+                            index[extraItemId] = armorType
+                        end
+                    end
+                end
+            end
+        end
+        armorTypeByItemId = index
+    end
+    return armorTypeByItemId[itemId]
 end
 
 local function appearanceWeaponType(store, index)
@@ -1476,6 +1581,9 @@ function Catalog.ToggleDemoFavorite(category, id)
     for _, sourceRecord in ipairs(source) do
         if sourceRecord.id == id then
             local record = resolveRecordState(category, copyRecord(sourceRecord), sourceRecord.collected)
+            if category == "TOYS" and not record.collected then
+                return false
+            end
             if isCollectibleCompanion(category) and not record.collected then
                 ensureFavoriteStore(category)[id] = false
                 return false

@@ -117,8 +117,9 @@ function Lab.ApplyReasonText(reason, extra)
     extra = extra or {}
     local text
     if reason == "NOT_OWNED" and extra.set then
+        -- Short enough for the single-line state text under the preview.
         text = string.format(
-            "当前套装尚未收集完整：%s / %s。未收藏套装只能预览。",
+            "套装已收集 %s/%s，未收藏只能预览",
             tostring(extra.owned or 0),
             tostring(extra.required or 0)
         )

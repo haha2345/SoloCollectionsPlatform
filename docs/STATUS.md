@@ -1,6 +1,6 @@
 # SoloCollections source status / 源码状态
 
-Snapshot date / 快照日期：2026-08-12
+Snapshot date / 快照日期：2026-08-18
 
 ## 中文
 
@@ -12,6 +12,13 @@ Snapshot date / 快照日期：2026-08-12
   `SoloCollections.Backend = Cpp` 时它不会成为第二个写入者。
 - `v0.2.0` 是已发布的 C++/SC2 成套源码版本；它不声称提供稳定的游戏
   二进制或客户端提取资源包。
+- **2026-08-18：收藏手册 + 独立幻化室已验收通过**，可按已实现范围上线。
+  详细证据见
+  [2026-08-18-collections-transmog-acceptance.md](evidence/2026-08-18-collections-transmog-acceptance.md)。
+- 上线手册页签暂时只有坐骑、小宠物、外观。玩具箱页在 `feat/deferred-toy-box`，
+  头衔页在 `feat/deferred-title-journal`，等后续再合回。
+- 真实客户端不再部署收藏/幻化测试插件（QaRunner、LaunchAudit、Stage9/Asset
+  探针）。生产只保留 `SoloCollections` 与其数据包 / 可选素材。
 
 ### 当前生成目录
 
@@ -31,6 +38,11 @@ Snapshot date / 快照日期：2026-08-12
 
 ### 已有本地证据的范围
 
+- **2026-08-18 整套验收（三端 qa1/qa2/qa3 + 生产 worldserver）**
+  - 幻化协议/落库：`run-20260818-074736` 三端 19 步 PASS；
+  - 幻化室 UI：对标军团开窗/待定/报价/套装/互斥可用，U1/U2/U6（S2）已修清零；
+  - 收藏手册：铬、坐骑、小宠物、玩具使用拦截、头衔只读、手册外观浏览可用；
+    搜索/过滤跨页、手册应用钮、未解锁玩具偏好、`IsTitleKnown==1` 已修。
 - SC2 账号状态、快照和 revision 流程；
 - 20 个 race/sex 页面、9 个装备部位，共 180 个角色镜头 profile；
 - 套装滚动、预览清理和进度展示；
@@ -47,6 +59,11 @@ Snapshot date / 快照日期：2026-08-12
 
 ### 已知限制与欢迎贡献
 
+- 玩具箱页、头衔页暂不上线；后续分别从 `feat/deferred-toy-box`、`feat/deferred-title-journal` 继续。
+- 玩具偏好仍是本机 SavedVariables，不是服务端账号投影；已审核玩具只有 9 条。
+- 头衔页只读，不能点击启用。
+- 同账号多角色共享、异账号隔离本轮没有单独编排步骤。
+- 幻化写在当前穿着的物品实例上，换装后不会自动跟随。
 - 物品页镜头并未对所有种族、性别、HD/自定义模型达到一致构图；
 - 极端比例、特效 bounds 异常或共享模型不同纹理的武器仍可能需要 profile；
 - SoloCam 只支持一个精确的 x86 build-12340 EXE hash；
@@ -72,6 +89,12 @@ Release，也不能由上述 `REAL_CLIENT_ACCEPTED` 推导为可公开分发资�
 - `v0.2.0` is the published matched C++/SC2 source release. It is not a claim
   that stable game binaries or extracted client-resource packages are
   distributed.
+- **2026-08-18: the collection journal and transmog studio are accepted**
+  for the implemented scope. See
+  [2026-08-18-collections-transmog-acceptance.md](evidence/2026-08-18-collections-transmog-acceptance.md).
+- Live clients no longer ship collection/transmog QA addons (QaRunner,
+  LaunchAudit, Stage9/Asset probes). Production keeps `SoloCollections` plus
+  its data and optional media addons.
 
 The generated catalog contains 19,146 canonical records: 281 mounts, 201
 companions, 9 reviewed toys, 18,190 appearances, and 465 sets. Metadata is
@@ -79,7 +102,13 @@ companions, 9 reviewed toys, 18,190 appearances, and 465 sets. Metadata is
 `round-two-stage8-weapon-presentation-v2`. The public weapon baseline is 3,541
 `READY` plus 149 `UNAVAILABLE`.
 
-The maintainer's matched reference environment recorded SC2 state/revision
+On 2026-08-18 the three QA clients plus the production worldserver accepted
+the implemented journal and transmog studio: protocol/persistence
+`run-20260818-074736` (19/19 PASS), wardrobe UI with S2 items fixed, and the
+collection journal for mounts, companions, toy use gating, read-only titles,
+and appearance browsing. See the evidence note above.
+
+The maintainer's matched reference environment also recorded SC2 state/revision
 behavior, 180 race/sex/slot body profiles, set preview behavior, a terminal
 scan of 3,690 weapon presentations, representative layout checks, and
 fail-closed behavior for missing SoloCam, bad asset tokens, and cache changes.
@@ -93,11 +122,14 @@ aura cleanup. Source/build work is `IMPLEMENTED_LOCAL`, matched worldserver
 startup is `SERVER_ACCEPTED`, and that scoped client matrix is
 `REAL_CLIENT_ACCEPTED`.
 
-Known contribution areas are body and weapon framing across more models,
-extreme weapon bounds, English/locale coverage, and a future matched source
-update. `v0.2.0` intentionally does not redistribute the MPQs, DLL, or client
-patches from `v0.1.0`. Start camera work with
-[CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md).
+Known leftover gaps that do not block the accepted scope: toy favorites are
+still local SavedVariables, only 9 reviewed toys exist, titles are read-only,
+same-account multi-character sharing was not separately staged, and transmog
+follows the current item instance. Contribution areas remain body and weapon
+framing across more models, extreme weapon bounds, English/locale coverage,
+and a future matched source update. `v0.2.0` intentionally does not
+redistribute the MPQs, DLL, or client patches from `v0.1.0`. Start camera
+work with [CAMERA_CONTRIBUTIONS.md](CAMERA_CONTRIBUTIONS.md).
 
 The Spell/SkillLineAbility DBC files and `patch-zhCN-z.MPQ` used by that local
 acceptance are private client mutations. They are excluded from public source

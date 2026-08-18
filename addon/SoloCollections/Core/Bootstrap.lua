@@ -1,7 +1,7 @@
 local SC = SoloCollections
 
 local DEFAULTS = {
-    schemaVersion = 10,
+    schemaVersion = 11,
     launcher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -28, y = 150 },
     transmogLauncher = { point = "BOTTOMRIGHT", relativePoint = "BOTTOMRIGHT", x = -82, y = 150 },
     frame = { point = "CENTER", relativePoint = "CENTER", x = 0, y = 0 },
@@ -19,6 +19,13 @@ local DEFAULTS = {
         modelProviderByKind = { CREATURE = "newera", DRESSUP = "newera", DISPLAY = "newera" },
     },
     query = "",
+    tabUiState = {
+        MOUNTS = { query = "", collected = true, uncollected = true, favorites = false },
+        PETS = { query = "", collected = true, uncollected = true, favorites = false },
+        TOYS = { query = "", collected = true, uncollected = true, favorites = false },
+        WARDROBE = { query = "", collected = true, uncollected = true, favorites = false },
+        TITLES = { query = "", collected = true, uncollected = true, favorites = false },
+    },
     filters = {
         collected = true,
         uncollected = true,
@@ -68,7 +75,7 @@ local VALID_POINTS = {
 }
 
 local VALID_MAIN_TABS = {
-    MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true, TITLES = true,
+    MOUNTS = true, PETS = true, WARDROBE = true,
 }
 local VALID_WARDROBE_TABS = { ITEMS = true, SETS = true }
 local VALID_CLASS_TOKENS = SC.IdentityRegistry.GetValidClassTokens()
@@ -116,6 +123,43 @@ local function repairEnum(target, key, validValues, default)
     if type(target[key]) ~= "string" or not validValues[target[key]] then
         target[key] = default
     end
+end
+
+local TAB_UI_STATE_KEYS = { "MOUNTS", "PETS", "TOYS", "WARDROBE", "TITLES" }
+
+local function defaultTabUiSlice()
+    return { query = "", collected = true, uncollected = true, favorites = false }
+end
+
+local function repairTabUiState(db)
+    repairScalar(db, "tabUiState", "table", {})
+    for _, tabKey in ipairs(TAB_UI_STATE_KEYS) do
+        if type(db.tabUiState[tabKey]) ~= "table" then
+            db.tabUiState[tabKey] = defaultTabUiSlice()
+        else
+            local slice = db.tabUiState[tabKey]
+            repairScalar(slice, "query", "string", "")
+            repairScalar(slice, "collected", "boolean", true)
+            repairScalar(slice, "uncollected", "boolean", true)
+            repairScalar(slice, "favorites", "boolean", false)
+        end
+    end
+end
+
+local function migrateTabUiStateFromWorkingCopy(db)
+    local tabKey = db.mainTab
+    if not VALID_MAIN_TABS[tabKey] then
+        return
+    end
+    local slice = db.tabUiState and db.tabUiState[tabKey]
+    if type(slice) ~= "table" then
+        return
+    end
+    slice.query = db.query or ""
+    local filters = db.filters or {}
+    slice.collected = filters.collected ~= false
+    slice.uncollected = filters.uncollected ~= false
+    slice.favorites = filters.favorites and true or false
 end
 
 local function normalizePosition(db, key, defaults)
@@ -412,6 +456,7 @@ function BodyCameraTuning.Reset(profileKey)
 end
 
 local function normalizeDatabase(db)
+    local incomingSchema = type(db.schemaVersion) == "number" and db.schemaVersion or 0
     repairScalar(db, "schemaVersion", "number", DEFAULTS.schemaVersion)
     if db.schemaVersion ~= DEFAULTS.schemaVersion then
         db.schemaVersion = DEFAULTS.schemaVersion
@@ -461,6 +506,10 @@ local function normalizeDatabase(db)
     repairScalar(db.filters, "collected", "boolean", DEFAULTS.filters.collected)
     repairScalar(db.filters, "uncollected", "boolean", DEFAULTS.filters.uncollected)
     repairScalar(db.filters, "favorites", "boolean", DEFAULTS.filters.favorites)
+    repairTabUiState(db)
+    if incomingSchema < 11 then
+        migrateTabUiStateFromWorkingCopy(db)
+    end
     repairEnum(db.filters, "classToken", VALID_CLASS_TOKENS, DEFAULTS.filters.classToken)
     repairEnum(db.filters, "armorType", VALID_ARMOR_TYPES, DEFAULTS.filters.armorType)
     repairEnum(db.filters, "slot", VALID_SLOTS, DEFAULTS.filters.slot)
@@ -550,6 +599,7 @@ function SC:ResetLayoutAndFilters()
     SoloCollectionsDB.mainTab = nil
     SoloCollectionsDB.wardrobeTab = nil
     SoloCollectionsDB.query = nil
+    SoloCollectionsDB.tabUiState = nil
     SoloCollectionsDB.filters = nil
     normalizeDatabase(SoloCollectionsDB)
     self.db = SoloCollectionsDB
@@ -605,16 +655,7 @@ SLASH_SOLOCOLLECTIONS2 = "/collections"
 SlashCmdList.SOLOCOLLECTIONS = function(message)
     local command = string.lower((message or ""):match("^%s*(.-)%s*$"))
     local devBuild = SC.BUILD_CHANNEL == "development"
-    local toyId = string.match(command, "^toy%s+(%d+)$")
-    if toyId and SC.Bridge and SC.Bridge.UseToy then
-        SC.Bridge.UseToy(tonumber(toyId), function(ok, reason)
-            if ok == false and DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.AddMessage then
-                DEFAULT_CHAT_FRAME:AddMessage(
-                    "|cffff9f40SoloCollections:|r 玩具使用失败：" .. tostring(reason or "UNKNOWN")
-                )
-            end
-        end)
-    elseif command == "reset" then
+    if command == "reset" then
         SC:ResetLayoutAndFilters()
     elseif command == "transmog" or command == "tmog" or command == "幻化" then
         SC:ToggleTransmog()
