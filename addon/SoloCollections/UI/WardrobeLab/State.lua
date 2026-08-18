@@ -102,14 +102,14 @@ Lab.APPLY_REASON_TEXT = {
     SKILL_REQUIRED = "当前角色缺少使用此外观所需的技能。",
     WEAPON_TYPE = "武器类型不兼容。",
     ARMOR_TYPE = "护甲类型不兼容。",
-    UNKNOWN_IDENTITY = "未知外观，服务端已拒绝。",
+    UNKNOWN_IDENTITY = "未知外观。",
     COST_CHANGED = "费用已变化，请重新确认后再应用。",
     INSUFFICIENT_FUNDS = "金币不足。",
-    UNSUPPORTED = "当前服务器不支持这项幻化。",
+    UNSUPPORTED = "当前版本不支持这项幻化。",
     INVALID_REQUEST = "请求无效。",
     REQUEST_NOT_SENT = "请求未能发出。",
     REQUEST_PENDING = "已有应用请求正在处理。",
-    BRIDGE_UNAVAILABLE = "SC2 外观服务尚未就绪，暂不能提交应用。",
+    BRIDGE_UNAVAILABLE = "幻化服务尚未就绪，请稍后再试。",
     NO_PRESET = "先选择一套套装预设。",
 }
 
@@ -857,13 +857,7 @@ function Lab.ConfirmApply(state, summary, onAccept)
     if state and state.GetApplyCost then
         copper = state:GetApplyCost()
     end
-    local _, costState = state:GetApplyCost()
     local text = tostring(summary or "确定应用当前待定幻化？")
-    if costState == "READY" then
-        text = text .. "\n费用由服务端报价，见下方金额。"
-    else
-        text = text .. "\n当前没有有效报价，金额按 0 显示；应用时由服务端重新计价。"
-    end
     Lab.pendingPopupAccept = onAccept
     local dialog
     if StaticPopup_Show then
