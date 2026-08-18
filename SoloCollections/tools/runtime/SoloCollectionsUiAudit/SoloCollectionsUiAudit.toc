@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: SoloCollections UI Audit
+## Notes: Temporary formal-page runtime verifier; excluded from release bundles.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsUiAuditDB
+UiAudit.lua

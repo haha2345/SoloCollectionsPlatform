@@ -1,0 +1,10 @@
+typeKey,collectionId,collectionKey,ordinal,lifecycle,name_enUS,name_zhCN,policyKey,sourceBuild,sourceKind,sourceId,actionKind,actionId,assetReady,assetProfile,aliases
+toy,100306,toy.elunes_candle,306,active,Elune's Candle,艾露恩的蜡烛,unrestricted,3.3.5.12340,item,21713,SPELL_TARGET,26374,true,wotlk_native,
+toy,100307,toy.fishing_chair,307,active,Fishing Chair,钓鱼椅,unrestricted,3.3.5.12340,item,33223,ITEM_USE,42766,true,wotlk_native,
+toy,100305,toy.orb_of_the_sindorei,305,active,Orb of the Sin'dorei,辛多雷宝珠,unrestricted,3.3.5.12340,item,35275,SPELL_SELF,46354,true,wotlk_native,
+toy,100486,toy.decahedral_dwarven_dice,18684,active,Decahedral Dwarven Dice,矮人的十面骰子,unrestricted,3.3.5.12340,item,36863,SPELL_SELF,47770,true,wotlk_native,
+toy,100487,toy.super_simian_sphere,18685,active,Super Simian Sphere,超级猴子球,unrestricted,3.3.5.12340,item,37254,SPELL_SELF,48332,true,wotlk_native,
+toy,100488,toy.iron_boot_flask,18686,active,Iron Boot Flask,铁靴烈酒,unrestricted,3.3.5.12340,item,43499,SPELL_SELF,58501,true,wotlk_native,
+toy,100489,toy.titanium_seal_of_dalaran,18687,active,Titanium Seal of Dalaran,达拉然泰坦神铁徽记,unrestricted,3.3.5.12340,item,44430,SPELL_SELF,60458,true,wotlk_native,
+toy,100490,toy.muradins_favor,18688,active,Muradin's Favor,穆拉丁的礼物,unrestricted,3.3.5.12340,item,52201,SPELL_SELF,73320,true,wotlk_native,
+toy,100308,toy.unusual_compass,308,active,Unusual Compass,不寻常的指南针,unrestricted,3.3.5.12340,item,45984,CUSTOM_HANDLER,64385,true,wotlk_native,

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "typeId": 1,
+      "typeKey": "synthetic",
+      "ordinal": 0,
+      "lifecycle": "active",
+      "catalogMode": "GENERATED",
+      "providerKey": "synthetic",
+      "dependencies": [],
+      "features": ["VIEW"],
+      "name": {"enUS": "Synthetic", "zhCN": "合成测试"}
+    },
+    {
+      "typeId": 10,
+      "typeKey": "mount",
+      "ordinal": 1,
+      "lifecycle": "active",
+      "catalogMode": "GENERATED",
+      "providerKey": "mount",
+      "dependencies": [],
+      "features": ["VIEW", "ACTION"],
+      "name": {"enUS": "Mounts", "zhCN": "坐骑"}
+    },
+    {
+      "typeId": 11,
+      "typeKey": "companion",
+      "ordinal": 2,
+      "lifecycle": "active",
+      "catalogMode": "GENERATED",
+      "providerKey": "companion",
+      "dependencies": [],
+      "features": ["VIEW", "ACTION"],
+      "name": {"enUS": "Companions", "zhCN": "小宠物"}
+    },
+    {
+      "typeId": 12,
+      "typeKey": "toy",
+      "ordinal": 3,
+      "lifecycle": "active",
+      "catalogMode": "GENERATED",
+      "providerKey": "toy",
+      "dependencies": [],
+      "features": ["VIEW", "ACTION"],
+      "name": {"enUS": "Toys", "zhCN": "玩具"}
+    },
+    {
+      "typeId": 13,
+      "typeKey": "appearance",
+      "ordinal": 4,
+      "lifecycle": "active",
+      "catalogMode": "GENERATED",
+      "providerKey": "appearance",
+      "dependencies": [],
+      "features": ["VIEW", "ACTION"],
+      "name": {"enUS": "Appearances", "zhCN": "外观"}
+    },
+    {
+      "typeId": 14,
+      "typeKey": "set",
+      "ordinal": 5,
+      "lifecycle": "active",
+      "catalogMode": "GENERATED",
+      "providerKey": "set",
+      "dependencies": ["appearance"],
+      "features": ["VIEW", "PROGRESS", "ACTION"],
+      "name": {"enUS": "Sets", "zhCN": "套装"}
+    },
+    {
+      "typeId": 15,
+      "typeKey": "title",
+      "ordinal": 6,
+      "lifecycle": "active",
+      "catalogMode": "EXTERNAL",
+      "providerKey": "title",
+      "dependencies": [],
+      "features": ["VIEW"],
+      "name": {"enUS": "Titles", "zhCN": "头衔"}
+    },
+    {
+      "typeId": 16,
+      "typeKey": "mount-favorite",
+      "ordinal": 7,
+      "lifecycle": "active",
+      "catalogMode": "INTERNAL",
+      "providerKey": "mount-favorite",
+      "dependencies": ["mount"],
+      "features": [],
+      "name": {"enUS": "Mount Favorites", "zhCN": "坐骑偏好"}
+    },
+    {
+      "typeId": 17,
+      "typeKey": "companion-favorite",
+      "ordinal": 8,
+      "lifecycle": "active",
+      "catalogMode": "INTERNAL",
+      "providerKey": "companion-favorite",
+      "dependencies": ["companion"],
+      "features": [],
+      "name": {"enUS": "Companion Favorites", "zhCN": "小宠物偏好"}
+    }
+  ]
+}

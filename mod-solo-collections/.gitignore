@@ -1,0 +1,61 @@
+!.gitignore
+
+# Python contract tests
+__pycache__/
+*.py[cod]
+
+# Local build and IDE output
+/build/
+/build-*/
+/out/
+/.venv/
+/.vs/
+CMakeUserPresets.json
+
+#
+#Generic
+#
+
+.directory
+.mailmap
+*.orig
+*.rej
+*.*~
+.hg/
+*.kdev*
+.DS_Store
+CMakeLists.txt.user
+*.bak
+*.patch
+*.diff
+*.REMOTE.*
+*.BACKUP.*
+*.BASE.*
+*.LOCAL.*
+
+#
+# IDE & other softwares
+#
+/.settings/
+/.externalToolBuilders/*
+# exclude in all levels
+nbproject/
+.sync.ffs_db
+*.kate-swp
+
+#
+# Eclipse
+#
+*.pydevproject
+.metadata
+.gradle
+tmp/
+*.tmp
+*.swp
+src/generated/SoloCollectionsBuildInfo.inc
+*~.nib
+local.properties
+.settings/
+.loadpath
+.project
+.cproject

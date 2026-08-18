@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://solo-collections.local/schema/normalized-itemsets.schema.json",
+  "title": "SoloCollections normalized ItemSet catalog",
+  "type": "object",
+  "required": ["schemaVersion", "sourceEvidence", "expectedCounters", "mappingHash", "sets"],
+  "properties": {
+    "schemaVersion": {"const": 2},
+    "sourceEvidence": {"type": "object"},
+    "expectedCounters": {"type": "object"},
+    "mappingHash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "sets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["collectionId", "collectionKey", "ordinal", "itemSetId", "catalogLifecycle", "uiLifecycle", "classPolicy", "variants"],
+        "properties": {
+          "catalogLifecycle": {"enum": ["ACTIVE", "PREVIEW_ONLY", "DISABLED", "TOMBSTONE"]},
+          "classPolicy": {
+            "type": "object",
+            "required": ["mode", "allowedClassKeys"],
+            "properties": {
+              "mode": {"enum": ["ANY", "ALLOW_LIST", "UNRESOLVED"]},
+              "allowedClassKeys": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+            }
+          },
+          "variants": {"type": "array", "minItems": 1}
+        }
+      }
+    }
+  }
+}

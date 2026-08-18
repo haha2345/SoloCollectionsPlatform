@@ -1,0 +1,22 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    <!-- Prefix every virtual template: no ezCollections global Frame is used. -->
+    <Frame name="SoloCollectionsEzWardrobeItemsPanelTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="758" y="482"/>
+        </Size>
+    </Frame>
+
+    <Frame name="SoloCollectionsEzWardrobeItemCardTemplate" virtual="true">
+        <Size>
+            <AbsDimension x="78" y="104"/>
+        </Size>
+    </Frame>
+
+    <Button name="SoloCollectionsEzWardrobeItemHitTemplate" virtual="true" enableMouse="true">
+        <Size>
+            <AbsDimension x="78" y="104"/>
+        </Size>
+    </Button>
+</Ui>

@@ -1,0 +1,14 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Collections|r
+## Notes: Load-on-demand New Era collections journal.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\collections\Assets.lua
+modules\collections\Data.lua
+modules\collections\Window.lua
+modules\collections\Journal.lua
+modules\collections\Open.lua
+modules\collections\MicroButton.lua

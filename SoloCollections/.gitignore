@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Native builds and local test output
+client-extension/SoloCam/build/
+build/
+out/
+dist/
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+
+# Local release staging
+packaging/out/
+/release/
+_work/
+# Real-client screenshots, copied SavedVariables and temporary audit AddOns are
+# durable F: evidence, never source or release-bundle inputs.
+runtime-audit/
+tools/collections/phase1_manifest*.json
+*.zip
+*.7z
+
+# IDE and OS files
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
+# Game/client binaries and generated client patches must never enter Git
+Wow.exe
+Wow-*.exe
+*.MPQ
+*.mpq
+
+# Project-authored placeholder media remains trackable. Client-extracted
+# Retail media stays local and is distributed separately; see docs/ASSETS.md.
+addon/SoloCollections/Media/Retail/

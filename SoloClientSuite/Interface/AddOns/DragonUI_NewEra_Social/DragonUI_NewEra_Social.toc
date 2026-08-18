@@ -1,0 +1,27 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Social|r
+## Notes: Load-on-demand New Era social, guild, and group finder panels.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\guild\Assets.lua
+modules\guild\Window.lua
+modules\guild\Roster.lua
+modules\guild\Info.lua
+modules\guild\Chat.lua
+modules\guild\Tabard.lua
+modules\guild\Open.lua
+modules\social\Assets.lua
+modules\social\Window.lua
+modules\social\Friends.lua
+modules\social\Who.lua
+modules\social\Channels.lua
+modules\social\Raid.lua
+modules\lfg\Assets.lua
+modules\lfg\Window.lua
+modules\lfg\Roles.lua
+modules\lfg\Dungeons.lua
+modules\lfg\Raids.lua
+modules\lfg\Open.lua

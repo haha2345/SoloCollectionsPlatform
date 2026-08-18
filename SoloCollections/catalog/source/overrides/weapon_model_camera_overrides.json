@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "kind": "SoloCollectionsWeaponModelCameraOverrides",
+  "overrides": [
+    {
+      "scope": "model",
+      "modelSignature": "m2:aaa7aada31fc60e9b2625d3353003bdb9b1b3debd1dc4a2f74c25261efa333e5",
+      "expectedAppearanceIds": [
+        217942
+      ],
+      "expectedAppearanceCount": 1,
+      "expectedInputM2Sha256": "aaa7aada31fc60e9b2625d3353003bdb9b1b3debd1dc4a2f74c25261efa333e5",
+      "expectedOutputM2Sha256": "bca7f99a94d7e00015a58a4a07c620fc191f50df50760992645f6e30cebd85a2",
+      "cameraStrategy": "VERTEX_MESH_BOUNDS_CAMERA",
+      "reasonCode": "HEADER_BOUNDS_INCLUDE_EFFECTS",
+      "presentationPose": {
+        "yaw": 1.0,
+        "pitch": -0.32,
+        "roll": 0.96,
+        "distanceScale": 0.6,
+        "target": {
+          "x": -0.35,
+          "y": -0.05,
+          "z": 0.0
+        }
+      },
+      "workbenchExportSha256": "efccac104786509c81ab7537e1a8c28c67fb7aae920847380f6ec54c52f32f83"
+    }
+  ]
+}

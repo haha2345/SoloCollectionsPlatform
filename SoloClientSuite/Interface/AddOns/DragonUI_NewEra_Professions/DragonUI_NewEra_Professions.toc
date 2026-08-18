@@ -1,0 +1,12 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Professions|r
+## Notes: Load-on-demand New Era profession window.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\professions\Assets.lua
+modules\professions\Window.lua
+modules\professions\RecipeList.lua
+modules\professions\Crafting.lua

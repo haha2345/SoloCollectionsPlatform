@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <!-- DragonUI Action Bar Sub-modules -->
+    <!-- These modules handle specific action bar types -->
+    
+    <!-- Stance/Shapeshift Bar -->
+    <Script file="stance.lua"/>
+    
+    <!-- Vehicle UI and Exit Button -->
+    <Script file="vehicle.lua"/>
+    
+    <!-- Pet Action Bar -->
+    <Script file="petbar.lua"/>
+    
+    <!-- Multicast/Totem Bar (Shaman) -->
+    <Script file="multicast.lua"/>
+
+    <!-- Extra Action Bar — standalone, independent of any class bonus bar -->
+    <Script file="extrabar.lua"/>
+</Ui>

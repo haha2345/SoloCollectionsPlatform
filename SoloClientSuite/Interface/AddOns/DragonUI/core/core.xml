@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+    
+    <!-- DragonUI Core Files -->
+    <!-- Load order: api -> position_presets -> commands -->
+    <!-- Note: fonts.lua loads earlier via DragonUI.xml (before config.lua) -->
+    
+    <Script file="api.lua"/>
+    <Script file="editor_panel.lua"/>
+    <Script file="position_presets.lua"/>
+    <Script file="commands.lua"/>
+    <Script file="visibility_fade.lua"/>
+    <!-- module_base.lua / movers.lua removed — EditableFrames + PositionPresets own layout -->
+    
+</Ui>

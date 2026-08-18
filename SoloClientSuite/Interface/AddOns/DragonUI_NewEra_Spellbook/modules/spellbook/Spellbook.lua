@@ -1,0 +1,1461 @@
+-- DragonUI_NewEra/modules/spellbook/Spellbook.lua — the spell-display SYSTEM (RENDERER).
+--
+-- DOWNPORT: NewEra/Spellbook/Spellbook.lua (Classic 1.15) -> 3.3.5a, adapted to the SHARED
+-- CONTRACT. The window agent owns SB.frame / SB.Host() / the chrome constants / the boot +
+-- ToggleSpellBook intercept + SB.minimized / SB.ApplyWidth / SB.SetMinimized / SB.RegisterSheen.
+-- THIS file owns the render system: card pool, two-page grid, section headers, category tabs,
+-- pagination, search, cog filters. It exposes SB.Build / SB.Refresh / SB.RenderCards /
+-- SB.SetPage / SB.SelectCategory.
+--
+-- SCOPE (this sprint): LEARNED SPELLS ONLY. We use the Era-tab FALLBACK path — render learned
+-- spells grouped by spell-tab section + a live pet category. The ClassSpells future-spell /
+-- seed-driven path (greyed "Available at Level X" cards, SEED tables, emitFuture, petdata
+-- catalog, rank flyout) is DROPPED here — it is vanilla-1.12 data, wrong for WotLK; Phase 2.
+--
+-- DATA driver = the legacy 3.3.5a globals (all present): GetNumSpellTabs, GetSpellTabInfo,
+-- GetSpellBookItemName, GetSpellBookItemInfo, GetSpellBookItemTexture, IsPassiveSpell,
+-- HasPetSpells, GetSpellAutocast, BOOKTYPE_SPELL/PET.
+--
+-- MASKS: 3.3.5a CreateMaskTexture may return nil. Every mask use is guarded and degrades. PASSIVE spells
+-- still get NewEra's circular icon + ring: the round clip comes from the native SetPortraitToTexture
+-- (the addon's working 3.3.5a circular-icon recipe), not from a mask — see paintIcon().
+
+local NE = DragonUI_NewEra
+NE.spellbook = NE.spellbook or {}
+local SB = NE.spellbook
+
+-- Layout constants (retail nominal — same mapping NewEra used).
+local CARD_W, CARD_H   = 216.667, 60
+local CARD_XPAD        = 15
+local CARD_YPAD        = 10
+local GRID_COLS        = 3
+local ICON             = 33.6   -- 40 * 0.84 inset (matches the talents look): icon tucks fully under the frame border
+local ICON_BTN         = 40
+local PASSIVE_ICON     = 34     -- round (passive) icon size. The circle ring (talents-node-circle-gray) is a
+                                -- band ~4px thick at the 40px slot, so its clear opening is ~32px — 34 tucks the
+                                -- disc's edge just under the band. Useful range ~30 (gap) .. ~35 (spills over).
+local VIEW_W, VIEW_H   = 680, 620
+local VIEW_TOP         = -122   -- shifted up 26 (with PAGES_TOP/BG_TOP) to close the old black band
+local VIEW1_X          = 85
+local VIEW2_X          = -50
+local ROW_H            = CARD_H + CARD_YPAD
+local SPAN_W           = GRID_COLS * CARD_W + (GRID_COLS - 1) * CARD_XPAD
+local rows             = math.floor((VIEW_H + CARD_YPAD) / ROW_H)   -- ~9 rows/page
+
+-- Book background placement (host-relative; stretched to fill each half). BG_TOP=0 seats the wooden
+-- header flush under the title bar (host top == title-bar bottom) — removing the dead black band that
+-- used to show between the title bar and the wood. PAGES_TOP follows it up so no gap opens below.
+local PAGES_TOP        = -56
+local PAGES_BOT        = 0
+local BG_INSET_X       = 0
+local BG_TOP           = 0
+local HEADER_H         = 58
+
+-- Font sizes (px) — bumped from the template defaults so labels stay readable at the window's
+-- reduced scale. 0 leaves the FontObject default. Ceiling ~22 name / ~14 sub before CARD_H=60 overflows.
+local FONT_NAME_SIZE   = 18
+local FONT_SUB_SIZE    = 13
+local FONT_TAB_SIZE    = 12
+local FONT_TITLE_SIZE  = 14
+local FONT_PAGE_SIZE   = 14
+
+-- Category tabs — seated ON the wooden header, tops tucked just under the title bar (host top).
+-- Dimensions match the Character panel's tabs (h 36 inactive / 42 active, min-w 70, +24 text pad,
+-- 1px gap), applied in the Refresh chain loop + setTabArt.
+local CAT_TAB_X        = 70
+local CAT_TAB_TOP      = -2
+local TAB_H_INACTIVE   = 36
+local TAB_H_ACTIVE     = 42
+local TAB_MIN_W        = 70
+local TAB_TEXT_PAD     = 24
+local TAB_GAP          = 1
+
+-- SystemFont_Huge2 is a retail font object; fall back to a 3.3.5a-present huge font.
+local SECTION_TITLE_FONT = (_G.SystemFont_Huge2 and "SystemFont_Huge2")
+                        or (_G.GameFontNormalHuge and "GameFontNormalHuge")
+                        or "GameFontNormalLarge"
+local SECTION_TOP_GAP    = 18
+
+-- Near-black spellbook ink (retail SPELLBOOK_FONT_COLOR hex 2e1b0f).
+local function spellbookInk()
+  if SPELLBOOK_FONT_COLOR and SPELLBOOK_FONT_COLOR.GetRGB then return SPELLBOOK_FONT_COLOR:GetRGB() end
+  return 0.1804, 0.1059, 0.0588
+end
+
+local BOOKTYPE_SPELL_ = BOOKTYPE_SPELL or "spell"
+local BOOKTYPE_PET_   = BOOKTYPE_PET or "pet"
+
+-- State.
+SB.cards     = SB.cards or {}
+SB.headers   = SB.headers or {}
+SB.catTabs   = SB.catTabs or {}
+SB.bgParts   = SB.bgParts or {}
+SB.page      = SB.page or 1
+SB.selected  = SB.selected or 1
+SB.elements  = SB.elements or {}
+SB.search    = SB.search or ""
+SB.hidePassives = SB.hidePassives or false
+SB.showRanks    = SB.showRanks or false
+SB.showMounts   = SB.showMounts or false   -- cog option: show the Mounts tab
+SB.showCompanions = SB.showCompanions or false   -- cog option: show the Companions (vanity pets) tab
+if SB.showActiveGlow == nil then SB.showActiveGlow = true end   -- cog option: glow active spells (default ON)
+SB.refreshQueued = SB.refreshQueued or false
+
+-- The content root we parent everything to. Provided by the window agent as SB.Host().
+local function host()
+  if SB.Host then
+    local ok, h = pcall(SB.Host)
+    if ok and h then return h end
+  end
+  return SB.frame
+end
+local function frame() return SB.frame end
+
+-- Cog options persist in DragonUI_NewEraDB.spellbook.
+local function optsTable()
+  local root = _G.DragonUI_NewEraDB
+  if type(root) ~= "table" then return nil end
+  return root.spellbook
+end
+local function loadFilterOpts()
+  local o = optsTable()
+  if type(o) == "table" then
+    SB.hidePassives = o.hidePassives or false
+    SB.showRanks    = o.showRanks or false
+    SB.showMounts   = o.showMounts or false
+    SB.showCompanions = o.showCompanions or false
+    SB.showActiveGlow = (o.showActiveGlow ~= false)   -- default true (nil/true -> on; only explicit false -> off)
+  end
+end
+local function saveOpts()
+  _G.DragonUI_NewEraDB = _G.DragonUI_NewEraDB or {}
+  local o = _G.DragonUI_NewEraDB.spellbook or {}
+  o.hidePassives = SB.hidePassives
+  o.showRanks    = SB.showRanks
+  o.showMounts   = SB.showMounts
+  o.showCompanions = SB.showCompanions
+  o.showActiveGlow = SB.showActiveGlow
+  _G.DragonUI_NewEraDB.spellbook = o
+end
+SB._loadFilterOpts = loadFilterOpts
+
+-- Shared sheen clock — register opted-in nodes with the window agent's driver.
+local function registerSheen(node)
+  node._wantSheen = true
+  if SB.RegisterSheen then pcall(SB.RegisterSheen, node) end
+end
+
+-- Icon resolution — slot texture first, spellID texture fallback.
+local function slotIcon(slot, bookType, spellID)
+  local icon = GetSpellBookItemTexture and GetSpellBookItemTexture(slot, bookType)
+  if not icon and spellID and GetSpellTexture then icon = GetSpellTexture(spellID) end
+  return icon
+end
+
+-- Card art sets — square (active) vs circle (passive). The border OVERHANGS the icon button
+-- for the square set; the circle set rings it at button size.
+local ART_SET = {
+  square = {
+    iconMask      = "spellbook-item-spellicon-mask",
+    iconHighlight = "spellbook-item-iconframe-hover",
+    border        = "spellbook-item-iconframe",
+    borderTL = { -11, 1 }, borderBR = { 1, -7 },
+    sheenMask     = "spellbook-item-iconframe-sheen-mask", sheenCentered = false,
+  },
+  -- PASSIVE set — CIRCLE, matching NewEra (Spellbook/Spellbook.lua ART_SET.circle): the round talent-node
+  -- ring at button size. CreateMaskTexture is dead on 3.3.5a, but the icon itself is clipped round the way
+  -- the rest of this addon does it — the native SetPortraitToTexture (see paintIcon() below).
+  circle = {
+    iconMask      = "talents-node-circle-mask",
+    iconHighlight = "spellbook-item-iconframe-passive-hover",
+    border        = "talents-node-circle-gray",
+    borderTL = { 0, 0 }, borderBR = { 0, 0 },      -- the ring sits exactly on the 40x40 icon slot
+    sheenMask     = "talents-node-circle-sheenmask", sheenCentered = true,
+    round = true,
+  },
+  -- DEGRADE set for passives, used only if SetPortraitToTexture is missing (no way to round the icon —
+  -- a circular ring around a square icon leaves the corners poking out). The retail spellbook's SQUARE
+  -- SILVER passive frame: the square icon fits it cleanly and silver-vs-gold still reads as passive.
+  passiveSquare = {
+    iconMask      = "spellbook-item-spellicon-mask",
+    iconHighlight = "spellbook-item-iconframe-hover",
+    border        = "talents-node-square-gray",   -- the dark SQUARE talent-node socket (NewEra talents)
+    borderTL = { 0, 0 }, borderBR = { 0, 0 },      -- sized to the icon slot (matches the active frame's main square)
+    sheenMask     = "spellbook-item-iconframe-sheen-mask", sheenCentered = false,
+  },
+}
+
+-- ============================================================================
+-- ROUND ICONS — the addon-wide 3.3.5a recipe. Masks (CreateMaskTexture/AddMaskTexture/SetMask) are all
+-- dead on this client, so every circular icon we ship comes from the NATIVE SetPortraitToTexture, which
+-- clips a texture to a disc C-side (modules/lfg/Window.lua rail icons, modules/bags/CombinedBag.lua bag
+-- portrait, core/Portrait.lua). It needs a real texture PATH — a raw FileDataID silently blanks the
+-- texture on 3.3.5a (see core/Texture.lua), so resolve numbers through NE.tex.Local first.
+-- ============================================================================
+local ROUND_ICON_OK = type(_G.SetPortraitToTexture) == "function"
+
+local function iconPathOf(icon)
+  if type(icon) == "number" then
+    icon = (NE.tex and NE.tex.Local and NE.tex.Local(icon)) or nil
+  end
+  if type(icon) ~= "string" or icon == "" then return "Interface\\Icons\\INV_Misc_QuestionMark" end
+  return icon
+end
+
+-- Paint a card's icon: round (passive) via b.IconRound, square (active) via b.Icon. They are SEPARATE
+-- textures on purpose — SetPortraitToTexture's clip is a property of the texture it's applied to, and a
+-- card is recycled across pages, so a shared texture could carry the disc onto an active spell.
+-- Returns true when the round icon was used.
+local function paintIcon(b, icon, round)
+  local path = iconPathOf(icon)
+  if round and ROUND_ICON_OK and b.IconRound then
+    if pcall(SetPortraitToTexture, b.IconRound, path) then
+      b.IconRound:SetDesaturated(false)
+      b.IconRound:SetAlpha(1)
+      b.IconRound:Show()
+      b.Icon:Hide()
+      return true
+    end
+  end
+  if b.IconRound then b.IconRound:Hide() end
+  b.Icon:SetTexture(path)
+  b.Icon:SetDesaturated(false)
+  b.Icon:SetAlpha(1)
+  b.Icon:Show()
+  return false
+end
+
+
+-- ============================================================================
+-- MASK helpers — guarded; degrade if CreateMaskTexture or the atlas isn't available.
+-- ============================================================================
+
+-- Try to create + apply a mask to a region. Returns the mask on success, nil on failure.
+local function tryMask(parent, target, atlasName)
+  if not (parent and target and parent.CreateMaskTexture) then return nil end
+  local ok, mask = pcall(parent.CreateMaskTexture, parent)
+  if not ok or not mask then return nil end
+  local applied = false
+  if NE.tex and NE.tex.SetAtlasMask then applied = NE.tex.SetAtlasMask(mask, atlasName) end
+  if not applied then return nil end
+  if not target.AddMaskTexture then return nil end
+  local ok2 = pcall(target.AddMaskTexture, target, mask)
+  if not ok2 then return nil end
+  return mask
+end
+
+-- LibCustomGlow — the glow lib WeakAuras embeds (ships IconAlert/IconAlertAnts). Resolved lazily
+-- (WeakAuras may load before/after us; first card render happens post-login so it's available). When
+-- present we use its ButtonGlow ("Action Button Glow" — the marching-ants proc glow) as the active
+-- indicator; when absent (WeakAuras disabled) we fall back to the native 3.3.5a AutoCastShine.
+local function getLCG()
+  return (LibStub and LibStub.GetLibrary and LibStub:GetLibrary("LibCustomGlow-1.0", true)) or nil
+end
+
+-- ============================================================================
+-- CARD FACTORY. One spell = one card (backplate + 40x40 secure icon button + name/subname).
+-- ============================================================================
+local function createCard(i)
+  local h = host()
+  local card = CreateFrame("Frame", "NE_SpellBookCard" .. i, h)
+  card:SetSize(CARD_W, CARD_H)
+
+  card.Backplate = card:CreateTexture(nil, "BACKGROUND")
+  NE.tex.SetAtlas(card.Backplate, "spellbook-item-backplate", true)
+  card.Backplate:SetPoint("CENTER", 5, -5)
+  card.Backplate:SetAlpha(0.25)
+
+  -- icon button (secure cast)
+  local b = CreateFrame("Button", "NE_SpellBookCard" .. i .. "Btn", card, "SecureActionButtonTemplate")
+  b:SetAllPoints(card)   -- the WHOLE cell is the secure cast button — click anywhere on it to cast
+  -- UP-only: the secure cast fires on RELEASE, so a drag cancels the click and never casts.
+  b:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+  b:RegisterForDrag("LeftButton")
+  card.Button = b
+
+  -- 40x40 icon SLOT pinned to the cell's LEFT. b fills the WHOLE cell (for cell-wide click/hover),
+  -- so every icon visual (Icon, Border, mask, highlight, sheen) + the name anchors to this slot, NOT
+  -- to b — otherwise applyCardVisual's b-relative border anchoring stretches the frame across the cell.
+  b.IconSlot = CreateFrame("Frame", nil, b)
+  b.IconSlot:SetSize(ICON_BTN, ICON_BTN)
+  b.IconSlot:SetPoint("LEFT", b, "LEFT", 0, 0)
+
+  b.Icon = b:CreateTexture(nil, "ARTWORK", nil, -1)
+  b.Icon:SetSize(ICON, ICON)
+  b.Icon:SetPoint("CENTER", b.IconSlot, "CENTER")
+  -- full art (no crop); the 0.84 size inset lets the frame border cover the icon edge (talents look).
+  b.Icon:SetTexCoord(0, 1, 0, 1)
+
+  -- Round icon for PASSIVE spells (see paintIcon). Only ever fed by SetPortraitToTexture; never
+  -- SetTexCoord'd (the native clip owns the coords — CLAUDE.md: don't texcoord-zoom a portrait).
+  b.IconRound = b:CreateTexture(nil, "ARTWORK", nil, -1)
+  b.IconRound:SetSize(PASSIVE_ICON, PASSIVE_ICON)
+  b.IconRound:SetPoint("CENTER", b.IconSlot, "CENTER")
+  b.IconRound:Hide()
+
+  -- Cooldown swipe over the icon so spells on cooldown show the sweep instead of looking ready.
+  b.Cooldown = CreateFrame("Cooldown", "NE_SpellBookCard" .. i .. "Cooldown", b, "CooldownFrameTemplate")
+  b.Cooldown:SetAllPoints(b.Icon)
+  if b.Cooldown.SetDrawEdge then pcall(b.Cooldown.SetDrawEdge, b.Cooldown, false) end
+
+  b.Border = b:CreateTexture(nil, "OVERLAY", nil, 1)
+  b.Border:SetAllPoints(b.IconSlot)
+
+  -- "ACTIVE" overlay: the NATIVE 3.3.5a autocast SHINE — 16 sparkles (Interface\ItemSocketingFrame\
+  -- UI-ItemSockets) marching around the icon edges, exactly what the stock pet bar + spellbook use.
+  -- We build the sparkles ourselves (NO AutoCastShineTemplate → immune to addons like ezCollections
+  -- that reship UIPanelTemplates) but drive them with Blizzard's AutoCastShine_* helpers (core
+  -- UIParent.lua functions, untainted, never reshipped). Shown when a pet ability is autocasting or a
+  -- player spell's buff is up. ov:SetActive(bool) starts/stops it.
+  local ov = CreateFrame("Frame", nil, b)
+  ov:SetPoint("TOPLEFT", b.IconSlot, "TOPLEFT", 0, 0)
+  ov:SetPoint("BOTTOMRIGHT", b.IconSlot, "BOTTOMRIGHT", 0, 0)
+  ov:Hide()
+  ov.sparkles = {}
+  for i = 1, 16 do
+    local s = ov:CreateTexture(nil, "OVERLAY")
+    s:SetTexture("Interface\\ItemSocketingFrame\\UI-ItemSockets")
+    s:SetTexCoord(0.3984375, 0.4453125, 0.40234375, 0.44921875)   -- the small sparkle on that sheet
+    s:SetBlendMode("ADD")
+    local sz = ({ 13, 10, 7, 4 })[((i - 1) % 4) + 1]   -- comet-trail sizes, per the native template
+    s:SetSize(sz, sz)
+    s:Hide()
+    ov.sparkles[i] = s
+  end
+  if AutoCastShine_OnUpdate then ov:SetScript("OnUpdate", AutoCastShine_OnUpdate) end  -- native fallback driver
+  ov.glowTarget = b.IconSlot   -- LibCustomGlow attaches its glow here (around the icon, not the whole cell)
+  function ov:SetActive(on)
+    local LCG = getLCG()
+    local tgt = self.glowTarget
+    if on then
+      if LCG and LCG.ButtonGlow_Start and tgt then
+        LCG.ButtonGlow_Start(tgt)                  -- the WeakAuras proc-glow "ants"
+        if tgt._ButtonGlow then tgt._ButtonGlow:Show() end   -- re-show a reused (instant-stopped) glow
+      else
+        self:Show()                                -- fallback: native autocast sparkles
+        if AutoCastShine_AutoCastStart then AutoCastShine_AutoCastStart(self) end
+      end
+    else
+      -- INSTANT stop (no fade): a page/category swap reuses this card for a DIFFERENT spell, so the
+      -- lib's normal fade-out would leave the glow on the wrong icon "for a moment". Stop the fade
+      -- animation and hide the glow frame now (it stays as _ButtonGlow and is reused on the next Start).
+      if tgt and tgt._ButtonGlow then
+        local g = tgt._ButtonGlow            -- capture BEFORE Stop (it may release + nil _ButtonGlow)
+        if LCG and LCG.ButtonGlow_Stop then LCG.ButtonGlow_Stop(tgt) end
+        if g then
+          if g.animOut and g.animOut.Stop then g.animOut:Stop() end
+          if g.animIn  and g.animIn.Stop  then g.animIn:Stop()  end
+          if g.Hide then g:Hide() end
+        end
+      end
+      if AutoCastShine_AutoCastStop then AutoCastShine_AutoCastStop(self) end
+      self:Hide()
+    end
+  end
+  b.AutoCastOverlay = ov
+
+  b.IconHighlight = b:CreateTexture(nil, "OVERLAY", nil, 2)
+  NE.tex.SetAtlas(b.IconHighlight, "spellbook-item-iconframe-hover", false)
+  b.IconHighlight:SetAllPoints(b.Border)
+  b.IconHighlight:SetBlendMode("ADD")
+  b.IconHighlight:SetAlpha(0.35)
+  b.IconHighlight:Hide()
+
+  -- swept sheen (guarded — skipped entirely if its mask can't be built).
+  b.sheen = b:CreateTexture(nil, "OVERLAY", nil, 3)
+  local sheenOk = NE.tex.SetAtlas(b.sheen, "talents-sheen-node", true)
+  if sheenOk then
+    b.sheen:SetBlendMode("ADD")
+    b.sheen:SetAlpha(0.5)
+    b.sheen:SetPoint("RIGHT", b.Border, "LEFT")
+    b.sheenMask = tryMask(b, b.sheen, "spellbook-item-iconframe-sheen-mask")
+    if b.sheenMask then
+      b.sheenMask:SetPoint("TOPLEFT", b.Border)
+      b.sheenMask:SetPoint("BOTTOMRIGHT", b.Border)
+      b.sheenHome = b
+      registerSheen(b)
+    else
+      b.sheen:Hide()   -- no mask → skip the sheen (cosmetic)
+      b.sheen = nil
+    end
+  else
+    b.sheen = nil
+  end
+
+
+  -- name / subname
+  card.Name = card:CreateFontString(nil, "ARTWORK", "GameFontHighlightLarge")
+  card.Name:SetJustifyH("LEFT")
+  card.Name:SetPoint("TOPLEFT", b.Border, "TOPRIGHT", 10, -1)
+  card.Name:SetPoint("RIGHT", card, "RIGHT", -4, 0)
+  if card.Name.SetWordWrap then card.Name:SetWordWrap(true) end
+  if card.Name.SetMaxLines then card.Name:SetMaxLines(2) end
+  card.Name:SetShadowColor(0, 0, 0, 0)
+  do local f, _, g = card.Name:GetFont(); if f and FONT_NAME_SIZE > 0 then card.Name:SetFont(f, FONT_NAME_SIZE, g) end end
+
+  card.SubName = card:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+  card.SubName:SetJustifyH("LEFT")
+  card.SubName:SetPoint("TOPLEFT", card.Name, "BOTTOMLEFT", 0, -2)
+  card.SubName:SetPoint("RIGHT", card.Name, "RIGHT")
+  card.SubName:SetTextColor(0.82, 0.74, 0.55)
+  card.SubName:SetShadowColor(0, 0, 0, 0)
+  do local f, _, g = card.SubName:GetFont(); if f and FONT_SUB_SIZE > 0 then card.SubName:SetFont(f, FONT_SUB_SIZE, g) end end
+
+  -- tooltip + drag + hover. The hover (tooltip + cell highlight) covers the WHOLE cell, not just the
+  -- 40x40 icon: the same handlers sit on both the card frame and the icon button. OnLeave guards on
+  -- card:IsMouseOver() so crossing the icon/text seam (focus passing card<->button) never flickers
+  -- the tooltip — it only clears when the cursor actually leaves the cell. Anchored to the card so
+  -- the tooltip is positioned off the whole cell.
+  local function cardEnter()
+    if not card.unlearned then
+      card.Button.IconHighlight:SetAlpha(0.35)
+      card.Button.IconHighlight:Show()
+      card.Backplate:SetAlpha(1)
+    end
+    GameTooltip:SetOwner(card, "ANCHOR_RIGHT")
+    if card.slot and GameTooltip.SetSpellBookItem then
+      GameTooltip:SetSpellBookItem(card.slot, card.bookType)
+      GameTooltip:Show()
+    elseif card.spellID and GameTooltip.SetSpellByID then
+      GameTooltip:SetSpellByID(card.spellID)
+      GameTooltip:Show()
+    elseif card.tipName then
+      GameTooltip:SetText(card.tipName, 1, 1, 1, 1, true)
+      if card.tipSub and card.tipSub ~= "" then GameTooltip:AddLine(card.tipSub, 0.6, 0.6, 0.6, true) end
+      GameTooltip:Show()
+    end
+  end
+  local function cardLeave()
+    if card:IsMouseOver() then return end   -- moved onto the icon button (still in-cell) → keep hover
+    card.Button.IconHighlight:Hide()
+    card.Button.IconHighlight:SetAlpha(0.35)
+    card.Backplate:SetAlpha(0.25)
+    GameTooltip:Hide()
+  end
+  card:EnableMouse(true)
+  card:SetScript("OnEnter", cardEnter)
+  card:SetScript("OnLeave", cardLeave)
+  b:SetScript("OnEnter", cardEnter)
+  b:SetScript("OnLeave", cardLeave)
+  b:HookScript("OnMouseDown", function()
+    if not card.unlearned then card.Button.IconHighlight:SetAlpha(0.65) end
+  end)
+  b:HookScript("OnMouseUp", function()
+    if not card.unlearned then card.Button.IconHighlight:SetAlpha(0.35) end
+  end)
+  -- Pick the card up onto the cursor for placing on an action bar. Spellbook spells go by slot; mounts
+  -- and vanity pets are companions (no slot) so they use PickupCompanion; a spellID pickup is the last
+  -- resort. This is why dragging a mount to a bar did nothing before — the slot-only path skipped them.
+  local function cardPickup()
+    if card.passive or InCombatLockdown() then return end
+    if card.slot and PickupSpellBookItem then
+      PickupSpellBookItem(card.slot, card.bookType)
+    elseif card.companionType and card.companionIndex and PickupCompanion then
+      PickupCompanion(card.companionType, card.companionIndex)   -- mounts / vanity pets → action bar
+    elseif card.spellID and PickupSpell then
+      PickupSpell(card.spellID)
+    end
+  end
+
+  b:SetScript("OnDragStart", function()
+    if card.passive then return end   -- passives are click/drag-inert (still hover for tooltip)
+    cardPickup()
+  end)
+
+  -- Modified clicks: shift=link, ctrl=pickup. Blank the secure action under those modifiers so the
+  -- cast doesn't swallow them. PLAIN right-click on a pet autocast ability is handled by a SECURE
+  -- macro (/petautocasttoggle) set in applyCardVisual — a direct ToggleSpellAutocast call from here
+  -- is a protected action and gets taint-blocked, so it MUST go through the secure environment.
+  b:SetAttribute("shift-type*", "")
+  b:SetAttribute("ctrl-type*", "")
+  b:HookScript("OnClick", function(self, btn, down)
+    if down or card.passive then return end   -- passives: no link / pickup / any click action
+    if IsModifiedClick and IsModifiedClick("CHATLINK") then
+      if card.slot and GetSpellLink and ChatEdit_InsertLink then
+        local link = GetSpellLink(card.slot, card.bookType)
+        if link then ChatEdit_InsertLink(link) end
+      elseif card.spellID and GetSpellLink and ChatEdit_InsertLink then
+        local link = GetSpellLink(card.spellID)
+        if link then ChatEdit_InsertLink(link) end
+      end
+    elseif IsModifiedClick and IsModifiedClick("PICKUPACTION") then
+      cardPickup()
+    end
+  end)
+
+  SB.cards[i] = card
+  return card
+end
+
+-- ============================================================================
+-- BOOK BACKGROUND — evergreen panels stretched to fill the host halves.
+-- ============================================================================
+-- The old single 2048x1024 sheet (fdid 5834697) is SPLIT into one texture per region. This client
+-- can't reliably load a 2048-wide texture displayed at full size — it crashed on upload before, and
+-- otherwise renders BLACK (the dark bgFill showing through unloaded pages) until a fresh loading
+-- screen warms it. Each region is now its own ≤1024-class BGRA file (no mips → loads fully on first
+-- reference, so no streaming/black), displayed near-native = full quality. Each file is the whole
+-- region, so full 0..1 texcoords. Paths are hardcoded (immune to the Assets.lua registration race).
+local BG_DIR    = "Interface\\AddOns\\DragonUI_NewEra\\Textures\\Spellbook\\"
+local BG_LEFT   = BG_DIR .. "5834697-bg-left.blp"
+local BG_RIGHT  = BG_DIR .. "5834697-bg-right.blp"
+local BG_RIBBON = BG_DIR .. "5834697-bg-ribbon.blp"
+local BG_HEADER = BG_DIR .. "5834697-bg-header.blp"
+
+local function setBgTex(tex, file)
+  if not tex then return end
+  tex:SetTexture(file)
+  tex:SetTexCoord(0, 1, 0, 1)
+end
+
+local function buildBackground()
+  local h = host()
+  if SB.bgLeft or not h then return end
+  local function track(t) SB.bgParts[#SB.bgParts + 1] = t; return t end
+
+  -- NO solid-color bgFill here. A SetColorTexture / SetTexture(r,g,b,a) BACKGROUND fill (the old
+  -- SB.bgFill) intermittently corrupts this whole frame's texture batch on this client → the page
+  -- textures render black/green (diagnosed by mikki: deleting it fixes it). The window's own dark
+  -- bgTint already sits behind these, so nothing transparent shows through.
+
+  SB.bgLeft = track(h:CreateTexture(nil, "BACKGROUND", nil, -2))
+  setBgTex(SB.bgLeft, BG_LEFT)
+  SB.bgLeft:SetPoint("TOPLEFT", h, "TOPLEFT", BG_INSET_X, PAGES_TOP)
+  SB.bgLeft:SetPoint("BOTTOMRIGHT", h, "BOTTOM", -1, PAGES_BOT)
+
+  SB.bgRight = track(h:CreateTexture(nil, "BACKGROUND", nil, -2))
+  setBgTex(SB.bgRight, BG_RIGHT)
+  SB.bgRight:SetPoint("TOPLEFT", h, "TOP", 1, PAGES_TOP)
+  SB.bgRight:SetPoint("BOTTOMRIGHT", h, "BOTTOMRIGHT", -BG_INSET_X, PAGES_BOT)
+
+  -- Center ribbon: ARTWORK (above the BACKGROUND page halves, below the card frames). Sized to its
+  -- NATIVE atlas aspect (102x557 ≈ 1:5.46) and anchored at the TOP only, so it hangs from the spine
+  -- with its forked tail ending partway down — it must NOT stretch to the book's bottom.
+  local RIBBON_W = 102
+  local RIBBON_X = 28   -- nudge right onto the spine: measured ~23px left of the seam at FRAME_W=1618
+  SB.bgRibbon = track(h:CreateTexture(nil, "OVERLAY", nil, -1))
+  setBgTex(SB.bgRibbon, BG_RIBBON)
+  SB.bgRibbon:SetSize(RIBBON_W, RIBBON_W * 557 / 102)
+  SB.bgRibbon:SetPoint("TOP", h, "TOP", RIBBON_X, PAGES_TOP)
+  if SB.minimized then SB.bgRibbon:Hide() else SB.bgRibbon:Show() end
+
+  SB.bgHeader = track(h:CreateTexture(nil, "BORDER", nil, 0))
+  setBgTex(SB.bgHeader, BG_HEADER)
+  SB.bgHeader:SetHeight(HEADER_H)
+  SB.bgHeader:SetPoint("TOPLEFT", h, "TOPLEFT", 8, BG_TOP)
+  SB.bgHeader:SetPoint("TOPRIGHT", h, "TOPRIGHT", -8, BG_TOP)
+end
+
+-- Re-assert the background path on every open (NO nil->path cycle — that would cancel an in-flight
+-- GPU upload and itself cause a black flash). Hooked from the window's OnShow.
+function SB._reapplyBg()
+  setBgTex(SB.bgLeft,   SB.minimized and BG_RIGHT or BG_LEFT)
+  setBgTex(SB.bgRight,  BG_RIGHT)
+  setBgTex(SB.bgRibbon, BG_RIBBON)
+  setBgTex(SB.bgHeader, BG_HEADER)
+end
+
+-- Hold ALL four bg region textures GPU-resident for the whole session via a permanent, SHOWN 1x1
+-- BACKGROUND frame (one texture each). Called at SB.Build (login), so they upload right after a
+-- /reload — BEFORE the book is first opened. Otherwise the textures live only on the hidden book
+-- frame (don't upload until shown), and /reload (which flushes the texture cache) leaves the book
+-- black until a full relog warms it. A shown frame forces the upload + keeps it from being evicted.
+local function prewarmBackgroundBLP()
+  if SB._bgPrewarmed then return end
+  SB._bgPrewarmed = true
+  local pw = CreateFrame("Frame", nil, UIParent)
+  pw:SetFrameStrata("BACKGROUND"); pw:SetFrameLevel(1)
+  pw:SetSize(1, 1)
+  pw:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0, 0)
+  for _, file in ipairs({ BG_LEFT, BG_RIGHT, BG_RIBBON, BG_HEADER }) do
+    local t = pw:CreateTexture(nil, "BACKGROUND")
+    t:SetAllPoints(pw)
+    t:SetTexture(file)
+  end
+  pw:Show()
+  SB._bgPrewarm = pw
+end
+SB._prewarmBackgroundBLP = prewarmBackgroundBLP
+
+-- Sync the bg halves to the minimized state.
+local function applyBgWidth()
+  local h = host()
+  if not (h and SB.bgLeft) then return end
+  if SB.bgRight  then if SB.minimized then SB.bgRight:Hide()  else SB.bgRight:Show()  end end
+  if SB.bgRibbon then if SB.minimized then SB.bgRibbon:Hide() else SB.bgRibbon:Show() end end
+  setBgTex(SB.bgLeft, SB.minimized and BG_RIGHT or BG_LEFT)
+  SB.bgLeft:ClearAllPoints()
+  SB.bgLeft:SetPoint("TOPLEFT", h, "TOPLEFT", BG_INSET_X, PAGES_TOP)
+  if SB.minimized then
+    SB.bgLeft:SetPoint("BOTTOMRIGHT", h, "BOTTOMRIGHT", 0, PAGES_BOT)
+  else
+    SB.bgLeft:SetPoint("BOTTOMRIGHT", h, "BOTTOM", -1, PAGES_BOT)
+  end
+end
+SB._applyBgWidth = applyBgWidth
+
+-- ============================================================================
+-- CATEGORY TABS — General / class / Pet along the top, using this addon's reskin.
+-- ============================================================================
+local function categoryTab(i)
+  local t = SB.catTabs[i]
+  if t then return t end
+  local h = host()
+  t = CreateFrame("Button", "NE_SpellBookPageTab" .. i, h, "CharacterFrameTabButtonTemplate")
+  t:SetID(i)
+  t:SetHeight(TAB_H_INACTIVE)
+  t:SetScript("OnClick", function(self)
+    if PlaySound and SOUNDKIT and SOUNDKIT.IG_CHARACTER_INFO_TAB then PlaySound(SOUNDKIT.IG_CHARACTER_INFO_TAB)
+    elseif PlaySound then PlaySound("igCharacterInfoTab") end
+    SB.SelectCategory(self:GetID())
+  end)
+  if NE.tabs and NE.tabs.ReskinClassicTab then NE.tabs.ReskinClassicTab(t:GetName()) end
+  -- NOTE: MakeTopTab (vertical-flip polish) anchored the tab body rising UP into the chrome
+  -- title band, where it was clipped/covered → tabs looked invisible. Dropped: plain
+  -- bottom-anchored tabs read normally and stay on the header band (correctness over polish).
+  -- Raise the tabs above the book-background textures so they're not painted over.
+  local h2 = host()
+  if h2 and t.SetFrameLevel then t:SetFrameLevel((h2:GetFrameLevel() or 1) + 6) end
+  SB.catTabs[i] = t
+  return t
+end
+
+-- Drive a reskinned tab's selected/deselected ART manually (same as the Character panel's
+-- TabButtons.setTabArt). ReskinClassicTab paints the ACTIVE/gold atlas onto the *Disabled pieces,
+-- so SELECTED → show the *Disabled (gold) pieces + hide the regular ones; DESELECTED → reverse.
+-- (PanelTemplates_SetTab doesn't honour the reskin, which is why every tab read as active.) Also
+-- mute the custom hover highlight on the selected tab so it doesn't bleed over the gold art.
+local function setTabArt(tab, selected)
+  if not tab then return end
+  local n = tab:GetName()
+  local function set(suffix, show)
+    local t = _G[n .. suffix]
+    if t then if show then t:Show() else t:Hide() end end
+  end
+  set("Left",  not selected); set("Middle",  not selected); set("Right",  not selected)
+  set("LeftDisabled", selected); set("MiddleDisabled", selected); set("RightDisabled", selected)
+  if tab.SetHeight then tab:SetHeight(selected and TAB_H_ACTIVE or TAB_H_INACTIVE) end
+  local hl = tab._neCustomHL
+  if hl then
+    local a = selected and 0 or 0.4
+    if hl.left   and hl.left.SetAlpha   then hl.left:SetAlpha(a)   end
+    if hl.middle and hl.middle.SetAlpha then hl.middle:SetAlpha(a) end
+    if hl.right  and hl.right.SetAlpha  then hl.right:SetAlpha(a)  end
+  end
+end
+
+-- ============================================================================
+-- CATEGORIES — General (tab 1) + the class (tabs 2..N as sections) + a live pet category.
+-- LEARNED-ONLY: no ClassSpells seed / petdata catalog.
+-- ============================================================================
+local function buildCategories()
+  local cats = {}
+  local numTabs = (GetNumSpellTabs and GetNumSpellTabs()) or 0
+  -- FLAT "General" (spell tab 1) FIRST: on 3.3.5a it reliably holds most learned spells, so this
+  -- is the category that yields a populated default view. The sectioned class category (spec tabs
+  -- 2..N) follows — those tabs are often sparse/empty at low/mid level.
+  local generalIdx
+  if numTabs >= 1 then
+    local name, _, offset, numSlots = GetSpellTabInfo(1)
+    cats[#cats + 1] = { kind = "flat", label = name or (GENERAL or "General"),
+                        sections = { { offset = offset or 0, numSlots = numSlots or 0 } } }
+    generalIdx = #cats
+  end
+  if numTabs >= 2 then
+    local className = UnitClass and UnitClass("player") or "Class"
+    local sections = {}
+    for i = 2, numTabs do
+      local sName, _, offset, numSlots = GetSpellTabInfo(i)
+      if numSlots and numSlots > 0 then
+        sections[#sections + 1] = { title = sName, offset = offset, numSlots = numSlots }
+      end
+    end
+    cats[#cats + 1] = { kind = "sectioned", label = className, sections = sections }
+  end
+  local numPet = (HasPetSpells and HasPetSpells()) or 0
+  if numPet and numPet > 0 then
+    cats[#cats + 1] = { kind = "pet", label = PET or "Pet", numSlots = numPet }
+  end
+  -- Mounts (cog-toggled): the player's summonable mounts via the 3.3.5a companion API.
+  if SB.showMounts and GetNumCompanions and (GetNumCompanions("MOUNT") or 0) > 0 then
+    cats[#cats + 1] = { kind = "mounts", label = MOUNTS or "Mounts" }
+  end
+  -- Companions / vanity pets (cog-toggled): the "CRITTER" companion list (parallel to Mounts).
+  if SB.showCompanions and GetNumCompanions and (GetNumCompanions("CRITTER") or 0) > 0 then
+    cats[#cats + 1] = { kind = "companions", label = COMPANIONS or "Companions" }
+  end
+  SB.categories = cats
+  SB.generalIdx = generalIdx
+  return cats
+end
+
+-- Total raw slot count a category covers (used to pick a non-empty default category).
+local function catSlotCount(cat)
+  if not cat then return 0 end
+  if cat.kind == "pet" then return cat.numSlots or 0 end
+  if cat.kind == "mounts" then return (GetNumCompanions and GetNumCompanions("MOUNT")) or 0 end
+  if cat.kind == "companions" then return (GetNumCompanions and GetNumCompanions("CRITTER")) or 0 end
+  local total = 0
+  for _, sec in ipairs(cat.sections or {}) do total = total + (sec.numSlots or 0) end
+  return total
+end
+
+-- Pick the default selected category: first one that actually has slots (General reliably does).
+local function pickDefaultSelected(cats)
+  -- Prefer General if it has spells.
+  if SB.generalIdx and cats[SB.generalIdx] and catSlotCount(cats[SB.generalIdx]) > 0 then
+    return SB.generalIdx
+  end
+  for i, cat in ipairs(cats) do
+    if catSlotCount(cat) > 0 then return i end
+  end
+  return 1
+end
+SB._pickDefaultSelected = pickDefaultSelected
+
+function SB.SelectCategory(index)
+  SB.selected = index
+  SB.userPickedCategory = true
+  SB.page = 1
+  SB.Refresh()
+end
+
+-- ============================================================================
+-- PAGING controls (bottom-right): prev / next + "Page N/M".
+-- ============================================================================
+local function buildPaging()
+  if SB.paging then return SB.paging end
+  local h = host()
+  if not h then return nil end
+  local p = CreateFrame("Frame", "NE_SpellBookPaging", h)
+  p:SetSize(146, 32)
+  p:SetPoint("BOTTOMRIGHT", h, "BOTTOMRIGHT", -75, 40)
+
+  p.label = p:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
+  p.label:SetJustifyH("LEFT")
+  p.label:SetPoint("LEFT", 0, 0)
+  p.label:SetTextColor(0, 0, 0)
+  p.label:SetShadowColor(0, 0, 0, 0)
+  do local f, _, g = p.label:GetFont(); if f and FONT_PAGE_SIZE > 0 then p.label:SetFont(f, FONT_PAGE_SIZE, g) end end
+
+  local function pageButton(prefix, onClick)
+    local b = CreateFrame("Button", nil, p)
+    b:SetSize(32, 32)
+    b:SetNormalTexture("Interface\\Buttons\\UI-SpellbookIcon-" .. prefix .. "Page-Up")
+    b:SetPushedTexture("Interface\\Buttons\\UI-SpellbookIcon-" .. prefix .. "Page-Down")
+    b:SetDisabledTexture("Interface\\Buttons\\UI-SpellbookIcon-" .. prefix .. "Page-Disabled")
+    b:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight", "ADD")
+    b:SetScript("OnClick", onClick)
+    return b
+  end
+  p.prev = pageButton("Prev", function() SB.SetPage(SB.page - 1) end)
+  p.next = pageButton("Next", function() SB.SetPage(SB.page + 1) end)
+  p.next:SetPoint("RIGHT", 0, 0)
+  p.prev:SetPoint("RIGHT", p.next, "LEFT", -8, 0)
+
+  SB.paging = p
+  return p
+end
+
+function SB.SetPage(n)
+  local total = SB.totalPages or 1
+  if n < 1 then n = 1 elseif n > total then n = total end
+  SB.page = n
+  SB.RenderCards()
+end
+
+-- ============================================================================
+-- DATA — build the flat render-element list (section headers + spell cards).
+-- ============================================================================
+local function matchesSearch(name)
+  if SB.search == "" then return true end
+  return name ~= nil and name:lower():find(SB.search, 1, true) ~= nil
+end
+
+local function makeCardEntry(slot, bookType)
+  local name, subName = GetSpellBookItemName(slot, bookType)
+  if not name then return nil end
+  local slotType, spellID = GetSpellBookItemInfo(slot, bookType)
+  return {
+    kind = "card", slot = slot, bookType = bookType, name = name, subName = subName,
+    spellID = spellID, passive = IsPassiveSpell and IsPassiveSpell(slot, bookType) or false,
+    icon = slotIcon(slot, bookType, spellID),
+  }
+end
+
+-- Rank collapse: when "Show All Ranks" is OFF, keep only the highest rank of each spell (parsed
+-- from the "Rank N" subtext). Entries with no parseable rank (passives w/o ranks, summons, etc.)
+-- are kept as-is. Order is preserved by the position of each spell's FIRST-seen card.
+local function collapseRanks(list)
+  local out, idxByName = {}, {}
+  for _, e in ipairs(list) do
+    local rank = tonumber((e.subName or ""):match("(%d+)"))
+    local prev = rank and idxByName[e.name]
+    if prev then
+      if rank > (out[prev]._rank or 0) then e._rank = rank; out[prev] = e end
+    else
+      e._rank = rank
+      out[#out + 1] = e
+      if rank then idxByName[e.name] = #out end
+    end
+  end
+  return out
+end
+
+-- learned-spell slot scanner → emit cards (honours search + Hide Passives + Show All Ranks).
+local function addCards(els, offset, count, bookType)
+  local list = {}
+  for s = offset + 1, offset + count do
+    local e = makeCardEntry(s, bookType)
+    if e and matchesSearch(e.name) and not (SB.hidePassives and e.passive) then
+      list[#list + 1] = e
+    end
+  end
+  if not SB.showRanks then list = collapseRanks(list) end
+  for _, e in ipairs(list) do els[#els + 1] = e end
+  return #list
+end
+
+-- Mount cards from the 3.3.5a companion API. Each summons by CASTING its mount spell (the standard
+-- secure "spell" cast path in applyCardVisual), so no slot/bookType — just name/icon/spellID. Honors
+-- the search box. GetCompanionInfo("MOUNT", i) → creatureID, creatureName, spellID, icon, active.
+local function addMountCards(els)
+  if not (GetNumCompanions and GetCompanionInfo) then return end
+  local n = GetNumCompanions("MOUNT") or 0
+  for i = 1, n do
+    local _, creatureName, spellID, icon = GetCompanionInfo("MOUNT", i)
+    local name = (spellID and GetSpellInfo and GetSpellInfo(spellID)) or creatureName
+    if name and matchesSearch(name) then
+      els[#els + 1] = {
+        kind = "card", name = name, subName = "", spellID = spellID, icon = icon,
+        passive = false, mount = true, mountIndex = i,
+        companionType = "MOUNT", companionIndex = i,   -- for the "active" glow (riding == active)
+      }
+    end
+  end
+end
+
+-- Companion / vanity-pet cards (the "CRITTER" companion type). Identical to mounts: each summons by
+-- CASTING its companion spell (so just name/icon/spellID — the standard secure "spell" cast path).
+local function addCompanionCards(els)
+  if not (GetNumCompanions and GetCompanionInfo) then return end
+  local n = GetNumCompanions("CRITTER") or 0
+  for i = 1, n do
+    local _, creatureName, spellID, icon = GetCompanionInfo("CRITTER", i)
+    local name = (spellID and GetSpellInfo and GetSpellInfo(spellID)) or creatureName
+    if name and matchesSearch(name) then
+      els[#els + 1] = {
+        kind = "card", name = name, subName = "", spellID = spellID, icon = icon,
+        passive = false, companion = true, companionIndex = i,
+        companionType = "CRITTER",   -- for the "active" glow (currently-summoned companion == active)
+      }
+    end
+  end
+end
+
+local function buildElements()
+  local cats = SB.categories or buildCategories()
+  if SB.selected > #cats then SB.selected = 1 end
+  local cat = cats[SB.selected]
+  local els = {}
+
+  if cat then
+    if cat.kind == "pet" then
+      addCards(els, 0, cat.numSlots, BOOKTYPE_PET_)
+    elseif cat.kind == "mounts" then
+      addMountCards(els)
+    elseif cat.kind == "companions" then
+      addCompanionCards(els)
+    elseif cat.kind == "sectioned" then
+      for _, sec in ipairs(cat.sections) do
+        local headerIdx = #els + 1
+        els[#els + 1] = { kind = "header", label = sec.title }
+        if addCards(els, sec.offset, sec.numSlots, BOOKTYPE_SPELL_) == 0 then
+          table.remove(els, headerIdx)
+        end
+      end
+    else  -- flat (General)
+      local sec = cat.sections[1]
+      if sec then addCards(els, sec.offset, sec.numSlots, BOOKTYPE_SPELL_) end
+    end
+  end
+  SB.elements = els
+  return els
+end
+SB._buildElements = buildElements
+
+-- FLOW layout: 3 cards per row; a header spans the full page width and forces a fresh row.
+local function flowLayout(els)
+  local R, p, r, c = rows, 0, 0, 0
+  local function advance() r = r + 1; if r >= R then r = 0; p = p + 1 end end
+  for _, e in ipairs(els) do
+    if e.kind == "header" then
+      if c > 0 then c = 0; advance() end
+      e.p, e.r = p, r
+      advance(); c = 0
+    else
+      e.p, e.r, e.c = p, r, c
+      c = c + 1
+      if c >= GRID_COLS then c = 0; advance() end
+    end
+  end
+  local maxP = 0
+  for _, e in ipairs(els) do if e.p and e.p > maxP then maxP = e.p end end
+  SB.totalPages = math.max(1, math.ceil((maxP + 1) / (SB.minimized and 1 or 2)))
+end
+
+-- Cell → (point, relPoint, x, y). Left page from host LEFT; right page from host RIGHT.
+local function pagePoint(p, r, c)
+  local y = VIEW_TOP - r * ROW_H
+  if SB.minimized or (p % 2) == 0 then
+    return "TOPLEFT", "TOPLEFT", VIEW1_X + (c or 0) * (CARD_W + CARD_XPAD), y
+  else
+    return "TOPLEFT", "TOPRIGHT", (VIEW2_X - VIEW_W) + (c or 0) * (CARD_W + CARD_XPAD), y
+  end
+end
+
+-- ============================================================================
+-- SECTION HEADER — list-backplate plate + SystemFont_Huge2 title + divider.
+-- ============================================================================
+local function createHeader(i)
+  local h = CreateFrame("Frame", nil, host())
+  h:SetSize(SPAN_W, 51)
+  h.Plate = h:CreateTexture(nil, "BACKGROUND")
+  NE.tex.SetAtlas(h.Plate, "spellbook-list-backplate", false)
+  h.Plate:SetSize(416, 106)
+  h.Plate:SetPoint("LEFT", h, "LEFT", -85, 10)
+  h.Plate:SetAlpha(0.65)
+  h.Text = h:CreateFontString(nil, "ARTWORK", SECTION_TITLE_FONT)
+  h.Text:SetJustifyH("LEFT")
+  h.Text:SetPoint("TOPLEFT", -8, 0)
+  h.Text:SetPoint("BOTTOMRIGHT", -60, 0)
+  h.Text:SetTextColor(spellbookInk())
+  h.Border = h:CreateTexture(nil, "ARTWORK")
+  NE.tex.SetAtlas(h.Border, "spellbook-divider", false)
+  h.Border:SetHeight(11)
+  h.Border:SetPoint("BOTTOMLEFT", -32, 0)
+  h.Border:SetPoint("BOTTOMRIGHT", -60, 0)
+  SB.headers[i] = h
+  return h
+end
+
+-- Is `name` an active buff on the player right now? Covers the spellbook examples (Demon Armor,
+-- Aspect of the Cheetah, …) — all of which show as player buffs. Plain query, no taint.
+local function playerHasBuff(name)
+  if not (name and name ~= "" and UnitBuff) then return false end
+  for i = 1, 40 do
+    local n = UnitBuff("player", i)
+    if not n then break end
+    if n == name then return true end
+  end
+  return false
+end
+
+-- Drive a card's "active" overlay: a PET ability with autocast ENABLED, or a PLAYER spell whose buff
+-- is currently up. Reads GetSpellAutocast (pet) / UnitBuff (player) — both plain queries, no taint.
+function SB.UpdateActiveOverlay(card)
+  if not card then return end
+  local ov = card.Button and card.Button.AutoCastOverlay
+  if not ov then return end
+  local active = false
+  if SB.showActiveGlow then   -- cog "Glow active spells" gates BOTH pet-autocast and active-buff glow
+    if card.slot and card.bookType == BOOKTYPE_PET_ and GetSpellAutocast then
+      local allowed, enabled = GetSpellAutocast(card.slot, card.bookType)
+      active = (allowed and enabled) and true or false
+    elseif card.companionType and card.companionIndex and GetCompanionInfo then
+      -- Mount currently being ridden / companion currently summoned: the 5th return is the active flag.
+      local _, _, _, _, summoned = GetCompanionInfo(card.companionType, card.companionIndex)
+      active = summoned and true or false
+    elseif card.spellName then
+      active = playerHasBuff(card.spellName)
+    end
+  end
+  ov:SetActive(active)
+end
+SB.UpdateAutoCast = SB.UpdateActiveOverlay   -- back-compat alias
+
+-- Refresh every visible card's active overlay (cheap loop), so the glow tracks live aura/autocast
+-- state between full re-renders.
+function SB.UpdateActiveOverlays()
+  if not SB.cards then return end
+  for _, card in pairs(SB.cards) do
+    if card and card.IsShown and card:IsShown() then SB.UpdateActiveOverlay(card) end
+  end
+end
+
+-- Push a card's spell cooldown onto its swipe. Spellbook spells query by slot; mounts/companions
+-- (no slot) by name. Passives/unlearned cards clear the swipe.
+local function setCardCooldown(card)
+  local cd = card.Button and card.Button.Cooldown
+  if not (cd and CooldownFrame_Set) then return end
+  if card.passive or card.unlearned then
+    CooldownFrame_Set(cd, 0, 0, 0)
+    return
+  end
+  local start, duration, enable
+  if card.slot and card.bookType and GetSpellCooldown then
+    start, duration, enable = GetSpellCooldown(card.slot, card.bookType)
+  elseif card.spellID and GetSpellInfo and GetSpellCooldown then
+    local name = GetSpellInfo(card.spellID)
+    if name then start, duration, enable = GetSpellCooldown(name) end
+  end
+  CooldownFrame_Set(cd, start or 0, duration or 0, enable or 0)
+end
+SB.SetCardCooldown = setCardCooldown
+
+-- Refresh every visible card's cooldown swipe (cheap loop) between full re-renders.
+function SB.UpdateCooldowns()
+  if not SB.cards then return end
+  for _, card in pairs(SB.cards) do
+    if card and card.IsShown and card:IsShown() then setCardCooldown(card) end
+  end
+end
+
+-- Live watcher: buffs gained/lost + form changes flip the glow, and cooldown starts/ends drive the
+-- swipe, all without a full re-render.
+do
+  local w = CreateFrame("Frame")
+  w:RegisterEvent("UNIT_AURA")
+  w:RegisterEvent("UPDATE_SHAPESHIFT_FORM")
+  w:RegisterEvent("COMPANION_UPDATE")   -- summon/dismiss a mount or companion flips its card glow
+  w:RegisterEvent("SPELL_UPDATE_COOLDOWN")   -- a spell went on / off cooldown → repaint the swipe
+  w:SetScript("OnEvent", function(_, ev, unit)
+    if ev == "UNIT_AURA" and unit ~= "player" then return end
+    if not (SB.frame and SB.frame:IsShown()) then return end
+    if ev == "SPELL_UPDATE_COOLDOWN" then
+      SB.UpdateCooldowns()
+    else
+      SB.UpdateActiveOverlays()
+    end
+  end)
+end
+
+-- ============================================================================
+-- APPLY a card's visual — square (active) vs circle (passive) art + mask fallbacks.
+-- ============================================================================
+local function applyCardVisual(card, e)
+  card.slot, card.bookType, card.spellID = e.slot, e.bookType, e.spellID
+  card.spellName = e.name   -- for the "active buff" overlay check
+  card.companionType, card.companionIndex = e.companionType, e.companionIndex   -- mount/companion active glow
+  card.passive = e.passive and true or false   -- passive cells are click/drag-inert
+  card.unlearned = false
+  local b = card.Button
+  card.Name:SetText(e.name or "")
+  card.SubName:SetText(e.subName or "")
+
+  card.tipName = (not e.slot and not e.spellID) and e.name or nil
+  card.tipSub  = e.subName
+
+  local ir, ig, ib = spellbookInk()
+  card.Name:SetTextColor(ir, ig, ib)
+  card.SubName:SetTextColor(ir, ig, ib)
+  card.Name:SetAlpha(1); card.SubName:SetAlpha(1)
+
+  -- art set: square (active) vs circle (passive). Passives fall back to the square silver frame only if
+  -- this client can't clip the icon round at all (see paintIcon / ROUND_ICON_OK).
+  local art
+  if e.passive then art = ROUND_ICON_OK and ART_SET.circle or ART_SET.passiveSquare
+  else art = ART_SET.square end
+
+  -- icon (also resets desaturation/alpha on whichever of the two icon textures is shown).
+  paintIcon(b, e.icon, art.round)
+
+  -- border. SetAtlas fails gracefully (returns false, leaves prior); for the circle ring this
+  -- is the degrade path — the grey ring may or may not exist, but the icon still shows.
+  NE.tex.SetAtlas(b.Border, art.border, false)
+  -- Passives reuse the gold frame, desaturated to silver/grey (reset to colour for actives so a
+  -- reused card never stays grey).
+  if b.Border.SetDesaturated then b.Border:SetDesaturated(art.desaturate and true or false) end
+  local tl, br = art.borderTL, art.borderBR
+  b.Border:ClearAllPoints()
+  b.Border:SetPoint("TOPLEFT",     b.IconSlot, "TOPLEFT",     tl[1], tl[2])
+  b.Border:SetPoint("BOTTOMRIGHT", b.IconSlot, "BOTTOMRIGHT", br[1], br[2])
+
+  -- icon mask: rebuild per shape. Retail-only path (dead on 3.3.5a, kept so a client that DOES support
+  -- masks gets the exact retail clip). Only ever touches the SQUARE b.Icon — the round passive icon is
+  -- clipped by SetPortraitToTexture instead and must keep the native coords.
+  if b._iconMask then
+    if b.Icon.RemoveMaskTexture then pcall(b.Icon.RemoveMaskTexture, b.Icon, b._iconMask) end
+    b._iconMask:Hide()
+    b._iconMask = nil
+  end
+  b.Icon:SetTexCoord(0, 1, 0, 1)
+  local m = tryMask(b, b.Icon, art.iconMask)
+  if m then
+    b._iconMask = m
+    m:ClearAllPoints()
+    m:SetPoint("TOPLEFT", b.Icon, "TOPLEFT")
+    m:SetPoint("BOTTOMRIGHT", b.Icon, "BOTTOMRIGHT")
+  else
+    -- DEGRADE: no working mask → rely on the 0.84 size inset (full art, frame covers the edge).
+    b.Icon:SetTexCoord(0, 1, 0, 1)
+  end
+
+  NE.tex.SetAtlas(b.IconHighlight, art.iconHighlight, false)
+
+  -- sheen (only present when its mask built at create time).
+  b._wantSheen = true
+  if b.sheen and b.sheenMask then
+    b.sheenMask:ClearAllPoints()
+    if art.sheenCentered then
+      b.sheenMask:SetPoint("CENTER", b.Border, "CENTER")
+      local w = (b.Border:GetWidth() ~= 0 and b.Border:GetWidth()) or ICON_BTN
+      local hgt = (b.Border:GetHeight() ~= 0 and b.Border:GetHeight()) or ICON_BTN
+      b.sheenMask:SetSize(w, hgt)
+    else
+      b.sheenMask:SetPoint("TOPLEFT", b.Border)
+      b.sheenMask:SetPoint("BOTTOMRIGHT", b.Border)
+    end
+  end
+
+  -- secure cast attribute. Passive spells aren't castable. Pet RIGHT-click toggles autocast via a
+  -- SECURE macro (/petautocasttoggle <name>) — the only untainted way on 3.3.5a (a direct
+  -- ToggleSpellAutocast is protected → ADDON_ACTION_BLOCKED). Only autocast-capable spells get it.
+  local isPetSlot = (e.bookType == BOOKTYPE_PET_) and e.slot ~= nil
+  if not InCombatLockdown() then
+    if e.passive then
+      b:SetAttribute("type", nil); b:SetAttribute("spell", nil)
+    else
+      b:SetAttribute("type", "spell"); b:SetAttribute("spell", e.name)
+    end
+    if isPetSlot then
+      local allowed = GetSpellAutocast and GetSpellAutocast(e.slot, e.bookType)
+      if allowed and e.name and e.name ~= "" then
+        b:SetAttribute("type2", "macro")
+        b:SetAttribute("macrotext2", "/petautocasttoggle " .. e.name)
+      else
+        b:SetAttribute("type2", "")          -- non-autocast pet ability: right-click does nothing
+        b:SetAttribute("macrotext2", nil)
+      end
+    else
+      b:SetAttribute("type2", nil)
+      b:SetAttribute("macrotext2", nil)
+    end
+  end
+
+  SB.UpdateActiveOverlay(card)
+end
+
+-- ============================================================================
+-- RENDER the current spread.
+-- ============================================================================
+function SB.RenderCards()
+  -- The card icon buttons are secure; reflowing in combat is forbidden. Defer to regen.
+  if InCombatLockdown() then SB.refreshQueued = true; return end
+
+  local els = SB.elements or {}
+  flowLayout(els)
+  if SB.page > (SB.totalPages or 1) then SB.page = SB.totalPages or 1 end
+
+  local curSpread = SB.page - 1
+  local h = host()
+  local ci, hi = 0, 0
+  for _, e in ipairs(els) do
+    local onSpread = (math.floor((e.p or 0) / (SB.minimized and 1 or 2)) == curSpread)
+    if e.kind == "card" then
+      ci = ci + 1
+      local card = SB.cards[ci] or createCard(ci)
+      if onSpread then
+        local pt, rp, x, y = pagePoint(e.p, e.r, e.c)
+        card:ClearAllPoints(); card:SetPoint(pt, h, rp, x, y)
+        applyCardVisual(card, e)
+        setCardCooldown(card)   -- paint the cooldown swipe if the spell is on cooldown
+        card:Show()
+      else
+        card:Hide()
+      end
+    else  -- section header
+      hi = hi + 1
+      local hd = SB.headers[hi] or createHeader(hi)
+      if onSpread then
+        local pt, rp, x, y = pagePoint(e.p, e.r, 0)
+        if (e.r or 0) > 0 then y = y - SECTION_TOP_GAP end
+        hd:ClearAllPoints(); hd:SetPoint(pt, h, rp, x, y)
+        hd.Text:SetText(e.label or "")
+        hd:Show()
+      else
+        hd:Hide()
+      end
+    end
+  end
+  for i = ci + 1, #SB.cards   do SB.cards[i]:Hide()   end
+  for i = hi + 1, #SB.headers do SB.headers[i]:Hide() end
+
+  if SB.paging then
+    SB.paging.label:SetText(("Page %d/%d"):format(SB.page, SB.totalPages or 1))
+    if SB.paging.prev.SetEnabled then SB.paging.prev:SetEnabled(SB.page > 1)
+    elseif SB.page > 1 then SB.paging.prev:Enable() else SB.paging.prev:Disable() end
+    if SB.paging.next.SetEnabled then SB.paging.next:SetEnabled(SB.page < (SB.totalPages or 1))
+    elseif SB.page < (SB.totalPages or 1) then SB.paging.next:Enable() else SB.paging.next:Disable() end
+    SB.paging:Show()
+  end
+end
+
+-- ============================================================================
+-- SEARCH box — filters cards by name.
+-- ============================================================================
+local function buildSearch()
+  if SB.searchBox then return SB.searchBox end
+  local h = host()
+  if not h then return nil end
+  -- SELF-CONTAINED search box: a bare EditBox, NOT the shared "SearchBoxTemplate". Other addons
+  -- (e.g. ezCollections) ship their own Interface\SharedXML that redefines SearchBoxTemplate plus a
+  -- broken InputBoxInstructions_OnLoad; templates are global-by-name, so whichever loads last wins —
+  -- and CreateFrame would then run their faulty OnLoad and error. We build the border / magnifier /
+  -- placeholder ourselves so the search box is immune to any other addon's template redefinitions.
+  local sb = CreateFrame("EditBox", "NE_SpellBookSearchBox", h)
+  sb:SetSize(200, 28)
+  sb:SetPoint("TOPRIGHT", h, "TOPRIGHT", -42, -10)
+  sb:SetAutoFocus(false)
+  sb:SetFontObject(_G.ChatFontNormal or _G.GameFontHighlightSmall)   -- font OBJECT, not a string
+  sb:SetTextInsets(24, 8, 0, 0)   -- leave room for the magnifier icon at the left
+  sb:SetMaxLetters(40)
+  sb:SetScript("OnEscapePressed", function(self) self:ClearFocus() end)
+  sb:SetScript("OnEnterPressed",  function(self) self:ClearFocus() end)
+
+  -- Border — manual backdrop using guaranteed 3.3.5a art (SetBackdrop is guarded).
+  if sb.SetBackdrop then
+    sb:SetBackdrop({
+      bgFile   = "Interface\\Tooltips\\UI-Tooltip-Background",
+      edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
+      tile = true, tileSize = 16, edgeSize = 12,
+      insets = { left = 4, right = 4, top = 4, bottom = 4 },
+    })
+    sb:SetBackdropColor(0, 0, 0, 0.6)
+    sb:SetBackdropBorderColor(0.6, 0.6, 0.6, 1)
+  end
+
+  -- Magnifier icon (guarded path: blank if the file is absent, never errors).
+  local icon = sb:CreateTexture(nil, "OVERLAY")
+  icon:SetSize(14, 14)
+  icon:SetPoint("LEFT", sb, "LEFT", 6, 0)
+  icon:SetTexture("Interface\\Common\\UI-Searchbox-Icon")
+  sb.searchIcon = icon
+
+  -- Placeholder ("Search") — a SEPARATE FontString shown only when empty+unfocused, so GetText() is
+  -- genuinely "" when empty (the old SearchBoxTemplate reported its placeholder AS the text).
+  local ph = sb:CreateFontString(nil, "ARTWORK", "GameFontDisableSmall")
+  ph:SetPoint("LEFT", sb, "LEFT", 24, 0)
+  ph:SetText(_G.SEARCH or "Search")
+  sb.placeholder = ph
+
+  local function applyFilter()
+    local q = (sb:GetText() or ""):lower()
+    if q ~= SB.search then
+      SB.search = q
+      SB.page = 1
+      buildElements()
+      SB.RenderCards()
+    end
+  end
+  sb:SetScript("OnTextChanged", function(self)
+    if sb.placeholder then
+      if (self:GetText() or "") == "" then sb.placeholder:Show() else sb.placeholder:Hide() end
+    end
+    applyFilter()
+  end)
+  sb:SetScript("OnEditFocusGained", function() if sb.placeholder then sb.placeholder:Hide() end end)
+  sb:SetScript("OnEditFocusLost", function(self)
+    if sb.placeholder and (self:GetText() or "") == "" then sb.placeholder:Show() end
+  end)
+
+  SB.searchBox = sb
+  return sb
+end
+
+-- ============================================================================
+-- COG — settings popup with Hide Passives + Show All Ranks. 3.3.5a has no MenuUtil, so we
+-- build a small custom popup of checkbuttons (no taint risk — purely insecure UI).
+-- ============================================================================
+local function buildCogMenu(cog)
+  if SB.cogMenu then return SB.cogMenu end
+  local menu = CreateFrame("Frame", "NE_SpellBookCogMenu", cog)
+  menu:SetSize(180, 160)
+  menu:SetFrameStrata("DIALOG")
+  menu:SetPoint("TOPRIGHT", cog, "BOTTOMRIGHT", 0, -2)
+  if menu.SetBackdrop then
+    menu:SetBackdrop({
+      bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
+      edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
+      tile = true, tileSize = 16, edgeSize = 16,
+      insets = { left = 4, right = 4, top = 4, bottom = 4 },
+    })
+  end
+  menu:Hide()
+  menu:EnableMouse(true)
+
+  local title = menu:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+  title:SetPoint("TOPLEFT", 12, -10)
+  title:SetText(SPELLBOOK or "Spellbook")
+
+  local function checkRow(label, getfn, setfn, y)
+    local cb = CreateFrame("CheckButton", nil, menu, "UICheckButtonTemplate")
+    cb:SetSize(20, 20)
+    cb:SetPoint("TOPLEFT", 10, y)
+    local fs = cb:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    fs:SetPoint("LEFT", cb, "RIGHT", 2, 0)
+    fs:SetText(label)
+    cb:SetChecked(getfn())
+    cb:SetScript("OnClick", function(self)
+      setfn(self:GetChecked() and true or false)
+    end)
+    cb._sync = function() cb:SetChecked(getfn()) end
+    return cb
+  end
+
+  menu.cbPassives = checkRow(SPELLBOOK_FILTER_PASSIVES or "Hide Passives",
+    function() return SB.hidePassives end,
+    function(v) SB.hidePassives = v; saveOpts(); SB.page = 1; buildElements(); SB.RenderCards() end, -30)
+  menu.cbRanks = checkRow("Show All Ranks",
+    function() return SB.showRanks end,
+    function(v) SB.showRanks = v; saveOpts(); SB.page = 1; buildElements(); SB.RenderCards() end, -54)
+  -- Toggling the Mounts tab changes the category list, so re-run the full Refresh (rebuilds the tab
+  -- row + cards). Reset the auto-pick so we don't get stuck on a now-removed tab.
+  menu.cbMounts = checkRow("Show Mounts tab",
+    function() return SB.showMounts end,
+    function(v)
+      SB.showMounts = v; saveOpts(); SB.userPickedCategory = false; SB.page = 1
+      if SB.Refresh then SB.Refresh() end
+    end, -78)
+  -- Companions tab (vanity pets) — same as Mounts: toggling changes the category list, so full Refresh.
+  menu.cbCompanions = checkRow("Show Companions tab",
+    function() return SB.showCompanions end,
+    function(v)
+      SB.showCompanions = v; saveOpts(); SB.userPickedCategory = false; SB.page = 1
+      if SB.Refresh then SB.Refresh() end
+    end, -102)
+  -- Glow active spells (the WeakAuras ants on spells whose buff is currently up). Toggling re-evaluates
+  -- every visible card's overlay immediately (turning glows on/off without a full re-render).
+  menu.cbGlow = checkRow("Glow active spells",
+    function() return SB.showActiveGlow end,
+    function(v) SB.showActiveGlow = v; saveOpts(); if SB.UpdateActiveOverlays then SB.UpdateActiveOverlays() end end, -126)
+
+  menu:SetScript("OnShow", function(self)
+    if self.cbPassives and self.cbPassives._sync then self.cbPassives._sync() end
+    if self.cbRanks and self.cbRanks._sync then self.cbRanks._sync() end
+    if self.cbMounts and self.cbMounts._sync then self.cbMounts._sync() end
+    if self.cbCompanions and self.cbCompanions._sync then self.cbCompanions._sync() end
+    if self.cbGlow and self.cbGlow._sync then self.cbGlow._sync() end
+  end)
+  -- Close the popup whenever the spellbook closes, so reopening the book never shows a left-open cog.
+  if SB.frame and SB.frame.HookScript then
+    SB.frame:HookScript("OnHide", function() menu:Hide() end)
+  end
+  SB.cogMenu = menu
+  return menu
+end
+
+local function buildCog()
+  if SB.cog then return SB.cog end
+  local h = host()
+  if not h then return nil end
+  local cog = CreateFrame("Button", "NE_SpellBookCog", h)
+  cog:SetSize(16, 18)
+  cog:SetPoint("TOPRIGHT", h, "TOPRIGHT", -14, -16)   -- on the wood header, aligned with the tab row
+  cog.Icon = cog:CreateTexture(nil, "ARTWORK")
+  if not NE.tex.SetAtlas(cog.Icon, "questlog-icon-setting", true) then
+    cog.Icon:SetTexture("Interface\\Buttons\\UI-OptionsButton")
+    cog.Icon:SetSize(16, 16)
+  end
+  cog.Icon:SetPoint("CENTER")
+  cog.Hi = cog:CreateTexture(nil, "HIGHLIGHT")
+  if not NE.tex.SetAtlas(cog.Hi, "questlog-icon-setting", true) then
+    cog.Hi:SetTexture("Interface\\Buttons\\UI-OptionsButton")
+    cog.Hi:SetSize(16, 16)
+  end
+  cog.Hi:SetPoint("CENTER")
+  cog.Hi:SetBlendMode("ADD")
+  cog.Hi:SetAlpha(0.4)
+  cog:SetScript("OnClick", function(self)
+    local menu = buildCogMenu(self)
+    if menu:IsShown() then menu:Hide() else menu:Show() end
+  end)
+  -- seat the search box immediately to the cog's left.
+  if SB.searchBox then
+    SB.searchBox:ClearAllPoints()
+    SB.searchBox:SetPoint("RIGHT", cog, "LEFT", -6, 0)
+  end
+  SB.cog = cog
+  return cog
+end
+
+-- ============================================================================
+-- BUILD / REFRESH — the renderer-side entry points (the window agent calls these).
+-- ============================================================================
+function SB.Build()
+  if SB._built then return end
+  local h = host()
+  if not h then return end
+  SB._built = true
+  loadFilterOpts()   -- restore persisted Hide Passives / Show All Ranks (SV ready at PLAYER_LOGIN)
+  buildBackground()
+  buildPaging()
+  buildSearch()
+  buildCog()
+  prewarmBackgroundBLP()   -- warm the bg textures NOW (login), before the book is first opened
+end
+
+function SB.Refresh()
+  if not SB._built then SB.Build() end
+  if not host() then return end
+  if InCombatLockdown() then SB.refreshQueued = true end
+
+  buildSearch()
+  buildCog()
+  applyBgWidth()
+  prewarmBackgroundBLP()   -- idempotent (guarded); ensures warming even if Build's call was early
+
+  -- Title font size. The chrome stores the title FontString as frame._neTitle (PanelChrome.SetTitle),
+  -- inheriting GameFontNormal (~12pt) by default; bump it to match the resized window.
+  if FONT_TITLE_SIZE > 0 and SB.frame then
+    local titleFs = SB.frame._neTitle
+                 or (SB.frame.TitleContainer and SB.frame.TitleContainer.TitleText)
+                 or SB.frame.Title
+    if titleFs and titleFs.GetFont then
+      local f, _, g = titleFs:GetFont()
+      if f then titleFs:SetFont(f, FONT_TITLE_SIZE, g) end
+    end
+  end
+
+  local cats = buildCategories()
+  if SB.selected > #cats then SB.selected = 1 end
+  -- Default view = first category that actually has learned spells (General on 3.3.5a). Only
+  -- auto-pick until the user manually clicks a tab; thereafter honour their choice.
+  if not SB.userPickedCategory then
+    SB.selected = pickDefaultSelected(cats)
+  end
+
+  -- build + chain the category tabs along the header line.
+  local h = host()
+  local prev
+  for i, cat in ipairs(cats) do
+    local t = categoryTab(i)
+    t:SetText(cat.label)
+    -- Width to text, same as the Character panel's resizeTab (reset → measure → max(min, w+pad)).
+    local txt = _G[t:GetName() .. "Text"]
+    local tw = 0
+    if txt then
+      txt:SetWidth(0)
+      do local f, _, g = txt:GetFont(); if f and FONT_TAB_SIZE > 0 then txt:SetFont(f, FONT_TAB_SIZE, g) end end
+      tw = txt:GetWidth() or 0
+    end
+    t:SetWidth(math.max(TAB_MIN_W, math.floor(tw + TAB_TEXT_PAD)))
+    t:ClearAllPoints()
+    if prev then
+      t:SetPoint("TOPLEFT", prev, "TOPRIGHT", TAB_GAP, 0)
+    else
+      t:SetPoint("TOPLEFT", h, "TOPLEFT", CAT_TAB_X, CAT_TAB_TOP)
+    end
+    t:Show()
+    setTabArt(t, i == SB.selected)   -- selected → gold/active art (taller); others → dark/inactive
+    prev = t
+  end
+  for i = #cats + 1, #SB.catTabs do SB.catTabs[i]:Hide() end
+
+  buildElements()
+  SB.RenderCards()
+end
+
+-- Load persisted filter options if the SV is already available at parse time (nil-safe;
+-- SB.Build also calls loadFilterOpts at PLAYER_LOGIN when the SV is guaranteed loaded).
+if optsTable() then loadFilterOpts() end

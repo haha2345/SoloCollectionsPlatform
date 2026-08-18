@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-08-12",
+  "changeId": "CLIENT-20260812-089",
+  "rules": {
+    "spell": "A canonical action spell may identify at most one journal-visible mount.",
+    "creature": "Exact creature-entry tuples remain the canonical grouping key.",
+    "display": "An exact display match requires manual review but does not by itself merge distinct permanent actions.",
+    "localizedName": "A zhCN name collision requires review; collectionId remains the stable tie-breaker for distinct identities."
+  },
+  "summary": {
+    "canonicalRows": 281,
+    "visibleRows": 258,
+    "uniqueVisibleCanonicalActionSpells": 258,
+    "duplicateCanonicalActionSpells": 0,
+    "duplicateCreatureTuples": 0,
+    "sameDisplayGroups": 5,
+    "sameZhCNNameGroups": 11,
+    "sameDisplayGroupsWithMoreThanOneVisibleRow": 0
+  },
+  "sameDisplayDecisions": [
+    {"displayId": 24758, "collectionIds": [100051, 100053], "decision": "KEEP_VISIBLE_100053", "reason": "50869 is an internal action; 49378 is the permanent collectible."},
+    {"displayId": 28063, "collectionIds": [100091, 100210], "decision": "KEEP_VISIBLE_100091", "reason": "61442 is an internal profession variant; 75596 is the retained permanent action."},
+    {"displayId": 27237, "collectionIds": [100098, 100248], "decision": "KEEP_VISIBLE_100248", "reason": "60136 is superseded by the formal item-backed Traveler's Tundra Mammoth."},
+    {"displayId": 27238, "collectionIds": [100099, 100249], "decision": "KEEP_VISIBLE_100249", "reason": "60140 is superseded by the formal item-backed Traveler's Tundra Mammoth."},
+    {"displayId": 10718, "collectionIds": [100139, 100170], "decision": "KEEP_VISIBLE_100170", "reason": "29059 is an internal Naxxramas action; 17481 is the permanent collectible."}
+  ],
+  "sameZhCNNameDecisions": [
+    {"name": "装甲棕熊", "collectionIds": [100008, 100009], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "黑色战熊", "collectionIds": [100028, 100029], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "黑色猛犸战象", "collectionIds": [100032, 100033], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "美酒节科多兽", "collectionIds": [100051, 100053], "decision": "KEEP_VISIBLE_100053", "reason": "Internal action and permanent collectible are not both exposed."},
+    {"name": "重型黑色猛犸战象", "collectionIds": [100096, 100097], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "召唤重型旅行猛犸象", "collectionIds": [100098, 100099], "decision": "EXCLUDE_BOTH_DUPLICATES", "reason": "Both internal actions are superseded by the two formal item-backed Traveler's Tundra Mammoths."},
+    {"name": "重型冰雪猛犸象", "collectionIds": [100100, 100101], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "冰雪猛犸象", "collectionIds": [100124, 100125], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "迅捷斑马", "collectionIds": [100237, 100238], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and independent permanent promotional sources."},
+    {"name": "旅行者的苔原猛犸象", "collectionIds": [100248, 100249], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."},
+    {"name": "长毛猛犸象", "collectionIds": [100273, 100274], "decision": "KEEP_DISTINCT", "reason": "Separate creature identities and faction actions."}
+  ]
+}

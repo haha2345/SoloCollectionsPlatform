@@ -1,0 +1,15 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Level Up|r
+## Notes: Load-on-demand New Era level-up display.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\levelup\Assets.lua
+modules\levelup\Data.lua
+modules\levelup\Harvest.lua
+modules\levelup\Unlocks.lua
+modules\levelup\Banner.lua
+modules\levelup\SideDisplay.lua
+modules\levelup\Register.lua

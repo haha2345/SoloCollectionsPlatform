@@ -1,0 +1,33 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Cooldown Viewer|r
+## Notes: Load-on-demand New Era cooldown HUD and settings.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\cooldownviewer\ClassData.lua
+modules\cooldownviewer\CdmSeedWotLK.lua
+modules\cooldownviewer\CdmAuraCatalog.lua
+modules\cooldownviewer\CooldownViewer.lua
+modules\cooldownviewer\Assets.lua
+modules\cooldownviewer\Equip.lua
+modules\cooldownviewer\ItemMixins.lua
+modules\cooldownviewer\Viewers.lua
+modules\cooldownviewer\AuraItemMixins.lua
+modules\cooldownviewer\BuffViewers.lua
+modules\cooldownviewer\AlertData.lua
+modules\cooldownviewer\SoundAlertData.lua
+modules\cooldownviewer\Alerts.lua
+modules\cooldownviewer\SettingsAssets.lua
+modules\cooldownviewer\SettingsPanel.lua
+modules\cooldownviewer\CdmArsenal.lua
+modules\cooldownviewer\SettingsAdapter.lua
+modules\cooldownviewer\SettingsCategories.lua
+modules\cooldownviewer\SettingsMenu.lua
+modules\cooldownviewer\SettingsReorder.lua
+modules\cooldownviewer\SettingsPresets.lua
+modules\cooldownviewer\SettingsControls.lua
+modules\cooldownviewer\SettingsOptions.lua
+modules\cooldownviewer\EditorPanel.lua
+modules\cooldownviewer\Register.lua

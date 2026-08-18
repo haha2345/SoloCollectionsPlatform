@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Bags|r
+## Notes: Load-on-demand New Era bag panels.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\bags\BagSkin.lua
+modules\bags\Bags.lua
+modules\bags\CombinedBag.lua

@@ -1,0 +1,33 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Character|r
+## Notes: Load-on-demand New Era character panel.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\character\Assets.lua
+modules\character\CharacterPanel.lua
+modules\character\InsetFrames.lua
+modules\character\ModelArea.lua
+modules\character\ModelControls.lua
+modules\character\SlotFrames.lua
+modules\character\SlotQuality.lua
+modules\character\InnerBorder.lua
+modules\character\LevelText.lua
+modules\character\PaperDoll.lua
+modules\character\Sidebar.lua
+modules\character\SidebarTabs.lua
+modules\character\TabButtons.lua
+modules\character\EquipmentSets.lua
+modules\character\EquipmentManagerPane.lua
+modules\character\EquipmentFlyout.lua
+modules\character\TitlesPane.lua
+modules\character\Reputation.lua
+modules\character\Skills.lua
+modules\character\Honor.lua
+modules\character\Currency.lua
+modules\character\PetPaperDoll.lua
+modules\character\CloseButton.lua
+modules\character\SettingsCog.lua
+modules\character\EditModeRegister.lua

@@ -1,0 +1,2419 @@
+{
+  "entries": [
+    {
+      "canonicalSpellId": 4055,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100309,
+      "collectionKey": "companion.mechanical_squirrel",
+      "ordinal": 18507,
+      "previewCreatureEntry": 2671,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        4055
+      ]
+    },
+    {
+      "canonicalSpellId": 10677,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100310,
+      "collectionKey": "companion.siamese_cat",
+      "ordinal": 18508,
+      "previewCreatureEntry": 7380,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10677
+      ]
+    },
+    {
+      "canonicalSpellId": 10678,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100311,
+      "collectionKey": "companion.silver_tabby_cat",
+      "ordinal": 18509,
+      "previewCreatureEntry": 7381,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10678
+      ]
+    },
+    {
+      "canonicalSpellId": 10676,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100312,
+      "collectionKey": "companion.orange_tabby_cat",
+      "ordinal": 18510,
+      "previewCreatureEntry": 7382,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10676
+      ]
+    },
+    {
+      "canonicalSpellId": 10675,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100313,
+      "collectionKey": "companion.black_tabby_cat",
+      "ordinal": 18511,
+      "previewCreatureEntry": 7383,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10675
+      ]
+    },
+    {
+      "canonicalSpellId": 10674,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100314,
+      "collectionKey": "companion.cornish_rex_cat",
+      "ordinal": 18512,
+      "previewCreatureEntry": 7384,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10674
+      ]
+    },
+    {
+      "canonicalSpellId": 10673,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100315,
+      "collectionKey": "companion.bombay_cat",
+      "ordinal": 18513,
+      "previewCreatureEntry": 7385,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10673
+      ]
+    },
+    {
+      "canonicalSpellId": 10679,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100316,
+      "collectionKey": "companion.white_kitten",
+      "ordinal": 18514,
+      "previewCreatureEntry": 7386,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10679
+      ]
+    },
+    {
+      "canonicalSpellId": 10683,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100317,
+      "collectionKey": "companion.green_wing_macaw",
+      "ordinal": 18515,
+      "previewCreatureEntry": 7387,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10683
+      ]
+    },
+    {
+      "canonicalSpellId": 10681,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100318,
+      "collectionKey": "companion.cockatoo",
+      "ordinal": 18516,
+      "previewCreatureEntry": 7388,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10681
+      ]
+    },
+    {
+      "canonicalSpellId": 10684,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100319,
+      "collectionKey": "companion.senegal",
+      "ordinal": 18517,
+      "previewCreatureEntry": 7389,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10684
+      ]
+    },
+    {
+      "canonicalSpellId": 10680,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100320,
+      "collectionKey": "companion.cockatiel",
+      "ordinal": 18518,
+      "previewCreatureEntry": 7390,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10680
+      ]
+    },
+    {
+      "canonicalSpellId": 10682,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100291,
+      "collectionKey": "companion.hyacinth_macaw",
+      "ordinal": 291,
+      "previewCreatureEntry": 7391,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10682
+      ]
+    },
+    {
+      "canonicalSpellId": 10686,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100321,
+      "collectionKey": "companion.prairie_chicken",
+      "ordinal": 18519,
+      "previewCreatureEntry": 7392,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10686
+      ]
+    },
+    {
+      "canonicalSpellId": 10687,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100322,
+      "collectionKey": "companion.white_plymouth_rock",
+      "ordinal": 18520,
+      "previewCreatureEntry": 7393,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10687
+      ]
+    },
+    {
+      "canonicalSpellId": 10685,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100323,
+      "collectionKey": "companion.ancona_chicken",
+      "ordinal": 18521,
+      "previewCreatureEntry": 7394,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10685
+      ]
+    },
+    {
+      "canonicalSpellId": 10688,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100324,
+      "collectionKey": "companion.cockroach",
+      "ordinal": 18522,
+      "previewCreatureEntry": 7395,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10688
+      ]
+    },
+    {
+      "canonicalSpellId": 10695,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100325,
+      "collectionKey": "companion.dark_whelpling",
+      "ordinal": 18523,
+      "previewCreatureEntry": 7543,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10695
+      ]
+    },
+    {
+      "canonicalSpellId": 10697,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100326,
+      "collectionKey": "companion.crimson_whelpling",
+      "ordinal": 18524,
+      "previewCreatureEntry": 7544,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10697
+      ]
+    },
+    {
+      "canonicalSpellId": 10698,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100283,
+      "collectionKey": "companion.emerald_whelpling",
+      "ordinal": 283,
+      "previewCreatureEntry": 7545,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10698
+      ]
+    },
+    {
+      "canonicalSpellId": 10699,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100327,
+      "collectionKey": "companion.bronze_whelpling",
+      "ordinal": 18525,
+      "previewCreatureEntry": 7546,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10699
+      ]
+    },
+    {
+      "canonicalSpellId": 10696,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100328,
+      "collectionKey": "companion.azure_whelpling",
+      "ordinal": 18526,
+      "previewCreatureEntry": 7547,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10696
+      ]
+    },
+    {
+      "canonicalSpellId": 10700,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100329,
+      "collectionKey": "companion.faeling",
+      "ordinal": 18527,
+      "previewCreatureEntry": 7548,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10700
+      ]
+    },
+    {
+      "canonicalSpellId": 10704,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100330,
+      "collectionKey": "companion.tree_frog",
+      "ordinal": 18528,
+      "previewCreatureEntry": 7549,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10704
+      ]
+    },
+    {
+      "canonicalSpellId": 10703,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100331,
+      "collectionKey": "companion.wood_frog",
+      "ordinal": 18529,
+      "previewCreatureEntry": 7550,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10703
+      ]
+    },
+    {
+      "canonicalSpellId": 10701,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100332,
+      "collectionKey": "companion.dart_frog",
+      "ordinal": 18530,
+      "previewCreatureEntry": 7551,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10701
+      ]
+    },
+    {
+      "canonicalSpellId": 10702,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100333,
+      "collectionKey": "companion.island_frog",
+      "ordinal": 18531,
+      "previewCreatureEntry": 7552,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10702
+      ]
+    },
+    {
+      "canonicalSpellId": 10707,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100334,
+      "collectionKey": "companion.great_horned_owl",
+      "ordinal": 18532,
+      "previewCreatureEntry": 7553,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10707
+      ]
+    },
+    {
+      "canonicalSpellId": 10708,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100335,
+      "collectionKey": "companion.snowy_owl",
+      "ordinal": 18533,
+      "previewCreatureEntry": 7554,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10708
+      ]
+    },
+    {
+      "canonicalSpellId": 10706,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100336,
+      "collectionKey": "companion.hawk_owl",
+      "ordinal": 18534,
+      "previewCreatureEntry": 7555,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10706
+      ]
+    },
+    {
+      "canonicalSpellId": 10705,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100337,
+      "collectionKey": "companion.eagle_owl",
+      "ordinal": 18535,
+      "previewCreatureEntry": 7556,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10705
+      ]
+    },
+    {
+      "canonicalSpellId": 10710,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100338,
+      "collectionKey": "companion.cottontail_rabbit",
+      "ordinal": 18536,
+      "previewCreatureEntry": 7558,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10710
+      ]
+    },
+    {
+      "canonicalSpellId": 10712,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100339,
+      "collectionKey": "companion.spotted_rabbit",
+      "ordinal": 18537,
+      "previewCreatureEntry": 7559,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10712,
+        35157
+      ]
+    },
+    {
+      "canonicalSpellId": 10711,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100340,
+      "collectionKey": "companion.snowshoe_rabbit",
+      "ordinal": 18538,
+      "previewCreatureEntry": 7560,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10711
+      ]
+    },
+    {
+      "canonicalSpellId": 10713,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100341,
+      "collectionKey": "companion.albino_snake",
+      "ordinal": 18539,
+      "previewCreatureEntry": 7561,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10713
+      ]
+    },
+    {
+      "canonicalSpellId": 10716,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100342,
+      "collectionKey": "companion.brown_snake",
+      "ordinal": 18540,
+      "previewCreatureEntry": 7562,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10716
+      ]
+    },
+    {
+      "canonicalSpellId": 10715,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100343,
+      "collectionKey": "companion.blue_racer",
+      "ordinal": 18541,
+      "previewCreatureEntry": 7563,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10715
+      ]
+    },
+    {
+      "canonicalSpellId": 10714,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100344,
+      "collectionKey": "companion.black_kingsnake",
+      "ordinal": 18542,
+      "previewCreatureEntry": 7565,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10714
+      ]
+    },
+    {
+      "canonicalSpellId": 10720,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100345,
+      "collectionKey": "companion.scarlet_snake",
+      "ordinal": 18543,
+      "previewCreatureEntry": 7566,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10720
+      ]
+    },
+    {
+      "canonicalSpellId": 10717,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100346,
+      "collectionKey": "companion.crimson_snake",
+      "ordinal": 18544,
+      "previewCreatureEntry": 7567,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10717
+      ]
+    },
+    {
+      "canonicalSpellId": 10719,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100347,
+      "collectionKey": "companion.ribbon_snake",
+      "ordinal": 18545,
+      "previewCreatureEntry": 7568,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10719
+      ]
+    },
+    {
+      "canonicalSpellId": 10718,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100348,
+      "collectionKey": "companion.green_water_snake",
+      "ordinal": 18546,
+      "previewCreatureEntry": 7569,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10718
+      ]
+    },
+    {
+      "canonicalSpellId": 10721,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100349,
+      "collectionKey": "companion.elven_wisp",
+      "ordinal": 18547,
+      "previewCreatureEntry": 7570,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10721
+      ]
+    },
+    {
+      "canonicalSpellId": 12243,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100350,
+      "collectionKey": "companion.mechanical_chicken",
+      "ordinal": 18548,
+      "previewCreatureEntry": 8376,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        12243
+      ]
+    },
+    {
+      "canonicalSpellId": 15048,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100351,
+      "collectionKey": "companion.pet_bombling",
+      "ordinal": 18549,
+      "previewCreatureEntry": 9656,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        15048
+      ]
+    },
+    {
+      "canonicalSpellId": 15049,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100352,
+      "collectionKey": "companion.lil.creature_9657",
+      "ordinal": 18550,
+      "previewCreatureEntry": 9657,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        15049
+      ]
+    },
+    {
+      "canonicalSpellId": 15067,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100353,
+      "collectionKey": "companion.sprite_darter_hatchling",
+      "ordinal": 18551,
+      "previewCreatureEntry": 9662,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        15067
+      ]
+    },
+    {
+      "canonicalSpellId": 15648,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100354,
+      "collectionKey": "companion.corrupted_kitten",
+      "ordinal": 18552,
+      "previewCreatureEntry": 9936,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        15648
+      ]
+    },
+    {
+      "canonicalSpellId": 15999,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100281,
+      "collectionKey": "companion.worg_pup",
+      "ordinal": 281,
+      "previewCreatureEntry": 10259,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        15999
+      ]
+    },
+    {
+      "canonicalSpellId": 16450,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100282,
+      "collectionKey": "companion.smolderweb_hatchling",
+      "ordinal": 282,
+      "previewCreatureEntry": 10598,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        16450
+      ]
+    },
+    {
+      "canonicalSpellId": 17567,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100355,
+      "collectionKey": "companion.blood_parrot",
+      "ordinal": 18553,
+      "previewCreatureEntry": 11236,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        17567
+      ]
+    },
+    {
+      "canonicalSpellId": 17707,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100298,
+      "collectionKey": "companion.panda_cub",
+      "ordinal": 298,
+      "previewCreatureEntry": 11325,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        17707
+      ]
+    },
+    {
+      "canonicalSpellId": 17708,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100356,
+      "collectionKey": "companion.mini_diablo",
+      "ordinal": 18554,
+      "previewCreatureEntry": 11326,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        17708
+      ]
+    },
+    {
+      "canonicalSpellId": 17709,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100297,
+      "collectionKey": "companion.zergling",
+      "ordinal": 297,
+      "previewCreatureEntry": 11327,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        17709
+      ]
+    },
+    {
+      "canonicalSpellId": 19363,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100357,
+      "collectionKey": "companion.mechanical_yeti",
+      "ordinal": 18555,
+      "previewCreatureEntry": 12257,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        19363
+      ]
+    },
+    {
+      "canonicalSpellId": 19772,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100294,
+      "collectionKey": "companion.lifelike_toad",
+      "ordinal": 294,
+      "previewCreatureEntry": 12419,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        19772
+      ]
+    },
+    {
+      "canonicalSpellId": 10709,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100358,
+      "collectionKey": "companion.brown_prairie_dog",
+      "ordinal": 18556,
+      "previewCreatureEntry": 14421,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        10709
+      ]
+    },
+    {
+      "canonicalSpellId": 23429,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100359,
+      "collectionKey": "companion.loggerhead_snapjaw",
+      "ordinal": 18557,
+      "previewCreatureEntry": 14629,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23429
+      ]
+    },
+    {
+      "canonicalSpellId": 23431,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100360,
+      "collectionKey": "companion.leatherback_snapjaw",
+      "ordinal": 18558,
+      "previewCreatureEntry": 14630,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23431
+      ]
+    },
+    {
+      "canonicalSpellId": 23430,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100361,
+      "collectionKey": "companion.olive_snapjaw",
+      "ordinal": 18559,
+      "previewCreatureEntry": 14631,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23430
+      ]
+    },
+    {
+      "canonicalSpellId": 23432,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100362,
+      "collectionKey": "companion.hawksbill_snapjaw",
+      "ordinal": 18560,
+      "previewCreatureEntry": 14632,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23432
+      ]
+    },
+    {
+      "canonicalSpellId": 23428,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100363,
+      "collectionKey": "companion.albino_snapjaw",
+      "ordinal": 18561,
+      "previewCreatureEntry": 14633,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23428
+      ]
+    },
+    {
+      "canonicalSpellId": 23531,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100364,
+      "collectionKey": "companion.tiny_green_dragon",
+      "ordinal": 18562,
+      "previewCreatureEntry": 14755,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23531
+      ]
+    },
+    {
+      "canonicalSpellId": 23530,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100365,
+      "collectionKey": "companion.tiny_red_dragon",
+      "ordinal": 18563,
+      "previewCreatureEntry": 14756,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23530
+      ]
+    },
+    {
+      "canonicalSpellId": 23811,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100366,
+      "collectionKey": "companion.jubling",
+      "ordinal": 18564,
+      "previewCreatureEntry": 14878,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        23811
+      ]
+    },
+    {
+      "canonicalSpellId": 24696,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100367,
+      "collectionKey": "companion.murky",
+      "ordinal": 18565,
+      "previewCreatureEntry": 15186,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24696
+      ]
+    },
+    {
+      "canonicalSpellId": 24985,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100368,
+      "collectionKey": "companion.blue_baby_murloc",
+      "ordinal": 18566,
+      "previewCreatureEntry": 15356,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24985
+      ]
+    },
+    {
+      "canonicalSpellId": 24990,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100369,
+      "collectionKey": "companion.purple_baby_murloc",
+      "ordinal": 18567,
+      "previewCreatureEntry": 15357,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24990
+      ]
+    },
+    {
+      "canonicalSpellId": 24988,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100370,
+      "collectionKey": "companion.lurky",
+      "ordinal": 18568,
+      "previewCreatureEntry": 15358,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24988
+      ]
+    },
+    {
+      "canonicalSpellId": 24989,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100371,
+      "collectionKey": "companion.pink_baby_murloc",
+      "ordinal": 18569,
+      "previewCreatureEntry": 15359,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24989
+      ]
+    },
+    {
+      "canonicalSpellId": 24986,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100372,
+      "collectionKey": "companion.green_baby_murloc",
+      "ordinal": 18570,
+      "previewCreatureEntry": 15360,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24986
+      ]
+    },
+    {
+      "canonicalSpellId": 25018,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100373,
+      "collectionKey": "companion.murki",
+      "ordinal": 18571,
+      "previewCreatureEntry": 15361,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        24987,
+        25018
+      ]
+    },
+    {
+      "canonicalSpellId": 25162,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100292,
+      "collectionKey": "companion.disgusting_oozeling",
+      "ordinal": 292,
+      "previewCreatureEntry": 15429,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        25162
+      ]
+    },
+    {
+      "canonicalSpellId": 25849,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100374,
+      "collectionKey": "companion.baby_shark",
+      "ordinal": 18572,
+      "previewCreatureEntry": 15661,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        25849
+      ]
+    },
+    {
+      "canonicalSpellId": 26533,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100375,
+      "collectionKey": "companion.father_winter",
+      "ordinal": 18573,
+      "previewCreatureEntry": 15698,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26533
+      ]
+    },
+    {
+      "canonicalSpellId": 26010,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100376,
+      "collectionKey": "companion.tranquil_mechanical_yeti",
+      "ordinal": 18574,
+      "previewCreatureEntry": 15699,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26010
+      ]
+    },
+    {
+      "canonicalSpellId": 26541,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100377,
+      "collectionKey": "companion.winter",
+      "ordinal": 18575,
+      "previewCreatureEntry": 15705,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26541
+      ]
+    },
+    {
+      "canonicalSpellId": 26529,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100378,
+      "collectionKey": "companion.winter_reindeer",
+      "ordinal": 18576,
+      "previewCreatureEntry": 15706,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26529
+      ]
+    },
+    {
+      "canonicalSpellId": 26045,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100379,
+      "collectionKey": "companion.tiny_snowman",
+      "ordinal": 18577,
+      "previewCreatureEntry": 15710,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26045
+      ]
+    },
+    {
+      "canonicalSpellId": 26067,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100380,
+      "collectionKey": "companion.mechanical_greench",
+      "ordinal": 18578,
+      "previewCreatureEntry": 15721,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26067
+      ]
+    },
+    {
+      "canonicalSpellId": 26391,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100381,
+      "collectionKey": "companion.vanquished_tentacle",
+      "ordinal": 18579,
+      "previewCreatureEntry": 15901,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        26391
+      ]
+    },
+    {
+      "canonicalSpellId": 27241,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100382,
+      "collectionKey": "companion.gurky",
+      "ordinal": 18580,
+      "previewCreatureEntry": 16069,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        27241
+      ]
+    },
+    {
+      "canonicalSpellId": 27570,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100383,
+      "collectionKey": "companion.peddlefeet",
+      "ordinal": 18581,
+      "previewCreatureEntry": 16085,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        27570
+      ]
+    },
+    {
+      "canonicalSpellId": 28487,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100384,
+      "collectionKey": "companion.terky",
+      "ordinal": 18582,
+      "previewCreatureEntry": 16445,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        28487
+      ]
+    },
+    {
+      "canonicalSpellId": 28505,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100385,
+      "collectionKey": "companion.poley",
+      "ordinal": 18583,
+      "previewCreatureEntry": 16456,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        28505
+      ]
+    },
+    {
+      "canonicalSpellId": 28738,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100288,
+      "collectionKey": "companion.speedy",
+      "ordinal": 288,
+      "previewCreatureEntry": 16547,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        28738
+      ]
+    },
+    {
+      "canonicalSpellId": 28739,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100293,
+      "collectionKey": "companion.mr_wiggles",
+      "ordinal": 293,
+      "previewCreatureEntry": 16548,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        28739
+      ]
+    },
+    {
+      "canonicalSpellId": 28740,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100386,
+      "collectionKey": "companion.whiskers_the_rat",
+      "ordinal": 18584,
+      "previewCreatureEntry": 16549,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        28740
+      ]
+    },
+    {
+      "canonicalSpellId": 28871,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100387,
+      "collectionKey": "companion.spirit_of_summer",
+      "ordinal": 18585,
+      "previewCreatureEntry": 16701,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        28871
+      ]
+    },
+    {
+      "canonicalSpellId": 30152,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100388,
+      "collectionKey": "companion.white_tiger_cub",
+      "ordinal": 18586,
+      "previewCreatureEntry": 17254,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        30152
+      ]
+    },
+    {
+      "canonicalSpellId": 30156,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100389,
+      "collectionKey": "companion.hippogryph_hatchling",
+      "ordinal": 18587,
+      "previewCreatureEntry": 17255,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        30156
+      ]
+    },
+    {
+      "canonicalSpellId": 32298,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100390,
+      "collectionKey": "companion.netherwhelp",
+      "ordinal": 18588,
+      "previewCreatureEntry": 18381,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        32298
+      ]
+    },
+    {
+      "canonicalSpellId": 33050,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100391,
+      "collectionKey": "companion.magical_crawdad",
+      "ordinal": 18589,
+      "previewCreatureEntry": 18839,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        33050
+      ]
+    },
+    {
+      "canonicalSpellId": 33057,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100392,
+      "collectionKey": "companion.benevolent_mr_pinchy",
+      "ordinal": 18590,
+      "previewCreatureEntry": 18845,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        33057
+      ]
+    },
+    {
+      "canonicalSpellId": 35156,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100393,
+      "collectionKey": "companion.mana_wyrmling",
+      "ordinal": 18591,
+      "previewCreatureEntry": 20408,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        35156
+      ]
+    },
+    {
+      "canonicalSpellId": 35239,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100394,
+      "collectionKey": "companion.brown_rabbit",
+      "ordinal": 18592,
+      "previewCreatureEntry": 20472,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        35239
+      ]
+    },
+    {
+      "canonicalSpellId": 35910,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100395,
+      "collectionKey": "companion.yellow_moth",
+      "ordinal": 18593,
+      "previewCreatureEntry": 21008,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        35910
+      ]
+    },
+    {
+      "canonicalSpellId": 35909,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100396,
+      "collectionKey": "companion.red_moth",
+      "ordinal": 18594,
+      "previewCreatureEntry": 21009,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        35909
+      ]
+    },
+    {
+      "canonicalSpellId": 35907,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100397,
+      "collectionKey": "companion.blue_moth",
+      "ordinal": 18595,
+      "previewCreatureEntry": 21010,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        35907
+      ]
+    },
+    {
+      "canonicalSpellId": 35911,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100398,
+      "collectionKey": "companion.white_moth",
+      "ordinal": 18596,
+      "previewCreatureEntry": 21018,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        35911
+      ]
+    },
+    {
+      "canonicalSpellId": 36027,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100399,
+      "collectionKey": "companion.golden_dragonhawk_hatchling",
+      "ordinal": 18597,
+      "previewCreatureEntry": 21055,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        36027
+      ]
+    },
+    {
+      "canonicalSpellId": 36031,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100400,
+      "collectionKey": "companion.blue_dragonhawk_hatchling",
+      "ordinal": 18598,
+      "previewCreatureEntry": 21056,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        36031
+      ]
+    },
+    {
+      "canonicalSpellId": 36029,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100401,
+      "collectionKey": "companion.silver_dragonhawk_hatchling",
+      "ordinal": 18599,
+      "previewCreatureEntry": 21063,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        36029
+      ]
+    },
+    {
+      "canonicalSpellId": 36028,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100402,
+      "collectionKey": "companion.red_dragonhawk_hatchling",
+      "ordinal": 18600,
+      "previewCreatureEntry": 21064,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        36028
+      ]
+    },
+    {
+      "canonicalSpellId": 36034,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100296,
+      "collectionKey": "companion.firefly",
+      "ordinal": 296,
+      "previewCreatureEntry": 21076,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        36034
+      ]
+    },
+    {
+      "canonicalSpellId": 39181,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100403,
+      "collectionKey": "companion.miniwing",
+      "ordinal": 18601,
+      "previewCreatureEntry": 22445,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        39181
+      ]
+    },
+    {
+      "canonicalSpellId": 39709,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100404,
+      "collectionKey": "companion.wolpertinger",
+      "ordinal": 18602,
+      "previewCreatureEntry": 22943,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        39709
+      ]
+    },
+    {
+      "canonicalSpellId": 40319,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100405,
+      "collectionKey": "companion.lucky.creature_23114",
+      "ordinal": 18603,
+      "previewCreatureEntry": 23114,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40319
+      ]
+    },
+    {
+      "canonicalSpellId": 40405,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100406,
+      "collectionKey": "companion.lucky.creature_23198",
+      "ordinal": 18604,
+      "previewCreatureEntry": 23198,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40405
+      ]
+    },
+    {
+      "canonicalSpellId": 40613,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100407,
+      "collectionKey": "companion.willy",
+      "ordinal": 18605,
+      "previewCreatureEntry": 23231,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40613
+      ]
+    },
+    {
+      "canonicalSpellId": 40549,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100300,
+      "collectionKey": "companion.bananas",
+      "ordinal": 300,
+      "previewCreatureEntry": 23234,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40549
+      ]
+    },
+    {
+      "canonicalSpellId": 40614,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100408,
+      "collectionKey": "companion.egbert",
+      "ordinal": 18606,
+      "previewCreatureEntry": 23258,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40614
+      ]
+    },
+    {
+      "canonicalSpellId": 40634,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100409,
+      "collectionKey": "companion.peanut",
+      "ordinal": 18607,
+      "previewCreatureEntry": 23266,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40634
+      ]
+    },
+    {
+      "canonicalSpellId": 40990,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100285,
+      "collectionKey": "companion.stinker",
+      "ordinal": 285,
+      "previewCreatureEntry": 23274,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        40990
+      ]
+    },
+    {
+      "canonicalSpellId": 42609,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100286,
+      "collectionKey": "companion.sinister_squashling",
+      "ordinal": 286,
+      "previewCreatureEntry": 23909,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        42609
+      ]
+    },
+    {
+      "canonicalSpellId": 43697,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100410,
+      "collectionKey": "companion.toothy",
+      "ordinal": 18608,
+      "previewCreatureEntry": 24388,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        43697
+      ]
+    },
+    {
+      "canonicalSpellId": 43698,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100411,
+      "collectionKey": "companion.muckbreath",
+      "ordinal": 18609,
+      "previewCreatureEntry": 24389,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        43698
+      ]
+    },
+    {
+      "canonicalSpellId": 43918,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100412,
+      "collectionKey": "companion.mojo",
+      "ordinal": 18610,
+      "previewCreatureEntry": 24480,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        43918
+      ]
+    },
+    {
+      "canonicalSpellId": 44369,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100413,
+      "collectionKey": "companion.pint_sized_pink_pachyderm",
+      "ordinal": 18611,
+      "previewCreatureEntry": 24753,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        44369
+      ]
+    },
+    {
+      "canonicalSpellId": 54187,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100414,
+      "collectionKey": "companion.clockwork_rocket_bot.creature_24968",
+      "ordinal": 18612,
+      "previewCreatureEntry": 24968,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        54187
+      ]
+    },
+    {
+      "canonicalSpellId": 45082,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100287,
+      "collectionKey": "companion.tiny_sporebat",
+      "ordinal": 287,
+      "previewCreatureEntry": 25062,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        45082
+      ]
+    },
+    {
+      "canonicalSpellId": 45125,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100415,
+      "collectionKey": "companion.rocket_chicken",
+      "ordinal": 18613,
+      "previewCreatureEntry": 25109,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        45125
+      ]
+    },
+    {
+      "canonicalSpellId": 45127,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100295,
+      "collectionKey": "companion.dragon_kite",
+      "ordinal": 295,
+      "previewCreatureEntry": 25110,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        45127
+      ]
+    },
+    {
+      "canonicalSpellId": 45174,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100416,
+      "collectionKey": "companion.golden_pig",
+      "ordinal": 18614,
+      "previewCreatureEntry": 25146,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        45174
+      ]
+    },
+    {
+      "canonicalSpellId": 45175,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100417,
+      "collectionKey": "companion.silver_pig",
+      "ordinal": 18615,
+      "previewCreatureEntry": 25147,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        45175
+      ]
+    },
+    {
+      "canonicalSpellId": 45890,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100418,
+      "collectionKey": "companion.scorchling",
+      "ordinal": 18616,
+      "previewCreatureEntry": 25706,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        45890
+      ]
+    },
+    {
+      "canonicalSpellId": 46425,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100419,
+      "collectionKey": "companion.snarly",
+      "ordinal": 18617,
+      "previewCreatureEntry": 26050,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        46425
+      ]
+    },
+    {
+      "canonicalSpellId": 46426,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100420,
+      "collectionKey": "companion.chuck",
+      "ordinal": 18618,
+      "previewCreatureEntry": 26056,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        46426
+      ]
+    },
+    {
+      "canonicalSpellId": 46599,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100289,
+      "collectionKey": "companion.phoenix_hatchling",
+      "ordinal": 289,
+      "previewCreatureEntry": 26119,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        46599
+      ]
+    },
+    {
+      "canonicalSpellId": 48406,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100421,
+      "collectionKey": "companion.spirit_of_competition",
+      "ordinal": 18619,
+      "previewCreatureEntry": 27217,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        48406
+      ]
+    },
+    {
+      "canonicalSpellId": 48408,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100422,
+      "collectionKey": "companion.essence_of_competition",
+      "ordinal": 18620,
+      "previewCreatureEntry": 27346,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        48408
+      ]
+    },
+    {
+      "canonicalSpellId": 49964,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100423,
+      "collectionKey": "companion.ethereal_soul_trader",
+      "ordinal": 18621,
+      "previewCreatureEntry": 27914,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        49964
+      ]
+    },
+    {
+      "canonicalSpellId": 51716,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100424,
+      "collectionKey": "companion.nether_ray_fry",
+      "ordinal": 18622,
+      "previewCreatureEntry": 28470,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        51716
+      ]
+    },
+    {
+      "canonicalSpellId": 51851,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100284,
+      "collectionKey": "companion.vampiric_batling",
+      "ordinal": 284,
+      "previewCreatureEntry": 28513,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        51851
+      ]
+    },
+    {
+      "canonicalSpellId": 52615,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100299,
+      "collectionKey": "companion.frosty",
+      "ordinal": 299,
+      "previewCreatureEntry": 28883,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        52615
+      ]
+    },
+    {
+      "canonicalSpellId": 53082,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100425,
+      "collectionKey": "companion.mini_tyrael",
+      "ordinal": 18623,
+      "previewCreatureEntry": 29089,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        53082
+      ]
+    },
+    {
+      "canonicalSpellId": 53316,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100290,
+      "collectionKey": "companion.ghostly_skull",
+      "ordinal": 290,
+      "previewCreatureEntry": 29147,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        53316
+      ]
+    },
+    {
+      "canonicalSpellId": 53768,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100426,
+      "collectionKey": "companion.scourge_haunt",
+      "ordinal": 18624,
+      "previewCreatureEntry": 29238,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        53768
+      ]
+    },
+    {
+      "canonicalSpellId": 55068,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100301,
+      "collectionKey": "companion.mr_chilly",
+      "ordinal": 301,
+      "previewCreatureEntry": 29726,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        55068
+      ]
+    },
+    {
+      "canonicalSpellId": 13548,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100427,
+      "collectionKey": "companion.westfall_chicken",
+      "ordinal": 18625,
+      "previewCreatureEntry": 30379,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        13548
+      ]
+    },
+    {
+      "canonicalSpellId": 59250,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100302,
+      "collectionKey": "companion.giant_sewer_rat",
+      "ordinal": 302,
+      "previewCreatureEntry": 31575,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        59250
+      ]
+    },
+    {
+      "canonicalSpellId": 61348,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100428,
+      "collectionKey": "companion.tickbird_hatchling",
+      "ordinal": 18626,
+      "previewCreatureEntry": 32589,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61348
+      ]
+    },
+    {
+      "canonicalSpellId": 61349,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100429,
+      "collectionKey": "companion.white_tickbird_hatchling",
+      "ordinal": 18627,
+      "previewCreatureEntry": 32590,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61349
+      ]
+    },
+    {
+      "canonicalSpellId": 61351,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100430,
+      "collectionKey": "companion.cobra_hatchling",
+      "ordinal": 18628,
+      "previewCreatureEntry": 32591,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61351
+      ]
+    },
+    {
+      "canonicalSpellId": 61350,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100431,
+      "collectionKey": "companion.proto_drake_whelp",
+      "ordinal": 18629,
+      "previewCreatureEntry": 32592,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61350
+      ]
+    },
+    {
+      "canonicalSpellId": 61357,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100432,
+      "collectionKey": "companion.pengu",
+      "ordinal": 18630,
+      "previewCreatureEntry": 32595,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61357
+      ]
+    },
+    {
+      "canonicalSpellId": 61472,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100433,
+      "collectionKey": "companion.kirin_tor_familiar",
+      "ordinal": 18631,
+      "previewCreatureEntry": 32643,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61472
+      ]
+    },
+    {
+      "canonicalSpellId": 61725,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100303,
+      "collectionKey": "companion.spring_rabbit",
+      "ordinal": 303,
+      "previewCreatureEntry": 32791,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61725
+      ]
+    },
+    {
+      "canonicalSpellId": 61773,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100434,
+      "collectionKey": "companion.plump_turkey",
+      "ordinal": 18632,
+      "previewCreatureEntry": 32818,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61773
+      ]
+    },
+    {
+      "canonicalSpellId": 61855,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100435,
+      "collectionKey": "companion.baby_blizzard_bear",
+      "ordinal": 18633,
+      "previewCreatureEntry": 32841,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61855
+      ]
+    },
+    {
+      "canonicalSpellId": 61991,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100436,
+      "collectionKey": "companion.little_fawn",
+      "ordinal": 18634,
+      "previewCreatureEntry": 32939,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        61991
+      ]
+    },
+    {
+      "canonicalSpellId": 62491,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100437,
+      "collectionKey": "companion.teldrassil_sproutling",
+      "ordinal": 18635,
+      "previewCreatureEntry": 33188,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62491
+      ]
+    },
+    {
+      "canonicalSpellId": 62508,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100438,
+      "collectionKey": "companion.dun_morogh_cub",
+      "ordinal": 18636,
+      "previewCreatureEntry": 33194,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62508
+      ]
+    },
+    {
+      "canonicalSpellId": 62510,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100439,
+      "collectionKey": "companion.tirisfal_batling",
+      "ordinal": 18637,
+      "previewCreatureEntry": 33197,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62510
+      ]
+    },
+    {
+      "canonicalSpellId": 62513,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100440,
+      "collectionKey": "companion.durotar_scorpion",
+      "ordinal": 18638,
+      "previewCreatureEntry": 33198,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62513
+      ]
+    },
+    {
+      "canonicalSpellId": 62514,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100441,
+      "collectionKey": "companion.alarming_clockbot",
+      "ordinal": 18639,
+      "previewCreatureEntry": 33199,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62514
+      ]
+    },
+    {
+      "canonicalSpellId": 62516,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100442,
+      "collectionKey": "companion.elwynn_lamb",
+      "ordinal": 18640,
+      "previewCreatureEntry": 33200,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62516
+      ]
+    },
+    {
+      "canonicalSpellId": 62562,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100443,
+      "collectionKey": "companion.ammen_vale_lashling",
+      "ordinal": 18641,
+      "previewCreatureEntry": 33205,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62562
+      ]
+    },
+    {
+      "canonicalSpellId": 62542,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100444,
+      "collectionKey": "companion.mulgore_hatchling",
+      "ordinal": 18642,
+      "previewCreatureEntry": 33219,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62542
+      ]
+    },
+    {
+      "canonicalSpellId": 62561,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100445,
+      "collectionKey": "companion.strand_crawler",
+      "ordinal": 18643,
+      "previewCreatureEntry": 33226,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62561
+      ]
+    },
+    {
+      "canonicalSpellId": 62564,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100446,
+      "collectionKey": "companion.enchanted_broom",
+      "ordinal": 18644,
+      "previewCreatureEntry": 33227,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62564
+      ]
+    },
+    {
+      "canonicalSpellId": 62609,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100447,
+      "collectionKey": "companion.argent_squire",
+      "ordinal": 18645,
+      "previewCreatureEntry": 33238,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62609
+      ]
+    },
+    {
+      "canonicalSpellId": 62746,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100448,
+      "collectionKey": "companion.argent_gruntling",
+      "ordinal": 18646,
+      "previewCreatureEntry": 33239,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62746
+      ]
+    },
+    {
+      "canonicalSpellId": 62674,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100449,
+      "collectionKey": "companion.mechanopeep",
+      "ordinal": 18647,
+      "previewCreatureEntry": 33274,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        62674
+      ]
+    },
+    {
+      "canonicalSpellId": 65382,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100450,
+      "collectionKey": "companion.curious_wolvar_pup",
+      "ordinal": 18648,
+      "previewCreatureEntry": 33529,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        65382
+      ]
+    },
+    {
+      "canonicalSpellId": 65381,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100451,
+      "collectionKey": "companion.curious_oracle_hatchling",
+      "ordinal": 18649,
+      "previewCreatureEntry": 33530,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        65381
+      ]
+    },
+    {
+      "canonicalSpellId": 63318,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100452,
+      "collectionKey": "companion.murkimus_the_gladiator.creature_33578",
+      "ordinal": 18650,
+      "previewCreatureEntry": 33578,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        63318
+      ]
+    },
+    {
+      "canonicalSpellId": 63712,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100453,
+      "collectionKey": "companion.sen",
+      "ordinal": 18651,
+      "previewCreatureEntry": 33810,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        63712
+      ]
+    },
+    {
+      "canonicalSpellId": 64351,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100454,
+      "collectionKey": "companion.xs_001_constructor_bot",
+      "ordinal": 18652,
+      "previewCreatureEntry": 34031,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        64351
+      ]
+    },
+    {
+      "canonicalSpellId": 65358,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100455,
+      "collectionKey": "companion.calico_cat",
+      "ordinal": 18653,
+      "previewCreatureEntry": 34364,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        65358
+      ]
+    },
+    {
+      "canonicalSpellId": 65682,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100456,
+      "collectionKey": "companion.warbot",
+      "ordinal": 18654,
+      "previewCreatureEntry": 34587,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        65682
+      ]
+    },
+    {
+      "canonicalSpellId": 66030,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100457,
+      "collectionKey": "companion.grunty",
+      "ordinal": 18655,
+      "previewCreatureEntry": 34694,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        66030
+      ]
+    },
+    {
+      "canonicalSpellId": 66096,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100458,
+      "collectionKey": "companion.shimmering_wyrmling",
+      "ordinal": 18656,
+      "previewCreatureEntry": 34724,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        66096
+      ]
+    },
+    {
+      "canonicalSpellId": 66175,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100459,
+      "collectionKey": "companion.macabre_marionette",
+      "ordinal": 18657,
+      "previewCreatureEntry": 34770,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        66175
+      ]
+    },
+    {
+      "canonicalSpellId": 66520,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100460,
+      "collectionKey": "companion.jade_tiger",
+      "ordinal": 18658,
+      "previewCreatureEntry": 34930,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        66520
+      ]
+    },
+    {
+      "canonicalSpellId": 67416,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100461,
+      "collectionKey": "companion.leaping_hatchling",
+      "ordinal": 18659,
+      "previewCreatureEntry": 35387,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67416
+      ]
+    },
+    {
+      "canonicalSpellId": 67420,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100462,
+      "collectionKey": "companion.razzashi_hatchling",
+      "ordinal": 18660,
+      "previewCreatureEntry": 35394,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67420
+      ]
+    },
+    {
+      "canonicalSpellId": 67414,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100463,
+      "collectionKey": "companion.deviate_hatchling",
+      "ordinal": 18661,
+      "previewCreatureEntry": 35395,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67414
+      ]
+    },
+    {
+      "canonicalSpellId": 67413,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100464,
+      "collectionKey": "companion.darting_hatchling",
+      "ordinal": 18662,
+      "previewCreatureEntry": 35396,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67413
+      ]
+    },
+    {
+      "canonicalSpellId": 67418,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100465,
+      "collectionKey": "companion.ravasaur_hatchling",
+      "ordinal": 18663,
+      "previewCreatureEntry": 35397,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67418
+      ]
+    },
+    {
+      "canonicalSpellId": 67419,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100466,
+      "collectionKey": "companion.razormaw_hatchling",
+      "ordinal": 18664,
+      "previewCreatureEntry": 35398,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67419
+      ]
+    },
+    {
+      "canonicalSpellId": 67417,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100467,
+      "collectionKey": "companion.obsidian_hatchling",
+      "ordinal": 18665,
+      "previewCreatureEntry": 35399,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67417
+      ]
+    },
+    {
+      "canonicalSpellId": 67415,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100468,
+      "collectionKey": "companion.gundrak_hatchling",
+      "ordinal": 18666,
+      "previewCreatureEntry": 35400,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67415
+      ]
+    },
+    {
+      "canonicalSpellId": 67527,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100469,
+      "collectionKey": "companion.onyx_panther",
+      "ordinal": 18667,
+      "previewCreatureEntry": 35468,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        67527
+      ]
+    },
+    {
+      "canonicalSpellId": 68767,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100470,
+      "collectionKey": "companion.tuskarr_kite",
+      "ordinal": 18668,
+      "previewCreatureEntry": 36482,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        68767
+      ]
+    },
+    {
+      "canonicalSpellId": 68810,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100471,
+      "collectionKey": "companion.spectral_tiger_cub",
+      "ordinal": 18669,
+      "previewCreatureEntry": 36511,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        68810
+      ]
+    },
+    {
+      "canonicalSpellId": 69002,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100304,
+      "collectionKey": "companion.onyxian_whelpling",
+      "ordinal": 304,
+      "previewCreatureEntry": 36607,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69002
+      ]
+    },
+    {
+      "canonicalSpellId": 69452,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100472,
+      "collectionKey": "companion.core_hound_pup",
+      "ordinal": 18670,
+      "previewCreatureEntry": 36871,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69452
+      ]
+    },
+    {
+      "canonicalSpellId": 69535,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100473,
+      "collectionKey": "companion.gryphon_hatchling",
+      "ordinal": 18671,
+      "previewCreatureEntry": 36908,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69535
+      ]
+    },
+    {
+      "canonicalSpellId": 69536,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100474,
+      "collectionKey": "companion.wind_rider_cub",
+      "ordinal": 18672,
+      "previewCreatureEntry": 36909,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69536
+      ]
+    },
+    {
+      "canonicalSpellId": 69539,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100475,
+      "collectionKey": "companion.zipao_tiger",
+      "ordinal": 18673,
+      "previewCreatureEntry": 36910,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69539
+      ]
+    },
+    {
+      "canonicalSpellId": 69541,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100476,
+      "collectionKey": "companion.pandaren_monk",
+      "ordinal": 18674,
+      "previewCreatureEntry": 36911,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69541
+      ]
+    },
+    {
+      "canonicalSpellId": 69677,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100477,
+      "collectionKey": "companion.lil.creature_36979",
+      "ordinal": 18675,
+      "previewCreatureEntry": 36979,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        69677
+      ]
+    },
+    {
+      "canonicalSpellId": 70613,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100478,
+      "collectionKey": "companion.perky_pug",
+      "ordinal": 18676,
+      "previewCreatureEntry": 37865,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        70613
+      ]
+    },
+    {
+      "canonicalSpellId": 71840,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100479,
+      "collectionKey": "companion.toxic_wasteling",
+      "ordinal": 18677,
+      "previewCreatureEntry": 38374,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        71840
+      ]
+    },
+    {
+      "canonicalSpellId": 74932,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100480,
+      "collectionKey": "companion.frigid_frostling",
+      "ordinal": 18678,
+      "previewCreatureEntry": 40198,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        74932
+      ]
+    },
+    {
+      "canonicalSpellId": 75134,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100481,
+      "collectionKey": "companion.clockwork_rocket_bot.creature_40295",
+      "ordinal": 18679,
+      "previewCreatureEntry": 40295,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        75134
+      ]
+    },
+    {
+      "canonicalSpellId": 75613,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100482,
+      "collectionKey": "companion.celestial_dragon",
+      "ordinal": 18680,
+      "previewCreatureEntry": 40624,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        75613
+      ]
+    },
+    {
+      "canonicalSpellId": 75906,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100483,
+      "collectionKey": "companion.lil.creature_40703",
+      "ordinal": 18681,
+      "previewCreatureEntry": 40703,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        75906
+      ]
+    },
+    {
+      "canonicalSpellId": 75936,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100484,
+      "collectionKey": "companion.murkimus_the_gladiator.creature_40721",
+      "ordinal": 18682,
+      "previewCreatureEntry": 40721,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        75936
+      ]
+    },
+    {
+      "canonicalSpellId": 78381,
+      "catalogLifecycle": "ACTIVE",
+      "collectionId": 100485,
+      "collectionKey": "companion.mini_thor",
+      "ordinal": 18683,
+      "previewCreatureEntry": 42078,
+      "uiLifecycle": "public",
+      "unlockSpellIds": [
+        78381
+      ]
+    }
+  ],
+  "schemaVersion": 2
+}

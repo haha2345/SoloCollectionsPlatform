@@ -1,0 +1,587 @@
+{
+  "schemaVersion": 1,
+  "policyVersion": "wotlk-itemset-presentation-2026-08-14-seasons-and-classes",
+  "note": "Presentation-only review rules. ItemSet IDs come from the local 3.3.5 ItemSet.dbc. PvP arena sets use S labels; PvE raid/dungeon class sets use T/D labels. Class overrides only drive AddOn list filtering/display and do not change set collection identity.",
+  "rules": [
+    {
+      "key": "classic-dungeon-t0-mage",
+      "itemSetIds": [181],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["mage"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-priest",
+      "itemSetIds": [182],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["priest"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-warlock",
+      "itemSetIds": [183],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warlock"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-rogue",
+      "itemSetIds": [184],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["rogue"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-druid",
+      "itemSetIds": [185],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["druid"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-hunter",
+      "itemSetIds": [186],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["hunter"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-shaman",
+      "itemSetIds": [187],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["shaman"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-paladin",
+      "itemSetIds": [188],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["paladin"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-warrior",
+      "itemSetIds": [189],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warrior"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T0_CLASS_SET"
+    },
+    {
+      "key": "classic-t1-molten-core",
+      "itemSetIdRange": [201, 209],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T1",
+      "difficulty": "RAID",
+      "displayLabel": "T1",
+      "reasonCode": "REVIEWED_ITEMSET_RANGE_CLASSIC_T1_MOLTEN_CORE"
+    },
+    {
+      "key": "classic-t2-blackwing-lair",
+      "itemSetIdRange": [210, 218],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T2",
+      "difficulty": "RAID",
+      "displayLabel": "T2",
+      "reasonCode": "REVIEWED_ITEMSET_RANGE_CLASSIC_T2_BLACKWING_LAIR"
+    },
+    {
+      "key": "classic-aq40-t2-5",
+      "itemSetIds": [493, 496, 497, 499, 501, 503, 505, 507, 509],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T2.5",
+      "difficulty": "RAID",
+      "displayLabel": "T2.5",
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T25_AQ40_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-mage",
+      "itemSetIds": [517],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["mage"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-priest",
+      "itemSetIds": [514],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["priest"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-warlock",
+      "itemSetIds": [518],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warlock"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-rogue",
+      "itemSetIds": [512],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["rogue"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-druid",
+      "itemSetIds": [513],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["druid"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-hunter",
+      "itemSetIds": [515],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["hunter"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-shaman",
+      "itemSetIds": [519],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["shaman"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-paladin",
+      "itemSetIds": [516],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["paladin"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-dungeon-t0-5-warrior",
+      "itemSetIds": [511],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T0.5",
+      "difficulty": "DUNGEON",
+      "displayLabel": "T0.5",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warrior"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_DUNGEON_T05_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-druid",
+      "itemSetIds": [521],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["druid"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-warrior",
+      "itemSetIds": [523],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warrior"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-rogue",
+      "itemSetIds": [524],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["rogue"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-priest",
+      "itemSetIds": [525],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["priest"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-mage",
+      "itemSetIds": [526],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["mage"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-shaman",
+      "itemSetIds": [527],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["shaman"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-paladin",
+      "itemSetIds": [528],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["paladin"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-warlock",
+      "itemSetIds": [529],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warlock"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-t3-hunter",
+      "itemSetIds": [530],
+      "expansion": "CLASSIC",
+      "acquisition": "PVE",
+      "raidTier": "T3",
+      "difficulty": "RAID",
+      "displayLabel": "T3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["hunter"]},
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_T3_NAXX_CLASS_SET"
+    },
+    {
+      "key": "classic-pvp-honor",
+      "itemSetIds": [281, 282, 301, 341, 342, 343, 344, 345, 346, 347, 348, 361, 362, 381, 382, 383, 384, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 401, 402, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548, 549, 550, 551],
+      "expansion": "CLASSIC",
+      "acquisition": "PVP",
+      "raidTier": "NONE",
+      "pvpSeason": "NONE",
+      "difficulty": "DUNGEON",
+      "displayLabel": "PvP · 荣誉",
+      "reasonCode": "REVIEWED_ITEMSET_CLASSIC_PVP_HONOR_NON_ARENA"
+    },
+    {
+      "key": "tbc-pvp-s1-arena",
+      "itemSetIds": [567, 568, 577, 578, 579, 580, 581, 582, 583, 584, 585, 586, 615, 685, 686, 687, 690],
+      "expansion": "TBC",
+      "acquisition": "PVP",
+      "raidTier": "NONE",
+      "pvpSeason": "S1",
+      "pvpSeries": "GLADIATOR",
+      "difficulty": "RAID",
+      "displayLabel": "S1 · 角斗士",
+      "reasonCode": "REVIEWED_ITEMSET_TBC_ARENA_SEASON_1_GLADIATOR"
+    },
+    {
+      "key": "tbc-pvp-honor-non-arena",
+      "itemSetIds": [587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600, 601, 602, 603, 604, 605, 606, 607, 608, 609, 610, 688, 689, 691, 692, 693, 694, 695, 696, 697, 698, 717, 718],
+      "expansion": "TBC",
+      "acquisition": "PVP",
+      "raidTier": "NONE",
+      "pvpSeason": "NONE",
+      "difficulty": "DUNGEON",
+      "displayLabel": "PvP · 荣誉",
+      "reasonCode": "REVIEWED_ITEMSET_TBC_PVP_HONOR_NON_ARENA"
+    },
+    {
+      "key": "tbc-dungeon-d3-rogue",
+      "itemSetIds": [620],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["rogue"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-paladin",
+      "itemSetIds": [623],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["paladin"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-shaman",
+      "itemSetIds": [630],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["shaman"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-druid",
+      "itemSetIds": [637],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["druid"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-warlock",
+      "itemSetIds": [644],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warlock"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-mage",
+      "itemSetIds": [647],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["mage"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-hunter",
+      "itemSetIds": [650],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["hunter"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-warrior",
+      "itemSetIds": [653],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["warrior"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-dungeon-d3-priest",
+      "itemSetIds": [662],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "D3",
+      "difficulty": "DUNGEON",
+      "displayLabel": "D3",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["priest"]},
+      "reasonCode": "REVIEWED_ITEMSET_TBC_DUNGEON_3_CLASS_SET"
+    },
+    {
+      "key": "tbc-t4-karazhan-gruul-magtheridon",
+      "itemSetIds": [621, 624, 625, 626, 631, 632, 633, 638, 639, 640, 645, 648, 651, 654, 655, 663, 664],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "T4",
+      "difficulty": "RAID",
+      "displayLabel": "T4",
+      "reasonCode": "REVIEWED_ITEMSET_TBC_T4_KARAZHAN_GRUUL_MAGTHERIDON"
+    },
+    {
+      "key": "tbc-t5-ssc-tempest-keep",
+      "itemSetIds": [622, 627, 628, 629, 634, 635, 636, 641, 642, 643, 646, 649, 652, 656, 657, 665, 666],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "T5",
+      "difficulty": "RAID",
+      "displayLabel": "T5",
+      "reasonCode": "REVIEWED_ITEMSET_TBC_T5_SERPENTSHRINE_TEMPEST_KEEP"
+    },
+    {
+      "key": "tbc-t6-hyjal-black-temple-sunwell",
+      "itemSetIdRange": [668, 684],
+      "expansion": "TBC",
+      "acquisition": "PVE",
+      "raidTier": "T6",
+      "difficulty": "RAID",
+      "displayLabel": "T6",
+      "reasonCode": "REVIEWED_ITEMSET_TBC_T6_HYJAL_BLACK_TEMPLE_SUNWELL"
+    },
+    {
+      "key": "tbc-pvp-reputation-blue",
+      "itemSetIdRange": [738, 752],
+      "expansion": "TBC",
+      "acquisition": "PVP",
+      "raidTier": "NONE",
+      "pvpSeason": "NONE",
+      "difficulty": "DUNGEON",
+      "displayLabel": "PvP · 声望",
+      "reasonCode": "REVIEWED_ITEMSET_TBC_PVP_REPUTATION_BLUE_NON_ARENA"
+    },
+    {
+      "key": "wrath-pvp-s5-savage",
+      "itemSetIds": [760, 765, 766, 767, 768, 769, 770, 771, 772, 773, 774, 776, 777, 778, 779, 780],
+      "expansion": "WRATH",
+      "acquisition": "PVP",
+      "raidTier": "NONE",
+      "pvpSeason": "S5",
+      "pvpSeries": "SAVAGE",
+      "difficulty": "DUNGEON",
+      "displayLabel": "S5 · 凶残角斗士",
+      "reasonCode": "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE"
+    },
+    {
+      "key": "wrath-pvp-s5-savage-druid-sanctuary",
+      "itemSetIds": [775],
+      "expansion": "WRATH",
+      "acquisition": "PVP",
+      "raidTier": "NONE",
+      "pvpSeason": "S5",
+      "pvpSeries": "SAVAGE",
+      "difficulty": "DUNGEON",
+      "displayLabel": "S5 · 凶残角斗士",
+      "classPolicyOverride": {"mode": "ALLOW_LIST", "allowedClassKeys": ["druid"]},
+      "reasonCode": "REVIEWED_ITEMSET_WRATH_ARENA_SEASON_5_SAVAGE_CLASS_FIX"
+    },
+    {
+      "key": "wrath-t10-icc",
+      "itemSetIdRange": [883, 901],
+      "expansion": "WRATH",
+      "acquisition": "PVE",
+      "raidTier": "T10",
+      "difficulty": "RAID",
+      "displayLabel": "T10",
+      "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T10_ICC"
+    },
+    {
+      "key": "wrath-t9-toc",
+      "itemSetIdRange": [843, 880],
+      "expansion": "WRATH",
+      "acquisition": "PVE",
+      "raidTier": "T9",
+      "difficulty": "RAID",
+      "displayLabel": "T9",
+      "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T9_TOC"
+    },
+    {
+      "key": "wrath-t8-ulduar",
+      "itemSetIdRange": [820, 838],
+      "expansion": "WRATH",
+      "acquisition": "PVE",
+      "raidTier": "T8",
+      "difficulty": "RAID",
+      "displayLabel": "T8",
+      "difficultyBands": [
+        {
+          "minimumMedianItemLevel": 226,
+          "difficulty": "HIGH",
+          "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR_HIGH_ITEM_LEVEL"
+        }
+      ],
+      "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T8_ULDUAR"
+    },
+    {
+      "key": "wrath-t7-naxx",
+      "itemSetIdRange": [787, 805],
+      "expansion": "WRATH",
+      "acquisition": "PVE",
+      "raidTier": "T7",
+      "difficulty": "RAID",
+      "displayLabel": "T7",
+      "difficultyBands": [
+        {
+          "minimumMedianItemLevel": 213,
+          "difficulty": "HIGH",
+          "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX_HIGH_ITEM_LEVEL"
+        }
+      ],
+      "reasonCode": "REVIEWED_ITEMSET_RANGE_WRATH_T7_NAXX"
+    }
+  ]
+}

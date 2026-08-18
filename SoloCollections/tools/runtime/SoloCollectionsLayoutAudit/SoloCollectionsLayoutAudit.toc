@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: SoloCollections Layout Audit
+## Notes: Temporary phase-4 runtime verifier; excluded from release bundles.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsLayoutAuditDB
+LayoutAudit.lua
