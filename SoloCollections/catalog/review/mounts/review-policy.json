@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "sourceBuild": "3.3.5.12340",
+  "candidateHash": "ba414a13d43783698251b283ccd3d19030560f44b3e3238931b83e1a73d0249e",
+  "groupingPolicy": "EXACT_CREATURE_ENTRY_ONLY",
+  "reviewedOn": "2026-07-20",
+  "manualExclusions": [
+    {
+      "spellId": 3363,
+      "reasonCode": "UNUSED_LEGACY_NO_ACQUISITION_SOURCE",
+      "reason": "Legacy Nether Drake action has no item, quest, or trainer acquisition source."
+    },
+    {
+      "spellId": 28828,
+      "reasonCode": "UNUSED_LEGACY_NO_ACQUISITION_SOURCE",
+      "reason": "Duplicate legacy Nether Drake action has no acquisition source."
+    },
+    {
+      "spellId": 15780,
+      "reasonCode": "SUPERSEDED_LEGACY_VARIANT",
+      "reason": "Obsolete Green Mechanostrider variant is superseded by the player-learnable action."
+    },
+    {
+      "spellId": 15781,
+      "reasonCode": "SUPERSEDED_LEGACY_VARIANT",
+      "reason": "Obsolete Steel Mechanostrider variant is superseded by the player-learnable action."
+    },
+    {
+      "spellId": 33630,
+      "reasonCode": "SUPERSEDED_LEGACY_VARIANT",
+      "reason": "Obsolete Blue Mechanostrider variant is superseded by the player-learnable action."
+    },
+    {
+      "spellId": 32345,
+      "reasonCode": "TEST_SPELL",
+      "reason": "Peep the Phoenix is a test action; Ashes of Al'ar is the production mount source."
+    },
+    {
+      "spellId": 43810,
+      "reasonCode": "NPC_OR_TEST_MOUNT",
+      "reason": "Frost Wyrm is an NPC or test mount action with no player acquisition source."
+    },
+    {
+      "spellId": 51960,
+      "reasonCode": "NPC_OR_TEST_MOUNT",
+      "reason": "Frost Wyrm Mount is an NPC or test action with no player acquisition source."
+    },
+    {
+      "spellId": 61444,
+      "reasonCode": "UNUSED_PROFESSION_TEST_VARIANT",
+      "reason": "Swift Shadoweave Carpet is an unused profession test variant with no acquisition source."
+    },
+    {
+      "spellId": 64656,
+      "reasonCode": "UNUSED_TEST_VARIANT",
+      "reason": "Blue Skeletal Warhorse is an unused test variant with no acquisition source."
+    },
+    {
+      "spellId": 66122,
+      "reasonCode": "INTERNAL_VARIANT_NOT_LEARNED",
+      "reason": "Internal Magic Rooster variant is not the player-learned item action."
+    },
+    {
+      "spellId": 66123,
+      "reasonCode": "INTERNAL_VARIANT_NOT_LEARNED",
+      "reason": "Internal Magic Rooster variant is not the player-learned item action."
+    },
+    {
+      "spellId": 66124,
+      "reasonCode": "INTERNAL_VARIANT_NOT_LEARNED",
+      "reason": "Internal Magic Rooster variant is not the player-learned item action."
+    },
+    {
+      "spellId": 66907,
+      "reasonCode": "SUPERSEDED_UNUSED_VARIANT",
+      "reason": "Unused Argent Warhorse action is superseded by the actual faction reward spells."
+    }
+  ]
+}

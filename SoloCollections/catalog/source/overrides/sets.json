@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "entries": [],
+  "note": "Explicit ItemSet merge, member priority, lifecycle, and presentation overrides. Name-family extras (wrist/waist/feet/back) can be excluded with excludeSlots or excludeItemIds on an itemSetId entry."
+}

@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: SoloCollections Set Preview Audit
+## Notes: Temporary Stage 2 verifier for scroll, selected-variant preview, and generation isolation.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsSetAuditDB
+SetAudit.lua

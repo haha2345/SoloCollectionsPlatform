@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: SoloCollections Character Camera Audit (QA only)
+## Notes: Temporary phase-5 race, sex and slot camera matrix verifier.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsCameraAuditDB
+CameraAudit.lua

@@ -1,0 +1,24 @@
+name: Feature request
+description: Propose a scoped improvement
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior and component boundary
+    validations:
+      required: true
+  - type: checkboxes
+    id: assets
+    attributes:
+      label: Asset provenance
+      options:
+        - label: This proposal does not require committing proprietary client assets.
+          required: true

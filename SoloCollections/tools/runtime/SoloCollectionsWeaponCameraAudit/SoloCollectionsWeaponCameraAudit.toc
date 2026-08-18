@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: SoloCollections Weapon Camera Audit
+## Notes: Temporary Stage 4 verifier for the 21 reviewed standalone weapon presentations.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsWeaponCameraAuditDB
+CameraAudit.lua

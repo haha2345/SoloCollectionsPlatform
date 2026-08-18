@@ -1,0 +1,18 @@
+* text=auto eol=lf
+
+*.lua text
+*.py text
+*.ps1 text
+*.md text
+*.json text
+*.yml text
+*.yaml text
+
+*.tga binary
+*.blp binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.dll binary
+*.exe binary
+*.mpq binary

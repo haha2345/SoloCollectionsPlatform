@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "entries": [
+    {
+      "logicalClassId": 1,
+      "classKey": "warrior",
+      "runtimeClassId": 1,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 1,
+      "aliases": ["WARRIOR"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.warrior",
+      "clientAssetProfile": "class.warrior",
+      "legacyMaskBit": 1,
+      "name": {"enUS": "Warrior", "zhCN": "战士"},
+      "icon": "Interface\\Icons\\ClassIcon_Warrior",
+      "order": 10,
+      "defaultFilterProfile": {
+        "armorType": "PLATE",
+        "mainhand": ["ONE_HAND_AXE", "TWO_HAND_AXE", "BOW", "GUN", "ONE_HAND_MACE", "TWO_HAND_MACE", "POLEARM", "ONE_HAND_SWORD", "TWO_HAND_SWORD", "STAFF", "FIST_WEAPON", "DAGGER", "THROWN", "CROSSBOW", "FISHING_POLE"],
+        "offhand": ["ONE_HAND_AXE", "ONE_HAND_MACE", "ONE_HAND_SWORD", "FIST_WEAPON", "DAGGER", "SHIELD"]
+      }
+    },
+    {
+      "logicalClassId": 2,
+      "classKey": "paladin",
+      "runtimeClassId": 2,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 2,
+      "aliases": ["PALADIN"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.paladin",
+      "clientAssetProfile": "class.paladin",
+      "legacyMaskBit": 2,
+      "name": {"enUS": "Paladin", "zhCN": "圣骑士"},
+      "icon": "Interface\\Icons\\ClassIcon_Paladin",
+      "order": 20,
+      "defaultFilterProfile": {
+        "armorType": "PLATE",
+        "mainhand": ["ONE_HAND_AXE", "TWO_HAND_AXE", "ONE_HAND_MACE", "TWO_HAND_MACE", "POLEARM", "ONE_HAND_SWORD", "TWO_HAND_SWORD", "FISHING_POLE"],
+        "offhand": ["SHIELD"]
+      }
+    },
+    {
+      "logicalClassId": 3,
+      "classKey": "hunter",
+      "runtimeClassId": 3,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 3,
+      "aliases": ["HUNTER"],
+      "capabilities": ["mount.ground", "pet.hunter"],
+      "compatibilityProfile": "class.hunter",
+      "clientAssetProfile": "class.hunter",
+      "legacyMaskBit": 4,
+      "name": {"enUS": "Hunter", "zhCN": "猎人"},
+      "icon": "Interface\\Icons\\ClassIcon_Hunter",
+      "order": 30,
+      "defaultFilterProfile": {
+        "armorType": "MAIL",
+        "mainhand": ["ONE_HAND_AXE", "TWO_HAND_AXE", "BOW", "GUN", "POLEARM", "ONE_HAND_SWORD", "TWO_HAND_SWORD", "STAFF", "FIST_WEAPON", "DAGGER", "CROSSBOW", "FISHING_POLE"],
+        "offhand": ["ONE_HAND_AXE", "ONE_HAND_SWORD", "FIST_WEAPON", "DAGGER"]
+      }
+    },
+    {
+      "logicalClassId": 4,
+      "classKey": "rogue",
+      "runtimeClassId": 4,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 4,
+      "aliases": ["ROGUE"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.rogue",
+      "clientAssetProfile": "class.rogue",
+      "legacyMaskBit": 8,
+      "name": {"enUS": "Rogue", "zhCN": "潜行者"},
+      "icon": "Interface\\Icons\\ClassIcon_Rogue",
+      "order": 40,
+      "defaultFilterProfile": {
+        "armorType": "LEATHER",
+        "mainhand": ["ONE_HAND_AXE", "BOW", "GUN", "ONE_HAND_MACE", "ONE_HAND_SWORD", "FIST_WEAPON", "DAGGER", "THROWN", "CROSSBOW", "FISHING_POLE"],
+        "offhand": ["ONE_HAND_AXE", "ONE_HAND_MACE", "ONE_HAND_SWORD", "FIST_WEAPON", "DAGGER"]
+      }
+    },
+    {
+      "logicalClassId": 5,
+      "classKey": "priest",
+      "runtimeClassId": 5,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 5,
+      "aliases": ["PRIEST"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.priest",
+      "clientAssetProfile": "class.priest",
+      "legacyMaskBit": 16,
+      "name": {"enUS": "Priest", "zhCN": "牧师"},
+      "icon": "Interface\\Icons\\ClassIcon_Priest",
+      "order": 50,
+      "defaultFilterProfile": {
+        "armorType": "CLOTH",
+        "mainhand": ["ONE_HAND_MACE", "STAFF", "DAGGER", "WAND", "FISHING_POLE"],
+        "offhand": ["OFFHAND_ITEM"]
+      }
+    },
+    {
+      "logicalClassId": 6,
+      "classKey": "death_knight",
+      "runtimeClassId": 6,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 6,
+      "aliases": ["DEATHKNIGHT", "DEATH_KNIGHT"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.death_knight",
+      "clientAssetProfile": "class.death_knight",
+      "legacyMaskBit": 32,
+      "name": {"enUS": "Death Knight", "zhCN": "死亡骑士"},
+      "icon": "Interface\\Icons\\ClassIcon_DeathKnight",
+      "order": 60,
+      "defaultFilterProfile": {
+        "armorType": "PLATE",
+        "mainhand": ["ONE_HAND_AXE", "TWO_HAND_AXE", "ONE_HAND_MACE", "TWO_HAND_MACE", "POLEARM", "ONE_HAND_SWORD", "TWO_HAND_SWORD", "FISHING_POLE"],
+        "offhand": ["ONE_HAND_AXE", "ONE_HAND_MACE", "ONE_HAND_SWORD"]
+      }
+    },
+    {
+      "logicalClassId": 7,
+      "classKey": "shaman",
+      "runtimeClassId": 7,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 7,
+      "aliases": ["SHAMAN"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.shaman",
+      "clientAssetProfile": "class.shaman",
+      "legacyMaskBit": 64,
+      "name": {"enUS": "Shaman", "zhCN": "萨满祭司"},
+      "icon": "Interface\\Icons\\ClassIcon_Shaman",
+      "order": 70,
+      "defaultFilterProfile": {
+        "armorType": "MAIL",
+        "mainhand": ["ONE_HAND_AXE", "TWO_HAND_AXE", "ONE_HAND_MACE", "TWO_HAND_MACE", "STAFF", "FIST_WEAPON", "DAGGER", "FISHING_POLE"],
+        "offhand": ["ONE_HAND_AXE", "ONE_HAND_MACE", "FIST_WEAPON", "DAGGER", "SHIELD", "OFFHAND_ITEM"]
+      }
+    },
+    {
+      "logicalClassId": 8,
+      "classKey": "mage",
+      "runtimeClassId": 8,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 8,
+      "aliases": ["MAGE"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.mage",
+      "clientAssetProfile": "class.mage",
+      "legacyMaskBit": 128,
+      "name": {"enUS": "Mage", "zhCN": "法师"},
+      "icon": "Interface\\Icons\\ClassIcon_Mage",
+      "order": 80,
+      "defaultFilterProfile": {
+        "armorType": "CLOTH",
+        "mainhand": ["ONE_HAND_SWORD", "STAFF", "DAGGER", "WAND", "FISHING_POLE"],
+        "offhand": ["OFFHAND_ITEM"]
+      }
+    },
+    {
+      "logicalClassId": 9,
+      "classKey": "warlock",
+      "runtimeClassId": 9,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 9,
+      "aliases": ["WARLOCK"],
+      "capabilities": ["mount.ground"],
+      "compatibilityProfile": "class.warlock",
+      "clientAssetProfile": "class.warlock",
+      "legacyMaskBit": 256,
+      "name": {"enUS": "Warlock", "zhCN": "术士"},
+      "icon": "Interface\\Icons\\ClassIcon_Warlock",
+      "order": 90,
+      "defaultFilterProfile": {
+        "armorType": "CLOTH",
+        "mainhand": ["ONE_HAND_SWORD", "STAFF", "DAGGER", "WAND", "FISHING_POLE"],
+        "offhand": ["OFFHAND_ITEM"]
+      }
+    },
+    {
+      "logicalClassId": 10,
+      "classKey": "druid",
+      "runtimeClassId": 11,
+      "sourceBuild": "3.3.5.12340",
+      "sourceId": 11,
+      "aliases": ["DRUID"],
+      "capabilities": ["mount.ground", "form.druid"],
+      "compatibilityProfile": "class.druid",
+      "clientAssetProfile": "class.druid",
+      "legacyMaskBit": 1024,
+      "name": {"enUS": "Druid", "zhCN": "德鲁伊"},
+      "icon": "Interface\\Icons\\ClassIcon_Druid",
+      "order": 100,
+      "defaultFilterProfile": {
+        "armorType": "LEATHER",
+        "mainhand": ["ONE_HAND_MACE", "TWO_HAND_MACE", "POLEARM", "STAFF", "FIST_WEAPON", "DAGGER", "FISHING_POLE"],
+        "offhand": ["OFFHAND_ITEM"]
+      }
+    }
+  ]
+}

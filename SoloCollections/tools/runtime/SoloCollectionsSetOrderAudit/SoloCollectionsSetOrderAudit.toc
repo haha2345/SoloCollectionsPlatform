@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: SoloCollections Set Ordering Audit
+## Notes: Temporary Stage 3 client verifier for reviewed set presentation ordering.
+## Dependencies: SoloCollections
+## SavedVariables: SoloCollectionsSetOrderAuditDB
+
+SetOrderAudit.lua

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "addonRoot": { "type": "string" },
+    "assetPatchTargets": { "items": { "$ref": "#/$defs/target" }, "type": "array" },
+    "backupRoot": { "type": "string" },
+    "clientRoot": { "type": "string" },
+    "runtimeModuleConfig": { "type": "string" },
+    "schemaVersion": { "const": 1 },
+    "serverControl": {
+      "oneOf": [
+        { "additionalProperties": false, "properties": { "mode": { "const": "MANUAL" } }, "required": ["mode"], "type": "object" },
+        { "additionalProperties": false, "properties": { "expectedExecutable": { "type": "string" }, "mode": { "const": "WINDOWS_SERVICE" }, "serviceName": { "type": "string" } }, "required": ["mode", "serviceName", "expectedExecutable"], "type": "object" },
+        { "additionalProperties": false, "properties": { "mode": { "const": "EXTERNAL_COMMAND" }, "start": { "$ref": "#/$defs/command" }, "stop": { "$ref": "#/$defs/command" } }, "required": ["mode", "start", "stop"], "type": "object" }
+      ]
+    },
+    "serverRoot": { "type": "string" },
+    "soloCamDllTarget": { "type": "string" },
+    "wdbRoots": { "items": { "type": "string" }, "type": "array" },
+    "worldserverDependencyTargets": { "items": { "$ref": "#/$defs/target" }, "type": "array" },
+    "worldserverExeTarget": { "type": "string" },
+    "worldserverWorkingDirectory": { "type": "string" }
+  },
+  "required": ["schemaVersion", "serverRoot", "worldserverExeTarget", "worldserverWorkingDirectory", "worldserverDependencyTargets", "runtimeModuleConfig", "addonRoot", "clientRoot", "soloCamDllTarget", "assetPatchTargets", "wdbRoots", "backupRoot", "serverControl"],
+  "type": "object",
+  "$defs": {
+    "command": { "additionalProperties": false, "properties": { "script": { "type": "string" }, "sha256": { "pattern": "^[0-9a-fA-F]{64}$", "type": "string" }, "workingDirectory": { "type": "string" } }, "required": ["script", "sha256", "workingDirectory"], "type": "object" },
+    "target": { "additionalProperties": false, "properties": { "fileName": { "type": "string" }, "target": { "type": "string" } }, "required": ["fileName", "target"], "type": "object" }
+  }
+}

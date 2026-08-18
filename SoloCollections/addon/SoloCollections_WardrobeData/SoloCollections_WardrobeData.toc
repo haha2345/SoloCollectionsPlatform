@@ -1,0 +1,11 @@
+## Interface: 30300
+## Title: Solo Collections Wardrobe Data
+## Notes: Load-on-demand appearance catalog for Solo Collections.
+## Author: SoloCollections contributors
+## Version: 0.2.0
+## Dependencies: SoloCollections
+## LoadOnDemand: 1
+
+Data\Generated\WardrobeCatalog.lua
+Data\Generated\WardrobeAcquisitionSources.lua
+Data\Sets.lua

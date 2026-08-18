@@ -1,0 +1,99 @@
+# Asset and overlay policy
+
+## Base UI decision
+
+The base AddOn is self-contained. Every production media role must resolve to
+a tracked, redistributable file under `addon/SoloCollections/Media`; it must
+not resolve only after a maintainer installs a local overlay. The authoritative
+role-to-file, provenance, format, dimensions and SHA-256 contract is
+`addon/SoloCollections/Media/assets.json`.
+
+The default collection launcher, mount portrait, wardrobe slot atlas, selected
+ring and hover ring are project-authored TGA assets. The deterministic source
+for the generated slot and portrait assets is
+`tools/media/generate_base_ui_media.py`. It reads no client-extracted artwork.
+`Media/Retail` is not a supported base-UI path and is not part of the repository
+or a clean release bundle.
+
+`Media/Icons/collections-micro.tga` is a separate, maintainer-authorized extract
+from a local Legion 7.3.5.26972 client (`UI-MicroButton-Mounts-Up.blp`,
+FileDataID 615164). It is the collections micro-button that build actually
+uses. Intermediate BLP/CASC output stays in ignored `_work`. This file is not
+project-authored and must be replaced before a public redistribution.
+
+## Public repository gate
+
+Before the first public GitHub push:
+
+1. Classify every media file as project-authored, permissively licensed,
+   third-party redistributable, or client-extracted/non-redistributable.
+2. Keep project-authored or properly licensed files with attribution.
+3. Replace non-redistributable defaults with project-authored or properly
+   licensed assets before they are referenced by production Lua.
+4. Update `addon/SoloCollections/Media/assets.json` with provenance, licence,
+   SHA-256, container, dimensions and alpha/origin metadata.
+5. Run the media contract test and release verifier from a clean Git checkout.
+   They verify both the declared roles and the files copied to the bundle.
+
+`requiredForBaseUI` and `optionalExternalFiles` are deliberately separate: an
+optional declaration can never satisfy a default production reference.
+
+## Optional netdisk media overlay
+
+An external pack is permitted only for an explicitly selected skin or
+non-essential enhancement. It must use a distinct, documented skin namespace;
+it must not replace the files that the base role contract requires. For
+example:
+
+```text
+Interface/AddOns/SoloCollections/Media/...
+Data/<dedicated SoloCollections patch archive, if required>
+Data/<locale>/<dedicated SoloCollections locale patch archive, if required>
+```
+
+Users opt in to the pack and choose its skin through AddOn configuration. The
+pack must contain:
+
+- `media-pack.json` with project version, pack version, locale, and target paths;
+- `SHA256SUMS.txt` covering every file;
+- installation, backup, and removal instructions;
+- a clear statement that the pack is separately licensed and which UI features
+  it enhances.
+
+`Patch-W.MPQ` and numeric locale patch names may collide with another mod.
+Always detect, identify, and back up same-name files; integrated clients require
+a merge workflow. The source repository never contains a game executable.
+If the maintainer distributes one through a separate channel, its provenance,
+build, hash, legal-use warning, and patch state must be explicit.
+
+## Compatibility rule
+
+Missing optional media must not change the base UI or leave a default control
+blank. Missing MPQs must degrade to AddOn-only previews rather than modifying
+unrelated client archives. A release is rejected when any default production
+media reference lacks a tracked, hash-verified base file.
+
+## Integrated DragonUI client UI bundle
+
+`tools/release/build_unified_release.py` accepts the optional paired arguments `--client-suite-root` and `--suite-lock`. This produces a separate full `Interface/AddOns` archive that may contain the pinned DragonUI BLP resources already present in the authorized local SoloClientSuite. It does not change the public AddOn ZIP's `project-authored-files-only` media contract. Treat this integrated output as a distinct delivery with its own provenance review; do not attach it to a public release unless every upstream license and redistribution right has been cleared.
+
+## Local ezCollections UI master
+
+The corrective DragonUI migration may use a generated optional AddOn named
+`SoloCollections_EzUI`. SoloClientSuite creates it only when the operator passes
+an ezCollections 2.2 source root to `Import-EzCollectionsUI.ps1`. The generated
+AddOn contains the user-authorized snapshot's complete BLP, TGA, and WAV media
+projection plus a TOC, hash marker, and provenance JSON. It contains no copied
+Lua, XML, `C_Transmog*`, server logic, or message protocol.
+
+`Core/EzCollectionsUI.lua` validates the generated schema, source version,
+source-tree hash, media-projection hash, and AddOn root before returning any
+path. A missing or mismatched pack must place an opaque explanatory overlay
+over the dependent page and intercept interaction. It must never leave an
+empty texture, active invisible button, or UI that appears accepted.
+
+These media files remain in SoloClientSuite's ignored local `build/` tree. They
+are not part of the SoloCollections public source/release boundary, and no
+public redistribution is allowed until an explicit licence and provenance
+review grants it. A build that depends on this local visual capability must be
+labelled local integration rather than public base-UI acceptance.

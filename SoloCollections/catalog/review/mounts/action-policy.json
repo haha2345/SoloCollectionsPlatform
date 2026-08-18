@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-08-12",
+  "decisionRule": "Only permanent player mount actions retained by the canonical SkillLine 777 review may be journal actions. Visibility never grants ownership.",
+  "capabilityOverrides": {
+    "64731": "AQUATIC",
+    "75973": "FLYING"
+  },
+  "preCanonicalExclusions": {
+    "TAXI": [
+      60120,
+      64681,
+      64761
+    ],
+    "QUEST_TEMPORARY": [],
+    "CLASS_FORM": [],
+    "TEST": [
+      32345,
+      43810,
+      51960
+    ]
+  },
+  "notes": [
+    "Spell 64731 is the aquatic Sea Turtle and remains availability-checked by the server.",
+    "Spell 75973 is the two-seat X-53 Touring Rocket; ezCollections mountType 3 is flying even though the legacy action evidence lacks a flying speed row.",
+    "The three TAXI spells were rejected before canonical identity generation because they are not player mount SkillLine 777 actions."
+  ]
+}

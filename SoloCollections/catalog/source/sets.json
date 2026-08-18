@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 2,
+  "status": "RETIRED",
+  "productionSource": "catalog/generated/normalized-itemsets.json",
+  "rollbackFixture": "catalog/fixtures/sets/manual8.normalized.json",
+  "note": "This path is retained as a migration signpost and is not a production fact source."
+}

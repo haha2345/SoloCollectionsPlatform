@@ -1,0 +1,15 @@
+{
+  "policyKey": "appearance.plate",
+  "requiredCapabilities": ["armor.plate"],
+  "anyCapabilities": [],
+  "forbiddenCapabilities": [],
+  "allowedRaceKeys": [],
+  "deniedRaceKeys": [],
+  "allowedClassKeys": [],
+  "deniedClassKeys": [],
+  "factionPolicy": "ANY",
+  "minimumLevel": 40,
+  "requiredSkills": {},
+  "customPolicyKey": "",
+  "legacyFallback": true
+}

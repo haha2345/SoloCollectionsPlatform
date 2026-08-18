@@ -1,0 +1,28 @@
+local SC = SoloCollections
+
+SC.Data.Pets = {
+    { id = 1, creatureId = 10259, spellId = 15999, name = "座狼幼崽", icon = "Interface\\Icons\\INV_Box_PetCarrier_01", source = "黑石塔", description = "忠诚的座狼幼崽。", collected = true, favorite = true },
+    { id = 2, creatureId = 10598, spellId = 16450, name = "烟网小蜘蛛", icon = "Interface\\Icons\\INV_Box_Birdcage_01", source = "黑石塔", description = "从烟网蜘蛛卵中孵化。", collected = false, favorite = false },
+    { id = 3, creatureId = 7545, spellId = 10698, name = "绿色翼手龙", icon = "Interface\\Icons\\INV_Misc_Head_Dragon_Green", source = "菲拉斯", description = "翡翠梦境色彩的幼龙。", collected = true, favorite = true },
+    { id = 4, creatureId = 28513, spellId = 51851, name = "吸血鬼小蝶", icon = "Interface\\Icons\\Ability_Hunter_Pet_Bat", source = "卡拉赞纪念活动", description = "一只小巧的吸血鬼蝶。", collected = false, favorite = false },
+    { id = 5, creatureId = 23274, spellId = 40990, name = "臭臭", icon = "Interface\\Icons\\INV_Box_PetCarrier_01", source = "宠物收藏成就", description = "总在寻找爱情的小臭鼬。", collected = true, favorite = false },
+    { id = 6, creatureId = 23909, spellId = 42609, name = "邪恶的南瓜娃娃", icon = "Interface\\Icons\\INV_Misc_Food_59", source = "万圣节", description = "会自己行走的南瓜苗。", collected = true, favorite = true },
+    { id = 7, creatureId = 25062, spellId = 45082, name = "迷你孢子蝙", icon = "Interface\\Icons\\Ability_Hunter_Pet_Sporebat", source = "孢子村", description = "赞加沼泽的迷你孢子蝙。", collected = false, favorite = false },
+    { id = 8, creatureId = 16547, spellId = 28738, name = "跳跳", icon = "Interface\\Icons\\INV_Crate_03", source = "儿童周", description = "活泼好动的小乌龟。", collected = true, favorite = false },
+    { id = 9, creatureId = 26119, spellId = 46599, name = "凤凰宝宝", icon = "Interface\\Icons\\INV_Misc_PheonixPet_01", source = "魔导师平台", description = "从烈焰中诞生的幼年凤凰。", collected = false, favorite = true },
+    { id = 10, creatureId = 29147, spellId = 53316, name = "幽灵颦髅", icon = "Interface\\Icons\\INV_Misc_Bone_HumanSkull_01", source = "达拉然", description = "漂浮在主人身边的幽灵颦髅。", collected = true, favorite = false },
+    { id = 11, creatureId = 7391, spellId = 10682, name = "花羽鹦鹉", icon = "Interface\\Icons\\INV_Feather_08", source = "世界掉落", description = "色彩鲜艳的稀有鹦鹉。", collected = false, favorite = true },
+    { id = 12, creatureId = 15429, spellId = 25162, name = "恶心的软泥怪", icon = "Interface\\Icons\\Ability_Creature_Poison_05", source = "沾满淤泥的袋子", description = "散发着奇怪气味的软泥怪。", collected = true, favorite = false },
+    { id = 13, creatureId = 16548, spellId = 28739, name = "哼哼先生", icon = "Interface\\Icons\\INV_Belt_25", source = "儿童周", description = "喜欢四处拱土的小猪。", collected = true, favorite = false },
+    { id = 14, creatureId = 12419, spellId = 19772, name = "仿真机械蛙", icon = "Interface\\Icons\\Spell_Shaman_Hex", source = "工程学", description = "几乎可以乱真的机械蛙。", collected = false, favorite = false },
+    { id = 15, creatureId = 25110, spellId = 45127, name = "龙鹰风筝", icon = "Interface\\Icons\\INV_Misc_DragonKite_02", source = "集换式卡牌", description = "一只在头顶飞翔的风筝。", collected = true, favorite = true },
+    { id = 16, creatureId = 21076, spellId = 36034, name = "火蝇", icon = "Interface\\Icons\\Ability_Hunter_Pet_Wasp", source = "赞加沼泽", description = "在夜色里闪烁的火蝇。", collected = false, favorite = false },
+    { id = 17, creatureId = 11327, spellId = 17709, name = "跳虫", icon = "Interface\\Icons\\Spell_Shadow_SummonFelHunter", source = "典藏版", description = "来自遥远星空的小生物。", collected = true, favorite = false },
+    { id = 18, creatureId = 11325, spellId = 17707, name = "熊猫幼崽", icon = "Interface\\Icons\\INV_Belt_05", source = "典藏版", description = "一只喜欢打盹的熊猫幼崽。", collected = false, favorite = true },
+    { id = 19, creatureId = 28883, spellId = 52615, name = "冰霜幼龙", icon = "Interface\\Icons\\INV_PET_FROSTWYRM", source = "典藏版", description = "一只缩小的冰霜巨龙。", collected = true, favorite = true },
+    { id = 20, creatureId = 23234, spellId = 40549, name = "香蕉爱好者", icon = "Interface\\Icons\\INV_Misc_Food_24", source = "集换式卡牌", description = "活泼的小猿猴。", collected = false, favorite = false },
+    { id = 21, creatureId = 29726, spellId = 55068, name = "寒冰先生", icon = "Interface\\Icons\\inv_misc_penguinpet", source = "账号奖励", description = "踏着小步前进的企鹅。", collected = true, favorite = false },
+    { id = 22, creatureId = 31575, spellId = 59250, name = "巨型下水道老鼠", icon = "Interface\\Icons\\INV_Misc_MonsterTail_03", source = "达拉然钓鱼", description = "达拉然下水道的大老鼠。", collected = false, favorite = false },
+    { id = 23, creatureId = 32791, spellId = 61725, name = "春季兔", icon = "Interface\\Icons\\INV_Misc_Food_54", source = "复活节", description = "一只欢快的春季兔子。", collected = true, favorite = true },
+    { id = 24, creatureId = 36607, spellId = 69002, name = "奥妮克希亚幼龙", icon = "Interface\\Icons\\INV_Misc_Head_Dragon_Black", source = "五周年纪念", description = "黑龙公主的微缩后裔。", collected = false, favorite = true },
+}

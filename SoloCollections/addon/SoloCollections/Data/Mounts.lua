@@ -1,0 +1,28 @@
+local SC = SoloCollections
+
+SC.Data.Mounts = {
+    { id = 1, creatureId = 24379, spellId = 43688, name = "阿曼尼战熊", icon = "Interface\\Icons\\Ability_Druid_ChallangingRoar", source = "祖阿曼限时奖励", description = "来自阿曼尼的稀有战熊。", collected = true, favorite = true },
+    { id = 2, creatureId = 18545, spellId = 40192, name = "奥的灰烬", icon = "Interface\\Icons\\Inv_Misc_SummerFest_BrazierOrange", source = "凯尔萨斯·逐日者", description = "烈焰中重生的传说飞鸟。", collected = false, favorite = false },
+    { id = 3, creatureId = 14334, spellId = 22719, name = "黑色战斗机甲鸟", icon = "Interface\\Icons\\ability_mount_blackbattlestrider", source = "PvP 奖励", description = "诺莫瑞根的黑色战斗坐骑。", collected = true, favorite = false },
+    { id = 4, creatureId = 30542, spellId = 17481, name = "瑞文戴尔的死亡战马", icon = "Interface\\Icons\\Ability_Mount_Undeadhorse", source = "斯坦索姆", description = "死亡骑士领主的战马。", collected = true, favorite = true },
+    { id = 5, creatureId = 24488, spellId = 43927, name = "塞纳里奥战斗角鹰兽", icon = "Interface\\Icons\\Ability_Mount_WarHippogryph", source = "塞纳里奥远征队", description = "远征队认可的飞行坐骑。", collected = false, favorite = false },
+    { id = 6, creatureId = 28302, spellId = 48778, name = "阿彻鲁斯死亡战马", icon = "Interface\\Icons\\Spell_DeathKnight_SummonDeathCharger", source = "死亡骑士任务", description = "从阿彻鲁斯召唤的战马。", collected = true, favorite = false },
+    { id = 7, creatureId = 18357, spellId = 32239, name = "黑锋骑士团鹰狮", icon = "Interface\\Icons\\ability_mount_ebongryphon", source = "坐骑商人", description = "黑锋骑士团的鹰狮。", collected = true, favorite = false },
+    { id = 8, creatureId = 21354, spellId = 36702, name = "炽热战马", icon = "Interface\\Icons\\Ability_Mount_Dreadsteed", source = "卡拉赞", description = "在烈焰中奔驰的恶魔战马。", collected = false, favorite = true },
+    { id = 9, creatureId = 24653, spellId = 44153, name = "飞行器", icon = "Interface\\Icons\\Ability_Mount_Gyrocoptor", source = "工程学", description = "工程师制造的飞行机械。", collected = true, favorite = false },
+    { id = 10, creatureId = 23455, spellId = 41513, name = "玛瑙灵翼幼龙", icon = "Interface\\Icons\\Ability_Mount_NetherdrakePurple", source = "灵翼之龙", description = "来自虚空的灵翼幼龙。", collected = false, favorite = false },
+    { id = 11, creatureId = 15090, spellId = 24242, name = "迅捷拉扎什迅猛龙", icon = "Interface\\Icons\\Ability_Mount_Raptor", source = "祖尔格拉布", description = "拉扎什部族的稀有迅猛龙。", collected = true, favorite = true },
+    { id = 12, creatureId = 23408, spellId = 41252, name = "乌鸦之神", icon = "Interface\\Icons\\INV-Mount_Raven_54", source = "塞泰克大厅", description = "安苏的神秘化身。", collected = false, favorite = true },
+    { id = 13, creatureId = 17266, spellId = 30174, name = "骑乘乌龟", icon = "Interface\\Icons\\Ability_Hunter_Pet_Turtle", source = "钓鱼", description = "一只悠然自得的骑乘乌龟。", collected = true, favorite = false },
+    { id = 14, creatureId = 27153, spellId = 48025, name = "无头骑士的坐骑", icon = "Interface\\Icons\\Ability_Mount_NightmareHorse", source = "万圣节", description = "无头骑士驾驭的幽灵战马。", collected = false, favorite = false },
+    { id = 15, creatureId = 29596, spellId = 54753, name = "白色北极熊", icon = "Interface\\Icons\\Ability_Mount_PolarBear_White", source = "海德比武会", description = "适应极寒环境的北极熊。", collected = true, favorite = false },
+    { id = 16, creatureId = 29929, spellId = 55531, name = "机械路霸", icon = "Interface\\Icons\\INV_Misc_Key_14", source = "工程学", description = "霍尔杜工程师的重型机车。", collected = false, favorite = false },
+    { id = 17, creatureId = 31694, spellId = 59567, name = "蓝色幼龙", icon = "Interface\\Icons\\Ability_Mount_Drake_Azure", source = "永恒之眼", description = "魔枢军团的蓝色幼龙。", collected = true, favorite = true },
+    { id = 18, creatureId = 31717, spellId = 59569, name = "青铜幼龙", icon = "Interface\\Icons\\Ability_Mount_Drake_Bronze", source = "净化斯坦索姆", description = "青铜龙军团的飞行坐骑。", collected = true, favorite = false },
+    { id = 19, creatureId = 31851, spellId = 59791, name = "长毛猛犸象", icon = "Interface\\Icons\\Ability_Mount_Mammoth_Brown", source = "冬拥湖", description = "披着厚毛的诺森德猛犸象。", collected = false, favorite = false },
+    { id = 20, creatureId = 31902, spellId = 59961, name = "红色始祖幼龙", icon = "Interface\\Icons\\Ability_Mount_Drake_Proto", source = "英雄的荣耀", description = "诺森德的红色始祖幼龙。", collected = true, favorite = true },
+    { id = 21, creatureId = 32153, spellId = 60002, name = "迷失始祖幼龙", icon = "Interface\\Icons\\Ability_Mount_Drake_Proto", source = "风暴峭壁", description = "穿行于时间裂隙的始祖幼龙。", collected = false, favorite = true },
+    { id = 22, creatureId = 34187, spellId = 64731, name = "海龟", icon = "Interface\\Icons\\inv_misc_fish_turtle_02", source = "诺森德钓鱼", description = "能在水中快速游动的坐骑。", collected = true, favorite = false },
+    { id = 23, creatureId = 38545, spellId = 72286, name = "无敌", icon = "Interface\\Icons\\Spell_DeathKnight_SummonDeathCharger", source = "巫妖王", description = "巫妖王最忠诚的翼马。", collected = false, favorite = true },
+    { id = 24, creatureId = 40625, spellId = 75614, name = "星骓", icon = "Interface\\Icons\\ability_mount_celestialhorse", source = "特别收藏", description = "身披星光的天界战马。", collected = true, favorite = true },
+}

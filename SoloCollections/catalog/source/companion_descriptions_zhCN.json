@@ -1,0 +1,1550 @@
+{
+  "entries": [
+    {
+      "collectionId": 100309,
+      "creatureEntry": 2671,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "机械松鼠体内的逻辑运算中心告诉它，要多多采集坚果和螺栓，以备冬季取用。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 39,
+      "spellId": 4055
+    },
+    {
+      "collectionId": 100310,
+      "creatureEntry": 7380,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "它漂亮的蓝眼睛闻名遐迩，同时也被大鱼人视为美味佳肴。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 44,
+      "spellId": 10677
+    },
+    {
+      "collectionId": 100311,
+      "creatureEntry": 7381,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "睡懒觉是这只猫的第二大嗜好。第一大嗜好是打哈欠。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 45,
+      "spellId": 10678
+    },
+    {
+      "collectionId": 100312,
+      "creatureEntry": 7382,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "上一个想要驯服这只猫的家伙很快意识到，地毯上有点污渍，总比整张地毯被撕成碎片来的强。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 43,
+      "spellId": 10676
+    },
+    {
+      "collectionId": 100313,
+      "creatureEntry": 7383,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "老奥特兰克俗语说：‘猫有九命，但却只需要其中之一。’",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 42,
+      "spellId": 10675
+    },
+    {
+      "collectionId": 100314,
+      "creatureEntry": 7384,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "冬妮·安萨妮娅邀请这些猫来她的午后茶会，但她没有提供它们最爱的饮品：敌人的眼泪。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 41,
+      "spellId": 10674
+    },
+    {
+      "collectionId": 100315,
+      "creatureEntry": 7385,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "冬妮·安萨妮娅计划在她临终时找一只灰猫陪葬，聪明的冒险者此刻又能大展身手了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 40,
+      "spellId": 10673
+    },
+    {
+      "collectionId": 100316,
+      "creatureEntry": 7386,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "‘皇后有三只猫。第一只猫给她抓来了肥硕的老鼠；第二只猫给她弄来了美味的野兔；而最后那只她最爱的白猫，给她送上了仇敌的头颅。’",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 46,
+      "spellId": 10679
+    },
+    {
+      "collectionId": 100317,
+      "creatureEntry": 7387,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这种五彩缤纷的小鸟是迪菲亚海盗喜爱的宠物，擅长记忆口令，购物清单和爆竹配方。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 50,
+      "spellId": 10683
+    },
+    {
+      "collectionId": 100319,
+      "creatureEntry": 7389,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "深受藏宝海湾地精们所喜爱的一个宠物，这只色彩艳丽的小鸟不仅会数钱，还会讨价还价，而且撒谎从不脸红。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 51,
+      "spellId": 10684
+    },
+    {
+      "collectionId": 100320,
+      "creatureEntry": 7390,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "有人说这只聪明的鸟能学会说话——但它很机灵，知道什么叫沉默是金。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 47,
+      "spellId": 10680
+    },
+    {
+      "collectionId": 100291,
+      "creatureEntry": 7391,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "丛林巨魔训练这些鸟儿模仿呼救声，引诱那些无知的旅行者并将他们引入陷阱。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 49,
+      "spellId": 10682
+    },
+    {
+      "collectionId": 100323,
+      "creatureEntry": 7394,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "在它看来，你吃上去也像鸡肉。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 52,
+      "spellId": 10685
+    },
+    {
+      "collectionId": 100324,
+      "creatureEntry": 7395,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只蟑螂通常是冲动消费的产物。购买者总是使劲浑身解数也难以摆脱它。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 55,
+      "spellId": 10688
+    },
+    {
+      "collectionId": 100325,
+      "creatureEntry": 7543,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "但愿有一天，它能长成像它母亲那样能够攻城拔寨的巨龙。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 56,
+      "spellId": 10695
+    },
+    {
+      "collectionId": 100326,
+      "creatureEntry": 7544,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这头小龙来自湿地，还在学习捕猎、喷火并不断可爱地发着毁灭性脾气。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 58,
+      "spellId": 10697
+    },
+    {
+      "collectionId": 100283,
+      "creatureEntry": 7545,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这种独特的雏龙曾由绿龙伊萨里奥斯孵化并抚育，已经在菲拉斯的丛林中安居了下来。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 59,
+      "spellId": 10698
+    },
+    {
+      "collectionId": 100327,
+      "creatureEntry": 7546,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "青铜龙宝宝在时间中迷失了，直到发生了一次不同寻常的事件，她才得以逃脱。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 1563,
+      "spellId": 10699
+    },
+    {
+      "collectionId": 100328,
+      "creatureEntry": 7547,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "和蓝龙军团的其他成员一样，这些古怪的小龙展现出了对奥术魔法的非凡亲和力。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 57,
+      "spellId": 10696
+    },
+    {
+      "collectionId": 100330,
+      "creatureEntry": 7549,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "它们以强劲的腿脚和敏锐的视力著称于世。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 65,
+      "spellId": 10704
+    },
+    {
+      "collectionId": 100331,
+      "creatureEntry": 7550,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "暗月马戏团的商贩经常卖一些稀奇古怪的东西，林蛙就是其中之一。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 64,
+      "spellId": 10703
+    },
+    {
+      "collectionId": 100334,
+      "creatureEntry": 7553,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "暗夜精灵的孩子在他们第一次生日时都会得到一根猫头鹰的羽毛，它象征着好运常伴。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 68,
+      "spellId": 10707
+    },
+    {
+      "collectionId": 100335,
+      "creatureEntry": 7554,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "冬泉谷的熊怪很珍视这些美丽生物的雪白羽毛，并将其用于举行仪式。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 69,
+      "spellId": 10708
+    },
+    {
+      "collectionId": 100336,
+      "creatureEntry": 7555,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "在泰达希尔的德鲁伊中，这种黑色羽毛的猛禽经常被视为是末日来临的先兆。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 67,
+      "spellId": 10706
+    },
+    {
+      "collectionId": 100340,
+      "creatureEntry": 7560,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "要是你一直追逐雪兔，那你就离摔跟头不远了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 72,
+      "spellId": 10711
+    },
+    {
+      "collectionId": 100341,
+      "creatureEntry": 7561,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "肯瑞托法师最钟爱的小伙伴之一。这个爬来爬去的小家伙最让人困惑的是——它究竟算是蛇呢，还是其他什么。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 74,
+      "spellId": 10713
+    },
+    {
+      "collectionId": 100342,
+      "creatureEntry": 7562,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些棕色蟒蛇原产于部落控制的地区。它看上去并不显眼，直到猎物走进其攻击范围。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 77,
+      "spellId": 10716
+    },
+    {
+      "collectionId": 100344,
+      "creatureEntry": 7565,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "克萨迪斯大胆地追踪、捕获并驯服那些大蟒蛇，以便它们能在战斗中呼朋唤友。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 75,
+      "spellId": 10714
+    },
+    {
+      "collectionId": 100346,
+      "creatureEntry": 7567,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这条赤练蛇深受暗矛巨魔的喜爱，不仅是因为它超强的毒性，还因为它不变的忠诚。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 78,
+      "spellId": 10717
+    },
+    {
+      "collectionId": 100350,
+      "creatureEntry": 8376,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "别担心，我想这个单位的战斗机制和归返逻辑都已被禁用了。——奥格索普·奥布诺提斯",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 83,
+      "spellId": 12243
+    },
+    {
+      "collectionId": 100351,
+      "creatureEntry": 9656,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "也许易爆，绝对可爱。远离明火。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 85,
+      "spellId": 15048
+    },
+    {
+      "collectionId": 100352,
+      "creatureEntry": 9657,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这个微小的维和安全机器人通常装备有最新式的施法者克星和群体打击者。不适用于环保人士。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 86,
+      "spellId": 15049
+    },
+    {
+      "collectionId": 100353,
+      "creatureEntry": 9662,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些可爱的小家伙在经过一天的野蛮、血腥的战斗后，最喜欢和它们的主人依偎在一起。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 87,
+      "spellId": 15067
+    },
+    {
+      "collectionId": 100281,
+      "creatureEntry": 10259,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "座狼是兽人们喜爱的伙伴，并在战场上极其忠诚。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 89,
+      "spellId": 15999
+    },
+    {
+      "collectionId": 100282,
+      "creatureEntry": 10598,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "虽然出生在温暖的黑石塔高层，但烟网小蜘蛛能够适应绝大部分环境。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 90,
+      "spellId": 16450
+    },
+    {
+      "collectionId": 100298,
+      "creatureEntry": 11325,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只迷你熊猫幼崽尽管天生嗜睡，却广受艾泽拉斯冒险者的追捧。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 92,
+      "spellId": 17707
+    },
+    {
+      "collectionId": 100356,
+      "creatureEntry": 11326,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "天穹将要震颤，凡人注定悲泣，而末日将会——等等，你怎么这么高？",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 93,
+      "spellId": 17708
+    },
+    {
+      "collectionId": 100297,
+      "creatureEntry": 11327,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "异虫大军的成员，体型微小却凶猛善战，千万不要低估了跳虫的实力。如果成批来袭，是非常危险的。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 94,
+      "spellId": 17709
+    },
+    {
+      "collectionId": 100294,
+      "creatureEntry": 12419,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "天赋异禀的工程师们制造出了林蛙的精密复制体——成本仅相当于真品价格的十倍。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 95,
+      "spellId": 19772
+    },
+    {
+      "collectionId": 100358,
+      "creatureEntry": 14421,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "一个相当复杂的地道系统保护了土拨鼠免遭邻居的大蹄子踩踏。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 70,
+      "spellId": 10709
+    },
+    {
+      "collectionId": 100364,
+      "creatureEntry": 14755,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "相传，这些充满活力的翡翠同伴能给主人带来好运，保他们旅途平安。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 757,
+      "spellId": 23531
+    },
+    {
+      "collectionId": 100365,
+      "creatureEntry": 14756,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "据说如果能在秋天见到，就能交上好运。一向对不熟悉的生物退避三舍。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 758,
+      "spellId": 23530
+    },
+    {
+      "collectionId": 100366,
+      "creatureEntry": 14878,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "许多人认为传说中的醉蛙已经灭绝了，直到暗月马戏团的怪味酒把它们都吸引了出来。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 106,
+      "spellId": 23811
+    },
+    {
+      "collectionId": 100367,
+      "creatureEntry": 15186,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只可爱又隐居避世的鱼人，其外表一定能吸引大批围观者。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 107,
+      "spellId": 24696
+    },
+    {
+      "collectionId": 100370,
+      "creatureEntry": 15358,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "乐奇那可爱迷人的气质和活泼搞怪的动作，必然能舒缓沮丧，令最晦暗的心情焕发光亮。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 111,
+      "spellId": 24988
+    },
+    {
+      "collectionId": 100373,
+      "creatureEntry": 15361,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "霸波尔奔是全世界最稀有的鱼人品种之一。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 1168,
+      "spellId": 25018
+    },
+    {
+      "collectionId": 100292,
+      "creatureEntry": 15429,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "警告：请在接触恶心的软泥怪时佩戴手套和护目镜。请勿水洗。可污染大部分护甲。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 114,
+      "spellId": 25162
+    },
+    {
+      "collectionId": 100375,
+      "creatureEntry": 15698,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些小家伙不知疲倦地在为冬幕节做精心准备，并且在接下来的日子中如果能不被打扰，他们就很感激了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 119,
+      "spellId": 26533
+    },
+    {
+      "collectionId": 100376,
+      "creatureEntry": 15699,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "在这个聪明小玩意的内部装有秘密开关，可禁用‘安静’模式。所幸就连制作它的工程师都不知道这个开关在哪儿。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 116,
+      "spellId": 26010
+    },
+    {
+      "collectionId": 100377,
+      "creatureEntry": 15705,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "在宏大的冬幕节庆典期间，这些忠实的小伙伴将快乐传播至整个大陆。在接下来的日子里，她们可有的忙了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 120,
+      "spellId": 26541
+    },
+    {
+      "collectionId": 100378,
+      "creatureEntry": 15706,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "等不及要打开包装精美的节日礼盒了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 118,
+      "spellId": 26529
+    },
+    {
+      "collectionId": 100379,
+      "creatureEntry": 15710,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "他很爱和你跳舞，和你摇摆，和你嬉戏！他会在冬幕节之后融化。别担心，他还会再回来的！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 117,
+      "spellId": 26045
+    },
+    {
+      "collectionId": 100382,
+      "creatureEntry": 16069,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "咕唧生来就是个表演者，尽管她很少抛头露面，只在极为难得的场合才会公开亮相。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 121,
+      "spellId": 27241
+    },
+    {
+      "collectionId": 100383,
+      "creatureEntry": 16085,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "爱情的力量也会成为危险的东西，特别是当一个轻浮且脾气暴躁的地精坠入爱河时。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 122,
+      "spellId": 27570
+    },
+    {
+      "collectionId": 100384,
+      "creatureEntry": 16445,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "塔吉是一只可爱又隐居避世的鱼人，相对于新朋友，她更喜欢和密友们在一起。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 1073,
+      "spellId": 28487
+    },
+    {
+      "collectionId": 100385,
+      "creatureEntry": 16456,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只小家伙和它的同类有着许多相似之处，但其吟唱能力却自成一格。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 124,
+      "spellId": 28505
+    },
+    {
+      "collectionId": 100288,
+      "creatureEntry": 16547,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "稳扎稳打才能赢得这场比赛。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 125,
+      "spellId": 28738
+    },
+    {
+      "collectionId": 100293,
+      "creatureEntry": 16548,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "许多人相信‘扭扭’这名字取自于这头猪走路时屁股扭扭的样子，直到他们看到自己的时候才明白其中的真正含义。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 126,
+      "spellId": 28739
+    },
+    {
+      "collectionId": 100386,
+      "creatureEntry": 16549,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "古灵精怪的吱吱能通过装死躲避捕食者和收藏家。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 127,
+      "spellId": 28740
+    },
+    {
+      "collectionId": 100387,
+      "creatureEntry": 16701,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这一小块夏季元素散发着温暖夏夜和雷雨的气息。如果你凑近仔细看，或许能看清它的五官。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 128,
+      "spellId": 28871
+    },
+    {
+      "collectionId": 100388,
+      "creatureEntry": 17254,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "阿什阿拉产下的幼崽之一，是织梦者托付给你的。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 1927,
+      "spellId": 30152
+    },
+    {
+      "collectionId": 100389,
+      "creatureEntry": 17255,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "在鹰身人入侵菲拉斯之后，几个角鹰兽筑巢地遭到了攻击。数百只角鹰幼兽变成了孤儿，萨尔多岛上的德鲁伊们肩负起了抚养它们的责任。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 130,
+      "spellId": 30156
+    },
+    {
+      "collectionId": 100390,
+      "creatureEntry": 18381,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "作为外域虚空幼龙的后代，这只幼龙仍在努力成长为空中猎手、保护者或是令人敬畏的恐怖力量。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 131,
+      "spellId": 32298
+    },
+    {
+      "collectionId": 100391,
+      "creatureEntry": 18839,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "只有神奇的愿望才能造就魔法龙虾。如果你想要钓到这种鱼，就得心怀愿望才行。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 132,
+      "spellId": 33050
+    },
+    {
+      "collectionId": 100393,
+      "creatureEntry": 20408,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "自从了解到它们能以奥术能量为食后，虚灵拉沙德就开始喂养这些魔法生物了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 136,
+      "spellId": 35156
+    },
+    {
+      "collectionId": 100394,
+      "creatureEntry": 20472,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只兔子的对手一定是头一次见到这么可爱的小东西。也是最后一次。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 137,
+      "spellId": 35239
+    },
+    {
+      "collectionId": 100395,
+      "creatureEntry": 21008,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "它喜欢在暴风骤雨中飞行，这在秘蓝岛上是平常事。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 140,
+      "spellId": 35910
+    },
+    {
+      "collectionId": 100396,
+      "creatureEntry": 21009,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "一种受到了原始魔法能量影响的产物。该昆虫原是艾泽拉斯的蛾类生物，引进至虚空风暴的生态圆顶后，其颜色变得异常艳丽。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 139,
+      "spellId": 35909
+    },
+    {
+      "collectionId": 100397,
+      "creatureEntry": 21010,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "秘蓝岛的濒危物种，谣传这种散发着魔力的昆虫拥有治疗能力。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 138,
+      "spellId": 35907
+    },
+    {
+      "collectionId": 100398,
+      "creatureEntry": 21018,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "它喜欢在多雾的夜间翱翔，这在秘蓝岛上是平常事。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 141,
+      "spellId": 35911
+    },
+    {
+      "collectionId": 100399,
+      "creatureEntry": 21055,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "曾一度被银月城的龙鹰饲养员视为珍宝。由于夜间在捕食者眼中非常显眼，使得它在幼年时期就练出了极高的警惕性。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 142,
+      "spellId": 36027
+    },
+    {
+      "collectionId": 100400,
+      "creatureEntry": 21056,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "尽管鲜有人饲养，但商人们还是很愿意在虚空风暴进行交易。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 145,
+      "spellId": 36031
+    },
+    {
+      "collectionId": 100401,
+      "creatureEntry": 21063,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "凶猛的龙鹰种类。经常能看到它从高空俯冲下来，进行掠食。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 144,
+      "spellId": 36029
+    },
+    {
+      "collectionId": 100402,
+      "creatureEntry": 21064,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "普通敌人只配有银色龙鹰，只有那些精英才配有金色龙鹰。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 143,
+      "spellId": 36028
+    },
+    {
+      "collectionId": 100296,
+      "creatureEntry": 21076,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这种荧光昆虫通常被航行于赞加沼泽航道上的孢子人当成光源来使用，并帮助他们躲避危险的水光针刺者。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 146,
+      "spellId": 36034
+    },
+    {
+      "collectionId": 100403,
+      "creatureEntry": 22445,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "天空之翼变回真实鸦人形态时所释放的魔法能量，解救了这只可怜的小动物——卢埃加囚禁了这只雏鸟，以强化他的禽鸟诅咒。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 149,
+      "spellId": 39181
+    },
+    {
+      "collectionId": 100404,
+      "creatureEntry": 22943,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "许多在美酒节上喝的酩酊大醉的人都谈论过这个神秘生物，但极少数人在第二天早晨醒来还记得住。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 153,
+      "spellId": 39709
+    },
+    {
+      "collectionId": 100406,
+      "creatureEntry": 23198,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "金猪在发怒或进食时都会尖叫。不论是上述哪种情形，最好都别去打搅他。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 155,
+      "spellId": 40405
+    },
+    {
+      "collectionId": 100407,
+      "creatureEntry": 23231,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "他虽然有点坏坏的，但极度嗜睡。让他远离小动物！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 157,
+      "spellId": 40613
+    },
+    {
+      "collectionId": 100300,
+      "creatureEntry": 23234,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "虽然万般不愿意与蕉蕉分离，兰德鲁还是意识到，等到他爸爸穆克拉发现他失踪时，这只宠物还是远离藏宝海湾的好。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 156,
+      "spellId": 40549
+    },
+    {
+      "collectionId": 100408,
+      "creatureEntry": 23258,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "辛多雷使用陆行鸟作为坐骑，但这个小家伙因为被诊断出患有多重焦虑症而被视为不符合要求的坐骑。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 158,
+      "spellId": 40614
+    },
+    {
+      "collectionId": 100409,
+      "creatureEntry": 23266,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "德莱尼人以驯服的雷象为坐骑，在野外它们通常因为珍贵的象牙而被猎杀。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 159,
+      "spellId": 40634
+    },
+    {
+      "collectionId": 100285,
+      "creatureEntry": 23274,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "臭臭靠自己的臭味来吓退捕食者，并攻击猫咪。不过对于前者的成功率要远高于后者。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 160,
+      "spellId": 40990
+    },
+    {
+      "collectionId": 100286,
+      "creatureEntry": 23909,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这个淘气的南瓜想要破土而出，把你吓得屁滚尿流。向南瓜歌致敬！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 162,
+      "spellId": 42609
+    },
+    {
+      "collectionId": 100410,
+      "creatureEntry": 24388,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "鳄鱼的皮和肉是猎人眼中的珍宝，但这种猛兽凶残无比，且很少能被成功偷袭。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 163,
+      "spellId": 43697
+    },
+    {
+      "collectionId": 100411,
+      "creatureEntry": 24389,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "毒皮和其它鳄鱼一样，除了具有超常的幽默感。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 164,
+      "spellId": 43698
+    },
+    {
+      "collectionId": 100412,
+      "creatureEntry": 24480,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "阿曼尼巫医将许多牺牲者变成了青蛙。其中的某些人再也没能恢复过来。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 165,
+      "spellId": 43918
+    },
+    {
+      "collectionId": 100413,
+      "creatureEntry": 24753,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "粉色雷象是一种害羞的生物，它只会出现在曾经帮助过它的，或是已醉得不省人事的人身边。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 166,
+      "spellId": 44369
+    },
+    {
+      "collectionId": 100414,
+      "creatureEntry": 24968,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这个机器人战士是冬幕节上最受欢迎的礼物。虽然没附带电池，但火箭弹肯定是有的！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 191,
+      "spellId": 54187
+    },
+    {
+      "collectionId": 100287,
+      "creatureEntry": 25062,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "野生的孢子蝠是一种险恶的生物，但如果在它们小时候加以驯化，它们就能成为忠心的小伙伴。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 167,
+      "spellId": 45082
+    },
+    {
+      "collectionId": 100415,
+      "creatureEntry": 25109,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "当燃烧军团入侵外域时，兰德鲁·郎绍特捐献出了这个设计用于对抗强敌。联盟和部落都接连开始了生产。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 168,
+      "spellId": 45125
+    },
+    {
+      "collectionId": 100295,
+      "creatureEntry": 25110,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "比真龙要安静得多。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 169,
+      "spellId": 45127
+    },
+    {
+      "collectionId": 100416,
+      "creatureEntry": 25146,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只金猪以赠与同伴好运的方式，为其祖先增光添彩。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 170,
+      "spellId": 45174
+    },
+    {
+      "collectionId": 100417,
+      "creatureEntry": 25147,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "德鲁伊认为，银猪与金猪有着特殊的联结，因为这两种生物在艾泽拉斯出现的时间不谋而合。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 171,
+      "spellId": 45175
+    },
+    {
+      "collectionId": 100418,
+      "creatureEntry": 25706,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "年长的萨满曾警告说，拉格纳罗斯的爪牙，火焰领主的忠实奴仆，已经赶往熔火前线了。我们得提高警惕。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 172,
+      "spellId": 45890
+    },
+    {
+      "collectionId": 100419,
+      "creatureEntry": 26050,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "鳄鱼是在沿海水域活动的六脚两栖掠食者。考古学家认为，它们也许是从安戈洛环形山的双帆龙演变而来。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 173,
+      "spellId": 46425
+    },
+    {
+      "collectionId": 100420,
+      "creatureEntry": 26056,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "在对鳄鱼这个物种研究了数年之后，著名钓鱼专家纳特·帕格得出了结论，鳄鱼宝宝大多无害。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 174,
+      "spellId": 46426
+    },
+    {
+      "collectionId": 100289,
+      "creatureEntry": 26119,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "凤凰之神奥的子嗣之一，这头雏鸟一出生即能飞行。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 175,
+      "spellId": 46599
+    },
+    {
+      "collectionId": 100421,
+      "creatureEntry": 27217,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些奇妙的小家伙，是奖励给得胜归来的英雄的，代表着勇猛与力量。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 179,
+      "spellId": 48406
+    },
+    {
+      "collectionId": 100422,
+      "creatureEntry": 27346,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "只有那些通过伟绩证明自己勇猛过人的英雄们，才能拥有这种神秘的蛇形生物。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 180,
+      "spellId": 48408
+    },
+    {
+      "collectionId": 100423,
+      "creatureEntry": 27914,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "神秘的灵魂商人会选择跟那些能从难驯宿主体内释放精魄的人同行。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 183,
+      "spellId": 49964
+    },
+    {
+      "collectionId": 100424,
+      "creatureEntry": 28470,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "原产自泰罗卡森林，虚空鳐只在雨季产卵。虽然一次可孵化出数百个幼崽，但只有少数能活到成年。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 186,
+      "spellId": 51716
+    },
+    {
+      "collectionId": 100284,
+      "creatureEntry": 28513,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "吸血蝙蝠已经被幽暗城的被遗忘者和祖阿曼的阿曼尼巨魔训练成了斥候和坐骑。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 187,
+      "spellId": 51851
+    },
+    {
+      "collectionId": 100299,
+      "creatureEntry": 28883,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "巫妖王用死亡之力将霜牙从亡者之界召回时的偶然产物。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 188,
+      "spellId": 52615
+    },
+    {
+      "collectionId": 100425,
+      "creatureEntry": 29089,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "‘我就是正义！’",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 189,
+      "spellId": 53082
+    },
+    {
+      "collectionId": 100290,
+      "creatureEntry": 29147,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "当它感应到附近有生物濒临死亡时，它的颅骨会发出一种刺耳的咯咯声。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 190,
+      "spellId": 53316
+    },
+    {
+      "collectionId": 100301,
+      "creatureEntry": 29726,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "小叽的外表能让人联想到更为文明的时代，那时决斗者都身穿燕尾服战斗。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 192,
+      "spellId": 55068
+    },
+    {
+      "collectionId": 100427,
+      "creatureEntry": 30379,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "别管这只鸟叫小鸡，除非你想让自己的脸被鸡蛋砸开花。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 84,
+      "spellId": 13548
+    },
+    {
+      "collectionId": 100302,
+      "creatureEntry": 31575,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "你不会愿意在黑暗的巷路里与这只老鼠狭路相逢。或者说，在哪里都一样。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 193,
+      "spellId": 59250
+    },
+    {
+      "collectionId": 100428,
+      "creatureEntry": 32589,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "和鳄鱼人吉恩大部分‘神秘的卵’不同，这个卵里真的有一只活物。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 194,
+      "spellId": 61348
+    },
+    {
+      "collectionId": 100429,
+      "creatureEntry": 32590,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "稀有的白色食虱鸟在神谕者中备受尊重。它们被视为暴雨来临，幼虫丰收以及狼獾人冬眠的预兆。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 195,
+      "spellId": 61349
+    },
+    {
+      "collectionId": 100430,
+      "creatureEntry": 32591,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "艾泽拉斯的眼镜蛇以其快速发作的毒液和迅猛的攻击而著称。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 197,
+      "spellId": 61351
+    },
+    {
+      "collectionId": 100431,
+      "creatureEntry": 32592,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些贪吃的幼兽生长速度十分惊人，而且每天都能吞下相当于其体重两倍的生肉。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 196,
+      "spellId": 61350
+    },
+    {
+      "collectionId": 100432,
+      "creatureEntry": 32595,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "它大大的眼睛和时髦的滑步特别引人注目。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 198,
+      "spellId": 61357
+    },
+    {
+      "collectionId": 100433,
+      "creatureEntry": 32643,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "为了防止学徒们依靠魔仆来完成功课，大法师举行仪式，将能够召唤这种生物的法术书页藏在了达拉然的几处角落。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 199,
+      "spellId": 61472
+    },
+    {
+      "collectionId": 100303,
+      "creatureEntry": 32791,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "春兔象征着多产，而且它们很乐意展现这一点。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 200,
+      "spellId": 61725
+    },
+    {
+      "collectionId": 100434,
+      "creatureEntry": 32818,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "他很谦卑，富有洞察力，要是再来上一点小红莓果酱，那味道就更美了。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 201,
+      "spellId": 61773
+    },
+    {
+      "collectionId": 100435,
+      "creatureEntry": 32841,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这头稀有的小熊不但天生体格娇小，而且外貌常葆青春。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 202,
+      "spellId": 61855
+    },
+    {
+      "collectionId": 100436,
+      "creatureEntry": 32939,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "她喜欢朋友们的陪伴。准确地说，是七十五个朋友的陪伴。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 203,
+      "spellId": 61991
+    },
+    {
+      "collectionId": 100437,
+      "creatureEntry": 33188,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "只要醒着，它就不停地跳舞。多么快乐的小树啊！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 204,
+      "spellId": 62491
+    },
+    {
+      "collectionId": 100438,
+      "creatureEntry": 33194,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "丹莫罗的熊以它们的强壮、忠诚和英勇顽强而闻名于世。自从和矮人生活在一起后，它们凶狠的天性有所收敛。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 205,
+      "spellId": 62508
+    },
+    {
+      "collectionId": 100439,
+      "creatureEntry": 33197,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "通过回声定位的能力可感应到对手的心跳。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 206,
+      "spellId": 62510
+    },
+    {
+      "collectionId": 100440,
+      "creatureEntry": 33198,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "性格暴躁的杜隆塔尔蝎子是一种凶猛的沙漠掠食者。它偶尔还会攻击自己的主人。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 207,
+      "spellId": 62513
+    },
+    {
+      "collectionId": 100442,
+      "creatureEntry": 33200,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "不同于其他的异变种类，真正的小绵羊胆子非常小。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 209,
+      "spellId": 62516
+    },
+    {
+      "collectionId": 100443,
+      "creatureEntry": 33205,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "受埃索达长期严重污染的影响，还需要仔细观察一段时间。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 212,
+      "spellId": 62562
+    },
+    {
+      "collectionId": 100444,
+      "creatureEntry": 33219,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "陆行鸟在空旷地带的移动速度无可匹敌，所以捕食者只能依靠偷袭和包围战术来捕食它们。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 210,
+      "spellId": 62542
+    },
+    {
+      "collectionId": 100445,
+      "creatureEntry": 33226,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "沙滩蟹因在海岛沙滩下过冬，而适应了北方的寒冷气候。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 211,
+      "spellId": 62561
+    },
+    {
+      "collectionId": 100446,
+      "creatureEntry": 33227,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "由一名血精灵学徒制作而成，如果有人能琢磨出如何让它停下来，这把魔法扫帚就能派上很大的用场。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 213,
+      "spellId": 62564
+    },
+    {
+      "collectionId": 100447,
+      "creatureEntry": 33238,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "许多暴风城中的年轻人都以侍从身份加入了银色北伐军，希望有朝一日能在战斗中为圣光效命。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 214,
+      "spellId": 62609
+    },
+    {
+      "collectionId": 100448,
+      "creatureEntry": 33239,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些年轻的兽人力图彰显银色北伐军的种种美德——英勇、强力、正直。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 216,
+      "spellId": 62746
+    },
+    {
+      "collectionId": 100449,
+      "creatureEntry": 33274,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "作为年轻侏儒的训练坐骑使用，机械鸟速度不怎么样，但它所有的魅力都来自于它的老大哥。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 215,
+      "spellId": 62674
+    },
+    {
+      "collectionId": 100450,
+      "creatureEntry": 33529,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "尽管它们身材矮小，但狼獾人还是诺森德大陆上最具攻击性的物种。这通常使它们让人望而生畏。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 226,
+      "spellId": 65382
+    },
+    {
+      "collectionId": 100451,
+      "creatureEntry": 33530,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "鳄鱼人是鱼人的远房表亲。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 225,
+      "spellId": 65381
+    },
+    {
+      "collectionId": 100452,
+      "creatureEntry": 33578,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "莫叽姆斯是所有鱼人竞技场战士中最厉害的一个。在某段时期，也是唯一的一个。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 217,
+      "spellId": 63318
+    },
+    {
+      "collectionId": 100453,
+      "creatureEntry": 33810,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这宠物其实有三个。除非召唤出来，否则你不会知道出来的是什么！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 218,
+      "spellId": 63712
+    },
+    {
+      "collectionId": 100455,
+      "creatureEntry": 34364,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "许多宠物在战斗前曾嘲笑这只猫。通常它们的最后一句话就是：‘过来啊，小猫咪。’",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 224,
+      "spellId": 65358
+    },
+    {
+      "collectionId": 100456,
+      "creatureEntry": 34587,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "以红蓝电解质为动力源泉的战斗机器人。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 227,
+      "spellId": 65682
+    },
+    {
+      "collectionId": 100457,
+      "creatureEntry": 34694,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "只有极少数鱼人能成功跨越时空障碍。还能带着玛润的先进盔甲和武器返回的则更是罕见。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 228,
+      "spellId": 66030
+    },
+    {
+      "collectionId": 100458,
+      "creatureEntry": 34724,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这条极其稀有的法力浮龙以它独特的色泽和超凡的气质饱受赞誉。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 229,
+      "spellId": 66096
+    },
+    {
+      "collectionId": 100459,
+      "creatureEntry": 34770,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "异想天开的亡者鬼魂为这些被附身的小傀儡赋予了有如生者的外表。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 1351,
+      "spellId": 66175
+    },
+    {
+      "collectionId": 100460,
+      "creatureEntry": 34930,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "作为幸运的象征，碧玉雕成的老虎是十分珍贵的，但驯养碧玉虎本身则更为难得。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 231,
+      "spellId": 66520
+    },
+    {
+      "collectionId": 100461,
+      "creatureEntry": 35387,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这个“跳跃者”塔克的后裔敏捷得令人难以置信，并可以轻松适应各种艰苦环境。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 235,
+      "spellId": 67416
+    },
+    {
+      "collectionId": 100462,
+      "creatureEntry": 35394,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "拉扎什迅猛龙是丛林中最聪明的掠食者之一，并因此受到了古拉巴什巨魔的喜爱。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 239,
+      "spellId": 67420
+    },
+    {
+      "collectionId": 100463,
+      "creatureEntry": 35395,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "人们对这种紫皮变种的旺盛需求，已经极大地削减了哀嚎洞穴附近的迅猛龙数量。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 233,
+      "spellId": 67414
+    },
+    {
+      "collectionId": 100464,
+      "creatureEntry": 35396,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "它们很少在成年之前离开巢穴，最喜欢对附近的刺喉龙巢穴恶作剧。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 232,
+      "spellId": 67413
+    },
+    {
+      "collectionId": 100465,
+      "creatureEntry": 35397,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这些雏龙的体型比其他迅猛龙幼崽更大，能够长成极具破坏性的巨型爬行动物。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 237,
+      "spellId": 67418
+    },
+    {
+      "collectionId": 100466,
+      "creatureEntry": 35398,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "刺喉龙的卵由刺喉雌龙严密看守。它们娇小的体格掩饰了其凶猛的天性。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 238,
+      "spellId": 67419
+    },
+    {
+      "collectionId": 100467,
+      "creatureEntry": 35399,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这只幼崽因拥有独特的颜色而令人艳羡不已。尽管布琳妮悉心调教，但迅猛龙凶狠的天性难改。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 236,
+      "spellId": 67417
+    },
+    {
+      "collectionId": 100468,
+      "creatureEntry": 35400,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这头狡诈的迅猛龙出生于诺森德的冰原。严酷的生长环境造就了它无以伦比的生存能力。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 234,
+      "spellId": 67415
+    },
+    {
+      "collectionId": 100469,
+      "creatureEntry": 35468,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "墨玉猎豹在夜间隐形，犹如潜行的暗影，随着黎明的到来而消失得无影无踪。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 240,
+      "spellId": 67527
+    },
+    {
+      "collectionId": 100470,
+      "creatureEntry": 36482,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "看到这些风筝高飞在诺森德岸边的天空中，就知道附近有海象人。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 241,
+      "spellId": 68767
+    },
+    {
+      "collectionId": 100471,
+      "creatureEntry": 36511,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "与人亲近又好奇心十足，这些小虎崽似乎找到了最特别的藏身之所。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 242,
+      "spellId": 68810
+    },
+    {
+      "collectionId": 100304,
+      "creatureEntry": 36607,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "奥妮克希亚的雏龙，这条年轻的小龙已经决心不再重蹈父辈们的毁灭覆辙。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 243,
+      "spellId": 69002
+    },
+    {
+      "collectionId": 100472,
+      "creatureEntry": 36871,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "熔火恶犬生活在火焰之地和熔火之心，血统可追溯到首领玛格曼达。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 244,
+      "spellId": 69452
+    },
+    {
+      "collectionId": 100473,
+      "creatureEntry": 36908,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "作为蛮锤矮人赠与联盟英雄的礼物，这些幼崽是弗斯塔德和随从进入格瑞姆巴托时骑乘的狮鹫所生。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 245,
+      "spellId": 69535
+    },
+    {
+      "collectionId": 100474,
+      "creatureEntry": 36909,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "索基佐格从没把那句古老的兽人格言当回事——‘不要拉扯双足飞龙的尾巴’。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 246,
+      "spellId": 69536
+    },
+    {
+      "collectionId": 100475,
+      "creatureEntry": 36910,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "罕见的虎族成员，很多人认为（也许是谬误），其独特的颜色也许是由残存魔法或其它经历造成的。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 247,
+      "spellId": 69539
+    },
+    {
+      "collectionId": 100476,
+      "creatureEntry": 36911,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "熊猫人僧侣是大无畏的旅行同伴，不断磨练着自己的战技……除非你请他喝酒。他认为拒绝是粗鲁的行为。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 248,
+      "spellId": 69541
+    },
+    {
+      "collectionId": 100477,
+      "creatureEntry": 36979,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "生时，克尔苏加德背叛了肯瑞托，成立了诅咒教派。死后，他以纳克萨玛斯巫妖领主的身份效命于天灾军团。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 249,
+      "spellId": 69677
+    },
+    {
+      "collectionId": 100478,
+      "creatureEntry": 37865,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "虽然个头很小，但小狗们被激怒时也是很危险的。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 250,
+      "spellId": 70613
+    },
+    {
+      "collectionId": 100479,
+      "creatureEntry": 38374,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "这个看似‘可爱’的小家伙想和小动物玩耍。千万别让它们靠太近。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 251,
+      "spellId": 71840
+    },
+    {
+      "collectionId": 100480,
+      "creatureEntry": 40198,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "不同于它们极具毁灭性的主人——冰霜之王埃霍恩，霜娃娃喜欢和毫无防备冒险者嬉闹，向他们丢雪球。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 253,
+      "spellId": 74932
+    },
+    {
+      "collectionId": 100481,
+      "creatureEntry": 40295,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "耶比托当季最畅销的热门玩具，这个打架机器人的全新蓝色底盘让整个艾泽拉斯的孩子们为之疯狂。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 254,
+      "spellId": 75134
+    },
+    {
+      "collectionId": 100482,
+      "creatureEntry": 40624,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "作为世界上首屈一指的珍奇宠物收藏家，达拉然的布琳妮只会将神秘的星界灵龙奖励给那些和她一样热爱宠物的收藏家。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 255,
+      "spellId": 75613
+    },
+    {
+      "collectionId": 100483,
+      "creatureEntry": 40703,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "根据奥杜尔的巨大泰坦原型仿制而成，这个狂躁的小东西可决不会对它的玩具们手软。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 256,
+      "spellId": 75906
+    },
+    {
+      "collectionId": 100484,
+      "creatureEntry": 40721,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "莫叽姆斯是所有鱼人竞技场战士中最厉害的一个。也是唯一的一个。",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 257,
+      "spellId": 75936
+    },
+    {
+      "collectionId": 100485,
+      "creatureEntry": 42078,
+      "descriptionStatus": "OFFICIAL_ZHCN_BATTLE_PET_SPECIES",
+      "descriptionZhCN": "人类军队中的强大火炮。雷神总是冲锋在先，撤退殿后！",
+      "sourceBuild": "7.3.5.26972",
+      "sourceRowId": 258,
+      "spellId": 78381
+    }
+  ],
+  "locale": "zhCN",
+  "matchedCount": 167,
+  "missingCollectionIds": [
+    100318,
+    100321,
+    100322,
+    100329,
+    100332,
+    100333,
+    100337,
+    100338,
+    100339,
+    100343,
+    100345,
+    100347,
+    100348,
+    100349,
+    100354,
+    100355,
+    100357,
+    100359,
+    100360,
+    100361,
+    100362,
+    100363,
+    100368,
+    100369,
+    100371,
+    100372,
+    100374,
+    100380,
+    100381,
+    100392,
+    100405,
+    100426,
+    100441,
+    100454
+  ],
+  "schemaVersion": 1,
+  "sourceBuild": "7.3.5.26972",
+  "sourcePayloadSha256": "024257e288ab347d2c5f820440ea5e93befd0da0a013fe8d8159f0d49df1f8dd",
+  "sourceTable": "BattlePetSpecies",
+  "sourceUrl": "https://wago.tools/db2/BattlePetSpecies/csv?build=7.3.5.26972&locale=zhCN"
+}

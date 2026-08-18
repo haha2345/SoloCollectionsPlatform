@@ -1,0 +1,1828 @@
+{
+  "candidateHash": "de5468f5047f6b8afbe9fdceadd5b3124b7854cd91f5104bd619aac175a15e55",
+  "decisions": [
+    {
+      "canonicalSpellId": 4055,
+      "collectionKey": "companion.mechanical_squirrel",
+      "creatureEntry": 2671,
+      "decision": "accepted",
+      "name_enUS": "Mechanical Squirrel",
+      "name_zhCN": "机械松鼠",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10677,
+      "collectionKey": "companion.siamese_cat",
+      "creatureEntry": 7380,
+      "decision": "accepted",
+      "name_enUS": "Siamese Cat",
+      "name_zhCN": "黑尾白猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10678,
+      "collectionKey": "companion.silver_tabby_cat",
+      "creatureEntry": 7381,
+      "decision": "accepted",
+      "name_enUS": "Silver Tabby Cat",
+      "name_zhCN": "黑斑白猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10676,
+      "collectionKey": "companion.orange_tabby_cat",
+      "creatureEntry": 7382,
+      "decision": "accepted",
+      "name_enUS": "Orange Tabby Cat",
+      "name_zhCN": "虎皮猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10675,
+      "collectionKey": "companion.black_tabby_cat",
+      "creatureEntry": 7383,
+      "decision": "accepted",
+      "name_enUS": "Black Tabby Cat",
+      "name_zhCN": "黑纹灰猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10674,
+      "collectionKey": "companion.cornish_rex_cat",
+      "creatureEntry": 7384,
+      "decision": "accepted",
+      "name_enUS": "Cornish Rex Cat",
+      "name_zhCN": "黄猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10673,
+      "collectionKey": "companion.bombay_cat",
+      "creatureEntry": 7385,
+      "decision": "accepted",
+      "name_enUS": "Bombay Cat",
+      "name_zhCN": "灰猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10679,
+      "collectionKey": "companion.white_kitten",
+      "creatureEntry": 7386,
+      "decision": "accepted",
+      "name_enUS": "White Kitten",
+      "name_zhCN": "白猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10683,
+      "collectionKey": "companion.green_wing_macaw",
+      "creatureEntry": 7387,
+      "decision": "accepted",
+      "name_enUS": "Green Wing Macaw",
+      "name_zhCN": "绿翼鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10681,
+      "collectionKey": "companion.cockatoo",
+      "creatureEntry": 7388,
+      "decision": "accepted",
+      "name_enUS": "Cockatoo",
+      "name_zhCN": "美冠鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10684,
+      "collectionKey": "companion.senegal",
+      "creatureEntry": 7389,
+      "decision": "accepted",
+      "name_enUS": "Senegal",
+      "name_zhCN": "金翼鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10680,
+      "collectionKey": "companion.cockatiel",
+      "creatureEntry": 7390,
+      "decision": "accepted",
+      "name_enUS": "Cockatiel",
+      "name_zhCN": "红尾鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10682,
+      "collectionKey": "companion.hyacinth_macaw",
+      "creatureEntry": 7391,
+      "decision": "accepted",
+      "name_enUS": "Hyacinth Macaw",
+      "name_zhCN": "花羽鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10686,
+      "collectionKey": "companion.prairie_chicken",
+      "creatureEntry": 7392,
+      "decision": "accepted",
+      "name_enUS": "Prairie Chicken",
+      "name_zhCN": "农场小鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10687,
+      "collectionKey": "companion.white_plymouth_rock",
+      "creatureEntry": 7393,
+      "decision": "accepted",
+      "name_enUS": "White Plymouth Rock",
+      "name_zhCN": "白色小鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10685,
+      "collectionKey": "companion.ancona_chicken",
+      "creatureEntry": 7394,
+      "decision": "accepted",
+      "name_enUS": "Ancona Chicken",
+      "name_zhCN": "灰色小鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10688,
+      "collectionKey": "companion.cockroach",
+      "creatureEntry": 7395,
+      "decision": "accepted",
+      "name_enUS": "Cockroach",
+      "name_zhCN": "蟑螂",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10695,
+      "collectionKey": "companion.dark_whelpling",
+      "creatureEntry": 7543,
+      "decision": "accepted",
+      "name_enUS": "Dark Whelpling",
+      "name_zhCN": "黑龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10697,
+      "collectionKey": "companion.crimson_whelpling",
+      "creatureEntry": 7544,
+      "decision": "accepted",
+      "name_enUS": "Crimson Whelpling",
+      "name_zhCN": "红龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10698,
+      "collectionKey": "companion.emerald_whelpling",
+      "creatureEntry": 7545,
+      "decision": "accepted",
+      "name_enUS": "Emerald Whelpling",
+      "name_zhCN": "绿色翼手龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10699,
+      "collectionKey": "companion.bronze_whelpling",
+      "creatureEntry": 7546,
+      "decision": "accepted",
+      "name_enUS": "Bronze Whelpling",
+      "name_zhCN": "青铜龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10696,
+      "collectionKey": "companion.azure_whelpling",
+      "creatureEntry": 7547,
+      "decision": "accepted",
+      "name_enUS": "Azure Whelpling",
+      "name_zhCN": "蓝龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10700,
+      "collectionKey": "companion.faeling",
+      "creatureEntry": 7548,
+      "decision": "accepted",
+      "name_enUS": "Faeling",
+      "name_zhCN": "精灵龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10704,
+      "collectionKey": "companion.tree_frog",
+      "creatureEntry": 7549,
+      "decision": "accepted",
+      "name_enUS": "Tree Frog",
+      "name_zhCN": "树蛙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10703,
+      "collectionKey": "companion.wood_frog",
+      "creatureEntry": 7550,
+      "decision": "accepted",
+      "name_enUS": "Wood Frog",
+      "name_zhCN": "林蛙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10701,
+      "collectionKey": "companion.dart_frog",
+      "creatureEntry": 7551,
+      "decision": "accepted",
+      "name_enUS": "Dart Frog",
+      "name_zhCN": "蓝蛙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10702,
+      "collectionKey": "companion.island_frog",
+      "creatureEntry": 7552,
+      "decision": "accepted",
+      "name_enUS": "Island Frog",
+      "name_zhCN": "岛蛙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10707,
+      "collectionKey": "companion.great_horned_owl",
+      "creatureEntry": 7553,
+      "decision": "accepted",
+      "name_enUS": "Great Horned Owl",
+      "name_zhCN": "棕色猫头鹰",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10708,
+      "collectionKey": "companion.snowy_owl",
+      "creatureEntry": 7554,
+      "decision": "accepted",
+      "name_enUS": "Snowy Owl",
+      "name_zhCN": "白色猫头鹰",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10706,
+      "collectionKey": "companion.hawk_owl",
+      "creatureEntry": 7555,
+      "decision": "accepted",
+      "name_enUS": "Hawk Owl",
+      "name_zhCN": "黑色猫头鹰",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10705,
+      "collectionKey": "companion.eagle_owl",
+      "creatureEntry": 7556,
+      "decision": "accepted",
+      "name_enUS": "Eagle Owl",
+      "name_zhCN": "黄色猫头鹰",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10710,
+      "collectionKey": "companion.cottontail_rabbit",
+      "creatureEntry": 7558,
+      "decision": "accepted",
+      "name_enUS": "Cottontail Rabbit",
+      "name_zhCN": "黄毛兔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10712,
+      "collectionKey": "companion.spotted_rabbit",
+      "creatureEntry": 7559,
+      "decision": "accepted",
+      "name_enUS": "Spotted Rabbit",
+      "name_zhCN": "斑点兔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10711,
+      "collectionKey": "companion.snowshoe_rabbit",
+      "creatureEntry": 7560,
+      "decision": "accepted",
+      "name_enUS": "Snowshoe Rabbit",
+      "name_zhCN": "雪兔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10713,
+      "collectionKey": "companion.albino_snake",
+      "creatureEntry": 7561,
+      "decision": "accepted",
+      "name_enUS": "Albino Snake",
+      "name_zhCN": "白鳞蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10716,
+      "collectionKey": "companion.brown_snake",
+      "creatureEntry": 7562,
+      "decision": "accepted",
+      "name_enUS": "Brown Snake",
+      "name_zhCN": "棕色蟒蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10715,
+      "collectionKey": "companion.blue_racer",
+      "creatureEntry": 7563,
+      "decision": "accepted",
+      "name_enUS": "Blue Racer",
+      "name_zhCN": "蓝鳞蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10714,
+      "collectionKey": "companion.black_kingsnake",
+      "creatureEntry": 7565,
+      "decision": "accepted",
+      "name_enUS": "Black Kingsnake",
+      "name_zhCN": "黑色王蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10720,
+      "collectionKey": "companion.scarlet_snake",
+      "creatureEntry": 7566,
+      "decision": "accepted",
+      "name_enUS": "Scarlet Snake",
+      "name_zhCN": "血纹蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10717,
+      "collectionKey": "companion.crimson_snake",
+      "creatureEntry": 7567,
+      "decision": "accepted",
+      "name_enUS": "Crimson Snake",
+      "name_zhCN": "赤练蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10719,
+      "collectionKey": "companion.ribbon_snake",
+      "creatureEntry": 7568,
+      "decision": "accepted",
+      "name_enUS": "Ribbon Snake",
+      "name_zhCN": "赤环蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10718,
+      "collectionKey": "companion.green_water_snake",
+      "creatureEntry": 7569,
+      "decision": "accepted",
+      "name_enUS": "Green Water Snake",
+      "name_zhCN": "绿色水蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10721,
+      "collectionKey": "companion.elven_wisp",
+      "creatureEntry": 7570,
+      "decision": "accepted",
+      "name_enUS": "Elven Wisp",
+      "name_zhCN": "小精灵",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 12243,
+      "collectionKey": "companion.mechanical_chicken",
+      "creatureEntry": 8376,
+      "decision": "accepted",
+      "name_enUS": "Mechanical Chicken",
+      "name_zhCN": "机械小鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 15048,
+      "collectionKey": "companion.pet_bombling",
+      "creatureEntry": 9656,
+      "decision": "accepted",
+      "name_enUS": "Pet Bombling",
+      "name_zhCN": "步行炸弹",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 15049,
+      "collectionKey": "companion.lil.creature_9657",
+      "creatureEntry": 9657,
+      "decision": "accepted",
+      "name_enUS": "Lil\\",
+      "name_zhCN": "发条机器人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 15067,
+      "collectionKey": "companion.sprite_darter_hatchling",
+      "creatureEntry": 9662,
+      "decision": "accepted",
+      "name_enUS": "Sprite Darter Hatchling",
+      "name_zhCN": "精龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 15648,
+      "collectionKey": "companion.corrupted_kitten",
+      "creatureEntry": 9936,
+      "decision": "accepted",
+      "name_enUS": "Corrupted Kitten",
+      "name_zhCN": "腐化猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 15999,
+      "collectionKey": "companion.worg_pup",
+      "creatureEntry": 10259,
+      "decision": "accepted",
+      "name_enUS": "Worg Pup",
+      "name_zhCN": "座狼幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 16450,
+      "collectionKey": "companion.smolderweb_hatchling",
+      "creatureEntry": 10598,
+      "decision": "accepted",
+      "name_enUS": "Smolderweb Hatchling",
+      "name_zhCN": "烟网小蜘蛛",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 17567,
+      "collectionKey": "companion.blood_parrot",
+      "creatureEntry": 11236,
+      "decision": "accepted",
+      "name_enUS": "Blood Parrot",
+      "name_zhCN": "红鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 17707,
+      "collectionKey": "companion.panda_cub",
+      "creatureEntry": 11325,
+      "decision": "accepted",
+      "name_enUS": "Panda Cub",
+      "name_zhCN": "熊猫幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 17708,
+      "collectionKey": "companion.mini_diablo",
+      "creatureEntry": 11326,
+      "decision": "accepted",
+      "name_enUS": "Mini Diablo",
+      "name_zhCN": "迷你破坏神",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 17709,
+      "collectionKey": "companion.zergling",
+      "creatureEntry": 11327,
+      "decision": "accepted",
+      "name_enUS": "Zergling",
+      "name_zhCN": "跳虫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 19363,
+      "collectionKey": "companion.mechanical_yeti",
+      "creatureEntry": 12257,
+      "decision": "accepted",
+      "name_enUS": "Mechanical Yeti",
+      "name_zhCN": "机械雪人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 19772,
+      "collectionKey": "companion.lifelike_toad",
+      "creatureEntry": 12419,
+      "decision": "accepted",
+      "name_enUS": "Lifelike Toad",
+      "name_zhCN": "仿真机械蛙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 10709,
+      "collectionKey": "companion.brown_prairie_dog",
+      "creatureEntry": 14421,
+      "decision": "accepted",
+      "name_enUS": "Brown Prairie Dog",
+      "name_zhCN": "棕色土拨鼠",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23429,
+      "collectionKey": "companion.loggerhead_snapjaw",
+      "creatureEntry": 14629,
+      "decision": "accepted",
+      "name_enUS": "Loggerhead Snapjaw",
+      "name_zhCN": "圆头钳嘴龟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23431,
+      "collectionKey": "companion.leatherback_snapjaw",
+      "creatureEntry": 14630,
+      "decision": "accepted",
+      "name_enUS": "Leatherback Snapjaw",
+      "name_zhCN": "硬皮钳嘴龟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23430,
+      "collectionKey": "companion.olive_snapjaw",
+      "creatureEntry": 14631,
+      "decision": "accepted",
+      "name_enUS": "Olive Snapjaw",
+      "name_zhCN": "绿色钳嘴龟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23432,
+      "collectionKey": "companion.hawksbill_snapjaw",
+      "creatureEntry": 14632,
+      "decision": "accepted",
+      "name_enUS": "Hawksbill Snapjaw",
+      "name_zhCN": "鹰喙钳嘴龟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23428,
+      "collectionKey": "companion.albino_snapjaw",
+      "creatureEntry": 14633,
+      "decision": "accepted",
+      "name_enUS": "Albino Snapjaw",
+      "name_zhCN": "白色钳嘴龟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23531,
+      "collectionKey": "companion.tiny_green_dragon",
+      "creatureEntry": 14755,
+      "decision": "accepted",
+      "name_enUS": "Tiny Green Dragon",
+      "name_zhCN": "绿色小神龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23530,
+      "collectionKey": "companion.tiny_red_dragon",
+      "creatureEntry": 14756,
+      "decision": "accepted",
+      "name_enUS": "Tiny Red Dragon",
+      "name_zhCN": "红色小神龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 23811,
+      "collectionKey": "companion.jubling",
+      "creatureEntry": 14878,
+      "decision": "accepted",
+      "name_enUS": "Jubling",
+      "name_zhCN": "加布林",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 24696,
+      "collectionKey": "companion.murky",
+      "creatureEntry": 15186,
+      "decision": "accepted",
+      "name_enUS": "Murky",
+      "name_zhCN": "奔波尔霸",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 24985,
+      "collectionKey": "companion.blue_baby_murloc",
+      "creatureEntry": 15356,
+      "decision": "accepted",
+      "name_enUS": "Blue Baby Murloc",
+      "name_zhCN": "蓝色小鱼人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 24990,
+      "collectionKey": "companion.purple_baby_murloc",
+      "creatureEntry": 15357,
+      "decision": "accepted",
+      "name_enUS": "Purple Baby Murloc",
+      "name_zhCN": "紫色小鱼人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 24988,
+      "collectionKey": "companion.lurky",
+      "creatureEntry": 15358,
+      "decision": "accepted",
+      "name_enUS": "Lurky",
+      "name_zhCN": "乐奇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 24989,
+      "collectionKey": "companion.pink_baby_murloc",
+      "creatureEntry": 15359,
+      "decision": "accepted",
+      "name_enUS": "Pink Baby Murloc",
+      "name_zhCN": "粉色小鱼人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 24986,
+      "collectionKey": "companion.green_baby_murloc",
+      "creatureEntry": 15360,
+      "decision": "accepted",
+      "name_enUS": "Green Baby Murloc",
+      "name_zhCN": "绿色小鱼人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 25018,
+      "collectionKey": "companion.murki",
+      "creatureEntry": 15361,
+      "decision": "accepted",
+      "name_enUS": "Murki",
+      "name_zhCN": "霸波尔奔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 25162,
+      "collectionKey": "companion.disgusting_oozeling",
+      "creatureEntry": 15429,
+      "decision": "accepted",
+      "name_enUS": "Disgusting Oozeling",
+      "name_zhCN": "恶心的软泥怪",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 25849,
+      "collectionKey": "companion.baby_shark",
+      "creatureEntry": 15661,
+      "decision": "accepted",
+      "name_enUS": "Baby Shark",
+      "name_zhCN": "鲨鱼宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26533,
+      "collectionKey": "companion.father_winter",
+      "creatureEntry": 15698,
+      "decision": "accepted",
+      "name_enUS": "Father Winter\\",
+      "name_zhCN": "冬天爷爷的助手",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26010,
+      "collectionKey": "companion.tranquil_mechanical_yeti",
+      "creatureEntry": 15699,
+      "decision": "accepted",
+      "name_enUS": "Tranquil Mechanical Yeti",
+      "name_zhCN": "安静的机械雪人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26541,
+      "collectionKey": "companion.winter",
+      "creatureEntry": 15705,
+      "decision": "accepted",
+      "name_enUS": "Winter\\",
+      "name_zhCN": "冬天爷爷的小助手",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26529,
+      "collectionKey": "companion.winter_reindeer",
+      "creatureEntry": 15706,
+      "decision": "accepted",
+      "name_enUS": "Winter Reindeer",
+      "name_zhCN": "冬季驯鹿",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26045,
+      "collectionKey": "companion.tiny_snowman",
+      "creatureEntry": 15710,
+      "decision": "accepted",
+      "name_enUS": "Tiny Snowman",
+      "name_zhCN": "雪孩子",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26067,
+      "collectionKey": "companion.mechanical_greench",
+      "creatureEntry": 15721,
+      "decision": "accepted",
+      "name_enUS": "Mechanical Greench",
+      "name_zhCN": "机械格林奇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 26391,
+      "collectionKey": "companion.vanquished_tentacle",
+      "creatureEntry": 15901,
+      "decision": "accepted",
+      "name_enUS": "Vanquished Tentacle",
+      "name_zhCN": "被砍下来的触须",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 27241,
+      "collectionKey": "companion.gurky",
+      "creatureEntry": 16069,
+      "decision": "accepted",
+      "name_enUS": "Gurky",
+      "name_zhCN": "咕唧",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 27570,
+      "collectionKey": "companion.peddlefeet",
+      "creatureEntry": 16085,
+      "decision": "accepted",
+      "name_enUS": "Peddlefeet",
+      "name_zhCN": "小匹德菲特",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 28487,
+      "collectionKey": "companion.terky",
+      "creatureEntry": 16445,
+      "decision": "accepted",
+      "name_enUS": "Terky",
+      "name_zhCN": "塔吉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 28505,
+      "collectionKey": "companion.poley",
+      "creatureEntry": 16456,
+      "decision": "accepted",
+      "name_enUS": "Poley",
+      "name_zhCN": "波利",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 28738,
+      "collectionKey": "companion.speedy",
+      "creatureEntry": 16547,
+      "decision": "accepted",
+      "name_enUS": "Speedy",
+      "name_zhCN": "跳跳",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 28739,
+      "collectionKey": "companion.mr_wiggles",
+      "creatureEntry": 16548,
+      "decision": "accepted",
+      "name_enUS": "Mr. Wiggles",
+      "name_zhCN": "哼哼先生",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 28740,
+      "collectionKey": "companion.whiskers_the_rat",
+      "creatureEntry": 16549,
+      "decision": "accepted",
+      "name_enUS": "Whiskers the Rat",
+      "name_zhCN": "小老鼠吱吱",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 28871,
+      "collectionKey": "companion.spirit_of_summer",
+      "creatureEntry": 16701,
+      "decision": "accepted",
+      "name_enUS": "Spirit of Summer",
+      "name_zhCN": "仲夏之魂",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 30152,
+      "collectionKey": "companion.white_tiger_cub",
+      "creatureEntry": 17254,
+      "decision": "accepted",
+      "name_enUS": "White Tiger Cub",
+      "name_zhCN": "白色虎崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 30156,
+      "collectionKey": "companion.hippogryph_hatchling",
+      "creatureEntry": 17255,
+      "decision": "accepted",
+      "name_enUS": "Hippogryph Hatchling",
+      "name_zhCN": "角鹰兽宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 32298,
+      "collectionKey": "companion.netherwhelp",
+      "creatureEntry": 18381,
+      "decision": "accepted",
+      "name_enUS": "Netherwhelp",
+      "name_zhCN": "虚空龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 33050,
+      "collectionKey": "companion.magical_crawdad",
+      "creatureEntry": 18839,
+      "decision": "accepted",
+      "name_enUS": "Magical Crawdad",
+      "name_zhCN": "魔法龙虾",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 33057,
+      "collectionKey": "companion.benevolent_mr_pinchy",
+      "creatureEntry": 18845,
+      "decision": "accepted",
+      "name_enUS": "Benevolent Mr. Pinchy",
+      "name_zhCN": "善良的钳子先生",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 35156,
+      "collectionKey": "companion.mana_wyrmling",
+      "creatureEntry": 20408,
+      "decision": "accepted",
+      "name_enUS": "Mana Wyrmling",
+      "name_zhCN": "法力龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 35239,
+      "collectionKey": "companion.brown_rabbit",
+      "creatureEntry": 20472,
+      "decision": "accepted",
+      "name_enUS": "Brown Rabbit",
+      "name_zhCN": "棕兔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 35910,
+      "collectionKey": "companion.yellow_moth",
+      "creatureEntry": 21008,
+      "decision": "accepted",
+      "name_enUS": "Yellow Moth",
+      "name_zhCN": "黄色飞蛾",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 35909,
+      "collectionKey": "companion.red_moth",
+      "creatureEntry": 21009,
+      "decision": "accepted",
+      "name_enUS": "Red Moth",
+      "name_zhCN": "红色飞蛾",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 35907,
+      "collectionKey": "companion.blue_moth",
+      "creatureEntry": 21010,
+      "decision": "accepted",
+      "name_enUS": "Blue Moth",
+      "name_zhCN": "蓝色飞蛾",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 35911,
+      "collectionKey": "companion.white_moth",
+      "creatureEntry": 21018,
+      "decision": "accepted",
+      "name_enUS": "White Moth",
+      "name_zhCN": "白色飞蛾",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 36027,
+      "collectionKey": "companion.golden_dragonhawk_hatchling",
+      "creatureEntry": 21055,
+      "decision": "accepted",
+      "name_enUS": "Golden Dragonhawk Hatchling",
+      "name_zhCN": "金色龙鹰幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 36031,
+      "collectionKey": "companion.blue_dragonhawk_hatchling",
+      "creatureEntry": 21056,
+      "decision": "accepted",
+      "name_enUS": "Blue Dragonhawk Hatchling",
+      "name_zhCN": "蓝色龙鹰幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 36029,
+      "collectionKey": "companion.silver_dragonhawk_hatchling",
+      "creatureEntry": 21063,
+      "decision": "accepted",
+      "name_enUS": "Silver Dragonhawk Hatchling",
+      "name_zhCN": "银色龙鹰幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 36028,
+      "collectionKey": "companion.red_dragonhawk_hatchling",
+      "creatureEntry": 21064,
+      "decision": "accepted",
+      "name_enUS": "Red Dragonhawk Hatchling",
+      "name_zhCN": "红色龙鹰幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 36034,
+      "collectionKey": "companion.firefly",
+      "creatureEntry": 21076,
+      "decision": "accepted",
+      "name_enUS": "Firefly",
+      "name_zhCN": "火蝇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 39181,
+      "collectionKey": "companion.miniwing",
+      "creatureEntry": 22445,
+      "decision": "accepted",
+      "name_enUS": "Miniwing",
+      "name_zhCN": "迷你鹦鹉",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 39709,
+      "collectionKey": "companion.wolpertinger",
+      "creatureEntry": 22943,
+      "decision": "accepted",
+      "name_enUS": "Wolpertinger",
+      "name_zhCN": "鹿角小飞兔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40319,
+      "collectionKey": "companion.lucky.creature_23114",
+      "creatureEntry": 23114,
+      "decision": "accepted",
+      "name_enUS": "Lucky",
+      "name_zhCN": "金猪",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40405,
+      "collectionKey": "companion.lucky.creature_23198",
+      "creatureEntry": 23198,
+      "decision": "accepted",
+      "name_enUS": "Lucky",
+      "name_zhCN": "金猪",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40613,
+      "collectionKey": "companion.willy",
+      "creatureEntry": 23231,
+      "decision": "accepted",
+      "name_enUS": "Willy",
+      "name_zhCN": "威利",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40549,
+      "collectionKey": "companion.bananas",
+      "creatureEntry": 23234,
+      "decision": "accepted",
+      "name_enUS": "Bananas",
+      "name_zhCN": "香蕉爱好者",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40614,
+      "collectionKey": "companion.egbert",
+      "creatureEntry": 23258,
+      "decision": "accepted",
+      "name_enUS": "Egbert",
+      "name_zhCN": "蛋蛋",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40634,
+      "collectionKey": "companion.peanut",
+      "creatureEntry": 23266,
+      "decision": "accepted",
+      "name_enUS": "Peanut",
+      "name_zhCN": "小新",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 40990,
+      "collectionKey": "companion.stinker",
+      "creatureEntry": 23274,
+      "decision": "accepted",
+      "name_enUS": "Stinker",
+      "name_zhCN": "臭臭",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 42609,
+      "collectionKey": "companion.sinister_squashling",
+      "creatureEntry": 23909,
+      "decision": "accepted",
+      "name_enUS": "Sinister Squashling",
+      "name_zhCN": "邪恶的南瓜娃娃",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 43697,
+      "collectionKey": "companion.toothy",
+      "creatureEntry": 24388,
+      "decision": "accepted",
+      "name_enUS": "Toothy",
+      "name_zhCN": "牙牙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 43698,
+      "collectionKey": "companion.muckbreath",
+      "creatureEntry": 24389,
+      "decision": "accepted",
+      "name_enUS": "Muckbreath",
+      "name_zhCN": "毒皮",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 43918,
+      "collectionKey": "companion.mojo",
+      "creatureEntry": 24480,
+      "decision": "accepted",
+      "name_enUS": "Mojo",
+      "name_zhCN": "魔汁",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 44369,
+      "collectionKey": "companion.pint_sized_pink_pachyderm",
+      "creatureEntry": 24753,
+      "decision": "accepted",
+      "name_enUS": "Pint-Sized Pink Pachyderm",
+      "name_zhCN": "粉色小雷象",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 54187,
+      "collectionKey": "companion.clockwork_rocket_bot.creature_24968",
+      "creatureEntry": 24968,
+      "decision": "accepted",
+      "name_enUS": "Clockwork Rocket Bot",
+      "name_zhCN": "发条战士",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 45082,
+      "collectionKey": "companion.tiny_sporebat",
+      "creatureEntry": 25062,
+      "decision": "accepted",
+      "name_enUS": "Tiny Sporebat",
+      "name_zhCN": "迷你孢子蝙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 45125,
+      "collectionKey": "companion.rocket_chicken",
+      "creatureEntry": 25109,
+      "decision": "accepted",
+      "name_enUS": "Rocket Chicken",
+      "name_zhCN": "火箭鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 45127,
+      "collectionKey": "companion.dragon_kite",
+      "creatureEntry": 25110,
+      "decision": "accepted",
+      "name_enUS": "Dragon Kite",
+      "name_zhCN": "龙鹰风筝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 45174,
+      "collectionKey": "companion.golden_pig",
+      "creatureEntry": 25146,
+      "decision": "accepted",
+      "name_enUS": "Golden Pig",
+      "name_zhCN": "金猪",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 45175,
+      "collectionKey": "companion.silver_pig",
+      "creatureEntry": 25147,
+      "decision": "accepted",
+      "name_enUS": "Silver Pig",
+      "name_zhCN": "银猪",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 45890,
+      "collectionKey": "companion.scorchling",
+      "creatureEntry": 25706,
+      "decision": "accepted",
+      "name_enUS": "Scorchling",
+      "name_zhCN": "灼烧元素",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 46425,
+      "collectionKey": "companion.snarly",
+      "creatureEntry": 26050,
+      "decision": "accepted",
+      "name_enUS": "Snarly",
+      "name_zhCN": "尼尼",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 46426,
+      "collectionKey": "companion.chuck",
+      "creatureEntry": 26056,
+      "decision": "accepted",
+      "name_enUS": "Chuck",
+      "name_zhCN": "莫莫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 46599,
+      "collectionKey": "companion.phoenix_hatchling",
+      "creatureEntry": 26119,
+      "decision": "accepted",
+      "name_enUS": "Phoenix Hatchling",
+      "name_zhCN": "凤凰宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 48406,
+      "collectionKey": "companion.spirit_of_competition",
+      "creatureEntry": 27217,
+      "decision": "accepted",
+      "name_enUS": "Spirit of Competition",
+      "name_zhCN": "竞争之魂",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 48408,
+      "collectionKey": "companion.essence_of_competition",
+      "creatureEntry": 27346,
+      "decision": "accepted",
+      "name_enUS": "Essence of Competition",
+      "name_zhCN": "竞争之精华",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 49964,
+      "collectionKey": "companion.ethereal_soul_trader",
+      "creatureEntry": 27914,
+      "decision": "accepted",
+      "name_enUS": "Ethereal Soul-Trader",
+      "name_zhCN": "灵魂商人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 51716,
+      "collectionKey": "companion.nether_ray_fry",
+      "creatureEntry": 28470,
+      "decision": "accepted",
+      "name_enUS": "Nether Ray Fry",
+      "name_zhCN": "小虚空鳐",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 51851,
+      "collectionKey": "companion.vampiric_batling",
+      "creatureEntry": 28513,
+      "decision": "accepted",
+      "name_enUS": "Vampiric Batling",
+      "name_zhCN": "吸血鬼小蝶",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 52615,
+      "collectionKey": "companion.frosty",
+      "creatureEntry": 28883,
+      "decision": "accepted",
+      "name_enUS": "Frosty",
+      "name_zhCN": "冰霜幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 53082,
+      "collectionKey": "companion.mini_tyrael",
+      "creatureEntry": 29089,
+      "decision": "accepted",
+      "name_enUS": "Mini Tyrael",
+      "name_zhCN": "迷你泰瑞尔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 53316,
+      "collectionKey": "companion.ghostly_skull",
+      "creatureEntry": 29147,
+      "decision": "accepted",
+      "name_enUS": "Ghostly Skull",
+      "name_zhCN": "幽灵颅骨",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 53768,
+      "collectionKey": "companion.scourge_haunt",
+      "creatureEntry": 29238,
+      "decision": "accepted",
+      "name_enUS": "Scourge Haunt",
+      "name_zhCN": "天灾幽灵",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 55068,
+      "collectionKey": "companion.mr_chilly",
+      "creatureEntry": 29726,
+      "decision": "accepted",
+      "name_enUS": "Mr. Chilly",
+      "name_zhCN": "寒冰先生",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 13548,
+      "collectionKey": "companion.westfall_chicken",
+      "creatureEntry": 30379,
+      "decision": "accepted",
+      "name_enUS": "Westfall Chicken",
+      "name_zhCN": "西部荒野小鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 59250,
+      "collectionKey": "companion.giant_sewer_rat",
+      "creatureEntry": 31575,
+      "decision": "accepted",
+      "name_enUS": "Giant Sewer Rat",
+      "name_zhCN": "巨型下水道老鼠",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61348,
+      "collectionKey": "companion.tickbird_hatchling",
+      "creatureEntry": 32589,
+      "decision": "accepted",
+      "name_enUS": "Tickbird Hatchling",
+      "name_zhCN": "小食虱鸟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61349,
+      "collectionKey": "companion.white_tickbird_hatchling",
+      "creatureEntry": 32590,
+      "decision": "accepted",
+      "name_enUS": "White Tickbird Hatchling",
+      "name_zhCN": "白色小食虱鸟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61351,
+      "collectionKey": "companion.cobra_hatchling",
+      "creatureEntry": 32591,
+      "decision": "accepted",
+      "name_enUS": "Cobra Hatchling",
+      "name_zhCN": "小眼镜蛇",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61350,
+      "collectionKey": "companion.proto_drake_whelp",
+      "creatureEntry": 32592,
+      "decision": "accepted",
+      "name_enUS": "Proto-Drake Whelp",
+      "name_zhCN": "始祖龙宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61357,
+      "collectionKey": "companion.pengu",
+      "creatureEntry": 32595,
+      "decision": "accepted",
+      "name_enUS": "Pengu",
+      "name_zhCN": "小潘",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61472,
+      "collectionKey": "companion.kirin_tor_familiar",
+      "creatureEntry": 32643,
+      "decision": "accepted",
+      "name_enUS": "Kirin Tor Familiar",
+      "name_zhCN": "肯瑞托魔仆",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61725,
+      "collectionKey": "companion.spring_rabbit",
+      "creatureEntry": 32791,
+      "decision": "accepted",
+      "name_enUS": "Spring Rabbit",
+      "name_zhCN": "春季兔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61773,
+      "collectionKey": "companion.plump_turkey",
+      "creatureEntry": 32818,
+      "decision": "accepted",
+      "name_enUS": "Plump Turkey",
+      "name_zhCN": "肥胖的火鸡",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61855,
+      "collectionKey": "companion.baby_blizzard_bear",
+      "creatureEntry": 32841,
+      "decision": "accepted",
+      "name_enUS": "Baby Blizzard Bear",
+      "name_zhCN": "暴雪熊宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 61991,
+      "collectionKey": "companion.little_fawn",
+      "creatureEntry": 32939,
+      "decision": "accepted",
+      "name_enUS": "Little Fawn",
+      "name_zhCN": "小鹿",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62491,
+      "collectionKey": "companion.teldrassil_sproutling",
+      "creatureEntry": 33188,
+      "decision": "accepted",
+      "name_enUS": "Teldrassil Sproutling",
+      "name_zhCN": "泰达希尔树苗",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62508,
+      "collectionKey": "companion.dun_morogh_cub",
+      "creatureEntry": 33194,
+      "decision": "accepted",
+      "name_enUS": "Dun Morogh Cub",
+      "name_zhCN": "丹莫罗熊宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62510,
+      "collectionKey": "companion.tirisfal_batling",
+      "creatureEntry": 33197,
+      "decision": "accepted",
+      "name_enUS": "Tirisfal Batling",
+      "name_zhCN": "提瑞斯法蝙蝠宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62513,
+      "collectionKey": "companion.durotar_scorpion",
+      "creatureEntry": 33198,
+      "decision": "accepted",
+      "name_enUS": "Durotar Scorpion",
+      "name_zhCN": "杜隆塔尔蝎子",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62514,
+      "collectionKey": "companion.alarming_clockbot",
+      "creatureEntry": 33199,
+      "decision": "accepted",
+      "name_enUS": "Alarming Clockbot",
+      "name_zhCN": "报警发条机器人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62516,
+      "collectionKey": "companion.elwynn_lamb",
+      "creatureEntry": 33200,
+      "decision": "accepted",
+      "name_enUS": "Elwynn Lamb",
+      "name_zhCN": "艾尔文小羊羔",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62562,
+      "collectionKey": "companion.ammen_vale_lashling",
+      "creatureEntry": 33205,
+      "decision": "accepted",
+      "name_enUS": "Ammen Vale Lashling",
+      "name_zhCN": "埃门谷花苗",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62542,
+      "collectionKey": "companion.mulgore_hatchling",
+      "creatureEntry": 33219,
+      "decision": "accepted",
+      "name_enUS": "Mulgore Hatchling",
+      "name_zhCN": "莫高雷小陆行鸟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62561,
+      "collectionKey": "companion.strand_crawler",
+      "creatureEntry": 33226,
+      "decision": "accepted",
+      "name_enUS": "Strand Crawler",
+      "name_zhCN": "沙滩蟹",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62564,
+      "collectionKey": "companion.enchanted_broom",
+      "creatureEntry": 33227,
+      "decision": "accepted",
+      "name_enUS": "Enchanted Broom",
+      "name_zhCN": "魔法扫帚",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62609,
+      "collectionKey": "companion.argent_squire",
+      "creatureEntry": 33238,
+      "decision": "accepted",
+      "name_enUS": "Argent Squire",
+      "name_zhCN": "银色侍从",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62746,
+      "collectionKey": "companion.argent_gruntling",
+      "creatureEntry": 33239,
+      "decision": "accepted",
+      "name_enUS": "Argent Gruntling",
+      "name_zhCN": "银色小步兵",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 62674,
+      "collectionKey": "companion.mechanopeep",
+      "creatureEntry": 33274,
+      "decision": "accepted",
+      "name_enUS": "Mechanopeep",
+      "name_zhCN": "机械鸟",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 65382,
+      "collectionKey": "companion.curious_wolvar_pup",
+      "creatureEntry": 33529,
+      "decision": "accepted",
+      "name_enUS": "Curious Wolvar Pup",
+      "name_zhCN": "好奇的小狼獾人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 65381,
+      "collectionKey": "companion.curious_oracle_hatchling",
+      "creatureEntry": 33530,
+      "decision": "accepted",
+      "name_enUS": "Curious Oracle Hatchling",
+      "name_zhCN": "好奇的小神谕者",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 63318,
+      "collectionKey": "companion.murkimus_the_gladiator.creature_33578",
+      "creatureEntry": 33578,
+      "decision": "accepted",
+      "name_enUS": "Murkimus the Gladiator",
+      "name_zhCN": "角斗士莫叽姆斯",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 63712,
+      "collectionKey": "companion.sen",
+      "creatureEntry": 33810,
+      "decision": "accepted",
+      "name_enUS": "Sen\\",
+      "name_zhCN": "森金神像",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 64351,
+      "collectionKey": "companion.xs_001_constructor_bot",
+      "creatureEntry": 34031,
+      "decision": "accepted",
+      "name_enUS": "XS-001 Constructor Bot",
+      "name_zhCN": "XS-001建筑机器人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 65358,
+      "collectionKey": "companion.calico_cat",
+      "creatureEntry": 34364,
+      "decision": "accepted",
+      "name_enUS": "Calico Cat",
+      "name_zhCN": "玳瑁猫",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 65682,
+      "collectionKey": "companion.warbot",
+      "creatureEntry": 34587,
+      "decision": "accepted",
+      "name_enUS": "Warbot",
+      "name_zhCN": "战斗机器人",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 66030,
+      "collectionKey": "companion.grunty",
+      "creatureEntry": 34694,
+      "decision": "accepted",
+      "name_enUS": "Grunty",
+      "name_zhCN": "玛润",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 66096,
+      "collectionKey": "companion.shimmering_wyrmling",
+      "creatureEntry": 34724,
+      "decision": "accepted",
+      "name_enUS": "Shimmering Wyrmling",
+      "name_zhCN": "幽光雏龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 66175,
+      "collectionKey": "companion.macabre_marionette",
+      "creatureEntry": 34770,
+      "decision": "accepted",
+      "name_enUS": "Macabre Marionette",
+      "name_zhCN": "死亡木偶",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 66520,
+      "collectionKey": "companion.jade_tiger",
+      "creatureEntry": 34930,
+      "decision": "accepted",
+      "name_enUS": "Jade Tiger",
+      "name_zhCN": "碧玉虎",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67416,
+      "collectionKey": "companion.leaping_hatchling",
+      "creatureEntry": 35387,
+      "decision": "accepted",
+      "name_enUS": "Leaping Hatchling",
+      "name_zhCN": "小塔克",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67420,
+      "collectionKey": "companion.razzashi_hatchling",
+      "creatureEntry": 35394,
+      "decision": "accepted",
+      "name_enUS": "Razzashi Hatchling",
+      "name_zhCN": "拉扎什幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67414,
+      "collectionKey": "companion.deviate_hatchling",
+      "creatureEntry": 35395,
+      "decision": "accepted",
+      "name_enUS": "Deviate Hatchling",
+      "name_zhCN": "变异幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67413,
+      "collectionKey": "companion.darting_hatchling",
+      "creatureEntry": 35396,
+      "decision": "accepted",
+      "name_enUS": "Darting Hatchling",
+      "name_zhCN": "小达尔特",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67418,
+      "collectionKey": "companion.ravasaur_hatchling",
+      "creatureEntry": 35397,
+      "decision": "accepted",
+      "name_enUS": "Ravasaur Hatchling",
+      "name_zhCN": "暴掠幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67419,
+      "collectionKey": "companion.razormaw_hatchling",
+      "creatureEntry": 35398,
+      "decision": "accepted",
+      "name_enUS": "Razormaw Hatchling",
+      "name_zhCN": "刺喉幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67417,
+      "collectionKey": "companion.obsidian_hatchling",
+      "creatureEntry": 35399,
+      "decision": "accepted",
+      "name_enUS": "Obsidian Hatchling",
+      "name_zhCN": "黑曜石幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67415,
+      "collectionKey": "companion.gundrak_hatchling",
+      "creatureEntry": 35400,
+      "decision": "accepted",
+      "name_enUS": "Gundrak Hatchling",
+      "name_zhCN": "古达克幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 67527,
+      "collectionKey": "companion.onyx_panther",
+      "creatureEntry": 35468,
+      "decision": "accepted",
+      "name_enUS": "Onyx Panther",
+      "name_zhCN": "墨玉猎豹",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 68767,
+      "collectionKey": "companion.tuskarr_kite",
+      "creatureEntry": 36482,
+      "decision": "accepted",
+      "name_enUS": "Tuskarr Kite",
+      "name_zhCN": "海象人风筝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 68810,
+      "collectionKey": "companion.spectral_tiger_cub",
+      "creatureEntry": 36511,
+      "decision": "accepted",
+      "name_enUS": "Spectral Tiger Cub",
+      "name_zhCN": "幽灵虎幼崽",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69002,
+      "collectionKey": "companion.onyxian_whelpling",
+      "creatureEntry": 36607,
+      "decision": "accepted",
+      "name_enUS": "Onyxian Whelpling",
+      "name_zhCN": "奥妮克希亚幼龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69452,
+      "collectionKey": "companion.core_hound_pup",
+      "creatureEntry": 36871,
+      "decision": "accepted",
+      "name_enUS": "Core Hound Pup",
+      "name_zhCN": "熔火恶犬宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69535,
+      "collectionKey": "companion.gryphon_hatchling",
+      "creatureEntry": 36908,
+      "decision": "accepted",
+      "name_enUS": "Gryphon Hatchling",
+      "name_zhCN": "狮鹫宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69536,
+      "collectionKey": "companion.wind_rider_cub",
+      "creatureEntry": 36909,
+      "decision": "accepted",
+      "name_enUS": "Wind Rider Cub",
+      "name_zhCN": "驭风者宝宝",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69539,
+      "collectionKey": "companion.zipao_tiger",
+      "creatureEntry": 36910,
+      "decision": "accepted",
+      "name_enUS": "Zipao Tiger",
+      "name_zhCN": "紫袍玉虎",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69541,
+      "collectionKey": "companion.pandaren_monk",
+      "creatureEntry": 36911,
+      "decision": "accepted",
+      "name_enUS": "Pandaren Monk",
+      "name_zhCN": "熊猫人僧侣",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 69677,
+      "collectionKey": "companion.lil.creature_36979",
+      "creatureEntry": 36979,
+      "decision": "accepted",
+      "name_enUS": "Lil\\",
+      "name_zhCN": "小克",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 70613,
+      "collectionKey": "companion.perky_pug",
+      "creatureEntry": 37865,
+      "decision": "accepted",
+      "name_enUS": "Perky Pug",
+      "name_zhCN": "溜溜",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 71840,
+      "collectionKey": "companion.toxic_wasteling",
+      "creatureEntry": 38374,
+      "decision": "accepted",
+      "name_enUS": "Toxic Wasteling",
+      "name_zhCN": "毒毒",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 74932,
+      "collectionKey": "companion.frigid_frostling",
+      "creatureEntry": 40198,
+      "decision": "accepted",
+      "name_enUS": "Frigid Frostling",
+      "name_zhCN": "雪孩子",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 75134,
+      "collectionKey": "companion.clockwork_rocket_bot.creature_40295",
+      "creatureEntry": 40295,
+      "decision": "accepted",
+      "name_enUS": "Clockwork Rocket Bot",
+      "name_zhCN": "发条战士",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 75613,
+      "collectionKey": "companion.celestial_dragon",
+      "creatureEntry": 40624,
+      "decision": "accepted",
+      "name_enUS": "Celestial Dragon",
+      "name_zhCN": "星界灵龙",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 75906,
+      "collectionKey": "companion.lil.creature_40703",
+      "creatureEntry": 40703,
+      "decision": "accepted",
+      "name_enUS": "Lil\\",
+      "name_zhCN": "小拆",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 75936,
+      "collectionKey": "companion.murkimus_the_gladiator.creature_40721",
+      "creatureEntry": 40721,
+      "decision": "accepted",
+      "name_enUS": "Murkimus the Gladiator",
+      "name_zhCN": "角斗士莫叽姆斯",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    },
+    {
+      "canonicalSpellId": 78381,
+      "collectionKey": "companion.mini_thor",
+      "creatureEntry": 42078,
+      "decision": "accepted",
+      "name_enUS": "Mini Thor",
+      "name_zhCN": "迷你雷神",
+      "reasonCode": "CLIENT_SKILLLINE_778_EXACT_CREATURE_RESOURCE_READY"
+    }
+  ],
+  "journalReview": {
+    "canonicalIdentity": "summonCreatureEntry",
+    "crossReferenceAuthority": "read-only; never overrides zhCN client or world database evidence",
+    "excludedClasses": [
+      "TRANSPORT_OR_FLIGHT_POINT",
+      "TEMPORARY_QUEST_FOLLOWER",
+      "CLASS_GUARDIAN",
+      "GM_OR_TEST",
+      "PLACEHOLDER_SPELL"
+    ],
+    "legacyPromotionPolicy": "visible when canonical identity is unique and executable"
+  },
+  "reviewMethod": "SKILLLINE_778_EXACT_CREATURE_ENTRY",
+  "schemaVersion": 2
+}
