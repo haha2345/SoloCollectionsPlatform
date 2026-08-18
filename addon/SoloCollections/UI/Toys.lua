@@ -245,9 +245,15 @@ function UI.CreateToysPage(parent)
         local favoriteInfo = UIDropDownMenu_CreateInfo()
         favoriteInfo.text = record.favorite and "取消偏好" or "设为偏好"
         favoriteInfo.notCheckable = 1
-        favoriteInfo.func = function()
-            Catalog.ToggleDemoFavorite("TOYS", record.id)
-            page:Refresh()
+        if not record.collected then
+            favoriteInfo.disabled = 1
+            favoriteInfo.tooltipTitle = "尚未解锁"
+            favoriteInfo.tooltipText = "未解锁的玩具不能设为偏好。"
+        else
+            favoriteInfo.func = function()
+                Catalog.ToggleDemoFavorite("TOYS", record.id)
+                page:Refresh()
+            end
         end
         UIDropDownMenu_AddButton(favoriteInfo)
     end, "MENU")
@@ -389,6 +395,10 @@ function UI.CreateToysPage(parent)
         local collected, total = Catalog.GetProgress("TOYS", SC.db.filters)
         if UI.CollectionsFrame and UI.CollectionsFrame.scProgress then
             UI.CollectionsFrame.scProgress:SetProgress(collected, total)
+        end
+        if UI.CollectionsFrame and UI.CollectionsFrame.scCollectionCount then
+            local allCollected, allTotal = Catalog.GetProgress("TOYS")
+            UI.CollectionsFrame.scCollectionCount:SetCount(allCollected, allTotal)
         end
 
         if #records == 0 then

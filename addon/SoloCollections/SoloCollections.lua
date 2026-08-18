@@ -14,7 +14,6 @@ SC.TABS = {
     "MOUNTS",
     "PETS",
     "TOYS",
-    "TITLES",
     "WARDROBE",
 }
 SC.WARDROBE_TABS = {

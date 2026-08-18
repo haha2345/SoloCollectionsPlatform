@@ -1,6 +1,5 @@
 local SC = SoloCollections
 local UI = SC.UI
-local CS = SC.CollectionState
 local MountJournal = UI.DragonUI and UI.DragonUI.MountJournal
 
 local DESIGN_SCREEN_WIDTH = 1920
@@ -9,206 +8,16 @@ local COLLECTION_WIDTH = 703
 local COMPANION_JOURNAL_WIDTH = 768
 local JOURNAL_HEIGHT = 606
 local MIN_SCALE = 0.72
-local TITLE_VISIBLE_ROWS = 10
-local TITLE_ROW_HEIGHT = 46
 
 local TAB_DEFINITIONS = {
     { key = "MOUNTS", label = "坐骑", title = "坐骑", cutoff = true },
     { key = "PETS", label = "小宠物", title = "小宠物", cutoff = true },
     { key = "TOYS", label = "玩具箱", title = "玩具箱" },
-    { key = "TITLES", label = "头衔", title = "头衔（只读）" },
     { key = "WARDROBE", label = "外观", title = "外观" },
 }
 
 local function isTabAvailable(key)
     return true
-end
-
-local function titleRecords()
-    local records = {}
-    local count = type(GetNumTitles) == "function" and tonumber(GetNumTitles()) or 0
-    local query = SC.db and string.lower(SC.db.query or "") or ""
-    local filters = SC.db and SC.db.filters or {}
-    for titleIndex = 1, count do
-        local ok, name = pcall(GetTitleName, titleIndex)
-        if ok and type(name) == "string" and name ~= "" then
-            name = string.gsub(name, "%%s", UnitName("player") or "")
-            local nativeKnown = type(IsTitleKnown) == "function" and IsTitleKnown(titleIndex) and true or false
-            local owned, authoritative, state = CS.ResolveOwned("TITLES", titleIndex, nativeKnown)
-            local matchesQuery = query == "" or string.find(string.lower(name), query, 1, true) ~= nil
-            local matchesOwned = (owned and filters.collected ~= false) or
-                (not owned and filters.uncollected ~= false)
-            if matchesQuery and matchesOwned then
-                table.insert(records, {
-                    id = titleIndex,
-                    name = name,
-                    owned = owned,
-                    authoritative = authoritative,
-                    state = state,
-                    assetReady = true,
-                })
-            end
-        end
-    end
-    return records, count
-end
-
-function UI.CreateTitlesPage(parent)
-    local page = CreateFrame("Frame", nil, parent)
-    page:SetAllPoints(parent)
-    page:Hide()
-    page.scRows = {}
-
-    local panel = CreateFrame("Frame", nil, page)
-    panel:SetPoint("TOPLEFT", page, "TOPLEFT", 4, -60)
-    panel:SetPoint("BOTTOMRIGHT", page, "BOTTOMRIGHT", -6, 5)
-    local panelInset = UI.EzCollections:ApplyInset(panel)
-    UI.EzCollections:AddShadowOverlay(panel)
-    SC.WardrobeUI.Layout:StylePanel(panel, panelInset.background)
-
-    local note = panel:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    note:SetPoint("BOTTOMLEFT", panel, "BOTTOMLEFT", 14, 12)
-    note:SetText("只读视图：头衔拥有状态来自服务端角色数据；本页不会授予或切换头衔。")
-    note:SetTextColor(0.72, 0.68, 0.60)
-
-    local scrollFrame = CreateFrame(
-        "ScrollFrame",
-        "SoloCollectionsTitleScrollFrame",
-        panel,
-        "FauxScrollFrameTemplate"
-    )
-    scrollFrame:SetPoint("TOPLEFT", panel, "TOPLEFT", 3, -36)
-    scrollFrame:SetPoint("BOTTOMRIGHT", panel, "BOTTOMRIGHT", -2, 29)
-    scrollFrame:EnableMouseWheel(true)
-    UI.EzCollections:SkinTrimScrollFrame(scrollFrame)
-
-    local listTexture = UI.EzCollections:MediaPath(
-        "Buttons",
-        "ListButtons.tga",
-        "Interface\\Buttons\\WHITE8X8"
-    )
-    for index = 1, TITLE_VISIBLE_ROWS do
-        local row = CreateFrame("Button", nil, panel)
-        row:SetHeight(TITLE_ROW_HEIGHT)
-        row:SetPoint("TOPLEFT", panel, "TOPLEFT", 7, -(36 + (index - 1) * TITLE_ROW_HEIGHT))
-        row:SetPoint("RIGHT", panel, "RIGHT", -22, 0)
-        local background = row:CreateTexture(nil, "BACKGROUND")
-        background:SetAllPoints(row)
-        background:SetTexture(listTexture)
-        background:SetTexCoord(0.00390625, 0.8203125, 0.00390625, 0.18359375)
-        local highlight = row:CreateTexture(nil, "HIGHLIGHT")
-        highlight:SetAllPoints(row)
-        highlight:SetTexture(listTexture)
-        highlight:SetTexCoord(0.00390625, 0.8203125, 0.19140625, 0.37109375)
-        local name = row:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-        name:SetPoint("LEFT", row, "LEFT", 12, 0)
-        name:SetJustifyH("LEFT")
-        local status = row:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-        status:SetWidth(370)
-        status:SetPoint("RIGHT", row, "RIGHT", -12, 0)
-        status:SetJustifyH("RIGHT")
-        name:SetPoint("RIGHT", status, "LEFT", -10, 0)
-        row.scName = name
-        row.scStatus = status
-        row.scBackground = background
-        page.scRows[index] = row
-    end
-
-    local function refreshRows()
-        local records = page.scRecords or {}
-        FauxScrollFrame_Update(scrollFrame, #records, TITLE_VISIBLE_ROWS, TITLE_ROW_HEIGHT)
-        local offset = FauxScrollFrame_GetOffset(scrollFrame)
-        local current = type(GetCurrentTitle) == "function" and tonumber(GetCurrentTitle()) or 0
-        for index, row in ipairs(page.scRows) do
-            local record = records[offset + index]
-            if record then
-                row.scName:SetText(record.name)
-                row.scName:SetTextColor(record.owned and 1.00 or 0.50, record.owned and 0.82 or 0.47, 0.24)
-                if not record.authoritative then
-                    row.scStatus:SetText("目录可见 · 拥有状态加载中 · 资源已安装")
-                elseif record.id == current then
-                    row.scStatus:SetText("目录可见 · 已拥有 · 当前可用（已启用） · 资源已安装")
-                elseif record.owned then
-                    row.scStatus:SetText("目录可见 · 已拥有 · 当前可用（只读） · 资源已安装")
-                else
-                    row.scStatus:SetText("目录可见 · 未拥有 · 当前不可用 · 资源已安装")
-                end
-                row:Show()
-            else
-                row:Hide()
-            end
-        end
-    end
-
-    local function scrollByWheel(self, delta)
-        local currentOffset = FauxScrollFrame_GetOffset(self) or 0
-        local maximumOffset = math.max(0, #(page.scRecords or {}) - TITLE_VISIBLE_ROWS)
-        local newOffset = math.max(0, math.min(maximumOffset, currentOffset - delta))
-        FauxScrollFrame_OnVerticalScroll(
-            self,
-            newOffset * TITLE_ROW_HEIGHT,
-            TITLE_ROW_HEIGHT,
-            refreshRows
-        )
-    end
-
-    for _, row in ipairs(page.scRows) do
-        row:EnableMouseWheel(true)
-        row:SetScript("OnMouseWheel", function(_, delta)
-            scrollByWheel(scrollFrame, delta)
-        end)
-    end
-    scrollFrame:SetScript("OnVerticalScroll", function(self, offset)
-        FauxScrollFrame_OnVerticalScroll(self, offset, TITLE_ROW_HEIGHT, refreshRows)
-    end)
-    scrollFrame:SetScript("OnMouseWheel", function(self, delta)
-        scrollByWheel(self, delta)
-    end)
-
-    function page:SyncFilters()
-        local frame = UI.CollectionsFrame
-        if not (frame and frame.scFilterPopup and SC.db and SC.db.filters) then return end
-        frame.scFilterPopup:SetOptions({
-            {
-                label = "已收集",
-                checked = SC.db.filters.collected ~= false,
-                onClick = function()
-                    SC.db.filters.collected = not (SC.db.filters.collected ~= false)
-                    page:Refresh()
-                end,
-            },
-            {
-                label = "未收集",
-                checked = SC.db.filters.uncollected ~= false,
-                onClick = function()
-                    SC.db.filters.uncollected = not (SC.db.filters.uncollected ~= false)
-                    page:Refresh()
-                end,
-            },
-        })
-    end
-
-    function page:Refresh()
-        local records, total = titleRecords()
-        self.scRecords = records
-        local ownedCount = 0
-        for titleIndex = 1, total do
-            local owned = CS.ResolveOwned("TITLES", titleIndex, false)
-            if owned then ownedCount = ownedCount + 1 end
-        end
-        if UI.CollectionsFrame then
-            UI.CollectionsFrame.scCollectionCount:SetCount(ownedCount, total)
-            UI.CollectionsFrame.scProgress:SetProgress(ownedCount, total)
-        end
-        refreshRows()
-        self:SyncFilters()
-    end
-
-    page.scPanel = panel
-    page.scPanelBackground = panelInset.background
-    page.scScrollFrame = scrollFrame
-    page.scNote = note
-    return page
 end
 
 local function getResponsiveScale()
@@ -267,7 +76,7 @@ local function applyJournalControlLayout(frame, key)
     else
         if companionFilter then companionFilter:Hide() end
         filter:Show()
-        if key == "TOYS" or key == "TITLES" or key == "WARDROBE" then
+        if key == "TOYS" or key == "WARDROBE" then
             host:SetWidth(210)
             host:SetHeight(22)
             host:SetPoint("TOPRIGHT", frame, "TOPRIGHT", -12, -34)
@@ -331,18 +140,7 @@ function UI.RefreshActivePage()
     if not frame or not frame.scPages or not SC.db then
         return
     end
-    local activeKey = SC.db.mainTab
-    if SC.db.mainTab == "MOUNTS" then
-        activeKey = "MOUNTS"
-    elseif SC.db.mainTab == "PETS" then
-        activeKey = "PETS"
-    elseif SC.db.mainTab == "TOYS" then
-        activeKey = "TOYS"
-    elseif SC.db.mainTab == "WARDROBE" then
-        activeKey = "WARDROBE"
-    elseif SC.db.mainTab == "TITLES" then
-        activeKey = "TITLES"
-    end
+    local activeKey = SC.db.mainTab or "MOUNTS"
     for key, page in pairs(frame.scPages) do
         if key == activeKey then
             page:Show()
@@ -391,6 +189,59 @@ function UI.SetWardrobeTab(key)
     refreshPage()
 end
 
+local TAB_UI_STATE_KEYS = {
+    MOUNTS = true, PETS = true, TOYS = true, WARDROBE = true,
+}
+
+local function defaultTabUiSlice()
+    return { query = "", collected = true, uncollected = true, favorites = false }
+end
+
+local function ensureTabUiSlice(tab)
+    if not SC.db or not TAB_UI_STATE_KEYS[tab] then
+        return nil
+    end
+    if type(SC.db.tabUiState) ~= "table" then
+        SC.db.tabUiState = {}
+    end
+    local slice = SC.db.tabUiState[tab]
+    if type(slice) ~= "table" then
+        slice = defaultTabUiSlice()
+        SC.db.tabUiState[tab] = slice
+    end
+    return slice
+end
+
+local function captureTabUiState(tab)
+    local slice = ensureTabUiSlice(tab)
+    if not slice then
+        return
+    end
+    slice.query = SC.db.query or ""
+    local filters = SC.db.filters
+    if type(filters) ~= "table" then
+        filters = {}
+        SC.db.filters = filters
+    end
+    slice.collected = filters.collected ~= false
+    slice.uncollected = filters.uncollected ~= false
+    slice.favorites = filters.favorites and true or false
+end
+
+local function restoreTabUiState(tab)
+    local slice = ensureTabUiSlice(tab)
+    if not slice then
+        return
+    end
+    SC.db.query = slice.query or ""
+    if type(SC.db.filters) ~= "table" then
+        SC.db.filters = {}
+    end
+    SC.db.filters.collected = slice.collected ~= false
+    SC.db.filters.uncollected = slice.uncollected ~= false
+    SC.db.filters.favorites = slice.favorites and true or false
+end
+
 function UI.SetMainTab(key)
     local selected = "MOUNTS"
     for _, definition in ipairs(TAB_DEFINITIONS) do
@@ -399,7 +250,11 @@ function UI.SetMainTab(key)
             break
         end
     end
-    SC.db.mainTab = selected
+    if SC.db then
+        captureTabUiState(SC.db.mainTab)
+        SC.db.mainTab = selected
+        restoreTabUiState(selected)
+    end
 
     local frame = UI.CollectionsFrame
     if not frame then
@@ -411,6 +266,12 @@ function UI.SetMainTab(key)
         button:SetSelected(tabKey == selected)
     end
     frame.scPageTitle:SetText(frame.scTabTitles[selected])
+    if frame.scSearchBox then
+        local previousSuppress = UI.scSuppressRefresh
+        UI.scSuppressRefresh = true
+        frame.scSearchBox:SetText((SC.db and SC.db.query) or "")
+        UI.scSuppressRefresh = previousSuppress
+    end
     if UI.EzCollections then
         UI.EzCollections:SetPortraitForTab(frame, selected)
     elseif selected == "MOUNTS" then
@@ -420,16 +281,16 @@ function UI.SetMainTab(key)
         frame.scPortrait:SetTexture(UI.Media.tabs[selected] or UI.Media.launcher)
         frame.scPortrait:SetTexCoord(0.07, 0.93, 0.07, 0.93)
     end
-    if selected == "MOUNTS" or selected == "PETS" or selected == "TITLES" then
+    if selected == "MOUNTS" or selected == "PETS" or selected == "TOYS" then
         frame.scCollectionCount:Show()
         if selected == "MOUNTS" then
             frame.scCollectionCount:SetLabel("所有坐骑")
         elseif selected == "PETS" then
             frame.scCollectionCount:SetLabel("所有小宠物")
         else
-            frame.scCollectionCount:SetLabel("已获头衔")
+            frame.scCollectionCount:SetLabel("所有玩具")
         end
-        if selected ~= "TITLES" and SC.Catalog and SC.Catalog.GetProgress then
+        if SC.Catalog and SC.Catalog.GetProgress then
             local collected, total = SC.Catalog.GetProgress(selected)
             frame.scCollectionCount:SetCount(collected, total)
             frame.scProgress:SetProgress(collected, total)
@@ -650,7 +511,6 @@ function UI.CreateCollectionsFrame()
         PETS = UI.CreatePetsPage(contentHost),
         TOYS = UI.CreateToysPage(contentHost),
         WARDROBE = UI.CreateWardrobePage(contentHost),
-        TITLES = UI.CreateTitlesPage(contentHost),
     }
     UI.EzCollections:Guard(contentHost, "收藏日志内页已锁定到 ezCollections 2.2 素材")
 
