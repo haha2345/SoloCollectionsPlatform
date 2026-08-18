@@ -1172,8 +1172,8 @@ function UI.CreateWardrobePage(parent)
     page.scSlotButtons = {}
 
     local weaponDropdown = CreateFrame("Frame", "SoloCollectionsWardrobeWeaponDropdown", filterBar, "UIDropDownMenuTemplate")
-    weaponDropdown:SetPoint("TOPRIGHT", filterBar, "TOPRIGHT", 12, -40)
-    UIDropDownMenu_SetWidth(weaponDropdown, 164)
+    weaponDropdown:SetPoint("TOPLEFT", filterBar, "TOPLEFT", -12, -6)
+    UIDropDownMenu_SetWidth(weaponDropdown, 148)
     weaponDropdown:Hide()
 
     local function chooseDedicatedFilter(key, value)
@@ -2112,10 +2112,10 @@ function UI.CreateWardrobePage(parent)
         end
 
         if SC.db.wardrobeTab == "ITEMS" then
-            armorDropdown:Show()
             classDropdown:Hide()
             slotsFrame:Show()
             if STANDALONE_ITEM_SLOTS[filters.slot] then
+                armorDropdown:Hide()
                 local weaponOptions = getAvailableWeaponFilters(filters.slot)
                 if #weaponOptions == 0 then
                     weaponDropdown:Hide()
@@ -2126,6 +2126,7 @@ function UI.CreateWardrobePage(parent)
                     weaponDropdown:Show()
                 end
             else
+                armorDropdown:Show()
                 weaponDropdown:Hide()
             end
         else
