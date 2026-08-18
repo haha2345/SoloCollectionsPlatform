@@ -1,0 +1,7 @@
+## Interface: 30300
+## Title: !!!ClassicAPI
+## Notes: Emulate aspects of the Classic API.
+## Version: 1.23
+## Author: Tsoukie
+Lib\Load.xml
+Load.xml

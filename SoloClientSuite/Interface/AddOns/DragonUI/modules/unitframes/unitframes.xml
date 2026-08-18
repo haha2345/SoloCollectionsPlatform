@@ -1,0 +1,32 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+    
+    <!-- Shared core utilities — must load before all frame modules -->
+    <Script file="uf_core.lua"/>
+    
+    <!-- UnitFrame Layers dependencies (math, mixin, spell cost, animated loss) -->
+    <Script file="uf_layers_deps.lua"/>
+    
+    <!-- UnitFrame Layers XML templates (heal prediction, absorb bar templates) -->
+    <Include file="unitframe_layers.xml"/>
+
+    <!-- Shared factory for small companion frames (ToT/FoT) -->
+    <Script file="small_frame.lua"/>
+
+    <!-- Shared factory for target-style frames (Target/Focus) -->
+    <Script file="target_style.lua"/>
+        
+    <!-- Individual frame modules -->
+    <Script file="player.lua"/>
+    <Script file="target.lua"/>
+    <Script file="text_system.lua"/>
+    <Script file="focus.lua"/>
+    <Script file="tot.lua"/>
+    <Script file="tof.lua"/>
+    <Script file="party.lua"/>
+    <Script file="pet.lua"/>
+    <Script file="boss.lua"/>
+
+    <!-- UnitFrame Layers module (hooks all above — must load LAST) -->
+    <Script file="unitframe_layers.lua"/>
+
+</Ui>

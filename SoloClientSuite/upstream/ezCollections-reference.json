@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 2,
+  "name": "ezCollections",
+  "version": "2.2",
+  "author": "ZEUStiger",
+  "sourceKind": "user-provided local snapshot",
+  "sourcePage": "https://ezwow.org/topic/131942-ezcollections-262-addon-dlia-transmogrifikatcii-i-kollektcij-na/page-1",
+  "sourcePathRecorded": false,
+  "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
+  "directoryHash": "218c65a59b42d810935963013cdf6b729cd7d1d69dc67a52a70632b89911c7f6",
+  "keyFiles": [
+    {
+      "path": "ezCollections.toc",
+      "sha256": "eb7c70619885a2311d3fea84509c2a538cc12f03f0e69ee8fe2857d9c5dc528a"
+    },
+    {
+      "path": "Interface/AddOns/Blizzard_Collections/Blizzard_Collections.xml",
+      "sha256": "b3885904754987c7c251d82a556cda044bd00b52b33f786237b5e8f44903b35d"
+    },
+    {
+      "path": "Interface/AddOns/Blizzard_Collections/Blizzard_MountCollection.xml",
+      "sha256": "82715b8dbc4e31e5fcd65791e38ee94c3e1815bc618b60177e2e5e8a9fbe8f07"
+    },
+    {
+      "path": "Interface/AddOns/Blizzard_Collections/Blizzard_PetCollection.xml",
+      "sha256": "39835c0ec059d9ef7972f6ef45fe1863111e2c54b9bde30b83b171ced02633e4"
+    },
+    {
+      "path": "Interface/AddOns/Blizzard_Collections/Blizzard_ToyBox.xml",
+      "sha256": "41762b00662695a6bc6a2df01e4a7a86874687791b53b2744ea93877d05825bf"
+    },
+    {
+      "path": "Interface/AddOns/Blizzard_Collections/Blizzard_Wardrobe.xml",
+      "sha256": "67caa7284c7e32175bd4eeb93aad0a7f8ede076d0ee6954ff24da97320d1926d"
+    },
+    {
+      "path": "Interface/AddOns/Blizzard_Collections/Blizzard_Wardrobe.lua",
+      "sha256": "27d58536f64838633abb0365de2f775bb58dd9609273aa9d0de359acef843657"
+    },
+    {
+      "path": "Interface/FrameXML/WardrobeOutfits.xml",
+      "sha256": "8a66703869d4ba8a2b3fd1f7ac69f0bfbed039b031a480814dffbb73b885c260"
+    },
+    {
+      "path": "Interface/FrameXML/WardrobeOutfits.lua",
+      "sha256": "b14ea11c76ccf508fb9f41dc04834c1b81b90570886f1593c1e2e30631cad0bb"
+    }
+  ],
+  "localAssetProjection": {
+    "generatedAddon": "SoloCollections_EzUI",
+    "assetScope": "all .blp, .tga, and .wav files in the authorized local snapshot",
+    "fileCount": 222,
+    "directoryHash": "4673b2c8631c5f28050b9eecde7dad4a6bb33dc6a2ed5f0630a64a17945dbf53",
+    "generatedIntoIgnoredBuild": true,
+    "vendoredIntoRepository": false,
+    "importsLuaOrXml": false
+  },
+  "runtimeDependency": false,
+  "localVisualCapability": true,
+  "allowedUse": "local UI layout adaptation and complete media reuse under explicit user authorization",
+  "excludedRuntime": [
+    "C_Transmog* emulation",
+    "ezCollections server Lua",
+    "ezCollections message protocol"
+  ],
+  "publicReleaseState": "blocked pending explicit license and provenance review",
+  "explicitLicenseFileFound": false
+}

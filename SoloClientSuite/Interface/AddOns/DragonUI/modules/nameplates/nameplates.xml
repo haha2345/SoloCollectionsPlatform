@@ -1,0 +1,26 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <Script file="core\init.lua"/>
+    <Script file="core\constants.lua"/>
+    <Script file="core\config.lua"/>
+    <Script file="core\state.lua"/>
+    <Script file="pipeline\native_style.lua"/>
+    <Script file="pipeline\discovery.lua"/>
+    <Script file="pipeline\identity.lua"/>
+    <Script file="features\widgets.lua"/>
+    <Script file="features\threat.lua"/>
+    <Script file="features\tap.lua"/>
+    <Script file="features\castbar.lua"/>
+    <Script file="features\auras.lua"/>
+    <Script file="pipeline\layout.lua"/>
+    <Script file="pipeline\gather.lua"/>
+    <Script file="features\clickbox.lua"/>
+    <Script file="features\raid_marker.lua"/>
+    <Script file="features\combo.lua"/>
+    <Script file="features\elite.lua"/>
+    <Script file="features\quest.lua"/>
+    <Script file="features\quest_providers.lua"/>
+    <Script file="features\quest_coexist.lua"/>
+    <Script file="features\totem.lua"/>
+    <Script file="pipeline\lifecycle.lua"/>
+    <Script file="pipeline\engine.lua"/>
+</Ui>

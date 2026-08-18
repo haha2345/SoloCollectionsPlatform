@@ -1,0 +1,42 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffOptions|r
+## Notes: |cffcaf7faConfiguration UI for DragonUI|r
+## Author: NeticSoul
+## Version: 2.5
+## LoadOnDemand: 1
+## Dependencies: DragonUI
+## X-License: MIT for project-authored code; bundled dependencies retain their own licenses
+
+# Libraries for options UI (loaded only when options are opened)
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
+libs\AceConfig-3.0\AceConfig-3.0.xml
+
+# Localization for options (AceLocale-3.0 already loaded by main DragonUI addon)
+Locales\Load_Locales.xml
+
+# Core options system
+core.lua
+
+# Custom panel system (AceGUI-based)
+panel\controls.lua
+panel\panel.lua
+panel\tab_general.lua
+panel\tab_modules.lua
+panel\tab_actionbars.lua
+panel\tab_additionalbars.lua
+panel\tab_xprepbars.lua
+panel\tab_unitframes.lua
+panel\tab_nameplates.lua
+panel\tab_castbars.lua
+panel\tab_minimap.lua
+panel\tab_micromenu.lua
+panel\tab_questtracker.lua
+panel\tab_enhancements.lua
+panel\tab_panels.lua
+panel\tab_auras.lua
+panel\tab_bags.lua
+panel\tab_chat.lua
+panel\tab_profiles.lua
+panel\search.lua

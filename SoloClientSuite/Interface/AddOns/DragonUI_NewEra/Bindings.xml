@@ -1,0 +1,14 @@
+<Bindings>
+    <Binding name="NEWERA_TOGGLECOLLECTIONS" header="DRAGONUI_NEWERA">
+        DragonUI_NewEra.LoadOnDemandRoutes.Open("Collections", "Toggle")
+    </Binding>
+    <Binding name="NEWERA_TOGGLESPELLBOOK" header="DRAGONUI_NEWERA">
+        DragonUI_NewEra.LoadOnDemandRoutes.Open("Spellbook", "Toggle")
+    </Binding>
+    <Binding name="NEWERA_TOGGLETALENTS" header="DRAGONUI_NEWERA">
+        DragonUI_NewEra.LoadOnDemandRoutes.Open("Talents", "Toggle")
+    </Binding>
+    <Binding name="NEWERA_TOGGLEEJ" header="DRAGONUI_NEWERA">
+        DragonUI_NewEra.LoadOnDemandRoutes.Open("EncounterJournal", "Toggle")
+    </Binding>
+</Bindings>

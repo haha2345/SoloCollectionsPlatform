@@ -1,0 +1,94 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era|r
+## Notes: Dragonflight-style panels for 3.3.5a — downport of NewEra (Classic 1.15) onto DragonUI.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI, !!!ClassicAPI
+## OptionalDeps: DragonUI_Options
+## SavedVariables: DragonUI_NewEraDB
+
+bootstrap.lua
+Bindings.xml
+
+# --- libs: embedded so features don't depend on other addons being loaded ---
+# LibCustomGlow provides the WeakAuras-style "Action Button Glow" (ants) used for the spellbook's
+# active-ability indicator. Embedded (not relying on WeakAuras); LibStub dedupes if another copy loads.
+Libs\LibStub\LibStub.lua
+Libs\LibCustomGlow-1.0\LibCustomGlow-1.0.xml
+
+# --- compat: thin bridge over the REQUIRED !!!ClassicAPI (owner: API Bridge Engineer) ---
+# !!!ClassicAPI is a hard dependency and loads first (via its !!! prefix + Dependencies), so it
+# owns the modern globals (C_Timer/C_Texture/C_Container/C_Item/C_Spell/C_SpellBook/C_Map/Mixin/…).
+# These files now only fill the handful of symbols ClassicAPI does NOT provide; C_Timer/C_Texture
+# are fully ClassicAPI-owned and no longer shipped here. See compat/COVERAGE.md.
+compat\Compat.lua
+# Events.lua adds Frame:RegisterUnitEvent (a 5.0 API; ClassicAPI implements the semantics but only
+# inside its private namespace) plus NE.EV_LEARNED_SPELL. Must follow Compat.lua for NE.compat.
+compat\Events.lua
+compat\C_Container.lua
+compat\C_Item.lua
+compat\C_Spell.lua
+compat\C_Map.lua
+compat\C_EquipmentSet.lua
+compat\SpellBook.lua
+
+compat\Locale.lua
+Locales\Load_Locales.xml
+
+# --- core: downported NewEra Core chrome toolkit (owner: Core/Chrome Engineer) ---
+core\FrameUtil.lua
+core\Scale.lua
+core\Texture.lua
+core\NineSlice.lua
+core\NineSliceLayouts.lua
+core\PanelChrome.lua
+core\Portrait.lua
+core\Tabs.lua
+# Menu = a MenuUtil-shaped context-menu builder over UIDropDownMenu. Resolves its backend lazily,
+# so it does not care where ClassicAPI sits in the load order.
+core\Menu.lua
+core\ButtonSkin.lua
+core\ScrollbarReskin.lua
+core\ItemButton.lua
+core\ItemGrid.lua
+core\Modules.lua
+core\LoadOnDemandRoutes.lua
+core\StartupProfile.lua
+# --- core: HUD-layer primitives (added for the Cooldown Manager port; reusable) ---
+# GridLayout    = Lua reimplementation of retail's GridLayoutFrame template (absent on 3.3.5a).
+# CooldownNumbers = countdown text on Cooldown frames (the widget draws none on this client).
+# AuraSnapshot  = one UnitBuff/UnitDebuff walk per unit per frame, shared addon-wide.
+# SpellRanks    = per-ability rank ids from the live spellbook. Load-bearing: GetSpellInfo's 7th
+#                 return is castTime here, NOT the spellID it is on modern clients.
+core\GridLayout.lua
+core\CooldownNumbers.lua
+core\AuraSnapshot.lua
+core\SpellRanks.lua
+
+# --- textures: art + atlas registration data (owner: Asset Pipeline Engineer) ---
+Textures\Assets.lua
+
+# --- integration: DragonUI handshake/options/module bridge (owner: Integration Liaison) ---
+integration\Register.lua
+integration\Options.lua
+
+# --- shared model presentation service: one scheduler, generation-safe providers ---
+model\Lifecycle.lua
+model\Controls.lua
+model\Presenter.lua
+model\CreaturePresenter.lua
+model\DressUpPresenter.lua
+model\DisplayPresenter.lua
+
+# --- stable public platform API: the only supported surface for external AddOns ---
+public\API.lua
+public\Theme.lua
+public\Chrome.lua
+public\Components.lua
+public\Model.lua
+public\Callbacks.lua
+
+# --- qa: in-game harness + manifest (owner: QA/Harness Engineer) ---
+qa\Harness.lua
+
+# Heavy feature implementations live in explicit LoadOnDemand sibling AddOns.

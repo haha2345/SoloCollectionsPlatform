@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<!-- DragonUI Core Locales -->
+	<!-- English MUST load first (default locale) -->
+	<Script file="enUS.lua"/>
+
+	<!-- Translations -->
+    <Script file="esES.lua"/>
+	<Script file="esMX.lua"/>
+	<Script file="ptBR.lua"/>
+	<Script file="deDE.lua"/>
+	<Script file="frFR.lua"/>
+	<Script file="ruRU.lua"/>
+	<Script file="zhCN.lua"/>
+	<Script file="zhTW.lua"/>
+	<Script file="koKR.lua"/>
+
+	<!-- Defines addon.GetActiveLocale, which config.lua calls from DragonUI.xml right after this -->
+	<Script file="locale_override.lua"/>
+</Ui>

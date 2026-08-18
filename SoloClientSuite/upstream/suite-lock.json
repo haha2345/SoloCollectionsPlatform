@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "syncedAt": "2026-08-13T18:20:00+08:00",
+  "hashAlgorithm": "sha256(sorted relative-path + NUL + lowercase file-sha256 + LF)",
+  "components": [
+    {
+      "id": "classicapi",
+      "addonRoot": "!!!ClassicAPI",
+      "url": "https://gitlab.com/Tsoukie/classicapi.git",
+      "commit": "1ffaa484f62f225052de69dd82d97f78bf723fd7",
+      "tocVersion": "1.23",
+      "directoryHash": "7a0d42527efbe47c27a2ee789a9c29a0a8ee61e96ea7395ded27520dff047c10",
+      "localPatchState": "clean-export",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "dragonui",
+      "addonRoot": "DragonUI",
+      "url": "https://github.com/NeticSoul/DragonUI.git",
+      "commit": "9c7e5b189f438391e3de8731b4fc62fc2a0f0839",
+      "tocVersion": "2.5",
+      "directoryHash": "96d7a9e03c1397e5dfc2d439f7d4fcc0f3c7a7d904dbacf72cee03f34c39d100",
+      "localPatchState": "clean-export",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "dragonui-options",
+      "addonRoot": "DragonUI_Options",
+      "url": "https://github.com/NeticSoul/DragonUI.git",
+      "commit": "9c7e5b189f438391e3de8731b4fc62fc2a0f0839",
+      "tocVersion": "2.5",
+      "directoryHash": "f3e96465b67183b44e3811192b0c0369bad24dd5fc886d5f3b35382ea202181e",
+      "localPatchState": "clean-export",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "dragonui-newera",
+      "addonRoot": "DragonUI_NewEra",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "cba8a9f36b56692231b0f9efdd8bed006e1b92fe18cc06fdfe5bec96fc7ce26e",
+      "localPatchState": "project-patched: Lua-5.1-safe LoadOnDemand wrapper registry, public-api-v1, startup-profile, canonical module state, shared DragonUI collection components including generic random collection controls, generation-safe model presenters, and no base heavy feature implementations",
+      "licenseState": "no-explicit-license-file-found; user-authorized-local-integration; public-release-review-required"
+    },
+    {
+      "id": "solocollections",
+      "addonRoot": "SoloCollections",
+      "url": "https://github.com/haha2345/SoloCollections.git",
+      "commit": "35354284c7e5dca82960fae1e13f79936e400143",
+      "tocVersion": "0.2.0",
+      "directoryHash": "d8088a8c724d2488f15a5e438acdf25c66c555c0597be42c8fd451d5bb1a06a2",
+      "localPatchState": "sibling-source; branch feat/pet-journal-parity; reviewed companion journal projection, server-backed companion favorites and authoritative random summon, DragonUI mount and companion controls, generation-safe model presentation, and load-on-demand wardrobe catalog bootstrap",
+      "licenseState": "repository license applies only to SoloCollections-owned files"
+    },
+    {
+      "id": "solocollections-wardrobe-data",
+      "addonRoot": "SoloCollections_WardrobeData",
+      "url": "https://github.com/haha2345/SoloCollections.git",
+      "commit": "35354284c7e5dca82960fae1e13f79936e400143",
+      "tocVersion": "0.2.0",
+      "directoryHash": "24ac33f1edde2039105e53e7c2d63288218e8287d4e0a0262ec65b78d2023ff8",
+      "localPatchState": "generated sibling-source; load-on-demand appearance and set catalog projection",
+      "licenseState": "repository license applies only to SoloCollections-owned files"
+    },
+    {
+      "id": "dragonui-newera-character",
+      "addonRoot": "DragonUI_NewEra_Character",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "07a0a6d77348bc7ee5d3c4b49d8ad6492fec2432c10fd821b0deb60d8cfdc0f5",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-collections",
+      "addonRoot": "DragonUI_NewEra_Collections",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "75c08e27bd1759c0bf8ebdd956b5f9896780f4a5a6337e7c78d3c3de8e815858",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-spellbook",
+      "addonRoot": "DragonUI_NewEra_Spellbook",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "c81cd61c29f11b578de904c4ead28b5b4611ee53178a360fc02d6e7dccb7913f",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-talents",
+      "addonRoot": "DragonUI_NewEra_Talents",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "09670647109312e8cca9fa6d3ea49e02615400c5060d60c1f21f0bcd41e84fae",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-bags",
+      "addonRoot": "DragonUI_NewEra_Bags",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "05e22bf996d329082a0282d18eae879156735fcbe5e3890c98723499c9007f5e",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-professions",
+      "addonRoot": "DragonUI_NewEra_Professions",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "e5dfb032295ff960215bdb28d05e9357d23af6c6a2d0fe62df689720cac1dda8",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-auctionhouse",
+      "addonRoot": "DragonUI_NewEra_AuctionHouse",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "ffc4fc2477578580b61f7df0f05555b57813e2b6c4b43391bf559e43c70a635b",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-social",
+      "addonRoot": "DragonUI_NewEra_Social",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "9fa8ee87f8900d23efa186f00bf71fa1379e7bf6208498575b9e185cdf2eeafe",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-encounterjournal",
+      "addonRoot": "DragonUI_NewEra_EncounterJournal",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "869435b951968d0b7037d7e80346aea270e38290ecf2fa47f078892f90c46545",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-cooldownviewer",
+      "addonRoot": "DragonUI_NewEra_CooldownViewer",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "e9b088b2d2f8612ca920b9ac91be6b1436a0c684fa2f1c07f6925ecefbae4d53",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    },
+    {
+      "id": "dragonui-newera-levelup",
+      "addonRoot": "DragonUI_NewEra_LevelUp",
+      "url": "https://github.com/ghbset/DragonUI_NewEra.git",
+      "commit": "8f3d1007952abd532c6d5b736b7d43d30a9b4719",
+      "tocVersion": "0.2.0",
+      "directoryHash": "c53fd6595abf681c05fcbf5401d49df7f68a243f9d9ad8d7faa7d9549731234a",
+      "localPatchState": "project-patched: explicit LoadOnDemand sibling projection from DragonUI_NewEra; shared public API and route ownership remain in the base AddOn",
+      "licenseState": "upstream DragonUI_NewEra license boundary applies; sibling projection is for local integration review"
+    }
+  ],
+  "references": [
+    {
+      "id": "ezcollections-2.2",
+      "runtimeDependency": false,
+      "purpose": "local UI master plus complete generated media projection; no ezCollections runtime code",
+      "sourceTreeHash": "218c65a59b42d810935963013cdf6b729cd7d1d69dc67a52a70632b89911c7f6",
+      "assetProjectionHash": "4673b2c8631c5f28050b9eecde7dad4a6bb33dc6a2ed5f0630a64a17945dbf53",
+      "assetFileCount": 222,
+      "generatedAddon": "SoloCollections_EzUI",
+      "licenseState": "no-explicit-license-file-confirmed; user-authorized-local-reference; public-copying-prohibited-until-reviewed"
+    }
+  ]
+}

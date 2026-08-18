@@ -1,0 +1,16 @@
+* text=auto
+
+# suite-lock hashes the deployed bytes. Keep the project-maintained NewEra
+# source stable across Windows worktrees while leaving vendored media binary.
+Interface/AddOns/DragonUI_NewEra/**/*.lua text eol=lf
+Interface/AddOns/DragonUI_NewEra/**/*.toc text eol=lf
+Interface/AddOns/DragonUI_NewEra/**/*.xml text eol=lf
+Interface/AddOns/DragonUI_NewEra/**/*.md text eol=lf
+Interface/AddOns/DragonUI_NewEra/**/*.json text eol=lf
+
+*.blp binary
+*.tga binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.wav binary

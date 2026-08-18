@@ -1,0 +1,15 @@
+## Interface: 30300
+## Title: |cff1784d1DragonUI|r |cffffffffNew Era Auction House|r
+## Notes: Load-on-demand New Era auction house.
+## Author: DragonUI_NewEra team
+## Version: 0.2.0
+## Dependencies: DragonUI_NewEra
+## LoadOnDemand: 1
+
+modules\auctionhouse\Assets.lua
+modules\auctionhouse\Browse.lua
+modules\auctionhouse\Sell.lua
+modules\auctionhouse\Auctions.lua
+modules\auctionhouse\TabBridge.lua
+modules\auctionhouse\Window.lua
+modules\auctionhouse\AuctionatorEmbed.lua

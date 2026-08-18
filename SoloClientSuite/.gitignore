@@ -1,0 +1,6 @@
+/build/
+/Interface/AddOns/SoloCollections/
+/Interface/AddOns/SoloCollections_WardrobeData/
+/.sync-staging/
+*.tmp
+
