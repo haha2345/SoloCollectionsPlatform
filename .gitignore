@@ -1,0 +1,49 @@
+# Intermediate / local-only
+_work/
+_backups/
+_recovery/
+release-artifacts/
+dist/
+packaging/out/
+build/
+out/
+SoloClientSuite/build/
+SoloClientSuite/Interface/AddOns/SoloCollections/
+SoloCollections/_work/
+SoloCollections/build/
+SoloCollections/client-extension/SoloCam/build/
+.vs/
+.vscode/
+.idea/
+
+# Nested repo metadata (platform repo tracks source trees, not child remotes)
+**/.git/
+**/.git.hidden/
+
+# Machine-local tree dumps
+_ez_client_tree.txt
+_ez_paths.txt
+_ez_server_tree.txt
+_scp_tree.txt
+
+# Python / native junk
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.lib
+*.zip
+*.7z
+
+# Generated personal build metadata
+mod-solo-collections/src/generated/SoloCollectionsBuildInfo.inc
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
