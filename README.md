@@ -2,6 +2,8 @@
 
 **魔兽世界 3.3.5a（WotLK 12340）账号级全功能收藏系统与军团风格幻化平台**
 
+[English](README.en.md) · [简体中文](README.md) · [最新发布](https://github.com/haha2345/SoloCollectionsPlatform/releases) · [发布包说明](docs/RELEASE.zh-CN.md) · [AzerothCore 模块](https://github.com/haha2345/mod-solo-collections)
+
 [![Release](https://img.shields.io/badge/Release-v0.3.2-blue.svg)](https://github.com/haha2345/SoloCollectionsPlatform/releases/tag/v0.3.2)
 [![AzerothCore](https://img.shields.io/badge/AzerothCore-WotLK%203.3.5a-orange.svg)](https://www.azerothcore.org/)
 [![License: GPL-3.0-or-later](https://img.shields.io/badge/License%20(AddOn)-GPL--3.0--or--later-green.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
@@ -12,11 +14,28 @@
 ## 📑 目录
 
 - [1. 项目概述与核心价值](#1-项目概述与核心价值)
+  - [1.1 项目简介](#11-项目简介)
+  - [1.2 解决的痛点](#12-解决的痛点)
+  - [1.3 核心技术指标](#13-核心技术指标)
 - [2. 系统架构与子模块划分](#2-系统架构与子模块划分)
-- [3. 界面预览与展示](#3-界面预览与展示)
-- [4. 安装与部署指南](#4-安装与部署指南)（也可直接看 [发布包说明](docs/RELEASE.zh-CN.md)）
+  - [2.1 模块结构](#21-模块结构)
+  - [2.2 数据流与权威边界](#22-数据流与权威边界)
+- [3. 界面预览与核心功能展示](#3-界面预览与核心功能展示)
+  - [3.1 收藏手册（Collections Journal）](#31-收藏手册collections-journal)
+  - [3.2 独立军团风格幻化室（Wardrobe Studio）](#32-独立军团风格幻化室wardrobe-studio)
+- [4. 安装与部署指南](#4-安装与部署指南)
+  - [4.1 环境要求](#41-环境要求)
+  - [4.2 服务端模块部署（mod-solo-collections）](#42-服务端模块部署mod-solo-collections)
+  - [4.3 客户端插件部署（SoloCollections）](#43-客户端插件部署solocollections)
 - [5. 编译环境与构建方法](#5-编译环境与构建方法)
+  - [5.1 服务端编译（C++）](#51-服务端编译c)
+  - [5.2 目录生成工具（Python）](#52-目录生成工具python)
+  - [5.3 镜头扩展编译（SoloCam C++）](#53-镜头扩展编译solocam-c)
 - [6. Agent 帮助文档（AI 智能体直接部署与操作指南）](#6-agent-帮助文档ai-智能体直接部署与操作指南)
+  - [6.1 核心纪律与设计红线](#61-核心纪律与设计红线)
+  - [6.2 Agent 一键部署与热重载脚本](#62-agent-一键部署与热重载脚本)
+  - [6.3 自动化 QA 验收测试执行指引](#63-自动化-qa-验收测试执行指引)
+  - [6.4 典型故障排查决策树](#64-典型故障排查决策树)
 - [7. 如何参与贡献](#7-如何参与贡献)
 - [8. 未完成功能 TODO List 与路线图](#8-未完成功能-todo-list-与路线图)
 - [9. 开源许可证与致谢](#9-开源许可证与致谢)
@@ -25,10 +44,12 @@
 
 ## 1. 项目概述与核心价值
 
-### 1.1 项目是什么？
+### 1.1 项目简介
 `SoloCollectionsPlatform` 是专为 **World of Warcraft 3.3.5a (Build 12340)** 打造的现代收藏系统与独立幻化试衣间综合平台。它将现代魔兽正式服（Legion/Dragonflight 风格）的账号级收藏体验带入 3.3.5a 经典版本，构建了一套**端云分离、服务端强权威、协议强类型校验、UI 响应极致流畅**的完整技术生态。
 
-### 1.2 解决了什么痛点？
+全账号共享：账号下的所有角色共享坐骑、小宠物和装备外观。
+
+### 1.2 解决的痛点
 1. **传统 3.3.5 缺乏账号级收藏体系**：原生 3.3.5a 的坐骑和小宠物占用背包/法术书，没有全账号共享的外观衣柜，更无套装收集进度与进度条。
 2. **传统幻化插件（如旧版 Transmog / SC1 / ALE）的架构缺陷**：
    - 依赖客户端计算与弱校验协议，容易引发客户端作弊、数据错乱与幽灵外观。
@@ -46,7 +67,7 @@
 
 ## 2. 系统架构与子模块划分
 
-本项目采用多模块工作区架构，各子系统边界分明：
+### 2.1 模块结构
 
 ```text
 SoloCollectionsPlatform (平台工作区)
@@ -69,7 +90,7 @@ SoloCollectionsPlatform (平台工作区)
     └── qa-framework/               # 多客户端后台并发端到端验收套件
 ```
 
-### 数据流与权威边界图
+### 2.2 数据流与权威边界
 
 ```text
        +-------------------------------------------------------+
@@ -93,42 +114,60 @@ SoloCollectionsPlatform (平台工作区)
 
 ---
 
-## 3. 界面预览与展示
-
-*(注：以下预留了项目截图的占位位置，实际使用中可直接替换或补充相应图片)*
+## 3. 界面预览与核心功能展示
 
 ### 3.1 收藏手册（Collections Journal）
 
-| 坐骑收藏页 (Mounts) | 非战斗小宠物页 (Companions) |
+提供现代化魔兽正式服风格的收藏界面，分类浏览坐骑、小宠物、装备外观及套装。
+
+#### 🏇 坐骑与小宠物
+- **坐骑系统**：1 级可骑乘、自动学习对应骑术、45 级解锁飞行、60 级自动提升至最高飞行速度，全面支持旧世界大陆飞行。支持一键召唤随机坐骑、可直接拖拽坐骑图标到动作条快捷使用。
+- **宠物伙伴**：直观展示全账号小宠物列表、模型与详细背景信息，支持一键召唤随机小宠物。
+
+| 坐骑收藏界面 | 宠物收藏界面 |
 | :---: | :---: |
-| ![坐骑收藏与模型预览](./SoloCollections/docs/images/mounts.png) | ![小宠物收藏与模型预览](./SoloCollections/docs/images/pets.png) |
-| *支持 3D 模型旋转、法术来源展示与快捷召唤* | *支持宠物分类、模型动作展示与多条件检索* |
+| ![坐骑收藏界面](docs/images/mount-journal.png) | ![宠物收藏界面](docs/images/pet-journal.png) |
+| *支持随机召唤坐骑、拖拽快捷栏、1级骑术与全域飞行* | *支持随机小宠物召唤与 3D 模型交互预览* |
 
-| 物品外观页 (Appearances) | 经典套装页 (Sets) |
+#### 🛡️ 装备外观与部位筛选
+- 针对头盔、护肩、披风、胸甲、护腕、手套、腰带、护腿、鞋子各部位提供精确定位镜头与收集进度。
+- 支持按护甲类型（板甲 / 锁甲 / 皮甲 / 布甲）一键筛选切换。
+
+| 外观各部位展示 | 护甲类型切换筛选 |
 | :---: | :---: |
-| ![外观列表与部位筛选](./SoloCollections/docs/images/wardrobe-items.png) | ![套装收集进度与试衣间预览](./SoloCollections/docs/images/wardrobe-sets.png) |
-| *按护甲类型/武器种类精准筛选，真实品质高亮* | *全职业套装一览、收集进度追踪与全局试衣间* |
+| ![外观收藏各部位展示](docs/images/wardrobe-items.png) | ![护甲类型切换筛选](docs/images/armor-types.png) |
+| *各装备部位特写构图与实时收集进度条* | *支持板甲/锁甲/皮甲/布甲快速切换与跨职业外观浏览* |
 
-### 3.2 独立军团风格幻化室（Wardrobe Studio / Lab）
+#### ⚔️ 武器外观与经典套装
+- **独立武器模型展示**：针对单手剑、双手剑、匕首、法杖、长柄武器、弓弩等进行独立模型渲染与构图调优。
+- **经典套装整合**：收录 T1~T10、S1~S8 等经典套装，带醒目分类与完成度统计，支持一键在试衣间中预览全套效果。
 
-| 幻化试衣间与报价系统 | 外观方案管理与快捷撤销 |
+| 独立武器外观展示 | 经典套装分类与进度 |
 | :---: | :---: |
-| ![幻化室试穿与报价](./SoloCollections/docs/images/wardrobe-lab-main.png) | ![外观方案管理](./SoloCollections/docs/images/wardrobe-lab-outfits.png) |
-| *单部位试穿、本地待定高亮、智能服务端报价* | *保存多套外观方案、一键载入、恢复原装外观* |
+| ![独立武器外观展示](docs/images/wardrobe-weapons.png) | ![经典套装分类与进度](docs/images/wardrobe-sets.png) |
+| *各类武器独立模型渲染与视口特写* | *T1~T10/S系列套装分类与试衣间整套预览* |
 
-### 3.3 镜头微调与自动化验收
+---
 
-| SoloCam 局部特写对比 | QA 无人值守自动化测试 |
-| :---: | :---: |
-| ![镜头特写对比](./SoloCollections/docs/images/solocam-workbench.png) | ![QA 验收监控](./SoloCollections/docs/images/qa-acceptance-dashboard.png) |
-| *头部/护肩/手套/武器独立构图纠偏* | *三客户端并发、后台无焦点注入、端到端交叉验证* |
+### 3.2 独立军团风格幻化室（Wardrobe Studio）
+
+告别传统 NPC 简陋的文本交互，带来全面对标军团再临（Legion）版本的独立幻化试衣间体验。
+
+- **实时可视化试衣**：在独立幻化窗口中自由选配各部位外观，实时计算幻化费用并由服务端强校验执行。
+- **套装一键幻化**：一键应用已收集的完整套装外观。
+- **自由混穿（跨甲 / 跨武器类型）**：支持在服务端配置文件中灵活开启跨甲（例如牧师幻化板甲）与跨武器幻化规则。
+
+| 军团风格独立幻化室 | 套装一键幻化 | 跨甲混穿支持（牧师幻化板甲） |
+| :---: | :---: | :---: |
+| ![独立幻化室](docs/images/transmog-studio.jpg) | ![套装幻化](docs/images/transmog-set.jpg) | ![跨甲混穿支持](docs/images/transmog-cross-armor.jpg) |
+| *独立高颜值幻化界面，实时算价与服务端校验* | *一键预览并应用经典套装整体外观* | *服务端配置可开启跨护甲与跨武器自由幻化* |
 
 ---
 
 ## 4. 安装与部署指南
 
-### 4.1 快速部署环境要求
-- **服务端**：AzerothCore WotLK (分支 `master` 或匹配版本)，MySQL 8.0/8.4+
+### 4.1 环境要求
+- **服务端**：AzerothCore WotLK（分支 `master` 或匹配版本），MySQL 8.0 / 8.4+
 - **客户端**：World of Warcraft 3.3.5a (Build 12340)，32 位 Windows 客户端
 
 ---
@@ -346,10 +385,9 @@ cd F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\qa-framework
 - [ ] **镜头 Profile 全覆盖与极端体型适配**
   - [ ] 针对侏儒、地精、牛头人以及高清自定义模型（HD Models）优化构图
   - [ ] 巨型双手武器和副手特殊物品视口边缘裁剪补偿
-- [ ] **跨账号多角色共享隔离演练**
-  - [ ] 编写同账号多角色并发登录与异账号数据绝对隔离的自动化压测套件
 - [ ] **全球多语言本地化（Full English & Multi-locale Localization）**
   - [ ] 完成全界面字符串解耦，支持 enUS, zhTW, ruRU 等语言切换
+- [ ] **猎人兽栏收藏**
 
 ---
 
@@ -360,11 +398,31 @@ cd F:\1_projects\wow_projects\SoloCollectionsPlatform\_work\qa-framework
 - **服务端模块（`mod-solo-collections`）**：遵循 [AGPL-3.0](https://www.gnu.org/licenses/agpl-3.0.html) 许可证开源。
 - *本项目严禁捆绑或闭源商业分发暴雪版权所有的私有美术资产与二进制补丁。*
 
-### 9.2 致谢
-- **[AzerothCore](https://www.azerothcore.org/)**：优秀的开源 3.3.5a 服务端架构与活跃的模块生态。
-- **[DragonUI](https://github.com/) & ClassicAPI**：为 3.3.5a 带来的现代化 UI 基础框架与兼容层。
-- **ezCollections**：在 3.3.5 时代早期探索收藏界面的先驱项目与思路启发。
-- **所有参与测试与镜头贡献的维护者与玩家们**。
+### 9.2 致谢与鸣谢
+
+本项目凝聚了魔兽世界开源社区多年的探索结晶，在此向以下开源项目、工具作者与社区先驱致以崇高的敬意与感谢：
+
+#### 🏛️ 服务端架构与核心模块
+- **[AzerothCore](https://www.azerothcore.org/)** (`azerothcore-wotlk`)：优秀的开源 3.3.5a 服务端架构与活跃的模块生态，为本项目服务端运行提供了坚实基石。
+- **[mod-transmog](https://github.com/azerothcore/mod-transmog)** (AzerothCore / Arugal)：经典 3.3.5a 幻化系统的奠基之作，为本项目的服务端幻化服务、费用规则、混穿判定与数据模型提供了宝贵的架构基础与兼容实现。
+- **[TrinityCore](https://www.trinitycore.org/)**：经典的开源 WoW 模拟器先驱，为 WotLK 底层协议与数据结构研究提供了重要参考。
+
+#### 🎨 客户端 UI、现代兼容层与界面参考
+- **[DragonUI](https://github.com/NeticSoul/DragonUI)** (NeticSoul)：为 3.3.5a 带来的现代化 Dragonflight 风格基础 UI 与 HUD 框架。
+- **[DragonUI_NewEra](https://github.com/ghbset/DragonUI_NewEra)** (ghbset)：项目维护的现代 UI 平台分支，提供精美统一的金属外框、顶级 Chrome 容器与模型 Presenter。
+- **[!!!ClassicAPI](https://github.com/SuicidalKat/ClassicAPI)** (SuicidalKat 等贡献者)：强大的 3.3.5a 现代 API 兼容层与 polyfill 库，使现代 FrameXML、Mixin 与 `C_*` 命名空间能够优雅向下兼容。
+- **[ezCollections](https://github.com/)** (ezCollections 2.2)：在 3.3.5 时代早期探索收藏界面的先驱项目与思路启发，其衣柜卡片与交互布局为本项目提供了重要灵感。
+- **[Transmorpher](https://github.com/)**：3.3.5a 经典外观预览与试衣间方案，为独立武器与装备预览架构提供了参考。
+
+#### 🛠️ 底层存储格式、反编译与二进制工具链
+- **[StormLib](https://github.com/ladislav-zezula/StormLib)** (Ladislav Zezula)：功能强大的 MPQ 归档读写开源 C++ 库，本项目用于只读解析、构建和验证客户端补丁 MPQ。
+- **[CascLib](https://github.com/ladislav-zezula/CascLib)** (Ladislav Zezula)：现代暴雪 CASC 存储系统的开源解析库，为跨版本模型与美术资源提取分析提供底层支撑。
+- **[Capstone Engine](https://www.capstone-engine.org/)** & **[pefile](https://github.com/erocarrera/pefile)**：优秀的反汇编引擎与 PE 二进制解析库，为 SoloCam 32 位 x86 客户端镜头补丁与偏移定位提供开发支撑。
+
+#### 📚 数据支持与社区研究
+- **[WotLK-Extensions](https://github.com/)** & **StoneHarry's Tools**：在 3.3.5a 客户端内存布局、Direct3D 模型视口与镜头扩展方面的社区研究与探索。
+- **[wago.tools](https://wago.tools/)** / **WoWDB** / **Wowhead**：权威的魔兽数据、FileDataID、DBC 与法术数据库，为本平台 Canonical 规范目录编排提供数据校对支持。
+- **所有参与测试、镜头参数校准（Camera Contributions）与反馈建议的维护者与玩家们**。
 
 ---
 
