@@ -2,8 +2,6 @@
 
 #include "SoloCollectionsTransmogProjection.h"
 
-#include "Log.h"
-
 #include <algorithm>
 #include <chrono>
 #include <iomanip>
@@ -62,16 +60,10 @@ std::string DefaultRawPayload(CollectionTypeId typeId)
     return "-";
 }
 
-void LogWardrobe(std::string_view event, AccountId account, AccountSessionId sessionId,
-    Sc2Message const& message, std::string_view status, std::uint32_t copper,
-    std::uint32_t warningMask, std::uint64_t revision, std::string_view source)
+void LogWardrobe(std::string_view, AccountId, AccountSessionId,
+    Sc2Message const&, std::string_view, std::uint32_t,
+    std::uint32_t, std::uint64_t, std::string_view)
 {
-    LOG_INFO("module.solocollections.wardrobe",
-        "event={} account={} character={} request={} op={} slots={} entries={} "
-        "status={} copper={} warning={} revision={} source={}",
-        event, account.Value(), sessionId.Value(), message.RequestId, message.Op,
-        static_cast<unsigned>(message.SlotCount), message.Entries, status, copper,
-        warningMask, revision, source);
 }
 
 Sc2CategoryDefinition const* FindCategory(std::vector<Sc2CategoryDefinition> const& categories,

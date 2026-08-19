@@ -22,7 +22,6 @@
 #include "Transmogrification.h"
 
 #include "Chat.h"
-#include "Log.h"
 #include "ObjectAccessor.h"
 #include "Player.h"
 #include "SharedDefines.h"
@@ -231,14 +230,6 @@ bool Sc2ProtocolCanUsePrivateChat(
         return true;
 
     std::string_view body(message.data() + WirePrefix.size(), message.size() - WirePrefix.size());
-    Sc2DecodeResult decoded = DecodeSc2Body(body);
-    if (!decoded.Success)
-    {
-        LOG_WARN("module.solocollections.protocol",
-            "event=protocol_reject result=bad_message account={} character={} bytes={} kind={}",
-            player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), body.size(),
-            body.empty() ? '-' : body.front());
-    }
     GetSc2Server().SetExternalOwned(
         SessionId(player), TitleCollectionTypeId, GetTitleService().OwnedByPlayer(player));
     GetSc2Server().SetExternalOwned(
@@ -247,16 +238,8 @@ bool Sc2ProtocolCanUsePrivateChat(
     (void)GetSc2Server().HandleInbound(SessionId(player), body, MonotonicMilliseconds(),
         [player](AccountId accountId, Sc2Message const& request) -> std::optional<std::string>
         {
-            auto actionStarted = std::chrono::steady_clock::now();
-            auto finish = [&](std::string_view actionKind, std::string status, std::uint32_t entry = 0)
+            auto finish = [](std::string_view, std::string status, std::uint32_t = 0)
             {
-                std::uint64_t elapsedMicroseconds = static_cast<std::uint64_t>(
-                    std::chrono::duration_cast<std::chrono::microseconds>(
-                        std::chrono::steady_clock::now() - actionStarted).count());
-                LOG_INFO("module.solocollections.performance",
-                    "event=action_timing account={} character={} type={} collection={} action={} entry={} status={} elapsed_us={}",
-                    accountId.Value(), player->GetGUID().GetCounter(), request.TypeId,
-                    request.CollectionId, actionKind, entry, status, elapsedMicroseconds);
                 return status;
             };
             if (!player->GetSession() || accountId.Value() != player->GetSession()->GetAccountId())
@@ -670,20 +653,5 @@ Sc2ServerDiagnostics Sc2ProtocolDiagnostics()
 
 void AddSC_solo_collections_protocol()
 {
-    LOG_INFO("module.solocollections",
-        "event=build_info addon_commit={} module_commit={} core_commit={} metadata_version={} asset_pack_version={} "
-        "mapping_hash={} presentation_hash={} mount_hash={} companion_hash={} toy_hash={} appearance_hash={} set_hash={}",
-        SoloCollections::SoloCollectionsBuildInfo::addonCommit,
-        SoloCollections::SoloCollectionsBuildInfo::moduleCommit,
-        SoloCollections::SoloCollectionsBuildInfo::coreCommit,
-        SoloCollections::SoloCollectionsBuildInfo::metadataVersion,
-        SoloCollections::SoloCollectionsBuildInfo::assetPackVersion,
-        SoloCollections::SoloCollectionsBuildInfo::mappingHash,
-        SoloCollections::SoloCollectionsBuildInfo::presentationHash,
-        SoloCollections::SoloCollectionsBuildInfo::mountMappingHash,
-        SoloCollections::SoloCollectionsBuildInfo::companionMappingHash,
-        SoloCollections::SoloCollectionsBuildInfo::toyMappingHash,
-        SoloCollections::SoloCollectionsBuildInfo::appearanceMappingHash,
-        SoloCollections::SoloCollectionsBuildInfo::setMappingHash);
     SoloCollections::GetAccountCollectionStore().SetEventSink(&SoloCollections::GetSc2EventSink());
 }

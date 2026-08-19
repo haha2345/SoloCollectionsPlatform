@@ -6,7 +6,6 @@
 #include "SoloCollectionsIdentity.h"
 
 #include "DBCStores.h"
-#include "Log.h"
 #include "Player.h"
 #include "Random.h"
 #include "SharedDefines.h"
@@ -168,17 +167,11 @@ public:
         {
             if (suppressed->second.empty())
                 _projectionSuppression.erase(suppressed);
-            LOG_DEBUG("module.solocollections.mount",
-                "event=mount_action_projection_learn character={} spell={} result=suppressed",
-                player->GetGUID().GetCounter(), spellId);
             return;
         }
         MountAccountState& state = _accounts[account];
         state.LoginCharacterGuid = player->GetGUID().GetCounter();
         QueueGrant(state, *definition, spellId, state.LoginCharacterGuid, CollectionSourceKind::Gameplay);
-        LOG_INFO("module.solocollections.mount",
-            "event=mount_spell_learned account={} character={} spell={} collection={}",
-            account.Value(), state.LoginCharacterGuid, spellId, definition->Id.Value());
     }
 
     void ReconcileCharacterMountActions(Player* player)
@@ -217,10 +210,6 @@ public:
         }
         for (std::uint32_t spellId : learn)
             player->learnSpell(spellId, false);
-        if (!learn.empty())
-            LOG_INFO("module.solocollections.mount",
-                "event=mount_action_reconcile account={} character={} revision={} learned={} result=complete",
-                account.Value(), guid, snapshot->Revision.Value(), learn.size());
     }
 
     void ReconcileNativeMountState(Player* player)
@@ -429,9 +418,6 @@ public:
         }
         else if (earlyFlightScaling && player->HasIncreaseMountedFlightSpeedAura())
             CapMountedFlightSpeedAtExpert(player);
-        LOG_INFO("module.solocollections.mount",
-            "event=mount_summon result=accepted account={} character={} collection={} spell={}",
-            account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), selected->SpellId);
         return "ACCEPTED";
     }
 
@@ -493,11 +479,6 @@ public:
                         std::scoped_lock lock(_mutex);
                         _accounts[account].LastRandomCollection = selected;
                     }
-                    LOG_INFO("module.solocollections.mount",
-                        "event=mount_random account={} character={} pool_size={} favorite_pool={} collection={} spell={} capability={} result=accepted",
-                        account.Value(), player->GetGUID().GetCounter(), all.size(), favoritePool ? favorites.size() : 0,
-                        selected.Value(), definition ? definition->CanonicalActionSpellId : 0,
-                        definition ? static_cast<unsigned>(definition->Capability) : 0);
                     return result;
                 }
                 if (result != "MAP_RESTRICTED" && result != "FLYING_NOT_ALLOWED" &&
@@ -578,14 +559,6 @@ public:
         }
         else if (level < FastFlightMinimumLevel)
             CapMountedFlightSpeedAtExpert(player);
-
-        char const* band = level <= EarlyRidingMaximumLevel ? "1-19" :
-            level < EarlyFlightMinimumLevel ? "20-44" :
-            level < FastFlightMinimumLevel ? "45-59" : "60+";
-        LOG_INFO("module.solocollections.mount",
-            "event=mount_native_resolve account={} character={} collection={} spell={} level={} band={} flight={} result=accepted",
-            PlayerAccount(player).Value(), player->GetGUID().GetCounter(), definition->Id.Value(), spellInfo->Id,
-            static_cast<unsigned>(level), band, flightAllowed ? 1 : 0);
     }
 
 private:
@@ -643,16 +616,12 @@ private:
                 if (!succeeded)
                 {
                     current.Phase = MigrationPhase::Failed;
-                    LOG_ERROR("module.solocollections.mount",
-                        "event=mount_migration_check result=failed account={}", account.Value());
                     return;
                 }
                 if (completed)
                 {
                     current.Phase = MigrationPhase::Complete;
                     current.CandidateSpells.clear();
-                    LOG_DEBUG("module.solocollections.mount",
-                        "event=mount_migration_check result=already_complete account={}", account.Value());
                     return;
                 }
                 current.CandidateSpells.insert(databaseSpells.begin(), databaseSpells.end());
@@ -661,9 +630,6 @@ private:
                         QueueGrant(current, *definition, spellId, current.LoginCharacterGuid, CollectionSourceKind::Migration);
                 current.CandidateSpells.clear();
                 current.Phase = MigrationPhase::Importing;
-                LOG_INFO("module.solocollections.mount",
-                    "event=mount_migration_check result=import account={} queued={}",
-                    account.Value(), current.Pending.size());
             });
         if (!started)
             state.Phase = MigrationPhase::AwaitingReady;
@@ -712,9 +678,6 @@ private:
             }
             if (grant.SourceKind == CollectionSourceKind::Migration)
                 ++state.RejectedCount;
-            LOG_ERROR("module.solocollections.mount",
-                "event=mount_unlock result=rejected account={} spell={} collection={} reason={}",
-                account.Value(), grant.SpellId, grant.Collection.Value(), ToStableReasonCode(result.Reason));
             state.QueuedCollections.erase(grant.Collection);
             state.Pending.pop_front();
         }
@@ -735,10 +698,6 @@ private:
                 if (found == _accounts.end())
                     return;
                 found->second.Phase = committed ? MigrationPhase::Complete : MigrationPhase::Failed;
-                LOG_INFO("module.solocollections.mount",
-                    "event=mount_migration_marker result={} account={} imported={} rejected={}",
-                    committed ? "complete" : "failed", account.Value(),
-                    found->second.ImportedCount, found->second.RejectedCount);
             });
         if (!started)
             state.Phase = MigrationPhase::Importing;

@@ -17,7 +17,7 @@ class Phase12ServerPerformanceContractTests(unittest.TestCase):
     def test_login_query_time_rows_cache_hits_evictions_and_memory_are_measured(self):
         for token in ("LoadQueryCount", "LoadedUnlockRows", "LastLoadMicroseconds", "MaxLoadMicroseconds"):
             self.assertIn(token, STORE_H)
-        self.assertIn('event=account_load result=ready', STORE_CPP)
+        self.assertIn("LastLoadMicroseconds", STORE_CPP)
         for token in ("CacheHits", "CacheMisses", "TotalEvictions", "EstimatedBytes"):
             self.assertIn(token, CACHE_H)
 
@@ -33,4 +33,3 @@ class Phase12ServerPerformanceContractTests(unittest.TestCase):
         self.assertIn("constexpr std::size_t ShadowSetRows = 509", COMMANDS)
         self.assertIn("constexpr std::size_t CompanionCandidateRows = 201", COMMANDS)
         self.assertIn('"benchmark", HandleBenchmark', COMMANDS)
-        self.assertIn("module.solocollections.performance", COMMANDS)

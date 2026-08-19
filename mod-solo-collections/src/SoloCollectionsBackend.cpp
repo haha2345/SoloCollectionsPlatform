@@ -1,7 +1,6 @@
 #include "SoloCollectionsBackend.h"
 
 #include "Config.h"
-#include "Log.h"
 
 #include <algorithm>
 #include <cctype>
@@ -41,16 +40,9 @@ void InitializeBackendConfiguration()
     else
     {
         Mode = BackendMode::Lua;
-        LOG_ERROR("module.solocollections.backend",
-            "event=backend_config result=invalid configured={} fallback=Lua writes_enabled=0 actions_enabled=0",
-            configured);
     }
     ShadowReportPath = sConfigMgr->GetOption<std::string>(
         "SoloCollections.ShadowReportPath", "logs/solo-collections-shadow.jsonl");
-    LOG_INFO("module.solocollections.backend",
-        "event=backend_config result=ready mode={} writes_enabled={} actions_enabled={} shadow_enabled={} report={}",
-        BackendModeName(Mode), Mode == BackendMode::Cpp ? 1 : 0, Mode == BackendMode::Cpp ? 1 : 0,
-        Mode == BackendMode::Compare ? 1 : 0, ShadowReportPath.empty() ? "disabled" : ShadowReportPath);
 }
 
 BackendMode GetBackendMode() noexcept

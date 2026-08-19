@@ -8,7 +8,6 @@
 #include "Bag.h"
 #include "DatabaseEnv.h"
 #include "Item.h"
-#include "Log.h"
 #include "ObjectMgr.h"
 #include "Player.h"
 #include "QueryResult.h"
@@ -384,11 +383,6 @@ void AppearanceService::AdvanceQueuedUnlocks()
             ++account;
             continue;
         }
-        if (started.Reason != CollectionReasonCode::AlreadyOwned)
-            LOG_WARN("module.solocollections.appearance",
-                "event=appearance_unlock result=rejected account={} character={} appearance={} item={} trigger={} reason={}",
-                accountId.Value(), pending.CharacterGuid, pending.Appearance.Value(), pending.SourceItemId,
-                UnlockTriggerName(pending.Trigger), ToStableReasonCode(started.Reason));
         _queuedAppearanceIds[accountId].erase(pending.Appearance);
         queue.pop_front();
     }
@@ -433,11 +427,6 @@ void AppearanceService::BeginMigrationCheck(AccountId accountId, MigrationState&
             current.FailedCount = current.Report.UnknownSources + current.Report.DisabledSources +
                 current.Report.MissingTemplates + current.Report.Conflicts;
             current.Phase = MigrationPhase::Importing;
-            LOG_INFO("module.solocollections.appearance",
-                "event=migration_dry_run account={} legacy={} valid={} canonical={} merged={} unknown={} disabled={} missing={} conflicts={}",
-                accountId.Value(), current.Report.LegacySources, current.Report.ValidSources,
-                current.Report.CanonicalGroups, current.Report.MergedSources, current.Report.UnknownSources,
-                current.Report.DisabledSources, current.Report.MissingTemplates, current.Report.Conflicts);
         }))
         state.Phase = MigrationPhase::AwaitingReady;
 }
@@ -456,18 +445,12 @@ void AppearanceService::AdvanceMigration(AccountId accountId, MigrationState& st
             state.Report.Conflicts += missingCanonicalGroups;
             state.FailedCount += missingCanonicalGroups;
             state.Phase = MigrationPhase::Failed;
-            LOG_ERROR("module.solocollections.appearance",
-                "event=migration_reconcile account={} expected={} missing={} result=failed",
-                accountId.Value(), state.ExpectedCanonicalGroups.size(), missingCanonicalGroups);
             return;
         }
 
         std::optional<AccountCacheSnapshot> snapshot = GetAccountCollectionCache().Snapshot(accountId);
         if (!snapshot || snapshot->State != AccountCacheLoadState::Ready)
             return;
-        LOG_INFO("module.solocollections.appearance",
-            "event=migration_reconcile account={} expected={} missing=0 result=success",
-            accountId.Value(), state.ExpectedCanonicalGroups.size());
         MigrationMarkerCompletion completion;
         completion.Account = accountId;
         completion.MigrationId = AppearanceMigrationId;
@@ -483,8 +466,6 @@ void AppearanceService::AdvanceMigration(AccountId accountId, MigrationState& st
                 auto found = _migrations.find(accountId);
                 if (found != _migrations.end())
                     found->second.Phase = committed ? MigrationPhase::Complete : MigrationPhase::Failed;
-                LOG_INFO("module.solocollections.appearance",
-                    "event=migration_marker account={} result={}", accountId.Value(), committed ? "success" : "failed");
             }))
             state.Phase = MigrationPhase::Importing;
         return;
@@ -541,8 +522,6 @@ bool AppearanceService::LoadLegacyCollections()
     {
         std::scoped_lock lock(_mutex);
         _health = AppearanceRepositoryHealth::QueryFailed;
-        LOG_ERROR("module.solocollections.appearance",
-            "event=legacy_load result=failed previous_accounts={}", _legacyCollections.size());
         return false;
     }
 
@@ -558,8 +537,6 @@ bool AppearanceService::LoadLegacyCollections()
     std::scoped_lock lock(_mutex);
     _legacyCollections.swap(refreshed);
     _health = AppearanceRepositoryHealth::Healthy;
-    LOG_INFO("module.solocollections.appearance",
-        "event=legacy_load result=ready accounts={}", _legacyCollections.size());
     return true;
 }
 

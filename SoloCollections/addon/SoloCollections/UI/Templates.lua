@@ -305,12 +305,12 @@ function UI.AttachAuthorCredit(frame)
     host:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -14, 8)
     host:SetFrameLevel(frame:GetFrameLevel() + 80)
     host:EnableMouse(false)
-    local credit = host:CreateFontString(nil, "OVERLAY")
+    local credit = host:CreateFontString(nil, "OVERLAY", "GameFontNormal")
     credit:SetPoint("BOTTOMRIGHT", host, "BOTTOMRIGHT", 0, 0)
     credit:SetJustifyH("RIGHT")
+    applyYaHeiBold(credit, 12)
     credit:SetText("本项目由woden开发")
     credit:SetTextColor(1, 1, 1)
-    applyYaHeiBold(credit, 12)
     frame.scAuthorCredit = credit
     frame.scAuthorCreditHost = host
     return credit

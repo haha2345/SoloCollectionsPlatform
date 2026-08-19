@@ -1,6 +1,6 @@
-# SoloCollectionsPlatform v0.3.1 怎么用
+# SoloCollectionsPlatform v0.3.2 怎么用
 
-相对 v0.3.0：模块启动日志和每次登录聊天框会提示 `SoloCollections`、QQ 群、邮箱和学习交流声明；收藏 / 幻化窗口右下角署名「本项目由woden开发」；world 库新增 `sc_module_credits`（玩法不读这张表）。
+相对 v0.3.1：收藏模块不再打玩法 `LOG_*`；`worldserver` 加载完成后用和 AzerothCore 同款的 `SOLO` / `COLLECTIONS` 花字提示署名；登录聊天一行写「本服务端已加载 SoloCollections 模块，此模块模拟军团再临版本的收藏系统和幻化系统」（`SoloCollections` 金色）；署名含作者、QQ 群、邮箱、仓库 `https://github.com/haha2345/SoloCollectionsPlatform` 和学习交流声明；右下角署名先设字体再写字，避免 `SetText(): Font not set`。world 库 `sc_module_credits` 增加 `repository`（玩法不读这张表）。
 
 这不是完整游戏包。你必须自己已有：
 

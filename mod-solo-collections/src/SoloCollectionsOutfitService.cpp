@@ -4,7 +4,6 @@
 
 #include "DatabaseEnv.h"
 #include "Item.h"
-#include "Log.h"
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
 #include "Player.h"
@@ -57,15 +56,12 @@ std::optional<std::map<std::uint8_t, std::uint32_t>> ParseOutfitData(std::string
     return appearances;
 }
 
-void CommitOutfitTransactionAsync(CharacterDatabaseTransaction const& transaction, ObjectGuid characterGuid,
-    std::string_view operation, std::function<void(bool)> completion)
+void CommitOutfitTransactionAsync(CharacterDatabaseTransaction const& transaction, ObjectGuid,
+    std::string_view, std::function<void(bool)> completion)
 {
     sTransmogrification->EnqueueDbCommit(transaction,
-        [characterGuid, operation = std::string(operation), completion = std::move(completion)](bool committed)
+        [completion = std::move(completion)](bool committed)
         {
-            if (!committed)
-                LOG_ERROR("module", "SoloCollections outfit {} failed for character {}.",
-                    operation, characterGuid.ToString());
             if (completion)
                 completion(committed);
         });
@@ -90,13 +86,9 @@ void OutfitService::Load(ObjectGuid characterGuid)
                     std::optional<std::string> name = NormalizeOutfitName((*result)[1].Get<std::string>());
                     std::optional<std::map<std::uint8_t, std::uint32_t>> appearances =
                         ParseOutfitData((*result)[2].Get<std::string>());
-                    if (outfitId >= sTransmogrification->GetMaxSets() || !name || !appearances ||
-                        !loaded.emplace(outfitId,
-                            OutfitRecord { outfitId, std::move(*name), std::move(*appearances) }).second)
-                    {
-                        LOG_WARN("module", "SoloCollections ignored invalid legacy outfit {} for character {}.",
-                            static_cast<std::uint32_t>(outfitId), characterGuid.ToString());
-                    }
+                    if (outfitId < sTransmogrification->GetMaxSets() && name && appearances)
+                        loaded.emplace(outfitId,
+                            OutfitRecord { outfitId, std::move(*name), std::move(*appearances) });
                 } while (result->NextRow());
             }
             _byCharacter[characterGuid] = std::move(loaded);

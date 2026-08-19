@@ -1,7 +1,7 @@
 #Requires -Version 5.1
 [CmdletBinding()]
 param(
-    [string]$Version = '0.3.1',
+    [string]$Version = '0.3.2',
     [string]$ClientRoot = 'D:\Games\wow335\World of Warcraft11'
 )
 

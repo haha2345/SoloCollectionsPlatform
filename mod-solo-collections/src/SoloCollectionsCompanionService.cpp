@@ -5,7 +5,6 @@
 #include "SoloCollectionsCompanionCatalog.h"
 
 #include "Creature.h"
-#include "Log.h"
 #include "Player.h"
 #include "Random.h"
 #include "SpellMgr.h"
@@ -91,9 +90,6 @@ public:
         AccountState& state = _accounts[account];
         state.LoginCharacterGuid = player->GetGUID().GetCounter();
         QueueGrant(state, *definition, spellId, state.LoginCharacterGuid, CollectionSourceKind::Gameplay);
-        LOG_INFO("module.solocollections.companion",
-            "event=companion_spell_learned account={} character={} spell={} collection={}",
-            account.Value(), state.LoginCharacterGuid, spellId, definition->Id.Value());
     }
 
     void Update()
@@ -183,7 +179,6 @@ public:
             }
         }
 
-        std::size_t initialPoolSize = pool.size();
         while (!pool.empty())
         {
             std::size_t index = urand(0, static_cast<std::uint32_t>(pool.size() - 1));
@@ -191,15 +186,7 @@ public:
             pool.erase(pool.begin() + index);
             std::string result = ExecuteSummon(player, selected);
             if (result == "ACCEPTED" || result == "DISMISSED")
-            {
-                CompanionCollectionDefinition const* definition = GetCompanionCatalog().Find(selected);
-                LOG_INFO("module.solocollections.companion",
-                    "event=companion_random account={} character={} pool_size={} favorite_pool={} collection={} spell={} result={}",
-                    account.Value(), player->GetGUID().GetCounter(), initialPoolSize,
-                    favorites.empty() ? 0 : favorites.size(), selected.Value(),
-                    definition ? definition->CanonicalActionSpellId : 0, result);
                 return result;
-            }
             if (result != "MAP_RESTRICTED" && result != "CAST_FAILED" && result != "UNSUPPORTED")
                 return result;
         }
@@ -226,10 +213,6 @@ private:
             if (current->GetUInt32Value(UNIT_CREATED_BY_SPELL) == definition.CanonicalActionSpellId)
             {
                 current->DespawnOrUnsummon();
-                LOG_INFO("module.solocollections.companion",
-                    "event=companion_toggle result=dismissed account={} character={} collection={} spell={}",
-                    account.Value(), player->GetGUID().GetCounter(), definition.Id.Value(),
-                    definition.CanonicalActionSpellId);
                 return "DISMISSED";
             }
         }
@@ -242,10 +225,6 @@ private:
         SpellCastResult result = player->CastSpell(player, spellInfo, TRIGGERED_NONE);
         if (result != SPELL_CAST_OK)
             return "CAST_FAILED";
-        LOG_INFO("module.solocollections.companion",
-            "event=companion_summon result=accepted account={} character={} collection={} spell={}",
-            account.Value(), player->GetGUID().GetCounter(), definition.Id.Value(),
-            definition.CanonicalActionSpellId);
         return "ACCEPTED";
     }
     static void QueueGrant(AccountState& state, CompanionCollectionDefinition const& definition,
@@ -270,8 +249,6 @@ private:
                 if (!succeeded)
                 {
                     current.Phase = MigrationPhase::Failed;
-                    LOG_ERROR("module.solocollections.companion",
-                        "event=companion_migration_check result=failed account={}", account.Value());
                     return;
                 }
                 if (completed)
@@ -286,9 +263,6 @@ private:
                         QueueGrant(current, *definition, spellId, current.LoginCharacterGuid, CollectionSourceKind::Migration);
                 current.CandidateSpells.clear();
                 current.Phase = MigrationPhase::Importing;
-                LOG_INFO("module.solocollections.companion",
-                    "event=companion_migration_check result=import account={} queued={}",
-                    account.Value(), current.Pending.size());
             });
         if (!started)
             state.Phase = MigrationPhase::AwaitingReady;
@@ -348,10 +322,6 @@ private:
                 if (found == _accounts.end())
                     return;
                 found->second.Phase = committed ? MigrationPhase::Complete : MigrationPhase::Failed;
-                LOG_INFO("module.solocollections.companion",
-                    "event=companion_migration_marker result={} account={} imported={} rejected={}",
-                    committed ? "complete" : "failed", account.Value(),
-                    found->second.ImportedCount, found->second.RejectedCount);
             });
         if (!started)
             state.Phase = MigrationPhase::Importing;

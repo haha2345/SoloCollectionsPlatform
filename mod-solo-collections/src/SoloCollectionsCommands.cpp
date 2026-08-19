@@ -10,7 +10,6 @@
 #include "Chat.h"
 #include "CommandScript.h"
 #include "DatabaseEnv.h"
-#include "Log.h"
 #include "Player.h"
 #include "QueryResult.h"
 #include "RBAC.h"
@@ -234,11 +233,6 @@ public:
         std::int64_t lookupUs = microseconds(lookupStarted, finished);
         handler->PSendSysMessage(
             "SoloCollections benchmark scale={} shadow_sets={} companion_candidates={} catalog_entries={} materialized={} filtered={} found={} "
-            "load_us={} filter_us={} lookup_us={}",
-            BenchmarkEntries, ShadowSetRows, CompanionCandidateRows, collections.size(), materialized.size(), filtered, found,
-            loadUs, filterUs, lookupUs);
-        LOG_INFO("module.solocollections.performance",
-            "event=appearance_catalog_benchmark scale={} shadow_sets={} companion_candidates={} catalog_entries={} materialized={} filtered={} found={} "
             "load_us={} filter_us={} lookup_us={}",
             BenchmarkEntries, ShadowSetRows, CompanionCandidateRows, collections.size(), materialized.size(), filtered, found,
             loadUs, filterUs, lookupUs);

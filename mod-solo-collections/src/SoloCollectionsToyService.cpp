@@ -5,7 +5,6 @@
 #include "SoloCollectionsToyCatalog.h"
 
 #include "Item.h"
-#include "Log.h"
 #include "Player.h"
 #include "Spell.h"
 #include "SpellMgr.h"
@@ -81,9 +80,6 @@ public:
             return;
         std::scoped_lock lock(_mutex);
         QueueGrant(_accounts[PlayerAccount(player)], *definition, player->GetGUID().GetCounter());
-        LOG_INFO("module.solocollections.toy",
-            "event=toy_item_acquired account={} character={} item={} collection={}",
-            player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), itemId, definition->Id.Value());
     }
 
     void Update()
@@ -188,10 +184,6 @@ public:
             std::scoped_lock lock(_mutex);
             _accountCooldowns[account][collectionId] = now + definition->AccountCooldownMs;
         }
-        LOG_INFO("module.solocollections.toy",
-            "event=toy_action result=accepted account={} character={} collection={} item={} spell={} kind={} risks={}",
-            account.Value(), player->GetGUID().GetCounter(), collectionId.Value(), definition->ItemId,
-            definition->SpellId, static_cast<unsigned>(definition->ActionKind), definition->RiskFlags.size());
         return "ACCEPTED";
     }
 

@@ -7,7 +7,6 @@
 
 #include "Item.h"
 #include "ItemTemplate.h"
-#include "Log.h"
 #include "ObjectAccessor.h"
 #include "ObjectMgr.h"
 #include "Player.h"
@@ -471,9 +470,6 @@ void TransmogProjectionService::CommitTransactionAsync(CharacterDatabaseTransact
     sTransmogrification->EnqueueDbCommit(transaction,
         [completion = std::move(completion)](bool committed)
         {
-            if (!committed)
-                LOG_ERROR("module.solocollections.wardrobe",
-                    "event=wardrobe_transaction result=failed");
             if (completion)
                 completion(committed);
         });

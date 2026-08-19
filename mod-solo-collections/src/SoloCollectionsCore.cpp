@@ -19,8 +19,8 @@
 
 #include "Item.h"
 #include "Chat.h"
-#include "Player.h"
 #include "Log.h"
+#include "Player.h"
 #include "ScriptMgr.h"
 #include "SpellScript.h"
 #include "WorldSession.h"
@@ -35,16 +35,40 @@ namespace SoloCollections
 namespace
 {
 constexpr char const* kCreditsModuleName = "SoloCollections";
+constexpr char const* kCreditsSummary = "SoloCollections模块模拟军团再临版本的收藏系统和幻化系统。";
+constexpr char const* kCreditsAuthor = "本项目由woden开发";
 constexpr char const* kCreditsQqGroup = "1031799838";
 constexpr char const* kCreditsEmail = "woden3702@gmail.com";
+constexpr char const* kCreditsRepository = "https://github.com/haha2345/SoloCollectionsPlatform";
 constexpr char const* kCreditsLicense = "本模块仅限学习交流使用，禁止用于商业用途。";
+
+constexpr char const* kCreditsBanner[] = {
+    "  ███████╗ ██████╗ ██╗      ██████╗",
+    "  ██╔════╝██╔═══██╗██║     ██╔═══██╗",
+    "  ███████╗██║   ██║██║     ██║   ██║",
+    "  ╚════██║██║   ██║██║     ██║   ██║",
+    "  ███████║╚██████╔╝███████╗╚██████╔╝",
+    "  ╚══════╝ ╚═════╝ ╚══════╝ ╚═════╝",
+    " ",
+    "  ██████╗  ██████╗ ██╗     ██╗     ███████╗ ██████╗ ████████╗██╗ ██████╗ ███╗   ██╗ ███████╗",
+    " ██╔════╝ ██╔═══██╗██║     ██║     ██╔════╝██╔════╝ ╚══██╔══╝██║██╔═══██╗████╗  ██║ ██╔════╝",
+    " ██║      ██║   ██║██║     ██║     █████╗  ██║         ██║   ██║██║   ██║██╔██╗ ██║ ███████╗",
+    " ██║      ██║   ██║██║     ██║     ██╔══╝  ██║         ██║   ██║██║   ██║██║╚██╗██║ ╚════██║",
+    " ╚██████╗ ╚██████╔╝███████╗███████╗███████╗╚██████╗    ██║   ██║╚██████╔╝██║ ╚████║ ███████║",
+    "  ╚═════╝  ╚═════╝ ╚══════╝╚══════╝╚══════╝ ╚═════╝    ╚═╝   ╚═╝ ╚═════╝ ╚═╝  ╚═══╝ ╚══════╝",
+};
 
 void LogModuleCredits()
 {
-    LOG_INFO("module.solocollections", "{}", kCreditsModuleName);
-    LOG_INFO("module.solocollections", "QQ群：{}", kCreditsQqGroup);
-    LOG_INFO("module.solocollections", "邮箱：{}", kCreditsEmail);
-    LOG_INFO("module.solocollections", "{}", kCreditsLicense);
+    LOG_INFO("server.worldserver", " ");
+    for (char const* line : kCreditsBanner)
+        LOG_INFO("server.worldserver", "{}", line);
+    LOG_INFO("server.worldserver", " ");
+    LOG_INFO("server.worldserver", "     {}", kCreditsSummary);
+    LOG_INFO("server.worldserver", "     {}  ·  QQ群：{}  ·  {}", kCreditsAuthor, kCreditsQqGroup, kCreditsEmail);
+    LOG_INFO("server.worldserver", "     {}", kCreditsRepository);
+    LOG_INFO("server.worldserver", "     {}", kCreditsLicense);
+    LOG_INFO("server.worldserver", " ");
 }
 
 void SendModuleCredits(Player* player)
@@ -53,9 +77,10 @@ void SendModuleCredits(Player* player)
         return;
 
     ChatHandler handler(player->GetSession());
-    handler.PSendSysMessage("|cffffd100{}|r", kCreditsModuleName);
-    handler.PSendSysMessage("QQ群：{}", kCreditsQqGroup);
-    handler.PSendSysMessage("邮箱：{}", kCreditsEmail);
+    handler.PSendSysMessage("本服务端已加载|cffffd100{}|r模块，此模块模拟军团再临版本的收藏系统和幻化系统。",
+        kCreditsModuleName);
+    handler.PSendSysMessage("{}  ·  QQ群：{}  ·  {}", kCreditsAuthor, kCreditsQqGroup, kCreditsEmail);
+    handler.PSendSysMessage("{}", kCreditsRepository);
     handler.PSendSysMessage("{}", kCreditsLicense);
 }
 
@@ -365,53 +390,18 @@ public:
     void OnStartup() override
     {
         InitializeBackendConfiguration();
-        LOG_INFO("module.solocollections.health",
-            "event=startup_versions schema={} catalog={} identity={} protocol={} asset={}",
-            AccountStoreSchemaVersion, Sc2CatalogVersion(), Sc2IdentityVersion(),
-            Sc2ProtocolVersion, Sc2AssetPackVersion());
 
-        auto catalogStarted = std::chrono::steady_clock::now();
-        std::size_t appearanceEntries = 0;
-        try
-        {
-            IdentityRegistry const& identities = GetIdentityRegistry();
-            if (!identities.IsValid())
-                throw std::runtime_error("generated identity registry is invalid");
-            appearanceEntries = GetAppearanceCatalog().Collections().size();
-        }
-        catch (...)
-        {
-            LOG_ERROR("module.solocollections.catalog",
-                "event=catalog_startup result=exception catalog_version={} identity_version={}",
-                Sc2CatalogVersion(), Sc2IdentityVersion());
-            throw;
-        }
-        std::uint64_t catalogMicroseconds = static_cast<std::uint64_t>(
-            std::chrono::duration_cast<std::chrono::microseconds>(
-                std::chrono::steady_clock::now() - catalogStarted).count());
-        LOG_INFO("module.solocollections.performance",
-            "event=appearance_catalog_load result=ready entries={} elapsed_us={}",
-            appearanceEntries, catalogMicroseconds);
+        IdentityRegistry const& identities = GetIdentityRegistry();
+        if (!identities.IsValid())
+            throw std::runtime_error("generated identity registry is invalid");
+        (void)GetAppearanceCatalog().Collections().size();
         CollectionProviderRegistry& registry = GetCollectionProviderRegistry();
-        auto registerProvider = [&registry](std::string_view providerKey,
+        auto registerProvider = [&registry](std::string_view,
             std::unique_ptr<CollectionProvider> provider)
         {
-            RegistryRegistrationResult registration;
-            try
-            {
-                registration = registry.Register(std::move(provider));
-            }
-            catch (...)
-            {
-                LOG_ERROR("module.solocollections.provider",
-                    "event=provider_registration result=exception provider={}", providerKey);
-                throw;
-            }
+            RegistryRegistrationResult registration = registry.Register(std::move(provider));
             if (registration.Accepted)
                 return;
-            LOG_ERROR("module.solocollections.provider",
-                "event=provider_registration result=rejected provider={} reason={}",
-                providerKey, static_cast<std::uint16_t>(registration.Reason));
             throw std::runtime_error("SoloCollections provider registration failed");
         };
         registerProvider("synthetic", std::make_unique<SyntheticCollectionProvider>());
@@ -425,34 +415,15 @@ public:
         registerProvider("set", std::make_unique<SetCollectionProvider>());
         registerProvider("title", std::make_unique<TitleCollectionProvider>());
 
-        RegistryFinalizeResult finalized;
-        try
-        {
-            finalized = registry.Finalize();
-        }
-        catch (...)
-        {
-            LOG_ERROR("module.solocollections.provider",
-                "event=provider_finalize result=exception");
-            throw;
-        }
+        RegistryFinalizeResult finalized = registry.Finalize();
         if (!finalized.Success)
-        {
-            LOG_ERROR("module.solocollections.provider",
-                "event=provider_finalize result=rejected reason={}",
-                static_cast<std::uint16_t>(finalized.Reason));
             throw std::runtime_error("SoloCollections provider finalization failed");
-        }
 
         (void)GetAccountCollectionCache();
         GetAccountCollectionStore().SetWritesEnabled(IsCppBackendOwner());
         if (GetBackendMode() != BackendMode::Lua)
             GetAccountCollectionStore().Initialize();
 
-        LOG_INFO("module.solocollections.provider",
-            "event=provider_registry result=ready providers={} backend={} writes_enabled={}",
-            registry.TopologicalOrder().size(), BackendModeName(GetBackendMode()),
-            GetAccountCollectionStore().WritesEnabled() ? 1 : 0);
         LogModuleCredits();
     }
 
@@ -557,9 +528,6 @@ public:
                 if (snapshot && snapshot->State == AccountCacheLoadState::Ready)
                 {
                     player->learnSpell(MountRandomSpellId, false);
-                    LOG_INFO("module.solocollections.mount",
-                        "event=random_mount_spell_learn account={} character={} spell={} result=learned",
-                        player->GetSession()->GetAccountId(), player->GetGUID().GetCounter(), MountRandomSpellId);
                 }
             }
             Sc2ProtocolPumpAndSend(player);

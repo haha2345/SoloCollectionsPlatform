@@ -622,8 +622,6 @@ public:
 
             if (_hideSlotButton)
                 spoofedItems.push_back(_hideSlotButton);
-            else
-                LOG_WARN("module", "Transmogrification::GetSpoofedVendorItems - Hide-item templates {} and {} are both missing.", CUSTOM_HIDE_ITEM_VENDOR_ID, FALLBACK_HIDE_ITEM_VENDOR_ID);
         }
         if (existingTransmog)
         {
@@ -633,8 +631,6 @@ public:
 
             if (_removeTransmogButton)
                 spoofedItems.push_back(_removeTransmogButton);
-            else
-                LOG_WARN("module", "Transmogrification::GetSpoofedVendorItems - Remove-item templates {} and {} are both missing.", CUSTOM_REMOVE_TMOG_VENDOR_ID, FALLBACK_REMOVE_TMOG_VENDOR_ID);
         }
         return spoofedItems;
     }
@@ -888,8 +884,6 @@ public:
             {
                 if (ItemTemplate const* sourceTemplate = sObjectMgr->GetItemTemplate(entry))
                     display = sourceTemplate->DisplayInfoID;
-                else
-                    LOG_WARN("module", "Transmogrification::OnMirrorImageDisplayItem - Fake entry {} has no item template.", entry);
             }
         }
     }

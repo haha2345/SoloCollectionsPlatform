@@ -28,7 +28,6 @@ class Phase12HealthContractTests(unittest.TestCase):
             "GeneratedSc2AssetPackVersion",
         ):
             self.assertIn(token, GENERATED_VERSIONS)
-        self.assertIn("event=startup_versions schema={} catalog={} identity={} protocol={} asset={}", CORE)
         self.assertIn("Sc2ProtocolVersion", PROTOCOL_SERVER)
         self.assertNotIn("message.ProtocolVersion != 1", PROTOCOL_SERVER)
 
@@ -45,31 +44,9 @@ class Phase12HealthContractTests(unittest.TestCase):
         self.assertIn("store.PendingMutations + store.PendingAudits", COMMANDS)
         self.assertIn("store.PendingMigrationMarkers", COMMANDS)
 
-    def test_failures_use_distinct_log_categories(self):
-        self.assertIn('LOG_ERROR("module.solocollections.database"', STORE_CPP)
-        self.assertIn('LOG_ERROR("module.solocollections.catalog"', CORE)
-        self.assertIn('LOG_ERROR("module.solocollections.provider"', CORE)
-        self.assertIn('LOG_WARN("module.solocollections.protocol"', PROTOCOL_SCRIPT)
-
-    def test_logs_do_not_emit_client_text_snapshots_or_credentials(self):
-        sources = "\n".join((CORE, STORE_CPP, PROTOCOL_SCRIPT))
-        log_calls = re.findall(r"LOG_(?:TRACE|DEBUG|INFO|WARN|ERROR|FATAL)\(.*?\);", sources, re.DOTALL)
-        self.assertTrue(log_calls)
-        joined = "\n".join(log_calls)
-        for forbidden in (
-            "request.ActionId",
-            "request.Target",
-            "request.Payload",
-            "message.c_str",
-            "body.data",
-            "payload={}",
-            "ClientNonce",
-            "SessionNonce",
-        ):
-            self.assertNotIn(forbidden, joined)
-        lowered = joined.lower()
-        self.assertNotIn("password", lowered)
-        self.assertNotIn("credential", lowered)
+    def test_collection_sources_do_not_emit_server_logs(self):
+        sources = "\n".join((CORE, STORE_CPP, PROTOCOL_SCRIPT, PROTOCOL_SERVER))
+        self.assertFalse(re.search(r"LOG_(?:TRACE|DEBUG|INFO|WARN|ERROR|FATAL)\s*\(", sources))
 
 
 if __name__ == "__main__":

@@ -32,17 +32,11 @@ class Phase5ProtocolContractTests(unittest.TestCase):
             self.assertIn(token, source)
         self.assertNotIn("player->Whisper", source)
 
-    def test_malformed_protocol_logging_is_structured_and_does_not_echo_client_text(self):
+    def test_malformed_protocol_does_not_echo_client_text(self):
         source = (ROOT / "src/SoloCollectionsProtocolScript.cpp").read_text(encoding="utf-8")
-        self.assertIn('"module.solocollections.protocol"', source)
-        self.assertIn(
-            '"event=protocol_reject result=bad_message account={} character={} bytes={} kind={}"', source
-        )
-        log_statement = source.split('LOG_WARN("module.solocollections.protocol"', 1)[1].split(");", 1)[0]
-        self.assertIn("body.size()", log_statement)
-        self.assertNotIn("body.data()", log_statement)
-        self.assertNotIn("std::string(body)", log_statement)
-        self.assertNotIn("message.data()", log_statement)
+        self.assertIn("HandleInbound", source)
+        self.assertNotIn("LOG_WARN", source)
+        self.assertNotIn("std::string(body)", source)
 
     def test_limits_replay_rate_and_outbound_queue_are_explicit(self):
         combined = "\n".join(

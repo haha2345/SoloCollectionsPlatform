@@ -10,5 +10,6 @@ INSERT INTO `sc_module_credits` (`credit_key`, `credit_value`) VALUES
 ('author', 'woden'),
 ('qq_group', '1031799838'),
 ('email', 'woden3702@gmail.com'),
+('repository', 'https://github.com/haha2345/SoloCollectionsPlatform'),
 ('license', '本模块仅限学习交流使用，禁止用于商业用途。')
 ON DUPLICATE KEY UPDATE `credit_value` = VALUES(`credit_value`);

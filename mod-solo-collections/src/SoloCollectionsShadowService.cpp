@@ -5,7 +5,6 @@
 #include "SoloCollectionsBackend.h"
 #include "SoloCollectionsShadowComparison.h"
 
-#include "Log.h"
 #include "Player.h"
 #include "WorldSession.h"
 
@@ -121,28 +120,18 @@ void ExportReport(std::string const& jsonLine)
             std::filesystem::create_directories(parent, error);
             if (error)
             {
-                LOG_ERROR("module.solocollections.shadow",
-                    "event=shadow_report_export result=directory_failed path={} error={}",
-                    path, error.message());
                 return;
             }
         }
         std::ofstream output(path, std::ios::out | std::ios::app);
         if (!output)
         {
-            LOG_ERROR("module.solocollections.shadow",
-                "event=shadow_report_export result=open_failed path={}", path);
             return;
         }
         output << jsonLine << '\n';
-        if (!output)
-            LOG_ERROR("module.solocollections.shadow",
-                "event=shadow_report_export result=write_failed path={}", path);
     }
     catch (...)
     {
-        LOG_ERROR("module.solocollections.shadow",
-            "event=shadow_report_export result=exception path={}", path);
     }
 }
 
@@ -223,9 +212,6 @@ void ShadowComparisonOnPlayerUpdate(Player* player)
     }
     if (snapshot->State != AccountCacheLoadState::Ready)
     {
-        LOG_ERROR("module.solocollections.shadow",
-            "event=shadow_compare result=load_failed mode=Compare account={} character={} generation={}",
-            accountId.Value(), player->GetGUID().GetCounter(), snapshot->Generation.Value());
         return;
     }
 
@@ -233,17 +219,6 @@ void ShadowComparisonOnPlayerUpdate(Player* player)
     std::vector<LegacyShadowEntryDefinition> legacy = LoadGeneratedLegacyShadowEntries();
     ShadowComparisonReport report = CompareLegacyShadow(
         categories, legacy, ObserveCanonical(accountId, categories, legacy));
-    LOG_INFO("module.solocollections.shadow",
-        "event=shadow_compare result={} mode=Compare account={} character={} generation={} revision={} "
-        "legacy_entries={} mapped_entries={} unmapped_entries={} legacy_owned={} canonical_owned={} "
-        "hash_mismatches={} catalog_mismatches={} owned_mismatches={} availability_mismatches={} "
-        "writes=0 actions=0 success_deltas=0 legacy_source_hash={} legacy_mapping_hash={} canonical_mapping_hash={}",
-        report.ExactMatch() ? "match" : "difference", accountId.Value(), player->GetGUID().GetCounter(),
-        snapshot->Generation.Value(), snapshot->Revision.Value(), report.LegacyEntryCount,
-        report.MappedEntryCount, report.UnmappedEntryCount, report.LegacyOwnedCount,
-        report.CanonicalOwnedCount, report.CategoryHashMismatchCount, report.CatalogMismatchCount,
-        report.OwnedMismatchCount, report.AvailabilityMismatchCount, GeneratedLegacySc1SourceHash,
-        GeneratedLegacySc1MappingHash, GeneratedCanonicalMappingHash);
 
     std::size_t logged = 0;
     for (ShadowDifference const& difference : report.Differences)
@@ -252,18 +227,8 @@ void ShadowComparisonOnPlayerUpdate(Player* player)
             break;
 
         ++logged;
-        LOG_INFO("module.solocollections.shadow",
-            "event=shadow_difference account={} character={} type={} legacy_id={} canonical_id={} "
-            "unmapped={} catalog={} owned={} availability={} extra_canonical_owned={}",
-            accountId.Value(), player->GetGUID().GetCounter(), difference.TypeId.Value(),
-            difference.LegacyId, difference.CanonicalId.Value(), difference.Unmapped ? 1 : 0,
-            difference.CatalogMismatch ? 1 : 0, difference.OwnedMismatch ? 1 : 0,
-            difference.AvailabilityMismatch ? 1 : 0, difference.ExtraCanonicalOwned ? 1 : 0);
     }
     if (report.Differences.size() > logged)
-        LOG_INFO("module.solocollections.shadow",
-            "event=shadow_difference_truncated account={} character={} total={} logged={}",
-            accountId.Value(), player->GetGUID().GetCounter(), report.Differences.size(), logged);
     ExportReport(RenderJsonLine(accountId, player->GetGUID().GetCounter(), report));
 }
 }

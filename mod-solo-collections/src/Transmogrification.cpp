@@ -79,7 +79,6 @@ void Transmogrification::UnloadPlayerSets(ObjectGuid pGUID)
 
 const char* Transmogrification::GetSlotName(uint8 slot, WorldSession* session) const
 {
-    LOG_DEBUG("module", "Transmogrification::GetSlotName");
 
     LocaleConstant locale = session->GetSessionDbLocaleIndex();
 
@@ -262,7 +261,6 @@ const char* Transmogrification::GetSlotName(uint8 slot, WorldSession* session) c
 
 std::string Transmogrification::GetItemIcon(uint32 entry, uint32 width, uint32 height, int x, int y) const
 {
-    LOG_DEBUG("module", "Transmogrification::GetItemIcon");
 
     std::ostringstream ss;
     ss << "|TInterface";
@@ -282,7 +280,6 @@ std::string Transmogrification::GetItemIcon(uint32 entry, uint32 width, uint32 h
 
 std::string Transmogrification::GetSlotIcon(uint8 slot, uint32 width, uint32 height, int x, int y) const
 {
-    LOG_DEBUG("module", "Transmogrification::GetSlotIcon");
 
     std::ostringstream ss;
     ss << "|TInterface/PaperDoll/";
@@ -310,7 +307,6 @@ std::string Transmogrification::GetSlotIcon(uint8 slot, uint32 width, uint32 hei
 
 std::string Transmogrification::GetItemLink(Item* item, WorldSession* session) const
 {
-    LOG_DEBUG("module", "Transmogrification::GetItemLink");
 
     if (!item || !session)
         return "(Unknown item)";
@@ -364,7 +360,6 @@ std::string Transmogrification::GetItemLink(Item* item, WorldSession* session) c
 
 std::string Transmogrification::GetItemLink(uint32 entry, WorldSession* session) const
 {
-    LOG_DEBUG("module", "Transmogrification::GetItemLink");
 
     if (entry == HIDDEN_ITEM_ID)
     {
@@ -391,7 +386,6 @@ std::string Transmogrification::GetItemLink(uint32 entry, WorldSession* session)
 
 uint32 Transmogrification::GetFakeEntry(ObjectGuid itemGUID) const
 {
-    LOG_DEBUG("module", "Transmogrification::GetFakeEntry");
 
     std::scoped_lock lock(_visualLock);
     transmogData::const_iterator itr = dataMap.find(itemGUID);
@@ -448,7 +442,6 @@ std::optional<uint8> Transmogrification::GetSelectedSlot(ObjectGuid playerGuid) 
 
 void Transmogrification::UpdateItem(Player* player, Item* item) const
 {
-    LOG_DEBUG("module", "Transmogrification::UpdateItem");
 
     if (!player || !item)
         return;
@@ -502,16 +495,12 @@ TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, Obj
     Creature* interaction = player->GetNPCIfCanInteractWith(interactionGuid, requiredNpcFlag);
     if (!interaction || !IsTransmogVendor(interaction->GetEntry()))
     {
-        LOG_WARN("module", "Transmogrification::ValidateApplyInteraction - Player {} rejected invalid transmog interaction {}.",
-            player->GetGUID().ToString(), interactionGuid.ToString());
         return LANG_TRANSMOG_INVALID_SRC_ENTRY;
     }
 
     if (source != TransmogApplySource::Vendor &&
         (!player->PlayerTalkClass || player->PlayerTalkClass->GetGossipMenu().GetSenderGUID() != interactionGuid))
     {
-        LOG_WARN("module", "Transmogrification::ValidateApplyInteraction - Player {} rejected mismatched gossip sender {}.",
-            player->GetGUID().ToString(), interactionGuid.ToString());
         return LANG_TRANSMOG_INVALID_SRC_ENTRY;
     }
 
@@ -520,8 +509,6 @@ TransmogStrings Transmogrification::ValidateApplyInteraction(Player* player, Obj
         TempSummon* summon = interaction->ToTempSummon();
         if (!summon || summon->GetOwner() != player)
         {
-            LOG_WARN("module", "Transmogrification::ValidateApplyInteraction - Player {} rejected another owner's portable transmog NPC {}.",
-                player->GetGUID().ToString(), interactionGuid.ToString());
             return LANG_TRANSMOG_INVALID_SRC_ENTRY;
         }
     }
@@ -585,8 +572,6 @@ TransmogApplyResult Transmogrification::PreflightApply(Player* player,
                 if (!SoloCollections::GetAppearanceService().HasCollectedSource(
                         SoloCollections::AccountId(accountId), request.SourceItemEntry))
                 {
-                    LOG_WARN("module", "Transmogrification::PreflightApply - Account {} rejected uncollected source item {}.",
-                        accountId, request.SourceItemEntry);
                     return { LANG_TRANSMOG_MISSING_SRC_ITEM };
                 }
             }
@@ -707,8 +692,6 @@ void Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan con
         {
             if (!committed)
             {
-                LOG_ERROR("module", "Transmogrification::CommitApplyPlan - Appearance transaction failed for player {}; no resources or cache entries were changed.",
-                    playerGuid.ToString());
                 if (completion)
                     completion({ LANG_TRANSMOG_DATABASE_ERROR });
                 return;
@@ -717,8 +700,6 @@ void Transmogrification::CommitApplyPlan(Player* player, AppearanceApplyPlan con
             Player* player = ObjectAccessor::FindConnectedPlayer(playerGuid);
             if (!player)
             {
-                LOG_WARN("module", "Transmogrification::CommitApplyPlan - Player {} disconnected before the appearance commit resolved; visuals load from DB on next login.",
-                    playerGuid.ToString());
                 if (completion)
                     completion({ LANG_TRANSMOG_OK, 0 });
                 return;
@@ -1203,7 +1184,6 @@ bool Transmogrification::SuitableForTransmogrification(ObjectGuid guid, ItemTemp
         } while (resultSkills->NextRow());
     }
     else {
-        LOG_ERROR("module", "Transmogification could not find skills for player with guid {} in database.", playerGuid);
         return false;
     }
 
@@ -1435,8 +1415,6 @@ void Transmogrification::LoadConfig(bool reload)
         Allowed.swap(refreshedAllowed);
         NotAllowed.swap(refreshedNotAllowed);
     }
-    else
-        LOG_ERROR("module", "Transmogrification::LoadConfig - Invalid Allowed/NotAllowed entry list; previous cache retained.");
 
     ScaledCostModifier = sConfigMgr->GetOption<float>("Transmogrification.ScaledCostModifier", 1.0f);
     CopperCost = sConfigMgr->GetOption<uint32>("Transmogrification.CopperCost", 0);
@@ -1502,16 +1480,12 @@ void Transmogrification::LoadConfig(bool reload)
         ParseMembershipLevels(sConfigMgr->GetOption<std::string>("Transmogrification.MembershipLevelsSkipLevelReq", ""), PLUS_FEATURE_SKIP_LEVEL_REQ, refreshedPlusData);
     if (plusDataValid)
         plusDataMap.swap(refreshedPlusData);
-    else
-        LOG_ERROR("module", "Transmogrification::LoadConfig - Invalid membership level list; previous Plus cache retained.");
 
     PetSpellId = sConfigMgr->GetOption<uint32>("Transmogrification.PetSpellId", 2000100);
     PetEntry = 0;
 
     if (SpellInfo const* spellInfo = sSpellMgr->GetSpellInfo(PetSpellId))
         PetEntry = spellInfo->Effects[EFFECT_0].MiscValue;
-    else
-        LOG_WARN("module", "Transmogrification::LoadConfig - Portable NPC spell {} is missing; portable vendor is disabled.", PetSpellId);
 }
 
 void Transmogrification::DeleteFakeFromDB(ObjectGuid::LowType itemLowGuid, CharacterDatabaseTransaction* trans /*= nullptr*/)
